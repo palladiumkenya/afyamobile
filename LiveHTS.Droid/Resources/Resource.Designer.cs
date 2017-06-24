@@ -111,11 +111,20 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f040001
 			public const int MvxBindingTagUnique = 2130968577;
 			
-			// aapt resource value: 0x7f040002
-			public const int textView1 = 2130968578;
-			
 			// aapt resource value: 0x7f040003
-			public const int textView2 = 2130968579;
+			public const int editText1 = 2130968579;
+			
+			// aapt resource value: 0x7f040004
+			public const int editText2 = 2130968580;
+			
+			// aapt resource value: 0x7f040002
+			public const int spinner1 = 2130968578;
+			
+			// aapt resource value: 0x7f040005
+			public const int textView1 = 2130968581;
+			
+			// aapt resource value: 0x7f040006
+			public const int textView2 = 2130968582;
 			
 			static Id()
 			{
@@ -131,10 +140,13 @@ namespace LiveHTS.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int MainView = 2130903040;
+			public const int ActivateView = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int SplashScreen = 2130903041;
+			public const int MainView = 2130903041;
+			
+			// aapt resource value: 0x7f030002
+			public const int SplashScreen = 2130903042;
 			
 			static Layout()
 			{

@@ -37,6 +37,8 @@
     <Compile Include="AppStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IMainViewModel.cs" />
+    <Compile Include="ViewModel\ActivateViewModel.cs" />
+    <Compile Include="Interfaces\IActivateViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

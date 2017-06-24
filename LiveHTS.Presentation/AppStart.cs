@@ -7,7 +7,7 @@ namespace LiveHTS.Presentation
     {
         public void Start(object hint = null)
         {
-            ShowViewModel<MainViewModel>();
+            ShowViewModel<ActivateViewModel>();
         }
     }
 }
