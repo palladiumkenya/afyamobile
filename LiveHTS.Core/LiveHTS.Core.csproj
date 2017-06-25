@@ -46,8 +46,18 @@
     <Compile Include="Interfaces\Services\IActivationService.cs" />
     <Compile Include="Model\Practice.cs" />
     <Compile Include="Model\PracticeType.cs" />
+    <Compile Include="Model\Survey\ConceptConfig.cs" />
+    <Compile Include="Model\Survey\Concept.cs" />
+    <Compile Include="Model\Survey\LookupConcept.cs" />
+    <Compile Include="Model\Survey\LookupConceptItem.cs" />
+    <Compile Include="Model\Survey\ConceptType.cs" />
+    <Compile Include="Model\Survey\LookupItem.cs" />
+    <Compile Include="Model\Survey\Form.cs" />
+    <Compile Include="Model\Survey\Module.cs" />
+    <Compile Include="Model\Survey\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ActivationService.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
