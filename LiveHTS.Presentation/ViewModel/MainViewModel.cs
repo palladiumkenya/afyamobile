@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using LiveHTS.Core.Interfaces.Repository;
+using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Presentation.Interfaces;
 using MvvmCross.Core.ViewModels;
@@ -8,42 +9,28 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class MainViewModel : MvxViewModel, IMainViewModel
     {
-        private readonly IActivationService _activationService;
-        private readonly IPracticeTypeRepository _practiceTypeRepository;
-        private string _activationCode;
-        private int _parcticesTypeCount;
+        private readonly IFormRepository _formRepository;
+        private string _module;
+        private string _title;
 
-
-        public MainViewModel(IActivationService activationService, IPracticeTypeRepository practiceTypeRepository)
+        public string Module
         {
-            _activationService = activationService;
-            _practiceTypeRepository = practiceTypeRepository;
-        }
-
-        public string ActivationCode
-        {
-            get { return _activationCode; }
+            get { return _module; }
             set
             {
-                _activationCode = value; 
-                RaisePropertyChanged(()=> ActivationCode);
+                _module = value;
+                RaisePropertyChanged(() => Module);
             }
         }
 
-        public int ParcticesTypeCount
+        public MainViewModel(IFormRepository formRepository)
         {
-            get { return _parcticesTypeCount; }
-            set
-            {
-                _parcticesTypeCount = value;
-                RaisePropertyChanged(()=> ParcticesTypeCount);
-            }
+            _formRepository = formRepository;
         }
-
         public override void Start()
         {
-            ActivationCode = _activationService.IsActive() ? "XYZ" : "Not Activated!";
-            ParcticesTypeCount = _practiceTypeRepository.GetAll().ToList().Count;
+            var module =_formRepository.GetModule();
+            Module = $"{module.Name} ({module.Description})";
             base.Start();
         }
     }

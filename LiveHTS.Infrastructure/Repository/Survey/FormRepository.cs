@@ -7,13 +7,15 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 {
     public class FormRepository:BaseRepository<Form>,IFormRepository
     {
+        private readonly Module _module;
+
         public FormRepository()
         {
             //module
-            var module = new Module { Name = "HTS", Description = "HTS" };
+            _module = new Module {Name = "HTS", Description = "HTS"};
 
             //form
-            var form = new Form { Name = "HTS Form", Description = "HTS Form", ModuleId = module.Id };
+            var form = new Form { Name = "HTS Form", Description = "HTS Form", ModuleId = _module.Id };
 
             //sections
             var sections = new List<Section>
@@ -46,8 +48,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
                     Display = "No of Partners ?",Description = "No of Partners ?",Rank = 2.0m,SectionId = sections[0].Id,
                     ConceptTypeId = conceptTypes[1].Id
                 }
-            };
-            
+            };          
 
             var conceptsB = new List<Concept>
             {
@@ -68,6 +69,11 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             form.Sections.ToList().AddRange(sections);
 
             _entities.AddRange(new List<Form>() { form });
+        }
+
+        public Module GetModule()
+        {
+            return _module;
         }
     }
 }

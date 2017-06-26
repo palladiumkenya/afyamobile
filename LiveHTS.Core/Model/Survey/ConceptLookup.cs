@@ -7,6 +7,6 @@ namespace LiveHTS.Core.Model.Survey
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual IEnumerable<ConceptLookupItem> Items { get; set; }
+        public virtual IEnumerable<ConceptLookupItem> Items { get; set; }=new List<ConceptLookupItem>();
     }
 }

@@ -1,12 +1,12 @@
-using System;
-using Android.App;
+﻿using Android.App;
 using Android.OS;
+using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Droid.Views;
 
-namespace LiveHTS.Droid.Views
+namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "View for MainViewModel")]
-    public class MainView : MvxActivity
+    [Activity(Label = "LiveHTS")]
+    public class MainActivity: MvxActivity<MainViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {

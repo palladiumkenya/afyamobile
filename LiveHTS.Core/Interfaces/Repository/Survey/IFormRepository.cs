@@ -4,6 +4,6 @@ namespace LiveHTS.Core.Interfaces.Repository.Survey
 {
     public interface IFormRepository:IRepository<Form>
     {
-        
+        Module GetModule();
     }
 }
