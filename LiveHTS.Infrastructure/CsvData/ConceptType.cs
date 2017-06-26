@@ -2,9 +2,9 @@
 
 namespace LiveHTS.Core.Model.Survey
 {
-    public class LookupItem:Entity
+    public class ConceptType:Entity
     {
-        public string Display { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
     }
 }

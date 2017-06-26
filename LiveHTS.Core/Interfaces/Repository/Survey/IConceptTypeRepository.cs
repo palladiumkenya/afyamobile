@@ -2,7 +2,7 @@
 
 namespace LiveHTS.Core.Interfaces.Repository.Survey
 {
-    public interface ILookupConceptRepository:IRepository<LookupConcept>
+    public interface IConceptTypeRepository : IRepository<ConceptType>
     {
         
     }

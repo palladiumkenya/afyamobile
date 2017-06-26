@@ -3,10 +3,10 @@ using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.Survey
 {
-    public class LookupConcept:Entity
+    public class Module:Entity
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual IEnumerable<LookupConceptItem> ConceptItems { get; set; }
+        public IEnumerable<Form> Forms { get; set; }=new List<Form>();
     }
 }

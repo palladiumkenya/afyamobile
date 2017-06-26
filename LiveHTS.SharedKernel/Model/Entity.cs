@@ -6,6 +6,8 @@ namespace LiveHTS.SharedKernel.Model
     public abstract class Entity
     {
         public virtual  Guid Id { get; set; }
+        public virtual bool Voided { get; set; }
+
 
         protected Entity():this(LiveGuid.NewGuid())
         {
