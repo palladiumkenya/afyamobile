@@ -1,6 +1,6 @@
 ﻿namespace LiveHTS.Presentation.Interfaces
 {
-    public interface IActivateViewModel
+    public interface IFormViewModel
     {
     }
 }
