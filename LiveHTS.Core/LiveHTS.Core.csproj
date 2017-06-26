@@ -43,6 +43,7 @@
     <Compile Include="Interfaces\Repository\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\IPracticeTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
+    <Compile Include="Interfaces\Repository\Survey\ILookupConceptRepository.cs" />
     <Compile Include="Interfaces\Services\IActivationService.cs" />
     <Compile Include="Model\Practice.cs" />
     <Compile Include="Model\PracticeType.cs" />

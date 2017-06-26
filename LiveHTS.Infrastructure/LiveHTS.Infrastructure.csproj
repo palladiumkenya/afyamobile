@@ -48,6 +48,7 @@
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\PracticeRepository.cs" />
     <Compile Include="Repository\PracticeTypeRepository.cs" />
+    <Compile Include="Repository\Survey\LookupConceptRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

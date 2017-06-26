@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Model;
 
@@ -12,6 +13,6 @@ namespace LiveHTS.Infrastructure.Repository
                 new PracticeType("Facility", "Health Facility"),
                 new PracticeType("Surveillance", "Surveillance")
             };
-        }
+        }      
     }
 }
