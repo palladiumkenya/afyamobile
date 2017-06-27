@@ -10,4 +10,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView1"
         local:MvxBind="Text Module" />
+    <MvvmCross.Binding.Droid.Views.MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mvxSpinner1"
+        local:MvxBind="ItemsSource Forms;SelectedItem Form" />
+    <Button
+        android:text="Proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1" />
 </LinearLayout>

@@ -10,5 +10,10 @@ namespace LiveHTS.Core.Model.Survey
         public string Description { get; set; }
         public IEnumerable<Section> Sections { get; set; }=new List<Section>();
         public Guid ModuleId { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

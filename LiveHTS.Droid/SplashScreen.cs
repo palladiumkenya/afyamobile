@@ -5,7 +5,7 @@ using MvvmCross.Droid.Views;
 namespace LiveHTS.Droid
 {
     [Activity(
-        Label = "LiveHTS.Droid"
+        Label = "LiveHTS"
         , MainLauncher = true
         , Icon = "@drawable/icon"
         , Theme = "@style/Theme.Splash"
