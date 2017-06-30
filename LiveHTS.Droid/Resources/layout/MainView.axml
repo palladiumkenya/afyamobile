@@ -10,14 +10,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView1"
         local:MvxBind="Text Module" />
-    <MvvmCross.Binding.Droid.Views.MvxSpinner
-        android:layout_width="match_parent"
+  <Mvx.MvxSpinner
+      android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/mvxSpinner1"
-        local:MvxBind="ItemsSource Forms;SelectedItem Form" />
+        local:MvxBind="ItemsSource Forms; SelectedItem SelectedForm, Mode=TwoWay; HandleItemSelected SwitchFormCommand" />
     <Button
         android:text="Proceed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button1" />
+        android:id="@+id/button1"
+        local:MvxBind="Click ProceedCommand" />
 </LinearLayout>

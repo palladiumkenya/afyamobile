@@ -68,7 +68,8 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             sections[1].Concepts.ToList().AddRange(conceptsB);
             form.Sections.ToList().AddRange(sections);
 
-            _entities.AddRange(new List<Form>() { form });
+            var form2 = new Form { Name = "HTS Form II", Description = "HTS Form II", ModuleId = _module.Id };
+            _entities.AddRange(new List<Form>() { form ,form2});
         }
 
         public Module GetModule()

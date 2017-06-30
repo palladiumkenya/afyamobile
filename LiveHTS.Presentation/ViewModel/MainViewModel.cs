@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
@@ -47,6 +48,31 @@ namespace LiveHTS.Presentation.ViewModel
                 _forms = value;
                 RaisePropertyChanged(() => Forms);
             }
+        }
+
+        public ICommand ProceedCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    var formName = SelectedForm?.Name;
+                    ShowViewModel<ObsViewModel>(new {form = formName});
+                });
+            }
+        }
+
+        public ICommand SwitchFormCommand
+        {
+            get
+            {
+                return new MvxCommand(() => doish());
+            }
+        }
+
+        private void doish()
+        {
+            
         }
 
         public MainViewModel(IFormRepository formRepository)
