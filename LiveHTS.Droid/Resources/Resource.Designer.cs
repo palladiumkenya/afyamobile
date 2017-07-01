@@ -126,6 +126,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f040006
 			public const int textView2 = 2130968582;
 			
+			// aapt resource value: 0x7f040007
+			public const int textView3 = 2130968583;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

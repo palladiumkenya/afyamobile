@@ -11,5 +11,6 @@ namespace LiveHTS.Presentation.Interfaces
         ICommand StopCommand { get;  }
 
         string CurrentAction { get; set; }
+        string Status { get; set; }
     }
 }

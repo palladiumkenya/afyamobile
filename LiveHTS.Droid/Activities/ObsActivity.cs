@@ -17,22 +17,22 @@ namespace LiveHTS.Droid.Activities
             SetContentView(Resource.Layout.ObsActivity);
         }
 
-//        protected override void OnRestoreInstanceState(Bundle savedInstanceState)
-//        {
-//            IMvxSavedStateConverter converter;
-//            if (!Mvx.TryResolve(out converter))
-//            {
-//                MvxTrace.Warning("Saved state converter not available - saving state will be hard");
-//            }
-//            else
-//            {
-//                if (savedInstanceState != null)
-//                {
-//                    var mvxBundle = converter.Read(savedInstanceState);
-//                    this.ViewModel.ReloadState(mvxBundle);
-//                }
-//            }
-//            base.OnRestoreInstanceState(savedInstanceState);
-//        }
+        protected override void OnRestoreInstanceState(Bundle savedInstanceState)
+        {
+            IMvxSavedStateConverter converter;
+            if (!Mvx.TryResolve(out converter))
+            {
+                MvxTrace.Warning("Saved state converter not available - saving state will be hard");
+            }
+            else
+            {
+                if (savedInstanceState != null)
+                {
+                    var mvxBundle = converter.Read(savedInstanceState);
+                    this.ViewModel.ReloadState(mvxBundle);
+                }
+            }
+            base.OnRestoreInstanceState(savedInstanceState);
+        }
     }
 }

@@ -32,4 +32,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView2"
         local:MvxBind="Text CurrentAction" />
+    <TextView
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textColor="@android:color/holo_orange_dark"
+        android:gravity="center_horizontal"
+        local:MvxBind="Text Status"/>
 </LinearLayout>
