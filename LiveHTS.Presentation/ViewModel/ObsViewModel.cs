@@ -7,6 +7,8 @@ using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.Platform;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -38,7 +40,6 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _canStop; }
             set { _canStop = value; RaisePropertyChanged(() => CanStop);}
         }
-
         public ICommand StartCommand
         {
             get
@@ -47,11 +48,10 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     CanStart = false;
                     CanStop = true;
-                    CurrentAction = "Started...";
+                    CurrentAction = "Started... (Disable START)";
                 });
             }
         }
-
         public ICommand StopCommand
         {
             get
@@ -64,31 +64,44 @@ namespace LiveHTS.Presentation.ViewModel
                 });
             }
         }
-
         public string CurrentAction
         {
             get { return _currentAction; }
             set { _currentAction = value;RaisePropertyChanged(() => CurrentAction); }
         }
-
         public void Init(string form)
         {
             Form = form;
-            CanStart = CanStop = false;
-        }
-
-
-        public override void Start()
-        {
-            base.Start();
-            CurrentAction = "Ready...";
-        }
-
-        public override void Appeared()
-        {
-            base.Appeared();
             CanStart = true;
-             CanStop = false;
+            CanStop = false;
+            CurrentAction = "Im Ready!";
+        }
+        public SavedState SaveState()
+        {
+            MvxTrace.Trace("SaveState called");
+            return new SavedState()
+            {
+                CanStart = _canStart,
+                CanStop = _canStop,
+                CurrentAction = _currentAction
+            };
+        }
+        public void ReloadState(SavedState savedState)
+        {
+            MvxTrace.Trace("ReloadState called with {0}",
+                savedState.CanStop ? "STARTED" : "STOPPED");
+            _canStart = savedState.CanStart;
+            _canStop = savedState.CanStop;
+            _currentAction = savedState.CurrentAction;
         }
     }
+
+    public class SavedState
+    {
+        public bool CanStart { get; set; }
+        public bool CanStop { get; set; }
+        public string CurrentAction { get; set; }
+    }
+
+
 }

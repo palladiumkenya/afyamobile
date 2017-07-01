@@ -18,13 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button1"
-        local:MvxBind="Enabled CanStart;Click StartCommand"/>
+        local:MvxBind="Click StartCommand; Enabled CanStart" />
     <Button
         android:text="Stop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button2"
-        local:MvxBind="Enabled CanStop;Click StopCommand"/>
+        local:MvxBind="Click StopCommand; Enabled CanStop" />
     <TextView
         android:text="Ready"
         android:textAppearance="?android:attr/textAppearanceMedium"
