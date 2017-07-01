@@ -44,13 +44,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DummyData\LiveDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\PracticeRepository.cs" />
     <Compile Include="Repository\PracticeTypeRepository.cs" />
+    <Compile Include="Repository\Survey\ConceptLookupItemRepository.cs" />
+    <Compile Include="Repository\Survey\ConceptRepository.cs" />
     <Compile Include="Repository\Survey\ConceptTypeRepository.cs" />
-    <Compile Include="Repository\Survey\ConceptLookupRepository.cs" />
     <Compile Include="Repository\Survey\FormRepository.cs" />
+    <Compile Include="Repository\Survey\IConceptRepository.cs" />
+    <Compile Include="Repository\Survey\ModuleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
@@ -60,8 +64,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CsvData\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

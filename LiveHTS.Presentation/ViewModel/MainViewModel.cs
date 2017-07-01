@@ -12,13 +12,13 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class MainViewModel : MvxViewModel, IMainViewModel
     {
-        private readonly IFormRepository _formRepository;
-        private string _module;
+        private readonly IModuleRepository _moduleRepository;
+        private Module _module;
         private string _title;
         private List<Form> _forms;
         private  Form _selectedForm;
 
-        public string Module
+        public Module Module
         {
             get { return _module; }
             set
@@ -38,18 +38,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-
-
-        public List<Form> Forms
-        {
-            get { return _forms; }
-            set
-            {
-                _forms = value;
-                RaisePropertyChanged(() => Forms);
-            }
-        }
-
+       
         public ICommand ProceedCommand
         {
             get
@@ -62,31 +51,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public ICommand SwitchFormCommand
+      
+        public MainViewModel(IModuleRepository moduleRepository)
         {
-            get
-            {
-                return new MvxCommand(() => doish());
-            }
-        }
-
-        private void doish()
-        {
-            
-        }
-
-        public MainViewModel(IFormRepository formRepository)
-        {
-            _formRepository = formRepository;
+            _moduleRepository = moduleRepository;
         }
 
         public override void Start()
         {
-            var module = _formRepository.GetModule();
-            Module = $"{module.Name} ({module.Description})";
-            Forms = _formRepository.GetAll().Select(x => new Form() {Name = x.Name, Id = x.Id}).ToList();
-
             base.Start();
+            Module = _moduleRepository.GetDefaultModule();
         }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace LiveHTS.Core.Interfaces.Repository.Survey
 {
-    public interface IConceptLookupRepository : IRepository<ConceptLookup>
+    public interface IModuleRepository:IRepository<Module>
     {
-        
+        Module GetDefaultModule();
     }
 }

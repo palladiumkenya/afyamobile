@@ -7,11 +7,11 @@ using LiveHTS.Infrastructure.DummyData;
 
 namespace LiveHTS.Infrastructure.Repository.Survey
 {
-    public class ConceptTypeRepository : BaseRepository<ConceptType>, IConceptTypeRepository
+    public class ConceptLookupItemRepository : BaseRepository<ConceptLookupItem>, IConceptLookupItemRepository
     {
-        public ConceptTypeRepository()
+        public ConceptLookupItemRepository()
         {
-            _entities = LiveDatabase.ReadConceptTypes().ToList();
+            _entities = LiveDatabase.ReadConceptLookupItems().ToList();
         }
     }
 }

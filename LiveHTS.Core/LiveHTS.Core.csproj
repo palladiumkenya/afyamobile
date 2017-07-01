@@ -40,12 +40,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
     <Compile Include="Interfaces\Repository\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\IPracticeTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
+    <Compile Include="Interfaces\Repository\Survey\IConceptLookupItemRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IConceptTypeRepository.cs" />
-    <Compile Include="Interfaces\Repository\Survey\IConceptLookupRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IFormRepository.cs" />
+    <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
     <Compile Include="Interfaces\Services\IActivationService.cs" />
     <Compile Include="Model\Practice.cs" />
     <Compile Include="Model\PracticeType.cs" />
