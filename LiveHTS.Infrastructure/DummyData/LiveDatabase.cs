@@ -4,59 +4,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LiveHTS.Core.Interfaces.Repository;
 
 namespace LiveHTS.Infrastructure.DummyData
 {
-    public static class LiveDatabase
+    public  class LiveDatabase : ILiveDatabase
     {
-        public static IEnumerable<Module> Read()
-        {
-            var modules = ReadModules();
-            var forms = ReadForms();
-            var sections = ReadSections();
-            var concepts = ReadConcepts();
+        private static List<Module> _modules=new List<Module>();
+        private static List<Form> _forms = new List<Form>();
+        private static List<Section> _sections = new List<Section>();
+        private static List<Concept> _concepts = new List<Concept>();
+        private static List<ConceptType> _conceptTypes=new List<ConceptType>();
+        private static List<ConceptLookup> _conceptLookups=new List<ConceptLookup>();
+        private static List<ConceptLookupItem> _conceptLookupItems=new List<ConceptLookupItem>();
 
-            foreach (var s in sections)
-            {
-                s.Concepts.ToList().AddRange(concepts.Where(x => x.SectionId == s.Id));
-            }
+        public LiveDatabase()
+        {
+            Create();
+        }
 
-            foreach (var f in forms)
+        private void Create()
+        {
+            _sections = ReadSections();
+            _concepts = ReadConcepts();
+            foreach (var section in _sections)
             {
-                f.Sections.ToList().AddRange(sections.Where(x => x.FormId == f.Id));
+                section.AddConcepts(_concepts.Where(x => x.SectionId == section.Id).ToList());
             }
+            _forms = ReadForms().ToList();
+            foreach (var form  in _forms)
+            {
+                form.AddSections(_sections);
+            }
+            _modules = ReadModules();
+            foreach (var module in _modules)
+            {
+                module.AddForms(_forms);
+            }
+        }
+        public  List<Module> Read()
+        {
+            return _modules;
+        }
 
-            foreach (var m in modules)
-            {
-                m.Forms.ToList().AddRange(forms.Where(x => x.ModuleId == m.Id));
-            }
-            return modules;
-        }
-        private static IEnumerable<Module> ReadModules()
+        private  List<Module> ReadModules()
         {
-            return new List<Module>
-            {
-                new Module { Name = "HTS", Description = "HTS" }
-            };
+            return _modules.Count > 0
+                ? _modules
+                : _modules = new List<Module>
+                {
+                    new Module {Name = "HTS Module", Description = "HTS Module for CBS"}
+                };
         }
-        private static IEnumerable<Form> ReadForms()
+        private  List<Form> ReadForms()
         {
-            var module = ReadModules().First();
-            return new List<Form>
-            {
-                new Form { Name = "HTS Form", Description = "HTS Form", ModuleId = module.Id }
-            };
+            return _forms.Count > 0
+                ? _forms
+                : _forms = new List<Form>
+                {
+                    new Form {Name = "HTS Form", Description = "HTS Form for CBS"}
+                };
         }
-        private static IEnumerable<Section> ReadSections()
+        private  List<Section> ReadSections()
         {
-            var form = ReadForms().First();
-            return new List<Section>
-            {
-                new Section {Name = "Section A", Description = "Section A", FormId = form.Id},
-                new Section {Name = "Section B", Description = "Section B", FormId = form.Id},
-            };
+            return _sections.Count > 0
+                ? _sections
+                : _sections = new List<Section>
+                {
+                    new Section {Name = "Section A", Description = "Section A"},
+                    new Section {Name = "Section B", Description = "Section B"},
+                };
         }
-        private static IEnumerable<Concept> ReadConcepts()
+        private  List<Concept> ReadConcepts()
         {
             var lookups = ReadConceptLookups().ToList();
             var conceptTypes = ReadConceptTypes().ToList();
@@ -64,7 +83,7 @@ namespace LiveHTS.Infrastructure.DummyData
 
             return new List<Concept>
             {
-                 new Concept
+                new Concept
                 {
                     Display = "Staff ?",Description = "Staff ?",Rank = 1.0m,SectionId = sections[0].Id,
                     ConceptTypeId = conceptTypes[2].Id,LookupConceptId = lookups[0].Id
@@ -86,29 +105,35 @@ namespace LiveHTS.Infrastructure.DummyData
                 }
             };
         }
-        public static IEnumerable<ConceptType> ReadConceptTypes()
+        public  List<ConceptType> ReadConceptTypes()
         {
-            return new List<ConceptType>
+           return _conceptTypes.Count > 0
+               ? _conceptTypes
+               : _conceptTypes = new List<ConceptType>
             {
                 new ConceptType {Name = "Text", Description = "Text"},
                 new ConceptType {Name = "Numeric", Description = "Numeric"},
                 new ConceptType {Name = "Coded", Description = "Coded"}
             };
         }
-        private static IEnumerable<ConceptLookup> ReadConceptLookups()
+        private  List<ConceptLookup> ReadConceptLookups()
         {
-            return new List<ConceptLookup>
-            {
-                  new ConceptLookup { Name = "YesNo", Description = "YesNo" },
-            new ConceptLookup { Name = "Referral", Description = "Referral" }
-            };
+            return _conceptLookups.Count > 0
+                ? _conceptLookups
+                : _conceptLookups = new List<ConceptLookup>
+                {
+                    new ConceptLookup {Name = "YesNo", Description = "YesNo"},
+                    new ConceptLookup {Name = "Referral", Description = "Referral"}
+                };
         }
-        public static IEnumerable<ConceptLookupItem> ReadConceptLookupItems()
+        public  List<ConceptLookupItem> ReadConceptLookupItems()
         {
             var lookupYesNo = ReadConceptLookups().First(x => x.Name == "YesNo");
             var lookupReferral = ReadConceptLookups().First(x => x.Name == "Referral");
 
-            return new List<ConceptLookupItem>
+           return _conceptLookupItems.Count > 0
+               ? _conceptLookupItems
+               : _conceptLookupItems = new List<ConceptLookupItem>
             {
               new ConceptLookupItem {Display = "Y",Description = "Yes",Rank = 1.0m,ConceptLookupId = lookupYesNo.Id},
                 new ConceptLookupItem {Display = "N",Description = "No",Rank = 2.0m,ConceptLookupId = lookupYesNo.Id},

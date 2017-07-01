@@ -7,18 +7,15 @@ using ILiveDatabase = LiveHTS.Core.Interfaces.Repository.ILiveDatabase;
 
 namespace LiveHTS.Infrastructure.Repository.Survey
 {
-    public class ConceptRepository : BaseRepository<Concept>, IConceptRepository
+    public class SectionRepository : BaseRepository<Section>, ISectionRepository
     {
-        public ConceptRepository(ILiveDatabase database) : base(database)
+        public SectionRepository(ILiveDatabase database) : base(database)
         {
             var forms = database.Read().ToList().SelectMany(x => x.Forms).ToList();
 
             foreach (var form in forms)
             {
-                foreach (var formSection in form.Sections)
-                {
-                    _entities.AddRange(formSection.Concepts);
-                }
+                _entities.AddRange(form.Sections);
             }
         }
     }

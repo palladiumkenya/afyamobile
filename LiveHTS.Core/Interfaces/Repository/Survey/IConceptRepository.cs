@@ -1,6 +1,8 @@
-﻿namespace LiveHTS.Infrastructure.Repository.Survey
+﻿using LiveHTS.Core.Model.Survey;
+
+namespace LiveHTS.Core.Interfaces.Repository.Survey
 {
-    internal interface IConceptRepository
+    public interface IConceptRepository : IRepository<Concept>
     {
     }
 }

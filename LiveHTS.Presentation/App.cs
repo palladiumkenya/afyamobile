@@ -26,6 +26,11 @@ namespace LiveHTS.Presentation
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
+            CreatableTypes(assemblyInfrastructure)
+                .EndingWith("LiveDatabase")
+                .AsInterfaces()
+                .RegisterAsSingleton();
+
             RegisterAppStart(new AppStart());
         }
     }

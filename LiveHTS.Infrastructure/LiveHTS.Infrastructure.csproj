@@ -49,11 +49,9 @@
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\PracticeRepository.cs" />
     <Compile Include="Repository\PracticeTypeRepository.cs" />
-    <Compile Include="Repository\Survey\ConceptLookupItemRepository.cs" />
+    <Compile Include="Repository\Survey\SectionRepository.cs" />
     <Compile Include="Repository\Survey\ConceptRepository.cs" />
-    <Compile Include="Repository\Survey\ConceptTypeRepository.cs" />
     <Compile Include="Repository\Survey\FormRepository.cs" />
-    <Compile Include="Repository\Survey\IConceptRepository.cs" />
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
   </ItemGroup>
   <ItemGroup>

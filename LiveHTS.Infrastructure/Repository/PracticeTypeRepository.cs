@@ -6,13 +6,9 @@ using LiveHTS.Core.Model;
 namespace LiveHTS.Infrastructure.Repository
 {
     public class PracticeTypeRepository:BaseRepository<PracticeType>, IPracticeTypeRepository
-    {         
-        public PracticeTypeRepository()
+    {
+        public PracticeTypeRepository(ILiveDatabase database) : base(database)
         {
-            _entities = new List<PracticeType>{
-                new PracticeType("Facility", "Health Facility"),
-                new PracticeType("Surveillance", "Surveillance")
-            };
-        }      
+        }
     }
 }

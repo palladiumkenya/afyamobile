@@ -2,8 +2,7 @@
 
 namespace LiveHTS.Core.Interfaces.Repository.Survey
 {
-    public interface IConceptTypeRepository : IRepository<ConceptType>
+    public interface ISectionRepository : IRepository<Section>
     {
-        
     }
 }
