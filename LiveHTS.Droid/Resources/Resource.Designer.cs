@@ -47,6 +47,27 @@ namespace LiveHTS.Droid
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView = global::LiveHTS.Droid.Resource.Styleable.MvxListView;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
 			global::MvvmCross.Binding.Droid.Resource.Styleable.MvxListView_MvxItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxBind = global::LiveHTS.Droid.Resource.Attribute.MvxBind;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxDropDownItemTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxGroupItemTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxGroupItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxItemTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxLang = global::LiveHTS.Droid.Resource.Attribute.MvxLang;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxSource = global::LiveHTS.Droid.Resource.Attribute.MvxSource;
+			global::MvvmCross.Droid.FullFragging.Resource.Attribute.MvxTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Id.MvvmCrossTagId = global::LiveHTS.Droid.Resource.Id.MvvmCrossTagId;
+			global::MvvmCross.Droid.FullFragging.Resource.Id.MvxBindingTagUnique = global::LiveHTS.Droid.Resource.Id.MvxBindingTagUnique;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxBinding = global::LiveHTS.Droid.Resource.Styleable.MvxBinding;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxBinding_MvxBind = global::LiveHTS.Droid.Resource.Styleable.MvxBinding_MvxBind;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxBinding_MvxLang = global::LiveHTS.Droid.Resource.Styleable.MvxBinding_MvxLang;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxControl = global::LiveHTS.Droid.Resource.Styleable.MvxControl;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxControl_MvxTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxControl_MvxTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxExpandableListView = global::LiveHTS.Droid.Resource.Styleable.MvxExpandableListView;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxImageView = global::LiveHTS.Droid.Resource.Styleable.MvxImageView;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxImageView_MvxSource = global::LiveHTS.Droid.Resource.Styleable.MvxImageView_MvxSource;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxListView = global::LiveHTS.Droid.Resource.Styleable.MvxListView;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.FullFragging.Resource.Styleable.MvxListView_MvxItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
 		}
 		
 		public partial class Attribute
@@ -111,23 +132,29 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f040001
 			public const int MvxBindingTagUnique = 2130968577;
 			
-			// aapt resource value: 0x7f040004
-			public const int button1 = 2130968580;
-			
-			// aapt resource value: 0x7f040005
-			public const int button2 = 2130968581;
-			
-			// aapt resource value: 0x7f040003
-			public const int mvxSpinner1 = 2130968579;
-			
-			// aapt resource value: 0x7f040002
-			public const int textView1 = 2130968578;
-			
 			// aapt resource value: 0x7f040006
-			public const int textView2 = 2130968582;
+			public const int button1 = 2130968582;
 			
 			// aapt resource value: 0x7f040007
-			public const int textView3 = 2130968583;
+			public const int button2 = 2130968583;
+			
+			// aapt resource value: 0x7f040003
+			public const int content_frame = 2130968579;
+			
+			// aapt resource value: 0x7f040005
+			public const int mvxSpinner1 = 2130968581;
+			
+			// aapt resource value: 0x7f040004
+			public const int textView1 = 2130968580;
+			
+			// aapt resource value: 0x7f040008
+			public const int textView2 = 2130968584;
+			
+			// aapt resource value: 0x7f040009
+			public const int textView3 = 2130968585;
+			
+			// aapt resource value: 0x7f040002
+			public const int textViewForm = 2130968578;
 			
 			static Id()
 			{
@@ -143,13 +170,19 @@ namespace LiveHTS.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int MainView = 2130903040;
+			public const int CounsellingView = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int ObsActivity = 2130903041;
+			public const int InterviewView = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int SplashScreen = 2130903042;
+			public const int MainView = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int ObsActivity = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int SplashScreen = 2130903044;
 			
 			static Layout()
 			{

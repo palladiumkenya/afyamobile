@@ -46,7 +46,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return new MvxCommand(() =>
                 {
                     var formName = SelectedForm?.Name;
-                    ShowViewModel<ObsViewModel>(new {form = formName});
+                    ShowViewModel<CounsellingViewModel>(new {form = formName});
                 });
             }
         }
