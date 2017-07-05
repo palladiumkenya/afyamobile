@@ -16,7 +16,6 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => Welcome); RaisePropertyChanged(() => Greeting);
             }
         }
-
         public string Greeting => string.IsNullOrWhiteSpace(_welcome) ? string.Empty : $"Karibu {_welcome}";
     }
 }
