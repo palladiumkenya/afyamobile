@@ -4,11 +4,12 @@ using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Interfaces.Repository
 {
-    public interface IRepository<T> where T:Entity
+    public interface IRepository<T,TId> where T:Entity<TId>
     {
-        T Get(Guid id);
+        T Get(TId id);
         IEnumerable<T> GetAll();
-        IEnumerable<T> GetAllBy(Predicate<T> predicate);
         void Save(T entity);
+        void Update(T entity);
+        void Delete(TId id);
     }
 }

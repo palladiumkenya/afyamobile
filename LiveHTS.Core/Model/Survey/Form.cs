@@ -5,23 +5,25 @@ using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.Survey
 {
-    public class Form:Entity
+    public class Form:Entity<Guid>
     {
         public string Name { get; set; }
+        public string Display { get; set; }
         public string Description { get; set; }
-        public List<Section> Sections { get; set; }=new List<Section>();
+        public decimal Rank { get; set; }
         public Guid ModuleId { get; set; }
+        public List<Question> Questions { get; set; }=new List<Question>();
 
-        public void AddSection(Section section)
+        public void AddQuestion(Question question)
         {
-            section.FormId = Id;
-            Sections.Add(section);
+            question.FormId = Id;
+            Questions.Add(question);
         }
-        public void AddSections(List<Section> sections)
+        public void AddQuestion(List<Question> questions)
         {
-            foreach (var section in sections)
+            foreach (var question in questions)
             {
-                AddSection(section);
+                AddQuestion(question);
             }
         }
 

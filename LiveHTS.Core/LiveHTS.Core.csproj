@@ -40,27 +40,31 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\Repository\Survey\ISectionRepository.cs" />
-    <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPracticeRepository.cs" />
-    <Compile Include="Interfaces\Repository\IPracticeTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
-    <Compile Include="Interfaces\Repository\Survey\IFormRepository.cs" />
-    <Compile Include="Interfaces\Repository\ILiveDatabase.cs" />
-    <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
-    <Compile Include="Interfaces\Services\IActivationService.cs" />
-    <Compile Include="Model\Practice.cs" />
-    <Compile Include="Model\PracticeType.cs" />
+    <Compile Include="Model\Config\SubjectAttribute.cs" />
+    <Compile Include="Model\Config\Action.cs" />
+    <Compile Include="Model\Config\Condition.cs" />
+    <Compile Include="Model\Config\Validator.cs" />
+    <Compile Include="Model\Config\ValidatorType.cs" />
+    <Compile Include="Model\Lookup\CategoryItem.cs" />
+    <Compile Include="Model\Lookup\Item.cs" />
+    <Compile Include="Model\Survey\QuestionRemoteTransformation.cs" />
+    <Compile Include="Model\Survey\QuestionTransformation.cs" />
+    <Compile Include="Model\Survey\QuestionBranch.cs" />
+    <Compile Include="Model\Survey\QuestionReValidation.cs" />
+    <Compile Include="Model\Survey\QuestionValidation.cs" />
     <Compile Include="Model\Survey\Concept.cs" />
-    <Compile Include="Model\Survey\ConceptLookup.cs" />
     <Compile Include="Model\Survey\ConceptType.cs" />
-    <Compile Include="Model\Survey\ConceptLookupItem.cs" />
+    <Compile Include="Model\Lookup\Category.cs" />
     <Compile Include="Model\Survey\Form.cs" />
     <Compile Include="Model\Survey\Module.cs" />
-    <Compile Include="Model\Survey\Section.cs" />
+    <Compile Include="Model\Survey\Question.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ActivationService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interfaces\Repository\Survey\" />
+    <Folder Include="Interfaces\Services\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

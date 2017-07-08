@@ -4,13 +4,10 @@ using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.Survey
 {
-    public class Concept:Entity
+    public class Concept:Entity<Guid>
     {
-        public string Display { get; set; }
-        public string Description { get; set; }
-        public decimal Rank { get; set; }
-        public Guid ConceptTypeId { get; set; }
-        public Guid? LookupConceptId { get; set; }
-        public Guid SectionId { get; set; }        
+        public string Name { get; set; }
+        public int ConceptTypeId { get; set; }
+        public Guid? LookupCategoryId { get; set; }
     }
 }
