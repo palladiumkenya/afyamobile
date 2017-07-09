@@ -10,40 +10,22 @@ namespace LiveHTS.Infrastructure.Tests
 {
     public class TestHelpers
     {
-        public static SQLiteConnection GetTestDatabase(bool withData = true)
-        { 
-            var db = new SQLiteConnection(  "test.db");
-//            var path = db.DatabasePath;
-//            db.Close();
-//            File.Delete(path);
-//            db = new SQLiteConnection("test.db");
-            db.CreateTable<TestCar>();
-            db.CreateTable<TestModel>();
+        public static SQLiteConnection GetDatabase(bool withData = true)
+        {
+            var db = new SQLiteConnection("livehts.db");
+            db.CreateTable<Module>();
+            db.CreateTable<Form>();
             if (withData)
             {
-                db.InsertAll(ReadCsv<TestCar>());
-                db.InsertAll(ReadCsv<TestModel>());
+                db.InsertAll(ReadCsv<Module>());
+              db.Insert(ReadCsv<Form>());
             }
             return db;
         }
 
-        public static SQLiteConnection GetDatabase(bool withData=true)
+        public static List<T> ReadCsv<T>() where T : class
         {
-            var db=new SQLiteConnection( "livehts.db");
-//            var path = db.DatabasePath;
-//            db.Close();
-//            File.Delete(path);
-//            db = new SQLiteConnection("livehts.db");
 
-            db.CreateTable<Module>();
-            if(withData)
-                db.InsertAll(ReadCsv<Module>());
-            return db;
-        }
-
-        public static List<T> ReadCsv<T>() where T:class
-        {
-            
             var name = typeof(T).Name;
             var folder = Directory.GetCurrentDirectory();
 
@@ -51,7 +33,7 @@ namespace LiveHTS.Infrastructure.Tests
 
 
             List<T> records;
-            using (TextReader reader =  File.OpenText($@"{folder}Seed\{name}.csv"))
+            using (TextReader reader = File.OpenText($@"{folder}Seed\{name}.csv"))
             {
                 var csv = new CsvReader(reader);
                 csv.Configuration.Delimiter = "|";
@@ -63,7 +45,18 @@ namespace LiveHTS.Infrastructure.Tests
             return records;
 
         }
-    }
 
-  
+        public static SQLiteConnection GetTestDatabase(bool withData = true)
+        {
+            var db = new SQLiteConnection("test.db");
+            db.CreateTable<TestCar>();
+            db.CreateTable<TestModel>();
+            if (withData)
+            {
+                db.InsertAll(ReadCsv<TestCar>());
+                db.InsertAll(ReadCsv<TestModel>());
+            }
+            return db;
+        }
+    }
 }

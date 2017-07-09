@@ -15,6 +15,7 @@ namespace LiveHTS.Infrastructure.Repository
         {
             _databasePath = databasePath;
             _db = new SQLiteConnection(_databasePath);
+           // _db.CreateTable<T>();
         }
 
         public virtual T Get(TId id)

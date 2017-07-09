@@ -40,12 +40,15 @@ namespace LiveHTS.Infrastructure.Tests.Repository
             {
                 Console.WriteLine(testCar);
                 Assert.IsTrue(testCar.TestModels.Count>0);
+                
                 foreach (var model in testCar.TestModels)
                 {
+                    Assert.AreEqual(testCar.Id, model.CarId);
                     Console.WriteLine($"  {model}");
                 }
             }
         }
+
     }
 
     class TestCar : Entity<Guid>
