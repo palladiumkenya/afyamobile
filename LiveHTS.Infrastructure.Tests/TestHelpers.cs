@@ -15,22 +15,22 @@ namespace LiveHTS.Infrastructure.Tests
             var db = new SQLiteConnection("livehts.db");
             db.CreateTable<Module>();
             db.CreateTable<Form>();
+            db.DeleteAll<Form>();
+            db.DeleteAll<Module>();
             if (withData)
             {
                 db.InsertAll(ReadCsv<Module>());
-              db.Insert(ReadCsv<Form>());
+                db.InsertAll(ReadCsv<Form>());
             }
             return db;
         }
 
         public static List<T> ReadCsv<T>() where T : class
         {
-
             var name = typeof(T).Name;
             var folder = Directory.GetCurrentDirectory();
 
             folder = folder.EndsWith(@"\") ? folder : $@"{folder}\";
-
 
             List<T> records;
             using (TextReader reader = File.OpenText($@"{folder}Seed\{name}.csv"))
@@ -43,14 +43,14 @@ namespace LiveHTS.Infrastructure.Tests
                 records = csv.GetRecords<T>().ToList();
             }
             return records;
-
         }
-
         public static SQLiteConnection GetTestDatabase(bool withData = true)
         {
             var db = new SQLiteConnection("test.db");
             db.CreateTable<TestCar>();
             db.CreateTable<TestModel>();
+            db.DeleteAll<TestModel>();
+            db.DeleteAll<TestCar>();
             if (withData)
             {
                 db.InsertAll(ReadCsv<TestCar>());

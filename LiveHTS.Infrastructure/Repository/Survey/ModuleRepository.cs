@@ -22,19 +22,19 @@ namespace LiveHTS.Infrastructure.Repository.Survey
         {
             var modules = base.GetAll().ToList();
 
-//            foreach (var module in modules)
-//            {
-//                try
-//                {
-//                    var forms = _db.Table<Form>().Where(x => x.ModuleId == module.Id).ToList();
-//                    if (forms.Count > 0)
-//                        module.Forms = forms;
-//                }
-//                catch
-//                {
-//                    // ignored
-//                }
-//            }
+            foreach (var module in modules)
+            {
+                try
+                {
+                    var forms = _db.Table<Form>().Where(x => x.ModuleId == module.Id).ToList();
+                    if (forms.Count > 0)
+                        module.Forms = forms;
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
 
             return modules;
         }

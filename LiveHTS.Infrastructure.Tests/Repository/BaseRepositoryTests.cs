@@ -26,7 +26,9 @@ namespace LiveHTS.Infrastructure.Tests.Repository
         [TestMethod]
         public void should_Get_By_Id()
         {
-            var model = _modelRepository.Get(1);
+            var modelId=_modelRepository.GetAll().First().Id;
+
+            var model = _modelRepository.Get(modelId);
             Assert.IsNotNull(model);
             Console.WriteLine(model);
         }

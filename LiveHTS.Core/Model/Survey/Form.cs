@@ -16,7 +16,6 @@ namespace LiveHTS.Core.Model.Survey
         [Ignore]
         public List<Question> Questions { get; set; }=new List<Question>();
 
-
         public override string ToString()
         {
             return $"{Display}";

@@ -90,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="livehts.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Seed\Form.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -101,6 +104,9 @@
     </None>
     <None Include="packages.config" />
     <None Include="Seed\Module.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="test.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

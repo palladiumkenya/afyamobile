@@ -26,12 +26,12 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
             var module = _moduleRepository.GetDefaultModule();
             Assert.IsNotNull(module);
             Console.WriteLine($"{module.Id}|{module}");
-//            foreach (var form in module.Forms)
-//            {
-//                Assert.IsNotNull(form);
-//                Assert.AreEqual(module.Id,form.ModuleId);
-//                Console.WriteLine($" > {form}");
-//            }
+            foreach (var form in module.Forms)
+            {
+                Assert.IsNotNull(form);
+                Assert.AreEqual(module.Id, form.ModuleId);
+                Console.WriteLine($" > {form}");
+            }
         }
 
         
