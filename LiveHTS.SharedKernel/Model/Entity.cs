@@ -2,6 +2,7 @@
 using LiveHTS.SharedKernel.Custom;
 using SQLite;
 
+
 namespace LiveHTS.SharedKernel.Model
 {
     public abstract class Entity<TId> : IEquatable<Entity<TId>>

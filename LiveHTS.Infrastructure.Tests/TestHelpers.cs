@@ -3,20 +3,41 @@ using System.IO;
 using System.Linq;
 using CsvHelper;
 using LiveHTS.Core.Model.Survey;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using LiveHTS.Infrastructure.Tests.Repository;
 using SQLite;
 
 namespace LiveHTS.Infrastructure.Tests
 {
     public class TestHelpers
     {
-        
+        public static SQLiteConnection GetTestDatabase(bool withData = true)
+        { 
+            var db = new SQLiteConnection(  "test.db");
+//            var path = db.DatabasePath;
+//            db.Close();
+//            File.Delete(path);
+//            db = new SQLiteConnection("test.db");
+            db.CreateTable<TestCar>();
+            db.CreateTable<TestModel>();
+            if (withData)
+            {
+                db.InsertAll(ReadCsv<TestCar>());
+                db.InsertAll(ReadCsv<TestModel>());
+            }
+            return db;
+        }
 
-        public static SQLiteConnection GetTestDatabase()
+        public static SQLiteConnection GetDatabase(bool withData=true)
         {
-            var db=new SQLiteConnection("livehts");
+            var db=new SQLiteConnection( "livehts.db");
+//            var path = db.DatabasePath;
+//            db.Close();
+//            File.Delete(path);
+//            db = new SQLiteConnection("livehts.db");
+
             db.CreateTable<Module>();
-            db.InsertAll(ReadCsv<Module>());
+            if(withData)
+                db.InsertAll(ReadCsv<Module>());
             return db;
         }
 

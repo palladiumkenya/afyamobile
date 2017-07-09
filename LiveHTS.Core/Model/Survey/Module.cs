@@ -8,14 +8,6 @@ namespace LiveHTS.Core.Model.Survey
 {
     public class Module:Entity<Guid>
     {
-        private Guid _id;
-        
-        public override Guid Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
-
         public string Name { get; set; }
         public string Display { get; set; }
         public string Description { get; set; }
@@ -41,5 +33,10 @@ namespace LiveHTS.Core.Model.Survey
             }
         }
         */
+
+        public override string ToString()
+        {
+            return $"{Name},{Display}";
+        }
     }
 }

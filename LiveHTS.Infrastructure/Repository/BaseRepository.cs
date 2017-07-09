@@ -1,50 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
+
 
 namespace LiveHTS.Infrastructure.Repository
 {
     public abstract class BaseRepository<T,TId>:IRepository<T,TId> where T : Entity<TId>,new()
     {
-        private SQLiteConnection db;
+        private readonly string _databasePath;
+        protected SQLiteConnection _db;
 
-        protected BaseRepository()
+        protected BaseRepository(string databasePath)
         {
-            db=new SQLiteConnection("livehts");
-            db.CreateTable<T>();
+            _databasePath = databasePath;
+            _db = new SQLiteConnection(_databasePath);
         }
 
-        protected BaseRepository(SQLiteConnection db)
+        public virtual T Get(TId id)
         {
-            this.db = db;
+            return _db.Find<T>(id);
         }
 
-        public T Get(TId id)
+        public virtual IEnumerable<T> GetAll()
         {
-            return db.Find<T>(id);
+            return _db.Table<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual void Save(T entity)
         {
-            return db.Table<T>();
+            _db.Insert(entity);
         }
 
-        public void Save(T entity)
+        public virtual void Update(T entity)
         {
-            db.Insert(entity);
+            _db.Update(entity);
         }
 
-        public void Update(T entity)
+        public virtual  void Delete(TId id)
         {
-            db.Update(entity);
-        }
-
-        public void Delete(TId id)
-        {
-            db.Delete<T>(id);
+            _db.Delete<T>(id);
         }
     }
 }
