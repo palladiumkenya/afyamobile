@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Linq;
-using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Interfaces.Repository.Survey;
-using LiveHTS.Core.Model.Survey;
-using LiveHTS.Infrastructure.DummyData;
 using LiveHTS.Infrastructure.Repository.Survey;
-using LiveHTS.SharedKernel.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SQLite;
 
 
 namespace LiveHTS.Infrastructure.Tests.Repository.Survey
@@ -14,7 +11,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
     [TestClass]
     public class ModuleRepositoryTests
     {
-        private readonly ILiveDatabase _database=new LiveDatabase();
+        private SQLiteConnection _database = TestHelpers.GetTestDatabase();
         private IModuleRepository _moduleRepository;
 
         [TestInitialize]
@@ -22,18 +19,24 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         {
             _moduleRepository=new ModuleRepository(_database);
         }
+
         [TestMethod]
         public void should_GetDefaultModule()
         {
-            var module = _moduleRepository.GetDefaultModule();
-            Assert.IsNotNull(module);
-            Assert.IsTrue(module.Forms.ToList().Count>0);
-            Console.WriteLine(module.Name);
-            foreach (var form in module.Forms)
+            var modules = _moduleRepository.GetAll().ToList();
+            Assert.IsTrue(modules.Count > 0);
+
+            foreach (var m in modules)
             {
-                Console.WriteLine($" >.{form.Name}");
+                Console.WriteLine($"{m.Display}");
             }
         }
+
+        public void TEarDown()
+        {
+            
+        }
+
         
     }
 }

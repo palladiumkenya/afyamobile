@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
-using LiveHTS.Core.Interfaces.Repository;
-using LiveHTS.Core.Interfaces.Repository.Survey;
-using LiveHTS.Core.Interfaces.Services;
-using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform.Platform;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel

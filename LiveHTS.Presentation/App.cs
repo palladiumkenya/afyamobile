@@ -13,8 +13,8 @@ namespace LiveHTS.Presentation
         {
             base.Initialize();
 
-            var assemblyCore = typeof(PracticeType).GetTypeInfo().Assembly;
-            var assemblyInfrastructure = typeof(FormRepository).GetTypeInfo().Assembly;
+            var assemblyCore = typeof(Module).GetTypeInfo().Assembly;
+            var assemblyInfrastructure = typeof(ModuleRepository).GetTypeInfo().Assembly;
 
             CreatableTypes(assemblyCore)
                 .EndingWith("Service")

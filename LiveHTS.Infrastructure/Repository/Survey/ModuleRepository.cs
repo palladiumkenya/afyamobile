@@ -1,22 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Model.Survey;
-using LiveHTS.Infrastructure.DummyData;
-using ILiveDatabase = LiveHTS.Core.Interfaces.Repository.ILiveDatabase;
+using SQLite;
 
 namespace LiveHTS.Infrastructure.Repository.Survey
 {
-    public class ModuleRepository : BaseRepository<Module>,IModuleRepository
+    public class ModuleRepository:BaseRepository<Module,Guid>,IModuleRepository
     {
-        public ModuleRepository(ILiveDatabase database) : base(database)
+        public ModuleRepository()
         {
-            _entities = database.Read();
         }
+
+        public ModuleRepository(SQLiteConnection db) : base(db)
+        {
+        }
+
         public Module GetDefaultModule()
         {
-           return _entities.First();
+            throw new NotImplementedException();
         }
     }
 }

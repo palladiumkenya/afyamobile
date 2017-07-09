@@ -1,10 +1,12 @@
 ﻿using System;
 using LiveHTS.SharedKernel.Custom;
+using SQLite;
 
 namespace LiveHTS.SharedKernel.Model
 {
     public abstract class Entity<TId> : IEquatable<Entity<TId>>
     {
+        [PrimaryKey]
         public virtual TId Id { get; set; }
         public virtual bool? Voided { get; set; }
         protected Entity()

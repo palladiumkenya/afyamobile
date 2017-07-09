@@ -1,42 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using LiveHTS.Core.Interfaces.Repository;
-using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.SharedKernel.Model;
+using SQLite;
 
 namespace LiveHTS.Infrastructure.Repository
 {
-    public abstract class BaseRepository<T>: IRepository<T> where T:Entity
+    public abstract class BaseRepository<T,TId>:IRepository<T,TId> where T : Entity<TId>,new()
     {
-        private readonly ILiveDatabase _database;
-        internal List<T> _entities;
+        private SQLiteConnection db;
 
-        protected BaseRepository(ILiveDatabase database)
+        protected BaseRepository()
         {
-            _database = database;
-            _entities = new List<T>();
-        }
-        public virtual IEnumerable<T> GetAll()
-        {
-            return _entities;
+            db=new SQLiteConnection("livehts");
+            db.CreateTable<T>();
         }
 
-        public T Get(Guid id)
+        protected BaseRepository(SQLiteConnection db)
         {
-            return _entities
-                .FirstOrDefault(x => x.Id == id);
-        }
-        public virtual IEnumerable<T> GetAllBy(Predicate<T> predicate)
-        {
-            return _entities.FindAll(predicate).ToList();
+            this.db = db;
         }
 
-
-        public virtual void Save(T entity)
+        public T Get(TId id)
         {
-            _entities.Add(entity);
+            return db.Find<T>(id);
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return db.Table<T>();
+        }
+
+        public void Save(T entity)
+        {
+            db.Insert(entity);
+        }
+
+        public void Update(T entity)
+        {
+            db.Update(entity);
+        }
+
+        public void Delete(TId id)
+        {
+            db.Delete<T>(id);
         }
     }
 }
