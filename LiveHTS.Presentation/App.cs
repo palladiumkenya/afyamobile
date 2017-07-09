@@ -1,14 +1,25 @@
 ﻿using System.Reflection;
+using LiveHTS.Core;
+using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Model;
 using LiveHTS.Infrastructure.Repository;
 using LiveHTS.Infrastructure.Repository.Survey;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 
 namespace LiveHTS.Presentation
 {
     public class App:MvxApplication
     {
+        private readonly string _dbpath;
+
+        public App(string dbpath)
+        {
+            _dbpath = dbpath;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -26,10 +37,12 @@ namespace LiveHTS.Presentation
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
+            Mvx.RegisterSingleton<ILiveSetting>(new LiveSetting(_dbpath));
+
             CreatableTypes(assemblyInfrastructure)
-                .EndingWith("LiveDatabase")
+                .EndingWith("Migrator")
                 .AsInterfaces()
-                .RegisterAsSingleton();
+                .RegisterAsLazySingleton();
 
             RegisterAppStart(new AppStart());
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using LiveHTS.Core;
+using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository.Survey;
@@ -11,13 +13,15 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
     [TestClass]
     public class ModuleRepositoryTests
     {
+        private ILiveSetting _liveSetting;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
         private IModuleRepository _moduleRepository;
 
         [TestInitialize]
         public void SetUp()
         {
-            _moduleRepository=new ModuleRepository(  _database.DatabasePath);
+            _liveSetting = new LiveSetting(_database.DatabasePath);
+            _moduleRepository =new ModuleRepository(_liveSetting);
         }
 
         [TestMethod]

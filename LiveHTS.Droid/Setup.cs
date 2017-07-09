@@ -1,3 +1,4 @@
+using System.IO;
 using Android.Content;
 using MvvmCross.Droid.Platform;
 using MvvmCross.Core.ViewModels;
@@ -15,8 +16,9 @@ namespace LiveHTS.Droid
         }
 
         protected override IMvxApplication CreateApp()
-        {
-            return new Presentation.App();
+        {            
+            var dbpath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "livehts.db"); //Create New Database
+            return new Presentation.App(dbpath);
         }
 
         protected override IMvxTrace CreateDebugTrace()

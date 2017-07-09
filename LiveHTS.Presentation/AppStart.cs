@@ -1,5 +1,10 @@
-﻿using LiveHTS.Presentation.ViewModel;
+﻿using System;
+using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Repository;
+using LiveHTS.Infrastructure.Migrations;
+using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 
 namespace LiveHTS.Presentation
 {
@@ -7,6 +12,9 @@ namespace LiveHTS.Presentation
     {
         public void Start(object hint = null)
         {
+            var migrator=Mvx.Resolve<IMigrator>();
+            migrator.Migrate();
+
             ShowViewModel<MainViewModel>();
         }
     }

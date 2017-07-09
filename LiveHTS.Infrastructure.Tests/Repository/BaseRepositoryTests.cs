@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core;
+using LiveHTS.Core.Interfaces;
 using LiveHTS.Infrastructure.Repository;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
@@ -12,6 +14,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository
     [TestClass]
     public class BaseRepositoryTests
     {
+        private ILiveSetting _liveSetting;
         private SQLiteConnection _database = TestHelpers.GetTestDatabase();
         private TestCarRepository _carRepository;
         private TestModelRepository _modelRepository;
@@ -19,8 +22,9 @@ namespace LiveHTS.Infrastructure.Tests.Repository
         [TestInitialize]
         public void SetUp()
         {
-            _carRepository = new TestCarRepository(_database.DatabasePath);
-            _modelRepository = new TestModelRepository(_database.DatabasePath);
+            _liveSetting=new LiveSetting(_database.DatabasePath);
+            _carRepository = new TestCarRepository(_liveSetting);
+            _modelRepository = new TestModelRepository(_liveSetting);
         }
 
         [TestMethod]
@@ -87,7 +91,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository
 
     class TestCarRepository : BaseRepository<TestCar, Guid>
     {
-        public TestCarRepository( string databasePath) : base( databasePath)
+        public TestCarRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
         }
 
@@ -111,11 +115,13 @@ namespace LiveHTS.Infrastructure.Tests.Repository
 
             return cars;
         }
+
+        
     }
 
     class TestModelRepository : BaseRepository<TestModel, int>
     {
-        public TestModelRepository( string databasePath) : base( databasePath)
+        public TestModelRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
         }
     }

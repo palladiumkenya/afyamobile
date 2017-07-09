@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Model.Survey;
 
@@ -9,10 +10,9 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 {
     public class ModuleRepository : BaseRepository<Module, Guid>, IModuleRepository
     {
-        public ModuleRepository(string databasePath) : base(databasePath)
+        public ModuleRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
         }
-
         public Module GetDefaultModule()
         {
             return GetAll().First();
@@ -38,5 +38,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
             return modules;
         }
+
+     
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -8,13 +9,13 @@ namespace LiveHTS.Infrastructure.Repository
 {
     public abstract class BaseRepository<T,TId>:IRepository<T,TId> where T : Entity<TId>,new()
     {
-        private readonly string _databasePath;
+        private readonly ILiveSetting _liveSetting;
         protected SQLiteConnection _db;
 
-        protected BaseRepository(string databasePath)
+        protected BaseRepository(ILiveSetting liveSetting)
         {
-            _databasePath = databasePath;
-            _db = new SQLiteConnection(_databasePath);
+            _liveSetting = liveSetting;
+            _db = new SQLiteConnection(_liveSetting.DatasePath);
             _db.CreateTable<T>();
         }
 
