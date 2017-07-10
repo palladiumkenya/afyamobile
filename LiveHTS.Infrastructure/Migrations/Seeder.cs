@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-
-using System.Linq;
-using CsvHelper;
-using LiveHTS.Core.Model.Survey;
+﻿using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Seed;
 using SQLite;
 

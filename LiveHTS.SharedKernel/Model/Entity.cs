@@ -9,9 +9,10 @@ namespace LiveHTS.SharedKernel.Model
     {
         [PrimaryKey]
         public virtual TId Id { get; set; }
-        public virtual bool? Voided { get; set; }
+        public virtual bool Voided { get; set; }
         protected Entity()
         {
+            
         }
         protected Entity(TId id)
         {

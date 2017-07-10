@@ -18,7 +18,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             return GetAll().First();
         }
 
-        public override IEnumerable<Module> GetAll()
+        public override IEnumerable<Module> GetAll(bool voided = false)
         {
             var modules = base.GetAll().ToList();
 
