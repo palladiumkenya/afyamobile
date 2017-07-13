@@ -54,11 +54,13 @@ namespace LiveHTS.Infrastructure.Tests.Repository
             Assert.IsTrue(cars.Count>0);
             foreach (var testCar in cars)
             {
+                Assert.IsFalse(testCar.Voided);
                 Console.WriteLine(testCar);
                 Assert.IsTrue(testCar.TestModels.Count>0);
                 
                 foreach (var model in testCar.TestModels)
                 {
+                    Assert.IsFalse(model.Voided);
                     Assert.AreEqual(testCar.Id, model.CarId);
                     Console.WriteLine($"  {model}");
                 }
@@ -170,13 +172,16 @@ namespace LiveHTS.Infrastructure.Tests.Repository
 
         public override IEnumerable<TestCar> GetAll(bool voided = false)
         {
-            var cars=base.GetAll().ToList();
+            var cars = base.GetAll().ToList();
 
             foreach (var testCar in cars)
             {
                 try
                 {
-                    var models = _db.Table<TestModel>().Where(x => x.CarId == testCar.Id).ToList();
+                    var models = _db.Table<TestModel>()
+                        .Where(x => x.CarId == testCar.Id &&
+                                    x.Voided == voided)
+                        .ToList();
                     if (models.Count > 0)
                         testCar.TestModels = models;
                 }
@@ -189,7 +194,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository
             return cars;
         }
 
-        
+
     }
 
     class TestModelRepository : BaseRepository<TestModel, int>

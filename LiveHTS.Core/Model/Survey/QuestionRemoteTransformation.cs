@@ -11,7 +11,9 @@ namespace LiveHTS.Core.Model.Survey
         [Indexed]
         public int SubjectAttributeId { get; set; }
         [Indexed]
-        public Guid? RefQuestionId { get; set; }
+        public Guid? RemoteQuestionId { get; set; }
+        [Indexed]
+        public Guid? SelfQuestionId { get; set; }
         public string ResponseType { get; set; }
         public string Response { get; set; }
         public string ResponseComplex { get; set; }

@@ -91,6 +91,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Seed\Concept.csv" />
+    <None Include="Seed\QuestionTransformation.csv" />
+    <None Include="Seed\QuestionRemoteTransformation.csv" />
+    <None Include="Seed\QuestionReValidation.csv" />
+    <None Include="Seed\SubjectAttribute.csv" />
+    <None Include="Seed\Action.csv" />
+    <None Include="Seed\Condition.csv" />
+    <None Include="Seed\QuestionBranch.csv" />
+    <None Include="Seed\Validator.csv" />
+    <None Include="Seed\QuestionValidation.csv" />
+    <None Include="Seed\ValidatorType.csv" />
+    <None Include="Seed\Question.csv" />
+    <None Include="Seed\LookupItem.csv" />
+    <None Include="Seed\LookupCategoryItem.csv" />
+    <None Include="Seed\LookupCategory.csv" />
+    <None Include="Seed\ConceptType.csv" />
     <None Include="testlivehts.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
