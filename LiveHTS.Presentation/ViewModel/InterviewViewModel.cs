@@ -9,7 +9,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public string Welcome
         {
-            get => _welcome;
+            get { return _welcome; }
             set
             {
                 _welcome = value;
