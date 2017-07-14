@@ -41,12 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ILiveSetting.cs" />
-    <Compile Include="Interfaces\Repository\Lookup\ILookupCategoryRepository.cs" />
+    <Compile Include="Interfaces\Repository\Lookup\ICategoryRepository.cs" />
     <Compile Include="Interfaces\Repository\IMigrator.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
     <Compile Include="LiveSetting.cs" />
+    <Compile Include="Model\Config\ConceptType.cs" />
     <Compile Include="Model\Config\SubjectAttribute.cs" />
     <Compile Include="Model\Config\Action.cs" />
     <Compile Include="Model\Config\Condition.cs" />
@@ -60,7 +61,6 @@
     <Compile Include="Model\Survey\QuestionReValidation.cs" />
     <Compile Include="Model\Survey\QuestionValidation.cs" />
     <Compile Include="Model\Survey\Concept.cs" />
-    <Compile Include="Model\Config\ConceptType.cs" />
     <Compile Include="Model\Lookup\Category.cs" />
     <Compile Include="Model\Survey\Form.cs" />
     <Compile Include="Model\Survey\Module.cs" />

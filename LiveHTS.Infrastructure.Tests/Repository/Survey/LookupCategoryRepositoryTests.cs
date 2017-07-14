@@ -17,19 +17,19 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
     {
         private ILiveSetting _liveSetting;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
-        private ILookupCategoryRepository _lookupCategoryRepository;
+        private ICategoryRepository _categoryRepository;
 
         [TestInitialize]
         public void SetUp()
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
-            _lookupCategoryRepository =new LookupCategoryRepository(_liveSetting);
+            _categoryRepository =new CategoryRepository(_liveSetting);
         }
 
         [TestMethod]
         public void should_Get_Category_with_Items()
         {
-            var categories = _lookupCategoryRepository.GetAllWithItems().ToList();
+            var categories = _categoryRepository.GetAllWithItems().ToList();
             Assert.IsTrue(categories.Count>0);
             foreach (var category in categories)
             {

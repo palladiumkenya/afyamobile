@@ -49,7 +49,7 @@
     <Compile Include="Repository\BaseRepository.cs" />
     <Compile Include="Repository\DbMigrator.cs" />
     <Compile Include="Repository\Survey\ConceptRepository.cs" />
-    <Compile Include="Repository\Survey\LookupCategoryRepository.cs" />
+    <Compile Include="Repository\Survey\CategoryRepository.cs" />
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
     <Compile Include="Seed\FormJson.cs" />
     <Compile Include="Seed\ModuleJson.cs" />

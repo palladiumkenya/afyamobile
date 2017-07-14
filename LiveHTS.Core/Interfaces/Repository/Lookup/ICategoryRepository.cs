@@ -4,8 +4,8 @@ using LiveHTS.Core.Model.Lookup;
 
 namespace LiveHTS.Core.Interfaces.Repository.Lookup
 {
-    public interface ILookupCategoryRepository:IRepository<Category,Guid>
+    public interface ICategoryRepository:IRepository<Category,Guid>
     {
-        IEnumerable<Category> GetAllWithItems();
+        IEnumerable<Category> GetAllWithItems(Guid? conceptCategoryId=null);
     }
 }

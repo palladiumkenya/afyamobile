@@ -2,7 +2,7 @@
 
 namespace LiveHTS.Core.Model.Config
 {
-    public class ConceptType:Entity<int>
+    public class ConceptType:Entity<string>
     {
         public string Name { get; set; }
     }

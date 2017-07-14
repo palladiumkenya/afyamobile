@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.Core.Model.Lookup;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
@@ -8,8 +9,15 @@ namespace LiveHTS.Core.Model.Survey
     {
         public string Name { get; set; }
         [Indexed]
-        public int ConceptTypeId { get; set; }
+        public string ConceptTypeId { get; set; }
         [Indexed]
-        public Guid? LookupCategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
+        [Ignore]
+        public Category Category { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

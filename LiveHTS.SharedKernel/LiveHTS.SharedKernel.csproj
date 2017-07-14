@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Custom\LiveGuid.cs" />
+    <Compile Include="Custom\TypeExtentions.cs" />
     <Compile Include="Custom\Utils.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

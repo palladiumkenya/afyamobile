@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using CsvHelper;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Tests.Repository;
@@ -16,11 +17,15 @@ namespace LiveHTS.Infrastructure.Tests
         {
             
             var db = new SQLiteConnection("livehts.db");
+
             db.CreateTable<Module>();
             db.CreateTable<Form>();
             db.CreateTable<Category>();
             db.CreateTable<Item>();
             db.CreateTable<CategoryItem>();
+
+            db.CreateTable<ConceptType>();
+            db.CreateTable<Concept>();
 
             db.DeleteAll<Form>();
             db.DeleteAll<Module>();
@@ -28,7 +33,10 @@ namespace LiveHTS.Infrastructure.Tests
             db.DeleteAll<CategoryItem>();
             db.DeleteAll<Item>();
             db.DeleteAll<Category>();
-            
+
+            db.DeleteAll<Concept>();
+            db.DeleteAll<ConceptType>();
+
 
             if (withData)
             {
@@ -37,6 +45,8 @@ namespace LiveHTS.Infrastructure.Tests
                 db.InsertAll(ReadCsv<Category>());
                 db.InsertAll(ReadCsv<Item>());
                 db.InsertAll(ReadCsv<CategoryItem>());
+                db.InsertAll(ReadCsv<ConceptType>());
+                db.InsertAll(ReadCsv<Concept>());
             }
             return db;
         }
