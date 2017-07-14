@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.Lookup
@@ -7,5 +8,10 @@ namespace LiveHTS.Core.Model.Lookup
     {
         public string Code { get; set; }
         public string Display { get; set; }
+
+        public Item()
+        {
+            Id = LiveGuid.NewGuid();
+        }
     }
 }

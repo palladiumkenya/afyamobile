@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
@@ -19,5 +20,10 @@ namespace LiveHTS.Core.Model.Survey
         [Indexed]
         public int QuestionValidationId { get; set; }
         public Guid QuestionId { get; set; }
+
+        public QuestionReValidation()
+        {
+            Id = LiveGuid.NewGuid();
+        }
     }
 }

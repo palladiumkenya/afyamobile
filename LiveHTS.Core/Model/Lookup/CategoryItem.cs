@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
@@ -22,6 +23,11 @@ namespace LiveHTS.Core.Model.Lookup
         }
 
         public Decimal Rank { get; set; }
+
+        public CategoryItem()
+        {
+            Id = LiveGuid.NewGuid();
+        }
 
         public override string ToString()
         {

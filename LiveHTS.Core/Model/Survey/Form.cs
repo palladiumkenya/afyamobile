@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
@@ -15,6 +16,11 @@ namespace LiveHTS.Core.Model.Survey
         public Guid ModuleId { get; set; }
         [Ignore]
         public List<Question> Questions { get; set; }=new List<Question>();
+
+        public Form()
+        {
+            Id = LiveGuid.NewGuid();
+        }
 
         public override string ToString()
         {

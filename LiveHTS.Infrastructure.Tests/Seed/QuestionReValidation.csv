@@ -1,2 +1,2 @@
-Id,QuestionId,ConditionId,RefQuestionId,ResponseType,Response,ResponseComplex,Group,ActionId,QuestionValidationId,Voided
-6203e068-6260-11e7-907b-a6006ad3dba0,6206ab4a-6260-11e7-907b-a6006ad3dba0,Pre,6206aa78-6260-11e7-907b-a6006ad3dba0,=,00c2ad58-6246-11e7-907b-a6006ad3dba0,,,Rng,6206a2d0-6260-11e7-907b-a6006ad3dba0,0
+Id|QuestionId|ConditionId|RefQuestionId|ResponseType|Response|ResponseComplex|Group|ActionId|QuestionValidationId|Voided
+6203e068-6260-11e7-907b-a6006ad3dba0|6206ab4a-6260-11e7-907b-a6006ad3dba0|Pre|6206aa78-6260-11e7-907b-a6006ad3dba0|=|00c2ad58-6246-11e7-907b-a6006ad3dba0|||Rng|6206a2d0-6260-11e7-907b-a6006ad3dba0|0

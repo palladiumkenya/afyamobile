@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
@@ -24,5 +25,10 @@ namespace LiveHTS.Core.Model.Survey
         public int  AltContent { get; set; }
         [Indexed]
         public Guid QuestionId { get; set; }
+
+        public QuestionRemoteTransformation()
+        {
+            Id = LiveGuid.NewGuid();
+        }
     }
 }

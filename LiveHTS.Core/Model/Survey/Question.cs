@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
@@ -60,6 +61,11 @@ namespace LiveHTS.Core.Model.Survey
         public bool HasRemoteTreans
         {
             get { return null != RemoteTransformations && ReValidations.Count > 0; }
+        }
+
+        public Question()
+        {
+            Id = LiveGuid.NewGuid();
         }
 
         public override string ToString()

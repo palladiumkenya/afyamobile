@@ -2,7 +2,7 @@
 
 namespace LiveHTS.Core.Model.Config
 {
-    public class SubjectAttribute:Entity<int>
+    public class SubjectAttribute:Entity<string>
     {
         public string Name { get; set; }
     }
