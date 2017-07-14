@@ -45,5 +45,33 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             }
             return questions;
         }
+
+        public IEnumerable<Question> GetWithMetadata(Guid? questionId = null, Guid? formId = null)
+        {
+            var questions = new List<Question>();
+
+            if (formId.IsNullOrEmpty())
+            {
+                questions = _db.Table<Question>().ToList();
+            }
+            else
+            {
+                questions = new List<Question> { Get(formId.Value) };
+            }
+
+            foreach (var question in questions)
+            {
+                try
+                {
+                    var concept = _conceptRepository.GetWithLookups(question.ConceptId).FirstOrDefault();
+                    question.Concept = concept;
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+            return questions;
+        }
     }
 }
