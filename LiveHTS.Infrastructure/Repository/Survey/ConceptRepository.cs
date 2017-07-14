@@ -20,10 +20,22 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             _categoryRepository = categoryRepository;
         }
 
-        public IEnumerable<Concept> GetWithLookups()
+        public IEnumerable<Concept> GetWithLookups(Guid? conceptId = null)
         {
-            //cat
-            var concepts = _db.Table<Concept>().ToList();
+            var concepts = new List<Concept>();
+
+
+            if (conceptId.IsNullOrEmpty())
+            {
+                concepts = _db.Table<Concept>().ToList();
+            }
+            else
+            {
+                concepts = new List<Concept> { Get(conceptId.Value) };
+            }
+
+
+
 
             foreach (var concept in concepts)
             {

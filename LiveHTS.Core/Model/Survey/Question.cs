@@ -9,6 +9,8 @@ namespace LiveHTS.Core.Model.Survey
     {
         [Indexed]
         public Guid ConceptId { get; set; }
+        [Ignore]
+        public Concept Concept { get; set; }
         public string Ordinal { get; set; }
         public string Display { get; set; }
         public Decimal Rank { get; set; }
@@ -24,5 +26,10 @@ namespace LiveHTS.Core.Model.Survey
         public List<QuestionRemoteTransformation> RemoteTransformations { get; set; }
         [Indexed]
         public Guid FormId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Ordinal}. {Display}";
+        }
     }
 }

@@ -23,9 +23,9 @@ namespace LiveHTS.Infrastructure.Tests
             db.CreateTable<Category>();
             db.CreateTable<Item>();
             db.CreateTable<CategoryItem>();
-
             db.CreateTable<ConceptType>();
             db.CreateTable<Concept>();
+            db.CreateTable<Question>();
 
             db.DeleteAll<Form>();
             db.DeleteAll<Module>();
@@ -37,6 +37,7 @@ namespace LiveHTS.Infrastructure.Tests
             db.DeleteAll<Concept>();
             db.DeleteAll<ConceptType>();
 
+            db.DeleteAll<Question>();
 
             if (withData)
             {
@@ -47,6 +48,7 @@ namespace LiveHTS.Infrastructure.Tests
                 db.InsertAll(ReadCsv<CategoryItem>());
                 db.InsertAll(ReadCsv<ConceptType>());
                 db.InsertAll(ReadCsv<Concept>());
+                db.InsertAll(ReadCsv<Question>());
             }
             return db;
         }

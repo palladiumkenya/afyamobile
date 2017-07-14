@@ -46,6 +46,7 @@
     <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
+    <Compile Include="Interfaces\Repository\Survey\IQuestionRepository.cs" />
     <Compile Include="LiveSetting.cs" />
     <Compile Include="Model\Config\ConceptType.cs" />
     <Compile Include="Model\Config\SubjectAttribute.cs" />

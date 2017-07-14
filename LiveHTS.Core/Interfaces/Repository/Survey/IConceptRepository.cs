@@ -8,6 +8,6 @@ namespace LiveHTS.Core.Interfaces.Repository.Survey
 {
     public interface IConceptRepository:IRepository<Concept, Guid>
     {
-        IEnumerable<Concept> GetWithLookups();
+        IEnumerable<Concept> GetWithLookups(Guid? conceptId=null);
     }
 }

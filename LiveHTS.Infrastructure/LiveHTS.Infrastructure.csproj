@@ -51,6 +51,7 @@
     <Compile Include="Repository\Survey\ConceptRepository.cs" />
     <Compile Include="Repository\Survey\CategoryRepository.cs" />
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
+    <Compile Include="Repository\Survey\QuestionRepository.cs" />
     <Compile Include="Seed\FormJson.cs" />
     <Compile Include="Seed\ModuleJson.cs" />
   </ItemGroup>
