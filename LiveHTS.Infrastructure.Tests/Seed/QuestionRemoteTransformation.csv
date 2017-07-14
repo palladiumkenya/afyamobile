@@ -1,0 +1,7 @@
+Id|QuestionId|ConditionId|SubjectAttributeId|RemoteQuestionId|SelfQuestionId|ResponseType|Response|ResponseComplex|Group|ActionId|Content|AltContent|Voided
+6203cad8-6260-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner|6206aa78-6260-11e7-907b-a6006ad3dba0||!=|00c2ad58-6246-11e7-907b-a6006ad3dba0||1| |||0
+6203cad8-6260-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner||6206aa78-6260-11e7-907b-a6006ad3dba0|!=|00c2ad58-6246-11e7-907b-a6006ad3dba0||1| |||0
+6203cc90-6260-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner|6206aa78-6260-11e7-907b-a6006ad3dba0||=|00c2abb4-6246-11e7-907b-a6006ad3dba0||2||||0
+6203cc90-6260-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner||6206aa78-6260-11e7-907b-a6006ad3dba0|=|00c2ac90-6246-11e7-907b-a6006ad3dba0||2|Set|00c2a902-6246-11e7-907b-a6006ad3dba0|00c2aae2-6246-11e7-907b-a6006ad3dba0|0
+6203cd9e-6260-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner|6206aa78-6260-11e7-907b-a6006ad3dba0||=|00c2ac90-6246-11e7-907b-a6006ad3dba0||3||||0
+6203cd9e-6260-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner||6206aa78-6260-11e7-907b-a6006ad3dba0|=|00c2abb4-6246-11e7-907b-a6006ad3dba0||3|Set|00c2a902-6246-11e7-907b-a6006ad3dba0|00c2aae2-6246-11e7-907b-a6006ad3dba0|0

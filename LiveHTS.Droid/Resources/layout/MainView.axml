@@ -9,11 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView1"
-        local:MvxBind="Text ActivationCode"/>
-    <TextView
-        android:text="Text"
+        local:MvxBind="Text Module.Name" />
+    <Mvx.MvxSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        local:MvxBind="Text ParcticesTypeCount"/>
+        android:id="@+id/mvxSpinner1"
+        local:MvxBind="ItemsSource Module.Forms; SelectedItem SelectedForm, Mode=TwoWay; HandleItemSelected SwitchFormCommand" />
+    <Button
+        android:text="Proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1"
+        local:MvxBind="Click ProceedCommand" />
 </LinearLayout>

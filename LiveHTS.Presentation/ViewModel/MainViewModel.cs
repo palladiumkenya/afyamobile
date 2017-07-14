@@ -1,6 +1,7 @@
-﻿using System.Linq;
-using LiveHTS.Core.Interfaces.Repository;
-using LiveHTS.Core.Interfaces.Services;
+﻿using System.Collections.Generic;
+using System.Windows.Input;
+using LiveHTS.Core.Interfaces.Repository.Survey;
+using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces;
 using MvvmCross.Core.ViewModels;
 
@@ -8,43 +9,55 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class MainViewModel : MvxViewModel, IMainViewModel
     {
-        private readonly IActivationService _activationService;
-        private readonly IPracticeTypeRepository _practiceTypeRepository;
-        private string _activationCode;
-        private int _parcticesTypeCount;
+        private readonly IModuleRepository _moduleRepository;
+        private Module _module;
+        private string _title;
+        private List<Form> _forms;
+        private  Form _selectedForm;
 
-
-        public MainViewModel(IActivationService activationService, IPracticeTypeRepository practiceTypeRepository)
+        public Module Module
         {
-            _activationService = activationService;
-            _practiceTypeRepository = practiceTypeRepository;
-        }
-
-        public string ActivationCode
-        {
-            get { return _activationCode; }
+            get { return _module; }
             set
             {
-                _activationCode = value; 
-                RaisePropertyChanged(()=> ActivationCode);
+                _module = value;
+                RaisePropertyChanged(() => Module);
             }
         }
 
-        public int ParcticesTypeCount
+        public Form SelectedForm
         {
-            get { return _parcticesTypeCount; }
+            get { return _selectedForm; }
             set
             {
-                _parcticesTypeCount = value;
-                RaisePropertyChanged(()=> ParcticesTypeCount);
+                _selectedForm = value;
+                RaisePropertyChanged(() => SelectedForm);
             }
+        }
+
+       
+        public ICommand ProceedCommand
+        {
+            get
+            {
+                return new MvxCommand(() =>
+                {
+                    var formName = SelectedForm?.Name;
+                    ShowViewModel<CounsellingViewModel>(new {form = formName});
+                });
+            }
+        }
+
+      
+        public MainViewModel(IModuleRepository moduleRepository)
+        {
+            _moduleRepository = moduleRepository;
         }
 
         public override void Start()
         {
-            ActivationCode = _activationService.IsActive() ? "XYZ" : "Not Activated!";
-            ParcticesTypeCount = _practiceTypeRepository.GetAll().ToList().Count;
             base.Start();
+            Module = _moduleRepository.GetDefaultModule();
         }
     }
 }
