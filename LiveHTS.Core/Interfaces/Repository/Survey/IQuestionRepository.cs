@@ -6,7 +6,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Survey
 {
     public interface IQuestionRepository:IRepository<Question,Guid>
     {
-        IEnumerable<Question> GetWithConcepts(Guid? formId=null);
-        IEnumerable<Question> GetWithMetaData(Guid? questionId=null, Guid? formId = null);
+        IEnumerable<Question> GetWithConcepts(Guid? questionId = null,Guid ? formId=null);
+        IEnumerable<Question> GetWithMetadata(Guid? questionId=null, Guid? formId = null);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace LiveHTS.Core.Model.Config
 {
-    public class Action:Entity<int>
+    public class Action:Entity<string>
     {
         public string Name { get; set; }
     }

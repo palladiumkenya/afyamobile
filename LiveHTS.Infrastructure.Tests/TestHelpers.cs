@@ -26,6 +26,9 @@ namespace LiveHTS.Infrastructure.Tests
             db.CreateTable<ConceptType>();
             db.CreateTable<Concept>();
             db.CreateTable<Question>();
+            db.CreateTable<Validator>();
+            db.CreateTable<ValidatorType>();
+            db.CreateTable<QuestionValidation>();
 
             db.DeleteAll<Form>();
             db.DeleteAll<Module>();
@@ -36,7 +39,10 @@ namespace LiveHTS.Infrastructure.Tests
 
             db.DeleteAll<Concept>();
             db.DeleteAll<ConceptType>();
-
+            
+            db.DeleteAll<QuestionValidation>();
+            db.DeleteAll<Validator>();
+            db.DeleteAll<ValidatorType>();
             db.DeleteAll<Question>();
 
             if (withData)
@@ -49,6 +55,9 @@ namespace LiveHTS.Infrastructure.Tests
                 db.InsertAll(ReadCsv<ConceptType>());
                 db.InsertAll(ReadCsv<Concept>());
                 db.InsertAll(ReadCsv<Question>());
+                db.InsertAll(ReadCsv<Validator>());
+                db.InsertAll(ReadCsv<ValidatorType>());
+                db.InsertAll(ReadCsv<QuestionValidation>());
             }
             return db;
         }

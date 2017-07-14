@@ -17,18 +17,34 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             _conceptRepository = conceptRepository;
         }
 
-        public IEnumerable<Question> GetWithConcepts(Guid? formId = null)
+        public IEnumerable<Question> GetWithConcepts(Guid? questionId = null,Guid ? formId = null)
         {
             var questions = new List<Question>();
 
-
             if (formId.IsNullOrEmpty())
             {
-                questions = _db.Table<Question>().ToList();
+                if (questionId.IsNullOrEmpty())
+                {
+                    questions = _db.Table<Question>().ToList();
+                }
+                else
+                {
+                    questions = GetAll(x => x.Id == questionId.Value).ToList();
+                }
             }
             else
             {
-                questions = new List<Question> { Get(formId.Value) };
+                if (questionId.IsNullOrEmpty())
+                {
+                    questions = GetAll(x => x.FormId == formId.Value).ToList();
+                }
+                else
+                {
+                    questions = GetAll(
+                            x => x.FormId == formId.Value &&
+                                 x.Id == questionId.Value)
+                        .ToList();
+                }
             }
 
             foreach (var question in questions)
@@ -52,19 +68,49 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
             if (formId.IsNullOrEmpty())
             {
-                questions = _db.Table<Question>().ToList();
+                if (questionId.IsNullOrEmpty())
+                {
+                    questions = _db.Table<Question>().ToList();
+                }
+                else
+                {
+                    questions = GetAll(x => x.Id == questionId.Value).ToList();
+                }
             }
             else
             {
-                questions = new List<Question> { Get(formId.Value) };
+                if (questionId.IsNullOrEmpty())
+                {
+                    questions = GetAll(x => x.FormId == formId.Value).ToList();
+                }
+                else
+                {
+                    questions = GetAll(
+                            x => x.FormId == formId.Value &&
+                                 x.Id == questionId.Value)
+                        .ToList();
+                }
             }
 
             foreach (var question in questions)
             {
                 try
                 {
-                    var concept = _conceptRepository.GetWithLookups(question.ConceptId).FirstOrDefault();
-                    question.Concept = concept;
+                    var validations = _db.Table<QuestionValidation>().Where(x => x.QuestionId == question.Id).ToList();
+                    question.Validations = validations;
+
+                    var reValidations = _db.Table<QuestionReValidation>().Where(x => x.QuestionId == question.Id).ToList();
+                    question.ReValidations = reValidations;
+
+                    var branches = _db.Table<QuestionBranch>().Where(x => x.QuestionId == question.Id).ToList();
+                    question.Branches = branches;
+
+                    var transformations = _db.Table<QuestionTransformation>().Where(x => x.QuestionId == question.Id).ToList();
+                    question.Transformations = transformations;
+
+                    var remoteTransformations = _db.Table<QuestionRemoteTransformation>().Where(x => x.QuestionId == question.Id).ToList();
+                    question.RemoteTransformations = remoteTransformations;
+                    
                 }
                 catch
                 {
