@@ -11,5 +11,10 @@ namespace LiveHTS.Core.Model.Lookup
         public string Code { get; set; }
         [Ignore]
         public List<CategoryItem> Items { get; set; } = new List<CategoryItem>();
+
+        public override string ToString()
+        {
+            return Code;
+        }
     }
 }

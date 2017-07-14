@@ -2,9 +2,11 @@
 using System.IO;
 using System.Linq;
 using CsvHelper;
+using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Tests.Repository;
 using SQLite;
+
 
 namespace LiveHTS.Infrastructure.Tests
 {
@@ -12,15 +14,29 @@ namespace LiveHTS.Infrastructure.Tests
     {
         public static SQLiteConnection GetDatabase(bool withData = true)
         {
+            
             var db = new SQLiteConnection("livehts.db");
             db.CreateTable<Module>();
             db.CreateTable<Form>();
+            db.CreateTable<Category>();
+            db.CreateTable<Item>();
+            db.CreateTable<CategoryItem>();
+
             db.DeleteAll<Form>();
             db.DeleteAll<Module>();
+
+            db.DeleteAll<CategoryItem>();
+            db.DeleteAll<Item>();
+            db.DeleteAll<Category>();
+            
+
             if (withData)
             {
                 db.InsertAll(ReadCsv<Module>());
                 db.InsertAll(ReadCsv<Form>());
+                db.InsertAll(ReadCsv<Category>());
+                db.InsertAll(ReadCsv<Item>());
+                db.InsertAll(ReadCsv<CategoryItem>());
             }
             return db;
         }

@@ -22,10 +22,11 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _moduleRepository =new ModuleRepository(_liveSetting);
+
         }
 
         [TestMethod]
-        public void should_GetDefaultModule()
+        public void should_Get_Default_Module()
         {
             var module = _moduleRepository.GetDefaultModule();
             Assert.IsNotNull(module);
@@ -37,7 +38,5 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
                 Console.WriteLine($" > {form}");
             }
         }
-
-        
     }
 }

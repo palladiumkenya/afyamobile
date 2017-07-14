@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ILiveSetting.cs" />
+    <Compile Include="Interfaces\Repository\Lookup\ILookupCategoryRepository.cs" />
     <Compile Include="Interfaces\Repository\IMigrator.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
+    <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
     <Compile Include="LiveSetting.cs" />
     <Compile Include="Model\Config\SubjectAttribute.cs" />
