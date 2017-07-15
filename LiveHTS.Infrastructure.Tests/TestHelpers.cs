@@ -28,8 +28,17 @@ namespace LiveHTS.Infrastructure.Tests
             db.CreateTable<Question>();
             db.CreateTable<Validator>();
             db.CreateTable<ValidatorType>();
-            db.CreateTable<QuestionValidation>();
 
+            db.CreateTable<Action>();
+            db.CreateTable<Condition>();
+            db.CreateTable<SubjectAttribute>();
+
+            db.CreateTable<QuestionBranch>();
+            db.CreateTable<QuestionRemoteTransformation>();
+            db.CreateTable<QuestionReValidation>();
+            db.CreateTable<QuestionTransformation>();
+            db.CreateTable<QuestionValidation>();
+            
             db.DeleteAll<Form>();
             db.DeleteAll<Module>();
 
@@ -39,11 +48,19 @@ namespace LiveHTS.Infrastructure.Tests
 
             db.DeleteAll<Concept>();
             db.DeleteAll<ConceptType>();
-            
+
+            db.DeleteAll<QuestionBranch>();
+            db.DeleteAll<QuestionRemoteTransformation>();
+            db.DeleteAll<QuestionReValidation>();
+            db.DeleteAll<QuestionTransformation>();
             db.DeleteAll<QuestionValidation>();
+
             db.DeleteAll<Validator>();
             db.DeleteAll<ValidatorType>();
             db.DeleteAll<Question>();
+            db.DeleteAll<Action>();
+            db.DeleteAll<Condition>();
+            db.DeleteAll<SubjectAttribute>();
 
             if (withData)
             {
@@ -54,9 +71,16 @@ namespace LiveHTS.Infrastructure.Tests
                 db.InsertAll(ReadCsv<CategoryItem>());
                 db.InsertAll(ReadCsv<ConceptType>());
                 db.InsertAll(ReadCsv<Concept>());
+                db.InsertAll(ReadCsv<Action>());
+                db.InsertAll(ReadCsv<Condition>());
+                db.InsertAll(ReadCsv<SubjectAttribute>());
                 db.InsertAll(ReadCsv<Question>());
                 db.InsertAll(ReadCsv<Validator>());
                 db.InsertAll(ReadCsv<ValidatorType>());
+                db.InsertAll(ReadCsv<QuestionBranch>());
+                db.InsertAll(ReadCsv<QuestionRemoteTransformation>());
+                db.InsertAll(ReadCsv<QuestionReValidation>());
+                db.InsertAll(ReadCsv<QuestionTransformation>());
                 db.InsertAll(ReadCsv<QuestionValidation>());
             }
             return db;

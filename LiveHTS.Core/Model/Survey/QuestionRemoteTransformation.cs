@@ -8,9 +8,9 @@ namespace LiveHTS.Core.Model.Survey
     public class QuestionRemoteTransformation : Entity<Guid>
     {
         [Indexed]
-        public int ConditionId { get; set; }
+        public string ConditionId { get; set; }
         [Indexed]
-        public int SubjectAttributeId { get; set; }
+        public string SubjectAttributeId { get; set; }
         [Indexed]
         public Guid? RemoteQuestionId { get; set; }
         [Indexed]
@@ -20,9 +20,9 @@ namespace LiveHTS.Core.Model.Survey
         public string ResponseComplex { get; set; }
         public decimal? Group { get; set; }
         [Indexed]
-        public int ActionId { get; set; }
-        public int Content { get; set; }
-        public int  AltContent { get; set; }
+        public string ActionId { get; set; }
+        public string Content { get; set; }
+        public string  AltContent { get; set; }
         [Indexed]
         public Guid QuestionId { get; set; }
 

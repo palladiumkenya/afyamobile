@@ -42,7 +42,8 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
             Console.WriteLine($"{form}");
             foreach (var question in form.Questions)
             {
-                Console.WriteLine($"   {question}");
+                Assert.IsNotNull(question.Concept);
+                Console.WriteLine($"   {question} [{question.Concept}]");
             }
         }
     }
