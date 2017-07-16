@@ -74,6 +74,23 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
                 }
             }
 
-        }       
+        }
+        [TestMethod]
+        public void should_Get_Question_with_Metadata_Validations()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasValidations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
+            {
+                Console.WriteLine(question);
+                foreach (var validation in question.Validations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
+            }
+
+        }
     }
 }

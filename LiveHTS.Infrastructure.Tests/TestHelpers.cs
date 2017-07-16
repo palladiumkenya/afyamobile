@@ -47,7 +47,7 @@ namespace LiveHTS.Infrastructure.Tests
             //            db.CreateTable<QuestionRemoteTransformation>();
             //            db.CreateTable<QuestionReValidation>();
             //            db.CreateTable<QuestionTransformation>();
-            //            db.CreateTable<QuestionValidation>();
+            db.CreateTable<QuestionValidation>();
             #endregion
 
 
@@ -56,7 +56,7 @@ namespace LiveHTS.Infrastructure.Tests
             //            db.DeleteAll<QuestionRemoteTransformation>();
             //            db.DeleteAll<QuestionReValidation>();
             //            db.DeleteAll<QuestionTransformation>();
-            //            db.DeleteAll<QuestionValidation>();
+            db.DeleteAll<QuestionValidation>();
             #endregion
 
             #region Delete Question
@@ -118,7 +118,7 @@ namespace LiveHTS.Infrastructure.Tests
                 //            db.InsertAll(ReadCsv<QuestionRemoteTransformation>());
                 //            db.InsertAll(ReadCsv<QuestionReValidation>());
                 //            db.InsertAll(ReadCsv<QuestionTransformation>());
-                //            db.InsertAll(ReadCsv<QuestionValidation>());
+                db.InsertAll(ReadCsv<QuestionValidation>());
                 #endregion
             }
             return db;

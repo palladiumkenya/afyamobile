@@ -97,8 +97,10 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             {
                 try
                 {
-//                    var validations = _db.Table<QuestionValidation>().Where(x => x.QuestionId == question.Id).ToList();
-//                    question.Validations = validations;
+                    var validations = _db.Table<QuestionValidation>().Where(x => x.QuestionId == question.Id).ToList();
+                    question.Validations = validations;
+
+
 //
 //                    var reValidations = _db.Table<QuestionReValidation>().Where(x => x.QuestionId == question.Id).ToList();
 //                    question.ReValidations = reValidations;
