@@ -82,6 +82,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
                 if (questionId.IsNullOrEmpty())
                 {
                     questions = GetAll(x => x.FormId == formId.Value).ToList();
+
                 }
                 else
                 {
@@ -96,20 +97,20 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             {
                 try
                 {
-                    var validations = _db.Table<QuestionValidation>().Where(x => x.QuestionId == question.Id).ToList();
-                    question.Validations = validations;
-
-                    var reValidations = _db.Table<QuestionReValidation>().Where(x => x.QuestionId == question.Id).ToList();
-                    question.ReValidations = reValidations;
+//                    var validations = _db.Table<QuestionValidation>().Where(x => x.QuestionId == question.Id).ToList();
+//                    question.Validations = validations;
+//
+//                    var reValidations = _db.Table<QuestionReValidation>().Where(x => x.QuestionId == question.Id).ToList();
+//                    question.ReValidations = reValidations;
 
                     var branches = _db.Table<QuestionBranch>().Where(x => x.QuestionId == question.Id).ToList();
                     question.Branches = branches;
 
-                    var transformations = _db.Table<QuestionTransformation>().Where(x => x.QuestionId == question.Id).ToList();
-                    question.Transformations = transformations;
-
-                    var remoteTransformations = _db.Table<QuestionRemoteTransformation>().Where(x => x.QuestionId == question.Id).ToList();
-                    question.RemoteTransformations = remoteTransformations;
+//                    var transformations = _db.Table<QuestionTransformation>().Where(x => x.QuestionId == question.Id).ToList();
+//                    question.Transformations = transformations;
+//
+//                    var remoteTransformations = _db.Table<QuestionRemoteTransformation>().Where(x => x.QuestionId == question.Id).ToList();
+//                    question.RemoteTransformations = remoteTransformations;
                     
                 }
                 catch

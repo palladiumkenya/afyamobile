@@ -59,32 +59,21 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         }
 
         [TestMethod]
-        public void should_Get_Question_with_Metadata_Validations()
+        public void should_Get_Question_with_Metadata_Branches()
         {
             var questions = _questionRepository.GetWithMetadata().ToList();
             Assert.IsTrue(questions.Count > 0);
-            foreach (var question in questions)
+            var questionMetadata = questions.Where(x => x.HasBranches).ToList();
+            Assert.IsTrue(questionMetadata.Count>0);
+            foreach (var question in questionMetadata)
             {
-                Assert.IsNotNull(question);
                 Console.Write(question);
-                Console.WriteLine();
-
-                if (question.HasValidations)
-                    Assert.IsTrue(question.Validations.Count > 0);
-
-                if (question.HasReValidations)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
-                if (question.HasBranches)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
-                if (question.HasTransform)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
-                if (question.HasRemoteTreans)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
+                foreach (var branch in question.Branches)
+                {
+                    Console.WriteLine(branch);
+                }
             }
+
         }       
     }
 }
