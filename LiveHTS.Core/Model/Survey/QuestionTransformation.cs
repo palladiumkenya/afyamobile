@@ -25,5 +25,10 @@ namespace LiveHTS.Core.Model.Survey
         {
             Id = LiveGuid.NewGuid();
         }
+
+        public override string ToString()
+        {
+            return $"{ConditionId},{RefQuestionId}{ResponseType}{Response}{ActionId}";
+        }
     }
 }

@@ -92,5 +92,56 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
             }
 
         }
+        [TestMethod]
+        public void should_Get_Question_with_Metadata_ReValidations()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasReValidations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
+            {
+                Console.WriteLine(question);
+                foreach (var validation in question.ReValidations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
+            }
+
+        }
+        [TestMethod]
+        public void should_Get_Question_with_Metadata_Transformation()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasTransformations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
+            {
+                Console.WriteLine(question);
+                foreach (var validation in question.Transformations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
+            }
+
+        }
+        [TestMethod]
+        public void should_Get_Question_with_Metadata_RemoteTransformation()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasRemoteTransformations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
+            {
+                Console.WriteLine(question);
+                foreach (var validation in question.RemoteTransformations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
+            }
+
+        }
     }
 }

@@ -44,18 +44,18 @@ namespace LiveHTS.Infrastructure.Tests
 
             #region Question-Meta
             db.CreateTable<QuestionBranch>();
-            //            db.CreateTable<QuestionRemoteTransformation>();
-            //            db.CreateTable<QuestionReValidation>();
-            //            db.CreateTable<QuestionTransformation>();
+            db.CreateTable<QuestionRemoteTransformation>();
+            db.CreateTable<QuestionReValidation>();
+            db.CreateTable<QuestionTransformation>();
             db.CreateTable<QuestionValidation>();
             #endregion
 
 
             #region Delete Question-Meta
             db.DeleteAll<QuestionBranch>();
-            //            db.DeleteAll<QuestionRemoteTransformation>();
-            //            db.DeleteAll<QuestionReValidation>();
-            //            db.DeleteAll<QuestionTransformation>();
+            db.DeleteAll<QuestionRemoteTransformation>();
+            db.DeleteAll<QuestionReValidation>();
+            db.DeleteAll<QuestionTransformation>();
             db.DeleteAll<QuestionValidation>();
             #endregion
 
@@ -115,9 +115,9 @@ namespace LiveHTS.Infrastructure.Tests
 
                 #region Question-Meta
                 db.InsertAll(ReadCsv<QuestionBranch>());
-                //            db.InsertAll(ReadCsv<QuestionRemoteTransformation>());
-                //            db.InsertAll(ReadCsv<QuestionReValidation>());
-                //            db.InsertAll(ReadCsv<QuestionTransformation>());
+                db.InsertAll(ReadCsv<QuestionRemoteTransformation>());
+                db.InsertAll(ReadCsv<QuestionReValidation>());
+                db.InsertAll(ReadCsv<QuestionTransformation>());
                 db.InsertAll(ReadCsv<QuestionValidation>());
                 #endregion
             }

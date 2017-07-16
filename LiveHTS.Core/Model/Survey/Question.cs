@@ -53,12 +53,12 @@ namespace LiveHTS.Core.Model.Survey
             get { return null != Branches && Branches.Count > 0; }
         }
 
-        public bool HasTransform
+        public bool HasTransformations
         {
             get { return null != Transformations && Transformations.Count > 0; }
         }
 
-        public bool HasRemoteTreans
+        public bool HasRemoteTransformations
         {
             get { return null != RemoteTransformations && RemoteTransformations.Count > 0; }
         }
