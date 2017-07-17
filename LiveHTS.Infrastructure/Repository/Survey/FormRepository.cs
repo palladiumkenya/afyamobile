@@ -21,9 +21,12 @@ namespace LiveHTS.Infrastructure.Repository.Survey
         {
             var form= GetAll(x => x.ModuleId == moduleId && x.Id == formId).FirstOrDefault();
 
-            if(null!=form)
+            if (null != form)
             {
-                var questions = _questionRepository.GetWithConcepts(null, form.Id).ToList();
+                var questions = _questionRepository
+                    .GetWithConcepts(null, form.Id)
+                    .OrderBy(x => x.Rank)
+                    .ToList();
                 form.Questions = questions;
             }
             return form;

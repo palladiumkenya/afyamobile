@@ -48,15 +48,23 @@
     <Compile Include="Interfaces\Repository\Survey\IFormRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IQuestionRepository.cs" />
+    <Compile Include="Interfaces\Services\IInterviewService.cs" />
     <Compile Include="LiveSetting.cs" />
     <Compile Include="Model\Config\ConceptType.cs" />
+    <Compile Include="Model\Config\EncounterType.cs" />
     <Compile Include="Model\Config\SubjectAttribute.cs" />
     <Compile Include="Model\Config\Action.cs" />
     <Compile Include="Model\Config\Condition.cs" />
     <Compile Include="Model\Config\Validator.cs" />
     <Compile Include="Model\Config\ValidatorType.cs" />
+    <Compile Include="Model\Config\IdentifierType.cs" />
+    <Compile Include="Model\Interview\Encounter.cs" />
+    <Compile Include="Model\Interview\Manifest.cs" />
+    <Compile Include="Model\Interview\Obs.cs" />
     <Compile Include="Model\Lookup\CategoryItem.cs" />
     <Compile Include="Model\Lookup\Item.cs" />
+    <Compile Include="Model\Person.cs" />
+    <Compile Include="Model\PersonIdentifier.cs" />
     <Compile Include="Model\Survey\QuestionRemoteTransformation.cs" />
     <Compile Include="Model\Survey\QuestionTransformation.cs" />
     <Compile Include="Model\Survey\QuestionBranch.cs" />
@@ -70,7 +78,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaces\Services\" />
     <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
