@@ -2,8 +2,11 @@
 using System.IO;
 using System.Linq;
 using CsvHelper;
+using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Tests.Repository;
 using SQLite;
@@ -35,6 +38,16 @@ namespace LiveHTS.Infrastructure.Tests
             db.CreateTable<Validator>();
             db.CreateTable<ValidatorType>();
             db.CreateTable<ClientAttribute>();
+
+            db.CreateTable<County>();
+            db.CreateTable<SubCounty>();
+            db.CreateTable<EncounterType>();
+            db.CreateTable<IdentifierType>();
+            db.CreateTable<PracticeType>();
+            db.CreateTable<ProviderType>();
+            db.CreateTable<RelationshipType>();
+            db.CreateTable<Device>();
+
             #endregion
 
             #region Question
@@ -50,6 +63,29 @@ namespace LiveHTS.Infrastructure.Tests
             db.CreateTable<QuestionValidation>();
             #endregion
 
+            #region Data
+            db.CreateTable<Person>();
+            db.CreateTable<PersonAddress>();
+            db.CreateTable<PersonContact>();
+            db.CreateTable<Client>();
+            db.CreateTable<ClientIdentifier>();
+            db.CreateTable<User>();
+            db.CreateTable<Provider>();
+            db.CreateTable<Encounter>();
+            db.CreateTable<Obs>();
+            #endregion
+
+            #region Delete Data
+            db.DeleteAll<Obs>();
+            db.DeleteAll<Encounter>();
+            db.DeleteAll<ClientIdentifier>();
+            db.DeleteAll<PersonAddress>();
+            db.DeleteAll<PersonContact>();
+            db.DeleteAll<Client>();
+            db.DeleteAll<User>();
+            db.DeleteAll<Provider>();
+            db.DeleteAll<Person>();
+            #endregion
 
             #region Delete Question-Meta
             db.DeleteAll<QuestionBranch>();
@@ -72,6 +108,14 @@ namespace LiveHTS.Infrastructure.Tests
             db.DeleteAll<Validator>();
             db.DeleteAll<ValidatorType>();
             db.DeleteAll<ClientAttribute>();
+            db.DeleteAll<County>();
+            db.DeleteAll<SubCounty>();
+            db.DeleteAll<EncounterType>();
+            db.DeleteAll<IdentifierType>();
+            db.DeleteAll<PracticeType>();
+            db.DeleteAll<ProviderType>();
+            db.DeleteAll<RelationshipType>();
+            db.DeleteAll<Device>();
             #endregion
 
             #region Delete Lookups
@@ -106,6 +150,14 @@ namespace LiveHTS.Infrastructure.Tests
                 db.InsertAll(ReadCsv<Validator>());
                 db.InsertAll(ReadCsv<ValidatorType>());
                 db.InsertAll(ReadCsv<ClientAttribute>());
+                db.InsertAll(ReadCsv<County>());
+                db.InsertAll(ReadCsv<SubCounty>());
+                db.InsertAll(ReadCsv<EncounterType>());
+                db.InsertAll(ReadCsv<IdentifierType>());
+                db.InsertAll(ReadCsv<PracticeType>());
+                db.InsertAll(ReadCsv<ProviderType>());
+                db.InsertAll(ReadCsv<RelationshipType>());
+                db.InsertAll(ReadCsv<Device>());
                 #endregion
 
                 #region Question

@@ -51,10 +51,10 @@
     <Compile Include="Interfaces\Services\IDirectorService.cs" />
     <Compile Include="Interfaces\Services\IInterviewService.cs" />
     <Compile Include="LiveSetting.cs" />
-    <Compile Include="Model\ClientRelationship.cs" />
-    <Compile Include="Model\Client.cs" />
+    <Compile Include="Model\Subject\ClientRelationship.cs" />
+    <Compile Include="Model\Subject\Client.cs" />
     <Compile Include="Model\Config\ConceptType.cs" />
-    <Compile Include="Model\Config\Device.cs" />
+    <Compile Include="Model\Device.cs" />
     <Compile Include="Model\Config\ProviderType.cs" />
     <Compile Include="Model\Config\RelationshipType.cs" />
     <Compile Include="Model\Config\SubCounty.cs" />
@@ -62,8 +62,8 @@
     <Compile Include="Model\Config\EncounterType.cs" />
     <Compile Include="Model\Interview\Manifest.cs" />
     <Compile Include="Model\Interview\Session.cs" />
-    <Compile Include="Model\PersonContact.cs" />
-    <Compile Include="Model\PersonAddress.cs" />
+    <Compile Include="Model\Subject\PersonContact.cs" />
+    <Compile Include="Model\Subject\PersonAddress.cs" />
     <Compile Include="Model\Practice.cs" />
     <Compile Include="Model\Config\PracticeType.cs" />
     <Compile Include="Model\Config\ClientAttribute.cs" />
@@ -76,9 +76,9 @@
     <Compile Include="Model\Interview\Obs.cs" />
     <Compile Include="Model\Lookup\CategoryItem.cs" />
     <Compile Include="Model\Lookup\Item.cs" />
-    <Compile Include="Model\Person.cs" />
-    <Compile Include="Model\ClientIdentifier.cs" />
-    <Compile Include="Model\Provider.cs" />
+    <Compile Include="Model\Subject\Person.cs" />
+    <Compile Include="Model\Subject\ClientIdentifier.cs" />
+    <Compile Include="Model\Subject\Provider.cs" />
     <Compile Include="Model\Survey\QuestionRemoteTransformation.cs" />
     <Compile Include="Model\Survey\QuestionTransformation.cs" />
     <Compile Include="Model\Survey\QuestionBranch.cs" />
@@ -89,9 +89,10 @@
     <Compile Include="Model\Survey\Form.cs" />
     <Compile Include="Model\Survey\Module.cs" />
     <Compile Include="Model\Survey\Question.cs" />
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Subject\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DirectorService.cs" />
+    <Compile Include="Service\InterviewService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

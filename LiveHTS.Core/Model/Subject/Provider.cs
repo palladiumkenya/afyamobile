@@ -1,8 +1,9 @@
 ﻿using System;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
-namespace LiveHTS.Core.Model
+namespace LiveHTS.Core.Model.Subject
 {
     public class Provider:Entity<Guid>
     {
@@ -13,5 +14,10 @@ namespace LiveHTS.Core.Model
         public Guid PracticeId { get; set; }
         [Indexed]
         public Guid PersonId { get; set; }
+
+        public Provider()
+        {
+            Id = LiveGuid.NewGuid();
+        }
     }
 }

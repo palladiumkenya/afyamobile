@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
+using SQLite;
 
-namespace LiveHTS.Core.Model
+namespace LiveHTS.Core.Model.Subject
 {
     public class Person:Entity<Guid>
     {
@@ -14,7 +15,14 @@ namespace LiveHTS.Core.Model
         public virtual DateTime? BirthDate { get; set; }
         public virtual bool? BirthDateEstimated { get; set; }
         public virtual string Email { get; set; }
-        public virtual IEnumerable<PersonAddress> Addresses { get; set; }
-        public virtual IEnumerable<PersonContact> Contacts { get; set; }
+        [Ignore]
+        public virtual IEnumerable<PersonAddress> Addresses { get; set; }=new List<PersonAddress>();
+        [Ignore]
+        public virtual IEnumerable<PersonContact> Contacts { get; set; }=new List<PersonContact>();
+
+        public Person()
+        {
+            Id = LiveGuid.NewGuid();
+        }
     }
 }

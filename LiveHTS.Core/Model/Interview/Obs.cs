@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
+using SQLite;
 
 namespace LiveHTS.Core.Model.Interview
 {
@@ -13,6 +15,12 @@ namespace LiveHTS.Core.Model.Interview
         public Guid? ValueCoded { get; set; }
         public string ValueMultiCoded { get; set; }
         public DateTime? ValueDateTime { get; set; }
-        public Guid EncounterId { get; set; }       
+        [Indexed]
+        public Guid EncounterId { get; set; }
+
+        public Obs()
+        {
+            Id = LiveGuid.NewGuid();
+        }
     }
 }

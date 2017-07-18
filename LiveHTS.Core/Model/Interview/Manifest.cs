@@ -7,6 +7,6 @@ namespace LiveHTS.Core.Model.Interview
     public class Manifest
     {
         public List<Question> QuestionStore { get; set; }
-        public List<Session> SessionStore { get; set; }
+        public List<LiveSession> SessionStore { get; set; }
     }
 }

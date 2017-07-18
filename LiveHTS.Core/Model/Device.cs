@@ -1,7 +1,7 @@
 ﻿using System;
 using LiveHTS.SharedKernel.Model;
 
-namespace LiveHTS.Core.Model.Config
+namespace LiveHTS.Core.Model
 {
     public class Device:Entity<Guid>
     {
