@@ -14,7 +14,8 @@ namespace LiveHTS.Core.Model.Subject
         public Guid PracticeId { get; set; }
         [Indexed]
         public Guid PersonId { get; set; }
-
+        [Ignore]
+        public Person Person { get; set; }
         public Provider()
         {
             Id = LiveGuid.NewGuid();

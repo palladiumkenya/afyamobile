@@ -172,6 +172,25 @@ namespace LiveHTS.Infrastructure.Tests
                 db.InsertAll(ReadCsv<QuestionTransformation>());
                 db.InsertAll(ReadCsv<QuestionValidation>());
                 #endregion
+
+                var clients = TestDataHelpers.GetTestClients(2);
+                var users = TestDataHelpers.GetTestUsers(1);
+                var providers = TestDataHelpers.GetTestProviders(1);
+
+                var peoples = clients.Select(x => x.Person).ToList();
+                peoples.AddRange(users.Select(x=>x.Person));
+                peoples.AddRange(providers.Select(x => x.Person));
+
+                #region Data
+                db.InsertAll(peoples);
+                db.InsertAll(clients);
+                db.InsertAll(users);
+                db.InsertAll(providers);
+                var encounters = TestDataHelpers.GetTestEncounters(2, clients, users, providers);
+                var obs = encounters.SelectMany(x => x.Obses).ToList();
+                db.InsertAll(encounters);
+                db.InsertAll(obs);
+                #endregion
             }
             return db;
         }

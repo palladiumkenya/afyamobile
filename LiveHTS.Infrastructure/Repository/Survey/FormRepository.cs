@@ -17,9 +17,9 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             _questionRepository = questionRepository;
         }
         
-        public Form GetWithQuestions(Guid moduleId, Guid formId)
+        public Form GetWithQuestions(Guid formId)
         {
-            var form= GetAll(x => x.ModuleId == moduleId && x.Id == formId).FirstOrDefault();
+            var form= GetAll(x => x.Id == formId).FirstOrDefault();
 
             if (null != form)
             {

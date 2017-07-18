@@ -1,4 +1,6 @@
-﻿using LiveHTS.Core.Interfaces.Services;
+﻿using System;
+using LiveHTS.Core.Interfaces.Repository.Survey;
+using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 
@@ -6,6 +8,8 @@ namespace LiveHTS.Core.Service
 {
     public class DirectorService:IDirectorService
     {
+        private readonly IFormRepository _formRepository;
+
         private readonly Manifest _manifest;
 
         public Manifest Manifest
@@ -13,7 +17,7 @@ namespace LiveHTS.Core.Service
             get { return _manifest; }
         }
 
-        public void RefreshManifest()
+        public void RefreshManifest(Guid formId, Guid encounterTypeId, Guid clientId)
         {
             throw new System.NotImplementedException();
         }

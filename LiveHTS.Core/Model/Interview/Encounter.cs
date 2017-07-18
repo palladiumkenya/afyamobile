@@ -24,8 +24,9 @@ namespace LiveHTS.Core.Model.Interview
         
         public DateTime? Started { get; set; }
         public DateTime? Stopped { get; set; }
+
         [Ignore]
-        public IEnumerable<Obs> Obses { get; set; }
+        public IEnumerable<Obs> Obses { get; set; } = new List<Obs>();
         [Indexed]
         public Guid UserId { get; set; }
 

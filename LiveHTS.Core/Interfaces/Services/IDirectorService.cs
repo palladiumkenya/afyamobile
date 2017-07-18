@@ -1,4 +1,5 @@
-﻿using LiveHTS.Core.Model.Interview;
+﻿using System;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 
 namespace LiveHTS.Core.Interfaces.Services
@@ -6,7 +7,7 @@ namespace LiveHTS.Core.Interfaces.Services
     public interface IDirectorService
     {
         Manifest Manifest { get; }
-        void RefreshManifest();
+        void RefreshManifest(Guid formId, Guid encounterTypeId,Guid clientId );
         Question GetLiveQuestion();
     }
 }
