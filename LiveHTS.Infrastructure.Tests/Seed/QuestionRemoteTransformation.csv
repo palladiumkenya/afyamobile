@@ -1,4 +1,4 @@
-Id|QuestionId|ConditionId|SubjectAttributeId|RemoteQuestionId|SelfQuestionId|ResponseType|Response|ResponseComplex|Group|ActionId|Content|AltContent|Voided
+Id|QuestionId|ConditionId|ClientAttributeId|RemoteQuestionId|SelfQuestionId|ResponseType|Response|ResponseComplex|Group|ActionId|Content|AltContent|Voided
 9f6e1b46-67a9-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner|6206aa78-6260-11e7-907b-a6006ad3dba0||!=|00c2ad58-6246-11e7-907b-a6006ad3dba0||1||||0
 9f6e1c72-67a9-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner||6206aa78-6260-11e7-907b-a6006ad3dba0|!=|00c2ad58-6246-11e7-907b-a6006ad3dba0||1||||0
 9f6e1d4e-67a9-11e7-907b-a6006ad3dba0|6206acf8-6260-11e7-907b-a6006ad3dba0|Pre|Partner|6206aa78-6260-11e7-907b-a6006ad3dba0||=|00c2abb4-6246-11e7-907b-a6006ad3dba0||2||||0

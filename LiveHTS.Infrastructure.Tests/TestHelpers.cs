@@ -34,7 +34,7 @@ namespace LiveHTS.Infrastructure.Tests
             db.CreateTable<ConceptType>();
             db.CreateTable<Validator>();
             db.CreateTable<ValidatorType>();
-            db.CreateTable<SubjectAttribute>();
+            db.CreateTable<ClientAttribute>();
             #endregion
 
             #region Question
@@ -71,7 +71,7 @@ namespace LiveHTS.Infrastructure.Tests
             db.DeleteAll<ConceptType>();
             db.DeleteAll<Validator>();
             db.DeleteAll<ValidatorType>();
-            db.DeleteAll<SubjectAttribute>();
+            db.DeleteAll<ClientAttribute>();
             #endregion
 
             #region Delete Lookups
@@ -105,7 +105,7 @@ namespace LiveHTS.Infrastructure.Tests
                 db.InsertAll(ReadCsv<ConceptType>());
                 db.InsertAll(ReadCsv<Validator>());
                 db.InsertAll(ReadCsv<ValidatorType>());
-                db.InsertAll(ReadCsv<SubjectAttribute>());
+                db.InsertAll(ReadCsv<ClientAttribute>());
                 #endregion
 
                 #region Question

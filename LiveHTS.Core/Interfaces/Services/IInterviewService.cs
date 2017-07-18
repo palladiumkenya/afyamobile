@@ -7,7 +7,10 @@ namespace LiveHTS.Core.Interfaces.Services
 {
     public interface IInterviewService
     {
-        IEnumerable<Question> Questions { get; set; }
-        IEnumerable<Question> Manifest { get; set; }
+        void StartOrResume();
+        void MoveNext();
+        void MovePrevious();
+        void Stop();
+        void Discard();
     }
 }

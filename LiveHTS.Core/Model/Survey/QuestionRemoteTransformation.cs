@@ -10,7 +10,7 @@ namespace LiveHTS.Core.Model.Survey
         [Indexed]
         public string ConditionId { get; set; }
         [Indexed]
-        public string SubjectAttributeId { get; set; }
+        public string ClientAttributeId { get; set; }
         [Indexed]
         public Guid? RemoteQuestionId { get; set; }
         [Indexed]
@@ -33,7 +33,7 @@ namespace LiveHTS.Core.Model.Survey
 
         public override string ToString()
         {
-            return $"{ConditionId} {SubjectAttributeId} {ActionId}";
+            return $"{ConditionId} {ClientAttributeId} {ActionId}";
         }
     }
 }
