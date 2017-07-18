@@ -8,11 +8,9 @@ using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
-using LiveHTS.Infrastructure.Tests.Repository;
 using SQLite;
 
-
-namespace LiveHTS.Infrastructure.Tests
+namespace LiveHTS.Core.Tests
 {
     public class TestHelpers
     {
@@ -214,19 +212,6 @@ namespace LiveHTS.Infrastructure.Tests
             }
             return records;
         }
-        public static SQLiteConnection GetTestDatabase(bool withData = true)
-        {
-            var db = new SQLiteConnection("test.db",false);
-            db.CreateTable<TestCar>();
-            db.CreateTable<TestModel>();
-            db.DeleteAll<TestModel>();
-            db.DeleteAll<TestCar>();
-            if (withData)
-            {
-                db.InsertAll(ReadCsv<TestCar>());
-                db.InsertAll(ReadCsv<TestModel>());
-            }
-            return db;
-        }
+       
     }
 }

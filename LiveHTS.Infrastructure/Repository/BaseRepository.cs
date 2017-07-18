@@ -17,7 +17,8 @@ namespace LiveHTS.Infrastructure.Repository
         protected BaseRepository(ILiveSetting liveSetting)
         {
             _liveSetting = liveSetting;
-            _db = new SQLiteConnection(_liveSetting.DatasePath);
+            _db = new SQLiteConnection(_liveSetting.DatasePath,false);
+            
             _db.CreateTable<T>();
         }
 

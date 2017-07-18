@@ -31,14 +31,14 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         {
             var encounter = _encounterRepository.GetActiveEncounter(TestDataHelpers._formId, TestDataHelpers._encounterTypeId, TestDataHelpers._clients.First().Id);
             Assert.IsNotNull(encounter);
-//            Assert.AreEqual(_module.Id,form.ModuleId);
-//            Assert.IsTrue(form.Questions.Count>0);
-//            Console.WriteLine($"{form}");
-//            foreach (var question in form.Questions)
-//            {
-//                Assert.IsNotNull(question.Concept);
-//                Console.WriteLine($"   {question} [{question.Concept}]");
-//            }
+            Console.WriteLine(encounter);
+            Assert.IsTrue(encounter.Obses.ToList().Count>0);
+
+            foreach (var obs in encounter.Obses)
+            {
+                Assert.AreEqual(obs.EncounterId,encounter.Id);
+                Console.WriteLine($"   {obs}");
+            }
         }
     }
 }

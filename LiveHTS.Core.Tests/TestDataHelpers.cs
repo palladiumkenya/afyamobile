@@ -1,22 +1,11 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using CsvHelper;
 using FizzWare.NBuilder;
-using LiveHTS.Core.Model;
-using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
-using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
-using LiveHTS.Core.Model.Survey;
-using LiveHTS.Infrastructure.Tests.Repository;
-using NUnit.Framework.Interfaces;
-using SQLite;
 
-
-namespace LiveHTS.Infrastructure.Tests
+namespace LiveHTS.Core.Tests
 {
     public class TestDataHelpers
     {

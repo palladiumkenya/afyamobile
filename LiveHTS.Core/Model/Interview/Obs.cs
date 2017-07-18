@@ -22,5 +22,10 @@ namespace LiveHTS.Core.Model.Interview
         {
             Id = LiveGuid.NewGuid();
         }
+
+        public override string ToString()
+        {
+            return $"{QuestionId} |{ObsDate:T}|";
+        }
     }
 }

@@ -9,17 +9,28 @@ namespace LiveHTS.Core.Service
     public class DirectorService:IDirectorService
     {
         private readonly IFormRepository _formRepository;
+        private readonly IEncounterRepository _encounterRepository;
 
-        private readonly Manifest _manifest;
+        private  Manifest _manifest;
 
         public Manifest Manifest
         {
             get { return _manifest; }
         }
 
+        public DirectorService(IFormRepository formRepository, IEncounterRepository encounterRepository)
+        {
+            _formRepository = formRepository;
+            _encounterRepository = encounterRepository;
+        }
+
         public void RefreshManifest(Guid formId, Guid encounterTypeId, Guid clientId)
         {
-            throw new System.NotImplementedException();
+            var questions = _formRepository.GetWithQuestions(formId);
+
+            var obs = _encounterRepository.GetActiveEncounter(formId, encounterTypeId, clientId);
+
+            _manifest = Manifest.Create(questions, obs);
         }
 
         public Question GetLiveQuestion()
