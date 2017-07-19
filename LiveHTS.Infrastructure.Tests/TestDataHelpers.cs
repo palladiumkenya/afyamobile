@@ -36,6 +36,9 @@ namespace LiveHTS.Infrastructure.Tests
             new Guid("6206ac1c-6260-11e7-907b-a6006ad3dba0")
         };
         public static List<Client> _clients;
+        public static List<Provider> _providers;
+        public static List<Encounter> Encounters;
+
         public static List<Client> GetTestClients(int count)
         {
             var clients=new List<Client>();
@@ -115,6 +118,7 @@ namespace LiveHTS.Infrastructure.Tests
                 client.Person = p;
                 providers.Add(client);
             }
+            _providers = providers;
             return providers;
         }
         public static List<Encounter> GetTestEncounters(int count, List<Client> clients,List<User> users,List<Provider> providers)
@@ -150,7 +154,7 @@ namespace LiveHTS.Infrastructure.Tests
 
                 e.Obses = obs;
             }
-          
+            Encounters = encounters;
             return encounters;
         }
     }

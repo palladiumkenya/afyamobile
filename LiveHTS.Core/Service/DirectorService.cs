@@ -24,13 +24,37 @@ namespace LiveHTS.Core.Service
             _encounterRepository = encounterRepository;
         }
 
-        public void RefreshManifest(Guid formId, Guid encounterTypeId, Guid clientId)
+        public void RefreshManifest(Guid formId, Guid encounterTypeId, Guid clientId, Guid practiceId)
         {
             var questions = _formRepository.GetWithQuestions(formId);
 
-            var obs = _encounterRepository.GetActiveEncounter(formId, encounterTypeId, clientId);
+            var encounter = _encounterRepository.GetActiveEncounter(formId, encounterTypeId, clientId, practiceId);
 
-            _manifest = Manifest.Create(questions, obs);
+            _manifest = Manifest.Create(questions, encounter,formId,encounterTypeId,clientId, practiceId);
+        }
+
+        public Encounter StartEncounter(Guid practiceId, Guid deviceId, Guid providerId, Guid userId)
+        {
+            Encounter encounter = null;
+
+            var existingEncounter = _manifest.GetEncounter();
+            if (null != existingEncounter)
+            {
+                encounter = _encounterRepository.GetWithObs(existingEncounter.Id);
+            }
+            else
+            {
+                var newEncounter = Encounter.CreateNew(_manifest.ClientId, _manifest.FormId, _manifest.EncounterTypeId,
+                    practiceId, deviceId, providerId, userId);
+
+                _encounterRepository.Save(newEncounter);
+
+                encounter= _encounterRepository.GetWithObs(newEncounter.Id);
+            }
+
+            _manifest.UpdateEncounter(encounter);
+
+            return encounter;
         }
 
         public Question GetLiveQuestion()
