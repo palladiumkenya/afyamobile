@@ -28,12 +28,13 @@ namespace LiveHTS.Core.Service
         public void Initialize()
         {
             var form= _formRepository.GetWithQuestions(_encounter.FormId);
-
+            _manifest = Manifest.Create(form, _encounter);
         }
 
         public void UpdateManifest()
         {
-            
+            _encounter = _encounterRepository.Get(_encounter.Id);
+            _manifest.UpdateEncounter(_encounter);
         }
 
         public Question GetLiveQuestion()

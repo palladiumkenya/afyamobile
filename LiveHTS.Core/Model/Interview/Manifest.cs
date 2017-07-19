@@ -45,6 +45,7 @@ namespace LiveHTS.Core.Model.Interview
         {
             Encounter = encounter;
             ResponseStore = ReadResponses(Encounter);
+
         }
 
         private static List<Response> ReadResponses(Encounter encounter)
@@ -68,7 +69,7 @@ namespace LiveHTS.Core.Model.Interview
         public override string ToString()
         {
             var stats = $"{ResponseStore.Count}/{QuestionStore.Count}";
-            var summary = Encounter.IsComplete ? " Completed" : "Open";
+            var summary = Encounter.IsComplete ? " Completed" : " Open";
             return $" Status:{stats} ,{summary}";
         }
     }

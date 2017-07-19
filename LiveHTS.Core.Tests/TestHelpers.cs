@@ -214,17 +214,34 @@ namespace LiveHTS.Core.Tests
             return records;
         }
 
-        public Form CreateTestFormWithQuestions(int count)
+        public static Form CreateTestFormWithQuestions(int questionCount)
         {
             var form = Builder<Form>.CreateNew().Build();
-            var qs = Builder<Question>.CreateListOfSize(count).All().With(x => x.FormId == form.Id).Build().ToList();
+            var qs = Builder<Question>.CreateListOfSize(questionCount).All().With(x => x.FormId == form.Id).Build().ToList();
+            form.Questions = qs;
             return form;
         }
-        public List<Encounter> CreateTestEncounters(Form form)
+        public static Encounter CreateTestEncountersWithObs(Form form)
         {
-            var encounters = Builder<Encounter>.CreateListOfSize(form.Questions.Count).Build().ToList();
+            var encounter = Builder<Encounter>.CreateNew()
+                .With(x=>x.FormId=form.Id)
+                .With(x => x.IsComplete = true)
+                .Build();
 
-            return encounters;
+            var obs = Builder<Obs>.CreateListOfSize(form.Questions.Count).All().With(x => x.EncounterId = encounter.Id)
+                .Build().ToList();
+            var questions = form.Questions;
+            for (int i = 0; i < questions.Count; i++)
+            {
+                obs[i].QuestionId = questions[0].Id;
+            }
+            encounter.Obses = obs;
+            return encounter;
+        }
+        public static Encounter CreateTestEncounters(Form form)
+        {
+            var encounter = Builder<Encounter>.CreateNew().With(x => x.FormId = form.Id).Build();
+            return encounter;
         }
     }
 }
