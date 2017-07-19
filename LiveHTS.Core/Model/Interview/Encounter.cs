@@ -41,13 +41,11 @@ namespace LiveHTS.Core.Model.Interview
             get { return Obses.Any(); }
         }
 
-
         public Encounter()
         {
             Status = "Created";
             Id = LiveGuid.NewGuid();
         }
-
         public Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId):this()
         {
             FormId = formId;
@@ -56,31 +54,9 @@ namespace LiveHTS.Core.Model.Interview
             ProviderId = providerId;
             UserId = userId;
         }
-
-        private Encounter(Guid clientId, Guid formId, Guid encounterTypeId, Guid practiceId, Guid deviceId,Guid providerId, Guid userId) :this()
-        {
-            ClientId = clientId;
-            FormId = formId;
-            EncounterTypeId = encounterTypeId;
-            Started = EncounterDate = DateTime.Now;
-            DeviceId = deviceId;
-            ProviderId = providerId;
-            PracticeId = practiceId;
-            UserId = userId;
-        }
         public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
         {
             var encounter = new Encounter(clientId, formId, encounterTypeId, providerId, userId);
-            return encounter;
-        }
-        public static Encounter CreateNew(Manifest manifest, Guid practiceId, Guid deviceId, Guid providerId, Guid userId)
-        {
-            return CreateNew(manifest.ClientId, manifest.FormId, manifest.EncounterTypeId, practiceId, deviceId, providerId, userId);
-        }
-        
-        public static Encounter CreateNew(Guid clientId, Guid formId, Guid encounterTypeId, Guid practiceId, Guid deviceId, Guid providerId, Guid userId)
-        {
-            var encounter=new Encounter(clientId,formId,encounterTypeId,practiceId,deviceId,providerId,userId);
             return encounter;
         }
         public override string ToString()
