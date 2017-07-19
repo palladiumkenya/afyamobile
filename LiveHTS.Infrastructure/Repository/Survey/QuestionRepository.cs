@@ -71,7 +71,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
         public IEnumerable<Question> GetWithMetadata(Guid? questionId = null, Guid? formId = null)
         {
-            var questions = GetQuestions(questionId, formId);
+            var questions = GetWithConcepts(questionId, formId).ToList();
 
             foreach (var question in questions)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -28,6 +29,16 @@ namespace LiveHTS.Core.Model.Survey
         public override string ToString()
         {
             return $"{ConditionId},{ResponseType}{Response}>>{GotoQuestionId}";
+        }
+
+        public Guid? Evaluate(Obs lastResonseObs)
+        {
+            if (ResponseType == "=")
+            {
+                
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

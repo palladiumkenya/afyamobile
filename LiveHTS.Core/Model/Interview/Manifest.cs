@@ -66,6 +66,15 @@ namespace LiveHTS.Core.Model.Interview
             return answeredQuestions;
         }
 
+        public Question GetFirstQuestion()
+        {
+            return QuestionStore.OrderBy(x => x.Ordinal).FirstOrDefault();
+        }
+        public Response GetLastResponse()
+        {
+            return ResponseStore.OrderByDescending(x => x.Question.Ordinal).FirstOrDefault();
+        }
+
         public override string ToString()
         {
             var stats = $"{ResponseStore.Count}/{QuestionStore.Count}";

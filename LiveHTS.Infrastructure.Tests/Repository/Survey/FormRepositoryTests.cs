@@ -35,7 +35,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         [TestMethod]
         public void should_Get_Form_With_Questions()
         {
-            var form = _formRepository.GetWithQuestions(_labForm.Id);
+            var form = _formRepository.GetWithQuestions(_labForm.Id,true);
             Assert.IsNotNull(form);
             Assert.AreEqual(_module.Id,form.ModuleId);
             Assert.IsTrue(form.Questions.Count>0);
@@ -43,7 +43,9 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
             foreach (var question in form.Questions)
             {
                 Assert.IsNotNull(question.Concept);
-                Console.WriteLine($"   {question} [{question.Concept}]");
+                if (question.HasValidations)
+                    Assert.IsTrue(question.Validations.Count > 0);
+                Console.WriteLine($"   {question} [{question.Concept}] validations[{question.Validations.Count}]");
             }
         }
     }

@@ -52,6 +52,7 @@
     <Compile Include="Interfaces\Services\IDirectorService.cs" />
     <Compile Include="Interfaces\Services\IInterviewService.cs" />
     <Compile Include="LiveSetting.cs" />
+    <Compile Include="Model\Interview\ObsValue.cs" />
     <Compile Include="Model\Subject\ClientRelationship.cs" />
     <Compile Include="Model\Subject\Client.cs" />
     <Compile Include="Model\Config\ConceptType.cs" />

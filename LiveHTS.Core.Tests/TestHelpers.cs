@@ -17,6 +17,7 @@ namespace LiveHTS.Core.Tests
     {
         public static SQLiteConnection GetDatabase(bool withData = true)
         {
+            
             var db = new SQLiteConnection("livehts.db",false);
 
             #region Module

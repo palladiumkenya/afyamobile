@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Model.Interview;
@@ -27,7 +28,7 @@ namespace LiveHTS.Core.Service
 
         public void Initialize()
         {
-            var form= _formRepository.GetWithQuestions(_encounter.FormId);
+            var form= _formRepository.GetWithQuestions(_encounter.FormId,true);
             _manifest = Manifest.Create(form, _encounter);
         }
 
@@ -39,7 +40,37 @@ namespace LiveHTS.Core.Service
 
         public Question GetLiveQuestion()
         {
-            throw new NotImplementedException();
+            Question question = null;
+
+            if( !_manifest.HasQuestions())
+                throw new ArgumentException("No Questions Found");
+
+            //Get FIRST Question
+            if (!_manifest.HasResponses())
+                question = _manifest.GetFirstQuestion();
+                
+
+            //GetLastResponse
+            var lastResonse = _manifest.GetLastResponse();
+
+            //Check Branch Directions
+            if (lastResonse.Question.HasBranches)
+            {
+                //Post
+                var postBranches =lastResonse.Question.Branches.Where(x => x.ConditionId.ToLower() == "Post".ToLower()).ToList();
+                if (postBranches.Count > 0)
+                {
+                    foreach (var questionBranch in postBranches)
+                    {
+                        var nextQuestionId = questionBranch.Evaluate(lastResonse.Obs);
+
+                    }
+                }
+            }
+
+
+
+            return question;
         }
     }
 }

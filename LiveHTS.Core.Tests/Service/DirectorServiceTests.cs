@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Survey;
@@ -16,7 +17,7 @@ namespace LiveHTS.Core.Tests.Service
         private DirectorService _directorService;
         private ILiveSetting _liveSetting;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
-        private Encounter _encounter;
+        private Encounter _encounter, _encounterNoObs;
         private IFormRepository _formRepository;
         private IEncounterRepository _encounterRepository;
 
@@ -24,7 +25,11 @@ namespace LiveHTS.Core.Tests.Service
         public void SetUp()
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
+            _formRepository=new FormRepository(_liveSetting,new QuestionRepository(_liveSetting,new ConceptRepository(_liveSetting,new CategoryRepository(_liveSetting))));
+            _encounterRepository=new EncounterRepository(_liveSetting);
             _encounter = TestDataHelpers.Encounters.First();
+            _encounterNoObs = _encounter;
+            _encounterNoObs.Obses = new List<Obs>();
             _directorService = new DirectorService(_formRepository,_encounterRepository,_encounter);
         }
         [TestMethod]
@@ -39,9 +44,15 @@ namespace LiveHTS.Core.Tests.Service
         [TestMethod]
         public void should_Refresh_Manifest()
         {
-            _directorService.UpdateManifest();
-            var manifest=_directorService.Manifest;
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterNoObs);
+            _directorService.Initialize();
+            var manifest = _directorService.Manifest;
             Assert.IsNotNull(manifest);
+            Assert.IsFalse(manifest.HasResponses());
+
+            _directorService.UpdateManifest();
+            manifest = _directorService.Manifest;
+            Assert.IsTrue(manifest.HasResponses());
             Console.WriteLine(manifest);
         }
 

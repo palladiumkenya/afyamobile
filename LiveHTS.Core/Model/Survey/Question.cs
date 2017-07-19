@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -40,28 +41,29 @@ namespace LiveHTS.Core.Model.Survey
         [Ignore]
         public bool HasValidations
         {
-            get { return null != Validations && Validations.Count > 0; }
+            get { return null != Validations && Validations.Any(); }
         }
-
+        [Ignore]
         public bool HasReValidations
         {
-            get { return null != ReValidations && ReValidations.Count > 0; }
+            get { return null != ReValidations && ReValidations.Any(); }
         }
-
+        [Ignore]
         public bool HasBranches
         {
-            get { return null != Branches && Branches.Count > 0; }
+            get { return null != Branches && Branches.Any(); }
         }
-
+        [Ignore]
         public bool HasTransformations
         {
-            get { return null != Transformations && Transformations.Count > 0; }
+            get { return null != Transformations && Transformations.Any(); }
         }
-
+        [Ignore]
         public bool HasRemoteTransformations
         {
-            get { return null != RemoteTransformations && RemoteTransformations.Count > 0; }
+            get { return null != RemoteTransformations && RemoteTransformations.Any(); }
         }
+
 
         public Question()
         {
