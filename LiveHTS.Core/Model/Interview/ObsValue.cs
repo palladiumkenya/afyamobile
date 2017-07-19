@@ -7,9 +7,9 @@ namespace LiveHTS.Core.Model.Interview
         public Type Type { get; set; }
         public object Value { get; set; }
 
-        public ObsValue(Type type, object value)
+        public ObsValue(object value)
         {
-            Type = type;
+            Type = value.GetType();
             Value = value;
         }
     }

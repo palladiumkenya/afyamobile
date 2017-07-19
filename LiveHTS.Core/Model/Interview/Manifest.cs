@@ -81,5 +81,10 @@ namespace LiveHTS.Core.Model.Interview
             var summary = Encounter.IsComplete ? " Completed" : " Open";
             return $" Status:{stats} ,{summary}";
         }
+
+        public Question GetQuestion(Guid value)
+        {
+            return QuestionStore.FirstOrDefault(x => x.Id == value);
+        }
     }
 }

@@ -4,6 +4,7 @@ using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service
 {
@@ -43,12 +44,11 @@ namespace LiveHTS.Core.Service
             Question question = null;
 
             if( !_manifest.HasQuestions())
-                throw new ArgumentException("No Questions Found");
+                throw new ArgumentException("No Fields in Form");
 
             //Get FIRST Question
             if (!_manifest.HasResponses())
-                question = _manifest.GetFirstQuestion();
-                
+                return _manifest.GetFirstQuestion();
 
             //GetLastResponse
             var lastResonse = _manifest.GetLastResponse();
@@ -62,14 +62,15 @@ namespace LiveHTS.Core.Service
                 {
                     foreach (var questionBranch in postBranches)
                     {
-                        var nextQuestionId = questionBranch.Evaluate(lastResonse.Obs);
-
+                        var nextQuestionId = questionBranch.Evaluate(lastResonse.GetValue());
+                        if (!nextQuestionId.IsNullOrEmpty())
+                        {
+                            question = _manifest.GetQuestion(nextQuestionId.Value);
+                            break;
+                        }                            
                     }
                 }
             }
-
-
-
             return question;
         }
     }

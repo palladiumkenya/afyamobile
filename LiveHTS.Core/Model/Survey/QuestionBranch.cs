@@ -31,14 +31,15 @@ namespace LiveHTS.Core.Model.Survey
             return $"{ConditionId},{ResponseType}{Response}>>{GotoQuestionId}";
         }
 
-        public Guid? Evaluate(Obs lastResonseObs)
-        {
-            if (ResponseType == "=")
-            {
-                
-            }
 
-            throw new NotImplementedException();
+        public Guid? Evaluate(ObsValue getValue)
+        {
+            if (ResponseType.Equals("="))
+            {
+                var response = Convert.ChangeType(Response, Nullable.GetUnderlyingType(getValue.Type) ?? getValue.Type);
+                return response.Equals(getValue.Value) ? GotoQuestionId : null;
+            }
+            return null;
         }
     }
 }

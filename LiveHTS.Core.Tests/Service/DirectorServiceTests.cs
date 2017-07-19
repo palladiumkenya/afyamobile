@@ -17,7 +17,7 @@ namespace LiveHTS.Core.Tests.Service
         private DirectorService _directorService;
         private ILiveSetting _liveSetting;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
-        private Encounter _encounter, _encounterNoObs;
+        private Encounter _encounter, _encounterNoObs, _encounterIncompleteObs;
         private IFormRepository _formRepository;
         private IEncounterRepository _encounterRepository;
 
@@ -29,6 +29,8 @@ namespace LiveHTS.Core.Tests.Service
             _encounterRepository=new EncounterRepository(_liveSetting);
             _encounter = TestDataHelpers.Encounters.First();
             _encounterNoObs = _encounter;
+            _encounterIncompleteObs = _encounter;
+            _encounterIncompleteObs.Obses = _encounter.Obses.Take(2).ToList();
             _encounterNoObs.Obses = new List<Obs>();
             _directorService = new DirectorService(_formRepository,_encounterRepository,_encounter);
         }
@@ -57,11 +59,22 @@ namespace LiveHTS.Core.Tests.Service
         }
 
         [TestMethod]
-        public void should_Get_LiveQuestion()
+        public void should_Get_LiveQuestion_First()
         {
-            var q = _directorService.GetLiveQuestion();
-            Assert.IsNotNull(q);
-            Console.WriteLine($"Active:{q}");
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterNoObs);
+            _directorService.Initialize();
+            var liveQuestion = _directorService.GetLiveQuestion();
+            Assert.IsNotNull(liveQuestion);
+            Console.WriteLine($"{liveQuestion}");
+        }
+        [TestMethod]
+        public void should_Get_LiveQuestion_Other()
+        {
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterIncompleteObs);
+            _directorService.Initialize();
+            var liveQuestion = _directorService.GetLiveQuestion();
+            Assert.IsNotNull(liveQuestion);
+            Console.WriteLine($"{liveQuestion}");
         }
     }
 }
