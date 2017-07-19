@@ -7,12 +7,8 @@ namespace LiveHTS.Core.Interfaces.Services
 {
     public interface IInterviewService
     {
-        Manifest Manifest { get; } 
-        Question LiveQuestion { get; }
-
-        void Open(Guid formId, Guid encounterTypeId, Guid clientId, Guid practiceId);
-        void Start(Guid practiceId, Guid deviceId, Guid providerId, Guid userId);
-        void Resume();
-        void Discard();
+        Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId);
+        Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId);
+        Encounter OpenEncounter(Guid encounterId);
     }
 }

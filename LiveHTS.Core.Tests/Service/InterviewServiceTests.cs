@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Service;
@@ -13,51 +15,64 @@ namespace LiveHTS.Core.Tests.Service
     [TestClass]
     public class InterviewServiceTests
     {
-        private IDirectorService _directorService;
-        private IInterviewService _interviewService;
         private ILiveSetting _liveSetting;
+        private IEncounterRepository _encounterRepository;
+        private IInterviewService _interviewService;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
-        private Guid _formId, _encounterTypeId, _clientId, _practiceId, _deviceId, _providerId, _userId;
-        private Encounter _encounter;
+        private Guid _formId, _encounterTypeId, _clientId,_providerId,_userId;
+        private List<Encounter> _encounters;
 
-         [TestInitialize]
+        [TestInitialize]
         public void SetUp()
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
-            _directorService = new DirectorService(
-                new FormRepository(_liveSetting,
-                    new QuestionRepository(_liveSetting,
-                        new ConceptRepository(_liveSetting, new CategoryRepository(_liveSetting)))),
-                new EncounterRepository(_liveSetting));
-            _interviewService=new InterviewService(_directorService);
+            _encounterRepository = new EncounterRepository(_liveSetting);
+
+            _interviewService = new InterviewService(_encounterRepository);
+
             _formId = TestDataHelpers._formId;
             _encounterTypeId = TestDataHelpers._encounterTypeId;
             _clientId = TestDataHelpers._clients.First().Id;
-            _practiceId = TestDataHelpers._formId;
-            _encounter = TestDataHelpers.Encounters.First();
-            _deviceId = TestDataHelpers._deviceId;
             _providerId = TestDataHelpers._providers.First().Id;
             _userId = TestDataHelpers.Users.First().Id;
+            _encounters = TestDataHelpers.Encounters;
         }
 
         [TestMethod]
-        public void should_Open_Interview()
+        public void should_Load_Encounter()
         {
-            _interviewService.Open(_formId,_encounterTypeId,_clientId,_practiceId);
-            var manifest= _interviewService.Manifest;
-            Assert.IsNotNull(manifest);
-            Console.WriteLine(manifest);
+            var encounterNew = _interviewService.LoadEncounter(_formId, _encounterTypeId, Guid.NewGuid());
+            Assert.IsNull(encounterNew);
+
+            var encounter = _interviewService.LoadEncounter(_formId, _encounterTypeId, _clientId);
+            Assert.IsNotNull(encounter);
+            Assert.IsTrue(encounter.HasObs);
+            Assert.IsFalse(encounter.IsComplete);
+            Console.WriteLine(encounter);
         }
 
-
         [TestMethod]
-        public void should_Start_Interview()
+        public void should_Start_Encounter_New()
         {
-            _interviewService.Open(_formId, _encounterTypeId, _clientId, _practiceId);
-            _interviewService.Start(_practiceId, _deviceId,_providerId,_userId);
-            var manifest = _interviewService.Manifest;
-            Assert.IsNotNull(manifest);
-            Console.WriteLine($"{manifest}");
+            var encounter = _interviewService.StartEncounter(_formId, _encounterTypeId, Guid.NewGuid(), _providerId,_userId);
+            Assert.IsNotNull(encounter);
+            Assert.IsFalse(encounter.HasObs);
+            Assert.IsFalse(encounter.IsComplete);
+            Console.WriteLine(encounter);
+        }
+        [TestMethod]
+        public void should_Start_Encounter_Exisitng()
+        {
+            var encounter = _interviewService.StartEncounter(_formId, _encounterTypeId, _clientId, _providerId, _userId);
+            Assert.IsNotNull(encounter);
+            Console.WriteLine(encounter);
+        }
+        [TestMethod]
+        public void should_Open_Encounter_Exisitng()
+        {
+            var encounter = _interviewService.OpenEncounter(_encounters.First().Id);
+            Assert.IsNotNull(encounter);
+            Console.WriteLine(encounter);
         }
     }
 }

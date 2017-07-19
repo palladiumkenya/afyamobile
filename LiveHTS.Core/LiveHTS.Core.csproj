@@ -62,7 +62,7 @@
     <Compile Include="Model\Config\County.cs" />
     <Compile Include="Model\Config\EncounterType.cs" />
     <Compile Include="Model\Interview\Manifest.cs" />
-    <Compile Include="Model\Interview\AnsweredQuestion.cs" />
+    <Compile Include="Model\Interview\Response.cs" />
     <Compile Include="Model\Subject\PersonContact.cs" />
     <Compile Include="Model\Subject\PersonAddress.cs" />
     <Compile Include="Model\Practice.cs" />

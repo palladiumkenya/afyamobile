@@ -21,21 +21,26 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         private IEncounterRepository _encounterRepository;
         private Guid _clientId, _practiceId;
         private List<Encounter> _encounters;
+        private Guid _encounterTypeId;
+        private Guid _formId;
 
         [TestInitialize]
         public void SetUp()
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _encounterRepository = new EncounterRepository(_liveSetting);
-            _clientId = TestDataHelpers._clients.First().Id;
-            _practiceId = TestDataHelpers._practiceId;
+
             _encounters = TestDataHelpers.Encounters;
+            
+            _formId = TestDataHelpers._formId;
+            _encounterTypeId = TestDataHelpers._encounterTypeId;
+            _clientId = TestDataHelpers._clients.First().Id;
         }
 
         [TestMethod]
         public void should_Get_Encounter_With_Obs_by_Id()
         {
-            var encounter = _encounterRepository.GetWithObs(_encounters.First().Id);
+            var encounter = _encounterRepository.Get(_encounters.First().Id);
             Assert.IsNotNull(encounter);
             Console.WriteLine(encounter);
             Assert.IsTrue(encounter.Obses.ToList().Count>0);
@@ -50,7 +55,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         [TestMethod]
         public void should_Get_Encounter_With_Obs_by_ClientForm()
         {
-            var encounter = _encounterRepository.GetWithObs(_encounters.First().FormId, _encounters.First().ClientId).FirstOrDefault();
+            var encounter = _encounterRepository.GetWithObs(_formId,_encounterTypeId,_clientId).FirstOrDefault();
             Assert.IsNotNull(encounter);
             Console.WriteLine(encounter);
             Assert.IsTrue(encounter.Obses.ToList().Count > 0);
@@ -60,27 +65,6 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
                 Assert.AreEqual(obs.EncounterId, encounter.Id);
                 Console.WriteLine($"   {obs}");
             }
-        }
-        [TestMethod]
-        public void should_Get_Active_Encounter()
-        {
-            var encounter = _encounterRepository.GetActiveEncounter(TestDataHelpers._formId, TestDataHelpers._encounterTypeId, _clientId, _practiceId);
-            Assert.IsNotNull(encounter);
-            Console.WriteLine(encounter);
-            Assert.IsTrue(encounter.Obses.ToList().Count > 0);
-
-            foreach (var obs in encounter.Obses)
-            {
-                Assert.AreEqual(obs.EncounterId, encounter.Id);
-                Console.WriteLine($"   {obs}");
-            }
-        }
-
-        [TestMethod]
-        public void should_Get_Active_Encounter_No_Data()
-        {
-            var encounter = _encounterRepository.GetActiveEncounter(TestDataHelpers._formId, Guid.Empty,  _clientId, _practiceId);
-            Assert.IsNull(encounter);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using CsvHelper;
+using FizzWare.NBuilder;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
@@ -212,6 +213,18 @@ namespace LiveHTS.Core.Tests
             }
             return records;
         }
-       
+
+        public Form CreateTestFormWithQuestions(int count)
+        {
+            var form = Builder<Form>.CreateNew().Build();
+            var qs = Builder<Question>.CreateListOfSize(count).All().With(x => x.FormId == form.Id).Build().ToList();
+            return form;
+        }
+        public List<Encounter> CreateTestEncounters(Form form)
+        {
+            var encounters = Builder<Encounter>.CreateListOfSize(form.Questions.Count).Build().ToList();
+
+            return encounters;
+        }
     }
 }

@@ -7,8 +7,8 @@ namespace LiveHTS.Core.Interfaces.Services
     public interface IDirectorService
     {
         Manifest Manifest { get; }
-        void RefreshManifest(Guid formId, Guid encounterTypeId,Guid clientId, Guid practiceId);
-        Encounter StartEncounter(Guid practiceId, Guid deviceId, Guid providerId, Guid userId);
+        void Initialize();
+        void UpdateManifest();
         Question GetLiveQuestion();
     }
 }

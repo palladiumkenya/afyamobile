@@ -24,40 +24,22 @@ namespace LiveHTS.Core.Tests.Model.Interview
         [TestMethod]
         public void should_Create_Manifest()
         {
-            var manifest = Manifest.Create(_form, _encounter,Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() , Guid.NewGuid());
+            var manifest = Manifest.Create(_form, _encounter);
             Assert.IsNotNull(manifest);
-            Assert.IsFalse(manifest.HasQuestionStore());
-            Assert.IsFalse(manifest.HasAnsweredQuestionStore());
+            Assert.IsFalse(manifest.HasQuestions());
+            Assert.IsFalse(manifest.HasResponses());
             Console.WriteLine(manifest);
 
         }
+       
         [TestMethod]
-        public void should_Get_Encounter()
+        public void should_Update_Manifest_Encounters()
         {
-            _encounter.Obses = Builder<Obs>.CreateListOfSize(2)
-                .All()
-                .With(x => x.EncounterId = _encounter.Id)
-                .Build()
-                .ToList();
-            var manifest = Manifest.Create(_form, _encounter, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+            var manifest = Manifest.Create(_form, _encounter);
             Assert.IsNotNull(manifest);
-            var encounter = manifest.GetEncounter();
-            Assert.IsNotNull(encounter);
-            Console.WriteLine($"{manifest} >>> {encounter.Id}");
-            
-            
-        }
-        [TestMethod]
-        public void should_Create_Manifest_No_Data()
-        {
-            var manifest = Manifest.Create(null, null, Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
-            Assert.IsNotNull(manifest);
-            Assert.IsFalse(manifest.HasQuestionStore());
-            Assert.IsFalse(manifest.HasAnsweredQuestionStore());
+            Assert.IsFalse(manifest.HasQuestions());
+            Assert.IsFalse(manifest.HasResponses());
             Console.WriteLine(manifest);
-
-            var encounter = manifest.GetEncounter();
-            Assert.IsNull(encounter);
         }
     }
 }

@@ -12,10 +12,9 @@ namespace LiveHTS.Infrastructure.Repository.Survey
         public EncounterRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
         }
-
-        public Encounter GetWithObs(Guid encounterId)
+        public override Encounter Get(Guid id, bool voided = false)
         {
-            var encounter = Get(encounterId);
+            var encounter = base.Get(id, voided);
             if (null != encounter)
             {
                 var obses = _db.Table<Obs>()
@@ -25,13 +24,13 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             }
             return encounter;
         }
-
-        public IEnumerable<Encounter> GetWithObs(Guid formId, Guid clientId)
+        public IEnumerable<Encounter> GetWithObs(Guid formId, Guid encounterTypeId, Guid clientId)
         {
             var encounters = GetAll(
-                    x => x.FormId == formId &&
-                         x.ClientId == clientId)
-                .ToList();
+                x => x.FormId == formId &&
+                     x.EncounterTypeId == encounterTypeId &&
+                     x.ClientId == clientId)
+                     .ToList();
 
             foreach (var e in encounters)
             {
@@ -45,27 +44,6 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             }
 
             return encounters;
-        }
-
-
-        public Encounter GetActiveEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid practiceId)
-        {
-            var encounters = GetWithObs(formId, clientId)
-                .ToList();
-
-            var encounter = encounters
-                .FirstOrDefault(x => x.EncounterTypeId == encounterTypeId &&
-                                     x.PracticeId == practiceId);
-
-            if (null != encounter)
-            {
-                var obses = _db.Table<Obs>()
-                    .Where(x => x.EncounterId == encounter.Id)
-                    .ToList();
-                encounter.Obses = obses;
-            }
-
-            return encounter;
-        }
+        }       
     }
 }

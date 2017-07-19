@@ -8,76 +8,52 @@ namespace LiveHTS.Core.Model.Interview
 {
     public class Manifest
     {
-        private Guid _formId;
-        private Guid _encounterTypeId;
-        private Guid _clientId;
-        private readonly Guid _practiceId;
-
-        public Guid FormId
-        {
-            get { return _formId; }
-        }
-
-        public Guid EncounterTypeId
-        {
-            get { return _encounterTypeId; }
-        }
-
-        public Guid ClientId
-        {
-            get { return _clientId; }
-        }
-
-        public Guid PracticeId
-        {
-            get { return _practiceId; }
-        }
-
+        public Encounter Encounter { get; set; }
         public List<Question> QuestionStore { get; set; } = new List<Question>();
-        public List<AnsweredQuestion> AnsweredQuestionStore { get; set; } = new List<AnsweredQuestion>();
+        public List<Response> ResponseStore { get; set; } = new List<Response>();
 
-        public bool HasQuestionStore()
+        public bool HasQuestions()
         {
             return null != QuestionStore && QuestionStore.Count > 0;
         }
 
-        public bool HasAnsweredQuestionStore()
+        public bool HasResponses()
         {
-            return null != AnsweredQuestionStore && AnsweredQuestionStore.Count > 0;
+            return null != ResponseStore && ResponseStore.Count > 0;
         }
 
         public Manifest()
         {
         }
 
-        private Manifest(List<Question> questionStore, List<AnsweredQuestion> answeredQuestionStore,  Guid formId, Guid encounterTypeId, Guid clientId, Guid practiceId)
+        private Manifest(List<Question> questions, List<Response> responses, Encounter encounter)
         {
-            QuestionStore = questionStore;
-            AnsweredQuestionStore = answeredQuestionStore;
-            _formId = formId;
-            _encounterTypeId = encounterTypeId;
-            _clientId = clientId;
-            _practiceId = practiceId;
+            QuestionStore = questions;
+            ResponseStore = responses;
+            Encounter = encounter;
         }
 
-        public static Manifest Create(Form form, Encounter encounter, Guid formId, Guid encounterTypeId, Guid clientId, Guid practiceId)
+        public static Manifest Create(Form form,Encounter encounter)
         {
             var formWithQuestions = form ?? new Form();
-            var sessions = Generate(encounter);
-            return new Manifest(formWithQuestions.Questions, sessions, formId, encounterTypeId, clientId,practiceId);
-        }
-        public  void UpdateEncounter(Encounter encounter)
-        {
-            AnsweredQuestionStore = Generate(encounter);
+            var responses = ReadResponses(encounter);
+
+            return new Manifest(formWithQuestions.Questions, responses, encounter);
         }
 
-        private static List<AnsweredQuestion> Generate(Encounter encounter)
+        public  void UpdateEncounter(Encounter encounter)
         {
-            var sessions = new List<AnsweredQuestion>();
+            Encounter = encounter;
+            ResponseStore = ReadResponses(Encounter);
+        }
+
+        private static List<Response> ReadResponses(Encounter encounter)
+        {
+            var answeredQuestions = new List<Response>();
 
             if (null != encounter)
             {
-                sessions = encounter.Obses.Select(x => new AnsweredQuestion
+                answeredQuestions = encounter.Obses.Select(x => new Response
                     {
                         EncounterId = x.EncounterId,
                         ObsId = x.Id,
@@ -86,33 +62,14 @@ namespace LiveHTS.Core.Model.Interview
                     .ToList();
             }
 
-            return sessions;
-        }
-
-        public Encounter GetEncounter()
-        {
-            if (HasAnsweredQuestionStore())
-            {
-                var encounterId = AnsweredQuestionStore.Select(x => x.EncounterId).FirstOrDefault();
-
-                if (encounterId.IsNullOrEmpty())
-                    return null;
-                return new Encounter() {Id = encounterId};
-            }
-
-            return null;
-
-        }
-
-        public bool IsStarted()
-        {
-            return null != GetEncounter();
+            return answeredQuestions;
         }
 
         public override string ToString()
         {
-            return $"Form:{FormId},EncounterType:{EncounterTypeId},Client:{ClientId},Practice:{PracticeId}, Qs:{QuestionStore.Count}| Completed:{AnsweredQuestionStore.Count}";
+            var stats = $"{ResponseStore.Count}/{QuestionStore.Count}";
+            var summary = Encounter.IsComplete ? " Completed" : "Open";
+            return $" Status:{stats} ,{summary}";
         }
-
     }
 }

@@ -127,6 +127,8 @@ namespace LiveHTS.Core.Tests
                 .With(x => x.DeviceId = _deviceId)
                 .With(x => x.PracticeId = _practiceId)
                 .With(x => x.Voided == false)
+                .With(x => x.IsComplete == false)
+                .With(x => x.Status == "Opened")
                 .Build().ToList();
 
             foreach (var e in encounters)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -24,17 +25,37 @@ namespace LiveHTS.Core.Model.Interview
         
         public DateTime? Started { get; set; }
         public DateTime? Stopped { get; set; }
+        
 
         [Ignore]
         public IEnumerable<Obs> Obses { get; set; } = new List<Obs>();
         [Indexed]
         public Guid UserId { get; set; }
+        public bool IsComplete { get; set; }
+        [Ignore]
+        public string Status { get; set; } 
+
+        [Ignore]
+        public bool HasObs
+        {
+            get { return Obses.Any(); }
+        }
+
 
         public Encounter()
         {
+            Status = "Created";
             Id = LiveGuid.NewGuid();
         }
 
+        public Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId):this()
+        {
+            FormId = formId;
+            EncounterTypeId = encounterTypeId;
+            ClientId = clientId;
+            ProviderId = providerId;
+            UserId = userId;
+        }
 
         private Encounter(Guid clientId, Guid formId, Guid encounterTypeId, Guid practiceId, Guid deviceId,Guid providerId, Guid userId) :this()
         {
@@ -47,12 +68,16 @@ namespace LiveHTS.Core.Model.Interview
             PracticeId = practiceId;
             UserId = userId;
         }
-
+        public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
+        {
+            var encounter = new Encounter(clientId, formId, encounterTypeId, providerId, userId);
+            return encounter;
+        }
         public static Encounter CreateNew(Manifest manifest, Guid practiceId, Guid deviceId, Guid providerId, Guid userId)
         {
             return CreateNew(manifest.ClientId, manifest.FormId, manifest.EncounterTypeId, practiceId, deviceId, providerId, userId);
         }
-
+        
         public static Encounter CreateNew(Guid clientId, Guid formId, Guid encounterTypeId, Guid practiceId, Guid deviceId, Guid providerId, Guid userId)
         {
             var encounter=new Encounter(clientId,formId,encounterTypeId,practiceId,deviceId,providerId,userId);
@@ -60,7 +85,7 @@ namespace LiveHTS.Core.Model.Interview
         }
         public override string ToString()
         {
-            return $"{Id} {EncounterDate:F}";
+            return $"{Id} {EncounterDate:F} [{Status}]";
         }
     }
 }

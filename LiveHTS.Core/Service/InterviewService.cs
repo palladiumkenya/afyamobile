@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
@@ -7,48 +9,43 @@ namespace LiveHTS.Core.Service
 {
     public class InterviewService:IInterviewService
     {
-        private readonly IDirectorService _directorService;
-        private  Manifest _manifest;
-        private  Question _liveQuestion;
+        private readonly IEncounterRepository _encounterRepository;
 
-        public Manifest Manifest
+        public InterviewService(IEncounterRepository encounterRepository)
         {
-            get { return _manifest; }
+            _encounterRepository = encounterRepository;
         }
 
-        public Question LiveQuestion
+        public Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId)
         {
-            get { return _liveQuestion; }
+            var encounter=_encounterRepository.GetWithObs(formId, encounterTypeId, clientId).FirstOrDefault();
+
+            return encounter;
         }
 
-        public InterviewService(IDirectorService directorService)
+        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
         {
-            _directorService = directorService;
+            var exisitngEncounter =_encounterRepository.GetAll(x => x.FormId == formId &&
+                                                 x.EncounterTypeId == encounterTypeId &&
+                                                 x.ClientId == clientId)
+                    .FirstOrDefault();
+
+            if (null != exisitngEncounter)
+            {
+                exisitngEncounter.Status = "Opened";
+                return exisitngEncounter;
+            }
+
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId);
+            _encounterRepository.Save(encounter);
+            return encounter;
         }
 
-
-        
-
-        public void Open(Guid formId, Guid encounterTypeId, Guid clientId, Guid practiceId)
+        public Encounter OpenEncounter(Guid encounterId)
         {
-            _directorService.RefreshManifest(formId,encounterTypeId,clientId, practiceId);
-            _manifest = _directorService.Manifest;
-        }
+            var encounter = _encounterRepository.Get(encounterId);
 
-        public void Start(Guid practiceId, Guid deviceId, Guid providerId, Guid userId)
-        {
-            _directorService.StartEncounter(practiceId,deviceId,providerId,userId );
-            _manifest = _directorService.Manifest;
-        }
-
-        public void Resume()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Discard()
-        {
-            throw new System.NotImplementedException();
+            return encounter;
         }
     }
 }
