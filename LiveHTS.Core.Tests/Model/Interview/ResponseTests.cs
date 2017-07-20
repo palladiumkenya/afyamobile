@@ -133,17 +133,6 @@ namespace LiveHTS.Core.Tests.Model.Interview
             Console.WriteLine(obsVal);
             Console.WriteLine(new string('-',30));
             Console.WriteLine(obsValEmpty);
-        }
-
-        [TestMethod]
-        public void should_Convert()
-        {
-            var guid=new Guid(string.Empty);
-
-            Assert.IsNotNull(guid);
-
-        }
-
-        
+        }       
     }
 }

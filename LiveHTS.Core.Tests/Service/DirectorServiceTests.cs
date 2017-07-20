@@ -21,6 +21,7 @@ namespace LiveHTS.Core.Tests.Service
         private Encounter _encounter, _encounterNoObs, _encounterIncompleteObs, _encounterQ1ObsOnly;
         private IFormRepository _formRepository;
         private IEncounterRepository _encounterRepository;
+        private IObsRepository _obsRepository;
 
          [TestInitialize]
         public void SetUp()
@@ -30,7 +31,7 @@ namespace LiveHTS.Core.Tests.Service
             _encounterRepository=new EncounterRepository(_liveSetting);
             _encounter = TestDataHelpers.Encounters.First();
             _encounterNoObs = _encounterIncompleteObs = _encounterQ1ObsOnly = _encounter;
-            _directorService = new DirectorService(_formRepository,_encounterRepository,_encounter);
+            _directorService = new DirectorService(_formRepository,_encounterRepository, _obsRepository,_encounter);
         }
         [TestMethod]
         public void should_Initialize()
@@ -45,7 +46,7 @@ namespace LiveHTS.Core.Tests.Service
         public void should_Refresh_Manifest()
         {
             _encounterNoObs.Obses=new List<Obs>();
-            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterNoObs);
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _obsRepository ,_encounterNoObs);
             _directorService.Initialize();
             var manifest = _directorService.Manifest;
             Assert.IsNotNull(manifest);
@@ -61,7 +62,7 @@ namespace LiveHTS.Core.Tests.Service
         public void should_Get_LiveQuestion_First()
         {
             _encounterNoObs.Obses = new List<Obs>();
-            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterNoObs);
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _obsRepository ,_encounterNoObs);
             _directorService.Initialize();
             var liveQuestion = _directorService.GetLiveQuestion();
             Assert.IsNotNull(liveQuestion);
@@ -73,7 +74,7 @@ namespace LiveHTS.Core.Tests.Service
             _encounterQ1ObsOnly.Obses = _encounter.Obses.Take(1).ToList();
             _encounterQ1ObsOnly.Obses.First().ValueCoded = TestDataHelpers._consentNo;
 
-            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterQ1ObsOnly);
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _obsRepository ,_encounterQ1ObsOnly);
             _directorService.Initialize();
             var liveQuestion = _directorService.GetLiveQuestion();
             Assert.IsNotNull(liveQuestion);
@@ -86,7 +87,7 @@ namespace LiveHTS.Core.Tests.Service
             _encounterQ1ObsOnly.Obses = _encounter.Obses.Take(1).ToList();
             _encounterQ1ObsOnly.Obses.First().ValueCoded = TestDataHelpers._consentYes;
 
-            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterQ1ObsOnly);
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _obsRepository,_encounterQ1ObsOnly);
             _directorService.Initialize();
             var liveQuestion = _directorService.GetLiveQuestion();
             Assert.IsNotNull(liveQuestion);

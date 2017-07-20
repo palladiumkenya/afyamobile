@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Survey;
-using LiveHTS.Core.Interfaces.Services;
+using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
-using LiveHTS.Core.Model.Survey;
 
-namespace LiveHTS.Core.Service
+namespace LiveHTS.Core.Service.Clients
 {
-    public class InterviewService:IInterviewService
+    public class EncounterService:IEncounterService
     {
         private readonly IEncounterRepository _encounterRepository;
 
-        public InterviewService(IEncounterRepository encounterRepository)
+        public EncounterService(IEncounterRepository encounterRepository)
         {
             _encounterRepository = encounterRepository;
         }
@@ -21,6 +21,11 @@ namespace LiveHTS.Core.Service
             var encounter=_encounterRepository.GetWithObs(formId, encounterTypeId, clientId).FirstOrDefault();
 
             return encounter;
+        }
+
+        public IEnumerable<Encounter> LoadEncounters(Guid formId, Guid clientId)
+        {
+            throw new NotImplementedException();
         }
 
         public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
@@ -46,6 +51,11 @@ namespace LiveHTS.Core.Service
             var encounter = _encounterRepository.Get(encounterId);
 
             return encounter;
+        }
+
+        public void DiscardEncounter(Guid encounterId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

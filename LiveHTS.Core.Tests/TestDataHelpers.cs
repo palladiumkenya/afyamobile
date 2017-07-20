@@ -16,6 +16,7 @@ namespace LiveHTS.Core.Tests
         public static readonly string _relationshipType = "Partner"; //   |Partner|Partner|0
         public static readonly int _countyId = 47;
         public static readonly Guid _deviceId = new Guid("7e51658c-6b99-11e7-907b-a6006ad3dba0"); //       |12345|V01|VCT-01|0
+        public static readonly Guid _moduleId = new Guid(" 62040ce6-6260-11e7-907b-a6006ad3dba0"); //      |HTS Module|Hiv Testing Services Module|Hiv Testing Services Module|1|0
         public static readonly Guid _formId = new Guid("62040dcc-6260-11e7-907b-a6006ad3dba0"); //       |HTS Lab Form|HTS Lab Form|HTS Lab Form|1|62040ce6-6260-11e7-907b-a6006ad3dba0|0
         public static readonly List<Guid> _questionIds = new List<Guid>()
         {

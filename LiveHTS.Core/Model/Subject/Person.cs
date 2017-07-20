@@ -15,6 +15,12 @@ namespace LiveHTS.Core.Model.Subject
         public virtual DateTime? BirthDate { get; set; }
         public virtual bool? BirthDateEstimated { get; set; }
         public virtual string Email { get; set; }
+
+        [Ignore]
+        public virtual string FullName
+        {
+            get { return $"{FirstName} {MiddleName} {LastName}"; }
+        }
         [Ignore]
         public virtual IEnumerable<PersonAddress> Addresses { get; set; }=new List<PersonAddress>();
         [Ignore]
@@ -23,6 +29,11 @@ namespace LiveHTS.Core.Model.Subject
         public Person()
         {
             Id = LiveGuid.NewGuid();
+        }
+
+        public override string ToString()
+        {
+            return $"{FullName}";
         }
     }
 }

@@ -15,10 +15,10 @@ namespace LiveHTS.Core.Tests
 {
     public class TestHelpers
     {
-        public static SQLiteConnection GetDatabase(bool withData = true)
+        public static SQLiteConnection GetDatabase(string database= "livehts.db", bool withData = true)
         {
             
-            var db = new SQLiteConnection("livehts.db",false);
+            var db = new SQLiteConnection(database,false);
 
             #region Module
             db.CreateTable<Module>();

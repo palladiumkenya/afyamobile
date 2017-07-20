@@ -22,5 +22,10 @@ namespace LiveHTS.Core.Model.Subject
         {
             Id = LiveGuid.NewGuid();
         }
+
+        public override string ToString()
+        {
+            return $"{Person} ,{Person.Gender}";
+        }
     }
 }
