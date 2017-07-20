@@ -16,16 +16,14 @@ namespace LiveHTS.Core.Service.Clients
             _encounterRepository = encounterRepository;
         }
 
-        public Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId)
+        public Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId, bool includeObs = false)
         {
-            var encounter=_encounterRepository.GetWithObs(formId, encounterTypeId, clientId).FirstOrDefault();
-
-            return encounter;
+            return _encounterRepository.Load(formId, encounterTypeId, clientId,includeObs);
         }
 
-        public IEnumerable<Encounter> LoadEncounters(Guid formId, Guid clientId)
+        public IEnumerable<Encounter> LoadEncounters(Guid formId, Guid clientId, bool includeObs = false)
         {
-            throw new NotImplementedException();
+            return _encounterRepository.LoadAll(formId,  clientId, includeObs);
         }
 
         public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
@@ -55,7 +53,7 @@ namespace LiveHTS.Core.Service.Clients
 
         public void DiscardEncounter(Guid encounterId)
         {
-            throw new NotImplementedException();
+            _encounterRepository.Delete(encounterId);
         }
     }
 }

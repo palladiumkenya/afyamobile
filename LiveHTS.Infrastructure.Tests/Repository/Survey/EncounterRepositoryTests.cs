@@ -38,32 +38,45 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         }
 
         [TestMethod]
-        public void should_Get_Encounter_With_Obs_by_Id()
+        public void should_Load_Encounter_By_Id()
         {
-            var encounter = _encounterRepository.Get(_encounters.First().Id);
+            var encounter = _encounterRepository.Load(_encounters.First().Id);
             Assert.IsNotNull(encounter);
             Console.WriteLine(encounter);
-            Assert.IsTrue(encounter.Obses.ToList().Count>0);
-
-            foreach (var obs in encounter.Obses)
-            {
-                Assert.AreEqual(obs.EncounterId,encounter.Id);
-                Console.WriteLine($"   {obs}");
-            }
+            Assert.IsFalse(encounter.Obses.Any());
         }
-
         [TestMethod]
-        public void should_Get_Encounter_With_Obs_by_ClientForm()
+        public void should_Load_Encounter_With_Obs_By_Id()
         {
-            var encounter = _encounterRepository.GetWithObs(_formId,_encounterTypeId,_clientId).FirstOrDefault();
+            var encounter = _encounterRepository.Load(_encounters.First().Id, true);
             Assert.IsNotNull(encounter);
             Console.WriteLine(encounter);
-            Assert.IsTrue(encounter.Obses.ToList().Count > 0);
-
-            foreach (var obs in encounter.Obses)
+            Assert.IsTrue(encounter.Obses.Any());
+        }
+        [TestMethod]
+        public void should_Load_Encounter_Client()
+        {
+            var encounter = _encounterRepository.Load(_formId, _encounterTypeId, _clientId);
+            Assert.IsNotNull(encounter);
+            Console.WriteLine(encounter);
+            Assert.IsFalse(encounter.Obses.Any());
+        }
+        [TestMethod]
+        public void should_Load_Encounter_With_Obs_Client()
+        {
+            var encounter = _encounterRepository.Load(_formId, _encounterTypeId, _clientId,true);
+            Assert.IsNotNull(encounter);
+            Console.WriteLine(encounter);
+            Assert.IsTrue(encounter.Obses.Any());
+        }
+        [TestMethod]
+        public void should_Load_All_Encounters_By_Client()
+        {
+            var encounters = _encounterRepository.LoadAll(_formId,  _clientId).ToList();
+            Assert.IsTrue(encounters.Any());
+            foreach (var encounter in encounters)
             {
-                Assert.AreEqual(obs.EncounterId, encounter.Id);
-                Console.WriteLine($"   {obs}");
+                Console.WriteLine(encounter);
             }
         }
     }
