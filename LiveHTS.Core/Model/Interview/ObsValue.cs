@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace LiveHTS.Core.Model.Interview
 {
@@ -7,10 +8,15 @@ namespace LiveHTS.Core.Model.Interview
         public Type Type { get; set; }
         public object Value { get; set; }
 
-        public ObsValue(object value)
+        public ObsValue(Type type,object value)
         {
-            Type = value.GetType();
+            Type = type;
             Value = value;
+        }
+
+        public override string ToString()
+        {
+            return $"{Value} [{Type}]";
         }
     }
 }

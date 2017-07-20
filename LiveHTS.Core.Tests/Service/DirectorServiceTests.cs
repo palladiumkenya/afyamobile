@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Survey;
@@ -17,7 +18,7 @@ namespace LiveHTS.Core.Tests.Service
         private DirectorService _directorService;
         private ILiveSetting _liveSetting;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
-        private Encounter _encounter, _encounterNoObs, _encounterIncompleteObs;
+        private Encounter _encounter, _encounterNoObs, _encounterIncompleteObs, _encounterQ1ObsOnly;
         private IFormRepository _formRepository;
         private IEncounterRepository _encounterRepository;
 
@@ -28,10 +29,7 @@ namespace LiveHTS.Core.Tests.Service
             _formRepository=new FormRepository(_liveSetting,new QuestionRepository(_liveSetting,new ConceptRepository(_liveSetting,new CategoryRepository(_liveSetting))));
             _encounterRepository=new EncounterRepository(_liveSetting);
             _encounter = TestDataHelpers.Encounters.First();
-            _encounterNoObs = _encounter;
-            _encounterIncompleteObs = _encounter;
-            _encounterIncompleteObs.Obses = _encounter.Obses.Take(2).ToList();
-            _encounterNoObs.Obses = new List<Obs>();
+            _encounterNoObs = _encounterIncompleteObs = _encounterQ1ObsOnly = _encounter;
             _directorService = new DirectorService(_formRepository,_encounterRepository,_encounter);
         }
         [TestMethod]
@@ -46,6 +44,7 @@ namespace LiveHTS.Core.Tests.Service
         [TestMethod]
         public void should_Refresh_Manifest()
         {
+            _encounterNoObs.Obses=new List<Obs>();
             _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterNoObs);
             _directorService.Initialize();
             var manifest = _directorService.Manifest;
@@ -61,6 +60,7 @@ namespace LiveHTS.Core.Tests.Service
         [TestMethod]
         public void should_Get_LiveQuestion_First()
         {
+            _encounterNoObs.Obses = new List<Obs>();
             _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterNoObs);
             _directorService.Initialize();
             var liveQuestion = _directorService.GetLiveQuestion();
@@ -68,12 +68,29 @@ namespace LiveHTS.Core.Tests.Service
             Console.WriteLine($"{liveQuestion}");
         }
         [TestMethod]
-        public void should_Get_LiveQuestion_Other()
+        public void should_Get_LiveQuestion_Other_After_Branch_Staisfied()
         {
-            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterIncompleteObs);
+            _encounterQ1ObsOnly.Obses = _encounter.Obses.Take(1).ToList();
+            _encounterQ1ObsOnly.Obses.First().ValueCoded = TestDataHelpers._consentNo;
+
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterQ1ObsOnly);
             _directorService.Initialize();
             var liveQuestion = _directorService.GetLiveQuestion();
             Assert.IsNotNull(liveQuestion);
+            Assert.AreEqual(4,liveQuestion.Rank);
+            Console.WriteLine($"{liveQuestion}");
+        }
+        [TestMethod]
+        public void should_Get_LiveQuestion_Other_After_Branch_Not_Staisfied()
+        {
+            _encounterQ1ObsOnly.Obses = _encounter.Obses.Take(1).ToList();
+            _encounterQ1ObsOnly.Obses.First().ValueCoded = TestDataHelpers._consentYes;
+
+            _directorService = new DirectorService(_formRepository, _encounterRepository, _encounterQ1ObsOnly);
+            _directorService.Initialize();
+            var liveQuestion = _directorService.GetLiveQuestion();
+            Assert.IsNotNull(liveQuestion);
+            Assert.AreEqual(2, liveQuestion.Rank);
             Console.WriteLine($"{liveQuestion}");
         }
     }

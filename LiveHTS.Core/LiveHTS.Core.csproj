@@ -45,6 +45,7 @@
     <Compile Include="Interfaces\Repository\IMigrator.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
+    <Compile Include="Interfaces\Repository\Survey\IObsRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IEncounterRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IFormRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />

@@ -17,15 +17,42 @@ namespace LiveHTS.Core.Model.Interview
             //  Single | Numeric | Multi | DateTime | Text
 
             if (Question.Concept.ConceptTypeId == "Single")
-                return new ObsValue(Obs.ValueCoded);
+                return new ObsValue(typeof(Guid?), Obs.ValueCoded);
             if (Question.Concept.ConceptTypeId == "Numeric")
-                return new ObsValue(Obs.ValueNumeric);
+                return new ObsValue(typeof(decimal?), Obs.ValueNumeric);
             if (Question.Concept.ConceptTypeId == "Multi")
-                return new ObsValue(Obs.ValueMultiCoded);
+                return new ObsValue(typeof(Guid?[]), Obs.ValueMultiCoded);
             if (Question.Concept.ConceptTypeId == "DateTime")
-                return new ObsValue(Obs.ValueDateTime);
+                return new ObsValue(typeof(DateTime?), Obs.ValueDateTime);
 
-            return new ObsValue(Obs.ValueText);
+            return new ObsValue(typeof(string), Obs.ValueText);
+        }
+
+        public Response()
+        {
+        }
+
+        public Response(Guid encounterId)
+        {
+            EncounterId = encounterId;
+        }
+
+        public void SetQuestion(Question question)
+        {
+            if (null != question)
+            {
+                QuestionId = question.Id;
+                Question = question;
+            }
+        }
+
+        public void SetObs(Obs obs)
+        {
+            if (null != obs)
+            {
+                ObsId = obs.Id;
+                Obs = obs;
+            }
         }
     }
 }

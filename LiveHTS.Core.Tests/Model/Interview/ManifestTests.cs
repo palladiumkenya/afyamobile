@@ -5,6 +5,7 @@ using FizzWare.NBuilder;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SQLite;
 
 namespace LiveHTS.Core.Tests.Model.Interview
 {
@@ -55,6 +56,22 @@ namespace LiveHTS.Core.Tests.Model.Interview
             Assert.IsTrue(updatedManifest.HasResponses());
             Console.WriteLine(new string('-',30));
             Console.WriteLine(updatedManifest);
+        }
+        [TestMethod]
+        public void should_Get_FirstQuestion()
+        {
+            var manifest = Manifest.Create(_form, _encounter);
+            var q = manifest.GetFirstQuestion();
+            Assert.AreEqual(1,q.Rank);
+            Console.WriteLine(q);
+        }
+        [TestMethod]
+        public void should_Last_Question()
+        {
+            var manifest = Manifest.Create(_form, _encounter);
+            var q = manifest.GetLastResponse();
+            Assert.AreEqual(4, q.Question.Rank);
+            Console.WriteLine(q.Question);
         }
     }
 }

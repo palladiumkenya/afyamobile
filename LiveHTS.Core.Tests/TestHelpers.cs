@@ -219,7 +219,15 @@ namespace LiveHTS.Core.Tests
         {
             var form = Builder<Form>.CreateNew().Build();
             var qs = Builder<Question>.CreateListOfSize(questionCount).All().With(x => x.FormId == form.Id).Build().ToList();
+            int count = 0;
+            foreach (var q in qs)
+            {
+                count++;
+                q.Ordinal = $"{count}";
+                q.Rank = count;
+            }
             form.Questions = qs;
+            
             return form;
         }
         public static Encounter CreateTestEncountersWithObs(Form form)
@@ -234,7 +242,7 @@ namespace LiveHTS.Core.Tests
             var questions = form.Questions;
             for (int i = 0; i < questions.Count; i++)
             {
-                obs[i].QuestionId = questions[0].Id;
+                obs[i].QuestionId = questions[i].Id;
             }
             encounter.Obses = obs;
             return encounter;

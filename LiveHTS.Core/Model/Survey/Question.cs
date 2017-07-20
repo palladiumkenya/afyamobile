@@ -41,7 +41,7 @@ namespace LiveHTS.Core.Model.Survey
         [Ignore]
         public bool HasValidations
         {
-            get { return null != Validations && Validations.Any(); }
+            get { return null != Validations && Validations.Any(x=>x.Revision==0); }
         }
         [Ignore]
         public bool HasReValidations

@@ -31,9 +31,10 @@ namespace LiveHTS.Core.Model.Interview
             QuestionStore = questions;
             ResponseStore = responses;
             Encounter = encounter;
+            UpdateResponseQuestions();
         }
 
-        public static Manifest Create(Form form,Encounter encounter)
+        public static Manifest Create(Form form, Encounter encounter)
         {
             var formWithQuestions = form ?? new Form();
             var responses = ReadResponses(encounter);
@@ -41,11 +42,19 @@ namespace LiveHTS.Core.Model.Interview
             return new Manifest(formWithQuestions.Questions, responses, encounter);
         }
 
-        public  void UpdateEncounter(Encounter encounter)
+        public void UpdateEncounter(Encounter encounter)
         {
             Encounter = encounter;
             ResponseStore = ReadResponses(Encounter);
+            UpdateResponseQuestions();
+        }
 
+        private void UpdateResponseQuestions()
+        {
+            foreach (var response in ResponseStore)
+            {
+                response.Question = GetQuestion(response.QuestionId);
+            }
         }
 
         private static List<Response> ReadResponses(Encounter encounter)
@@ -58,6 +67,7 @@ namespace LiveHTS.Core.Model.Interview
                     {
                         EncounterId = x.EncounterId,
                         ObsId = x.Id,
+                        Obs = x,
                         QuestionId = x.QuestionId
                     })
                     .ToList();
@@ -68,11 +78,12 @@ namespace LiveHTS.Core.Model.Interview
 
         public Question GetFirstQuestion()
         {
-            return QuestionStore.OrderBy(x => x.Ordinal).FirstOrDefault();
+            return QuestionStore.OrderBy(x => x.Rank).FirstOrDefault();
         }
+
         public Response GetLastResponse()
         {
-            return ResponseStore.OrderByDescending(x => x.Question.Ordinal).FirstOrDefault();
+            return ResponseStore.OrderBy(x => x.Question.Rank).LastOrDefault();
         }
 
         public override string ToString()
@@ -83,8 +94,15 @@ namespace LiveHTS.Core.Model.Interview
         }
 
         public Question GetQuestion(Guid value)
+
         {
             return QuestionStore.FirstOrDefault(x => x.Id == value);
+        }
+
+        public Question GetNextRankQuestionAfter(Guid value)
+        {
+            var currenQuestion = GetQuestion(value);
+            return QuestionStore.FirstOrDefault(x => x.Rank > currenQuestion.Rank);
         }
     }
 }

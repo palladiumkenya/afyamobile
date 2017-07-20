@@ -19,11 +19,15 @@ namespace LiveHTS.Core.Tests
         public static readonly Guid _formId = new Guid("62040dcc-6260-11e7-907b-a6006ad3dba0"); //       |HTS Lab Form|HTS Lab Form|HTS Lab Form|1|62040ce6-6260-11e7-907b-a6006ad3dba0|0
         public static readonly List<Guid> _questionIds = new List<Guid>()
         {
-            new Guid("6206a9a6-6260-11e7-907b-a6006ad3dba0"),
+            new Guid("6206a9a6-6260-11e7-907b-a6006ad3dba0"), //Consent
             new Guid("6206aa78-6260-11e7-907b-a6006ad3dba0"),
             new Guid("6206ab4a-6260-11e7-907b-a6006ad3dba0"),
             new Guid("6206ac1c-6260-11e7-907b-a6006ad3dba0")
         };
+        
+        public static readonly Guid _consentYes= new Guid("00c2a902-6246-11e7-907b-a6006ad3dba0"); //   Yes,00c2a902-6246-11e7-907b-a6006ad3dba0
+        public static readonly Guid _consentNo= new Guid("00c2aae2-6246-11e7-907b-a6006ad3dba0"); //     No,00c2aae2-6246-11e7-907b-a6006ad3dba0
+
         public static List<Client> _clients;
         public static List<Provider> _providers;
         public static List<Encounter> Encounters;
@@ -141,6 +145,7 @@ namespace LiveHTS.Core.Tests
                     .Build().ToList();
 
                 obs[0].QuestionId = _questionIds[0];
+                obs[0].ValueCoded = _consentYes;
                 obs[1].QuestionId = _questionIds[1];
                 obs[2].QuestionId = _questionIds[2];
                 obs[3].QuestionId = _questionIds[3];

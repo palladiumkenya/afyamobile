@@ -21,6 +21,7 @@ namespace LiveHTS.Core.Model.Interview
         public Obs()
         {
             Id = LiveGuid.NewGuid();
+            ObsDate=DateTime.Now;
         }
 
         public override string ToString()
