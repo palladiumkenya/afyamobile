@@ -11,6 +11,7 @@ namespace LiveHTS.Core.Model.Interview
         public Question Question { get; set; }
         public Guid ObsId { get; set; }
         public Obs Obs { get; set; }
+        
 
         public ObsValue GetValue()
         {
@@ -54,5 +55,12 @@ namespace LiveHTS.Core.Model.Interview
                 Obs = obs;
             }
         }
+
+        public void SetObs(Guid encounterId, Guid questionId, string type, object response)
+        {
+            SetObs(Obs.Create(questionId,encounterId,type,response));
+        }
+
+       
     }
 }

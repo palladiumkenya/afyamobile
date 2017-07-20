@@ -12,6 +12,10 @@ namespace LiveHTS.Core.Interfaces.Services
         void Initialize();
         void UpdateManifest();
         Question GetLiveQuestion();
-        bool ValidateResponse();
+        void SaveResponse(Guid encounterId, Guid questionId,object response);
+        bool ValidateResponse(Response response);
+
+        Question GetNextQuestion();
+        Question GetPreviousQuestion();
     }
 }

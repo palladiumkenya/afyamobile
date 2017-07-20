@@ -135,6 +135,15 @@ namespace LiveHTS.Core.Tests.Model.Interview
             Console.WriteLine(obsValEmpty);
         }
 
+        [TestMethod]
+        public void should_Convert()
+        {
+            var guid=new Guid(string.Empty);
+
+            Assert.IsNotNull(guid);
+
+        }
+
         
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
@@ -12,6 +13,8 @@ namespace LiveHTS.Core.Service
     {
         private readonly IFormRepository _formRepository;
         private readonly IEncounterRepository _encounterRepository;
+        private readonly IObsRepository _obsRepository;
+
         private Encounter _encounter;
         private Manifest _manifest;
         private readonly Response _liveResponse;
@@ -26,11 +29,12 @@ namespace LiveHTS.Core.Service
             get { return _liveResponse; }
         }
 
-        public DirectorService(IFormRepository formRepository, IEncounterRepository encounterRepository,
+        public DirectorService(IFormRepository formRepository, IEncounterRepository encounterRepository, IObsRepository obsRepository,
             Encounter encounter)
         {
             _formRepository = formRepository;
             _encounterRepository = encounterRepository;
+            _obsRepository = obsRepository;
             _encounter = encounter;
             _liveResponse=new Response(encounter.Id);
         }
@@ -117,18 +121,43 @@ namespace LiveHTS.Core.Service
             return question;
         }
 
-        public bool ValidateResponse()
+        public void SaveResponse(Guid encounterId, Guid questionId, object response)
+        {
+            var question = _manifest.GetQuestion(questionId);
+            _liveResponse.SetQuestion(question);
+            _liveResponse.SetObs(encounterId,questionId,question.Concept.ConceptTypeId, response);
+
+            if (ValidateResponse(_liveResponse))
+            {
+                _obsRepository.SaveOrUpdate(_liveResponse.Obs);
+                UpdateManifest();
+            }
+        }
+
+        public bool ValidateResponse(Response response)
         {
             if (!_liveResponse.Question.HasValidations)
                 return true;
 
             var validations = _liveResponse.Question.Validations;
+            var vlist=new List<bool>();
 
             foreach (var validation in validations)
             {
-
+                var result = validation.Evaluate(response);
+                vlist.Add(result);
             }
 
+            return vlist.All(x => x);
+        }
+
+        public Question GetNextQuestion()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Question GetPreviousQuestion()
+        {
             throw new NotImplementedException();
         }
     }
