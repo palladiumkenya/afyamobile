@@ -40,6 +40,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Engine\IValidator.cs" />
+    <Compile Include="Service\Clients\ObsService.cs" />
+    <Compile Include="Engine\SimpleDirector.cs" />
+    <Compile Include="Interfaces\Engine\IDirector.cs" />
     <Compile Include="Interfaces\ILiveSetting.cs" />
     <Compile Include="Interfaces\Repository\Lookup\ICategoryRepository.cs" />
     <Compile Include="Interfaces\Repository\IMigrator.cs" />
@@ -100,6 +104,7 @@
     <Compile Include="Service\Clients\DashboardService.cs" />
     <Compile Include="Service\DirectorService.cs" />
     <Compile Include="Service\Clients\EncounterService.cs" />
+    <Compile Include="Engine\SimpleValidator.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

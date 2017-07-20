@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.SharedKernel.Custom;
+using SQLite;
 
 namespace LiveHTS.Core.Model.Interview
 {
@@ -21,6 +22,7 @@ namespace LiveHTS.Core.Model.Interview
         {
             return null != ResponseStore && ResponseStore.Count > 0;
         }
+       
 
         public Manifest()
         {
@@ -83,7 +85,7 @@ namespace LiveHTS.Core.Model.Interview
 
         public Response GetLastResponse()
         {
-            return ResponseStore.OrderBy(x => x.Question.Rank).LastOrDefault();
+            return HasResponses() ? ResponseStore.OrderBy(x => x.Question.Rank).LastOrDefault() : null;
         }
 
         public override string ToString()
@@ -99,10 +101,28 @@ namespace LiveHTS.Core.Model.Interview
             return QuestionStore.FirstOrDefault(x => x.Id == value);
         }
 
-        public Question GetNextRankQuestionAfter(Guid value)
+        public Question GetNextRankQuestionAfter(Guid currentQuestionId)
         {
-            var currenQuestion = GetQuestion(value);
-            return QuestionStore.FirstOrDefault(x => x.Rank > currenQuestion.Rank);
+            var currenQuestion = GetQuestion(currentQuestionId);
+            var currentRank = currenQuestion.Rank;
+            var currentId = currenQuestion.Id;
+
+            return QuestionStore
+                .OrderBy(x => x.Rank)
+                .FirstOrDefault(x => x.Rank >= currentRank &&
+                                     x.Id != currentId);
+        }
+
+        public Question GetPreviousRankQuestionBefore(Guid currentQuestionId)
+        {
+            var currenQuestion = GetQuestion(currentQuestionId);
+            var currentRank = currenQuestion.Rank;
+            var currentId = currenQuestion.Id;
+
+            return QuestionStore
+                .OrderBy(x=>x.Rank)
+                .FirstOrDefault(x => x.Rank <= currentRank &&
+                                     x.Id != currentId);
         }
     }
 }
