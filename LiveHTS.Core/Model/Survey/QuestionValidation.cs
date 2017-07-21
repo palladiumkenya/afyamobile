@@ -66,6 +66,27 @@ namespace LiveHTS.Core.Model.Survey
 
                     isValid = isValidMin&& isValidMax;
                 }
+                if (ValidatorTypeId.ToLower() == "Count".ToLower())
+                {
+                    var value = response.Obs.ValueMultiCoded;
+                    var obsValue = string.IsNullOrWhiteSpace(value) ? new string[0] : value.Split(',');
+
+                    if (!string.IsNullOrWhiteSpace(MinLimit))
+                    {
+                        isValidMin = obsValue.Length>0 && obsValue.Length >= Convert.ToDecimal(MinLimit);
+                        if (!isValidMin)
+                            validationMessages.Add($"Response cannot be Less than {MinLimit}");
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(MaxLimit))
+                    {
+                        isValidMax = obsValue.Length > 0 && obsValue.Length <= Convert.ToDecimal(MaxLimit);
+                        if (!isValidMax)
+                            validationMessages.Add($"Response cannot be greater than {MaxLimit}");
+                    }
+
+                    isValid = isValidMin && isValidMax;
+                }
             }
 
             if(!isValid)
@@ -79,8 +100,8 @@ namespace LiveHTS.Core.Model.Survey
             //$@"{ValidatorId}{ValidatorTypeId.ToLower().Equals("None".ToLower()) ? string.Empty : $",{ValidatorTypeId}")}";
 
             var mainInfo = $@"{ValidatorId}{(ValidatorTypeId.ToLower().Equals("None".ToLower()) ? "": $" | {ValidatorTypeId}")}";
-            var minInfo = string.IsNullOrWhiteSpace(MinLimit) ? string.Empty : $"{MinLimit}";
-            var maxInfo = string.IsNullOrWhiteSpace(MaxLimit) ? string.Empty : $"-{MaxLimit}";
+            var minInfo = string.IsNullOrWhiteSpace(MinLimit) ? string.Empty : $" >={MinLimit}";
+            var maxInfo = string.IsNullOrWhiteSpace(MaxLimit) ? string.Empty : $" <={MaxLimit}";
             return $"{mainInfo} {minInfo} {maxInfo}  [{Revision}]";
         }      
     }
