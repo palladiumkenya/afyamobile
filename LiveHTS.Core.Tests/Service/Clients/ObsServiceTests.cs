@@ -66,25 +66,23 @@ namespace LiveHTS.Core.Tests.Service.Clients
             
 
             _obsService.Initialize(_encounter);
-           var  manifestFull = _obsService.Manifest;
-            Assert.IsNotNull(manifestFull);
-            Assert.IsTrue(manifestFull.HasQuestions());
-            Assert.IsTrue(manifestFull.HasResponses());
+           var  completedManifest = _obsService.Manifest;
+            Assert.IsNotNull(completedManifest);
+            Assert.IsTrue(completedManifest.HasQuestions());
+            Assert.IsTrue(completedManifest.HasResponses());
 
             Console.WriteLine(manifest);
             Console.WriteLine(new string('-',30));
-            Console.WriteLine(manifestFull);
+            Console.WriteLine(completedManifest);
         }
-
-        /*
+        
         [Test]
-        public void should_GetLiveQuestion_First_On_NewEncounter()
+        public void should_GetLiveQuestion_First()
         {
             //Q1.Consent
 
-            _manifest = Manifest.Create(_form, _encounterNew);
-
-            var question = _director.GetLiveQuestion(_manifest);
+            _obsService.Initialize();
+            var question = _obsService.GetLiveQuestion();
             Assert.IsNotNull(question);
             Assert.AreEqual(1, question.Rank);
             Console.WriteLine(question);
@@ -93,18 +91,18 @@ namespace LiveHTS.Core.Tests.Service.Clients
         public void should_GetLiveQuestion_Other()
         {
             //  4.Referall   >>  5.Discordant
-
             _encounterNew.Obses = _encounter.Obses.Take(4).ToList();
             _encounterNew.Obses.First().ValueCoded = TestDataHelpers._consentNo;
+            _obsService.Initialize(_encounterNew);
 
-            _manifest = Manifest.Create(_form, _encounterNew);
 
-            var question = _director.GetLiveQuestion(_manifest);
+            var question = _obsService.GetLiveQuestion();
             Assert.IsNotNull(question);
             Assert.AreEqual(5, question.Rank);
             Console.WriteLine(question);
         }
 
+        
         [Test]
         public void should_GetLiveQuestion_Other_Branched()
         {
@@ -112,14 +110,14 @@ namespace LiveHTS.Core.Tests.Service.Clients
 
             _encounterNew.Obses = _encounter.Obses.Take(1).ToList();
             _encounterNew.Obses.First().ValueCoded = TestDataHelpers._consentNo;
+            _obsService.Initialize(_encounterNew);
 
-            _manifest = Manifest.Create(_form, _encounterNew);
-
-            var question = _director.GetLiveQuestion(_manifest);
+            var question = _obsService.GetLiveQuestion();
             Assert.IsNotNull(question);
             Assert.AreEqual(4, question.Rank);
             Console.WriteLine(question);
         }
+
 
         [Test]
         public void should_GetNextQuestion()
@@ -127,30 +125,43 @@ namespace LiveHTS.Core.Tests.Service.Clients
             //  4.Referall   >>  5.Discordant
 
             var currentQuestionId = _form.Questions.First(x => x.Rank == 4).Id;
-            _manifest = Manifest.Create(_form, _encounter);
+            _obsService.Initialize(_encounter);
 
 
-            var question = _director.GetNextQuestion(currentQuestionId, _manifest);
+            var question = _obsService.GetNextQuestion(currentQuestionId);
             Assert.IsNotNull(question);
             Assert.AreEqual(5, question.Rank);
             Console.WriteLine(question);
         }
-
+        
         [Test]
         public void should_GetPreviousQuestion()
         {
             //  4.Referall   <<  5.Discordant
 
             var currentQuestionId = _form.Questions.First(x => x.Rank == 5).Id;
-            _manifest = Manifest.Create(_form, _encounter);
+            _obsService.Initialize(_encounter);
 
-
-            var question = _director.GetPreviousQuestion(currentQuestionId, _manifest);
+            var question = _obsService.GetPreviousQuestion(currentQuestionId);
             Assert.IsNotNull(question);
             Assert.AreEqual(4, question.Rank);
             Console.WriteLine(question);
         }
-        */
+
+        [Test]
+        public void should_GetQuestion()
+        {
+            // 5.Discordant
+
+            var currentQuestionId = _form.Questions.First(x => x.Rank == 5).Id;
+            _obsService.Initialize(_encounter);
+
+            var question = _obsService.GetQuestion(currentQuestionId, _obsService.Manifest);
+            Assert.IsNotNull(question);
+            Assert.AreEqual(currentQuestionId, question.Id);
+            Assert.AreEqual(5, question.Rank);
+            Console.WriteLine(question);
+        }
 
     }
 }

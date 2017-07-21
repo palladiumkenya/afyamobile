@@ -92,8 +92,7 @@ namespace LiveHTS.Core.Tests.Engine
 
             var currentQuestionId = _form.Questions.First(x => x.Rank == 4).Id;
             _manifest = Manifest.Create(_form, _encounter);
-            
-            
+                       
             var question = _director.GetNextQuestion(currentQuestionId,_manifest);
             Assert.IsNotNull(question);
             Assert.AreEqual(5, question.Rank);
@@ -107,7 +106,6 @@ namespace LiveHTS.Core.Tests.Engine
 
             var currentQuestionId = _form.Questions.First(x => x.Rank == 5).Id;
             _manifest = Manifest.Create(_form, _encounter);
-
 
             var question = _director.GetPreviousQuestion(currentQuestionId, _manifest);
             Assert.IsNotNull(question);
