@@ -1,20 +1,74 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Linq;
+using LiveHTS.Core.Engine;
+using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Engine;
+using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Survey;
+using LiveHTS.Infrastructure.Repository.Survey;
+using NUnit.Framework;
+using SQLite;
 
 namespace LiveHTS.Core.Tests.Engine
 {
-    [TestClass]
+    [TestFixture]
     public class SimpleDirectorTests
     {
-        //[TestMethod]
-        public void should_GetLiveQuestion()
+        private bool setNunit = TestHelpers.UseNunit = true;
+
+        private ILiveSetting _liveSetting;
+        private SQLiteConnection _database = TestHelpers.GetDatabase();
+
+        private Form _form;
+        private Guid _formId;
+        private Encounter _encounter, _encounterNew;
+        private Response _responseRequired;
+        private Manifest _manifest;
+        private IDirector _director;
+
+        [SetUp]
+        public void SetUp()
         {
-           
+            _liveSetting = new LiveSetting(_database.DatabasePath);
+            var formRepository = new FormRepository(_liveSetting,
+                new QuestionRepository(_liveSetting,
+                    new ConceptRepository(_liveSetting, new CategoryRepository(_liveSetting))));
+            _formId = TestDataHelpers._formId;
+            _form = formRepository.GetWithQuestions(_formId, true);
+            _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
+            _encounterNew = TestHelpers.CreateTestEncounters(_form);
+            _director=new SimpleDirector();
         }
 
-        //[TestMethod]
-        private void should_EvaluateSelf()
+        [Test]
+        public void should_GetLiveQuestion_First_On_NewEncounter()
         {
+            //Q1.Consent
+
+            _manifest = Manifest.Create(_form, _encounterNew);
+
+            var question = _director.GetLiveQuestion(_manifest);
+            Assert.IsNotNull(question);
+            Assert.AreEqual(1,question.Rank);
+            Console.WriteLine(question);
+        }
+
+        [Test]
+        public void should_GetLiveQuestion_Other()
+        {
+            //Q1.Consent=N GOTO Q4.Referall
+
+            _encounterNew.Obses = _encounter.Obses.Take(1).ToList();
+            _encounterNew.Obses.First().ValueCoded = TestDataHelpers._consentNo;
+
+            _manifest = Manifest.Create(_form, _encounterNew);
             
+            
+
+            var question = _director.GetLiveQuestion(_manifest);
+            Assert.IsNotNull(question);
+            Assert.AreEqual(4, question.Rank);
+            Console.WriteLine(question);
         }
     }
 }

@@ -9,11 +9,10 @@ using LiveHTS.Infrastructure.Repository.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SQLite;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace LiveHTS.Core.Tests.Engine
 {
-    [TestClass]
+    [TestFixture]
     public class SimpleValidatorTest
     {
 

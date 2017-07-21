@@ -251,9 +251,13 @@ namespace LiveHTS.Core.Tests
             encounter.Obses = obs;
             return encounter;
         }
+
         public static Encounter CreateTestEncounters(Form form)
         {
-            var encounter = Builder<Encounter>.CreateNew().With(x => x.FormId = form.Id).Build();
+            var encounter = Builder<Encounter>.CreateNew()
+                .With(x => x.FormId = form.Id)
+                .With(x => x.IsComplete = false)
+                .Build();
             return encounter;
         }
     }
