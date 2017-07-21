@@ -56,7 +56,6 @@
     <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IQuestionRepository.cs" />
     <Compile Include="Interfaces\Services\Clients\IDashboardService.cs" />
-    <Compile Include="Interfaces\Services\IDirectorService.cs" />
     <Compile Include="Interfaces\Services\Clients\IEncounterService.cs" />
     <Compile Include="Interfaces\Services\Clients\IObsService.cs" />
     <Compile Include="LiveSetting.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="Model\Subject\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Clients\DashboardService.cs" />
-    <Compile Include="Service\DirectorService.cs" />
     <Compile Include="Service\Clients\EncounterService.cs" />
     <Compile Include="Engine\SimpleValidator.cs" />
   </ItemGroup>
