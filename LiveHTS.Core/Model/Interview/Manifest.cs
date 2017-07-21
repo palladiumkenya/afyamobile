@@ -76,6 +76,10 @@ namespace LiveHTS.Core.Model.Interview
                 .FirstOrDefault(x => x.Rank <= currentRank &&
                                      x.Id != currentId);
         }
+        public Response GetResponse(Guid questionId)
+        {
+            return HasResponses() ? ResponseStore.FirstOrDefault(x => x.QuestionId==questionId) : null;
+        }
         public Response GetLastResponse()
         {
             return HasResponses() ? ResponseStore.OrderBy(x => x.Question.Rank).LastOrDefault() : null;

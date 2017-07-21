@@ -15,7 +15,6 @@ namespace LiveHTS.Core.Tests.Engine
     [TestFixture]
     public class ValidationEngineTests
     {
-
         private ILiveSetting _liveSetting;
         private bool setNunit = TestHelpers.UseNunit = true;
         private SQLiteConnection _database = TestHelpers.GetDatabase();

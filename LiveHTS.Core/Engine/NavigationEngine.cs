@@ -36,7 +36,7 @@ namespace LiveHTS.Core.Engine
             {
                 #region Post Branches
 
-                if (lastQuestion.HasBranches)
+                if (lastQuestion.HasConditionalBranches("Post"))
                 {
                     var postBranches = lastQuestion.Branches.Where(x => x.ConditionId.ToLower() == "Post".ToLower())
                         .ToList();
@@ -50,6 +50,7 @@ namespace LiveHTS.Core.Engine
                         }
                     }
                 }
+
                 #endregion
 
                 //Get Next if not in Branch
@@ -81,9 +82,9 @@ namespace LiveHTS.Core.Engine
         //TODO: Evaluate self
         public Question EvaluateSelf(Question question,Manifest currentManifest)
         {
-            //TODO: Pre Branches
+            //TODO: Pre Branches          
 
-            //TODO: Transformtions
+            //TODO: Transformations
 
             //TODO: RemoteTransformations
 

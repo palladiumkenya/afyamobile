@@ -27,7 +27,6 @@ namespace LiveHTS.Core.Model.Survey
 
         [Ignore]
         public List<QuestionBranch> Branches { get; set; } = new List<QuestionBranch>();
-
         [Ignore]
         public List<QuestionTransformation> Transformations { get; set; } = new List<QuestionTransformation>();
 
@@ -68,6 +67,11 @@ namespace LiveHTS.Core.Model.Survey
         public Question()
         {
             Id = LiveGuid.NewGuid();
+        }
+
+        public bool HasConditionalBranches(string condition)
+        {
+            return null != Branches && Branches.Any(x => x.ConditionId.ToLower() == condition.ToLower());
         }
 
         public override string ToString()
