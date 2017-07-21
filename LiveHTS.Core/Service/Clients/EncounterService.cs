@@ -26,6 +26,12 @@ namespace LiveHTS.Core.Service.Clients
             return _encounterRepository.LoadAll(formId,  clientId, includeObs);
         }
 
+        public Encounter StartEncounter(Encounter encounter)
+        {
+            return StartEncounter(encounter.FormId, encounter.EncounterTypeId, encounter.ClientId, encounter.ProviderId,
+                encounter.UserId);
+        }
+
         public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
         {
             var exisitngEncounter =_encounterRepository.GetAll(x => x.FormId == formId &&

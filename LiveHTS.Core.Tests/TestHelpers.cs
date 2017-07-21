@@ -239,6 +239,7 @@ namespace LiveHTS.Core.Tests
             var encounter = Builder<Encounter>.CreateNew()
                 .With(x=>x.FormId=form.Id)
                 .With(x => x.IsComplete = true)
+                .With(x => x.Voided = false)
                 .Build();
 
             var obs = Builder<Obs>.CreateListOfSize(form.Questions.Count).All().With(x => x.EncounterId = encounter.Id)
@@ -257,6 +258,7 @@ namespace LiveHTS.Core.Tests
             var encounter = Builder<Encounter>.CreateNew()
                 .With(x => x.FormId = form.Id)
                 .With(x => x.IsComplete = false)
+                .With(x => x.Voided = false)
                 .Build();
             return encounter;
         }

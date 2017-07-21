@@ -56,7 +56,7 @@ namespace LiveHTS.Core.Model.Interview
         }
         public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
         {
-            var encounter = new Encounter(clientId, formId, encounterTypeId, providerId, userId);
+            var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId);
             return encounter;
         }
         public override string ToString()

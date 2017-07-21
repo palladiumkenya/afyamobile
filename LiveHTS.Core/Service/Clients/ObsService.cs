@@ -80,13 +80,17 @@ namespace LiveHTS.Core.Service.Clients
             if (_validator.Validate(liveResponse))
             {
                 _obsRepository.SaveOrUpdate(liveResponse.Obs);
-                UpdateManifest();
+                UpdateManifest(encounterId);
             }
         }
 
-        private void UpdateManifest()
+        private void UpdateManifest(Guid encounterId)
         {
-            _encounter = _encounterRepository.Load(_encounter.Id, true);
+            _encounter = _encounterRepository.Load(encounterId, true);
+
+            if (null == _encounter)
+                throw new ArgumentException("Encounter has not been started");
+
             _manifest.UpdateEncounter(_encounter);
         }
     }

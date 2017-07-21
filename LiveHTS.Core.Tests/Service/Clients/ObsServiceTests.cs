@@ -47,7 +47,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _obsRepository=new ObsRepository(_liveSetting);
             _formId = TestDataHelpers._formId;
             _form = _formRepository.GetWithQuestions(_formId, true);
-            _encounterNew = TestHelpers.CreateTestEncounters(_form);
+            _encounterNew = TestHelpers.CreateTestEncounters(_form);            
             _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
             _director = new SimpleDirector();
             _validator=new SimpleValidator();
@@ -163,5 +163,20 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Console.WriteLine(question);
         }
 
+
+        [Test]
+        public void should_SaveResponse()
+        {
+            // 1.Consent
+            _encounterNew = new EncounterService(_encounterRepository).StartEncounter(_encounterNew);
+            var currentQuestionId = _form.Questions.First(x => x.Rank == 1).Id;
+            _obsService.Initialize(_encounterNew);
+            _obsService.SaveResponse(_encounterNew.Id,currentQuestionId,TestDataHelpers._consentYes);
+
+            var manifest = _obsService.Manifest;
+            var obs= manifest.ResponseStore.First(x => x.QuestionId == currentQuestionId);
+            Assert.IsNotNull(obs);
+            Assert.AreEqual(TestDataHelpers._consentYes, obs.Obs.ValueCoded);
+        }
     }
 }
