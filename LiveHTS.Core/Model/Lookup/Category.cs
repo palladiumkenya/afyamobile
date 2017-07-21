@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using LiveHTS.Core.Model.Survey;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;

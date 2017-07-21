@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using FizzWare.NBuilder;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
@@ -17,8 +16,6 @@ namespace LiveHTS.Core.Tests.Model.Interview
         [TestInitialize]
         public void SetUp()
         {
-            
-            
             var concept = Builder<Concept>.CreateNew().Build();
             var question = Builder<Question>.CreateNew()
                 .With(x => x.Concept = concept)
@@ -27,18 +24,14 @@ namespace LiveHTS.Core.Tests.Model.Interview
             var obs = Builder<Obs>.CreateNew()
                 .With(x => x.QuestionId = question.Id)
                 .Build();
-
-
             _response = Builder<Response>.CreateNew()
                 .With(x => x.Question = question)
                 .With(x => x.QuestionId = question.Id)
                 .With(x => x.Obs = obs)
                 .With(x => x.ObsId = obs.Id)
                 .Build();
-            
         }
 
-        
         [TestMethod]
         public void should_Get_Obs_Value_Single()
         {
@@ -133,6 +126,6 @@ namespace LiveHTS.Core.Tests.Model.Interview
             Console.WriteLine(obsVal);
             Console.WriteLine(new string('-',30));
             Console.WriteLine(obsValEmpty);
-        }       
+        }
     }
 }

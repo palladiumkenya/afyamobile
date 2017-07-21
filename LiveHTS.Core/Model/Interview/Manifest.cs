@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Model.Survey;
-using LiveHTS.SharedKernel.Custom;
-using SQLite;
 
 namespace LiveHTS.Core.Model.Interview
 {
@@ -24,7 +22,6 @@ namespace LiveHTS.Core.Model.Interview
             UpdateResponseQuestions();
         }
 
-
         public static Manifest Create(Form form, Encounter encounter)
         {
             var formWithQuestions = form ?? new Form();
@@ -35,11 +32,11 @@ namespace LiveHTS.Core.Model.Interview
 
         public bool HasQuestions()
         {
-            return null != QuestionStore && QuestionStore.Count > 0;
+            return null != QuestionStore && QuestionStore.Any();
         }
         public bool HasResponses()
         {
-            return null != ResponseStore && ResponseStore.Count > 0;
+            return null != ResponseStore && ResponseStore.Any();
         }
 
         public void UpdateEncounter(Encounter encounter)
@@ -49,38 +46,7 @@ namespace LiveHTS.Core.Model.Interview
             UpdateResponseQuestions();
         }
 
-        public Response GetLastResponse()
-        {
-            return HasResponses() ? ResponseStore.OrderBy(x => x.Question.Rank).LastOrDefault() : null;
-        }
-        private void UpdateResponseQuestions()
-        {
-            foreach (var response in ResponseStore)
-            {
-                response.Question = GetQuestion(response.QuestionId);
-            }
-        }     
-        private static List<Response> ReadResponses(Encounter encounter)
-        {
-            var answeredQuestions = new List<Response>();
-
-            if (null != encounter)
-            {
-                answeredQuestions = encounter.Obses.Select(x => new Response
-                    {
-                        EncounterId = x.EncounterId,
-                        ObsId = x.Id,
-                        Obs = x,
-                        QuestionId = x.QuestionId
-                    })
-                    .ToList();
-            }
-
-            return answeredQuestions;
-        }
-
         public Question GetQuestion(Guid value)
-
         {
             return QuestionStore.FirstOrDefault(x => x.Id == value);
         }
@@ -106,9 +72,38 @@ namespace LiveHTS.Core.Model.Interview
             var currentId = currenQuestion.Id;
 
             return QuestionStore
-                .OrderBy(x=>x.Rank)
+                .OrderByDescending(x=>x.Rank)
                 .FirstOrDefault(x => x.Rank <= currentRank &&
                                      x.Id != currentId);
+        }
+        public Response GetLastResponse()
+        {
+            return HasResponses() ? ResponseStore.OrderBy(x => x.Question.Rank).LastOrDefault() : null;
+        }
+        private void UpdateResponseQuestions()
+        {
+            foreach (var response in ResponseStore)
+            {
+                response.Question = GetQuestion(response.QuestionId);
+            }
+        }
+        private static List<Response> ReadResponses(Encounter encounter)
+        {
+            var answeredQuestions = new List<Response>();
+
+            if (null != encounter)
+            {
+                answeredQuestions = encounter.Obses.Select(x => new Response
+                    {
+                        EncounterId = x.EncounterId,
+                        ObsId = x.Id,
+                        Obs = x,
+                        QuestionId = x.QuestionId
+                    })
+                    .ToList();
+            }
+
+            return answeredQuestions;
         }
 
         public override string ToString()

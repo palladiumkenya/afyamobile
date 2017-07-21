@@ -1,6 +1,5 @@
 ﻿using System;
 using LiveHTS.Core.Model.Survey;
-using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.Interview
 {
@@ -11,7 +10,15 @@ namespace LiveHTS.Core.Model.Interview
         public Question Question { get; set; }
         public Guid ObsId { get; set; }
         public Obs Obs { get; set; }
-        
+
+        public Response()
+        {
+        }
+
+        public Response(Guid encounterId)
+        {
+            EncounterId = encounterId;
+        }
 
         public ObsValue GetValue()
         {
@@ -27,15 +34,6 @@ namespace LiveHTS.Core.Model.Interview
                 return new ObsValue(typeof(DateTime?), Obs.ValueDateTime);
 
             return new ObsValue(typeof(string), Obs.ValueText);
-        }
-
-        public Response()
-        {
-        }
-
-        public Response(Guid encounterId)
-        {
-            EncounterId = encounterId;
         }
 
         public void SetQuestion(Question question)
@@ -60,7 +58,5 @@ namespace LiveHTS.Core.Model.Interview
         {
             SetObs(Obs.Create(questionId,encounterId,type,response));
         }
-
-       
     }
 }

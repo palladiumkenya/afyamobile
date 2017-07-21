@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FizzWare.NBuilder;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SQLite;
 
 namespace LiveHTS.Core.Tests.Model.Interview
 {
@@ -21,7 +17,6 @@ namespace LiveHTS.Core.Tests.Model.Interview
             _form = TestHelpers.CreateTestFormWithQuestions(4);
             _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
             _encounterNoObs = TestHelpers.CreateTestEncounters(_form);
-
         }
 
         [TestMethod]
@@ -32,8 +27,8 @@ namespace LiveHTS.Core.Tests.Model.Interview
             Assert.IsTrue(manifest.HasQuestions());
             Assert.IsTrue(manifest.HasResponses());
             Console.WriteLine(manifest);
-
         }
+
         [TestMethod]
         public void should_Create_Manifest_No_Obs()
         {
@@ -42,31 +37,74 @@ namespace LiveHTS.Core.Tests.Model.Interview
             Assert.IsTrue(manifest.HasQuestions());
             Assert.IsFalse(manifest.HasResponses());
             Console.WriteLine(manifest);
-
         }
 
         [TestMethod]
-        public void should_Update_Manifest_Encounters()
+        public void should_Update_Encounter()
         {
             var manifest = Manifest.Create(_form, _encounterNoObs);
             Console.WriteLine(manifest);
             Assert.IsFalse(manifest.HasResponses());
             var updatedManifest = manifest;
+
             updatedManifest.UpdateEncounter(_encounter);
+
             Assert.IsTrue(updatedManifest.HasResponses());
             Console.WriteLine(new string('-',30));
             Console.WriteLine(updatedManifest);
         }
+
+        [TestMethod]
+        public void should_Get_Question()
+        {
+            var manifest = Manifest.Create(_form, _encounter);
+            var q = manifest.GetFirstQuestion();
+
+            var question = manifest.GetQuestion(q.Id);
+
+            Assert.IsNotNull(question);
+            Console.WriteLine(question);
+        }
+
         [TestMethod]
         public void should_Get_FirstQuestion()
         {
             var manifest = Manifest.Create(_form, _encounter);
+
             var q = manifest.GetFirstQuestion();
-            Assert.AreEqual(1,q.Rank);
+
+            Assert.AreEqual(1, q.Rank);
             Console.WriteLine(q);
         }
+
         [TestMethod]
-        public void should_Last_Question()
+        public void should_Get_NextRank_Question()
+        {
+            var manifest = Manifest.Create(_form, _encounter);
+            var q = manifest.QuestionStore[0];
+
+            var question= manifest.GetNextRankQuestionAfter(q.Id);
+
+            Assert.AreEqual(2, question.Rank);
+            Assert.IsNotNull(question);
+            Console.WriteLine(question);
+        }
+
+        [TestMethod]
+        public void should_Get_PreviousRank_Question()
+        {
+            var manifest = Manifest.Create(_form, _encounter);
+            var q = manifest.QuestionStore[3];
+
+            var question = manifest.GetPreviousRankQuestionBefore(q.Id);
+
+            Assert.AreEqual(3, question.Rank);
+            Assert.IsNotNull(question);
+            Console.WriteLine(question);
+        }
+
+        [TestMethod]
+        public void should_Get_Last_Response()
         {
             var manifest = Manifest.Create(_form, _encounter);
             var q = manifest.GetLastResponse();

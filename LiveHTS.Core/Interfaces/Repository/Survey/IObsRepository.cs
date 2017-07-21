@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 
 namespace LiveHTS.Core.Interfaces.Repository.Survey

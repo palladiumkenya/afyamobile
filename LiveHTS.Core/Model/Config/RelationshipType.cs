@@ -1,5 +1,4 @@
-﻿using System;
-using LiveHTS.SharedKernel.Model;
+﻿using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.Config
 {
