@@ -4,7 +4,7 @@ using LiveHTS.Core.Model.Survey;
 
 namespace LiveHTS.Core.Interfaces.Engine
 {
-    public interface IDirector
+    public interface INavigationEngine
     {
         Question GetLiveQuestion(Manifest currentManifest);
         Question GetNextQuestion(Guid currentQuestionId, Manifest currentManifest);

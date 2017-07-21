@@ -12,8 +12,8 @@ namespace LiveHTS.Core.Service.Clients
         private Manifest _manifest;
         private readonly Response _response;
         private Encounter _encounter;
-        private readonly IDirector _director;
-        private readonly IValidator _validator;
+        private readonly INavigationEngine _navigationEngine;
+        private readonly IValidationEngine _validationEngine;
 
         private readonly IFormRepository _formRepository;
         private readonly IEncounterRepository _encounterRepository;
@@ -31,14 +31,14 @@ namespace LiveHTS.Core.Service.Clients
         }
 
         public ObsService(IFormRepository formRepository, IEncounterRepository encounterRepository, IObsRepository obsRepository,Encounter encounter
-            , IDirector director,IValidator validator)
+            , INavigationEngine navigationEngine,IValidationEngine validationEngine)
         {
             _formRepository = formRepository;
             _encounterRepository = encounterRepository;
             _obsRepository = obsRepository;
             _encounter = encounter;
-            _director = director;
-            _validator = validator;
+            _navigationEngine = navigationEngine;
+            _validationEngine = validationEngine;
         }
 
         public void Initialize(Encounter encounter=null)
@@ -51,22 +51,22 @@ namespace LiveHTS.Core.Service.Clients
 
         public Question GetLiveQuestion()
         {
-            return _director.GetLiveQuestion(_manifest);
+            return _navigationEngine.GetLiveQuestion(_manifest);
         }
 
         public Question GetNextQuestion(Guid currentQuestionId)
         {
-            return _director.GetNextQuestion(currentQuestionId,_manifest);
+            return _navigationEngine.GetNextQuestion(currentQuestionId,_manifest);
         }
 
         public Question GetPreviousQuestion(Guid currentQuestionId)
         {
-            return _director.GetPreviousQuestion(currentQuestionId,_manifest);
+            return _navigationEngine.GetPreviousQuestion(currentQuestionId,_manifest);
         }
 
         public Question GetQuestion(Guid questionId, Manifest currentManifest)
         {
-            return _director.GetQuestion(questionId, _manifest);
+            return _navigationEngine.GetQuestion(questionId, _manifest);
         }
 
         public void SaveResponse(Guid encounterId, Guid questionId, object response)
@@ -77,7 +77,7 @@ namespace LiveHTS.Core.Service.Clients
             liveResponse.SetQuestion(question);
             liveResponse.SetObs(encounterId, questionId, question.Concept.ConceptTypeId, response);
 
-            if (_validator.Validate(liveResponse))
+            if (_validationEngine.Validate(liveResponse))
             {
                 _obsRepository.SaveOrUpdate(liveResponse.Obs);
                 UpdateManifest(encounterId);

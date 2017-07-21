@@ -13,7 +13,7 @@ using SQLite;
 namespace LiveHTS.Core.Tests.Engine
 {
     [TestFixture]
-    public class SimpleValidatorTest
+    public class ValidationEngineTests
     {
 
         private ILiveSetting _liveSetting;
@@ -24,7 +24,7 @@ namespace LiveHTS.Core.Tests.Engine
         private Guid _formId;
         private Encounter _encounter;
         private Response _responseRequired;
-        private IValidator _validator;
+        private IValidationEngine _validationEngine;
 
         [SetUp]
         public void SetUp()
@@ -38,7 +38,7 @@ namespace LiveHTS.Core.Tests.Engine
             _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
 
             
-            _validator=new SimpleValidator();
+            _validationEngine=new ValidationEngine();
             //[ValidatorId] Required | Range 
             //[ValidatorTypeId] None | Numeric | Count
             //Revision=0
@@ -53,12 +53,12 @@ namespace LiveHTS.Core.Tests.Engine
             obs.ValueCoded = Guid.NewGuid();
             _responseRequired = new Response(obs.EncounterId, q1, obs);
 
-            var isvalid = _validator.Validate(_responseRequired);
+            var isvalid = _validationEngine.Validate(_responseRequired);
             NUnit.Framework.Assert.IsTrue(isvalid);
             Console.WriteLine($"{q1}={obs.ValueCoded}  | {isvalid}");
 
             _responseRequired.Obs.ValueCoded = null;
-            NUnit.Framework.Assert.Throws<ArgumentException>(() => _validator.Validate(_responseRequired));
+            NUnit.Framework.Assert.Throws<ArgumentException>(() => _validationEngine.Validate(_responseRequired));
         }
 
         [Test]
@@ -72,15 +72,15 @@ namespace LiveHTS.Core.Tests.Engine
             obs.ValueNumeric = 2;
             _responseRequired = new Response(obs.EncounterId, q3, obs);
 
-            var isvalid = _validator.Validate(_responseRequired);
+            var isvalid = _validationEngine.Validate(_responseRequired);
             NUnit.Framework.Assert.IsTrue(isvalid);
             Console.WriteLine($"{q3}={obs.ValueNumeric}  | {isvalid}");
 
             _responseRequired.Obs.ValueNumeric = null;
-            NUnit.Framework.Assert.Throws<ArgumentException>(() => _validator.Validate(_responseRequired));
+            NUnit.Framework.Assert.Throws<ArgumentException>(() => _validationEngine.Validate(_responseRequired));
 
             _responseRequired.Obs.ValueNumeric = 6;
-            NUnit.Framework.Assert.Throws<ArgumentException>(() => _validator.Validate(_responseRequired));
+            NUnit.Framework.Assert.Throws<ArgumentException>(() => _validationEngine.Validate(_responseRequired));
         }
     }
 }

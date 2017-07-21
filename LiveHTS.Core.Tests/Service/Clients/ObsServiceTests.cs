@@ -27,8 +27,8 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private IEncounterRepository _encounterRepository;
         private IObsRepository _obsRepository;
         
-        private IDirector _director;
-        private IValidator _validator;
+        private INavigationEngine _navigationEngine;
+        private IValidationEngine _validationEngine;
 
         private IObsService _obsService;
         private Guid _formId;
@@ -49,9 +49,9 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _form = _formRepository.GetWithQuestions(_formId, true);
             _encounterNew = TestHelpers.CreateTestEncounters(_form);            
             _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
-            _director = new SimpleDirector();
-            _validator=new SimpleValidator();
-            _obsService=new ObsService(_formRepository,_encounterRepository,_obsRepository,_encounterNew,_director,_validator);
+            _navigationEngine = new NavigationEngine();
+            _validationEngine=new ValidationEngine();
+            _obsService=new ObsService(_formRepository,_encounterRepository,_obsRepository,_encounterNew,_navigationEngine,_validationEngine);
 
         }
 

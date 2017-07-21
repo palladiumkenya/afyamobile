@@ -13,7 +13,7 @@ using SQLite;
 namespace LiveHTS.Core.Tests.Engine
 {
     [TestFixture]
-    public class SimpleDirectorTests
+    public class NavigationEngineTests
     {
         private bool setNunit = TestHelpers.UseNunit = true;
 
@@ -25,7 +25,7 @@ namespace LiveHTS.Core.Tests.Engine
         private Encounter _encounter, _encounterNew;
         private Response _responseRequired;
         private Manifest _manifest;
-        private IDirector _director;
+        private INavigationEngine _navigationEngine;
 
         [SetUp]
         public void SetUp()
@@ -38,7 +38,7 @@ namespace LiveHTS.Core.Tests.Engine
             _form = formRepository.GetWithQuestions(_formId, true);
             _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
             _encounterNew = TestHelpers.CreateTestEncounters(_form);
-            _director=new SimpleDirector();
+            _navigationEngine=new NavigationEngine();
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace LiveHTS.Core.Tests.Engine
 
             _manifest = Manifest.Create(_form, _encounterNew);
 
-            var question = _director.GetLiveQuestion(_manifest);
+            var question = _navigationEngine.GetLiveQuestion(_manifest);
             Assert.IsNotNull(question);
             Assert.AreEqual(1,question.Rank);
             Console.WriteLine(question);
@@ -63,7 +63,7 @@ namespace LiveHTS.Core.Tests.Engine
 
             _manifest = Manifest.Create(_form, _encounterNew);
 
-            var question = _director.GetLiveQuestion(_manifest);
+            var question = _navigationEngine.GetLiveQuestion(_manifest);
             Assert.IsNotNull(question);
             Assert.AreEqual(5, question.Rank);
             Console.WriteLine(question);
@@ -79,7 +79,7 @@ namespace LiveHTS.Core.Tests.Engine
 
             _manifest = Manifest.Create(_form, _encounterNew);
 
-            var question = _director.GetLiveQuestion(_manifest);
+            var question = _navigationEngine.GetLiveQuestion(_manifest);
             Assert.IsNotNull(question);
             Assert.AreEqual(4, question.Rank);
             Console.WriteLine(question);
@@ -93,7 +93,7 @@ namespace LiveHTS.Core.Tests.Engine
             var currentQuestionId = _form.Questions.First(x => x.Rank == 4).Id;
             _manifest = Manifest.Create(_form, _encounter);
                        
-            var question = _director.GetNextQuestion(currentQuestionId,_manifest);
+            var question = _navigationEngine.GetNextQuestion(currentQuestionId,_manifest);
             Assert.IsNotNull(question);
             Assert.AreEqual(5, question.Rank);
             Console.WriteLine(question);
@@ -107,7 +107,7 @@ namespace LiveHTS.Core.Tests.Engine
             var currentQuestionId = _form.Questions.First(x => x.Rank == 5).Id;
             _manifest = Manifest.Create(_form, _encounter);
 
-            var question = _director.GetPreviousQuestion(currentQuestionId, _manifest);
+            var question = _navigationEngine.GetPreviousQuestion(currentQuestionId, _manifest);
             Assert.IsNotNull(question);
             Assert.AreEqual(4, question.Rank);
             Console.WriteLine(question);

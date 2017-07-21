@@ -5,7 +5,7 @@ using LiveHTS.Core.Model.Interview;
 
 namespace LiveHTS.Core.Engine
 {
-    public class SimpleValidator:IValidator
+    public class ValidationEngine:IValidationEngine
     {
         public bool Validate(Response response)
         {

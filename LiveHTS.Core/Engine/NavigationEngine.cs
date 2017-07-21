@@ -7,7 +7,7 @@ using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Engine
 {
-    public class SimpleDirector : IDirector
+    public class NavigationEngine : INavigationEngine
     {
         public Question GetLiveQuestion(Manifest currentManifest)
         {

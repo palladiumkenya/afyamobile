@@ -2,7 +2,7 @@
 
 namespace LiveHTS.Core.Interfaces.Engine
 {
-    public interface IValidator
+    public interface IValidationEngine
     {
         bool Validate(Response response);
     }
