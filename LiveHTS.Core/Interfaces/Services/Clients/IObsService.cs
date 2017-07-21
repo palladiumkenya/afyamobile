@@ -10,9 +10,12 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Response Response { get; }
 
         void Initialize();
+        
         Question GetLiveQuestion();
         Question GetNextQuestion(Guid currentQuestionId);
         Question GetPreviousQuestion(Guid currentQuestionId);
+        Question GetQuestion(Guid questionId, Manifest currentManifest);
+
         void SaveResponse(Guid encounterId, Guid questionId, object response);
     }
 }

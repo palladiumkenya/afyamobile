@@ -9,5 +9,7 @@ namespace LiveHTS.Core.Interfaces.Engine
         Question GetLiveQuestion(Manifest currentManifest);
         Question GetNextQuestion(Guid currentQuestionId, Manifest currentManifest);
         Question GetPreviousQuestion(Guid currentQuestionId, Manifest currentManifest);
+        Question GetQuestion(Guid questionId, Manifest currentManifest);
+        Question EvaluateSelf(Question question, Manifest currentManifest);
     }
 }

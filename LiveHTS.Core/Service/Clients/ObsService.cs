@@ -62,6 +62,11 @@ namespace LiveHTS.Core.Service.Clients
             return _director.GetPreviousQuestion(currentQuestionId,_manifest);
         }
 
+        public Question GetQuestion(Guid questionId, Manifest currentManifest)
+        {
+            return _director.GetQuestion(questionId, _manifest);
+        }
+
         public void SaveResponse(Guid encounterId, Guid questionId, object response)
         {
             var liveResponse=new Response(encounterId);

@@ -72,8 +72,14 @@ namespace LiveHTS.Core.Engine
             return EvaluateSelf(q, currentManifest);
         }
 
+        public Question GetQuestion(Guid questionId, Manifest currentManifest)
+        {
+            var q = currentManifest.GetQuestion(questionId);
+            return EvaluateSelf(q, currentManifest);
+        }
+
         //TODO: Evaluate self
-        private Question EvaluateSelf(Question question,Manifest currentManifest)
+        public Question EvaluateSelf(Question question,Manifest currentManifest)
         {
             //TODO: Pre Branches
 
