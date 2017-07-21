@@ -23,8 +23,7 @@ namespace LiveHTS.Core.Engine
             // return FIRST Question
             if (null == lastResonse)
             {
-                var q = currentManifest.GetFirstQuestion();
-                candidateQuestion =  EvaluateSelf(q,lastResonse,currentManifest);
+                candidateQuestion = currentManifest.GetFirstQuestion();
                 return candidateQuestion;
             }
 
@@ -35,8 +34,6 @@ namespace LiveHTS.Core.Engine
             // Vet last Question
             if (null != lastQuestion)
             {
-                //TODO:Pre Branches
-
                 #region Post Branches
 
                 if (lastQuestion.HasBranches)
@@ -53,7 +50,6 @@ namespace LiveHTS.Core.Engine
                         }
                     }
                 }
-
                 #endregion
 
                 //Get Next if not in Branch
@@ -61,12 +57,20 @@ namespace LiveHTS.Core.Engine
                     candidateQuestion = currentManifest.GetNextRankQuestionAfter(lastQuestion.Id);
             }
 
-            return candidateQuestion;
+            return EvaluateSelf(candidateQuestion, currentManifest);
         }
 
         //TODO: Evaluate self
-        private Question EvaluateSelf(Question question,Response response,Manifest currentManifest)
+        private Question EvaluateSelf(Question question,Manifest currentManifest)
         {
+            //TODO: Pre Branches
+
+            //TODO: Transformtions
+
+            //TODO: RemoteTransformations
+
+            //TODO: ReVailidations
+
             Question nextQuestion = question;
             return nextQuestion;
         }

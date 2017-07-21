@@ -52,9 +52,24 @@ namespace LiveHTS.Core.Tests.Engine
             Assert.AreEqual(1,question.Rank);
             Console.WriteLine(question);
         }
-
         [Test]
         public void should_GetLiveQuestion_Other()
+        {
+            //  4.Referall   >>  5.Discordant
+
+            _encounterNew.Obses = _encounter.Obses.Take(4).ToList();
+            _encounterNew.Obses.First().ValueCoded = TestDataHelpers._consentNo;
+
+            _manifest = Manifest.Create(_form, _encounterNew);
+
+            var question = _director.GetLiveQuestion(_manifest);
+            Assert.IsNotNull(question);
+            Assert.AreEqual(5, question.Rank);
+            Console.WriteLine(question);
+        }
+
+        [Test]
+        public void should_GetLiveQuestion_Other_Branched()
         {
             //Q1.Consent=N GOTO Q4.Referall
 
@@ -62,8 +77,6 @@ namespace LiveHTS.Core.Tests.Engine
             _encounterNew.Obses.First().ValueCoded = TestDataHelpers._consentNo;
 
             _manifest = Manifest.Create(_form, _encounterNew);
-            
-            
 
             var question = _director.GetLiveQuestion(_manifest);
             Assert.IsNotNull(question);
