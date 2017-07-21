@@ -9,15 +9,17 @@ using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
+using NUnit.Framework;
 using SQLite;
 
 namespace LiveHTS.Core.Tests
 {
     public class TestHelpers
     {
+        public static bool UseNunit;
         public static SQLiteConnection GetDatabase(string database= "livehts.db", bool withData = true)
         {
-            
+
             var db = new SQLiteConnection(database,false);
 
             #region Module
@@ -198,7 +200,9 @@ namespace LiveHTS.Core.Tests
         public static List<T> ReadCsv<T>() where T : class
         {
             var name = typeof(T).Name;
-            var folder = Directory.GetCurrentDirectory();
+            var folder = UseNunit
+                ? TestContext.CurrentContext.TestDirectory
+                : Directory.GetCurrentDirectory();
 
             folder = folder.EndsWith(@"\") ? folder : $@"{folder}\";
 

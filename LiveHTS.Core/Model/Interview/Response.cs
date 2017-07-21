@@ -20,6 +20,13 @@ namespace LiveHTS.Core.Model.Interview
             EncounterId = encounterId;
         }
 
+        public Response(Guid encounterId, Question question, Obs obs)
+        {
+            EncounterId = encounterId;
+            SetQuestion(question);
+            SetObs(obs);
+        }
+
         public ObsValue GetValue()
         {
             //  Single | Numeric | Multi | DateTime | Text

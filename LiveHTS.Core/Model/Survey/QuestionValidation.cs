@@ -82,6 +82,6 @@ namespace LiveHTS.Core.Model.Survey
             var minInfo = string.IsNullOrWhiteSpace(MinLimit) ? string.Empty : $"{MinLimit}";
             var maxInfo = string.IsNullOrWhiteSpace(MaxLimit) ? string.Empty : $"-{MaxLimit}";
             return $"{mainInfo} {minInfo} {maxInfo}  [{Revision}]";
-        }       
+        }      
     }
 }

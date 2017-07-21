@@ -24,6 +24,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         [TestInitialize]
         public void SetUp()
         {
+
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _formRepository = new FormRepository(_liveSetting,
                 new QuestionRepository(_liveSetting,

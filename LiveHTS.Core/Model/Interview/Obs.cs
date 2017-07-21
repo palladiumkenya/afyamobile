@@ -80,7 +80,7 @@ namespace LiveHTS.Core.Model.Interview
         {            
             if (type == "Single")
             {
-                return ValueCoded.IsNullOrEmpty();
+                return !ValueCoded.IsNullOrEmpty();
             }
             if (type == "Numeric")
             {
