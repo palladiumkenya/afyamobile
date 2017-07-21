@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using LiveHTS.Core.Engine;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Engine;
@@ -83,5 +84,36 @@ namespace LiveHTS.Core.Tests.Engine
             Assert.AreEqual(4, question.Rank);
             Console.WriteLine(question);
         }
+
+        [Test]
+        public void should_GetNextQuestion()
+        {
+            //  4.Referall   >>  5.Discordant
+
+            var currentQuestionId = _form.Questions.First(x => x.Rank == 4).Id;
+            _manifest = Manifest.Create(_form, _encounter);
+            
+            
+            var question = _director.GetNextQuestion(currentQuestionId,_manifest);
+            Assert.IsNotNull(question);
+            Assert.AreEqual(5, question.Rank);
+            Console.WriteLine(question);
+        }
+
+        [Test]
+        public void should_GetPreviousQuestion()
+        {
+            //  4.Referall   <<  5.Discordant
+
+            var currentQuestionId = _form.Questions.First(x => x.Rank == 5).Id;
+            _manifest = Manifest.Create(_form, _encounter);
+
+
+            var question = _director.GetPreviousQuestion(currentQuestionId, _manifest);
+            Assert.IsNotNull(question);
+            Assert.AreEqual(4, question.Rank);
+            Console.WriteLine(question);
+        }
+
     }
 }

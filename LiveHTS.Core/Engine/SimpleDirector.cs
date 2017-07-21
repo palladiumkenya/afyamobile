@@ -60,6 +60,18 @@ namespace LiveHTS.Core.Engine
             return EvaluateSelf(candidateQuestion, currentManifest);
         }
 
+        public Question GetNextQuestion(Guid currentQuestionId, Manifest currentManifest)
+        {
+            var q= currentManifest.GetNextRankQuestionAfter(currentQuestionId);
+            return EvaluateSelf(q,currentManifest);
+        }
+
+        public Question GetPreviousQuestion(Guid currentQuestionId, Manifest currentManifest)
+        {
+            var q= currentManifest.GetPreviousRankQuestionBefore(currentQuestionId);
+            return EvaluateSelf(q, currentManifest);
+        }
+
         //TODO: Evaluate self
         private Question EvaluateSelf(Question question,Manifest currentManifest)
         {

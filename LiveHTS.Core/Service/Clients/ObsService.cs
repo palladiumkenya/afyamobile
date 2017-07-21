@@ -25,7 +25,6 @@ namespace LiveHTS.Core.Service.Clients
         {
             get { return _manifest; }
         }
-
         public Response Response
         {
             get { return _response; }
@@ -55,12 +54,12 @@ namespace LiveHTS.Core.Service.Clients
 
         public Question GetNextQuestion(Guid currentQuestionId)
         {
-            return _manifest.GetNextRankQuestionAfter(currentQuestionId);
+            return _director.GetNextQuestion(currentQuestionId,_manifest);
         }
 
         public Question GetPreviousQuestion(Guid currentQuestionId)
         {
-            return _manifest.GetPreviousRankQuestionBefore(currentQuestionId);
+            return _director.GetPreviousQuestion(currentQuestionId,_manifest);
         }
 
         public void SaveResponse(Guid encounterId, Guid questionId, object response)
