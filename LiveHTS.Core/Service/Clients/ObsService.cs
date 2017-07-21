@@ -41,10 +41,12 @@ namespace LiveHTS.Core.Service.Clients
             _validator = validator;
         }
 
-        public void Initialize()
+        public void Initialize(Encounter encounter=null)
         {
-            var form = _formRepository.GetWithQuestions(_encounter.FormId, true);
-            _manifest = Manifest.Create(form, _encounter);
+            var currentEncounter = null != encounter ? encounter : _encounter;
+            
+            var form = _formRepository.GetWithQuestions(currentEncounter.FormId, true);
+            _manifest = Manifest.Create(form, currentEncounter);
         }
 
         public Question GetLiveQuestion()

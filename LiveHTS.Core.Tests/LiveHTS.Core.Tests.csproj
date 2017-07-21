@@ -79,6 +79,7 @@
     <Compile Include="Model\Survey\QuestionValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Clients\DashboardServiceTests.cs" />
+    <Compile Include="Service\Clients\ObsServiceTests.cs" />
     <Compile Include="Service\Clients\EncounterServiceTests.cs" />
     <Compile Include="Service\InterviewServiceTests.cs" />
     <Compile Include="Service\DirectorServiceTests.cs" />
