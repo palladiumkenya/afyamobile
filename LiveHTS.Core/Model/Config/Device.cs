@@ -1,5 +1,6 @@
 ﻿using System;
 using LiveHTS.SharedKernel.Model;
+using SQLite;
 
 namespace LiveHTS.Core.Model.Config
 {
@@ -8,5 +9,7 @@ namespace LiveHTS.Core.Model.Config
         public string Serial { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        [Indexed]
+        public Guid PracticeId { get; set; }
     }
 }

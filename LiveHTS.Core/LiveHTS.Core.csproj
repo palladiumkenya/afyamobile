@@ -41,9 +41,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
+    <Compile Include="Interfaces\Repository\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IUserRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
+    <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />
+    <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
+    <Compile Include="Interfaces\Services\IDeviceSetupService.cs" />
+    <Compile Include="Interfaces\Services\ILookupService.cs" />
+    <Compile Include="Model\AppDashboard.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
+    <Compile Include="Service\AppDashboardService.cs" />
     <Compile Include="Service\Clients\ObsService.cs" />
     <Compile Include="Engine\NavigationEngine.cs" />
     <Compile Include="Interfaces\Engine\INavigationEngine.cs" />

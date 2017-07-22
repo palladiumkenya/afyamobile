@@ -30,7 +30,6 @@ namespace LiveHTS.Core.Service.Access
             if (String.CompareOrdinal(password, user.Password) == 0)
                 return _userRepository.Get(user.Id);
 
-
             throw new Exception("wrong User or Password !");
         }
     }
