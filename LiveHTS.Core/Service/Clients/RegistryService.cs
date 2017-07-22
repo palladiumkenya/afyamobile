@@ -10,6 +10,7 @@ namespace LiveHTS.Core.Service.Clients
     {
         private readonly IClientRepository _clientRepository;
 
+
         public RegistryService(IClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
@@ -17,22 +18,26 @@ namespace LiveHTS.Core.Service.Clients
 
         public Client Find(Guid id)
         {
-            throw new NotImplementedException();
+            return _clientRepository.Get(id);
         }
 
         public IEnumerable<Client> GetAllClients(string search = "")
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(search))
+                return _clientRepository.GetAll();
+
+            return _clientRepository.GetAll();
         }
 
         public void SaveOrUpdate(Client client)
         {
-            throw new NotImplementedException();
+            
+            _clientRepository.SaveOrUpdate(client);
         }
 
         public void Delete(Guid clientId)
         {
-            throw new NotImplementedException();
+            _clientRepository.Delete(clientId);
         }
     }
 }

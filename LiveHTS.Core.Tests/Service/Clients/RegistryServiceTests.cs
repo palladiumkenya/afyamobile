@@ -41,7 +41,17 @@ namespace LiveHTS.Core.Tests.Service.Clients
             var cient = _registryService.Find(_client.Id);
             Assert.IsNotNull(cient);
             Assert.IsNotNull(cient.Person);
+            Assert.IsTrue(cient.Identifiers.Any());
+            Assert.IsTrue(cient.Relationships.Any());
             Console.WriteLine(cient);
+            foreach (var identifier in cient.Identifiers)
+            {
+                Console.WriteLine($"  > {identifier}");
+            }
+            foreach (var relationship in cient.Relationships)
+            {
+                Console.WriteLine($"  > {relationship}");
+            }            
         }
 
 
@@ -53,6 +63,8 @@ namespace LiveHTS.Core.Tests.Service.Clients
             var cient = clients.First();
             Assert.IsNotNull(cient);
             Assert.IsNotNull(cient.Person);
+            Assert.IsTrue(cient.Identifiers.Any());
+            Assert.IsTrue(cient.Relationships.Any());
             Console.WriteLine(cient);
 
         }
@@ -65,6 +77,8 @@ namespace LiveHTS.Core.Tests.Service.Clients
             var cient = clients.First();
             Assert.IsNotNull(cient);
             Assert.IsNotNull(cient.Person);
+            Assert.IsTrue(cient.Identifiers.Any());
+            Assert.IsTrue(cient.Relationships.Any());
             Console.WriteLine(cient);
         }
 
@@ -100,7 +114,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _registryService.Delete(_client.Id);
 
             var deleted= _registryService.Find(_client.Id);
-            Assert.IsNotNull(deleted);
+            Assert.IsNull(deleted);
         }
     }
 }

@@ -5,6 +5,6 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
 {
     public interface IClientRepository:IRepository<Client,Guid>
     {
-        
+        void SaveOrUpdate(Client client);
     }
 }
