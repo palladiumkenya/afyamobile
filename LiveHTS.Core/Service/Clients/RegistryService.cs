@@ -48,11 +48,21 @@ namespace LiveHTS.Core.Service.Clients
             clientIds.AddRange(cIds);
             personIds.AddRange(pIds);
 
-            return _clientRepository
-                .GetAll(x => clientIds.Contains(x.Id) ||
-                             personIds.Contains(x.PersonId))
-                .ToList();
+            var clients= new List<Client>();
 
+            if (clientIds.Count > 0)
+            {
+                var cidMatch = _clientRepository.GetAll(x => clientIds.Contains(x.Id)).ToList();
+                clients.AddRange(cidMatch);
+            }
+
+            if (personIds.Count > 0)
+            {
+                var pMatch = _clientRepository.GetAll(x => personIds.Contains(x.PersonId)).ToList();
+                clients.AddRange(pMatch);
+            }
+
+            return clients;
         }
 
         public void SaveOrUpdate(Client client)

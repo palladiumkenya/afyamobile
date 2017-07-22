@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Model.Subject;
@@ -40,6 +41,20 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             return clients;
         }
 
+        public override IEnumerable<Client> GetAll(Expression<Func<Client, bool>> predicate, bool voided = false)
+        {
+            var clients = base.GetAll(predicate, voided).ToList();
+
+            foreach (var c in clients)
+            {
+                c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
+                c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
+                c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
+            }
+
+            return clients;
+        }
+
         public void SaveOrUpdate(Client obs)
         {
             var existingObs = _db.Find<Client>(obs.Id);
@@ -56,14 +71,25 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
         public IEnumerable<Client> QuickSearch(string search)
         {
-            
-            var clients = _db.Table<Client>().ToList();
+            var cIds = _db.Table<ClientIdentifier>().Where(x => x.Identifier.ToLower().Contains(search.ToLower()))
+                .Select(x => x.ClientId)
+                .ToList();
+            var pIds = _db.Table<Person>().Where(
+                    x => x.FirstName.ToLower().Contains(search.ToLower()) ||
+                         x.MiddleName.ToLower().Contains(search.ToLower()) ||
+                         x.LastName.ToLower().Contains(search.ToLower())
+                )
+                .Select(x => x.Id)
+                .ToList();
 
-            foreach (var c in clients)
+            var clients = _db.Table<Client>();
+            if (cIds.Count>0)
             {
-                c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
-                c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
-                c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
+                clients = _db.Table<Client>().Where(x=>cIds.Contains(x.Id));
+            }
+            if (pIds.Count > 0)
+            {
+                clients = _db.Table<Client>().Where(x => cIds.Contains(x.Id));
             }
 
             return clients;

@@ -83,8 +83,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             var cient = clients.First();
             Assert.IsNotNull(cient);
             Assert.IsNotNull(cient.Person);
-            Assert.IsTrue(cient.Identifiers.Any());
-            Assert.IsTrue(cient.Relationships.Any());
+            
             Console.WriteLine(cient);
         }
 

@@ -39,7 +39,7 @@ namespace LiveHTS.Infrastructure.Repository
             return results;
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate, bool voided = false)
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate, bool voided = false)
         {
             var results= _db.Table<T>()
                 .Where(predicate);
@@ -62,7 +62,7 @@ namespace LiveHTS.Infrastructure.Repository
             _db.Delete<T>(id);
         }
 
-        public void Void(TId id)
+        public virtual void Void(TId id)
         {
             var entity = Get(id);
             if (null != entity)
