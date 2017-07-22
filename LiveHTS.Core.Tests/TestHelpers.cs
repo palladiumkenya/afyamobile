@@ -49,6 +49,7 @@ namespace LiveHTS.Core.Tests
             db.CreateTable<ProviderType>();
             db.CreateTable<RelationshipType>();
             db.CreateTable<Device>();
+            db.CreateTable<Practice>();
 
             #endregion
 
@@ -71,6 +72,7 @@ namespace LiveHTS.Core.Tests
             db.CreateTable<PersonContact>();
             db.CreateTable<Client>();
             db.CreateTable<ClientIdentifier>();
+            db.CreateTable<ClientRelationship>();
             db.CreateTable<User>();
             db.CreateTable<Provider>();
             db.CreateTable<Encounter>();
@@ -118,6 +120,7 @@ namespace LiveHTS.Core.Tests
             db.DeleteAll<ProviderType>();
             db.DeleteAll<RelationshipType>();
             db.DeleteAll<Device>();
+            db.DeleteAll<Practice>();
             #endregion
 
             #region Delete Lookups
@@ -160,6 +163,7 @@ namespace LiveHTS.Core.Tests
                 db.InsertAll(ReadCsv<ProviderType>());
                 db.InsertAll(ReadCsv<RelationshipType>());
                 db.InsertAll(ReadCsv<Device>());
+                db.InsertAll(ReadCsv<Practice>());
                 #endregion
 
                 #region Question

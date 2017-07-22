@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IUserRepository.cs" />
+    <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
+    <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\Clients\ObsService.cs" />
     <Compile Include="Engine\NavigationEngine.cs" />
     <Compile Include="Interfaces\Engine\INavigationEngine.cs" />
@@ -63,7 +66,7 @@
     <Compile Include="Model\Subject\ClientRelationship.cs" />
     <Compile Include="Model\Subject\Client.cs" />
     <Compile Include="Model\Config\ConceptType.cs" />
-    <Compile Include="Model\Device.cs" />
+    <Compile Include="Model\Config\Device.cs" />
     <Compile Include="Model\Config\ProviderType.cs" />
     <Compile Include="Model\Config\RelationshipType.cs" />
     <Compile Include="Model\Config\SubCounty.cs" />
@@ -73,7 +76,7 @@
     <Compile Include="Model\Interview\Response.cs" />
     <Compile Include="Model\Subject\PersonContact.cs" />
     <Compile Include="Model\Subject\PersonAddress.cs" />
-    <Compile Include="Model\Practice.cs" />
+    <Compile Include="Model\Config\Practice.cs" />
     <Compile Include="Model\Config\PracticeType.cs" />
     <Compile Include="Model\Config\ClientAttribute.cs" />
     <Compile Include="Model\Config\Action.cs" />

@@ -93,6 +93,8 @@ namespace LiveHTS.Core.Tests
                 client.Person = p;
                 users.Add(client);
             }
+            users[0].UserName = "admin";
+            users[0].Password = "maun2806";
             Users = users;
             return users;
         }

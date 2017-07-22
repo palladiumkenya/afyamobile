@@ -2,7 +2,7 @@
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
-namespace LiveHTS.Core.Model
+namespace LiveHTS.Core.Model.Config
 {
     public class Practice : Entity<Guid>
     {

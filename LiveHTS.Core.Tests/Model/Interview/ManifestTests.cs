@@ -2,12 +2,15 @@
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SQLite;
 
 namespace LiveHTS.Core.Tests.Model.Interview
 {
     [TestClass]
     public class ManifestTests
     {
+        private SQLiteConnection _database = TestHelpers.GetDatabase();
+
         private Form _form;
         private Encounter _encounter, _encounterNoObs;
 
