@@ -1,10 +1,10 @@
 ﻿using System;
 using LiveHTS.Core.Model.Config;
 
-namespace LiveHTS.Core.Interfaces.Repository
+namespace LiveHTS.Core.Interfaces.Repository.Config
 {
     public interface IDeviceRepository:IRepository<Device,Guid>
     {
-        Device GetBySerial(string serial);
+        Device GetDefault(string serial="");
     }
 }

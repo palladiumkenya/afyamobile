@@ -7,6 +7,6 @@ namespace LiveHTS.Core.Interfaces.Services
 {
     public interface IAppDashboardService
     {
-        AppDashboard Load(User user,string serial);
+        AppDashboard Load(User user,string serial= "");
     }
 }

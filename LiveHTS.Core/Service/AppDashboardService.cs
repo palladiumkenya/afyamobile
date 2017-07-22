@@ -1,4 +1,5 @@
 ﻿using LiveHTS.Core.Interfaces.Repository;
+using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Model;
@@ -6,7 +7,7 @@ using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Core.Service
 {
-    public class AppDashboardService:IAppDashboardService
+   public class AppDashboardService:IAppDashboardService
     {
         private readonly IModuleRepository _moduleRepository;
         private readonly IDeviceRepository _deviceRepository;
@@ -19,13 +20,13 @@ namespace LiveHTS.Core.Service
             _deviceRepository = deviceRepository;
         }
 
-        public AppDashboard Load(User user,string serial)
+        public AppDashboard Load(User user,string serial="")
         {
             _user = user;
 
             var module = _moduleRepository.GetDefaultModule();
 
-            var device = _deviceRepository.GetBySerial(serial);
+            var device = _deviceRepository.GetDefault(serial);
 
             var dashboard= new AppDashboard(module,user,device);
 

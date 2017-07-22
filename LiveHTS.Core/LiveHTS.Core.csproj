@@ -41,13 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
-    <Compile Include="Interfaces\Repository\IDeviceRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\ISubCountyRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\ICountyRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IUserRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />
     <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
-    <Compile Include="Interfaces\Services\IDeviceSetupService.cs" />
-    <Compile Include="Interfaces\Services\ILookupService.cs" />
+    <Compile Include="Interfaces\Services\Config\IDeviceSetupService.cs" />
+    <Compile Include="Interfaces\Services\Config\ILookupService.cs" />
     <Compile Include="Model\AppDashboard.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />
@@ -113,6 +117,8 @@
     <Compile Include="Service\Clients\DashboardService.cs" />
     <Compile Include="Service\Clients\EncounterService.cs" />
     <Compile Include="Engine\ValidationEngine.cs" />
+    <Compile Include="Service\Config\DeviceSetupService.cs" />
+    <Compile Include="Service\Config\LookupService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

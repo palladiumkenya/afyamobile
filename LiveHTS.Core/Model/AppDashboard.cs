@@ -21,5 +21,10 @@ namespace LiveHTS.Core.Model
             SignedInUser = signedInUser;
             Device = device;
         }
+
+        public override string ToString()
+        {
+            return $"{DefaultModule} {SignedInUser} {Device}";
+        }
     }
 }
