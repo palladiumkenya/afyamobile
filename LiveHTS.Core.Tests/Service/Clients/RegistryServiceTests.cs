@@ -25,14 +25,20 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private Client _client = TestDataHelpers._clients.First();
 
         private IClientRepository _clientRepository;
-
+        private IClientIdentifierRepository _clientIdentifierRepository;
+        private IPersonRepository _personRepository;
+        
 
         [TestInitialize]
         public void SetUp()
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
-            _clientRepository=new ClientRepository(_liveSetting);
-            _registryService=new RegistryService(_clientRepository);
+
+            _clientRepository =new ClientRepository(_liveSetting);
+            _clientIdentifierRepository=new ClientIdentifierRepository(_liveSetting);
+            _personRepository=new PersonRepository(_liveSetting);
+
+            _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository);
         }
         
         [TestMethod]

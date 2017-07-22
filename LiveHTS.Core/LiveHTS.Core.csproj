@@ -46,6 +46,9 @@
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IClientRelationshipRepository.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IClientIdentifierRepository.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IPersonRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IUserRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />

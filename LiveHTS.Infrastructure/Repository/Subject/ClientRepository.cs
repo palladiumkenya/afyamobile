@@ -53,5 +53,20 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 Save(obs);
             }
         }
+
+        public IEnumerable<Client> QuickSearch(string search)
+        {
+            
+            var clients = _db.Table<Client>().ToList();
+
+            foreach (var c in clients)
+            {
+                c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
+                c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
+                c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
+            }
+
+            return clients;
+        }
     }
 }
