@@ -147,6 +147,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f040003
 			public const int content_frame = 2130968579;
 			
+			// aapt resource value: 0x7f04000a
+			public const int imageView = 2130968586;
+			
 			// aapt resource value: 0x7f040005
 			public const int mvxSpinner1 = 2130968581;
 			
