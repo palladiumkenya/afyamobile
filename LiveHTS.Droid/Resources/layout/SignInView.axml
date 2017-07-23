@@ -1,22 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:local="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:scrollbars="vertical"
-              android:overScrollMode="ifContentScrolls">
-  <FrameLayout
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="2">
-    <ImageView
-      android:id="@+id/imageView"
-      android:layout_width="wrap_content"
-      android:layout_height="100dp"
-      android:src="@drawable/livehts_logo"
-      android:layout_gravity="center"
-      android:scaleType="fitCenter" />
-  </FrameLayout>
-
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    android:overScrollMode="ifContentScrolls">
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/livehts"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter" />
+    </FrameLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        local:MvxBind="Visibility Visibility(IsBusy)"
+        android:id="@+id/progressBar1"
+        android:layout_marginTop="@dimen/element_margin_large"
+        android:layout_marginBottom="@dimen/element_margin_large" />
+    <TextView
+        android:text="User"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewUserName" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextUserName"
+        local:MvxBind="Text Username" />
+    <TextView
+        android:text="Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewPassword" />
+    <EditText
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextPassword" />
+    <Button
+        android:text="SIGN IN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSignIn"
+        local:MvxBind="Click SignInCommand" />
 </LinearLayout>

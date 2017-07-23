@@ -6,6 +6,8 @@ using MvvmCross.Droid.Views;
 using MvvmCross.Platform.Platform;
 using MvvmCross.Droid.Shared.Presenter;
 using MvvmCross.Platform;
+using LiveHTS.Presentation.Interfaces;
+using LiveHTS.Droid.Services;
 
 namespace LiveHTS.Droid
 {
@@ -24,6 +26,12 @@ namespace LiveHTS.Droid
         protected override IMvxTrace CreateDebugTrace()
         {
             return new DebugTrace();
+        }
+
+        protected override void InitializeFirstChance()
+        {
+            base.InitializeFirstChance();
+            Mvx.RegisterSingleton<IDialogService>(() => new DialogService());
         }
 
         protected override IMvxAndroidViewPresenter CreateViewPresenter()

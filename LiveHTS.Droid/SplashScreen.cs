@@ -7,7 +7,7 @@ namespace LiveHTS.Droid
     [Activity(
         Label = "LiveHTS"
         , MainLauncher = true
-        , Icon = "@drawable/icon"
+        , Icon = "@drawable/livehts"
         , Theme = "@style/Theme.Splash"
         , NoHistory = true
         , ScreenOrientation = ScreenOrientation.Portrait)]
