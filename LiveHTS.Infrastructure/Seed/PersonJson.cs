@@ -15,14 +15,17 @@ namespace LiveHTS.Infrastructure.Seed
         {
             string raw = @"
 [
-  {
-    ^Id^: ^62040ce6-6260-11e7-907b-a6006ad3dba0^,
-    ^Name^: ^HTS Person^,
-    ^Display^: ^Hiv Testing Services Person^,
-    ^Description^: ^Hiv Testing Services Person^,
-    ^Rank^: 1,
-    ^Voided^: 0
-  }
+ {
+   ^FirstName^: ^HTS^,
+   ^MiddleName^: ^^,
+   ^LastName^: ^Admin^,
+   ^Gender^: ^M^,
+   ^BirthDate^: ^2017-07-04T00:00:00.000^,
+   ^BirthDateEstimated^: 0,
+   ^Email^: ^koskedk@gmail.com^,
+   ^Id^: ^b4d18679-ed7e-4e02-8cc5-a7b7016df233^,
+   ^Voided^: 0
+ }
 ]
 ";
             return JsonConvert.DeserializeObject<List<Person>>(raw.Replace("^","\""));

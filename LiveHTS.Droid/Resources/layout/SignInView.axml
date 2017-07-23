@@ -23,9 +23,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         local:MvxBind="Visibility Visibility(IsBusy)"
-        android:id="@+id/progressBar1"
-        android:layout_marginTop="@dimen/element_margin_large"
-        android:layout_marginBottom="@dimen/element_margin_large" />
+        android:id="@+id/progressBar1" />
     <TextView
         android:text="User"
         android:layout_width="match_parent"
@@ -45,7 +43,8 @@
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextPassword" />
+        android:id="@+id/editTextPassword"
+        local:MvxBind="Text Password" />
     <Button
         android:text="SIGN IN"
         android:layout_width="match_parent"

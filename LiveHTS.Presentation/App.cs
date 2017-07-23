@@ -3,6 +3,7 @@ using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Model;
+using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository;
 using LiveHTS.Infrastructure.Repository.Survey;
 using MvvmCross.Core.ViewModels;
@@ -24,7 +25,7 @@ namespace LiveHTS.Presentation
         {
             base.Initialize();
 
-            var assemblyCore = typeof(Module).GetTypeInfo().Assembly;
+            var assemblyCore = typeof(Concept).GetTypeInfo().Assembly;
             var assemblyInfrastructure = typeof(ModuleRepository).GetTypeInfo().Assembly;
 
             CreatableTypes(assemblyCore)

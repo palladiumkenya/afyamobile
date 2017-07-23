@@ -8,7 +8,7 @@ namespace LiveHTS.Droid
         Label = "LiveHTS"
         , MainLauncher = true
         , Icon = "@drawable/livehts"
-        , Theme = "@style/Theme.Splash"
+        , Theme = "@android:style/Theme.Material.Light"
         , NoHistory = true
         , ScreenOrientation = ScreenOrientation.Portrait)]
     public class SplashScreen : MvxSplashScreenActivity

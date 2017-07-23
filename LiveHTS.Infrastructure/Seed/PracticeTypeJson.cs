@@ -14,10 +14,13 @@ namespace LiveHTS.Infrastructure.Seed
         public static List<PracticeType> Read()
         {
             string raw = @"
-"A";"B";"C"
-            "Name"; "Id"; "Voided"
-            "Facility Based"; "Facility"; 0
-
+[
+ {
+   ^Name^: ^Facility Based^,
+   ^Id^: ^Facility^,
+   ^Voided^: 0
+ }
+]
 ";
             return JsonConvert.DeserializeObject<List<PracticeType>>(raw.Replace("^","\""));
         }
