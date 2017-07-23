@@ -111,7 +111,13 @@ namespace LiveHTS.Droid
 			public const int Icon = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int splash = 2130837505;
+			public const int livehts = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int livehts_logo = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int splash = 2130837507;
 			
 			static Drawable()
 			{
@@ -182,7 +188,10 @@ namespace LiveHTS.Droid
 			public const int ObsActivity = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int SplashScreen = 2130903044;
+			public const int SignInView = 2130903044;
+			
+			// aapt resource value: 0x7f030005
+			public const int SplashScreen = 2130903045;
 			
 			static Layout()
 			{
