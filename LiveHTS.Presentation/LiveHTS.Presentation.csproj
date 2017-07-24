@@ -37,6 +37,7 @@
     <Compile Include="AppStart.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IAppDashboardViewModel.cs" />
     <Compile Include="Interfaces\IInterviewViewModel.cs" />
     <Compile Include="Interfaces\ICounsellingViewModel.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IMainViewModel.cs" />
     <Compile Include="ViewModel\AppDashboardViewModel.cs" />
+    <Compile Include="ViewModel\ClientDashboardViewModel.cs" />
     <Compile Include="ViewModel\InterviewViewModel.cs" />
     <Compile Include="ViewModel\CounsellingViewModel.cs" />
     <Compile Include="ViewModel\RegistryViewModel.cs" />

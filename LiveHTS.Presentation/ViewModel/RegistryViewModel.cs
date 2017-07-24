@@ -14,6 +14,9 @@ namespace LiveHTS.Presentation.ViewModel
         private string _search;
         private IMvxCommand _searchCommand;
         private IMvxCommand _clearSearchCommand;
+        
+        private Client _selectedClient;
+        private IMvxCommand<Client> _clientSelectedCommand;
 
         public string Search
         {
@@ -24,6 +27,12 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => Search);
                 SearchCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        public Client SelectedClient
+        {
+            get { return _selectedClient; }
+            set { _selectedClient = value; RaisePropertyChanged(() => SelectedClient);}
         }
 
         public IEnumerable<Client> Clients
@@ -53,6 +62,24 @@ namespace LiveHTS.Presentation.ViewModel
                 return _clearSearchCommand;
             }
         }
+
+        public IMvxCommand<Client> ClientSelectedCommand
+        {
+            get
+            {
+                _clientSelectedCommand = _clientSelectedCommand ?? new MvxCommand<Client>(SelectClient);
+                return _clientSelectedCommand;
+            }
+        }
+
+        private void SelectClient(Client selectedClient)
+        {
+            if(null==selectedClient)
+                return;
+            SelectedClient = selectedClient;
+            ShowViewModel<ClientDashboardViewModel>(new {id = SelectedClient.Id});
+        }
+
 
         private void ClearSearch()
         {

@@ -6,5 +6,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         IMvxCommand RegistryCommand { get; }
         string Profile { get; set; }
+        bool IsBusy { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IAppDashboardService _dashboardService;
         private string _profile;
         private IMvxCommand _registryCommand;
+        private bool _isBusy;
 
         public IMvxCommand RegistryCommand
         {
@@ -30,6 +31,12 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => Profile);
                 RaisePropertyChanged(() => Greeting);
             }
+        }
+
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { _isBusy = value; RaisePropertyChanged(() => IsBusy);}
         }
 
         public string Greeting => string.IsNullOrWhiteSpace(_profile) ? string.Empty : $"Karibu {_profile}";

@@ -206,28 +206,34 @@ namespace LiveHTS.Droid
 			public const int AppDashboardView = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int CounsellingView = 2130903041;
+			public const int ClientDashboardView = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int InterviewView = 2130903042;
+			public const int CounsellingView = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Item_Client = 2130903043;
+			public const int InterviewView = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int MainView = 2130903044;
+			public const int Item_Client = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int ObsActivity = 2130903045;
+			public const int Item_ClientId = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int RegistryView = 2130903046;
+			public const int MainView = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int SignInView = 2130903047;
+			public const int ObsActivity = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int SplashScreen = 2130903048;
+			public const int RegistryView = 2130903048;
+			
+			// aapt resource value: 0x7f030009
+			public const int SignInView = 2130903049;
+			
+			// aapt resource value: 0x7f03000a
+			public const int SplashScreen = 2130903050;
 			
 			static Layout()
 			{
