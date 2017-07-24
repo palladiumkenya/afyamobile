@@ -6,10 +6,10 @@ namespace LiveHTS.Presentation.ViewModel
     public class ClientRegistrationViewModel:MvxViewModel,IClientRegistrationViewModel
     {
 
-        public IClientDemographicViewModel Demographic { get; }
-        public IClientContactViewModel Contact { get; }
-        public IClientProfileViewModel Profile { get; }
-        public IClientEnrollmentViewModel Enrollment { get; }
+        public ClientDemographicViewModel Demographic { get; }
+        public ClientContactViewModel Contact { get; }
+        public ClientProfileViewModel Profile { get; }
+        public ClientEnrollmentViewModel Enrollment { get; }
 
         public ClientRegistrationViewModel()
         {

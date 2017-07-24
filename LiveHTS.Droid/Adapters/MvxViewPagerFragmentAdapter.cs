@@ -1,4 +1,12 @@
-﻿namespace LiveHTS.Droid.Adapters
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Android.Content;
+using Android.Support.V4.App;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Droid.Support.V4;
+
+namespace LiveHTS.Droid.Adapters
 {
     public class MvxViewPagerFragmentAdapter
         : FragmentPagerAdapter
@@ -24,14 +32,11 @@
 
         public override int Count
         {
-
             get { return Fragments.Count(); }
         }
 
         public override Fragment GetItem(int position)
         {
-
-            
             var frag = Fragments.ElementAt(position);
             var fragment = Fragment.Instantiate(_context,
                 FragmentJavaName(frag.FragmentType));

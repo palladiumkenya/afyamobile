@@ -1,7 +1,7 @@
 ﻿using Android.OS;
 using Android.Views;
 using MvvmCross.Binding.Droid.BindingContext;
-using MvvmCross.Droid.FullFragging.Fragments;
+using MvvmCross.Droid.Support.V4;
 
 namespace LiveHTS.Droid.Views
 {

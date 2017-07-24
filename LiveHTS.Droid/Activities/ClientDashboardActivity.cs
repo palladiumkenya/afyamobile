@@ -2,7 +2,8 @@
 using Android.Content.PM;
 using Android.OS;
 using LiveHTS.Presentation.ViewModel;
-using MvvmCross.Droid.FullFragging.Views;
+using MvvmCross.Droid.Views;
+
 
 namespace LiveHTS.Droid.Activities
 {
