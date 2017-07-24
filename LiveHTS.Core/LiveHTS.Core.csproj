@@ -40,7 +40,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\DateTimeConverter .cs" />
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
     <Compile Include="Interfaces\Repository\Config\ISubCountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ICountyRepository.cs" />

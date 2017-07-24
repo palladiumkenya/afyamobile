@@ -9,6 +9,11 @@ using MvvmCross.Platform;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Droid.Services;
 
+using System.Reflection;
+using LiveHTS.Presentation.Converters;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace LiveHTS.Droid
 {
     public class Setup : MvxAndroidSetup
@@ -33,6 +38,17 @@ namespace LiveHTS.Droid
             base.InitializeFirstChance();
             Mvx.RegisterSingleton<IDialogService>(() => new DialogService());
         }
+
+        protected override IEnumerable<Assembly> ValueConverterAssemblies
+        {
+            get
+            {
+                var toReturn = base.ValueConverterAssemblies.ToList();
+                toReturn.Add(typeof(DMYDateTimeValueConverter).Assembly);
+                return toReturn;
+            }
+        }
+
 
         protected override IMvxAndroidViewPresenter CreateViewPresenter()
         {

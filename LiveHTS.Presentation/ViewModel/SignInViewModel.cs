@@ -72,6 +72,10 @@ namespace LiveHTS.Presentation.ViewModel
             _authService = authService;
             _dialogService = dialogService;
             IsBusy = false;
+
+            //TODO:Remove default login
+            Username = "admin";
+            Password = "maun2806";
         }
 
         private void AttemptSignIn()
