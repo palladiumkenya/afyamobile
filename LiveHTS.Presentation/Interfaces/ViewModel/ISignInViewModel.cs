@@ -10,6 +10,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string Username { get; set; }
         string Password { get; set; }
         IMvxCommand SignInCommand { get; }
-        bool IsBusy { get; }
+        bool IsBusy { get; set; }
     }
 }

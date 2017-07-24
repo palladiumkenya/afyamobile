@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using LiveHTS.Core.Interfaces.Services.Access;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces;
@@ -18,6 +19,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _signInCommand;
         private bool _isBusy;
 
+
         public User User
         {
             get { return _user; }
@@ -30,6 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _username = value;
                 RaisePropertyChanged(() => Username);
+                SignInCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -40,14 +43,15 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _password = value;
                 RaisePropertyChanged(() =>Password);
+                SignInCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public IMvxCommand SignInCommand
+        public virtual IMvxCommand SignInCommand
         {
             get
             {
-                _signInCommand = _signInCommand ?? new MvxCommand(SignIn, CanSignIn);
+                _signInCommand = _signInCommand ?? new MvxCommand(AttemptSignIn, CanSignIn);
                 return _signInCommand;
             }
         }
@@ -55,6 +59,11 @@ namespace LiveHTS.Presentation.ViewModel
         public bool IsBusy
         {
             get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                RaisePropertyChanged(() => IsBusy);
+            }
         }
 
 
@@ -62,24 +71,30 @@ namespace LiveHTS.Presentation.ViewModel
         {
             _authService = authService;
             _dialogService = dialogService;
+            IsBusy = false;
         }
 
-        private void SignIn()
+        private void AttemptSignIn()
         {
-            _user = _authService.SignIn(Username, Password);
-            if (null!=_user)
+            IsBusy = true;
+            
+            try
             {
-                ShowViewModel<AppDashboardViewModel>(new { user = User });
+                _user = _authService.SignIn(Username, Password);
+                ShowViewModel<AppDashboardViewModel>(new { username= User.UserName });
             }
-            else
+            catch (Exception e)
             {
-               _dialogService.Alert("We were unable to log you in!", "Login Failed", "OK");
+                _dialogService.Alert($"{e.Message}", "Sign In Failed", "OK");
             }
+            
+           IsBusy = false;
         }
 
         private bool CanSignIn()
         {
-            return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+            return (!string.IsNullOrEmpty(Username) || !string.IsNullOrWhiteSpace(Username))
+                   && (!string.IsNullOrEmpty(Password) || !string.IsNullOrWhiteSpace(Password));
         }
     }
 }

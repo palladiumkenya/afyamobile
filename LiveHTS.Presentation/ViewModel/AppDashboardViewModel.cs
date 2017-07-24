@@ -1,4 +1,5 @@
-﻿using LiveHTS.Presentation.Interfaces;
+﻿using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
 
@@ -15,7 +16,15 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _profile = value;
                 RaisePropertyChanged(() => Profile);
+                RaisePropertyChanged(() => Greeting);
             }
+        }
+
+        public string Greeting => string.IsNullOrWhiteSpace(_profile) ? string.Empty : $"Karibu {_profile}";
+
+        public void Init(string username)
+        {
+            Profile = username;
         }
     }
 }

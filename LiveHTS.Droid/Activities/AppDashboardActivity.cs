@@ -6,14 +6,14 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Sign In",LaunchMode = LaunchMode.SingleTop,
+    [Activity(Label = "Dashboard",LaunchMode = LaunchMode.SingleTop,
         Theme = "@android:style/Theme.Material.Light")]
-    public class SignInActivity: MvxActivity<SignInViewModel>
+    public class AppDashboardActivity : MvxActivity<AppDashboardViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.SignInView);
+            SetContentView(Resource.Layout.AppDashboardView);
         }
     }
 }

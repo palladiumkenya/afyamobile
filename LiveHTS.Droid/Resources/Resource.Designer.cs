@@ -147,8 +147,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f040010
 			public const int buttonSignIn = 2130968592;
 			
-			// aapt resource value: 0x7f040004
-			public const int content_frame = 2130968580;
+			// aapt resource value: 0x7f040003
+			public const int content_frame = 2130968579;
 			
 			// aapt resource value: 0x7f04000f
 			public const int editTextPassword = 2130968591;
@@ -163,10 +163,10 @@ namespace LiveHTS.Droid
 			public const int mvxSpinner1 = 2130968581;
 			
 			// aapt resource value: 0x7f04000b
-			public const int progressBar1 = 2130968587;
+			public const int progressBarSignIn = 2130968587;
 			
-			// aapt resource value: 0x7f040002
-			public const int textView1 = 2130968578;
+			// aapt resource value: 0x7f040004
+			public const int textView1 = 2130968580;
 			
 			// aapt resource value: 0x7f040008
 			public const int textView2 = 2130968584;
@@ -174,8 +174,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f040009
 			public const int textView3 = 2130968585;
 			
-			// aapt resource value: 0x7f040003
-			public const int textViewForm = 2130968579;
+			// aapt resource value: 0x7f040002
+			public const int textViewForm = 2130968578;
 			
 			// aapt resource value: 0x7f04000e
 			public const int textViewPassword = 2130968590;

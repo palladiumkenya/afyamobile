@@ -17,6 +17,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var User =base.Get(id);
             if (null != User)
             {
+
              User.Person= _db.Table<Person>().FirstOrDefault(x => x.Id == User.PersonId);
             }
             return User;

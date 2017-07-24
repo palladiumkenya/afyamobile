@@ -20,7 +20,7 @@ namespace LiveHTS.Infrastructure.Seed
    ^MiddleName^: ^^,
    ^LastName^: ^Admin^,
    ^Gender^: ^M^,
-   ^BirthDate^: ^2017-07-04T00:00:00.000^,
+   ^BirthDate^: ^2017-07-04^,
    ^BirthDateEstimated^: 0,
    ^Email^: ^koskedk@gmail.com^,
    ^Id^: ^b4d18679-ed7e-4e02-8cc5-a7b7016df233^,
