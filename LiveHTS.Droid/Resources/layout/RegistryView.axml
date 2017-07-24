@@ -19,17 +19,24 @@
     android:text="Search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/buttonSignIn"
+    android:id="@+id/buttonSearch"
     local:MvxBind="Click SearchCommand" />
   <Button
     android:text="Clear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/buttonSignIn"
+    android:id="@+id/buttonClearSearch"
     local:MvxBind="Click ClearSearchCommand" />
+  <Button
+    android:text="Register"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/buttonRegisterClient"
+    local:MvxBind="Click RegisterClientCommand" />
     <Mvx.MvxListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         local:MvxBind="ItemsSource Clients; ItemClick ClientSelectedCommand;"
         local:MvxItemTemplate="@layout/item_client"/>
+ 
 </LinearLayout>

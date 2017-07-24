@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\ClientDashboardActivity.cs" />
+    <Compile Include="Activities\ClientRegistrationActivity.cs" />
     <Compile Include="Activities\RegistryActivity.cs" />
     <Compile Include="Activities\CounsellingActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
@@ -161,6 +162,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Item_ClientId.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ClientRegistrationView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

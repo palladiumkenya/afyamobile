@@ -17,6 +17,7 @@ namespace LiveHTS.Presentation.ViewModel
         
         private Client _selectedClient;
         private IMvxCommand<Client> _clientSelectedCommand;
+        private  IMvxCommand _registerClientCommand;
 
         public string Search
         {
@@ -70,6 +71,20 @@ namespace LiveHTS.Presentation.ViewModel
                 _clientSelectedCommand = _clientSelectedCommand ?? new MvxCommand<Client>(SelectClient);
                 return _clientSelectedCommand;
             }
+        }
+
+        public IMvxCommand RegisterClientCommand
+        {
+            get
+            {
+                _registerClientCommand = _registerClientCommand ?? new MvxCommand(RegisterClient);
+                return _registerClientCommand;
+            }
+        }
+
+        private void RegisterClient()
+        {
+            ShowViewModel<ClientRegistrationViewModel>();
         }
 
         private void SelectClient(Client selectedClient)

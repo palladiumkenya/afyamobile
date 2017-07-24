@@ -138,56 +138,68 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f040001
 			public const int MvxBindingTagUnique = 2130968577;
 			
-			// aapt resource value: 0x7f040007
-			public const int button1 = 2130968583;
-			
 			// aapt resource value: 0x7f040008
-			public const int button2 = 2130968584;
+			public const int button1 = 2130968584;
+			
+			// aapt resource value: 0x7f040009
+			public const int button2 = 2130968585;
+			
+			// aapt resource value: 0x7f04000f
+			public const int buttonClearSearch = 2130968591;
+			
+			// aapt resource value: 0x7f040010
+			public const int buttonRegisterClient = 2130968592;
 			
 			// aapt resource value: 0x7f040003
 			public const int buttonRegistry = 2130968579;
 			
-			// aapt resource value: 0x7f04000d
-			public const int buttonSignIn = 2130968589;
-			
-			// aapt resource value: 0x7f040004
-			public const int content_frame = 2130968580;
-			
-			// aapt resource value: 0x7f040012
-			public const int editTextPassword = 2130968594;
-			
-			// aapt resource value: 0x7f04000c
-			public const int editTextSearch = 2130968588;
-			
-			// aapt resource value: 0x7f040010
-			public const int editTextUserName = 2130968592;
-			
 			// aapt resource value: 0x7f04000e
-			public const int imageView = 2130968590;
+			public const int buttonSearch = 2130968590;
 			
-			// aapt resource value: 0x7f040006
-			public const int mvxSpinner1 = 2130968582;
-			
-			// aapt resource value: 0x7f04000b
-			public const int progressBarMain = 2130968587;
+			// aapt resource value: 0x7f040016
+			public const int buttonSignIn = 2130968598;
 			
 			// aapt resource value: 0x7f040005
-			public const int textView1 = 2130968581;
+			public const int content_frame = 2130968581;
 			
-			// aapt resource value: 0x7f040009
-			public const int textView2 = 2130968585;
+			// aapt resource value: 0x7f040015
+			public const int editTextPassword = 2130968597;
+			
+			// aapt resource value: 0x7f04000d
+			public const int editTextSearch = 2130968589;
+			
+			// aapt resource value: 0x7f040013
+			public const int editTextUserName = 2130968595;
+			
+			// aapt resource value: 0x7f040011
+			public const int imageView = 2130968593;
+			
+			// aapt resource value: 0x7f040007
+			public const int mvxSpinner1 = 2130968583;
+			
+			// aapt resource value: 0x7f04000c
+			public const int progressBarMain = 2130968588;
+			
+			// aapt resource value: 0x7f040006
+			public const int textView1 = 2130968582;
 			
 			// aapt resource value: 0x7f04000a
-			public const int textView3 = 2130968586;
+			public const int textView2 = 2130968586;
+			
+			// aapt resource value: 0x7f04000b
+			public const int textView3 = 2130968587;
 			
 			// aapt resource value: 0x7f040002
 			public const int textViewForm = 2130968578;
 			
-			// aapt resource value: 0x7f040011
-			public const int textViewPassword = 2130968593;
+			// aapt resource value: 0x7f040014
+			public const int textViewPassword = 2130968596;
 			
-			// aapt resource value: 0x7f04000f
-			public const int textViewUserName = 2130968591;
+			// aapt resource value: 0x7f040004
+			public const int textViewReg = 2130968580;
+			
+			// aapt resource value: 0x7f040012
+			public const int textViewUserName = 2130968594;
 			
 			static Id()
 			{
@@ -209,31 +221,34 @@ namespace LiveHTS.Droid
 			public const int ClientDashboardView = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int CounsellingView = 2130903042;
+			public const int ClientRegistrationView = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int InterviewView = 2130903043;
+			public const int CounsellingView = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int Item_Client = 2130903044;
+			public const int InterviewView = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int Item_ClientId = 2130903045;
+			public const int Item_Client = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int MainView = 2130903046;
+			public const int Item_ClientId = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int ObsActivity = 2130903047;
+			public const int MainView = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int RegistryView = 2130903048;
+			public const int ObsActivity = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int SignInView = 2130903049;
+			public const int RegistryView = 2130903049;
 			
 			// aapt resource value: 0x7f03000a
-			public const int SplashScreen = 2130903050;
+			public const int SignInView = 2130903050;
+			
+			// aapt resource value: 0x7f03000b
+			public const int SplashScreen = 2130903051;
 			
 			static Layout()
 			{

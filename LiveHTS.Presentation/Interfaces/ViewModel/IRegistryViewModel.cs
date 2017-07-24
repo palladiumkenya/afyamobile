@@ -12,6 +12,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand SearchCommand { get; }
         IMvxCommand ClearSearchCommand { get; }
         IMvxCommand<Client> ClientSelectedCommand { get; }
+        IMvxCommand RegisterClientCommand { get; }
         bool IsBusy { get; set; }
     }
 }

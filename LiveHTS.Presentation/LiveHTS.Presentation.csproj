@@ -41,6 +41,7 @@
     <Compile Include="Interfaces\ViewModel\IAppDashboardViewModel.cs" />
     <Compile Include="Interfaces\IInterviewViewModel.cs" />
     <Compile Include="Interfaces\ICounsellingViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientRegistrationViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IRegistryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
     <Compile Include="Interfaces\IObsViewModel.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Interfaces\IMainViewModel.cs" />
     <Compile Include="ViewModel\AppDashboardViewModel.cs" />
     <Compile Include="ViewModel\ClientDashboardViewModel.cs" />
+    <Compile Include="ViewModel\ClientRegistrationViewModel.cs" />
     <Compile Include="ViewModel\InterviewViewModel.cs" />
     <Compile Include="ViewModel\CounsellingViewModel.cs" />
     <Compile Include="ViewModel\RegistryViewModel.cs" />
