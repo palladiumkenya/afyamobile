@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using LiveHTS.Core.Interfaces.Repository;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using Newtonsoft.Json;
 
-namespace LiveHTS.Infrastructure.Seed
+namespace LiveHTS.Infrastructure.Seed.Survey
 {
-    public class FormJson
+    public class FormJson : ISeedJson<Form>
     {
-        public static List<Form> Read()
+        public  List<Form> Read()
         {
             string raw = @"
 [

@@ -93,8 +93,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSignIn()
         {
-            return (!string.IsNullOrEmpty(Username) || !string.IsNullOrWhiteSpace(Username))
-                   && (!string.IsNullOrEmpty(Password) || !string.IsNullOrWhiteSpace(Password));
+            return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
         }
     }
 }

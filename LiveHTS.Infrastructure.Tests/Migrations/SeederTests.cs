@@ -3,6 +3,7 @@ using System.Linq;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Migrations;
 using LiveHTS.Infrastructure.Seed;
+using LiveHTS.Infrastructure.Seed.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLite;
 
@@ -14,7 +15,7 @@ namespace LiveHTS.Infrastructure.Tests.Migrations
         [TestMethod]
         public void should_Read_Module_Json()
         {
-            var modules = ModuleJson.Read();
+            var modules =new ModuleJson().Read();
             Assert.IsTrue(modules.Count>0);
 
             foreach (var module in modules)
@@ -25,7 +26,7 @@ namespace LiveHTS.Infrastructure.Tests.Migrations
         [TestMethod]
         public void should_Read_Form_Json()
         {
-            var forms = FormJson.Read();
+            var forms =new FormJson().Read();
             Assert.IsTrue(forms.Count > 0);
 
             foreach (var form in forms)

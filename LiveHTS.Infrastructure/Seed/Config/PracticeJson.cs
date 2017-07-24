@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Model.Config;
-using LiveHTS.Core.Model.Survey;
 using Newtonsoft.Json;
 
-namespace LiveHTS.Infrastructure.Seed
+namespace LiveHTS.Infrastructure.Seed.Config
 {
-  public  class PracticeJson
+  public  class PracticeJson : ISeedJson<Practice>
     {
-        public static List<Practice> Read()
+        public  List<Practice> Read()
         {
             string raw = @"
 [

@@ -5,16 +5,22 @@ using SQLite;
 
 namespace LiveHTS.SharedKernel.Model
 {
-    public abstract class Entity<TId> : IEquatable<Entity<TId>>
+    public interface IEntity<TId> : IEquatable<Entity<TId>>
+    {
+        TId Id { get; set; }
+        bool Voided { get; set; }
+    }
+
+    public abstract class Entity<TId> : IEntity<TId>
     {
         [PrimaryKey]
         public virtual TId Id { get; set; }
         public virtual bool Voided { get; set; }
-        protected Entity()
+        public Entity()
         {
             
         }
-        protected Entity(TId id)
+        public Entity(TId id)
         {
             Id = id;
         }

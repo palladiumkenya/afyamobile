@@ -40,12 +40,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\DateTimeConverter .cs" />
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
     <Compile Include="Interfaces\Repository\Config\ISubCountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ICountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientRelationshipRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientIdentifierRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IPersonRepository.cs" />
@@ -126,6 +128,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Reference Include="MvvmCross.Platform, Version=5.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Platform.5.0.5\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\sqlite-net-pcl.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
     </Reference>

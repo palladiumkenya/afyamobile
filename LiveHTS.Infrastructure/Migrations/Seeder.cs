@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Seed;
+using LiveHTS.Infrastructure.Seed.Config;
+using LiveHTS.Infrastructure.Seed.Subject;
+using LiveHTS.Infrastructure.Seed.Survey;
+using LiveHTS.SharedKernel.Model;
 using SQLite;
 
 namespace LiveHTS.Infrastructure.Migrations
@@ -10,75 +16,71 @@ namespace LiveHTS.Infrastructure.Migrations
     public class Seeder
     {
         public static void Seed(SQLiteConnection db)
-        {            
+        {
+            SeedConfig(db);
+            SeedSurvey(db);
+            SeedSubject(db);
+        }
+
+        private static void SeedConfig(SQLiteConnection db)
+        {
+            #region Config
+
+            db.CreateTable<IdentifierType>();
+            db.CreateTable<PracticeType>();
+
+            db.CreateTable<Practice>();
+
+            #endregion
+
+            InsertOrUpdate(db, new IdentifierTypeJson());
+            InsertOrUpdate(db, new PracticeTypeJson());
+            InsertOrUpdate(db, new PracticeJson());
+
+        }
+
+        private static void SeedSurvey(SQLiteConnection db)
+        {
+            #region Survey
+
             db.CreateTable<Module>();
             db.CreateTable<Form>();
-            db.CreateTable<PracticeType>();
-            db.CreateTable<Practice>();
+
+            #endregion
+
+            InsertOrUpdate(db, new ModuleJson());
+            InsertOrUpdate(db, new FormJson());
+
+        }
+
+        private static void SeedSubject(SQLiteConnection db)
+        {
+            #region Subject
+
             db.CreateTable<Person>();
             db.CreateTable<User>();
-            
-            //Modules
-            foreach (var module in ModuleJson.Read())
-            {
-                var exisits = db.Find<Module>(module.Id);
-                if (null == exisits)
-                {
-                    db.Insert(module);
-                }
-            }
-            
-            //Forms
-            foreach (var form in FormJson.Read())
-            {
-                var exisits = db.Find<Form>(form.Id);
-                if (null == exisits)
-                {
-                    db.Insert(form);
-                }
-            }
+            db.CreateTable<Client>();
+            db.CreateTable<ClientIdentifier>();
+            db.CreateTable<ClientRelationship>();
+            #endregion
 
-            //PracticeType
-            foreach (var practiceType in PracticeTypeJson.Read())
-            {
-                var exisits = db.Find<PracticeType>(practiceType.Id);
-                if (null == exisits)
-                {
-                    db.Insert(practiceType);
-                }
-            }
+            InsertOrUpdate(db, new PersonJson());
+            InsertOrUpdate(db, new UserJson());
+            InsertOrUpdate(db, new ClientJson());
+            InsertOrUpdate(db, new ClientIdentifierJson());
+            InsertOrUpdate(db, new ClientRelationshipJson());
+        }
 
-            //Practice
-            foreach (var practice in PracticeJson.Read())
+        private static void InsertOrUpdate<T>(SQLiteConnection db, ISeedJson<T> json) 
+        {
+            foreach (var entity in json.Read())
             {
-                var exisits = db.Find<Practice>(practice.Id);
-                if (null == exisits)
+                var rowsAffected = db.Update(entity);
+                if (rowsAffected == 0)
                 {
-                    db.Insert(practice);
-                }
-            }
-
-            //Person
-            foreach (var person in PersonJson.Read())
-            {
-                var exisits = db.Find<Person>(person.Id);
-                if (null == exisits)
-                {
-                    db.Insert(person);
-                }
-            }
-
-            //User
-            foreach (var user in UserJson.Read())
-            {
-                var exisits = db.Find<User>(user.Id);
-                if (null == exisits)
-                {
-                    db.Insert(user);
+                    db.Insert(entity);
                 }
             }
         }
-
-        
     }
 }
