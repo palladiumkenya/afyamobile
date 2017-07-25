@@ -3,5 +3,6 @@
     public interface IClientEnrollmentViewModel
     {
         string Title { get; set; }
+        string Serial { get; set; }
     }
 }

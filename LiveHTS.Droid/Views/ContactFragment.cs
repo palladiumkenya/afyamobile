@@ -1,4 +1,5 @@
 ﻿using Android.OS;
+using Android.Runtime;
 using Android.Views;
 using MvvmCross.Binding.Droid.BindingContext;
 using MvvmCross.Droid.Support.V4;
@@ -6,6 +7,7 @@ using MvvmCross.Droid.Support.V4;
 
 namespace LiveHTS.Droid.Views
 {
+    [Register("livehts.droid.views.ContactFragment")]
     public class ContactFragment : MvxFragment
     {
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

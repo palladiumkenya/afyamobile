@@ -13,17 +13,11 @@ using MvvmCross.Droid.Views;
 namespace LiveHTS.Droid.Activities
 {
     [Activity(Label = "Registration", Theme = "@android:style/Theme.Material.Light")]
-    public class ClientRegistrationActivity: MvxFragmentActivity
+    public class ClientRegistrationActivity: MvxFragmentActivity<ClientRegistrationViewModel>
     {
         private ViewPager _viewPager;
         private PagerSlidingTabStrip _pageIndicator;
         private MvxViewPagerFragmentAdapter _adapter;
-
-        public new ClientRegistrationViewModel ViewModel
-        {
-            get { return (ClientRegistrationViewModel)base.ViewModel; }
-            set { base.ViewModel = value; }
-        }
 
         /// <summary>
         /// Called when [create].
@@ -39,25 +33,25 @@ namespace LiveHTS.Droid.Activities
                 new MvxViewPagerFragmentAdapter.FragmentInfo
                 {
                     FragmentType = typeof(DemographicFragment),
-                    Title = "First Fragment",
+                    Title = ViewModel.Demographic.Title,
                     ViewModel = ViewModel.Demographic
                 },
                 new MvxViewPagerFragmentAdapter.FragmentInfo
                 {
                     FragmentType = typeof(ContactFragment),
-                    Title = "Second Fragment",
+                    Title = ViewModel.Enrollment.Title,
                     ViewModel = ViewModel.Contact
                 },
                 new MvxViewPagerFragmentAdapter.FragmentInfo
                 {
                     FragmentType = typeof(ProfileFragment),
-                    Title = "Third Fragment",
+                    Title = ViewModel.Profile.Title,
                     ViewModel = ViewModel.Profile
                 },
                 new MvxViewPagerFragmentAdapter.FragmentInfo
                 {
                     FragmentType = typeof(EnrollmentFragment),
-                    Title = "Third Fragment",
+                    Title = ViewModel.Enrollment.Title,
                     ViewModel = ViewModel.Enrollment
                 }
             };

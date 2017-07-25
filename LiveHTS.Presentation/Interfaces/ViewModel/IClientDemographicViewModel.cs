@@ -3,5 +3,6 @@
     public interface IClientDemographicViewModel
     {
         string Title { get; set; }
+        string Names { get; set; }
     }
 }
