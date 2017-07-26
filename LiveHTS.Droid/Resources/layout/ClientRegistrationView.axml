@@ -10,33 +10,12 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/linearLayoutContent"
-        android:layout_weight="2">
+        android:id="@+id/linearLayoutContent">
         <FrameLayout
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/content_frame" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayoutNav"
-        android:layout_weight="1"
-        android:minHeight="80dp">
-        <Button
-            android:id="@+id/prev_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
-        <Button
-            android:id="@+id/next_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
-    </LinearLayout>
+    </LinearLayout>  
 </LinearLayout>

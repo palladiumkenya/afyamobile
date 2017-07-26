@@ -4,139 +4,48 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using MvvmCross.Platform.WeakSubscription;
 
 namespace LiveHTS.Presentation.ViewModel
 {
     public class ClientRegistrationViewModel:MvxViewModel,IClientRegistrationViewModel
     {
-        private readonly IDialogService _dialogService;
+        private readonly List<IStepViewModel> _viewModels;
 
-        private  IMvxCommand _moveNextCommand;
-        private  IMvxCommand _movePreviousCommand;
-        private List<IStepViewModel> _viewModels;
-        private  int _currentStep;
-        private  string _moveNextLabel, _movePreviousLabel;
-
-        public int CurrentStep
+        public IEnumerable<IStepViewModel> ViewModels
         {
-            get { return _currentStep;}
-            private set
-            {
-                _currentStep = value;
-                MoveNextCommand.RaiseCanExecuteChanged();
-                MovePreviousCommand.RaiseCanExecuteChanged();
-            }
-        }
-        public string MovePreviousLabel
-        {
-            get { return _movePreviousLabel; }
-            private set
-            {
-                _movePreviousLabel = value;
-                RaisePropertyChanged(() => MovePreviousLabel);
-            }
-        }
-        public string MoveNextLabel
-        {
-            get { return _moveNextLabel; }
-            private set
-            {
-                _moveNextLabel = value;
-                RaisePropertyChanged(() => MoveNextLabel);
-            }
+            get { return _viewModels.OrderBy(x => x.Step).ToList(); }
         }
 
-        public  IEnumerable<IStepViewModel> ViewModels
+        public void ShowStep(IStepViewModel viewModel)
         {
-            get { return _viewModels.OrderBy(x=>x.Step); }
+            ShowViewModel(viewModel.GetType());
         }
 
-        public IMvxCommand MoveNextCommand
+        public ClientRegistrationViewModel()
         {
-            get
-            {
-                _moveNextCommand = _moveNextCommand ?? new MvxCommand(MoveNext, CanMoveNext);
-                return _moveNextCommand;
-            }
-        }
-
-      
-        public IMvxCommand MovePreviousCommand
-
-        {
-            get
-            {
-                _movePreviousCommand = _movePreviousCommand ?? new MvxCommand(MovePrevious, CanMovePrevious);
-                return _movePreviousCommand;
-            }
-        }
-     
-        public ClientRegistrationViewModel(IDialogService dialogService)
-        {
-            _dialogService = dialogService;
-
             _viewModels = new List<IStepViewModel>
             {
-                Mvx.Resolve<IClientDemographicViewModel>(),
-                Mvx.Resolve<IClientContactViewModel>(),
-                Mvx.Resolve<IClientProfileViewModel>(),
-                Mvx.Resolve<IClientEnrollmentViewModel>()
+                new ClientDemographicViewModel {Parent = this},
+                new ClientContactViewModel {Parent = this},
+                new ClientProfileViewModel {Parent = this},
+                new ClientEnrollmentViewModel {Parent = this}
             };
-            MovePreviousLabel = "PREV";
-            MoveNextLabel = "NEXT";
-            CurrentStep = 1;
-            ShowStep(_currentStep);
+            ShowStep(1);
         }
-
-        private void MoveNext()
+        public void ShowStep(int step)
         {
-            var vmCurrent = ViewModels.FirstOrDefault(x => x.Step == _currentStep);
-
-            if(!vmCurrent.Validate())
-                return;
-
-            if (CurrentStep == _viewModels.Count)
-            {
-                //Save
-                _dialogService.Alert($"Save Successful", "Registration Complete", "OK");
-                return;
-            }
-
-            CurrentStep++;
-
-            ShowStep(_currentStep);
-
-            
-        }
-        private void MovePrevious()
-        {
-            CurrentStep--;
-
-            ShowStep(_currentStep);
-
-            
-        }
-
-        private bool CanMoveNext()
-        {
-            return CurrentStep < _viewModels.Count + 1;
-        }
-        private bool CanMovePrevious()
-        {
-            return CurrentStep > 1;
-        }
-
-        private void ShowStep(int step)
-        {
-            MoveNextLabel = CurrentStep == _viewModels.Count ? "SAVE" : "NEXT";
             var vm = ViewModels.FirstOrDefault(x => x.Step == step);
+
+            
             if (null != vm)
             {
                 switch (vm.Step)
                 {
-                    case 1:
+                    case 1:                        
                         ShowViewModel<ClientDemographicViewModel>();
                         break;
                     case 2:
@@ -148,7 +57,6 @@ namespace LiveHTS.Presentation.ViewModel
                     case 4:
                         ShowViewModel<ClientEnrollmentViewModel>();
                         break;
-
                 }
             }
         }

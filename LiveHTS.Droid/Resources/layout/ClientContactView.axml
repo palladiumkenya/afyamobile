@@ -1,27 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+  <LinearLayout
     android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="25px"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-  <TextView
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayoutContent"
+    android:layout_weight="2">
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/textViewContactTitle"
+      local:MvxBind="Text Title" />
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/textViewContactDescription"
+      local:MvxBind="Text Description" />
+    <TextView
+      android:text="Telephone"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/textViewTelephone" />
+    <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/editTextContactTelephone"
+      local:MvxBind="Text Telephone; Error Errors['Telephone']" />
+  </LinearLayout>
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/textViewContactTitle"
-    local:MvxBind="Text Title" />
-  <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewContactDescription"
-    local:MvxBind="Text Description" />
-  <TextView
-    android:text="Telephone"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewTelephone" />
-  <EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/editTextContactTelephone"
-    local:MvxBind="Text Telephone" />
+    android:orientation="horizontal"
+    android:id="@+id/linearLayoutNav"
+    android:layout_weight="1"
+    android:minHeight="80dp">
+    <Button
+      android:id="@+id/buttonContactPrev"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
+    <Button
+      android:id="@+id/buttonContactNext"
+      android:layout_width="0dp"
+      android:layout_weight="1"
+      android:layout_height="wrap_content"
+      local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
+  </LinearLayout>
 </LinearLayout>
+
+
+
+
+

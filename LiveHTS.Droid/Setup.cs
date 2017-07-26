@@ -18,6 +18,7 @@ namespace LiveHTS.Droid
 {
     public class Setup : MvxAndroidSetup
     {
+        private IDialogService _dialogService;
         public Setup(Context applicationContext) : base(applicationContext)
         {
         }
@@ -37,6 +38,7 @@ namespace LiveHTS.Droid
         {
             base.InitializeFirstChance();
             Mvx.RegisterSingleton<IDialogService>(() => new DialogService());
+
         }
 
         protected override IEnumerable<Assembly> ValueConverterAssemblies
