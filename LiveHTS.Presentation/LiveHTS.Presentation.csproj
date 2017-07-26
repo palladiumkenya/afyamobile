@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\ViewModel\IRegistryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
     <Compile Include="Interfaces\IObsViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IMainViewModel.cs" />
     <Compile Include="ViewModel\AppDashboardViewModel.cs" />

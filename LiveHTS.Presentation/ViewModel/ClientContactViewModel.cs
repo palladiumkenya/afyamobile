@@ -18,6 +18,19 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public string Description { get; set; }
+        public int Step { get; } = 2;
+
+        public bool Validate()
+        {
+            return true;
+        }
+
+        public void Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public int? Telephone
         {
             get { return _telephone; }

@@ -7,21 +7,21 @@
   <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/textViewContactTitle"
+    android:id="@+id/textViewProfileTitle"
     local:MvxBind="Text Title" />
   <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/textViewContactDescription"
+    android:id="@+id/textViewProfileDescription"
     local:MvxBind="Text Description" />
   <TextView
-    android:text="Telephone"
+    android:text="Key Population"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/textViewTelephone" />
+    android:id="@+id/textViewProfile" />
   <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/editTextContactTelephone"
-    local:MvxBind="Text Telephone" />
+    android:id="@+id/editTextProfileKeyPop"
+    local:MvxBind="Text KeyPop" />
 </LinearLayout>

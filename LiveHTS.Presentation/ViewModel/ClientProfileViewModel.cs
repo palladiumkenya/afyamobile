@@ -18,6 +18,18 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public string Description { get; set; }
+        public int Step { get; } = 3;
+        public bool Validate()
+        {
+            return true;
+        }
+
+        public void Save()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public string KeyPop
         {
             get { return _keyPop; }

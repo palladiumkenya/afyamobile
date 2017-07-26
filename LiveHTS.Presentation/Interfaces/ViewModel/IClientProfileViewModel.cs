@@ -1,8 +1,9 @@
-﻿namespace LiveHTS.Presentation.Interfaces.ViewModel
+﻿using MvvmCross.Core.ViewModels;
+
+namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
-    public interface IClientProfileViewModel
+    public interface IClientProfileViewModel : IStepViewModel
     {
-        string Title { get; set; }
         string KeyPop { get; set; }
     }
 }

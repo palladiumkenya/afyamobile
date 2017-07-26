@@ -4,10 +4,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewRegEnrollment" 
-      local:MvxBind="Text Title"/>
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textViewEnrollmentTitle"
+    local:MvxBind="Text Title" />
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textViewEnrollmentDescription"
+    local:MvxBind="Text Description" />
+  <TextView
+    android:text="Serial"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textViewSerial" />
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/editTextEnrollmentSerial"
+    local:MvxBind="Text Serial" />
 </LinearLayout>

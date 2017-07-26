@@ -6,6 +6,8 @@ using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository;
 using LiveHTS.Infrastructure.Repository.Survey;
+using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
@@ -39,6 +41,12 @@ namespace LiveHTS.Presentation
                 .RegisterAsLazySingleton();
 
             Mvx.RegisterSingleton<ILiveSetting>(new LiveSetting(_dbpath));
+
+            Mvx.RegisterSingleton<IClientDemographicViewModel>(new ClientDemographicViewModel());
+            Mvx.RegisterSingleton<IClientContactViewModel>(new ClientContactViewModel());
+            Mvx.RegisterSingleton<IClientProfileViewModel>(new ClientProfileViewModel());
+            Mvx.RegisterSingleton<IClientEnrollmentViewModel>(new ClientEnrollmentViewModel());
+
 
             CreatableTypes(assemblyInfrastructure)
                 .EndingWith("Migrator")

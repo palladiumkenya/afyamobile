@@ -53,5 +53,6 @@ namespace LiveHTS.Droid.Adapters
         }
 
         public override Java.Lang.ICharSequence GetPageTitleFormatted(int p0) { return new Java.Lang.String(Fragments.ElementAt(p0).Title); }
+       
     }
 }

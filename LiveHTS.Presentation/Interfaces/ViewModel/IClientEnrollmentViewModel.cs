@@ -1,8 +1,9 @@
-﻿namespace LiveHTS.Presentation.Interfaces.ViewModel
+﻿using MvvmCross.Core.ViewModels;
+
+namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
-    public interface IClientEnrollmentViewModel
+    public interface IClientEnrollmentViewModel : IStepViewModel
     {
-        string Title { get; set; }
         string Serial { get; set; }
     }
 }

@@ -170,10 +170,10 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="SplashScreen.cs" />
-    <Compile Include="Views\ContactFragment.cs" />
-    <Compile Include="Views\DemographicFragment.cs" />
-    <Compile Include="Views\EnrollmentFragment.cs" />
-    <Compile Include="Views\ProfileFragment.cs" />
+    <Compile Include="Views\ClientContactFragment.cs" />
+    <Compile Include="Views\ClientProfileFragment.cs" />
+    <Compile Include="Views\ClientDemographicFragment.cs" />
+    <Compile Include="Views\ClientEnrollmentFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\AppDashboardView.axml">
@@ -218,10 +218,10 @@
     <AndroidResource Include="Resources\layout\ClientDemographicView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\ClientContactViewModel.axml">
+    <AndroidResource Include="Resources\layout\ClientContactView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\ClientProfileViewModel.axml">
+    <AndroidResource Include="Resources\layout\ClientProfileView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

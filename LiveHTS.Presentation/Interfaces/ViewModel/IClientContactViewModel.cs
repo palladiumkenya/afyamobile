@@ -1,8 +1,9 @@
-﻿namespace LiveHTS.Presentation.Interfaces.ViewModel
+﻿using MvvmCross.Core.ViewModels;
+
+namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
-    public interface IClientContactViewModel
+    public interface IClientContactViewModel : IStepViewModel
     {
-        string Title { get; set; }
         int? Telephone { get; set; }
     }
 }
