@@ -52,13 +52,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/editTextLastName"
             local:MvxBind="Text ClientDemographicDTO.LastName; Error Errors['LastName']" />
-        <MvxRadioGroup
-            android:layout_width="fill_parent"
+      <Mvx.MvxRadioGroup
+          android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:textSize="40dp"
             local:MvxItemTemplate="@layout/item_gender"
-            local:MvxBind="ItemsSource CustomList.Gender;SelectedItem ClientDemographicDTO.Gender; Error Errors['Gender']" />
+            local:MvxBind="ItemsSource GenderLists" />
         <MvxDatePicker
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

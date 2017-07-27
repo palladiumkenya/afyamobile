@@ -37,7 +37,7 @@
     <Compile Include="Custom\TypeExtentions.cs" />
     <Compile Include="Custom\Utils.cs" />
     <Compile Include="Model\Context.cs" />
-    <Compile Include="Model\CustomList.cs" />
+    <Compile Include="Model\CustomLists.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

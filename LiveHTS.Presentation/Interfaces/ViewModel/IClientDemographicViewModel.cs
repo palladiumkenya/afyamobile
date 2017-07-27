@@ -1,4 +1,5 @@
-﻿using LiveHTS.Core.Model.Subject;
+﻿using System.Collections.Generic;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Validations;
 using LiveHTS.SharedKernel.Model;
@@ -9,7 +10,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientDemographicViewModel:IStepViewModel
     {
-        CustomList CustomList { get; }
+        List<CustomItem> GenderLists { get; set; }
         ClientDemographicDTO ClientDemographicDTO { get; set; }
     }
 }

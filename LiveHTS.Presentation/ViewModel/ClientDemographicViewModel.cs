@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
@@ -78,7 +79,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public CustomList CustomList { get; }
+
+        public List<CustomItem> GenderLists { get; set; }
 
         public ClientDemographicDTO ClientDemographicDTO
         {
@@ -90,8 +92,11 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        
+
         public ClientDemographicViewModel(IDialogService dialogService)
         {
+            GenderLists = CustomLists.Gender;
             _dialogService = dialogService;
 
             Validator = new ValidationHelper();
