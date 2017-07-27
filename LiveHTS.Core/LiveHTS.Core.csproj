@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\Services\Config\IDeviceSetupService.cs" />
     <Compile Include="Interfaces\Services\Config\ILookupService.cs" />
     <Compile Include="Model\AppDashboard.cs" />
+    <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />
     <Compile Include="Service\Clients\ObsService.cs" />

@@ -4,53 +4,87 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <LinearLayout
-    android:orientation="vertical"
-    android:minWidth="25px"
-    android:minHeight="25px"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/linearLayoutContent"
-    android:layout_weight="2">      
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayoutContent"
+        android:layout_weight="2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewDemographicTitle"
+            local:MvxBind="Text Title" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewDemographicDescription"
+            local:MvxBind="Text Description" />
+        <TextView
+            android:text="First Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewFirstName" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextFirstName"
+            local:MvxBind="Text ClientDemographicDTO.FirstName; Error Errors['FirstName']" />
+        <TextView
+            android:text="Middle Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewMiddleName" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextMiddleName"
+            local:MvxBind="Text ClientDemographicDTO.MiddleName; Error Errors['MiddleName']" />
+        <TextView
+            android:text="Last Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewFirstName" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextLastName"
+            local:MvxBind="Text ClientDemographicDTO.LastName; Error Errors['LastName']" />
+        <MvxRadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:textSize="40dp"
+            local:MvxItemTemplate="@layout/item_gender"
+            local:MvxBind="ItemsSource CustomList.Gender;SelectedItem ClientDemographicDTO.Gender; Error Errors['Gender']" />
+        <MvxDatePicker
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            local:MvxBind="Value ClientDemographicDTO.BirthDate; Error Errors['BirthDate']"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewDemographicTitle"
-        local:MvxBind="Text Title" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewDemographicDescription"
-        local:MvxBind="Text Description" />
-    <TextView
-        android:text="Full Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewFullName" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextFullName"
-        local:MvxBind="Text Names; Error Errors['Names']" />
-  </LinearLayout>
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/linearLayoutNav"
-    android:layout_weight="1"
-    android:minHeight="80dp">
-    <Button
-      android:id="@+id/buttonDemographicPrev"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
-    <Button
-      android:id="@+id/buttonDemographicNext"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
-  </LinearLayout>
+        android:orientation="horizontal"
+        android:id="@+id/linearLayoutNav"
+        android:layout_weight="1"
+        android:minHeight="80dp">
+        <Button
+            android:id="@+id/buttonDemographicPrev"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
+        <Button
+            android:id="@+id/buttonDemographicNext"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
+    </LinearLayout>
 </LinearLayout>

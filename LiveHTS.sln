@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.Infrastructure.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.Core.Tests", "LiveHTS.Core.Tests\LiveHTS.Core.Tests.csproj", "{352469CE-927D-42D6-A1EA-8FF940FDC133}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.Presentation.Tests", "LiveHTS.Presentation.Tests\LiveHTS.Presentation.Tests.csproj", "{889A71E1-517F-46E8-AF28-C2F59B5AF760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{352469CE-927D-42D6-A1EA-8FF940FDC133}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{352469CE-927D-42D6-A1EA-8FF940FDC133}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{352469CE-927D-42D6-A1EA-8FF940FDC133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{889A71E1-517F-46E8-AF28-C2F59B5AF760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{889A71E1-517F-46E8-AF28-C2F59B5AF760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{889A71E1-517F-46E8-AF28-C2F59B5AF760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{889A71E1-517F-46E8-AF28-C2F59B5AF760}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,5 +78,6 @@ Global
 		{3BD500D4-2CA9-4F00-B142-A77DA2E39E8B} = {EEB86DEA-401F-463F-8611-4022AFDACA8A}
 		{3B0AEAE6-AB23-41F3-BBCE-FED3A56D56A2} = {067FD0BA-D031-4A81-A171-31927527753B}
 		{352469CE-927D-42D6-A1EA-8FF940FDC133} = {7252F33F-6567-48AB-A538-8C0D2863C9FE}
+		{889A71E1-517F-46E8-AF28-C2F59B5AF760} = {EEB86DEA-401F-463F-8611-4022AFDACA8A}
 	EndGlobalSection
 EndGlobal

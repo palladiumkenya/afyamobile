@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
 namespace LiveHTS.Core.Model.Subject
 {
-    public class Person:Entity<Guid>
+    public class Person:Entity<Guid>, IPerson
     {
         public virtual string FirstName { get; set; }
         public virtual string MiddleName { get; set; }

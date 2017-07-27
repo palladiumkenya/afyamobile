@@ -1,6 +1,10 @@
-﻿using LiveHTS.Presentation.Interfaces;
+﻿using System;
+using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Core;
@@ -20,6 +24,8 @@ namespace LiveHTS.Presentation.ViewModel
         private string _movePreviousLabel;
         private IMvxCommand _moveNextCommand;
         private IMvxCommand _movePreviousCommand;
+        private Person _person;
+        private ClientDemographicDTO _clientDemographicDTO=new ClientDemographicDTO();
 
         public IClientRegistrationViewModel Parent { get; set; }
 
@@ -72,15 +78,21 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public string Names
+        public CustomList CustomList { get; }
+
+        public ClientDemographicDTO ClientDemographicDTO
         {
-            get { return _names; }
-            set { _names = value;RaisePropertyChanged(() => Names);}
+            get { return _clientDemographicDTO; }
+            set
+            {
+                _clientDemographicDTO = value;
+                RaisePropertyChanged(() => ClientDemographicDTO);
+            }
         }
-        
-        public ClientDemographicViewModel()
+
+        public ClientDemographicViewModel(IDialogService dialogService)
         {
-            _dialogService = Mvx.Resolve<IDialogService>();
+            _dialogService = dialogService;
 
             Validator = new ValidationHelper();
             Title = "Demographics";
@@ -88,16 +100,46 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
-        public bool Validate()
-        {   
-            Validator.AddRequiredRule(() => Names, "Full Name is required");
+       public bool Validate()
+        {
+            Validator.AddRule(
+                nameof(ClientDemographicDTO.FirstName),
+                () => RuleResult.Assert(
+                    !string.IsNullOrWhiteSpace(ClientDemographicDTO.FirstName),
+                    $"{nameof(ClientDemographicDTO.FirstName)} is required"
+                )
+            );
 
+            Validator.AddRule(
+                nameof(ClientDemographicDTO.LastName),
+                () => RuleResult.Assert(
+                    !string.IsNullOrWhiteSpace(ClientDemographicDTO.LastName),
+                    $"{nameof(ClientDemographicDTO.LastName)} is required"
+                )
+            );
+
+            Validator.AddRule(
+                nameof(ClientDemographicDTO.Gender),
+                () => RuleResult.Assert(
+                    !string.IsNullOrWhiteSpace(ClientDemographicDTO.Gender),
+                    $"{nameof(ClientDemographicDTO.Gender)} is required"
+                )
+            );
+
+            Validator.AddRequiredRule(() => ClientDemographicDTO.BirthDate, $"{nameof(ClientDemographicDTO.BirthDate)} is required");
+
+            if (null != ClientDemographicDTO.BirthDate)
+                Validator.AddRule(
+                    nameof(ClientDemographicDTO.BirthDate),
+                    () => RuleResult.Assert(ClientDemographicDTO.BirthDate.Value <= DateTime.Now, $"{nameof(ClientDemographicDTO.BirthDate)} cannot be future date"));
+            
             var result = Validator.ValidateAll();
 
             Errors = result.AsObservableDictionary();
             
             return result.IsValid;
         }
+
         public void Save()
         {
             throw new System.NotImplementedException();

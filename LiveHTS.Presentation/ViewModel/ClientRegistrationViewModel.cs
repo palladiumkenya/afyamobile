@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -14,6 +15,10 @@ namespace LiveHTS.Presentation.ViewModel
     public class ClientRegistrationViewModel:MvxViewModel,IClientRegistrationViewModel
     {
         private readonly List<IStepViewModel> _viewModels;
+        private  IDialogService _dialogService = null;
+
+
+        
 
         public IEnumerable<IStepViewModel> ViewModels
         {
@@ -27,9 +32,12 @@ namespace LiveHTS.Presentation.ViewModel
 
         public ClientRegistrationViewModel()
         {
+            Mvx.TryResolve(out _dialogService);
+
+
             _viewModels = new List<IStepViewModel>
             {
-                new ClientDemographicViewModel {Parent = this},
+                new ClientDemographicViewModel(_dialogService) {Parent = this},
                 new ClientContactViewModel {Parent = this},
                 new ClientProfileViewModel {Parent = this},
                 new ClientEnrollmentViewModel {Parent = this}

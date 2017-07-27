@@ -12,6 +12,8 @@ namespace LiveHTS.Core.Model.Subject
         public Guid? CountyId { get; set; }
         public bool Preferred { get; set; }
         [Indexed]
+        public decimal? Lat { get; set; }
+        public decimal? Lng { get; set; }
         public Guid PersonId { get; set; }
 
         public PersonAddress()
