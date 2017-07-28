@@ -52,20 +52,53 @@
             android:layout_height="wrap_content"
             android:id="@+id/editTextLastName"
             local:MvxBind="Text ClientDemographicDTO.LastName; Error Errors['LastName']" />
-      <Mvx.MvxRadioGroup
-          android:layout_width="match_parent"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutGender">
+            <TextView
+                android:text="Gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewGender" />
+            <MvxRadioGroup
+                android:textSize="40dp"
+                android:orientation="horizontal"
+                local:MvxItemTemplate="@layout/item_gender"
+                local:MvxBind="ItemsSource GenderOptions;SelectedItem SelectedGender"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/mvxRadioGroup1" />
+        </LinearLayout>
+        <LinearLayout
             android:orientation="horizontal"
-            android:textSize="40dp"
-            local:MvxItemTemplate="@layout/item_gender"
-            local:MvxBind="ItemsSource GenderLists" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutAge">
+            <TextView
+                android:text="Age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewAge" />
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextAge"
+                local:MvxBind="Text Age; Error Errors['Age']" />
+            <MvxSpinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                local:MvxBind="ItemsSource AgeUnitOptions;SelectedItem SelectedAgeUnit" />
+        </LinearLayout>
         <MvxDatePicker
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="40dp"
             local:MvxBind="Value ClientDemographicDTO.BirthDate; Error Errors['BirthDate']"
             android:calendarViewShown="false"
-            android:datePickerMode="spinner"/>
+            android:datePickerMode="spinner" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

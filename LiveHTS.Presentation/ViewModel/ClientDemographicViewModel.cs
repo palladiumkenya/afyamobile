@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
@@ -27,6 +28,11 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _movePreviousCommand;
         private Person _person;
         private ClientDemographicDTO _clientDemographicDTO=new ClientDemographicDTO();
+        private CustomItem _selectedGender;
+        private List<CustomItem> _genderOptions;
+        private decimal _age;
+        private List<CustomItem> _ageUnitOptions;
+        private CustomItem _selectedAgeUnit;
 
         public IClientRegistrationViewModel Parent { get; set; }
 
@@ -80,7 +86,47 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
 
-        public List<CustomItem> GenderLists { get; set; }
+        public List<CustomItem> GenderOptions
+        {
+            get { return _genderOptions; }
+            set
+            {
+                _genderOptions = value;
+                RaisePropertyChanged(() => GenderOptions);
+            }
+        }
+
+        public List<CustomItem> AgeUnitOptions
+        {
+            get { return _ageUnitOptions; }
+            set
+            {
+                _ageUnitOptions = value; 
+                RaisePropertyChanged(() => AgeUnitOptions);
+            }
+        }
+
+        public decimal Age
+        {
+            get { return _age; }
+            set { _age = value;RaisePropertyChanged(() => Age); }
+        }
+
+        public CustomItem SelectedGender
+        {
+            get { return _selectedGender; }
+            set { _selectedGender = value;RaisePropertyChanged(() => SelectedGender); }
+        }
+
+        public CustomItem SelectedAgeUnit
+        {
+            get { return _selectedAgeUnit; }
+            set
+            {
+                _selectedAgeUnit = value;
+                RaisePropertyChanged(() => SelectedAgeUnit);
+            }
+        }
 
         public ClientDemographicDTO ClientDemographicDTO
         {
@@ -92,12 +138,15 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        
-
         public ClientDemographicViewModel(IDialogService dialogService)
         {
-            GenderLists = CustomLists.Gender;
             _dialogService = dialogService;
+            
+            GenderOptions = CustomLists.GenderList;
+            AgeUnitOptions = CustomLists.AgeUnitList;
+
+            SelectedGender = GenderOptions.First();
+            SelectedAgeUnit = AgeUnitOptions.First();
 
             Validator = new ValidationHelper();
             Title = "Demographics";

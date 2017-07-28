@@ -15,6 +15,7 @@ namespace LiveHTS.Presentation.DTO
 
         public ClientDemographicDTO()
         {
+            BirthDate = DateTime.Today;
             BirthDateEstimated = false;
         }
     }

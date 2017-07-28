@@ -2,24 +2,28 @@
 
 namespace LiveHTS.SharedKernel.Model
 {
-    public class CustomItem
-    {
-        public string Display { get; set; }
-        public string Value { get; set; }
-
-        public CustomItem(string value)
-        {
-            Value=Display = value;
-        }
-
-        public CustomItem(string value,string display )
-        {
-            Display = display;
-            Value = value;
-        }
-    }
     public class CustomLists
     {
-        public static List<CustomItem> Gender = new List<CustomItem> {new CustomItem("M"), new CustomItem("F")};
+        private static readonly List<CustomItem> _genderList = new List<CustomItem>
+        {
+            new CustomItem("M", "Male"),
+            new CustomItem("F", "Female")
+        };
+
+        private static readonly List<CustomItem> _ageUnitList = new List<CustomItem>
+        {
+            new CustomItem("Y", "Years"),
+            new CustomItem("M", "Months"),
+            new CustomItem("D", "Days")
+        };
+
+        public static List<CustomItem> GenderList
+        {
+            get { return _genderList; }
+        }
+        public static List<CustomItem> AgeUnitList
+        {
+            get { return _ageUnitList; }
+        }
     }
 }

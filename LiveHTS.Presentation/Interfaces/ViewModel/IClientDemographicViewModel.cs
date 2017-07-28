@@ -10,7 +10,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientDemographicViewModel:IStepViewModel
     {
-        List<CustomItem> GenderLists { get; set; }
+        List<CustomItem> GenderOptions { get; set; }
+        List<CustomItem> AgeUnitOptions { get; set; }
         ClientDemographicDTO ClientDemographicDTO { get; set; }
+        decimal Age { get; set; }
+        CustomItem SelectedGender { get; set; }
+        CustomItem SelectedAgeUnit { get; set; }
     }
 }
