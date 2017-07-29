@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.SharedKernel", "LiveHTS.SharedKernel\LiveHTS.SharedKernel.csproj", "{11312AFD-1E57-48C8-A628-D6BE2E55D8B6}"
 EndProject
@@ -26,6 +26,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.Core.Tests", "LiveHTS.Core.Tests\LiveHTS.Core.Tests.csproj", "{352469CE-927D-42D6-A1EA-8FF940FDC133}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.Presentation.Tests", "LiveHTS.Presentation.Tests\LiveHTS.Presentation.Tests.csproj", "{889A71E1-517F-46E8-AF28-C2F59B5AF760}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.SharedKernel.Tests", "LiveHTS.SharedKernel.Tests\LiveHTS.SharedKernel.Tests.csproj", "{4D19AFAF-674A-49B1-9F9C-98341D678912}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{889A71E1-517F-46E8-AF28-C2F59B5AF760}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{889A71E1-517F-46E8-AF28-C2F59B5AF760}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{889A71E1-517F-46E8-AF28-C2F59B5AF760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D19AFAF-674A-49B1-9F9C-98341D678912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D19AFAF-674A-49B1-9F9C-98341D678912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D19AFAF-674A-49B1-9F9C-98341D678912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D19AFAF-674A-49B1-9F9C-98341D678912}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,5 +85,6 @@ Global
 		{3B0AEAE6-AB23-41F3-BBCE-FED3A56D56A2} = {067FD0BA-D031-4A81-A171-31927527753B}
 		{352469CE-927D-42D6-A1EA-8FF940FDC133} = {7252F33F-6567-48AB-A538-8C0D2863C9FE}
 		{889A71E1-517F-46E8-AF28-C2F59B5AF760} = {EEB86DEA-401F-463F-8611-4022AFDACA8A}
+		{4D19AFAF-674A-49B1-9F9C-98341D678912} = {E15B63D4-4E65-4389-95C2-4F5E8F8FDD02}
 	EndGlobalSection
 EndGlobal

@@ -46,22 +46,24 @@
             android:text="Last Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewFirstName" />
+            android:id="@+id/textViewLastName" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextLastName"
             local:MvxBind="Text ClientDemographicDTO.LastName; Error Errors['LastName']" />
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/linearLayoutGender">
             <TextView
                 android:text="Gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewGender" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textViewGender"
+                android:gravity="center_vertical"
+                android:paddingRight="10dp" />
             <MvxRadioGroup
                 android:textSize="40dp"
                 android:orientation="horizontal"
@@ -69,6 +71,7 @@
                 local:MvxBind="ItemsSource GenderOptions;SelectedItem SelectedGender"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:id="@+id/mvxRadioGroup1" />
         </LinearLayout>
         <LinearLayout
