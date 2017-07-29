@@ -38,7 +38,8 @@ namespace LiveHTS.Presentation.ViewModel
         private string _lastName;
         private string _gender;
         private DateTime? _birthDate;
-        
+        private string _birthDateError;
+
 
         public IClientRegistrationViewModel Parent { get; set; }
 
@@ -150,6 +151,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public string BirthDateError
+        {
+            get { return _birthDateError; }
+            set { _birthDateError = value; RaisePropertyChanged(() => BirthDateError);}
+        }
+
         public DateTime? BirthDate
         {
             get { return _birthDate; }
@@ -157,6 +164,16 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _birthDate = value;
                 RaisePropertyChanged(() => BirthDate);
+                BirthDateError=string.Empty;
+                try
+                {
+                    Errors.Remove("BirthDate");
+                }
+                catch 
+                {
+                    
+                }
+                
                 //CalculateAge();
             }
         }

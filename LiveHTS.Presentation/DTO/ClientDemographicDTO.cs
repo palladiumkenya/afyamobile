@@ -18,7 +18,5 @@ namespace LiveHTS.Presentation.DTO
             
             BirthDateEstimated = false;
         }
-
-       
     }
 }

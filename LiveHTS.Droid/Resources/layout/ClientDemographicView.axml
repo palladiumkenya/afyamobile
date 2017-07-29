@@ -102,11 +102,19 @@
                 android:gravity="center_vertical"
                 local:MvxBind="ItemsSource AgeUnitOptions;SelectedItem SelectedAgeUnit" />
         </LinearLayout>
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewBirthDate"
+            local:MvxBind="Text Errors['BirthDate'];Error Errors['BirthDate']"
+            android:textColor="@android:color/holo_red_dark"
+            android:gravity="center_horizontal" />
         <MvxDatePicker
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="40dp"
-            local:MvxBind="Value BirthDate; Error Errors['BirthDate']"
+            local:MvxBind="Value BirthDate;"
             android:calendarViewShown="false"
             android:datePickerMode="spinner" />
     </LinearLayout>

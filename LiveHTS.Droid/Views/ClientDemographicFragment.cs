@@ -19,7 +19,7 @@ namespace LiveHTS.Droid.Views
             this.EnsureBindingContextIsSet(savedInstanceState);
             var ignored=base.OnCreateView(inflater, container, savedInstanceState);
             var view= this.BindingInflate(Resource.Layout.ClientDemographicView,container,false);            
-            return view;
+            return view;           
         }          
     }
 }

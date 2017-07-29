@@ -18,6 +18,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string LastName { get; set; }
         string Gender { get; set; }
         decimal Age { get; set; }
+        string BirthDateError { get; set; }
         DateTime? BirthDate { get; set; }
         CustomItem SelectedGender { get; set; }
         CustomItem SelectedAgeUnit { get; set; }
