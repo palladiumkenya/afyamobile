@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextFirstName"
-            local:MvxBind="Text ClientDemographicDTO.FirstName; Error Errors['FirstName']" />
+            local:MvxBind="Text FirstName; Error Errors['FirstName']" />
         <TextView
             android:text="Middle Name"
             android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextMiddleName"
-            local:MvxBind="Text ClientDemographicDTO.MiddleName; Error Errors['MiddleName']" />
+            local:MvxBind="Text MiddleName; Error Errors['MiddleName']" />
         <TextView
             android:text="Last Name"
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextLastName"
-            local:MvxBind="Text ClientDemographicDTO.LastName; Error Errors['LastName']" />
+            local:MvxBind="Text LastName; Error Errors['LastName']" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -77,29 +77,36 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/linearLayoutAge">
             <TextView
                 android:text="Age"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewAge" />
+                android:layout_height="match_parent"
+                android:id="@+id/textViewAge"
+                android:gravity="center_vertical"
+                android:paddingRight="10dp" />
             <EditText
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextAge"
-                local:MvxBind="Text Age; Error Errors['Age']" />
+                local:MvxBind="Text Age; Error Errors['Age']"
+                android:paddingRight="10dp"
+                android:maxLength="3"
+                android:numeric="integer"
+                android:inputType="number" />
             <MvxSpinner
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:textSize="40dp"
+                android:gravity="center_vertical"
                 local:MvxBind="ItemsSource AgeUnitOptions;SelectedItem SelectedAgeUnit" />
         </LinearLayout>
         <MvxDatePicker
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="40dp"
-            local:MvxBind="Value ClientDemographicDTO.BirthDate; Error Errors['BirthDate']"
+            local:MvxBind="Value BirthDate; Error Errors['BirthDate']"
             android:calendarViewShown="false"
             android:datePickerMode="spinner" />
     </LinearLayout>

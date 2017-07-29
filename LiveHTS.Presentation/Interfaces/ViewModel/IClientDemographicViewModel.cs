@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Validations;
@@ -12,9 +13,14 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         List<CustomItem> GenderOptions { get; set; }
         List<CustomItem> AgeUnitOptions { get; set; }
-        ClientDemographicDTO ClientDemographicDTO { get; set; }
+        string FirstName { get; set; }
+        string MiddleName { get; set; }
+        string LastName { get; set; }
+        string Gender { get; set; }
         decimal Age { get; set; }
+        DateTime? BirthDate { get; set; }
         CustomItem SelectedGender { get; set; }
         CustomItem SelectedAgeUnit { get; set; }
+        void CalculateBirthDate();
     }
 }

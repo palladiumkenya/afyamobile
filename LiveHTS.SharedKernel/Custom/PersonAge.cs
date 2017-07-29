@@ -40,6 +40,25 @@
             AgeUnit = ageUnit;
         }
 
+        public static PersonAge Create(decimal age, string ageUnit)
+        {
+            if (ageUnit == "Y")
+            {
+                return CreateFromYears(age);
+            }
+
+            if (ageUnit == "M")
+            {
+                return CreateFromMonths(age);
+            }
+
+            if (ageUnit == "D")
+            {
+                return CreateFromDays(age);
+            }
+
+            return new PersonAge(age);
+        }
         public static PersonAge CreateFromYears(decimal years)
         {
             return new PersonAge(years, "Y");

@@ -6,7 +6,9 @@ using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
+using Microsoft.VisualBasic.CompilerServices;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Core;
@@ -18,7 +20,6 @@ namespace LiveHTS.Presentation.ViewModel
     public class ClientDemographicViewModel : MvxViewModel,IClientDemographicViewModel
     {
         private string _title;
-        private string _names;
         private string _description;
         private ObservableDictionary<string, string> _errors;
         private readonly IDialogService _dialogService;
@@ -26,13 +27,18 @@ namespace LiveHTS.Presentation.ViewModel
         private string _movePreviousLabel;
         private IMvxCommand _moveNextCommand;
         private IMvxCommand _movePreviousCommand;
-        private Person _person;
         private ClientDemographicDTO _clientDemographicDTO=new ClientDemographicDTO();
         private CustomItem _selectedGender;
         private List<CustomItem> _genderOptions;
         private decimal _age;
         private List<CustomItem> _ageUnitOptions;
         private CustomItem _selectedAgeUnit;
+        private string _firstName;
+        private string _middleName;
+        private string _lastName;
+        private string _gender;
+        private DateTime? _birthDate;
+        
 
         public IClientRegistrationViewModel Parent { get; set; }
 
@@ -106,10 +112,48 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public string FirstName
+        {
+            get { return _firstName; }
+            set
+            {
+                _firstName = value;
+                RaisePropertyChanged(() => FirstName);
+            }
+        }
+
+        public string MiddleName
+        {
+            get { return _middleName; }
+            set { _middleName = value; RaisePropertyChanged(() => MiddleName); }
+        }
+
+        public string LastName
+        {
+            get { return _lastName; }
+            set { _lastName = value; RaisePropertyChanged(() => LastName); }
+        }
+
+        public string Gender
+        {
+            get { return _gender; }
+            set { _gender = value; RaisePropertyChanged(() => Gender); }
+        }
+
         public decimal Age
         {
             get { return _age; }
-            set { _age = value;RaisePropertyChanged(() => Age); }
+            set
+            {
+                _age = value;RaisePropertyChanged(() => Age);
+                CalculateBirthDate();
+            }
+        }
+
+        public DateTime? BirthDate
+        {
+            get { return _birthDate; }
+            set { _birthDate = value; RaisePropertyChanged(() => BirthDate); }
         }
 
         public CustomItem SelectedGender
@@ -125,18 +169,17 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedAgeUnit = value;
                 RaisePropertyChanged(() => SelectedAgeUnit);
+                CalculateBirthDate();
             }
         }
 
-        public ClientDemographicDTO ClientDemographicDTO
+        public void CalculateBirthDate()
         {
-            get { return _clientDemographicDTO; }
-            set
-            {
-                _clientDemographicDTO = value;
-                RaisePropertyChanged(() => ClientDemographicDTO);
-            }
+            var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
+            BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
         }
+
+    
 
         public ClientDemographicViewModel(IDialogService dialogService)
         {
@@ -147,7 +190,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
-
+            BirthDate=DateTime.Today;
             Validator = new ValidationHelper();
             Title = "Demographics";
             MovePreviousLabel = "";
@@ -157,35 +200,51 @@ namespace LiveHTS.Presentation.ViewModel
        public bool Validate()
         {
             Validator.AddRule(
-                nameof(ClientDemographicDTO.FirstName),
+                nameof(FirstName),
                 () => RuleResult.Assert(
-                    !string.IsNullOrWhiteSpace(ClientDemographicDTO.FirstName),
-                    $"{nameof(ClientDemographicDTO.FirstName)} is required"
+                    !string.IsNullOrWhiteSpace(FirstName),
+                    $"{nameof(FirstName)} is required"
                 )
             );
 
             Validator.AddRule(
-                nameof(ClientDemographicDTO.LastName),
+                nameof(LastName),
                 () => RuleResult.Assert(
-                    !string.IsNullOrWhiteSpace(ClientDemographicDTO.LastName),
-                    $"{nameof(ClientDemographicDTO.LastName)} is required"
+                    !string.IsNullOrWhiteSpace(LastName),
+                    $"{nameof(LastName)} is required"
                 )
             );
 
             Validator.AddRule(
-                nameof(ClientDemographicDTO.Gender),
+                nameof(Gender),
                 () => RuleResult.Assert(
-                    !string.IsNullOrWhiteSpace(ClientDemographicDTO.Gender),
-                    $"{nameof(ClientDemographicDTO.Gender)} is required"
+                    !string.IsNullOrWhiteSpace(Gender),
+                    $"{nameof(Gender)} is required"
                 )
             );
 
-            Validator.AddRequiredRule(() => ClientDemographicDTO.BirthDate, $"{nameof(ClientDemographicDTO.BirthDate)} is required");
+            Validator.AddRule(
+                nameof(Age),
+                () => RuleResult.Assert(
+                    !string.IsNullOrWhiteSpace(Age.ToString()),
+                    $"{nameof(Age)} is required"
+                )
+            );
 
-            if (null != ClientDemographicDTO.BirthDate)
+            Validator.AddRule(
+                nameof(Age),
+                () => RuleResult.Assert(
+                    Age>0,
+                    $"valid {nameof(Age)} is required"
+                )
+            );
+
+            Validator.AddRequiredRule(() => BirthDate, $"{nameof(BirthDate)} is required");
+
+            if (null != BirthDate)
                 Validator.AddRule(
-                    nameof(ClientDemographicDTO.BirthDate),
-                    () => RuleResult.Assert(ClientDemographicDTO.BirthDate.Value <= DateTime.Now, $"{nameof(ClientDemographicDTO.BirthDate)} cannot be future date"));
+                    nameof(BirthDate),
+                    () => RuleResult.Assert(BirthDate.Value <= DateTime.Now, $"{nameof(BirthDate)} cannot be future date"));
             
             var result = Validator.ValidateAll();
 

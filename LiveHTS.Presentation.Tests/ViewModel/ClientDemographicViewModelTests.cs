@@ -18,12 +18,16 @@ namespace LiveHTS.Presentation.Tests.ViewModel
         {
             _viewModel=new ClientDemographicViewModel(null);
             _demographicDTO = Builder<ClientDemographicDTO>.CreateNew().Build();
+            _viewModel.FirstName = _demographicDTO.FirstName;
+            _viewModel.MiddleName = _demographicDTO.MiddleName;
+            _viewModel.LastName = _demographicDTO.LastName;
+            _viewModel.Gender = _demographicDTO.Gender;
+            _viewModel.BirthDate = _demographicDTO.BirthDate;
         }
         [Test]
         public void should_Validate_BirthDate()
         {
             _demographicDTO.BirthDate = null;
-            _viewModel.ClientDemographicDTO = _demographicDTO;
             Assert.IsFalse(_viewModel.Validate());
             foreach (var error in _viewModel.Errors)
             {
@@ -31,7 +35,24 @@ namespace LiveHTS.Presentation.Tests.ViewModel
             }
 
             _demographicDTO.BirthDate = DateTime.Now.AddDays(1);
-            _viewModel.ClientDemographicDTO = _demographicDTO;
+            Assert.IsFalse(_viewModel.Validate());
+            foreach (var error in _viewModel.Errors)
+            {
+                Console.WriteLine(error.ToString());
+            }
+        }
+
+        [Test]
+        public void should_Validate_Age()
+        {
+            _viewModel.Age = 0;
+            Assert.IsFalse(_viewModel.Validate());
+            foreach (var error in _viewModel.Errors)
+            {
+                Console.WriteLine(error.ToString());
+            }
+
+            _viewModel.Age = -1;
             Assert.IsFalse(_viewModel.Validate());
             foreach (var error in _viewModel.Errors)
             {
@@ -42,11 +63,11 @@ namespace LiveHTS.Presentation.Tests.ViewModel
         [Test]
         public void should_Validate_Required()
         {
-            _demographicDTO = Builder<ClientDemographicDTO>.CreateNew().Build();
-            _demographicDTO.FirstName = " ";
-            _demographicDTO.LastName = " ";
-            _demographicDTO.Gender = " ";
-            _viewModel.ClientDemographicDTO = _demographicDTO;
+
+            _viewModel.FirstName = " ";
+            _viewModel.LastName = " ";
+            _viewModel.Gender = " ";
+            
             Assert.IsFalse(_viewModel.Validate());
             foreach (var error in _viewModel.Errors)
             {
