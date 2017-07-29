@@ -153,13 +153,20 @@ namespace LiveHTS.Presentation.ViewModel
         public DateTime? BirthDate
         {
             get { return _birthDate; }
-            set { _birthDate = value; RaisePropertyChanged(() => BirthDate); }
+            set
+            {
+                _birthDate = value;
+                RaisePropertyChanged(() => BirthDate);
+                //CalculateAge();
+            }
         }
 
         public CustomItem SelectedGender
         {
             get { return _selectedGender; }
-            set { _selectedGender = value;RaisePropertyChanged(() => SelectedGender); }
+            set { _selectedGender = value;
+                Gender = _selectedGender.Value;
+                RaisePropertyChanged(() => SelectedGender); }
         }
 
         public CustomItem SelectedAgeUnit
@@ -179,7 +186,17 @@ namespace LiveHTS.Presentation.ViewModel
             BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
         }
 
-    
+        public void CalculateAge()
+        {
+            if (null != BirthDate)
+            {
+              var personAge=   SharedKernel.Custom.Utils.CalculateAge(BirthDate.Value);
+                Age = personAge.Age;
+                var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+                SelectedAgeUnit = ageUnit;
+            }
+        }
+
 
         public ClientDemographicViewModel(IDialogService dialogService)
         {
@@ -190,7 +207,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
-            BirthDate=DateTime.Today;
+            BirthDate=DateTime.Today.AddDays(-1);
             Validator = new ValidationHelper();
             Title = "Demographics";
             MovePreviousLabel = "";
@@ -244,7 +261,9 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != BirthDate)
                 Validator.AddRule(
                     nameof(BirthDate),
-                    () => RuleResult.Assert(BirthDate.Value <= DateTime.Now, $"{nameof(BirthDate)} cannot be future date"));
+                    () => RuleResult.Assert(
+                        BirthDate.Value < DateTime.Today,
+                        $"{nameof(BirthDate)} not a valid date"));
             
             var result = Validator.ValidateAll();
 

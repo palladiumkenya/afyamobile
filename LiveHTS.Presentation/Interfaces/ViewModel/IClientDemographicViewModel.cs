@@ -22,5 +22,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CustomItem SelectedGender { get; set; }
         CustomItem SelectedAgeUnit { get; set; }
         void CalculateBirthDate();
+        void CalculateAge();
     }
 }
