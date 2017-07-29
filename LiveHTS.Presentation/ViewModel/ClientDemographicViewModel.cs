@@ -14,6 +14,7 @@ using MvvmCross.Platform;
 using MvvmCross.Platform.Core;
 using MvvmCross.Platform.Platform;
 using MvvmValidation;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -280,7 +281,7 @@ namespace LiveHTS.Presentation.ViewModel
                     nameof(BirthDate),
                     () => RuleResult.Assert(
                         BirthDate.Value < DateTime.Today,
-                        $"{nameof(BirthDate)} not a valid date"));
+                        $"{nameof(BirthDate)} should be a valid date"));
             
             var result = Validator.ValidateAll();
 
@@ -291,13 +292,16 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Save()
         {
-            throw new System.NotImplementedException();
+            //save state
         }
 
         private void MoveNext()
         {
-            if(Validate())
+            if (Validate())
+            {
+                Save();
                 ShowViewModel<ClientContactViewModel>();
+            }
         }
         private void MovePrevious()
         {
