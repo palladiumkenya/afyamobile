@@ -1,9 +1,11 @@
-﻿using LiveHTS.Presentation.Interfaces;
+﻿using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmValidation;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -17,7 +19,12 @@ namespace LiveHTS.Presentation.ViewModel
         private string _movePreviousLabel;
         private IMvxCommand _moveNextCommand;
         private IMvxCommand _movePreviousCommand;
+        private ClientDemographicDTO _demographic;
+        private ClientContactAddressDTO _contactAddress;
         private int? _telephone;
+        private string _landmark;
+        private string _clientInfo;
+
 
         public IClientRegistrationViewModel Parent { get; set; }
 
@@ -72,10 +79,33 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public ClientDemographicDTO Demographic
+        {
+            get { return _demographic; }
+        }
+
+        public ClientContactAddressDTO ContactAddress
+        {
+            get { return _contactAddress= ClientContactAddressDTO.CreateFromView(this); ; }
+        }
+
+        public string ClientInfo
+        {
+            get { return _clientInfo; }
+            set { _clientInfo = value; RaisePropertyChanged(() => ClientInfo);}
+        }
+
+
         public int? Telephone
         {
             get { return _telephone; }
             set { _telephone = value; RaisePropertyChanged(() => Telephone);}
+        }
+
+        public string Landmark
+        {
+            get { return _landmark; }
+            set { _landmark = value; RaisePropertyChanged(() => Landmark);}
         }
 
         public ClientContactViewModel()
@@ -87,8 +117,15 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
+        public void Init(string demographic)
+        {
+            _demographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(demographic);
+            ClientInfo = _demographic.ToString();
+        }
+
         public bool Validate()
         {
+            /*
             Validator.AddRequiredRule(() => Telephone, "Telephone is required");
 
             var result = Validator.ValidateAll();
@@ -96,6 +133,8 @@ namespace LiveHTS.Presentation.ViewModel
             Errors = result.AsObservableDictionary();
 
             return result.IsValid;
+            */
+            return true;
         }
         public void Save()
         {
@@ -105,7 +144,8 @@ namespace LiveHTS.Presentation.ViewModel
         private void MoveNext()
         {
             if (Validate())
-                ShowViewModel<ClientProfileViewModel>();
+                
+                 ShowViewModel<ClientProfileViewModel>();
         }
         private void MovePrevious()
         {
@@ -119,7 +159,5 @@ namespace LiveHTS.Presentation.ViewModel
         {
             return true;
         }
-
-       
     }
 }

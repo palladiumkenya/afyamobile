@@ -1,11 +1,12 @@
 ﻿using System;
+using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
 namespace LiveHTS.Core.Model.Subject
 {
-    public class PersonAddress : Entity<Guid>
+    public class PersonAddress : Entity<Guid>, IPersonAddress
     {
         public string Landmark { get; set; }
         [Indexed]

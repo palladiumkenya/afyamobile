@@ -36,6 +36,7 @@
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />
+    <Compile Include="DTO\ClientContactAddressDTO.cs" />
     <Compile Include="DTO\ClientDemographicDTO.cs" />
     <Compile Include="Interfaces\ViewModel\IClientProfileViewModel.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />

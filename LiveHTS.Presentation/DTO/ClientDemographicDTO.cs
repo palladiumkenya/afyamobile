@@ -1,5 +1,6 @@
 ﻿using System;
 using LiveHTS.Core.Interfaces.Model;
+using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmValidation;
 
 namespace LiveHTS.Presentation.DTO
@@ -13,10 +14,38 @@ namespace LiveHTS.Presentation.DTO
         public DateTime? BirthDate { get; set; }
         public bool? BirthDateEstimated { get; set; }
 
+        public virtual string FullName
+        {
+            get { return $"{FirstName} {MiddleName} {LastName}"; }
+        }
+
         public ClientDemographicDTO()
         {
-            
             BirthDateEstimated = false;
+        }
+
+        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime? birthDate):this()
+        {
+            FirstName = firstName;
+            MiddleName = middleName;
+            LastName = lastName;
+            Gender = gender;
+            BirthDate = birthDate;
+        }
+
+        public static ClientDemographicDTO CreateFromView(IClientDemographicViewModel model)
+        {
+            return new ClientDemographicDTO(
+                model.FirstName, 
+                model.MiddleName, 
+                model.LastName, 
+                model.Gender, 
+                model.BirthDate);
+        }
+
+        public override string ToString()
+        {
+            return $"{FullName},{Gender}";
         }
     }
 }

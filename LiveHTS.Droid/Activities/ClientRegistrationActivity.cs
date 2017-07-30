@@ -21,5 +21,10 @@ namespace LiveHTS.Droid.Activities
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.ClientRegistrationView);
         }
+
+        protected override void OnViewModelSet()
+        {
+            base.OnViewModelSet();
+        }
     }
 }
