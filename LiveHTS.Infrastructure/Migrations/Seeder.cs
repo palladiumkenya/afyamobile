@@ -30,12 +30,17 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<PracticeType>();
 
             db.CreateTable<Practice>();
+            db.CreateTable<KeyPop>();
+            db.CreateTable<MaritalStatus>();
 
             #endregion
 
             InsertOrUpdate(db, new IdentifierTypeJson());
             InsertOrUpdate(db, new PracticeTypeJson());
             InsertOrUpdate(db, new PracticeJson());
+
+            InsertOrUpdate(db, new KeyPopJson());
+            InsertOrUpdate(db, new MaritalStatusJson());
 
         }
 
@@ -62,6 +67,7 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<Client>();
             db.CreateTable<ClientIdentifier>();
             db.CreateTable<ClientRelationship>();
+
             #endregion
 
             InsertOrUpdate(db, new PersonJson());

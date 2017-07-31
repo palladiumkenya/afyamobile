@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
+    <Compile Include="Interfaces\Repository\Config\IIdentifierTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\IMaritalStatusRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\IKeyPopRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ISubCountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ICountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
@@ -60,6 +63,8 @@
     <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
+    <Compile Include="Model\Config\KeyPop.cs" />
+    <Compile Include="Model\Config\MaritalStatus.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />
     <Compile Include="Service\Clients\ObsService.cs" />

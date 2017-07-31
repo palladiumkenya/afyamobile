@@ -1,4 +1,9 @@
-﻿using LiveHTS.Presentation.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using LiveHTS.Core.Interfaces.Services.Config;
+using LiveHTS.Core.Model.Config;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
@@ -18,6 +23,12 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _moveNextCommand;
         private IMvxCommand _movePreviousCommand;        
         private string _serial;
+        private string _clientInfo;
+        private IEnumerable<IdentifierType> _identifierTypes;
+        private string _identifier;
+        private DateTime _registrationDate;
+        private IdentifierType _selectedIdentifierType;
+        private ILookupService _lookupService;
 
         public IClientRegistrationViewModel Parent { get; set; }
 
@@ -72,31 +83,83 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public string Serial
+        public string ClientInfo
         {
-            get { return _serial; }
-            set { _serial = value; RaisePropertyChanged(() => Serial);}
+            get { return _clientInfo; }
+            set { _clientInfo = value;RaisePropertyChanged(() => ClientInfo); }
         }
 
-        public ClientEnrollmentViewModel()
+        public IEnumerable<IdentifierType> IdentifierTypes
         {
+            get { return _identifierTypes; }
+            set { _identifierTypes = value;RaisePropertyChanged(() => IdentifierTypes); }
+        }
+
+        public IdentifierType SelectedIdentifierType
+        {
+            get { return _selectedIdentifierType; }
+            set { _selectedIdentifierType = value;RaisePropertyChanged(() => SelectedIdentifierType); }
+        }
+
+        public string Identifier
+        {
+            get { return _identifier; }
+            set { _identifier = value;RaisePropertyChanged(() => Identifier); }
+        }
+
+        public DateTime RegistrationDate
+        {
+            get { return _registrationDate; }
+            set { _registrationDate = value; RaisePropertyChanged(() => RegistrationDate);}
+        }
+
+
+        public void Init(string clientinfo)
+        {
+            ClientInfo = clientinfo;
+        }
+
+        public ClientEnrollmentViewModel(ILookupService lookupService)
+        {
+            _lookupService = lookupService;
             _dialogService = Mvx.Resolve<IDialogService>();
             Validator = new ValidationHelper();
             Title = "Enrollment";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "SAVE";
+            RegistrationDate=DateTime.Today;
+        }
+
+        public override void Start()
+        {
+            base.Start();
+            IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
         }
 
         public bool Validate()
         {
-            Validator.AddRequiredRule(() => Serial, $"Serial is required");
+
+            Validator.AddRule(
+                nameof(Identifier),
+                () => RuleResult.Assert(
+                    !string.IsNullOrWhiteSpace(Identifier),
+                    $"{nameof(Identifier)} is required"
+                )
+            );
+
+            Validator.AddRule(
+                nameof(RegistrationDate),
+                () => RuleResult.Assert(
+                    RegistrationDate <= DateTime.Today,
+                    $"{nameof(RegistrationDate)} should not be future date"));
 
             var result = Validator.ValidateAll();
 
             Errors = result.AsObservableDictionary();
-            
+
             return result.IsValid;
         }
+
         public void Save()
         {
             throw new System.NotImplementedException();
@@ -111,7 +174,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void MovePrevious()
         {
-            ShowViewModel<ClientProfileViewModel>();
+            ShowViewModel<ClientProfileViewModel>(new { clientinfo = ClientInfo });
         }
         private bool CanMoveNext()
         {

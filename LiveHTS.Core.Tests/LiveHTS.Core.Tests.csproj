@@ -139,6 +139,12 @@
     <None Include="Seed\Practice.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Seed\MaritalStatus.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Seed\KeyPop.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Seed\PracticeType.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

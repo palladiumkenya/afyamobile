@@ -144,8 +144,7 @@ namespace LiveHTS.Presentation.ViewModel
         private void MoveNext()
         {
             if (Validate())
-                
-                 ShowViewModel<ClientProfileViewModel>();
+                 ShowViewModel<ClientProfileViewModel>(new { clientinfo= ClientInfo });
         }
         private void MovePrevious()
         {

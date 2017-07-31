@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace LiveHTS.Infrastructure.Seed.Config
 {
-  public  class PracticeJson : ISeedJson<Practice>
+  public class PracticeJson : ISeedJson<Practice>
     {
         public  List<Practice> Read()
         {

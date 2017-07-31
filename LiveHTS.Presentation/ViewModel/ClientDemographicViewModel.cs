@@ -213,12 +213,10 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     Errors.Remove("BirthDate");
                 }
-                catch
-                {
-
-                }
+                catch{}
 
                 //CalculateAge();
+
             }
         }
 

@@ -1,4 +1,9 @@
-﻿using LiveHTS.Presentation.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LiveHTS.Core.Interfaces.Services.Config;
+using LiveHTS.Core.Model.Config;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
@@ -17,7 +22,17 @@ namespace LiveHTS.Presentation.ViewModel
         private string _movePreviousLabel;
         private IMvxCommand _moveNextCommand;
         private IMvxCommand _movePreviousCommand;
-        private string _keyPop;
+        
+        private string _clientInfo;
+        private string _otherKeyPop;
+        private IEnumerable<MaritalStatus> _maritalStatus;
+        private IEnumerable<KeyPop> _keyPops;
+        private MaritalStatus _selectedMaritalStatus;
+        private KeyPop _selectedKeyPop;
+
+        private readonly ILookupService _lookupService;
+        private string _isOtherKeyPop;
+
 
         public IClientRegistrationViewModel Parent { get; set; }
 
@@ -72,14 +87,67 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public string KeyPop
+        public ClientContactAddressDTO ContactAddress { get; }
+
+        public string ClientInfo
         {
-            get { return _keyPop; }
-            set { _keyPop = value;RaisePropertyChanged(() => KeyPop); }
+            get { return _clientInfo; }
+            set { _clientInfo = value;RaisePropertyChanged(() => ClientInfo); }
         }
-        
-        public ClientProfileViewModel()
+
+        public IEnumerable<MaritalStatus> MaritalStatus
         {
+            get { return _maritalStatus; }
+            set { _maritalStatus = value;RaisePropertyChanged(() => MaritalStatus); }
+        }
+
+        public IEnumerable<KeyPop> KeyPops
+        {
+            get { return _keyPops; }
+            set { _keyPops = value;RaisePropertyChanged(() => KeyPops); }
+        }
+
+        public MaritalStatus SelectedMaritalStatus
+        {
+            get { return _selectedMaritalStatus; }
+            set { _selectedMaritalStatus = value;RaisePropertyChanged(() => SelectedMaritalStatus); }
+        }
+
+        public KeyPop SelectedKeyPop
+        {
+            get { return _selectedKeyPop; }
+            set
+            {
+                _selectedKeyPop = value;
+                RaisePropertyChanged(() => SelectedKeyPop);
+                IsOtherKeyPop = _selectedKeyPop.Id.ToLower() == "O".ToLower()? "visible" : "invisible";
+                RaisePropertyChanged(() => IsOtherKeyPop);
+            }
+        }
+
+        public string IsOtherKeyPop
+        {
+            get { return _isOtherKeyPop; }
+            set { _isOtherKeyPop = value;RaisePropertyChanged(() => IsOtherKeyPop); }
+        }
+
+
+        public string OtherKeyPop
+        {
+            get { return _otherKeyPop; }
+            set { _otherKeyPop = value;RaisePropertyChanged(() => OtherKeyPop); }
+        }
+
+
+        public void Init(string clientinfo)
+        {
+            ClientInfo = clientinfo;
+        }
+
+        public ClientProfileViewModel(ILookupService lookupService)
+        {
+            IsOtherKeyPop = "invisible";
+            _lookupService = lookupService;
             _dialogService = Mvx.Resolve<IDialogService>();
 
             Validator = new ValidationHelper();
@@ -88,9 +156,38 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
+        public override void Start()
+        {
+            base.Start();
+            MaritalStatus = _lookupService.GetMaritalStatuses().ToList();
+            KeyPops = _lookupService.GetKeyPops().ToList();
+        }
+
+
         public bool Validate()
         {
-            Validator.AddRequiredRule(() => KeyPop, "Full Name is required");
+            Validator.RemoveAllRules();
+            
+            if (IsOtherKeyPop.ToLower() == "visible")
+            {
+                Validator.AddRule(
+                    nameof(OtherKeyPop),
+                    () => RuleResult.Assert(
+                        !string.IsNullOrWhiteSpace(OtherKeyPop),
+                        $"{nameof(OtherKeyPop)} has to be specified"
+                    )
+                );
+            }
+            else
+            {
+                try
+                {
+                    Errors.Remove("OtherKeyPop");
+                }
+                catch
+                {
+                }
+            }
 
             var result = Validator.ValidateAll();
 
@@ -106,7 +203,7 @@ namespace LiveHTS.Presentation.ViewModel
         private void MoveNext()
         {
             if (Validate())
-                ShowViewModel<ClientEnrollmentViewModel>();
+                ShowViewModel<ClientEnrollmentViewModel>(new { clientinfo = ClientInfo });
         }
 
         private void MovePrevious()

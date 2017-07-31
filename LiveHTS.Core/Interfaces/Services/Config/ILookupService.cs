@@ -9,5 +9,8 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<SubCounty> GetSubCounties(int[] countyIds);
         IEnumerable<PracticeType> GetPracticeTypes();
         IEnumerable<Practice> GetPractices(string[] typeIds);
+        IEnumerable<MaritalStatus> GetMaritalStatuses();
+        IEnumerable<KeyPop> GetKeyPops();
+        IEnumerable<IdentifierType> GetIdentifierTypes();
     }
 }

@@ -130,7 +130,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void Start()
         {
-          LoadClients();
+            base.Start();
+            LoadClients();
         }
 
         private void LoadClients()

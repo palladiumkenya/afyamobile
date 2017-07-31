@@ -2,7 +2,7 @@
 
 namespace LiveHTS.Core.Model.Config
 {
-    public class IdentifierType : Entity<string>
+    public class KeyPop:Entity<string>
     {
         public string Name { get; set; }
 

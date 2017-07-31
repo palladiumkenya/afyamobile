@@ -47,6 +47,9 @@
     <Compile Include="Migrations\Seeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseRepository.cs" />
+    <Compile Include="Repository\Config\IdentifierTypeRepository.cs" />
+    <Compile Include="Repository\Config\MaritalStatusRepository.cs" />
+    <Compile Include="Repository\Config\KeyPopRepository.cs" />
     <Compile Include="Repository\Config\PracticeTypeRepository.cs" />
     <Compile Include="Repository\Config\PracticeRepository.cs" />
     <Compile Include="Repository\Config\CountyRepository.cs" />
@@ -66,6 +69,8 @@
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
     <Compile Include="Repository\Survey\QuestionRepository.cs" />
     <Compile Include="Seed\Config\IdentifierTypeJson.cs" />
+    <Compile Include="Seed\Config\KeyPopJson.cs" />
+    <Compile Include="Seed\Config\MaritalStatusJson.cs" />
     <Compile Include="Seed\Subject\ClientRelationshipJson.cs" />
     <Compile Include="Seed\Survey\FormJson.cs" />
     <Compile Include="Seed\Config\PracticeTypeJson.cs" />

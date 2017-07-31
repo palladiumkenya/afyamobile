@@ -1,56 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:local="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-  <LinearLayout
+    xmlns:local="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:minWidth="25px"
-    android:minHeight="25px"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/linearLayoutContent"
-    android:layout_weight="2">
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/textViewEnrollmentTitle"
-      local:MvxBind="Text Title" />
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/textViewEnrollmentDescription"
-      local:MvxBind="Text Description" />
-    <TextView
-      android:text="Serial"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/textViewSerial" />
-    <EditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/editTextEnrollmentSerial"
-      local:MvxBind="Text Serial; Error Errors['Serial']" />
-  </LinearLayout>
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:id="@+id/linearLayoutNav"
-    android:layout_weight="1"
-    android:minHeight="80dp">
-    <Button
-      android:id="@+id/buttonEnrollmentPrev"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
-    <Button
-      android:id="@+id/buttonEnrollmentNext"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
-  </LinearLayout>
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayoutContent"
+        android:layout_weight="2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewEnrollmentTitle"
+            local:MvxBind="Text Title" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewEnrollmentDescription"
+            local:MvxBind="Text Description" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewEnrollmentClientInfo"
+            local:MvxBind="Text ClientInfo" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/spinnerIdentifierType"
+            local:MvxBind="ItemsSource IdentifierTypes;SelectedItem SelectedIdentifierType" />
+        <TextView
+            android:text="Identifier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewIdentifier" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextIdentifier"
+            local:MvxBind="Text Identifier; Error Errors['Identifier']" />
+      <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewRegistrationDate"
+        local:MvxBind="Text Errors['RegistrationDate'];Error Errors['RegistrationDate']"
+        android:textColor="@android:color/holo_red_dark"
+        android:gravity="center_horizontal" />
+      <MvxDatePicker
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        local:MvxBind="Value RegistrationDate;"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" 
+        android:id="@+id/spinnerRegistrationDate"
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayoutNav"
+        android:layout_weight="1"
+        android:minHeight="80dp">
+        <Button
+            android:id="@+id/buttonEnrollmentPrev"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
+        <Button
+            android:id="@+id/buttonEnrollmentNext"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
+    </LinearLayout>
 </LinearLayout>

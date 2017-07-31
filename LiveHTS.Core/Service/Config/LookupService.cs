@@ -13,13 +13,19 @@ namespace LiveHTS.Core.Service.Config
         private readonly ISubCountyRepository _subCountyRepository;
         private readonly IPracticeRepository _practiceRepository;
         private readonly IPracticeTypeRepository _practiceTypeRepository;
+        private readonly IMaritalStatusRepository _maritalStatusRepository;
+        private readonly IKeyPopRepository _keyPopRepository;
+        private readonly IIdentifierTypeRepository _identifierTypeRepository;
 
-        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository)
+        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository, IMaritalStatusRepository maritalStatusRepository, IKeyPopRepository keyPopRepository, IIdentifierTypeRepository identifierTypeRepository)
         {
             _countyRepository = countyRepository;
             _subCountyRepository = subCountyRepository;
             _practiceRepository = practiceRepository;
             _practiceTypeRepository = practiceTypeRepository;
+            _maritalStatusRepository = maritalStatusRepository;
+            _keyPopRepository = keyPopRepository;
+            _identifierTypeRepository = identifierTypeRepository;
         }
 
         public IEnumerable<County> GetCounties()
@@ -40,6 +46,21 @@ namespace LiveHTS.Core.Service.Config
         public IEnumerable<Practice> GetPractices(string[] typeIds)
         {
             return _practiceRepository.GetAll(x => typeIds.Contains(x.PracticeTypeId)).ToList();
+        }
+
+        public IEnumerable<MaritalStatus> GetMaritalStatuses()
+        {
+            return _maritalStatusRepository.GetAll().ToList(); 
+        }
+
+        public IEnumerable<KeyPop> GetKeyPops()
+        {
+            return _keyPopRepository.GetAll().ToList();
+        }
+
+        public IEnumerable<IdentifierType> GetIdentifierTypes()
+        {
+            return _identifierTypeRepository.GetAll().ToList();
         }
     }
 }
