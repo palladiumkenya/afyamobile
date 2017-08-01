@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
 using LiveHTS.Core.Interfaces.Services.Access;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces;

@@ -1,14 +1,8 @@
 ﻿using System.Reflection;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
-using LiveHTS.Core.Interfaces.Repository;
-using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Survey;
-using LiveHTS.Infrastructure.Repository;
 using LiveHTS.Infrastructure.Repository.Survey;
-using LiveHTS.Presentation.Interfaces;
-using LiveHTS.Presentation.Interfaces.ViewModel;
-using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;

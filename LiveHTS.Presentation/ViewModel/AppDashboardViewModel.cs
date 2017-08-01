@@ -1,6 +1,4 @@
 ﻿using LiveHTS.Core.Interfaces.Services;
-using LiveHTS.Core.Model.Subject;
-using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
 

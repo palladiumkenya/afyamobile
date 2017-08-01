@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Config;
-using MvvmCross.Core.ViewModels;
+using LiveHTS.Presentation.DTO;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientEnrollmentViewModel : IStepViewModel
     {
+        ClientEnrollmentDTO Enrollment { get; set; }
         string ClientInfo { get; set; }
         IEnumerable<IdentifierType> IdentifierTypes { get; set; }
         IdentifierType SelectedIdentifierType { get; set; }

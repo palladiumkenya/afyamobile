@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
-using Microsoft.VisualBasic.CompilerServices;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform.Core;
 using MvvmValidation;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
-    public class ClientDemographicViewModel : MvxViewModel, IClientDemographicViewModel
+    public class ClientDemographicViewModel : StepViewModel, IClientDemographicViewModel
     {
         private string _title;
         private string _description;
@@ -39,86 +36,7 @@ namespace LiveHTS.Presentation.ViewModel
         private string _birthDateError;
         private ClientDemographicDTO _demographic;
 
-        public IClientRegistrationViewModel Parent { get; set; }
-
-        public int Step { get; } = 1;
-
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                _title = value;
-                RaisePropertyChanged(() => Title);
-            }
-        }
-
-        public string Description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-                RaisePropertyChanged(() => Description);
-            }
-        }
-
-        public string MoveNextLabel
-        {
-            get { return _moveNextLabel; }
-            set
-            {
-                _moveNextLabel = value;
-                RaisePropertyChanged(() => MoveNextLabel);
-            }
-        }
-
-        public string MovePreviousLabel
-        {
-            get { return _movePreviousLabel; }
-            set
-            {
-                _movePreviousLabel = value;
-                RaisePropertyChanged(() => MovePreviousLabel);
-            }
-        }
-
-
-        public ValidationHelper Validator { get; }
-
-        public ObservableDictionary<string, string> Errors
-        {
-            get { return _errors; }
-            set
-            {
-                _errors = value;
-                RaisePropertyChanged(() => Errors);
-            }
-        }
-
-        public IMvxCommand MoveNextCommand
-        {
-            get
-            {
-                _moveNextCommand = _moveNextCommand ?? new MvxCommand(MoveNext, CanMoveNext);
-                return _moveNextCommand;
-            }
-        }
-
-        public IMvxCommand MovePreviousCommand
-        {
-            get
-            {
-                _movePreviousCommand = _movePreviousCommand ?? new MvxCommand(MovePrevious, CanMovePrevious);
-                return _movePreviousCommand;
-            }
-        }
-
-
-        public ClientDemographicDTO Demographic
-        {
-            get { return _demographic = ClientDemographicDTO.CreateFromView(this); }
-        }
+        public ClientDemographicDTO Demographic { get; set; }
 
         public List<CustomItem> GenderOptions
         {
@@ -129,7 +47,6 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => GenderOptions);
             }
         }
-
         public List<CustomItem> AgeUnitOptions
         {
             get { return _ageUnitOptions; }
@@ -149,7 +66,6 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => FirstName);
             }
         }
-
         public string MiddleName
         {
             get { return _middleName; }
@@ -159,7 +75,6 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => MiddleName);
             }
         }
-
         public string LastName
         {
             get { return _lastName; }
@@ -169,7 +84,6 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => LastName);
             }
         }
-
         public string Gender
         {
             get { return _gender; }
@@ -179,7 +93,16 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => Gender);
             }
         }
-
+        public CustomItem SelectedGender
+        {
+            get { return _selectedGender; }
+            set
+            {
+                _selectedGender = value;
+                Gender = _selectedGender.Value;
+                RaisePropertyChanged(() => SelectedGender);
+            }
+        }
         public decimal Age
         {
             get { return _age; }
@@ -190,7 +113,16 @@ namespace LiveHTS.Presentation.ViewModel
                 CalculateBirthDate();
             }
         }
-
+        public CustomItem SelectedAgeUnit
+        {
+            get { return _selectedAgeUnit; }
+            set
+            {
+                _selectedAgeUnit = value;
+                RaisePropertyChanged(() => SelectedAgeUnit);
+                CalculateBirthDate();
+            }
+        }
         public string BirthDateError
         {
             get { return _birthDateError; }
@@ -200,7 +132,6 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => BirthDateError);
             }
         }
-
         public DateTime? BirthDate
         {
             get { return _birthDate; }
@@ -214,69 +145,24 @@ namespace LiveHTS.Presentation.ViewModel
                     Errors.Remove("BirthDate");
                 }
                 catch{}
-
-                //CalculateAge();
-
             }
         }
 
-        public CustomItem SelectedGender
+        public ClientDemographicViewModel(IDialogService dialogService) : base(dialogService)
         {
-            get { return _selectedGender; }
-            set
-            {
-                _selectedGender = value;
-                Gender = _selectedGender.Value;
-                RaisePropertyChanged(() => SelectedGender);
-            }
-        }
-
-        public CustomItem SelectedAgeUnit
-        {
-            get { return _selectedAgeUnit; }
-            set
-            {
-                _selectedAgeUnit = value;
-                RaisePropertyChanged(() => SelectedAgeUnit);
-                CalculateBirthDate();
-            }
-        }
-
-        public void CalculateBirthDate()
-        {
-            var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
-            BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
-        }
-
-        public void CalculateAge()
-        {
-            if (null != BirthDate)
-            {
-                var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate.Value);
-                Age = personAge.Age;
-                var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
-                SelectedAgeUnit = ageUnit;
-            }
-        }
-
-
-        public ClientDemographicViewModel(IDialogService dialogService)
-        {
-            _dialogService = dialogService;
-
+            Step = 1;
             GenderOptions = CustomLists.GenderList;
             AgeUnitOptions = CustomLists.AgeUnitList;
 
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
             BirthDate = DateTime.Today.AddDays(-1);
-            Validator = new ValidationHelper();
             Title = "Demographics";
             MovePreviousLabel = "";
             MoveNextLabel = "NEXT";
         }
 
-        public bool Validate()
+        public override bool Validate()
         {
             Validator.AddRule(
                 nameof(FirstName),
@@ -327,41 +213,36 @@ namespace LiveHTS.Presentation.ViewModel
                         BirthDate.Value < DateTime.Today,
                         $"{nameof(BirthDate)} should be a valid date"));
 
-            var result = Validator.ValidateAll();
-
-            Errors = result.AsObservableDictionary();
-
-            return result.IsValid;
+            return base.Validate();
         }
 
-        public void Save()
+        public void CalculateBirthDate()
         {
-            //save state
+            var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
+            BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
+        }
+        public void CalculateAge()
+        {
+            if (null != BirthDate)
+            {
+                var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate.Value);
+                Age = personAge.Age;
+                var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+                SelectedAgeUnit = ageUnit;
+            }
         }
 
-        private void MoveNext()
+        public override void MoveNext()
         {
             if (Validate())
-            {
-                Save();
+            {              
                 var demographicJson = JsonConvert.SerializeObject(Demographic);
                 ShowViewModel<ClientContactViewModel>(new {demographic = demographicJson});
             }
         }
-
-        private void MovePrevious()
-        {
-
-        }
-
-        private bool CanMoveNext()
+        public override bool CanMoveNext()
         {
             return true;
-        }
-
-        private bool CanMovePrevious()
-        {
-            return false;
-        }
+        }      
     }
 }

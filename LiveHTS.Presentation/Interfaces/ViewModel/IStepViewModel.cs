@@ -8,7 +8,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         IClientRegistrationViewModel Parent { get; set; }
 
-        int Step { get; }
+        int Step { get; set; }
         string Title { get; set; }
         string Description { get; set; }
         
@@ -22,6 +22,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand MovePreviousCommand { get; }
 
         bool Validate();
+
+        void MoveNext();
+        void MovePrevious();
+        bool CanMoveNext();
+        bool CanMovePrevious();
+        
         void Save();
     }
 }

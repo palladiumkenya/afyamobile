@@ -36,6 +36,8 @@
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />
+    <Compile Include="DTO\ClientEnrollmentDTO.cs" />
+    <Compile Include="DTO\ClientProfileDTO.cs" />
     <Compile Include="DTO\ClientContactAddressDTO.cs" />
     <Compile Include="DTO\ClientDemographicDTO.cs" />
     <Compile Include="Interfaces\ViewModel\IClientProfileViewModel.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="ViewModel\SignInViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ObsViewModel.cs" />
+    <Compile Include="ViewModel\StepViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LiveHTS.Core\LiveHTS.Core.csproj">

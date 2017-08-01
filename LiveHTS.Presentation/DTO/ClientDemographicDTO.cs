@@ -1,7 +1,6 @@
 ﻿using System;
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.Presentation.Interfaces.ViewModel;
-using MvvmValidation;
 
 namespace LiveHTS.Presentation.DTO
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using LiveHTS.Core.Interfaces;
-using LiveHTS.Core.Interfaces.Repository;
-using LiveHTS.Infrastructure.Migrations;
+﻿using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;

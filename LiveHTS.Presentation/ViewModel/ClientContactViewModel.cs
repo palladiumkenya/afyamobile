@@ -1,117 +1,36 @@
 ﻿using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
-using LiveHTS.Presentation.Validations;
-using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform;
-using MvvmValidation;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
-    public class ClientContactViewModel : MvxViewModel, IClientContactViewModel
+    public class ClientContactViewModel : StepViewModel, IClientContactViewModel
     {
-        private string _title;
-        private string _description;
-        private ObservableDictionary<string, string> _errors;
-        private readonly IDialogService _dialogService;
-        private string _moveNextLabel;
-        private string _movePreviousLabel;
-        private IMvxCommand _moveNextCommand;
-        private IMvxCommand _movePreviousCommand;
-        private ClientDemographicDTO _demographic;
-        private ClientContactAddressDTO _contactAddress;
+        private string _clientInfo;
         private int? _telephone;
         private string _landmark;
-        private string _clientInfo;
 
-
-        public IClientRegistrationViewModel Parent { get; set; }
-
-        public int Step { get; } = 2;
-        public string Title
-        {
-            get { return _title; }
-            set { _title = value; RaisePropertyChanged(() => Title); }
-        }
-        public string Description
-        {
-            get { return _description; }
-            set { _description = value; RaisePropertyChanged(() => Description); }
-        }
-
-        public string MoveNextLabel
-        {
-            get { return _moveNextLabel; }
-            set
-            {
-                _moveNextLabel = value; RaisePropertyChanged(() => MoveNextLabel);
-            }
-        }
-        public string MovePreviousLabel
-        {
-            get { return _movePreviousLabel; }
-            set { _movePreviousLabel = value; RaisePropertyChanged(() => MovePreviousLabel); }
-        }
-
-
-        public ValidationHelper Validator { get; }
-        public ObservableDictionary<string, string> Errors
-        {
-            get { return _errors; }
-            set { _errors = value; RaisePropertyChanged(() => Errors); }
-        }
-
-        public IMvxCommand MoveNextCommand
-        {
-            get
-            {
-                _moveNextCommand = _moveNextCommand ?? new MvxCommand(MoveNext, CanMoveNext);
-                return _moveNextCommand;
-            }
-        }
-        public IMvxCommand MovePreviousCommand
-        {
-            get
-            {
-                _movePreviousCommand = _movePreviousCommand ?? new MvxCommand(MovePrevious, CanMovePrevious);
-                return _movePreviousCommand;
-            }
-        }
-
-        public ClientDemographicDTO Demographic
-        {
-            get { return _demographic; }
-        }
-
-        public ClientContactAddressDTO ContactAddress
-        {
-            get { return _contactAddress= ClientContactAddressDTO.CreateFromView(this); ; }
-        }
-
+        public ClientContactAddressDTO ContactAddress { get; set; }
         public string ClientInfo
         {
             get { return _clientInfo; }
             set { _clientInfo = value; RaisePropertyChanged(() => ClientInfo);}
         }
-
-
         public int? Telephone
         {
             get { return _telephone; }
             set { _telephone = value; RaisePropertyChanged(() => Telephone);}
         }
-
         public string Landmark
         {
             get { return _landmark; }
             set { _landmark = value; RaisePropertyChanged(() => Landmark);}
         }
 
-        public ClientContactViewModel()
+        public ClientContactViewModel(IDialogService dialogService) : base(dialogService)
         {
-            _dialogService = Mvx.Resolve<IDialogService>();
-            Validator = new ValidationHelper();
+            Step = 2;
             Title = "Contacts";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
@@ -119,42 +38,24 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string demographic)
         {
-            _demographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(demographic);
-            ClientInfo = _demographic.ToString();
+            var demographicInfo = JsonConvert.DeserializeObject<ClientDemographicDTO>(demographic);
+            ClientInfo = demographicInfo.ToString();
         }
 
-        public bool Validate()
-        {
-            /*
-            Validator.AddRequiredRule(() => Telephone, "Telephone is required");
-
-            var result = Validator.ValidateAll();
-
-            Errors = result.AsObservableDictionary();
-
-            return result.IsValid;
-            */
-            return true;
-        }
-        public void Save()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void MoveNext()
+        public override void MoveNext()
         {
             if (Validate())
-                 ShowViewModel<ClientProfileViewModel>(new { clientinfo= ClientInfo });
+                 ShowViewModel<ClientProfileViewModel>(new { clientinfo = ClientInfo });
         }
-        private void MovePrevious()
+        public override void MovePrevious()
         {
             ShowViewModel<ClientDemographicViewModel>();
         }
-        private bool CanMoveNext()
+        public override bool CanMoveNext()
         {
             return true;
         }
-        private bool CanMovePrevious()
+        public override bool CanMovePrevious()
         {
             return true;
         }

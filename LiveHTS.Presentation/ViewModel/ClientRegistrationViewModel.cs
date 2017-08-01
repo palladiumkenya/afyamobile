@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
-using LiveHTS.SharedKernel.Model;
-using MvvmCross.Binding.BindingContext;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
-using MvvmCross.Platform.WeakSubscription;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -39,9 +33,9 @@ namespace LiveHTS.Presentation.ViewModel
             _viewModels = new List<IStepViewModel>
             {
                 new ClientDemographicViewModel(_dialogService) {Parent = this},
-                new ClientContactViewModel {Parent = this},
-                new ClientProfileViewModel(_lookupService) {Parent = this},
-                new ClientEnrollmentViewModel(_lookupService) {Parent = this}
+                new ClientContactViewModel (_dialogService){Parent = this},
+                new ClientProfileViewModel(_dialogService,_lookupService) {Parent = this},
+                new ClientEnrollmentViewModel(_dialogService,_lookupService) {Parent = this}
             };
             ShowStep(1);
         }
