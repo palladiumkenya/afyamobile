@@ -10,6 +10,8 @@ namespace LiveHTS.Presentation.DTO
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
+        public decimal Age { get; set; }
+        public string AgeUnit { get; set; }
         public DateTime? BirthDate { get; set; }
         public bool? BirthDateEstimated { get; set; }
 
@@ -23,22 +25,26 @@ namespace LiveHTS.Presentation.DTO
             BirthDateEstimated = false;
         }
 
-        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime? birthDate):this()
+        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, decimal age, string ageUnit, DateTime? birthDate):this()
         {
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
             Gender = gender;
+            Age = age;
+            AgeUnit = ageUnit;
             BirthDate = birthDate;
         }
 
         public static ClientDemographicDTO CreateFromView(IClientDemographicViewModel model)
         {
             return new ClientDemographicDTO(
-                model.FirstName, 
-                model.MiddleName, 
-                model.LastName, 
-                model.Gender, 
+                model.FirstName,
+                model.MiddleName,
+                model.LastName,
+                model.SelectedGender.Value,
+                model.Age,
+                model.SelectedAgeUnit.Value,
                 model.BirthDate);
         }
 

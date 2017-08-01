@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Presentation.DTO;
@@ -7,21 +9,15 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Platform;
 using MvvmValidation;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
     public class ClientProfileViewModel : StepViewModel, IClientProfileViewModel
     {
-        private string _title;
-        private string _description;
-        private ObservableDictionary<string, string> _errors;
-        private readonly IDialogService _dialogService;
-        private string _moveNextLabel;
-        private string _movePreviousLabel;
-        private IMvxCommand _moveNextCommand;
-        private IMvxCommand _movePreviousCommand;
-
         private string _clientInfo;
         private string _otherKeyPop;
         private IEnumerable<MaritalStatus> _maritalStatus;
@@ -106,7 +102,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService) : base(dialogService)
+        public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService,ISettings settings) : base(dialogService, settings)
         {
             Step = 3;
             _lookupService = lookupService;
@@ -159,11 +155,17 @@ namespace LiveHTS.Presentation.ViewModel
         public override void MoveNext()
         {
             if (Validate())
+            {
+                Profile = ClientProfileDTO.CreateFromView(this);
+                var json = JsonConvert.SerializeObject(Profile);
+                _settings.AddOrUpdateValue(GetType().Name, json);
+
                 ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo});
+            }
         }
         public override void MovePrevious()
         {
-            ShowViewModel<ClientContactViewModel>();
+            ShowViewModel<ClientContactViewModel>(new { clientinfo = ClientInfo });
         }
         public override bool CanMoveNext()
         {
@@ -173,5 +175,21 @@ namespace LiveHTS.Presentation.ViewModel
         {
             return true;
         }
+
+        public override void LoadFromStore(VMStore modelStore)
+        {
+            try
+            {
+                Profile = JsonConvert.DeserializeObject<ClientProfileDTO>(modelStore.Store);
+                SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
+                SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);
+                OtherKeyPop = Profile.OtherKeyPop;
+            }
+            catch (Exception e)
+            {
+                Mvx.Error(e.Message);
+            }
+        }
+
     }
 }

@@ -1,14 +1,18 @@
-﻿using LiveHTS.Presentation.Interfaces;
+﻿using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
 using MvvmValidation;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
     public abstract class StepViewModel : MvxViewModel, IStepViewModel
     {
         protected readonly IDialogService _dialogService;
+        protected readonly ISettings _settings;
+
         private string _title;
         private string _description;
         private string _moveNextLabel;
@@ -16,8 +20,15 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _moveNextCommand;
         private IMvxCommand _movePreviousCommand;
         private ObservableDictionary<string, string> _errors;
+        private VMStore _modelStore;
 
         public virtual IClientRegistrationViewModel Parent { get; set; }
+
+        public VMStore ModelStore
+        {
+            get { return _modelStore; }
+            set { _modelStore = value;RaisePropertyChanged(() => ModelStore); }
+        }
 
         public virtual int Step { get; set; }
         public virtual string Title
@@ -66,14 +77,26 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        protected StepViewModel():this(null)
+        protected StepViewModel():this(null, null)
         {
         }
 
-        protected StepViewModel(IDialogService dialogService)
+        protected StepViewModel(IDialogService dialogService, ISettings settings)
         {
             _dialogService = dialogService;
+            _settings = settings;
             Validator = new ValidationHelper();
+            ModelStore=new VMStore();
+            
+        }
+
+        public override void ViewAppeared()
+        {
+            ModelStore.Store = _settings.GetValue(GetType().Name, "");
+            if (ModelStore.HasData)
+            {
+                LoadFromStore(ModelStore);
+            }
         }
 
         public virtual bool Validate()
@@ -102,6 +125,11 @@ namespace LiveHTS.Presentation.ViewModel
        
         public virtual void Save()
         {
+        }
+
+        public virtual void LoadFromStore(VMStore modelStore)
+        {
+            
         }
     }
 }

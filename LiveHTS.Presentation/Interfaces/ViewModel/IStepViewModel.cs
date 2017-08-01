@@ -7,7 +7,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface IStepViewModel : IMvxViewModel
     {
         IClientRegistrationViewModel Parent { get; set; }
-
+        VMStore ModelStore { get; set; }
         int Step { get; set; }
         string Title { get; set; }
         string Description { get; set; }
@@ -29,5 +29,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         bool CanMovePrevious();
         
         void Save();
+        void LoadFromStore(VMStore store);
     }
 }

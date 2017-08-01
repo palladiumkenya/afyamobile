@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using FizzWare.NBuilder;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces.ViewModel;
@@ -10,18 +12,19 @@ namespace LiveHTS.Presentation.Tests.ViewModel
     [TestFixture]
     public class ClientDemographicViewModelTests
     {
+        
         private IClientDemographicViewModel _viewModel;
         private ClientDemographicDTO _demographicDTO;
 
         [SetUp]
         public void SetUp()
         {
-            _viewModel=new ClientDemographicViewModel(null);
+            _viewModel=new ClientDemographicViewModel(null,null);
             _demographicDTO = Builder<ClientDemographicDTO>.CreateNew().Build();
             _viewModel.FirstName = _demographicDTO.FirstName;
             _viewModel.MiddleName = _demographicDTO.MiddleName;
             _viewModel.LastName = _demographicDTO.LastName;
-            _viewModel.Gender = _demographicDTO.Gender;
+            
             _viewModel.BirthDate = _demographicDTO.BirthDate;
         }
         [Test]
@@ -66,7 +69,7 @@ namespace LiveHTS.Presentation.Tests.ViewModel
 
             _viewModel.FirstName = " ";
             _viewModel.LastName = " ";
-            _viewModel.Gender = " ";
+            
             
             Assert.IsFalse(_viewModel.Validate());
             foreach (var error in _viewModel.Errors)

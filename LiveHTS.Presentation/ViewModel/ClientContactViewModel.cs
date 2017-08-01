@@ -1,6 +1,11 @@
-﻿using LiveHTS.Presentation.DTO;
+﻿using System;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Platform;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
@@ -28,7 +33,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _landmark = value; RaisePropertyChanged(() => Landmark);}
         }
 
-        public ClientContactViewModel(IDialogService dialogService) : base(dialogService)
+        public ClientContactViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
         {
             Step = 2;
             Title = "Contacts";
@@ -36,16 +41,21 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
-        public void Init(string demographic)
+        public void Init(string clientinfo)
         {
-            var demographicInfo = JsonConvert.DeserializeObject<ClientDemographicDTO>(demographic);
-            ClientInfo = demographicInfo.ToString();
+            ClientInfo = clientinfo;
         }
 
         public override void MoveNext()
         {
             if (Validate())
-                 ShowViewModel<ClientProfileViewModel>(new { clientinfo = ClientInfo });
+            {
+                ContactAddress = ClientContactAddressDTO.CreateFromView(this);
+                var json = JsonConvert.SerializeObject(ContactAddress);
+                _settings.AddOrUpdateValue(GetType().Name, json);
+
+                ShowViewModel<ClientProfileViewModel>(new {clientinfo = ClientInfo});
+            }
         }
         public override void MovePrevious()
         {
@@ -58,6 +68,20 @@ namespace LiveHTS.Presentation.ViewModel
         public override bool CanMovePrevious()
         {
             return true;
+        }
+
+        public override void LoadFromStore(VMStore modelStore)
+        {
+            try
+            {
+                ContactAddress = JsonConvert.DeserializeObject<ClientContactAddressDTO>(modelStore.Store);
+                Telephone = ContactAddress.Phone;
+                Landmark = ContactAddress.Landmark;
+            }
+            catch (Exception e)
+            {
+                Mvx.Error(e.Message);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
@@ -8,6 +9,8 @@ using LiveHTS.Presentation.Validations;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Platform;
 using MvvmValidation;
 using Newtonsoft.Json;
 
@@ -15,26 +18,17 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class ClientDemographicViewModel : StepViewModel, IClientDemographicViewModel
     {
-        private string _title;
-        private string _description;
-        private ObservableDictionary<string, string> _errors;
-        private readonly IDialogService _dialogService;
-        private string _moveNextLabel;
-        private string _movePreviousLabel;
-        private IMvxCommand _moveNextCommand;
-        private IMvxCommand _movePreviousCommand;
-        private CustomItem _selectedGender;
         private List<CustomItem> _genderOptions;
-        private decimal _age;
         private List<CustomItem> _ageUnitOptions;
-        private CustomItem _selectedAgeUnit;
+
         private string _firstName;
         private string _middleName;
         private string _lastName;
-        private string _gender;
+        private CustomItem _selectedGender;
+        private decimal _age;
+        private CustomItem _selectedAgeUnit;
         private DateTime? _birthDate;
         private string _birthDateError;
-        private ClientDemographicDTO _demographic;
 
         public ClientDemographicDTO Demographic { get; set; }
 
@@ -84,22 +78,12 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => LastName);
             }
         }
-        public string Gender
-        {
-            get { return _gender; }
-            set
-            {
-                _gender = value;
-                RaisePropertyChanged(() => Gender);
-            }
-        }
         public CustomItem SelectedGender
         {
             get { return _selectedGender; }
             set
             {
                 _selectedGender = value;
-                Gender = _selectedGender.Value;
                 RaisePropertyChanged(() => SelectedGender);
             }
         }
@@ -148,7 +132,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public ClientDemographicViewModel(IDialogService dialogService) : base(dialogService)
+       
+        public ClientDemographicViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
         {
             Step = 1;
             GenderOptions = CustomLists.GenderList;
@@ -180,13 +165,7 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-            Validator.AddRule(
-                nameof(Gender),
-                () => RuleResult.Assert(
-                    !string.IsNullOrWhiteSpace(Gender),
-                    $"{nameof(Gender)} is required"
-                )
-            );
+           
 
             Validator.AddRule(
                 nameof(Age),
@@ -221,8 +200,11 @@ namespace LiveHTS.Presentation.ViewModel
             var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
             BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
         }
+
+        //TODO: CalculateAge from BirthDate
         public void CalculateAge()
         {
+        
             if (null != BirthDate)
             {
                 var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate.Value);
@@ -236,13 +218,36 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (Validate())
             {              
-                var demographicJson = JsonConvert.SerializeObject(Demographic);
-                ShowViewModel<ClientContactViewModel>(new {demographic = demographicJson});
+                Demographic=ClientDemographicDTO.CreateFromView(this);
+                var json = JsonConvert.SerializeObject(Demographic);
+                _settings.AddOrUpdateValue(GetType().Name, json);
+
+                var clientinfo = Demographic.ToString();
+                ShowViewModel<ClientContactViewModel>(new { clientinfo = clientinfo });
             }
         }
         public override bool CanMoveNext()
         {
             return true;
-        }      
+        }
+
+        public override void LoadFromStore(VMStore modelStore)
+        {
+            try
+            {
+                Demographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(modelStore.Store);
+                FirstName = Demographic.FirstName;
+                MiddleName = Demographic.MiddleName;
+                LastName = Demographic.LastName;
+                SelectedGender = GenderOptions.FirstOrDefault(x=>x.Value==Demographic.Gender);
+                Age = Demographic.Age;
+                SelectedAgeUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == Demographic.AgeUnit);
+                BirthDate = Demographic.BirthDate;
+            }
+            catch (Exception e)
+            {
+                Mvx.Error(e.Message);
+            }
+        }
     }
 }

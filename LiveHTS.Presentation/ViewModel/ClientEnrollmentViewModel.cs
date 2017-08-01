@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
+using MvvmCross.Platform.Platform;
 using MvvmValidation;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -46,7 +51,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _registrationDate = value; RaisePropertyChanged(() => RegistrationDate);}
         }
 
-        public ClientEnrollmentViewModel(IDialogService dialogService, ILookupService lookupService) : base(dialogService)
+        public ClientEnrollmentViewModel(IDialogService dialogService, ILookupService lookupService, ISettings settings) : base(dialogService, settings)
         {
             Step = 4;
             _lookupService = lookupService;
@@ -62,8 +67,8 @@ namespace LiveHTS.Presentation.ViewModel
         }
         public override void Start()
         {
-            base.Start();
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
+            base.Start();
         }
 
         public override bool Validate()
@@ -90,6 +95,10 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (Validate())
             {
+                Enrollment = ClientEnrollmentDTO.CreateFromView(this);
+                var json = JsonConvert.SerializeObject(Enrollment);
+                _settings.AddOrUpdateValue(GetType().Name, json);
+
                 _dialogService.Alert("Save Successful","Registration","Ok");    
             }
         }
@@ -104,6 +113,20 @@ namespace LiveHTS.Presentation.ViewModel
         public override bool CanMovePrevious()
         {
             return true;
+        }
+   
+        public override void LoadFromStore(VMStore modelStore)
+        {
+            try
+            {
+                Enrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(modelStore.Store);
+                SelectedIdentifierType = IdentifierTypes.FirstOrDefault(x => x.Id == Enrollment.IdentifierTypeId);
+                Identifier = Enrollment.Identifier;
+            }
+            catch (Exception e)
+            {
+                Mvx.Error(e.Message);
+            }
         }
     }
 }
