@@ -21,6 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _movePreviousCommand;
         private ObservableDictionary<string, string> _errors;
         private VMStore _modelStore;
+        private string _mode;
 
         public virtual IClientRegistrationViewModel Parent { get; set; }
 
@@ -41,6 +42,8 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _description; }
             set { _description = value; RaisePropertyChanged(() => Description); }
         }
+
+      
 
         public virtual string MoveNextLabel
         {

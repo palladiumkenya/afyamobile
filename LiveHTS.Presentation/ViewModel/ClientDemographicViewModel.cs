@@ -147,6 +147,7 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
+   
         public override bool Validate()
         {
             Validator.AddRule(

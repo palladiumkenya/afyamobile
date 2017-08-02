@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Presentation.DTO;
@@ -17,7 +18,8 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class ClientEnrollmentViewModel : StepViewModel, IClientEnrollmentViewModel
     {
-        private ILookupService _lookupService;
+        private readonly ILookupService _lookupService;
+        private readonly IRegistryService _registryService;
         private string _clientInfo;
         private IEnumerable<IdentifierType> _identifierTypes;
         private IdentifierType _selectedIdentifierType;
@@ -51,10 +53,11 @@ namespace LiveHTS.Presentation.ViewModel
             set { _registrationDate = value; RaisePropertyChanged(() => RegistrationDate);}
         }
 
-        public ClientEnrollmentViewModel(IDialogService dialogService, ILookupService lookupService, ISettings settings) : base(dialogService, settings)
+        public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService, IRegistryService registryService) : base(dialogService, settings)
         {
             Step = 4;
             _lookupService = lookupService;
+            _registryService = registryService;
             Title = "Enrollment";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "SAVE";
@@ -91,6 +94,11 @@ namespace LiveHTS.Presentation.ViewModel
             return base.Validate();
         }
 
+        public override void Save()
+        {
+            _dialogService.Alert("Save Successful", "Registration", "Ok");
+        }
+
         public override void MoveNext()
         {
             if (Validate())
@@ -98,8 +106,7 @@ namespace LiveHTS.Presentation.ViewModel
                 Enrollment = ClientEnrollmentDTO.CreateFromView(this);
                 var json = JsonConvert.SerializeObject(Enrollment);
                 _settings.AddOrUpdateValue(GetType().Name, json);
-
-                _dialogService.Alert("Save Successful","Registration","Ok");    
+                Save();                
             }
         }
         public override void MovePrevious()

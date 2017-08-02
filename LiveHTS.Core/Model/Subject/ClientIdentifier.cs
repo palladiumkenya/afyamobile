@@ -21,6 +21,20 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
+        private ClientIdentifier(string identifierTypeId, string identifier, DateTime registrationDate, bool preferred, Guid clientId)
+        {
+            IdentifierTypeId = identifierTypeId;
+            Identifier = identifier;
+            RegistrationDate = registrationDate;
+            Preferred = preferred;
+            ClientId = clientId;
+        }
+
+        public static ClientIdentifier Create(string identifierTypeId, string identifier, DateTime registrationDate,bool preferred, Guid clientId)
+        {
+            return new ClientIdentifier(identifierTypeId, identifier, registrationDate, preferred, clientId);
+        }
+
         public override string ToString()
         {
             return $"{IdentifierTypeId}|{Identifier}";

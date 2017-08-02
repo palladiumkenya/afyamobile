@@ -84,7 +84,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void RegisterClient()
         {
-            ShowViewModel<ClientRegistrationViewModel>();
+            ShowViewModel<ClientRegistrationViewModel>(new{mode="new"});
         }
 
         private void SelectClient(Client selectedClient)

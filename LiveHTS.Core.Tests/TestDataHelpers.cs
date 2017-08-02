@@ -39,7 +39,7 @@ namespace LiveHTS.Core.Tests
             var clients = new List<Client>();
             var people = Builder<Person>.CreateListOfSize(count)
                 .All()
-                .With(x => x.Voided == false)
+                .With(x => x.Voided = false)
                 .Build().ToList();
 
             people[0].FirstName = "John";
@@ -49,18 +49,18 @@ namespace LiveHTS.Core.Tests
             {
                 var addresses = Builder<PersonAddress>.CreateListOfSize(2)
                     .All()
-                    .With(x => x.PersonId == p.Id)
-                    .With(x => x.Preferred == false)
-                    .With(x => x.Voided == false)
+                    .With(x => x.PersonId = p.Id)
+                    .With(x => x.Preferred = false)
+                    .With(x => x.Voided =false)
                     .Build()
                     .ToList();
                 addresses.First().Preferred = true;
 
                 var contacts = Builder<PersonContact>.CreateListOfSize(2)
                     .All()
-                    .With(x => x.PersonId == p.Id)
-                    .With(x => x.Preferred == false)
-                    .With(x => x.Voided == false)
+                    .With(x => x.PersonId = p.Id)
+                    .With(x => x.Preferred = false)
+                    .With(x => x.Voided = false)
                     .Build()
                     .ToList();
                 contacts.First().Preferred = true;
@@ -70,7 +70,7 @@ namespace LiveHTS.Core.Tests
 
                 var client = Builder<Client>.CreateNew()
                     .With(x => x.PracticeId = _practiceId)
-                    .With(x => x.Voided == false)
+                    .With(x => x.Voided = false)
                     .Build();
                 client.PersonId = p.Id;
                 client.Person = p;
@@ -92,9 +92,8 @@ namespace LiveHTS.Core.Tests
             _clients = clients;
             return clients;
         }
-        public static List<User> GetTestUsers(int count)
+        public static List<Person> GetTestPersons(int count)
         {
-            var users = new List<User>();
             var people = Builder<Person>.CreateListOfSize(count)
                 .All()
                 .With(x => x.Voided == false)
@@ -102,8 +101,41 @@ namespace LiveHTS.Core.Tests
 
             foreach (var p in people)
             {
+                var addresses = Builder<PersonAddress>.CreateListOfSize(2)
+                    .All()
+                    .With(x => x.PersonId = p.Id)
+                    .With(x => x.Preferred = false)
+                    .With(x => x.Voided = false)
+                    .Build()
+                    .ToList();
+                addresses.First().Preferred = true;
+
+                var contacts = Builder<PersonContact>.CreateListOfSize(2)
+                    .All()
+                    .With(x => x.PersonId = p.Id)
+                    .With(x => x.Preferred = false)
+                    .With(x => x.Voided = false)
+                    .Build()
+                    .ToList();
+                contacts.First().Preferred = true;
+
+                p.Addresses = addresses;
+                p.Contacts = contacts;
+            }
+            return people;
+        }
+        public static List<User> GetTestUsers(int count)
+        {
+            var users = new List<User>();
+            var people = Builder<Person>.CreateListOfSize(count)
+                .All()
+                .With(x => x.Voided = false)
+                .Build().ToList();
+
+            foreach (var p in people)
+            {
                 var client = Builder<User>.CreateNew()
-                    .With(x => x.Voided == false)
+                    .With(x => x.Voided = false)
                     .With(x => x.PracticeId = _practiceId).Build();
                 client.PersonId = p.Id;
                 client.Person = p;
@@ -119,13 +151,13 @@ namespace LiveHTS.Core.Tests
             var providers = new List<Provider>();
             var people = Builder<Person>.CreateListOfSize(count)
                 .All()
-                .With(x => x.Voided == false)
+                .With(x => x.Voided =false)
                 .Build().ToList();
 
             foreach (var p in people)
             {
                 var client = Builder<Provider>.CreateNew()
-                    .With(x => x.Voided == false)
+                    .With(x => x.Voided = false)
                     .With(x => x.ProviderTypeId = _providerTypeId)
                     .With(x => x.PracticeId = _practiceId).Build();
                 client.PersonId = p.Id;
@@ -149,9 +181,9 @@ namespace LiveHTS.Core.Tests
                 .With(x => x.ProviderId = provider.Id)
                 .With(x => x.DeviceId = _deviceId)
                 .With(x => x.PracticeId = _practiceId)
-                .With(x => x.Voided == false)
-                .With(x => x.IsComplete == false)
-                .With(x => x.Status == "Opened")
+                .With(x => x.Voided = false)
+                .With(x => x.IsComplete = false)
+                .With(x => x.Status = "Opened")
                 .Build().ToList();
 
             foreach (var e in encounters)

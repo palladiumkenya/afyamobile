@@ -10,14 +10,16 @@ using LiveHTS.Core.Service.Clients;
 using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.Infrastructure.Repository.Survey;
 using LiveHTS.SharedKernel.Custom;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using NUnit.Framework;
 using SQLite;
 
 namespace LiveHTS.Core.Tests.Service.Clients
 {
-    [TestClass]
+    [TestFixture]
     public class RegistryServiceTests
     {
+        private bool setNunit = TestHelpers.UseNunit = true;
         private ILiveSetting _liveSetting;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
 
@@ -29,10 +31,13 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private IPersonRepository _personRepository;
         
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
+            Console.WriteLine(TestContext.CurrentContext.WorkDirectory);
+
             _liveSetting = new LiveSetting(_database.DatabasePath);
+            
 
             _clientRepository =new ClientRepository(_liveSetting);
             _clientIdentifierRepository=new ClientIdentifierRepository(_liveSetting);
@@ -41,7 +46,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository);
         }
         
-        [TestMethod]
+        [Test]
         public void should_Find_Client()
         {
             var cient = _registryService.Find(_client.Id);
@@ -61,7 +66,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         }
 
 
-        [TestMethod]
+        [Test]
         public void should_GetAllClients()
         {
             var clients = _registryService.GetAllClients().ToList();
@@ -75,7 +80,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
 
         }
 
-        [TestMethod]
+        [Test]
         public void should_GetAllClients_Search()
         {
             var clients = _registryService.GetAllClients("Doe").ToList();
@@ -87,7 +92,27 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Console.WriteLine(cient);
         }
 
-        [TestMethod]
+        [Test]
+        public void should_Save_New()
+        {
+            
+            
+
+            var client = TestDataHelpers.GetTestClients(1).First();
+            
+            _registryService.Save(client);
+
+            var cientNew = _registryService.Find(client.Id);
+            Assert.IsNotNull(cientNew);
+            Assert.IsNotNull(cientNew.Person);
+            Assert.IsNotNull(cientNew.Person.Addresses.FirstOrDefault());
+            Assert.IsNotNull(cientNew.Person.Contacts.FirstOrDefault());
+            Assert.IsNotNull(cientNew.Identifiers.FirstOrDefault());
+            Assert.IsNotNull(cientNew.Relationships.FirstOrDefault());
+            Console.WriteLine(cientNew);
+        }
+
+        [Test]
         public void should_SaveOrUpdate_New()
         {
             var client = Builder<Client>.CreateNew().Build();
@@ -98,7 +123,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Console.WriteLine(cientNew);
         }
 
-        [TestMethod]
+        [Test]
         public void should_SaveOrUpdate_Update()
         {
             var guid = LiveGuid.NewGuid();
@@ -113,7 +138,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.AreEqual(guid, cientNew.PracticeId);
             Console.WriteLine(cientNew);
         }
-        [TestMethod]
+        [Test]
         public void should_Delete_Client()
         {
             _registryService.Delete(_client.Id);

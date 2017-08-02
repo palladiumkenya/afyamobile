@@ -65,6 +65,29 @@ namespace LiveHTS.Core.Service.Clients
             return clients;
         }
 
+        public void Save(Client client)
+        {
+            //check id in use
+
+            if (!client.Identifiers.Any())
+                throw new ArgumentException($"Client should have an Identifier !");
+
+            var clientIdentifier = client.Identifiers.First();
+
+            var clientIdentifiers = _clientIdentifierRepository.GetAll(
+                x => x.Identifier.ToLower() == clientIdentifier.Identifier.ToLower() &&
+                     x.IdentifierTypeId == clientIdentifier.IdentifierTypeId
+            );
+            if (clientIdentifiers.Any())
+                throw new ArgumentException($"Identifier {clientIdentifier.Identifier} is already in Use !");
+
+            //create Person
+            _personRepository.Save(client.Person);
+
+            //create Client
+            _clientRepository.Save(client);
+        }
+
         public void SaveOrUpdate(Client client)
         {
             

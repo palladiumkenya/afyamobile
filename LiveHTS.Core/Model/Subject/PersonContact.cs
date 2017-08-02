@@ -17,5 +17,17 @@ namespace LiveHTS.Core.Model.Subject
         {
             Id = LiveGuid.NewGuid();
         }
+
+        private PersonContact(int? phone, bool preferred, Guid personId):this()
+        {
+            Phone = phone;
+            Preferred = preferred;
+            PersonId = personId;
+        }
+
+        public static PersonContact Create(int? phone, bool preferred, Guid personId)
+        {
+            return new PersonContact(phone, preferred, personId);
+        }
     } 
 }

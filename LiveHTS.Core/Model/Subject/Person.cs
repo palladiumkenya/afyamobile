@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
@@ -30,6 +31,34 @@ namespace LiveHTS.Core.Model.Subject
         public Person()
         {
             Id = LiveGuid.NewGuid();
+        }
+
+        private Person(string firstName, string middleName, string lastName, string gender, DateTime? birthDate, bool? birthDateEstimated, string email):this()
+        {
+            FirstName = firstName;
+            MiddleName = middleName;
+            LastName = lastName;
+            Gender = gender;
+            BirthDate = birthDate;
+            BirthDateEstimated = birthDateEstimated;
+            Email = email;
+        }
+
+        public static Person Create(string firstName, string middleName, string lastName, string gender,DateTime? birthDate, bool? birthDateEstimated, string email)
+        {
+            return new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
+        }
+
+        public void AddAddress(string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng)
+        {
+            var address = PersonAddress.Create(landmark, countyId, preferred, lat, lng, Id);
+            Addresses.ToList().Add(address);
+        }
+
+        public void AddContact(int? phone, bool preferred)
+        {
+            var contact = PersonContact.Create(phone, preferred, Id);
+            Contacts.ToList().Add(contact);
         }
 
         public override string ToString()

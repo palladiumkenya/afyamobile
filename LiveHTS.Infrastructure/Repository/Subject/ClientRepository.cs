@@ -21,8 +21,11 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             if (null != client)
             {
                 client.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == client.PersonId);
-                client.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id);
-                client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id);
+                var contacts = _db.Table<PersonContact>().ToList();
+                client.Person.Contacts = _db.Table<PersonContact>().Where(x => x.PersonId == client.PersonId).ToList();
+                client.Person.Addresses = _db.Table<PersonAddress>().Where(x => x.PersonId == client.PersonId).ToList();
+                client.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList(); ;
+                client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id).ToList(); ;
             }
             return client;
         }
@@ -53,6 +56,22 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
 
             return clients;
+        }
+
+        public override void Save(Client entity)
+        {
+            base.Save(entity);
+
+            _db.CreateTable<ClientIdentifier>();
+            _db.CreateTable<ClientRelationship>();
+
+            //Create identifiers
+            if(entity.Identifiers.Any())
+                _db.InsertAll(entity.Identifiers);
+
+            //Create Relationships
+            if(entity.Relationships.Any())
+                _db.InsertAll(entity.Relationships);
         }
 
         public void SaveOrUpdate(Client obs)
