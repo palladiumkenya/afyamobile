@@ -10,9 +10,9 @@ namespace LiveHTS.Core.Model.Subject
     public class Client:Entity<Guid>, IProfile
     {
         [Ignore]
-        public IEnumerable<ClientIdentifier> Identifiers { get; set; }
+        public IEnumerable<ClientIdentifier> Identifiers { get; set; } = new List<ClientIdentifier>();
         [Ignore]
-        public IEnumerable<ClientRelationship> Relationships { get; set; }
+        public IEnumerable<ClientRelationship> Relationships { get; set; } = new List<ClientRelationship>();
         public string MaritalStatus { get; set; }
         public string KeyPop { get; set; }
         public string OtherKeyPop { get; set; }

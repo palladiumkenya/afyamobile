@@ -19,10 +19,18 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             _db.CreateTable<PersonAddress>();
 
             if (entity.Addresses.Any())
-                _db.InsertAll(entity.Addresses);
+            {
+                var addresses = entity.Addresses.ToList();
+                _db.InsertAll(addresses);
+            }
 
-            if(entity.Contacts.Any())
-                _db.InsertAll(entity.Contacts);
+
+            if (entity.Contacts.Any())
+            {
+                var contacts = entity.Contacts.ToList();
+                _db.InsertAll(contacts);
+            }
+                
         }
     }
 }

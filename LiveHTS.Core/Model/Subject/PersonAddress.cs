@@ -22,7 +22,7 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private PersonAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId)
+        private PersonAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId):this()
         {
             Landmark = landmark;
             CountyId = countyId;

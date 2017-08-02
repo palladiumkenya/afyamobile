@@ -51,14 +51,20 @@ namespace LiveHTS.Core.Model.Subject
 
         public void AddAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng)
         {
+            var addressList = Addresses.ToList();
             var address = PersonAddress.Create(landmark, countyId, preferred, lat, lng, Id);
-            Addresses.ToList().Add(address);
+            addressList.Add(address);
+
+            Addresses = addressList;
         }
 
         public void AddContact(int? phone, bool preferred)
         {
+            var contactList = Contacts.ToList();
             var contact = PersonContact.Create(phone, preferred, Id);
-            Contacts.ToList().Add(contact);
+            contactList.Add(contact);
+
+            Contacts = contactList;
         }
 
         public override string ToString()

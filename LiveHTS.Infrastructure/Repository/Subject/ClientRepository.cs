@@ -66,12 +66,20 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             _db.CreateTable<ClientRelationship>();
 
             //Create identifiers
-            if(entity.Identifiers.Any())
-                _db.InsertAll(entity.Identifiers);
+            if (entity.Identifiers.Any())
+            {
+                var identifiers = entity.Identifiers.ToList();
+                _db.InsertAll(identifiers);
+            }
+                
 
             //Create Relationships
-            if(entity.Relationships.Any())
-                _db.InsertAll(entity.Relationships);
+            if (entity.Relationships.Any())
+            {
+                var relationships = entity.Relationships.ToList();
+                _db.InsertAll(relationships);
+            }
+                
         }
 
         public void SaveOrUpdate(Client obs)

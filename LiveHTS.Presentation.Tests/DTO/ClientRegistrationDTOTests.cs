@@ -43,27 +43,13 @@ namespace LiveHTS.Presentation.Tests.DTO
         [Test]
         public void should_Generate_Client_From_DTO()
         {
-            var person = _clientRegistrationDTO.GeneratePerson();
-            Assert.IsNotNull(person);
-            Assert.IsNotNull(person.Person);
-            Assert.IsNotNull(person.Person.Addresses.FirstOrDefault());
-            Assert.IsNotNull(person.Person.Contacts.FirstOrDefault());
-            Assert.IsNotNull(person.Identifiers.FirstOrDefault());
-            Assert.IsNotNull(person.Relationships.FirstOrDefault());
-            Console.WriteLine(person);
-        }
-
-        [Test]
-        public void should_Generate_Client_From_DTO()
-        {
-            var person = _clientRegistrationDTO. ();
-            Assert.IsNotNull(person);
-            Assert.IsNotNull(person.Person);
-            Assert.IsNotNull(person.Person.Addresses.FirstOrDefault());
-            Assert.IsNotNull(person.Person.Contacts.FirstOrDefault());
-            Assert.IsNotNull(person.Identifiers.FirstOrDefault());
-            Assert.IsNotNull(person.Relationships.FirstOrDefault());
-            Console.WriteLine(person);
+            var client = _clientRegistrationDTO.Generate();
+            Assert.IsNotNull(client);
+            Assert.IsNotNull(client.Person);
+            Assert.IsNotNull(client.Person.Addresses.FirstOrDefault());
+            Assert.IsNotNull(client.Person.Contacts.FirstOrDefault());
+            Assert.IsNotNull(client.Identifiers.FirstOrDefault());
+            Console.WriteLine(client);
         }
 
 

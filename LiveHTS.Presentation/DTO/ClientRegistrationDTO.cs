@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Model;
@@ -17,13 +18,22 @@ namespace LiveHTS.Presentation.DTO
 
         public ClientRegistrationDTO(ISettings settings)
         {
-            var demographic = settings.GetValue(nameof(ClientDemographicViewModel), "");
-            var contactAddress = settings.GetValue(nameof(ClientContactViewModel), "");
-            var profile = settings.GetValue(nameof(ClientProfileViewModel), "");
-            var enrollment = settings.GetValue(nameof(ClientEnrollmentViewModel), "");
+            string demographic = null;
+            string contactAddress = null;
+            string profile = null;
+            string enrollment = null;
 
-            if (!string.IsNullOrWhiteSpace(demographic ))
-                ClientDemographic =  JsonConvert.DeserializeObject<ClientDemographicDTO>(demographic );
+            if (settings.Contains(nameof(ClientDemographicViewModel)))
+                demographic = settings.GetValue(nameof(ClientDemographicViewModel), "");
+            if (settings.Contains(nameof(ClientContactViewModel)))
+                contactAddress = settings.GetValue(nameof(ClientContactViewModel), "");
+            if (settings.Contains(nameof(ClientProfileViewModel)))
+                profile = settings.GetValue(nameof(ClientProfileViewModel), "");
+            if (settings.Contains(nameof(ClientEnrollmentViewModel)))
+                enrollment = settings.GetValue(nameof(ClientEnrollmentViewModel), "");
+
+            if (!string.IsNullOrWhiteSpace(demographic))
+                ClientDemographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(demographic);
             if (!string.IsNullOrWhiteSpace(contactAddress))
                 ClientContactAddress = JsonConvert.DeserializeObject<ClientContactAddressDTO>(contactAddress);
             if (!string.IsNullOrWhiteSpace(profile))
@@ -31,6 +41,7 @@ namespace LiveHTS.Presentation.DTO
             if (!string.IsNullOrWhiteSpace(enrollment))
                 ClientEnrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(enrollment);
         }
+
         public ClientRegistrationDTO(ClientDemographicDTO clientDemographic, ClientContactAddressDTO clientContactAddress, ClientProfileDTO clientProfile, ClientEnrollmentDTO clientEnrollment)
         {
             ClientDemographic = clientDemographic;
@@ -66,7 +77,11 @@ namespace LiveHTS.Presentation.DTO
 
             var clientIdentifier = GenerateClientIdentifier(client.Id);
             if (null != clientIdentifier)
-                client.Identifiers.ToList().Add(clientIdentifier);
+            {
+                var clientIdentifiers=new List<ClientIdentifier>();
+                clientIdentifiers.Add(clientIdentifier);
+                client.Identifiers = clientIdentifiers;
+            }
 
             return client;
         }
@@ -81,8 +96,11 @@ namespace LiveHTS.Presentation.DTO
             return clientIdentifier;
         }
 
-        public Person GeneratePerson()
+        private Person GeneratePerson()
         {
+            if (null == ClientDemographic)
+                throw new ArgumentNullException("No Demographic data !");
+            
             //Person 
 
             //string firstName, string middleName, string lastName, string gender,DateTime? birthDate, bool? birthDateEstimated, string email
@@ -91,19 +109,31 @@ namespace LiveHTS.Presentation.DTO
                 ClientDemographic.LastName, ClientDemographic.Gender, ClientDemographic.BirthDate,
                 ClientDemographic.BirthDateEstimated, string.Empty);
 
+            
             var contact = GeneratePersonContact(person.Id);
             if (null != contact)
-                person.Contacts.ToList().Add(contact);
+            {
+                var contacts=new List<PersonContact>();
+                contacts.Add(contact);
+                person.Contacts = contacts;
+            }
 
             var address = GeneratePersonAddress(person.Id);
             if (null != address)
-                person.Addresses.ToList().Add(address);
+            {
+                var addresses=new List<PersonAddress>();
+                addresses.Add(address);
+                person.Addresses = addresses;
+            }
 
             return person;
         }
 
         private PersonContact GeneratePersonContact(Guid personId)
         {
+            if (null == ClientContactAddress)
+                throw new ArgumentNullException("No Contact data !");
+
             //Person Contact
 
             //int? phone, bool preferred, Guid personId
@@ -115,6 +145,9 @@ namespace LiveHTS.Presentation.DTO
 
         private PersonAddress GeneratePersonAddress(Guid personId)
         {
+            if (null == ClientContactAddress)
+                throw new ArgumentNullException("No Address data !");
+
             //Person Address 
 
             //string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId
@@ -126,10 +159,18 @@ namespace LiveHTS.Presentation.DTO
 
         public void ClearCache(ISettings settings)
         {
-            settings.DeleteValue(nameof(ClientDemographicDTO));
-            settings.DeleteValue(nameof(ClientContactAddressDTO));
-            settings.DeleteValue(nameof(ClientProfileDTO));
-            settings.DeleteValue(nameof(ClientEnrollmentDTO));
+
+            if (settings.Contains(nameof(ClientDemographicViewModel)))
+                settings.DeleteValue(nameof(ClientDemographicViewModel));
+
+            if (settings.Contains(nameof(ClientContactViewModel)))
+                settings.DeleteValue(nameof(ClientContactViewModel));
+
+            if (settings.Contains(nameof(ClientProfileViewModel)))
+                settings.DeleteValue(nameof(ClientProfileViewModel));
+
+            if (settings.Contains(nameof(ClientEnrollmentViewModel)))
+                settings.DeleteValue(nameof(ClientEnrollmentViewModel));
         }
     }
 }

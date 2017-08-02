@@ -12,7 +12,7 @@ namespace LiveHTS.Presentation
     public class App:MvxApplication
     {
         private readonly string _dbpath;
-
+    
         public App(string dbpath)
         {
             _dbpath = dbpath;
@@ -43,6 +43,7 @@ namespace LiveHTS.Presentation
                 .RegisterAsLazySingleton();
 
             RegisterAppStart(new AppStart());
+
         }
     }
 }
