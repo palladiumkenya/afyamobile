@@ -10,5 +10,6 @@ namespace LiveHTS.Core.Interfaces.Model
         string Gender { get; set; }
         DateTime? BirthDate { get; set; }
         bool? BirthDateEstimated { get; set; }
+        
     }
 }

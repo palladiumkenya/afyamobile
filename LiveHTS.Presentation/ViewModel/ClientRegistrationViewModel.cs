@@ -25,15 +25,18 @@ namespace LiveHTS.Presentation.ViewModel
         }
         public void Init(string mode)
         {
-            if (mode.ToLower() == "new")
-            {
-                //clear reg cache
-
-                _settings.DeleteValue(nameof(ClientDemographicViewModel));
-                _settings.DeleteValue(nameof(ClientContactViewModel));
-                _settings.DeleteValue(nameof(ClientProfileViewModel));
-                _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
-            }
+//            if (mode.ToLower() == "new")
+//            {
+//                //clear reg cache
+//
+//                _settings.DeleteValue(nameof(ClientDemographicViewModel));
+//                _settings.DeleteValue(nameof(ClientContactViewModel));
+//                _settings.DeleteValue(nameof(ClientProfileViewModel));
+//                _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+//            }
+            ShowViewModel<ClientDemographicViewModel>();
         }
+
+       
     }
 }

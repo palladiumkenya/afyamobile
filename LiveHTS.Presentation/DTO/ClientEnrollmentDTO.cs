@@ -6,6 +6,7 @@ namespace LiveHTS.Presentation.DTO
 {
     public class ClientEnrollmentDTO:IEnrollment
     {
+        public Guid PracticeId { get; set; }
         public string IdentifierTypeId { get; set; }
         public string Identifier { get; set; }
         public DateTime RegistrationDate { get; set; }
@@ -14,8 +15,9 @@ namespace LiveHTS.Presentation.DTO
         {
         }
 
-        private ClientEnrollmentDTO(string identifierTypeId, string identifier, DateTime registrationDate)
+        private ClientEnrollmentDTO(Guid practiceId, string identifierTypeId, string identifier, DateTime registrationDate)
         {
+            PracticeId = practiceId;
             IdentifierTypeId = identifierTypeId;
             Identifier = identifier;
             RegistrationDate = registrationDate;
@@ -23,7 +25,7 @@ namespace LiveHTS.Presentation.DTO
 
         public static ClientEnrollmentDTO CreateFromView(ClientEnrollmentViewModel clientEnrollmentViewModel)
         {
-            return new ClientEnrollmentDTO(clientEnrollmentViewModel.SelectedIdentifierType.Id, clientEnrollmentViewModel.Identifier, clientEnrollmentViewModel.RegistrationDate);
+            return new ClientEnrollmentDTO(clientEnrollmentViewModel.SelectedPractice.Id, clientEnrollmentViewModel.SelectedIdentifierType.Id, clientEnrollmentViewModel.Identifier, clientEnrollmentViewModel.RegistrationDate);
         }
     }
 }

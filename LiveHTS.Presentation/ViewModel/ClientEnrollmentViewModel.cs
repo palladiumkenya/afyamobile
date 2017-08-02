@@ -25,6 +25,8 @@ namespace LiveHTS.Presentation.ViewModel
         private IdentifierType _selectedIdentifierType;
         private string _identifier;
         private DateTime _registrationDate;
+        private Practice _selectedPractice;
+        private IEnumerable<Practice> _practices;
 
         public ClientEnrollmentDTO Enrollment { get; set; }
         public string ClientInfo
@@ -37,6 +39,19 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _identifierTypes; }
             set { _identifierTypes = value;RaisePropertyChanged(() => IdentifierTypes); }
         }
+
+        public IEnumerable<Practice> Practices
+        {
+            get { return _practices; }
+            set { _practices = value;RaisePropertyChanged(() => Practices); }
+        }
+
+        public Practice SelectedPractice
+        {
+            get { return _selectedPractice; }
+            set { _selectedPractice = value; RaisePropertyChanged(() => SelectedPractice);}
+        }
+
         public IdentifierType SelectedIdentifierType
         {
             get { return _selectedIdentifierType; }
@@ -71,6 +86,8 @@ namespace LiveHTS.Presentation.ViewModel
         public override void Start()
         {
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
+            Practices = _lookupService.GetDefaultPractices().ToList();
+            SelectedPractice = _lookupService.GetDefault();
             base.Start();
         }
 
@@ -96,7 +113,20 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void Save()
         {
-            _dialogService.Alert("Save Successful", "Registration", "Ok");
+            try
+            {
+                var clientRegistrationDTO = new ClientRegistrationDTO(_settings);
+                var client = clientRegistrationDTO.Generate();
+                _registryService.Save(client);
+                clientRegistrationDTO.ClearCache(_settings);
+                _dialogService.Alert("Save Successful", "Registration", "Ok");
+                ShowViewModel<ClientDashboardViewModel>(new {id = client.Id.ToString()});
+            }
+            catch (Exception e)
+            {
+                Mvx.Error(e.Message);
+                _dialogService.Alert($"Could NOT Save ! {e.Message}", "Registration", "Ok");
+            }
         }
 
         public override void MoveNext()

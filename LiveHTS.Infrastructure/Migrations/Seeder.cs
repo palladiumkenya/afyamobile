@@ -63,6 +63,8 @@ namespace LiveHTS.Infrastructure.Migrations
             #region Subject
 
             db.CreateTable<Person>();
+            db.CreateTable<PersonContact>();
+            db.CreateTable<PersonAddress>();
             db.CreateTable<User>();
             db.CreateTable<Client>();
             db.CreateTable<ClientIdentifier>();
@@ -71,6 +73,8 @@ namespace LiveHTS.Infrastructure.Migrations
             #endregion
 
             InsertOrUpdate(db, new PersonJson());
+            InsertOrUpdate(db, new PersonAddressJson());
+            InsertOrUpdate(db, new PersonContactJson());
             InsertOrUpdate(db, new UserJson());
             InsertOrUpdate(db, new ClientJson());
             InsertOrUpdate(db, new ClientIdentifierJson());

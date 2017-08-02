@@ -14,6 +14,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
  {
    ^Code^: 13023,
    ^Name^: ^Kenyatta National Hospital^,
+   ^IsDefault^: 1,
    ^PracticeTypeId^: ^Facility^,
    ^CountyId^: 47,
    ^Id^: ^7e51629e-6b99-11e7-907b-a6006ad3dba0^,

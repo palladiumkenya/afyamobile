@@ -10,6 +10,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         ClientEnrollmentDTO Enrollment { get; set; }
         string ClientInfo { get; set; }
         IEnumerable<IdentifierType> IdentifierTypes { get; set; }
+        IEnumerable<Practice> Practices { get; set; }
+        Practice SelectedPractice { get; set; }
         IdentifierType SelectedIdentifierType { get; set; }
         string Identifier { get; set; }
         DateTime RegistrationDate { get; set; }

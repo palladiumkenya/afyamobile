@@ -49,7 +49,7 @@ namespace LiveHTS.Core.Model.Subject
             return new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
         }
 
-        public void AddAddress(string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng)
+        public void AddAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng)
         {
             var address = PersonAddress.Create(landmark, countyId, preferred, lat, lng, Id);
             Addresses.ToList().Add(address);

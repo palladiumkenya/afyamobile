@@ -73,6 +73,8 @@
     <Compile Include="Seed\Config\IdentifierTypeJson.cs" />
     <Compile Include="Seed\Config\KeyPopJson.cs" />
     <Compile Include="Seed\Config\MaritalStatusJson.cs" />
+    <Compile Include="Seed\Subject\PersonContactJson.cs" />
+    <Compile Include="Seed\Subject\PersonAddressJson.cs" />
     <Compile Include="Seed\Subject\ClientRelationshipJson.cs" />
     <Compile Include="Seed\Survey\FormJson.cs" />
     <Compile Include="Seed\Config\PracticeTypeJson.cs" />

@@ -77,6 +77,13 @@ namespace LiveHTS.Core.Tests.Service.Config
             var practices = _lookupService.GetPractices(new []{"Facility"}).ToList();
             Assert.IsTrue(practices.Any());
         }
-       
+
+        [Test]
+        public void should_Load_DefaultPractice()
+        {
+            var practice = _lookupService.GetDefault();
+            Assert.IsNotNull(practice);
+        }
+
     }
 }

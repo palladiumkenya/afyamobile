@@ -14,6 +14,7 @@ namespace LiveHTS.Presentation.DTO
         public string AgeUnit { get; set; }
         public DateTime? BirthDate { get; set; }
         public bool? BirthDateEstimated { get; set; }
+        
 
         public virtual string FullName
         {
@@ -25,7 +26,7 @@ namespace LiveHTS.Presentation.DTO
             BirthDateEstimated = false;
         }
 
-        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, decimal age, string ageUnit, DateTime? birthDate):this()
+        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, decimal age, string ageUnit, DateTime? birthDate) :this()
         {
             FirstName = firstName;
             MiddleName = middleName;

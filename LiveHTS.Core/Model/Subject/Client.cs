@@ -28,14 +28,31 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId, Person person)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId)
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
             OtherKeyPop = otherKeyPop;
             PracticeId = practiceId;
             PersonId = personId;
+        }
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person)
+        {
+            MaritalStatus = maritalStatus;
+            KeyPop = keyPop;
+            OtherKeyPop = otherKeyPop;
+            PracticeId = practiceId;
+            PersonId = person.Id;
             Person = person;
+        }
+
+        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person)
+        {
+            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person);
+        }
+        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId)
+        {
+            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId);
         }
 
         public override string ToString()

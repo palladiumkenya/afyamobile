@@ -27,6 +27,22 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewEnrollmentClientInfo"
             local:MvxBind="Text ClientInfo" />
+        <TextView
+            android:text="Facility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPractice" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/spinnerPractice"
+            local:MvxBind="ItemsSource Practices;SelectedItem SelectedPractice" />
+        <TextView
+            android:text="Identifier Type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewIdentifierType" />
         <MvxSpinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,23 +59,22 @@
             android:layout_height="wrap_content"
             android:id="@+id/editTextIdentifier"
             local:MvxBind="Text Identifier; Error Errors['Identifier']" />
-      <TextView
-        android:text=""
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewRegistrationDate"
-        local:MvxBind="Text Errors['RegistrationDate'];Error Errors['RegistrationDate']"
-        android:textColor="@android:color/holo_red_dark"
-        android:gravity="center_horizontal" />
-      <MvxDatePicker
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        local:MvxBind="Value RegistrationDate;"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner" 
-        android:id="@+id/spinnerRegistrationDate"
-        />
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewRegistrationDate"
+            local:MvxBind="Text Errors['RegistrationDate'];Error Errors['RegistrationDate']"
+            android:textColor="@android:color/holo_red_dark"
+            android:gravity="center_horizontal" />
+        <MvxDatePicker
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            local:MvxBind="Value RegistrationDate;"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:id="@+id/spinnerRegistrationDate" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

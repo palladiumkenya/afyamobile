@@ -10,7 +10,7 @@ namespace LiveHTS.Core.Model.Subject
     {
         public string Landmark { get; set; }
         [Indexed]
-        public Guid? CountyId { get; set; }
+        public int? CountyId { get; set; }
         public bool Preferred { get; set; }
         [Indexed]
         public decimal? Lat { get; set; }
@@ -22,7 +22,7 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private PersonAddress(string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId)
+        private PersonAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId)
         {
             Landmark = landmark;
             CountyId = countyId;
@@ -32,7 +32,7 @@ namespace LiveHTS.Core.Model.Subject
             PersonId = personId;
         }
 
-        public static PersonAddress Create(string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId)
+        public static PersonAddress Create(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId)
         {
             return new PersonAddress(landmark,countyId,preferred,lat,lng,personId);
         }

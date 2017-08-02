@@ -4,7 +4,7 @@ namespace LiveHTS.Core.Interfaces.Model
 {
     public interface IPersonAddress
     {
-        Guid? CountyId { get; set; }
+        int? CountyId { get; set; }
         string Landmark { get; set; }
         decimal? Lat { get; set; }
         decimal? Lng { get; set; }
