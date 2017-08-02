@@ -20,7 +20,7 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private ClientRelationship(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId)
+        private ClientRelationship(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId):this()
         {
             RelationshipTypeId = relationshipTypeId;
             RelatedClientId = relatedClientId;

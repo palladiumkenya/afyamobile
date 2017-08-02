@@ -7,7 +7,7 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Client Dashboard", LaunchMode = LaunchMode.SingleTop,
+    [Activity(Label = "Client Dashboard", LaunchMode = LaunchMode.SingleTop,ParentActivity = typeof(RegistryActivity),
         Theme = "@android:style/Theme.Material.Light")]
     public class ClientDashboardActivity:MvxActivity<ClientDashboardViewModel>
     {

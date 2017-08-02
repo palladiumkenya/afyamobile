@@ -28,21 +28,22 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId):this()
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
             OtherKeyPop = otherKeyPop;
             PracticeId = practiceId;
+        }
+
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId)
+            :this(maritalStatus, keyPop, otherKeyPop,practiceId)
+        {
             PersonId = personId;
         }
         private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person)
+            : this(maritalStatus, keyPop, otherKeyPop, practiceId)
         {
-            MaritalStatus = maritalStatus;
-            KeyPop = keyPop;
-            OtherKeyPop = otherKeyPop;
-            PracticeId = practiceId;
-            PersonId = person.Id;
             Person = person;
         }
 

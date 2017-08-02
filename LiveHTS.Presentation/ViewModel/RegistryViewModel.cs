@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces.ViewModel;
@@ -8,6 +9,7 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class RegistryViewModel:MvxViewModel,IRegistryViewModel
     {
+        private readonly ISettings _settings;
         private readonly IRegistryService _registryService;
         private IEnumerable<Client> _clients;
         private bool _isBusy;
@@ -84,6 +86,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void RegisterClient()
         {
+            ClearCache(_settings);
             ShowViewModel<ClientRegistrationViewModel>(new{mode="new"});
         }
 
@@ -123,9 +126,10 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public RegistryViewModel(IRegistryService registryService)
+        public RegistryViewModel(IRegistryService registryService, ISettings settings)
         {
             _registryService = registryService;
+            _settings = settings;
         }
 
         public override void Start()
@@ -139,6 +143,22 @@ namespace LiveHTS.Presentation.ViewModel
             IsBusy = true;
             Clients = _registryService.GetAllClients();
             IsBusy = false;
+        }
+
+        private void ClearCache(ISettings settings)
+        {
+
+            if (settings.Contains(nameof(ClientDemographicViewModel)))
+                settings.DeleteValue(nameof(ClientDemographicViewModel));
+
+            if (settings.Contains(nameof(ClientContactViewModel)))
+                settings.DeleteValue(nameof(ClientContactViewModel));
+
+            if (settings.Contains(nameof(ClientProfileViewModel)))
+                settings.DeleteValue(nameof(ClientProfileViewModel));
+
+            if (settings.Contains(nameof(ClientEnrollmentViewModel)))
+                settings.DeleteValue(nameof(ClientEnrollmentViewModel));
         }
     }
 }

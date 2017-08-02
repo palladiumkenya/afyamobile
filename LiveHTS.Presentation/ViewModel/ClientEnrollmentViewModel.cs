@@ -119,8 +119,9 @@ namespace LiveHTS.Presentation.ViewModel
                 var client = clientRegistrationDTO.Generate();
                 _registryService.Save(client);
                 clientRegistrationDTO.ClearCache(_settings);
-                _dialogService.Alert("Save Successful", "Registration", "Ok");
+                
                 ShowViewModel<ClientDashboardViewModel>(new {id = client.Id.ToString()});
+                
             }
             catch (Exception e)
             {

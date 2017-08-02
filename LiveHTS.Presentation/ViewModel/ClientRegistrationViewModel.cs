@@ -15,28 +15,28 @@ namespace LiveHTS.Presentation.ViewModel
         public ClientRegistrationViewModel(ISettings settings)
         {
             _settings = settings;
-//            Mvx.TryResolve(out _dialogService);
-//            Mvx.TryResolve(out _lookupService);
-//            ClientDemographicViewModel = new ClientDemographicViewModel(_dialogService) {Parent = this};
-//            ClientContactViewModel = new ClientContactViewModel(_dialogService) {Parent = this};
-//            ClientProfileViewModel = new ClientProfileViewModel(_dialogService, _lookupService) {Parent = this};
-//            ClientEnrollmentViewModel=   new ClientEnrollmentViewModel(_dialogService,_lookupService) {Parent = this};
-            //ShowViewModel<ClientDemographicViewModel>();
         }
+
         public void Init(string mode)
         {
-//            if (mode.ToLower() == "new")
-//            {
-//                //clear reg cache
-//
-//                _settings.DeleteValue(nameof(ClientDemographicViewModel));
-//                _settings.DeleteValue(nameof(ClientContactViewModel));
-//                _settings.DeleteValue(nameof(ClientProfileViewModel));
-//                _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
-//            }
+            ClearCache(_settings);
             ShowViewModel<ClientDemographicViewModel>();
         }
 
-       
+        private void ClearCache(ISettings settings)
+        {
+
+            if (settings.Contains(nameof(ClientDemographicViewModel)))
+                settings.DeleteValue(nameof(ClientDemographicViewModel));
+
+            if (settings.Contains(nameof(ClientContactViewModel)))
+                settings.DeleteValue(nameof(ClientContactViewModel));
+
+            if (settings.Contains(nameof(ClientProfileViewModel)))
+                settings.DeleteValue(nameof(ClientProfileViewModel));
+
+            if (settings.Contains(nameof(ClientEnrollmentViewModel)))
+                settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+        }
     }
 }
