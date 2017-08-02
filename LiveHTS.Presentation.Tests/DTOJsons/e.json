@@ -1,1 +1,6 @@
-"{"PracticeId":"7e51629e-6b99-11e7-907b-a6006ad3dba0","IdentifierTypeId":"Serial","Identifier":"100","RegistrationDate":"2017-08-02T00:00:00+03:00"}"
+{
+  "PracticeId": "7e51629e-6b99-11e7-907b-a6006ad3dba0",
+  "IdentifierTypeId": "Serial",
+  "Identifier": "100",
+  "RegistrationDate": "2017-08-02T00:00:00+03:00"
+}

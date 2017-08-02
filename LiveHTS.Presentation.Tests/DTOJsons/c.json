@@ -1,1 +1,9 @@
-"{"Phone":777777,"CountyId":null,"Landmark":"Mauche","Lat":null,"Lng":null,"PersonId":"00000000-0000-0000-0000-000000000000","Preferred":false}"
+{
+  "Phone": 777777,
+  "CountyId": null,
+  "Landmark": "Mauche",
+  "Lat": null,
+  "Lng": null,
+  "PersonId": "00000000-0000-0000-0000-000000000000",
+  "Preferred": false
+}
