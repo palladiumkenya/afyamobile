@@ -81,7 +81,7 @@ namespace LiveHTS.Presentation.DTO
             return clientIdentifier;
         }
 
-        private Person GeneratePerson()
+        public Person GeneratePerson()
         {
             //Person 
 
