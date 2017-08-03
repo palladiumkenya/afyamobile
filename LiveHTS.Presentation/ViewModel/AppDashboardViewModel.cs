@@ -13,6 +13,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _registryCommand;
         private bool _isBusy;
         private IMvxCommand _registerNewClientCommand;
+        private IMvxCommand _quitCommand;
 
         public IMvxCommand RegistryCommand
         {
@@ -32,7 +33,15 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-      
+        public IMvxCommand QuitCommand
+        {
+            get
+            {
+                _quitCommand = _quitCommand ?? new MvxCommand(Quit);
+                return _quitCommand;
+            }
+        }
+
 
         public string Profile
         {

@@ -18,9 +18,15 @@
         android:id="@+id/buttonRegistry"
         local:MvxBind="Click RegistryCommand" />
     <Button
-      android:text="New Client"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/buttonNewClient"
-      local:MvxBind="Click RegisterNewClientCommand" />
+        android:text="New Client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonNewClient"
+        local:MvxBind="Click RegisterNewClientCommand" />
+    <Button
+        android:text="Exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonNewClient"
+        local:MvxBind="Click QuitCommand" />
 </LinearLayout>
