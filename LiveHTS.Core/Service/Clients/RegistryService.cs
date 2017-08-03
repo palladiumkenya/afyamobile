@@ -82,16 +82,36 @@ namespace LiveHTS.Core.Service.Clients
                 throw new ArgumentException($"Identifier {clientIdentifier.Identifier} is already in Use !");
 
             //create Person
-            _personRepository.InsertOrUpdate(client.Person);
+            _personRepository.Save(client.Person);
 
             //create Client
-            _clientRepository.InsertOrUpdate(client);
+            _clientRepository.Save(client);
         }
 
         public void SaveOrUpdate(Client client)
         {
-            
-            _clientRepository.SaveOrUpdate(client);
+            //check id in use
+
+            if (!client.Identifiers.Any())
+                throw new ArgumentException($"Client should have an Identifier !");
+
+            var clientIdentifier = client.Identifiers.First();
+
+            var clientIdentifiers = _clientIdentifierRepository.GetAll(
+                x => x.Identifier.ToLower() == clientIdentifier.Identifier.ToLower() &&
+                     x.IdentifierTypeId == clientIdentifier.IdentifierTypeId&&
+                     x.ClientId!=client.Id
+                     
+            );
+
+            if (clientIdentifiers.Any())
+                throw new ArgumentException($"Identifier {clientIdentifier.Identifier} is already in Use !");
+
+            //create Person
+            _personRepository.InsertOrUpdate(client.Person);
+
+            //create Client
+            _clientRepository.InsertOrUpdate(client);
         }
 
         public void Delete(Guid clientId)

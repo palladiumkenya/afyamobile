@@ -114,17 +114,23 @@ namespace LiveHTS.Core.Tests.Service.Clients
         public void should_Save_Exsistng()
         {
             var client = TestDataHelpers.GetTestClients(1).First();
-            _registryService.Save(client);
+            _registryService.SaveOrUpdate(client);
             var cientExisting = _registryService.Find(client.Id);
-
-
             Assert.IsNotNull(cientExisting);
-            Assert.IsNotNull(cientExisting.Person);
-            Assert.IsNotNull(cientExisting.Person.Addresses.FirstOrDefault());
-            Assert.IsNotNull(cientExisting.Person.Contacts.FirstOrDefault());
-            Assert.IsNotNull(cientExisting.Identifiers.FirstOrDefault());
-            Assert.IsNotNull(cientExisting.Relationships.FirstOrDefault());
-            Console.WriteLine(cientExisting);
+
+            var person = cientExisting.Person;
+            person.FirstName = "Uhuru";
+            cientExisting.Person = person;
+
+            _registryService.SaveOrUpdate(cientExisting);
+            var updatedClient = _registryService.Find(client.Id);
+
+            Assert.AreEqual("Uhuru", updatedClient.Person.FirstName);
+            Assert.AreEqual(client.Person.Addresses.ToList().Count, updatedClient.Person.Addresses.ToList().Count());
+            Assert.AreEqual(client.Person.Contacts.ToList().Count, updatedClient.Person.Contacts.ToList().Count());
+            Assert.AreEqual(client.Identifiers.ToList().Count, updatedClient.Identifiers.ToList().Count());
+            
+            Console.WriteLine(updatedClient);
         }
 
         [Test]
