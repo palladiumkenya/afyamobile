@@ -28,6 +28,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Practice _selectedPractice;
         private IEnumerable<Practice> _practices;
         private string _clientId;
+        private string _id;
 
         public ClientEnrollmentDTO Enrollment { get; set; }
         public string ClientInfo
@@ -73,6 +74,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _clientId; }
             set { _clientId = value;RaisePropertyChanged(() => ClientId); }
+        }
+
+        public string Id
+        {
+            get { return _id; }
+            set { _id = value; RaisePropertyChanged(() => Id);}
         }
 
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService, IRegistryService registryService) : base(dialogService, settings)
@@ -166,6 +173,7 @@ namespace LiveHTS.Presentation.ViewModel
                 ClientId = Enrollment.ClientId;
                 SelectedIdentifierType = IdentifierTypes.FirstOrDefault(x => x.Id == Enrollment.IdentifierTypeId);
                 Identifier = Enrollment.Identifier;
+                Id = Enrollment.Id;
             }
             catch (Exception e)
             {

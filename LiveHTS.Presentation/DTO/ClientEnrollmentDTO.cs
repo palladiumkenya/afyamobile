@@ -9,6 +9,7 @@ namespace LiveHTS.Presentation.DTO
 {
     public class ClientEnrollmentDTO : IEnrollment
     {
+        public string Id { get; set; }
         public string ClientId { get; set; }
 
         public Guid PracticeId { get; set; }
@@ -45,6 +46,7 @@ namespace LiveHTS.Presentation.DTO
                 clientEnrollmentViewModel.RegistrationDate);
 
             enrollmentDTO.ClientId = clientEnrollmentViewModel.ClientId;
+            enrollmentDTO.Id = clientEnrollmentViewModel.Id;
             return enrollmentDTO;
         }
 
@@ -65,6 +67,7 @@ namespace LiveHTS.Presentation.DTO
                     enrollmentDTO.Identifier = clientIdentifier.Identifier;
                     enrollmentDTO.RegistrationDate = clientIdentifier.RegistrationDate;
                     enrollmentDTO.ClientId = clientIdentifier.ClientId.ToString();
+                    enrollmentDTO.Id = clientIdentifier.Id.ToString();
                 }
             }
             return enrollmentDTO;

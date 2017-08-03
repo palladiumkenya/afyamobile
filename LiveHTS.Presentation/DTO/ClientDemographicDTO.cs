@@ -88,6 +88,7 @@ namespace LiveHTS.Presentation.DTO
                         model.BirthDate);
 
                     demographicDTO.PersonId = model.Id.ToString();
+                    
                 }
             }
 

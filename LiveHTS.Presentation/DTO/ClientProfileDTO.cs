@@ -7,6 +7,7 @@ namespace LiveHTS.Presentation.DTO
 {
     public class ClientProfileDTO:IProfile
     {
+        public string Id { get; set; }
         public string ClientId { get; set; }
 
         public string MaritalStatus { get; set; }
@@ -37,6 +38,7 @@ namespace LiveHTS.Presentation.DTO
             var profileDTO= new ClientProfileDTO(clientProfileViewModel.SelectedMaritalStatus.Id, clientProfileViewModel.SelectedKeyPop.Id, clientProfileViewModel.OtherKeyPop);
 
             profileDTO.ClientId = clientProfileViewModel.ClientId;
+            profileDTO.Id = clientProfileViewModel.Id;
             return profileDTO;
         }
 
@@ -50,6 +52,7 @@ namespace LiveHTS.Presentation.DTO
                 profileDTO.KeyPop = client.KeyPop;
                 profileDTO.OtherKeyPop = client.OtherKeyPop;
                 profileDTO.ClientId = client.Id.ToString();
+                profileDTO.Id = client.Id.ToString();
             }
 
             return profileDTO;

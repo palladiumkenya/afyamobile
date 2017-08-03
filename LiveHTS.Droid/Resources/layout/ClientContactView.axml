@@ -48,14 +48,22 @@
             android:layout_height="wrap_content"
             android:id="@+id/editTextContactLandmark"
             local:MvxBind="Text Landmark; Error Errors['Landmark']" />
-      <TextView
-        android:text=""
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewContactPersonId"
-        local:MvxBind="Text PersonId;Visibility ShowId, Converter=Visibility"
-        android:background="#0000FF"
-        android:textColor="#FFFFFF"  />
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewContactPersonId"
+            local:MvxBind="Text PersonId;Visibility ShowId, Converter=Visibility"
+            android:background="#0000FF"
+            android:textColor="#FFFFFF" />
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewContactId"
+            local:MvxBind="Text Id;Visibility ShowId, Converter=Visibility"
+            android:background="#1000FF"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

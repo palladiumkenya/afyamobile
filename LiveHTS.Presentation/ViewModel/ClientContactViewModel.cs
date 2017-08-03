@@ -16,6 +16,7 @@ namespace LiveHTS.Presentation.ViewModel
         private int? _telephone;
         private string _landmark;
         private string _personId;
+        private string _id;
 
         public ClientContactAddressDTO ContactAddress { get; set; }
         public string ClientInfo
@@ -43,6 +44,13 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => PersonId);
             }
         }
+
+        public string Id
+        {
+            get { return _id; }
+            set { _id = value;RaisePropertyChanged(() => Id); }
+        }
+
         public ClientContactViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
         {
             Step = 2;
@@ -88,6 +96,7 @@ namespace LiveHTS.Presentation.ViewModel
                 PersonId = ContactAddress.PersonId;
                 Telephone = ContactAddress.Phone;
                 Landmark = ContactAddress.Landmark;
+                Id = ContactAddress.Id;
             }
             catch (Exception e)
             {
