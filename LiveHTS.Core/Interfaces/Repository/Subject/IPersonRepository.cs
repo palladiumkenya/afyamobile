@@ -5,6 +5,5 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
 {
     public interface IPersonRepository:IRepository<Person,Guid>
     {
-        
     }
 }

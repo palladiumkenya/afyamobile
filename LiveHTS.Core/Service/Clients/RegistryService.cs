@@ -82,10 +82,10 @@ namespace LiveHTS.Core.Service.Clients
                 throw new ArgumentException($"Identifier {clientIdentifier.Identifier} is already in Use !");
 
             //create Person
-            _personRepository.Save(client.Person);
+            _personRepository.InsertOrUpdate(client.Person);
 
             //create Client
-            _clientRepository.Save(client);
+            _clientRepository.InsertOrUpdate(client);
         }
 
         public void SaveOrUpdate(Client client)

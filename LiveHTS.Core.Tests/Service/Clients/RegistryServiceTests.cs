@@ -95,8 +95,6 @@ namespace LiveHTS.Core.Tests.Service.Clients
         [Test]
         public void should_Save_New()
         {
-            
-            
 
             var client = TestDataHelpers.GetTestClients(1).First();
             
@@ -110,6 +108,23 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.IsNotNull(cientNew.Identifiers.FirstOrDefault());
             Assert.IsNotNull(cientNew.Relationships.FirstOrDefault());
             Console.WriteLine(cientNew);
+        }
+
+        [Test]
+        public void should_Save_Exsistng()
+        {
+            var client = TestDataHelpers.GetTestClients(1).First();
+            _registryService.Save(client);
+            var cientExisting = _registryService.Find(client.Id);
+
+
+            Assert.IsNotNull(cientExisting);
+            Assert.IsNotNull(cientExisting.Person);
+            Assert.IsNotNull(cientExisting.Person.Addresses.FirstOrDefault());
+            Assert.IsNotNull(cientExisting.Person.Contacts.FirstOrDefault());
+            Assert.IsNotNull(cientExisting.Identifiers.FirstOrDefault());
+            Assert.IsNotNull(cientExisting.Relationships.FirstOrDefault());
+            Console.WriteLine(cientExisting);
         }
 
         [Test]

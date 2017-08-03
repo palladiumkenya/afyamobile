@@ -66,7 +66,6 @@ namespace LiveHTS.Presentation.DTO
                     ClientEnrollment = ClientEnrollmentDTO.CreateFromClient(client)
                 };
 
-
             return clientRegistrationDTO;
         }
 

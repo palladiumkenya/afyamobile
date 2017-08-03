@@ -82,6 +82,33 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 
         }
 
+        public override void InsertOrUpdate(Client entity)
+        {
+            base.InsertOrUpdate(entity);
+            _db.CreateTable<ClientIdentifier>();
+            _db.CreateTable<ClientRelationship>();
+
+            //Create identifiers
+            if (entity.Identifiers.Any())
+            {
+                var identifiers = entity.Identifiers.ToList();
+                foreach (var a in identifiers)
+                {
+                    InsertOrUpdateAny(a);
+                }
+            }
+
+            //Create Relationships
+            if (entity.Relationships.Any())
+            {
+                var relationships = entity.Relationships.ToList();
+                foreach (var a in relationships)
+                {
+                    InsertOrUpdateAny(a);
+                }
+            }
+        }
+
         public void SaveOrUpdate(Client obs)
         {
             var existingObs = _db.Find<Client>(obs.Id);

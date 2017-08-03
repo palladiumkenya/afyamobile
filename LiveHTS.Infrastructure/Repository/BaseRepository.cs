@@ -52,6 +52,24 @@ namespace LiveHTS.Infrastructure.Repository
             _db.Insert(entity);
         }
 
+        public virtual void InsertOrUpdate(T entity)
+        {
+            var rowsAffected = _db.Update(entity);
+            if (rowsAffected == 0)
+            {
+                _db.Insert(entity);
+            }
+        }
+
+        public void InsertOrUpdateAny(object entity)
+        {
+            var rowsAffected = _db.Update(entity);
+            if (rowsAffected == 0)
+            {
+                _db.Insert(entity);
+            }
+        }
+
         public virtual void Update(T entity)
         {
             _db.Update(entity);

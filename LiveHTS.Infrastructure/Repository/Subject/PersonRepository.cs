@@ -32,5 +32,32 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
                 
         }
+
+        public override void InsertOrUpdate(Person entity)
+        {
+            base.InsertOrUpdate(entity);
+
+            _db.CreateTable<PersonContact>();
+            _db.CreateTable<PersonAddress>();
+
+            if (entity.Addresses.Any())
+            {
+                var addresses = entity.Addresses.ToList();
+                foreach (var a in addresses)
+                {
+                    InsertOrUpdateAny(a);
+                }
+            }
+
+
+            if (entity.Contacts.Any())
+            {
+                var contacts = entity.Contacts.ToList();
+                foreach (var a in contacts)
+                {
+                    InsertOrUpdateAny(a);
+                }
+            }
+        }
     }
 }
