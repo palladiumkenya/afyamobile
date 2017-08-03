@@ -24,6 +24,11 @@ namespace LiveHTS.Presentation.ViewModel
             set { _isBusy = value; RaisePropertyChanged(() => IsBusy); }
         }
 
+        public void ShowRegistry()
+        {
+            ShowViewModel<RegistryViewModel>();
+        }
+
         public ClientDashboardViewModel(IDashboardService dashboardService)
         {
             _dashboardService = dashboardService;

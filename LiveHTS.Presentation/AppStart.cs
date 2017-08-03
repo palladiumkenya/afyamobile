@@ -12,7 +12,7 @@ namespace LiveHTS.Presentation
             var migrator=Mvx.Resolve<IMigrator>();
             migrator.Migrate();
 
-            ShowViewModel<RegistryViewModel>();
+            ShowViewModel<SignInViewModel>();
         }
     }
 }

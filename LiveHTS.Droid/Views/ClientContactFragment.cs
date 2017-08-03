@@ -9,7 +9,7 @@ using MvvmCross.Droid.Shared.Attributes;
 
 namespace LiveHTS.Droid.Views
 {
-    [MvxFragment(typeof(ClientRegistrationViewModel), Resource.Id.content_frame, true)]
+    [MvxFragment(typeof(ClientRegistrationViewModel), Resource.Id.content_frame)]
     [Register("livehts.droid.views.ClientContactFragment")]
     public class ClientContactFragment : MvxFragment<ClientContactViewModel>
     {

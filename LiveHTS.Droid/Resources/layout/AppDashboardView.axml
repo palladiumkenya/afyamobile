@@ -17,4 +17,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonRegistry"
         local:MvxBind="Click RegistryCommand" />
+    <Button
+      android:text="New Client"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/buttonNewClient"
+      local:MvxBind="Click RegisterNewClientCommand" />
 </LinearLayout>

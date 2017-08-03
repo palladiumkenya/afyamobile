@@ -6,7 +6,7 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Registry", LaunchMode = LaunchMode.SingleTop,
+    [Activity(Label = "Registry", LaunchMode = LaunchMode.SingleTop, ParentActivity = typeof(RegistryActivity),
         Theme = "@android:style/Theme.Material.Light")]
     public class RegistryActivity : MvxActivity<RegistryViewModel>
     {

@@ -6,5 +6,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         Client Client { get; set; }
         bool IsBusy { get; set; }
+        void ShowRegistry();
     }
 }

@@ -14,6 +14,12 @@ namespace LiveHTS.Droid.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.AppDashboardView);
+            
+        }
+
+        public override void OnBackPressed()
+        {
+            ViewModel.Quit();
         }
     }
 }

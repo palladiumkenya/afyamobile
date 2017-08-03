@@ -10,7 +10,7 @@ using MvvmCross.Droid.Shared.Attributes;
 
 namespace LiveHTS.Droid.Views
 {
-    [MvxFragment(typeof(ClientRegistrationViewModel), Resource.Id.content_frame, true)]
+    [MvxFragment(typeof(ClientRegistrationViewModel), Resource.Id.content_frame)]
     [Register("livehts.droid.views.ClientDemographicFragment")]
     public class ClientDemographicFragment : MvxFragment<ClientDemographicViewModel>
     {
@@ -20,6 +20,7 @@ namespace LiveHTS.Droid.Views
             var ignored=base.OnCreateView(inflater, container, savedInstanceState);
             var view= this.BindingInflate(Resource.Layout.ClientDemographicView,container,false);            
             return view;           
-        }          
+        }  
+        
     }
 }
