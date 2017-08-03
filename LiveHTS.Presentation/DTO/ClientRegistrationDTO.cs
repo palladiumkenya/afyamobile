@@ -95,6 +95,11 @@ namespace LiveHTS.Presentation.DTO
 
             var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop, ClientProfile.OtherKeyPop, ClientEnrollment.PracticeId,personId);
 
+            if (!string.IsNullOrWhiteSpace(ClientEnrollment.ClientId))
+            {
+                client.Id = new Guid(ClientEnrollment.ClientId);
+            }
+
             var clientIdentifier = GenerateClientIdentifier(client.Id);
             if (null != clientIdentifier)
             {
@@ -129,6 +134,10 @@ namespace LiveHTS.Presentation.DTO
                 ClientDemographic.LastName, ClientDemographic.Gender, ClientDemographic.BirthDate,
                 ClientDemographic.BirthDateEstimated, string.Empty);
 
+            if (!string.IsNullOrWhiteSpace(ClientDemographic.PersonId))
+            {
+                person.Id=new Guid(ClientDemographic.PersonId);
+            }
             
             var contact = GeneratePersonContact(person.Id);
             if (null != contact)
