@@ -47,6 +47,7 @@ namespace LiveHTS.Droid
             {
                 var toReturn = base.ValueConverterAssemblies.ToList();
                 toReturn.Add(typeof(DMYDateTimeValueConverter).Assembly);
+                toReturn.Add(typeof(ShowControlConverter).Assembly);
                 return toReturn;
             }
         }

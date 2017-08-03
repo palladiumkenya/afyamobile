@@ -60,6 +60,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/editTextProfileKeyOtherPop"
             local:MvxBind="Text OtherKeyPop; Visibility IsOtherKeyPop; Error Errors['OtherKeyPop']" />
+      <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewProfileClientId"
+        local:MvxBind="Text ClientId;Visibility ShowId, Converter=Visibility"
+        android:background="#0000FF"
+        android:textColor="#FFFFFF"  />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

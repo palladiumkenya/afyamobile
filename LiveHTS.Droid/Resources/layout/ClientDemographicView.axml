@@ -117,6 +117,14 @@
             local:MvxBind="Value BirthDate;"
             android:calendarViewShown="false"
             android:datePickerMode="spinner" />
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPersonId"
+            local:MvxBind="Text PersonId;Visibility ShowId, Converter=Visibility"
+            android:background="#0000FF"
+            android:textColor="#FFFFFF"  />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

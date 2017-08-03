@@ -3,6 +3,7 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.UI;
 using MvvmValidation;
 using Newtonsoft.Json;
 
@@ -22,6 +23,7 @@ namespace LiveHTS.Presentation.ViewModel
         private ObservableDictionary<string, string> _errors;
         private VMStore _modelStore;
         private string _mode;
+        private bool _showId;
 
         public virtual IClientRegistrationViewModel Parent { get; set; }
 
@@ -43,7 +45,18 @@ namespace LiveHTS.Presentation.ViewModel
             set { _description = value; RaisePropertyChanged(() => Description); }
         }
 
-      
+        public bool ShowId
+        {
+
+            get
+            {
+                
+                return _showId;
+                
+            }
+            set { _showId = value;RaisePropertyChanged(() => ShowId); }
+        }
+
 
         public virtual string MoveNextLabel
         {
@@ -88,9 +101,10 @@ namespace LiveHTS.Presentation.ViewModel
         {
             _dialogService = dialogService;
             _settings = settings;
+            //TODO remove IDS
+            ShowId = true;
             Validator = new ValidationHelper();
             ModelStore=new VMStore();
-            
         }
 
         public override void ViewAppeared()

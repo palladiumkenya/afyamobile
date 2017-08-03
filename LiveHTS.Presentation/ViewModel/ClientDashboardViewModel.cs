@@ -11,11 +11,26 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IDashboardService _dashboardService;
         private Client _client;
         private bool _isBusy;
+        private  IMvxCommand _manageRegistrationCommand;
 
         public Client Client
         {
             get { return _client; }
             set { _client = value;RaisePropertyChanged(() => Client); }
+        }
+
+        public IMvxCommand ManageRegistrationCommand
+        {
+            get
+            {
+                _manageRegistrationCommand = _manageRegistrationCommand ?? new MvxCommand(ManageRegistration);
+                return _manageRegistrationCommand;
+            }
+        }
+
+        private void ManageRegistration()
+        {
+            ShowViewModel<ClientRegistrationViewModel>(new {id = Client.Id});
         }
 
         public bool IsBusy

@@ -8,7 +8,6 @@ namespace LiveHTS.Core.Interfaces.Model
         string Landmark { get; set; }
         decimal? Lat { get; set; }
         decimal? Lng { get; set; }
-        Guid PersonId { get; set; }
         bool Preferred { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace LiveHTS.Presentation.ViewModel
         private DateTime _registrationDate;
         private Practice _selectedPractice;
         private IEnumerable<Practice> _practices;
+        private string _clientId;
 
         public ClientEnrollmentDTO Enrollment { get; set; }
         public string ClientInfo
@@ -66,6 +67,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _registrationDate; }
             set { _registrationDate = value; RaisePropertyChanged(() => RegistrationDate);}
+        }
+
+        public string ClientId
+        {
+            get { return _clientId; }
+            set { _clientId = value;RaisePropertyChanged(() => ClientId); }
         }
 
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService, IRegistryService registryService) : base(dialogService, settings)
@@ -156,6 +163,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Enrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(modelStore.Store);
+                ClientId = Enrollment.ClientId;
                 SelectedIdentifierType = IdentifierTypes.FirstOrDefault(x => x.Id == Enrollment.IdentifierTypeId);
                 Identifier = Enrollment.Identifier;
             }

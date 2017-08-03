@@ -48,7 +48,12 @@ namespace LiveHTS.Core.Model.Subject
         {
             return new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
         }
-
+        public static Person Create(string firstName, string middleName, string lastName, string gender, DateTime? birthDate, bool? birthDateEstimated, string email,Guid personId)
+        {
+            var person=Create(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
+            person.Id = personId;
+            return person;
+        }
         public void AddAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng)
         {
             var addressList = Addresses.ToList();

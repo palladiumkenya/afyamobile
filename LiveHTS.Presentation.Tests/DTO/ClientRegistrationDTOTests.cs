@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Platform.Platform;
@@ -18,10 +19,13 @@ namespace LiveHTS.Presentation.Tests.DTO
         private ClientContactAddressDTO _addressDTO;
         private ClientProfileDTO _profileDTO;
         private ClientEnrollmentDTO _enrollmentDTO;
+        private Client _client;
 
         [SetUp]
         public void SetUp()
         {
+            _client = TestHelpers.CreateTestClients().First();
+
             _demographicDTO = JsonConvert.DeserializeObject<ClientDemographicDTO>(GetJson("d"));
             _addressDTO = JsonConvert.DeserializeObject<ClientContactAddressDTO>(GetJson("c"));
             _profileDTO = JsonConvert.DeserializeObject<ClientProfileDTO>(GetJson("p"));
@@ -52,6 +56,16 @@ namespace LiveHTS.Presentation.Tests.DTO
             Console.WriteLine(client);
         }
 
+        [Test]
+        public void should_Generate_DTO_From_Client()
+        {
+            var dto= ClientRegistrationDTO.Create(_client);
+            Assert.IsNotNull(dto);
+            Assert.IsTrue(dto.ClientDemographic.HasAnyData);
+            Assert.IsTrue(dto.ClientContactAddress.HasAnyData);
+            Assert.IsTrue(dto.ClientProfile.HasAnyData);
+            Assert.IsTrue(dto.ClientEnrollment.HasAnyData);
+        }
 
         private string GetJson(string fileName)
         {

@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
+    <Compile Include="Converters\ShowControlConverter.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />
     <Compile Include="DTO\ClientEnrollmentDTO.cs" />
     <Compile Include="DTO\ClientRegistrationDTO.cs" />

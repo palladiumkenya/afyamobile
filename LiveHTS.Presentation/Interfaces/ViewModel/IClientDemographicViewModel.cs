@@ -20,7 +20,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CustomItem SelectedAgeUnit { get; set; }
         string BirthDateError { get; set; }
         DateTime? BirthDate { get; set; }
-
+        string PersonId { get; set; }
+        
         void CalculateBirthDate();
         void CalculateAge();
     }

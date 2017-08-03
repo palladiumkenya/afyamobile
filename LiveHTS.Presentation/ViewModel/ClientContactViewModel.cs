@@ -15,6 +15,7 @@ namespace LiveHTS.Presentation.ViewModel
         private string _clientInfo;
         private int? _telephone;
         private string _landmark;
+        private string _personId;
 
         public ClientContactAddressDTO ContactAddress { get; set; }
         public string ClientInfo
@@ -32,7 +33,16 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _landmark; }
             set { _landmark = value; RaisePropertyChanged(() => Landmark);}
         }
-
+        
+        public string PersonId
+        {
+            get { return _personId; }
+            set
+            {
+                _personId = value;
+                RaisePropertyChanged(() => PersonId);
+            }
+        }
         public ClientContactViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
         {
             Step = 2;
@@ -75,6 +85,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 ContactAddress = JsonConvert.DeserializeObject<ClientContactAddressDTO>(modelStore.Store);
+                PersonId = ContactAddress.PersonId;
                 Telephone = ContactAddress.Phone;
                 Landmark = ContactAddress.Landmark;
             }

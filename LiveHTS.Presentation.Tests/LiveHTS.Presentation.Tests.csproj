@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Bootstrap\SettingsPluginBootstrap.cs" />
     <Compile Include="DTO\ClientRegistrationDTOTests.cs" />
+    <Compile Include="TestHelpers.cs" />
     <Compile Include="ViewModel\ClientDemographicViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

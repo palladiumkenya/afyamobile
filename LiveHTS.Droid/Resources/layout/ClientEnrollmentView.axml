@@ -75,6 +75,14 @@
             android:calendarViewShown="false"
             android:datePickerMode="spinner"
             android:id="@+id/spinnerRegistrationDate" />
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewEnrollmentClientId"
+            local:MvxBind="Text ClientId;Visibility ShowId, Converter=Visibility"
+            android:background="#0000FF"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

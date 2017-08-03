@@ -8,5 +8,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string ClientInfo { get; set; }
         int? Telephone { get; set; }
         string Landmark { get; set; }
+        string PersonId { get; set; }
     }
 }

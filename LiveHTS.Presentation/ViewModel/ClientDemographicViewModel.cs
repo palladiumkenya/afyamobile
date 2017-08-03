@@ -11,6 +11,7 @@ using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
+using MvvmCross.Platform.UI;
 using MvvmValidation;
 using Newtonsoft.Json;
 
@@ -29,6 +30,7 @@ namespace LiveHTS.Presentation.ViewModel
         private CustomItem _selectedAgeUnit;
         private DateTime? _birthDate;
         private string _birthDateError;
+        private string _personId;
 
         public ClientDemographicDTO Demographic { get; set; }
 
@@ -132,7 +134,18 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-       
+        
+        public string PersonId
+        {
+            get { return _personId; }
+            set
+            {
+                _personId = value;
+                RaisePropertyChanged(() => PersonId);
+            }
+        }
+
+
         public ClientDemographicViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
         {
             Step = 1;
@@ -176,13 +189,13 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-            Validator.AddRule(
-                nameof(Age),
-                () => RuleResult.Assert(
-                    Age > 0,
-                    $"valid {nameof(Age)} is required"
-                )
-            );
+//            Validator.AddRule(
+//                nameof(Age),
+//                () => RuleResult.Assert(
+//                    Age > 0,
+//                    $"valid {nameof(Age)} is required"
+//                )
+//            );
 
             Validator.AddRequiredRule(() => BirthDate, $"{nameof(BirthDate)} is required");
 
@@ -237,12 +250,14 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Demographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(modelStore.Store);
+                PersonId = Demographic.PersonId;
                 FirstName = Demographic.FirstName;
                 MiddleName = Demographic.MiddleName;
                 LastName = Demographic.LastName;
                 SelectedGender = GenderOptions.FirstOrDefault(x=>x.Value==Demographic.Gender);
                 Age = Demographic.Age;
-                SelectedAgeUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == Demographic.AgeUnit);
+                if (!string.IsNullOrWhiteSpace(Demographic.AgeUnit))
+                    SelectedAgeUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == Demographic.AgeUnit);
                 BirthDate = Demographic.BirthDate;
             }
             catch (Exception e)

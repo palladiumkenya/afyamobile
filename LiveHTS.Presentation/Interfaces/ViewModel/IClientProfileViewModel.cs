@@ -14,5 +14,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         KeyPop SelectedKeyPop { get; set; }
         string IsOtherKeyPop { get; set; }
         string OtherKeyPop { get; set; }
+        string ClientId { get; set; }
     }
 }

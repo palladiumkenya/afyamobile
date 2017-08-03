@@ -19,6 +19,12 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime" />
+     <Button
+        android:text="Registration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonManageClientRegistration"
+        local:MvxBind="Click ManageRegistrationCommand" />
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">

@@ -11,11 +11,17 @@ namespace LiveHTS.Presentation.DTO
 {
     public class ClientRegistrationDTO
     {
+        public string PersonId { get; set; }
+        public string ClientId { get; set; }
+
         public ClientDemographicDTO ClientDemographic { get; set; }
         public ClientContactAddressDTO ClientContactAddress { get; set; }
         public ClientProfileDTO ClientProfile { get; set; }
         public ClientEnrollmentDTO ClientEnrollment { get; set; }
 
+        public ClientRegistrationDTO()
+        {
+        }
         public ClientRegistrationDTO(ISettings settings)
         {
             string demographic = null;
@@ -41,13 +47,27 @@ namespace LiveHTS.Presentation.DTO
             if (!string.IsNullOrWhiteSpace(enrollment))
                 ClientEnrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(enrollment);
         }
-
         public ClientRegistrationDTO(ClientDemographicDTO clientDemographic, ClientContactAddressDTO clientContactAddress, ClientProfileDTO clientProfile, ClientEnrollmentDTO clientEnrollment)
         {
             ClientDemographic = clientDemographic;
             ClientContactAddress = clientContactAddress;
             ClientProfile = clientProfile;
             ClientEnrollment = clientEnrollment;
+        }
+        
+        public static ClientRegistrationDTO Create(Client client)
+        {
+            var clientRegistrationDTO =
+                new ClientRegistrationDTO
+                {
+                    ClientDemographic = ClientDemographicDTO.CreateFromClient(client),
+                    ClientContactAddress = ClientContactAddressDTO.CreateFromClient(client),
+                    ClientProfile = ClientProfileDTO.CreateFromClient(client),
+                    ClientEnrollment = ClientEnrollmentDTO.CreateFromClient(client)
+                };
+
+
+            return clientRegistrationDTO;
         }
 
         public Client Generate()

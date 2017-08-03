@@ -15,5 +15,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IdentifierType SelectedIdentifierType { get; set; }
         string Identifier { get; set; }
         DateTime RegistrationDate { get; set; }
+        string ClientId { get; set; }
     }
 }

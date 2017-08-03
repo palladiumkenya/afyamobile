@@ -1,5 +1,6 @@
 ﻿using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.UI;
 using MvvmValidation;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
@@ -11,10 +12,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         int Step { get; set; }
         string Title { get; set; }
         string Description { get; set; }
-        
+        bool ShowId { get; set; }
+
         string MoveNextLabel { get; set; }
         string MovePreviousLabel  { get; set; }
-
+        
         ValidationHelper Validator { get; }
         ObservableDictionary<string, string> Errors { get; set; }
 

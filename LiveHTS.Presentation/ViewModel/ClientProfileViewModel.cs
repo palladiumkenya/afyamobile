@@ -27,6 +27,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private readonly ILookupService _lookupService;
         private string _isOtherKeyPop;
+        private string _clientId;
 
         public ClientProfileDTO Profile { get; set; }
 
@@ -100,6 +101,12 @@ namespace LiveHTS.Presentation.ViewModel
                 _otherKeyPop = value;
                 RaisePropertyChanged(() => OtherKeyPop);
             }
+        }
+
+        public string ClientId
+        {
+            get { return _clientId; }
+            set { _clientId = value;RaisePropertyChanged(() => ClientId); }
         }
 
         public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService,ISettings settings) : base(dialogService, settings)
@@ -181,6 +188,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Profile = JsonConvert.DeserializeObject<ClientProfileDTO>(modelStore.Store);
+                ClientId = Profile.ClientId;
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);
                 OtherKeyPop = Profile.OtherKeyPop;
