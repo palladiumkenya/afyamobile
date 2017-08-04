@@ -14,6 +14,8 @@ namespace LiveHTS.Core.Model.Subject
         public bool Preferred { get; set; }
         [Indexed]
         public Guid ClientId { get; set; }
+        [Ignore]
+        public  Person Person { get; set; }
 
         public ClientRelationship()
         {
@@ -35,7 +37,8 @@ namespace LiveHTS.Core.Model.Subject
 
         public override string ToString()
         {
-            return $"{RelationshipTypeId}|{RelatedClientId}";
+            string person = null != Person ? Person.ToString() : string.Empty;
+            return $"{RelationshipTypeId}|{RelatedClientId} - {person}";
         }
     }
 }
