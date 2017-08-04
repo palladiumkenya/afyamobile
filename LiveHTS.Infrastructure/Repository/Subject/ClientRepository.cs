@@ -61,14 +61,12 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         public override IEnumerable<Client> GetAll(Expression<Func<Client, bool>> predicate, bool voided = false)
         {
             var clients = base.GetAll(predicate, voided).ToList();
-
             foreach (var c in clients)
             {
                 c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
                 c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
                 c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
             }
-
             return clients;
         }
 
@@ -84,16 +82,14 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             {
                 var identifiers = entity.Identifiers.ToList();
                 _db.InsertAll(identifiers);
-            }
-                
+            }                
 
             //Create Relationships
             if (entity.Relationships.Any())
             {
                 var relationships = entity.Relationships.ToList();
                 _db.InsertAll(relationships);
-            }
-                
+            }                
         }
 
         public override void InsertOrUpdate(Client entity)

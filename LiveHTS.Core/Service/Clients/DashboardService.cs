@@ -13,17 +13,24 @@ namespace LiveHTS.Core.Service.Clients
     public class DashboardService:IDashboardService
     {
         private readonly IClientRepository _clientRepository;
+        private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IFormRepository _formRepository;
 
-        public DashboardService(IClientRepository clientRepository, IFormRepository formRepository)
+        public DashboardService(IClientRepository clientRepository, IFormRepository formRepository, IClientRelationshipRepository clientRelationshipRepository)
         {
             _clientRepository = clientRepository;
             _formRepository = formRepository;
+            _clientRelationshipRepository = clientRelationshipRepository;
         }
 
         public Client LoadClient(Guid clientId)
         {
-            return _clientRepository.Get(clientId);
+            var client= _clientRepository.Get(clientId);
+
+            if (null != client)
+                client.Relationships = _clientRelationshipRepository.GetRelationships(clientId).ToList();
+
+            return client;
         }
 
         public IEnumerable<Form> LoadForms(Guid? moduleId = null)

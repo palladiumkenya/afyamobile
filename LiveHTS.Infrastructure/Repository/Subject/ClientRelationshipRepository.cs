@@ -14,7 +14,6 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         {
         }
 
-
         public IEnumerable<ClientRelationship> GetRelationships(Guid clientId)
         {
             var relationsList = new List<ClientRelationship>();

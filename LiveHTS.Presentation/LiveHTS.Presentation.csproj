@@ -52,6 +52,7 @@
     <Compile Include="Interfaces\ViewModel\IClientEnrollmentViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientContactViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientDemographicViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IRegistryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
     <Compile Include="Interfaces\IObsViewModel.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="ViewModel\ClientDemographicViewModel.cs" />
     <Compile Include="ViewModel\ClientContactViewModel.cs" />
     <Compile Include="ViewModel\ClientRegistrationViewModel.cs" />
+    <Compile Include="ViewModel\ClientRelationshipsViewModel.cs" />
     <Compile Include="ViewModel\InterviewViewModel.cs" />
     <Compile Include="ViewModel\CounsellingViewModel.cs" />
     <Compile Include="ViewModel\RegistryViewModel.cs" />

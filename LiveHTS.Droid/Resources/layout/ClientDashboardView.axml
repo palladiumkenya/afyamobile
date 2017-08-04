@@ -35,13 +35,13 @@
             local:MvxItemTemplate="@layout/item_clientid" />
     </FrameLayout>
   
-  <TextView
-      android:text="Partners"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/textViewPartners"/>
-
-  <FrameLayout
+    <TextView
+        android:text="Partners"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewPartners" />
+  
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <Mvx.MvxListView
@@ -49,6 +49,5 @@
             android:layout_height="fill_parent"
             local:MvxBind="ItemsSource Client.Relationships"
             local:MvxItemTemplate="@layout/item_partner" />
-  </FrameLayout>
-  
+    </FrameLayout>
 </LinearLayout>

@@ -28,6 +28,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public IMvxCommand AddRelationShipCommand { get; }
+
         private void ManageRegistration()
         {
             ShowViewModel<ClientRegistrationViewModel>(new {id = Client.Id});
