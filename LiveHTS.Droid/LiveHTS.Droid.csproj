@@ -165,6 +165,7 @@
   <ItemGroup>
     <Compile Include="Activities\ClientDashboardActivity.cs" />
     <Compile Include="Activities\ClientRegistrationActivity.cs" />
+    <Compile Include="Activities\ClientRelationshipsActivity.cs" />
     <Compile Include="Activities\RegistryActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ObsActivity.cs" />
@@ -239,6 +240,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Item_Partner.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ClientRelationshipsView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

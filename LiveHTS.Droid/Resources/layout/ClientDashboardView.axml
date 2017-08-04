@@ -40,7 +40,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewPartners" />
-  
+  <Button
+    android:text="Link Partner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/buttonLinkPartner"
+    local:MvxBind="Click AddRelationShipCommand" />
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">

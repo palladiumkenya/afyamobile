@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/editTextRelationshipsSearch"
+    local:MvxBind="Text Search" />
+  <Button
+    android:text="Search"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/buttonRelationshipsSearch"
+    local:MvxBind="Click SearchCommand" />
+  <Button
+    android:text="Clear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/buttonRelationshipsClear"
+    local:MvxBind="Click ClearSearchCommand" />
+
+  <Mvx.MvxListView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      local:MvxBind="ItemsSource Clients; ItemClick ClientSelectedCommand;"
+      local:MvxItemTemplate="@layout/item_partner"/>
+  <MvxSpinner
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="40dp"
+    android:id="@+id/spinnerRelationshipType"
+    local:MvxBind="ItemsSource RelationshipTypes;SelectedItem SelectedRelationshipType" />
+  <Button
+    android:text="Add Partner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/buttonAddRelationships"
+    local:MvxBind="Click AddRelationshipCommand" />
+  
+  <TextView
+    android:text=""
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/textViewRelationshipClientId"
+    local:MvxBind="Text ClientId;Visibility ShowId, Converter=Visibility"
+    android:background="#0000FF"
+    android:textColor="#FFFFFF" />
+
+</LinearLayout>

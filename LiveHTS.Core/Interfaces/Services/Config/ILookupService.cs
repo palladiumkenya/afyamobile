@@ -14,5 +14,6 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<MaritalStatus> GetMaritalStatuses();
         IEnumerable<KeyPop> GetKeyPops();
         IEnumerable<IdentifierType> GetIdentifierTypes();
+        IEnumerable<RelationshipType> GetRelationshipTypes();
     }
 }

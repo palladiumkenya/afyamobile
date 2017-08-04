@@ -12,12 +12,14 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IClientRepository _clientRepository;
         private readonly IClientIdentifierRepository _clientIdentifierRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly IClientRelationshipRepository _clientRelationshipRepository;
 
-        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository)
+        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository)
         {
             _clientRepository = clientRepository;
             _clientIdentifierRepository = clientIdentifierRepository;
             _personRepository = personRepository;
+            _clientRelationshipRepository = clientRelationshipRepository;
         }
 
         public Client Find(Guid id)
@@ -86,6 +88,14 @@ namespace LiveHTS.Core.Service.Clients
 
             //create Client
             _clientRepository.Save(client);
+        }
+
+        public void UpdateRelationShips(Client client)
+        {
+            foreach (var relationship in client.Relationships)
+            {
+                
+            }
         }
 
         public void SaveOrUpdate(Client client)

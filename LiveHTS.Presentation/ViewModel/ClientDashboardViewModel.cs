@@ -12,6 +12,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _client;
         private bool _isBusy;
         private  IMvxCommand _manageRegistrationCommand;
+        private  IMvxCommand _addRelationShipCommand;
 
         public Client Client
         {
@@ -28,7 +29,19 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public IMvxCommand AddRelationShipCommand { get; }
+        public IMvxCommand AddRelationShipCommand
+        {
+            get
+            {
+                _addRelationShipCommand = _addRelationShipCommand ?? new MvxCommand(AddRelationShip);
+                return _addRelationShipCommand;
+            }
+        }
+
+        private void AddRelationShip()
+        {
+            ShowViewModel<ClientRelationshipsViewModel>(new {id = Client.Id});
+        }
 
         private void ManageRegistration()
         {

@@ -16,8 +16,9 @@ namespace LiveHTS.Core.Service.Config
         private readonly IMaritalStatusRepository _maritalStatusRepository;
         private readonly IKeyPopRepository _keyPopRepository;
         private readonly IIdentifierTypeRepository _identifierTypeRepository;
+        private readonly IRelationshipTypeRepository _relationshipTypeRepository;
 
-        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository, IMaritalStatusRepository maritalStatusRepository, IKeyPopRepository keyPopRepository, IIdentifierTypeRepository identifierTypeRepository)
+        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository, IMaritalStatusRepository maritalStatusRepository, IKeyPopRepository keyPopRepository, IIdentifierTypeRepository identifierTypeRepository, IRelationshipTypeRepository relationshipTypeRepository)
         {
             _countyRepository = countyRepository;
             _subCountyRepository = subCountyRepository;
@@ -26,6 +27,7 @@ namespace LiveHTS.Core.Service.Config
             _maritalStatusRepository = maritalStatusRepository;
             _keyPopRepository = keyPopRepository;
             _identifierTypeRepository = identifierTypeRepository;
+            _relationshipTypeRepository = relationshipTypeRepository;
         }
 
         public IEnumerable<County> GetCounties()
@@ -71,6 +73,11 @@ namespace LiveHTS.Core.Service.Config
         public IEnumerable<IdentifierType> GetIdentifierTypes()
         {
             return _identifierTypeRepository.GetAll().ToList();
+        }
+
+        public IEnumerable<RelationshipType> GetRelationshipTypes()
+        {
+            return _relationshipTypeRepository.GetAll().ToList();
         }
     }
 }

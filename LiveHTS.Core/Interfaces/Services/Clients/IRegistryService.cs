@@ -9,6 +9,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Client Find(Guid id);
         IEnumerable<Client> GetAllClients(string search="");
         void Save(Client client);
+        void UpdateRelationShips(Client client);
         void SaveOrUpdate(Client client);
         void Delete(Guid clientId);
     }
