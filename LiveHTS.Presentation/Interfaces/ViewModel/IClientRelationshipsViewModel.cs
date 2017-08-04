@@ -15,7 +15,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Client SelectedClient { get; set; }
         IEnumerable<Client> Clients { get; set; }
         IEnumerable<RelationshipType> RelationshipTypes { get; set; }
-        Client SelectedRelationshipType { get; set; }
+        RelationshipType SelectedRelationshipType { get; set; }
         IMvxCommand SearchCommand { get; }
         IMvxCommand ClearSearchCommand { get; }
         IMvxCommand<Client> ClientSelectedCommand { get; }

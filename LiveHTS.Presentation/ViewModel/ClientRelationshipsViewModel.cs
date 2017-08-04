@@ -24,7 +24,7 @@ namespace LiveHTS.Presentation.ViewModel
         private  IMvxCommand _addRelationshipCommand;
         private  IMvxCommand _clearSearchCommand;
         private IEnumerable<RelationshipType> _relationshipTypes;
-        private Client _selectedRelationshipType;
+        private RelationshipType _selectedRelationshipType;
         private string _clientId;
         private bool _showId;
 
@@ -46,7 +46,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _relationshipTypes = value;RaisePropertyChanged(() => RelationshipTypes); }
         }
 
-        public Client SelectedRelationshipType
+        public RelationshipType SelectedRelationshipType
         {
             get { return _selectedRelationshipType; }
             set { _selectedRelationshipType = value;RaisePropertyChanged(() => SelectedRelationshipType); }
@@ -157,7 +157,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void AddRelationship()
         {
-            //_registryService
+            _registryService.UpdateRelationShips(SelectedRelationshipType.Id, new Guid(ClientId), SelectedClient.Id);
             Close(this);
         }
         private bool CanAddRelationship()

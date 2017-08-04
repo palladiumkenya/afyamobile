@@ -9,6 +9,7 @@ using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Service;
 using LiveHTS.Core.Service.Config;
 using LiveHTS.Infrastructure.Repository.Config;
+using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.Infrastructure.Repository.Survey;
 using NUnit.Framework;
 using SQLite;
@@ -33,7 +34,8 @@ namespace LiveHTS.Core.Tests.Service.Config
 
         private ILookupService _lookupService;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
-        
+        private IRelationshipTypeRepository _relationshipTypeRepository;
+
 
         [SetUp]
         public void SetUp()
@@ -47,8 +49,9 @@ namespace LiveHTS.Core.Tests.Service.Config
             _maritalStatusRepository=new MaritalStatusRepository(_liveSetting);
             _keyPopRepository=new KeyPopRepository(_liveSetting);
             _identifierTypeRepository=new IdentifierTypeRepository(_liveSetting);
+            _relationshipTypeRepository=new RelationshipTypeRepository(_liveSetting);
 
-        _lookupService = new LookupService(_countyRepository,_subCountyRepository,_practiceRepository,_practiceTypeRepository,_maritalStatusRepository,_keyPopRepository,_identifierTypeRepository);
+        _lookupService = new LookupService(_countyRepository,_subCountyRepository,_practiceRepository,_practiceTypeRepository,_maritalStatusRepository,_keyPopRepository,_identifierTypeRepository,_relationshipTypeRepository);
 
             
         }
@@ -83,6 +86,13 @@ namespace LiveHTS.Core.Tests.Service.Config
         {
             var practice = _lookupService.GetDefault();
             Assert.IsNotNull(practice);
+        }
+
+        [Test]
+        public void should_Load_GetRelationshipTypes()
+        {
+            var counties = _lookupService.GetRelationshipTypes().ToList();
+            Assert.IsTrue(counties.Any());
         }
 
     }

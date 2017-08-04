@@ -90,13 +90,17 @@ namespace LiveHTS.Core.Service.Clients
             _clientRepository.Save(client);
         }
 
-        public void UpdateRelationShips(Client client)
+        public void UpdateRelationShips(string relationshipTypeId, Guid clientId, Guid otherClientId)
         {
-            foreach (var relationship in client.Relationships)
+            var exisitngRelationship = _clientRelationshipRepository.Find(relationshipTypeId, clientId, otherClientId);
+            if (null == exisitngRelationship)
             {
-                
+                var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId);
+                _clientRelationshipRepository.Save(newRelation);
             }
         }
+
+      
 
         public void SaveOrUpdate(Client client)
         {

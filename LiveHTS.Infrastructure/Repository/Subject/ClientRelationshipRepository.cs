@@ -48,5 +48,11 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
             return relationsList;
         }
+
+        public ClientRelationship Find(string relationshipTypeId, Guid clientId, Guid otherClientId)
+        {
+            return GetAll(x => x.RelationshipTypeId == relationshipTypeId && x.ClientId == clientId &&
+                               x.RelatedClientId == otherClientId).FirstOrDefault();
+        }
     }
 }
