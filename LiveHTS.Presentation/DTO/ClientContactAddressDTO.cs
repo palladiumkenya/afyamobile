@@ -8,7 +8,8 @@ namespace LiveHTS.Presentation.DTO
 {
     public class ClientContactAddressDTO:IPersonContact, IPersonAddress
     {
-        public string Id { get; set; }
+        public string ContactId { get; set; }
+        public string AddressId { get; set; }
         public string PersonId { get; set; }
 
         public int? Phone { get; set; }
@@ -41,7 +42,8 @@ namespace LiveHTS.Presentation.DTO
         {
             var addressDTO= new ClientContactAddressDTO(clientContactViewModel.Telephone,clientContactViewModel.Landmark);
             addressDTO.PersonId = clientContactViewModel.PersonId;
-            addressDTO.Id = clientContactViewModel.Id;
+            addressDTO.ContactId = clientContactViewModel.ContactId;
+            addressDTO.AddressId = clientContactViewModel.AddressId;
             return addressDTO;
         }
 
@@ -60,6 +62,7 @@ namespace LiveHTS.Presentation.DTO
                     {
                         var contact = client.Person.Contacts.First();
                         addressDTO.Phone = contact.Phone;
+                        addressDTO.ContactId = contact.Id.ToString();
                     }
 
                     //Person Addresses
@@ -69,6 +72,7 @@ namespace LiveHTS.Presentation.DTO
                     {
                         var address = client.Person.Addresses.First();
                         addressDTO.Landmark = address.Landmark;
+                        addressDTO.AddressId = address.Id.ToString();
                     }
 
                     addressDTO.PersonId = client.PersonId.ToString();

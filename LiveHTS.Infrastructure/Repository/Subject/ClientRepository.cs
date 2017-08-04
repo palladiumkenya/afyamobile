@@ -24,7 +24,21 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 var contacts = _db.Table<PersonContact>().ToList();
                 client.Person.Contacts = _db.Table<PersonContact>().Where(x => x.PersonId == client.PersonId).ToList();
                 client.Person.Addresses = _db.Table<PersonAddress>().Where(x => x.PersonId == client.PersonId).ToList();
-                client.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList(); ;
+
+                var relationsList=new List<ClientRelationship>();
+                
+                //my Relationships
+                var relations = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList(); 
+                if(null!=relations&&relations.Count>0)
+                    relationsList.AddRange(relations);
+                
+                //related to
+                relations = _db.Table<ClientRelationship>().Where(x => x.ClientId != client.Id && x.RelatedClientId == client.Id).ToList(); 
+                if (null != relations && relations.Count > 0)
+                    relationsList.AddRange(relations);
+
+                client.Relationships = relationsList;
+
                 client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id).ToList(); ;
             }
             return client;

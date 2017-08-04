@@ -42,6 +42,8 @@ namespace LiveHTS.Presentation.Tests.DTO
             Assert.IsTrue(string.IsNullOrEmpty(_clientRegistrationDTO.ClientDemographic.PersonId));
             Assert.IsNotNull(_clientRegistrationDTO.ClientContactAddress);
             Assert.IsTrue(string.IsNullOrEmpty(_clientRegistrationDTO.ClientContactAddress.PersonId));
+            Assert.IsTrue(string.IsNullOrEmpty(_clientRegistrationDTO.ClientContactAddress.ContactId));
+            Assert.IsTrue(string.IsNullOrEmpty(_clientRegistrationDTO.ClientContactAddress.AddressId));
             Assert.IsNotNull(_clientRegistrationDTO.ClientProfile);
             Assert.IsTrue(string.IsNullOrEmpty(_clientRegistrationDTO.ClientProfile.ClientId));
             Assert.IsNotNull(_clientRegistrationDTO.ClientEnrollment);

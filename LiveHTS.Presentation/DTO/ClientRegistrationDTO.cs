@@ -117,6 +117,11 @@ namespace LiveHTS.Presentation.DTO
 
             var clientIdentifier = ClientIdentifier.Create(ClientEnrollment.IdentifierTypeId, ClientEnrollment.Identifier, ClientEnrollment.RegistrationDate,true,clientId);
 
+            if (!string.IsNullOrWhiteSpace(ClientEnrollment.Id))
+            {
+                clientIdentifier.Id = new Guid(ClientEnrollment.Id);
+            }
+
             return clientIdentifier;
         }
 
@@ -168,6 +173,10 @@ namespace LiveHTS.Presentation.DTO
 
             var personContact = PersonContact.Create(ClientContactAddress.Phone, true, personId);
 
+            if (!string.IsNullOrWhiteSpace(ClientContactAddress.ContactId))
+            {
+                personContact.Id = new Guid(ClientContactAddress.ContactId);
+            }
             return personContact;
         }
 
@@ -181,6 +190,11 @@ namespace LiveHTS.Presentation.DTO
             //string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId
 
             var personAddress = PersonAddress.Create(ClientContactAddress.Landmark, ClientContactAddress.CountyId, ClientContactAddress.Preferred, ClientContactAddress.Lat, ClientContactAddress.Lng, personId);
+
+            if (!string.IsNullOrWhiteSpace(ClientContactAddress.AddressId))
+            {
+                personAddress.Id = new Guid(ClientContactAddress.AddressId);
+            }
 
             return personAddress;
         }
