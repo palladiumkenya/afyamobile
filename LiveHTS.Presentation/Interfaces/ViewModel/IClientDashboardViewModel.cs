@@ -9,7 +9,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand ManageRegistrationCommand { get; }
         IMvxCommand AddRelationShipCommand { get; }
         IMvxCommand RemoveRelationShipCommand { get; }
-        Client SeletctedRelationShip { get; }
+        Client SeletctedRelationShip { get; set; }
         bool IsBusy { get; set; }
         void ShowRegistry();
     }

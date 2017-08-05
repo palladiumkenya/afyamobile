@@ -17,6 +17,7 @@ namespace LiveHTS.Presentation.ViewModel
         private  IMvxCommand _manageRegistrationCommand;
         private  IMvxCommand _addRelationShipCommand;
         private  IMvxCommand _removeRelationShipCommand;
+        private Client _seletctedRelationShip;
 
         public Client Client
         {
@@ -51,8 +52,11 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public Client SeletctedRelationShip { get; }
-
+        public Client SeletctedRelationShip
+        {
+            get { return _seletctedRelationShip; }
+            set { _seletctedRelationShip = value;RaisePropertyChanged(() => SeletctedRelationShip); }
+        }
 
         private void AddRelationShip()
         {
