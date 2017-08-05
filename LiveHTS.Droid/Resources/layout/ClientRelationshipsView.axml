@@ -26,7 +26,7 @@
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       local:MvxBind="ItemsSource Clients; ItemClick ClientSelectedCommand;"
-      local:MvxItemTemplate="@layout/item_partner"/>
+      local:MvxItemTemplate="@layout/item_search_partner"/>
   <MvxSpinner
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

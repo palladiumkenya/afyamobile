@@ -40,5 +40,10 @@ namespace LiveHTS.Core.Service.Clients
 
             return _formRepository.GetAll().ToList();
         }
+
+        public void RemoveRelationShip(Guid id)
+        {
+            _clientRelationshipRepository.Delete(id);
+        }
     }
 }

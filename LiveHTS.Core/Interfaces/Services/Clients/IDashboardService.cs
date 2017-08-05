@@ -9,5 +9,6 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
     {
         Client LoadClient(Guid clientId);
         IEnumerable<Form> LoadForms(Guid? moduleId=null);
+        void RemoveRelationShip(Guid id);
     }
 }

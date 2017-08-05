@@ -28,8 +28,8 @@ namespace LiveHTS.Infrastructure.Migrations
 
             db.CreateTable<IdentifierType>();
             db.CreateTable<PracticeType>();
-
             db.CreateTable<Practice>();
+            db.CreateTable<RelationshipType>();
             db.CreateTable<KeyPop>();
             db.CreateTable<MaritalStatus>();
 
@@ -38,10 +38,9 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new IdentifierTypeJson());
             InsertOrUpdate(db, new PracticeTypeJson());
             InsertOrUpdate(db, new PracticeJson());
-
+            InsertOrUpdate(db, new RelationshipTypeJson());
             InsertOrUpdate(db, new KeyPopJson());
             InsertOrUpdate(db, new MaritalStatusJson());
-
         }
 
         private static void SeedSurvey(SQLiteConnection db)
