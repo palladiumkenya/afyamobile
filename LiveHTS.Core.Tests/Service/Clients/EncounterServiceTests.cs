@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Service.Clients;
+using LiveHTS.Infrastructure.Repository.Interview;
 using LiveHTS.Infrastructure.Repository.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLite;

@@ -14,13 +14,13 @@ namespace LiveHTS.Core.Service.Clients
     {
         private readonly IClientRepository _clientRepository;
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
-        private readonly IFormRepository _formRepository;
+        private readonly IModuleRepository _moduleRepository;
 
-        public DashboardService(IClientRepository clientRepository, IFormRepository formRepository, IClientRelationshipRepository clientRelationshipRepository)
+        public DashboardService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IModuleRepository moduleRepository)
         {
             _clientRepository = clientRepository;
-            _formRepository = formRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
+            _moduleRepository = moduleRepository;
         }
 
         public Client LoadClient(Guid clientId)
@@ -32,15 +32,10 @@ namespace LiveHTS.Core.Service.Clients
 
             return client;
         }
-
-        public IEnumerable<Form> LoadForms(Guid? moduleId = null)
+        public Module LoadModule()
         {
-            if (!moduleId.IsNullOrEmpty())
-                return _formRepository.GetAll(x => x.ModuleId == moduleId).ToList();
-
-            return _formRepository.GetAll().ToList();
+            return _moduleRepository.GetDefaultModule();
         }
-
         public void RemoveRelationShip(Guid id)
         {
             _clientRelationshipRepository.Delete(id);

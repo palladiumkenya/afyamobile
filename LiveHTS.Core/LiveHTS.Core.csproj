@@ -64,6 +64,8 @@
     <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
     <Compile Include="Interfaces\Services\Config\IDeviceSetupService.cs" />
     <Compile Include="Interfaces\Services\Config\ILookupService.cs" />
+    <Compile Include="Interfaces\Services\Interview\IInterviewService.cs" />
+    <Compile Include="Interfaces\Services\Survey\ISurveyService.cs" />
     <Compile Include="Model\AppDashboard.cs" />
     <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
@@ -81,8 +83,8 @@
     <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
-    <Compile Include="Interfaces\Repository\Survey\IObsRepository.cs" />
-    <Compile Include="Interfaces\Repository\Survey\IEncounterRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IEncounterRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IFormRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IModuleRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IQuestionRepository.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="Service\Clients\RegistryService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
+    <Compile Include="Service\Interview\InterviewService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

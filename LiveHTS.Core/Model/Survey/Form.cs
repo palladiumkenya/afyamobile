@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -16,6 +17,9 @@ namespace LiveHTS.Core.Model.Survey
         public Guid ModuleId { get; set; }
         [Ignore]
         public List<Question> Questions { get; set; }=new List<Question>();
+
+        [Ignore]
+        public List<Encounter> ClientEncounters { get; set; }=new List<Encounter>();
 
         public Form()
         {

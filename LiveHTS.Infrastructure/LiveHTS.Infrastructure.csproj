@@ -66,18 +66,24 @@
     <Compile Include="Repository\Subject\ClientRepository.cs" />
     <Compile Include="Repository\Survey\ConceptRepository.cs" />
     <Compile Include="Repository\Survey\CategoryRepository.cs" />
-    <Compile Include="Repository\Survey\ObsRepository.cs" />
-    <Compile Include="Repository\Survey\EncounterRepository.cs" />
+    <Compile Include="Repository\Interview\ObsRepository.cs" />
+    <Compile Include="Repository\Interview\EncounterRepository.cs" />
     <Compile Include="Repository\Survey\FormRepository.cs" />
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
     <Compile Include="Repository\Survey\QuestionRepository.cs" />
+    <Compile Include="Seed\Config\EncounterTypeJson.cs" />
     <Compile Include="Seed\Config\IdentifierTypeJson.cs" />
     <Compile Include="Seed\Config\KeyPopJson.cs" />
     <Compile Include="Seed\Config\MaritalStatusJson.cs" />
+    <Compile Include="Seed\Config\ProviderTypeJson.cs" />
     <Compile Include="Seed\Config\RelationshipTypeJson.cs" />
+    <Compile Include="Seed\Lookup\CategoryJson.cs" />
+    <Compile Include="Seed\Lookup\ItemJson.cs" />
+    <Compile Include="Seed\Lookup\CategoryItemJson.cs" />
     <Compile Include="Seed\Subject\PersonContactJson.cs" />
     <Compile Include="Seed\Subject\PersonAddressJson.cs" />
     <Compile Include="Seed\Subject\ClientRelationshipJson.cs" />
+    <Compile Include="Seed\Subject\ProviderJson.cs" />
     <Compile Include="Seed\Survey\FormJson.cs" />
     <Compile Include="Seed\Config\PracticeTypeJson.cs" />
     <Compile Include="Seed\Config\PracticeJson.cs" />
@@ -85,6 +91,13 @@
     <Compile Include="Seed\Subject\ClientJson.cs" />
     <Compile Include="Seed\Subject\ClientIdentifierJson.cs" />
     <Compile Include="Seed\Subject\UserJson.cs" />
+    <Compile Include="Seed\Survey\QuestionTransformationJson.cs" />
+    <Compile Include="Seed\Survey\QuestionJson.cs" />
+    <Compile Include="Seed\Survey\QuestionBranchJson.cs" />
+    <Compile Include="Seed\Survey\QuestionRemoteTransformationJson.cs" />
+    <Compile Include="Seed\Survey\QuestionReValidationJson.cs" />
+    <Compile Include="Seed\Survey\ConceptJson.cs" />
+    <Compile Include="Seed\Survey\QuestionValidationJson.cs" />
     <Compile Include="Seed\Survey\ModuleJson.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
     public interface IDashboardService
     {
         Client LoadClient(Guid clientId);
-        IEnumerable<Form> LoadForms(Guid? moduleId=null);
+        Module LoadModule();
         void RemoveRelationShip(Guid id);
     }
 }

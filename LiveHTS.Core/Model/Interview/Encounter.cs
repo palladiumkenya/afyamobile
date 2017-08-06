@@ -41,6 +41,8 @@ namespace LiveHTS.Core.Model.Interview
             get { return Obses.Any(); }
         }
 
+        
+        
         public Encounter()
         {
             Status = "Created";

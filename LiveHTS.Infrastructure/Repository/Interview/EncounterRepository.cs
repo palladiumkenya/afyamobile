@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
-using LiveHTS.Core.Interfaces.Repository.Survey;
+using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Model.Interview;
 
-namespace LiveHTS.Infrastructure.Repository.Survey
+namespace LiveHTS.Infrastructure.Repository.Interview
 {
     public class EncounterRepository : BaseRepository<Encounter, Guid>, IEncounterRepository
     {
