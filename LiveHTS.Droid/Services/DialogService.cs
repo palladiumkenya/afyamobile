@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content;
 using LiveHTS.Presentation.Interfaces;
@@ -9,7 +11,14 @@ namespace LiveHTS.Droid.Services
 {
     public class DialogService:IDialogService
     {
-        public void Alert(string message, string title, string okbtnText)
+        private readonly IUserDialogs _userDialogs;
+
+        public DialogService()
+        {
+            _userDialogs = Mvx.Resolve<IUserDialogs>();
+        }
+
+        public void Alert(string message, string title="LiveHTS", string okbtnText="Ok")
         {
             var top = Mvx.Resolve<IMvxAndroidCurrentTopActivity>();
             var act = top.Activity;
@@ -21,6 +30,7 @@ namespace LiveHTS.Droid.Services
             adb.SetPositiveButton(okbtnText, (sender, args) => { /* some logic */ });
             adb.Create().Show();
         }
+
         public void ConfirmExit()
         {
             var top = Mvx.Resolve<IMvxAndroidCurrentTopActivity>();
@@ -35,18 +45,16 @@ namespace LiveHTS.Droid.Services
             adb.Create().Show();
         }
 
-        public void ConfirmAction(string message, EventHandler<DialogClickEventArgs> action)
+        public async  Task<bool> ConfirmAction(string message,string title = "LiveHTS", string yesbtnText = "Yes", string nobtnText = "No")
         {
-            var top = Mvx.Resolve<IMvxAndroidCurrentTopActivity>();
-            var act = top.Activity;
-
-            var adb = new AlertDialog.Builder(act);
-            adb.SetTitle("Exit");
-            adb.SetMessage(message);
-            adb.SetIcon(Resource.Drawable.Icon);
-            adb.SetPositiveButton("Yes",action);
-            adb.SetNegativeButton("No", (sender, args) => { /* some logic */ });
-            adb.Create().Show();
+            var destroy = await _userDialogs.ConfirmAsync(new ConfirmConfig
+            {
+                Title =title,
+                Message = message,
+                OkText = yesbtnText,
+                CancelText = nobtnText
+            });
+            return destroy;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LiveHTS.Core.Interfaces.Services;
+﻿using Acr.UserDialogs;
+using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
@@ -63,10 +64,11 @@ namespace LiveHTS.Presentation.ViewModel
         public string Greeting => string.IsNullOrWhiteSpace(_profile) ? string.Empty : $"Karibu {_profile}";
 
 
-        public AppDashboardViewModel(IAppDashboardService dashboardService, IDialogService dialogService)
+        public AppDashboardViewModel(IAppDashboardService dashboardService, IDialogService dialogService, IUserDialogs userDialogs)
         {
             _dashboardService = dashboardService;
             _dialogService = dialogService;
+            
         }
 
         public void Init(string username)
@@ -83,9 +85,9 @@ namespace LiveHTS.Presentation.ViewModel
             ShowViewModel<ClientRegistrationViewModel>();
         }
 
-        public void Quit()
+        public  void Quit()
         {
-         _dialogService.ConfirmExit();
+          _dialogService.ConfirmExit();
         }
     }
 }

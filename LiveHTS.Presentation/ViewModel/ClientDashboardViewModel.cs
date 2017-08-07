@@ -19,9 +19,11 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IInterviewService _interviewService;
         private Client _client;
         private bool _isBusy;
+
         private  IMvxCommand _manageRegistrationCommand;
         private  IMvxCommand _addRelationShipCommand;
-        private  IMvxCommand _removeRelationShipCommand;
+        
+
         private Client _seletctedRelationShip;
         private Module _module;
         private IEnumerable<Form> _forms;
@@ -42,7 +44,12 @@ namespace LiveHTS.Presentation.ViewModel
         public Client Client
         {
             get { return _client; }
-            set { _client = value; RaisePropertyChanged(() => Client); }
+            set
+            {
+                _client = value; RaisePropertyChanged(() => Client);
+
+                PartnerCollection = ConvertToWrapperClass(Client.Relationships, this);
+            }
         }
 
         public IMvxCommand ManageRegistrationCommand
@@ -63,14 +70,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public IMvxCommand RemoveRelationShipCommand
-        {
-            get
-            {
-                _removeRelationShipCommand = _removeRelationShipCommand ?? new MvxCommand(RemoveRelationShip);
-                return _removeRelationShipCommand;
-            }
-        }
+    
 
         public Client SeletctedRelationShip
         {
@@ -82,17 +82,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowViewModel<ClientRelationshipsViewModel>(new {id = Client.Id});
         }
-        private void RemoveRelationShip()
-        {
-            try
-            {
-                _dialogService.ConfirmAction("Delete", (sender, args) => _dashboardService.RemoveRelationShip(Client.Id));
-            }
-            catch (Exception e)
-            {
-                MvxTrace.Error(e.Message);
-            }
-        }
+      
         private void ManageRegistration()
         {
             ShowViewModel<ClientRegistrationViewModel>(new {id = Client.Id});
@@ -126,13 +116,14 @@ namespace LiveHTS.Presentation.ViewModel
         public void ShowRegistry()
         {
             ShowViewModel<RegistryViewModel>();
-        }
+        } 
 
         public ClientDashboardViewModel(IDashboardService dashboardService, IDialogService dialogService, IInterviewService interviewService)
         {
             _dashboardService = dashboardService;
             _dialogService = dialogService;
             _interviewService = interviewService;
+            
         }
 
         public void Init(string id)
@@ -146,6 +137,45 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
             }
+        }
+
+        public async void RemoveRelationship(PartnerItem item)
+        {
+            try
+            {
+                var result = await _dialogService.ConfirmAction("Are you sure ?", "Remove Relationship");
+                if ( result)
+                {
+                    _dashboardService.RemoveRelationShip(item.Id);
+                }
+            }
+            catch (Exception e)
+            {
+                MvxTrace.Error(e.Message);
+                _dialogService.Alert(e.Message,"Remove Relationship");
+            }
+        }
+
+        private List<PartnerItemWrap> _partnerCollection = new List<PartnerItemWrap>();
+        public List<PartnerItemWrap> PartnerCollection
+        {
+            get { return _partnerCollection; }
+            set
+            {
+                _partnerCollection = value;
+                RaisePropertyChanged(() => PartnerCollection);
+            }
+        }
+
+        private static List<PartnerItemWrap> ConvertToWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
+        {
+            List<PartnerItemWrap> list = new List<PartnerItemWrap>();
+            foreach (var r in clientRelationships)
+            {
+                list.Add(new PartnerItemWrap(new PartnerItem(r), clientDashboardViewModel));
+            }
+
+            return list;
         }
     }
 }

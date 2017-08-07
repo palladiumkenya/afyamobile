@@ -8,21 +8,20 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="40dp"
-        local:MvxBind="Text Person.FullName" />
+        local:MvxBind="Text PartnerItem.FullName" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        local:MvxBind="Text Person.Gender" />
+        local:MvxBind="Text PartnerItem.Gender" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        local:MvxBind="Text Person.BirthDate, Converter=DMYDateTime" />
+        local:MvxBind="Text PartnerItem.BirthDate, Converter=DMYDateTime" />
     <Button
-      android:text="X"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/buttonRemoveRelationships"
-    local:MvxBind="Click RemoveRelationshipCommand" />
+        android:text="X"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        local:MvxBind="Click RemoveRelationshipCommand" />
 </LinearLayout>

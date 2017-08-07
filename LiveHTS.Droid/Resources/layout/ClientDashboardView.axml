@@ -49,10 +49,10 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-        <Mvx.MvxListView
-            android:layout_width="fill_parent"
+      <Mvx.MvxListView
+          android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            local:MvxBind="ItemsSource Client.Relationships"
+            local:MvxBind="ItemsSource PartnerCollection"
             local:MvxItemTemplate="@layout/item_partner" />
     </FrameLayout>
   <TextView

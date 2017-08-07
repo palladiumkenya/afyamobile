@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Acr.UserDialogs;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Model.Survey;
@@ -36,7 +37,11 @@ namespace LiveHTS.Presentation
                 .RegisterAsLazySingleton();
 
             Mvx.RegisterSingleton<ILiveSetting>(new LiveSetting(_dbpath));
+
+            Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
             
+
+
             CreatableTypes(assemblyInfrastructure)
                 .EndingWith("Migrator")
                 .AsInterfaces()

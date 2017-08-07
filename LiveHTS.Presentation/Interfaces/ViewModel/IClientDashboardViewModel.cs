@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
@@ -12,11 +13,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Client Client { get; set; }
         IMvxCommand ManageRegistrationCommand { get; }
         IMvxCommand AddRelationShipCommand { get; }
-        IMvxCommand RemoveRelationShipCommand { get; }
         Client SeletctedRelationShip { get; set; }
         IMvxCommand StartEncounterCommand { get; }
 
         bool IsBusy { get; set; }
         void ShowRegistry();
+        void RemoveRelationship(PartnerItem partnerItem);
     }
 }

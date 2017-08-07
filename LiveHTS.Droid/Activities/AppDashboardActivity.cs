@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using LiveHTS.Presentation.ViewModel;
@@ -13,7 +14,8 @@ namespace LiveHTS.Droid.Activities
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.AppDashboardView);            
+            SetContentView(Resource.Layout.AppDashboardView);
+            
         }
 
         public override void OnBackPressed()
