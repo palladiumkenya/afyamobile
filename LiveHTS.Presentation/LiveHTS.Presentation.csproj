@@ -62,7 +62,9 @@
     <Compile Include="Validations\ObservableDictionary.cs" />
     <Compile Include="Validations\ValidationResultExtension.cs" />
     <Compile Include="ViewModel\AppDashboardViewModel.cs" />
-    <Compile Include="ViewModel\PartnerItemWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IRelationshipTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IRelationshipTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\RelationshipTemplateWrap.cs" />
     <Compile Include="ViewModel\ClientDashboardViewModel.cs" />
     <Compile Include="ViewModel\ClientEnrollmentViewModel.cs" />
     <Compile Include="ViewModel\ClientProfileViewModel.cs" />
@@ -72,7 +74,7 @@
     <Compile Include="ViewModel\ClientRelationshipsViewModel.cs" />
     <Compile Include="ViewModel\InterviewViewModel.cs" />
     <Compile Include="ViewModel\CounsellingViewModel.cs" />
-    <Compile Include="ViewModel\PartnerItem.cs" />
+    <Compile Include="ViewModel\Template\RelationshipTemplate.cs" />
     <Compile Include="ViewModel\RegistryViewModel.cs" />
     <Compile Include="ViewModel\SignInViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

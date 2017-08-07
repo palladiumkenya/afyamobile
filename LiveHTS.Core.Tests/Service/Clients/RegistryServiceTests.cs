@@ -29,6 +29,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private IClientRepository _clientRepository;
         private IClientIdentifierRepository _clientIdentifierRepository;
         private IPersonRepository _personRepository;
+        private IClientRelationshipRepository _clientRelationshipRepository;
         
 
         [SetUp]
@@ -42,8 +43,9 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _clientRepository =new ClientRepository(_liveSetting);
             _clientIdentifierRepository=new ClientIdentifierRepository(_liveSetting);
             _personRepository=new PersonRepository(_liveSetting);
+            _clientRelationshipRepository=new ClientRelationshipRepository(_liveSetting);
 
-            _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository);
+            _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository, _clientRelationshipRepository);
         }
         
         [Test]

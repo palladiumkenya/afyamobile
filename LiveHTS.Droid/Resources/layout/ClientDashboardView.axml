@@ -7,17 +7,17 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
+        android:textSize="20dp"
         local:MvxBind="Text Client.Person.FullName" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="10dp"
         local:MvxBind="Text Client.Person.Gender" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="10dp"
         local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime" />
     <Button
         android:text="Registration"
@@ -34,40 +34,40 @@
             local:MvxBind="ItemsSource Client.Identifiers"
             local:MvxItemTemplate="@layout/item_clientid" />
     </FrameLayout>
-  
     <TextView
         android:text="Partners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewPartners" />
-  <Button
-    android:text="Link Partner"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/buttonLinkPartner"
-    local:MvxBind="Click AddRelationShipCommand" />
+    <Button
+        android:text="Link Partner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLinkPartner"
+        local:MvxBind="Click AddRelationShipCommand" />
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-      <Mvx.MvxListView
-          android:layout_width="fill_parent"
+        <Mvx.MvxListView
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            local:MvxBind="ItemsSource PartnerCollection"
+            local:MvxBind="ItemsSource Relationships"
             local:MvxItemTemplate="@layout/item_partner" />
     </FrameLayout>
-  <TextView
-    android:text=""
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewHTS"
-    local:MvxBind="Text Module.Display"/>
-  <FrameLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-    <Mvx.MvxListView
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      local:MvxBind="ItemsSource Forms"
-      local:MvxItemTemplate="@layout/item_form" />
-  </FrameLayout>
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewHTS"
+        local:MvxBind="Text Module.Display" />
+  
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <Mvx.MvxListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            local:MvxBind="ItemsSource Forms"
+            local:MvxItemTemplate="@layout/item_form" />
+    </FrameLayout>
 </LinearLayout>

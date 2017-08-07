@@ -1,17 +1,17 @@
 ﻿using System;
 using LiveHTS.Core.Model.Subject;
-using MvvmCross.Core.ViewModels;
+using LiveHTS.Presentation.Interfaces.ViewModel.Template;
 
-namespace LiveHTS.Presentation.ViewModel
+namespace LiveHTS.Presentation.ViewModel.Template
 {
-    public class PartnerItem
+    public class RelationshipTemplate : IRelationshipTemplate
     {
         public Guid Id { get; set; }
         public string FullName { get; set; }
         public string Gender { get; set; }
         public DateTime BirthDate { get; set; }
 
-        public PartnerItem(ClientRelationship relationship)
+        public RelationshipTemplate(ClientRelationship relationship)
         {
             Id = relationship.Id;
             FullName = relationship.Person.FullName;
