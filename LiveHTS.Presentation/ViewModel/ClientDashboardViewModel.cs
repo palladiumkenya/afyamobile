@@ -28,9 +28,10 @@ namespace LiveHTS.Presentation.ViewModel
 
         private IMvxCommand _manageRegistrationCommand;
         private IMvxCommand _addRelationShipCommand;
+        
 
         private bool _isBusy;
-
+       
         public Client Client
         {
             get { return _client; }
@@ -81,6 +82,9 @@ namespace LiveHTS.Presentation.ViewModel
                 return _addRelationShipCommand;
             }
         }
+
+      
+
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -134,6 +138,10 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message,"Remove Relationship");
             }
         }
+        public void StartEncounter(FormTemplate encounterTemplate)
+        {
+            throw new NotImplementedException();
+        }
         private static List<RelationshipTemplateWrap> ConvertToWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
         {
             List<RelationshipTemplateWrap> list = new List<RelationshipTemplateWrap>();
@@ -143,6 +151,27 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             return list;
+        }
+
+        private bool CanStartEncounter()
+        {
+            throw new NotImplementedException();
+        }
+      
+
+        public void ResumeEncounter(EncounterTemplate encounterTemplate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReviewEncounter(EncounterTemplate encounterTemplate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DiscardEncounter(EncounterTemplate encounterTemplate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

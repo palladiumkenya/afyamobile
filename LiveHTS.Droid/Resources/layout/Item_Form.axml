@@ -19,7 +19,8 @@
         android:text="Start"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/buttonStart" />
+        android:id="@+id/buttonStart"
+        local:MvxBind="Click StartEncounterCommand"/>
     <Mvx.MvxListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

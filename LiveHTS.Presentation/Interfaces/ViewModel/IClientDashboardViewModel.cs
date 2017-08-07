@@ -17,11 +17,16 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IEnumerable<Form> Forms { get; set; }
 
         IMvxCommand ManageRegistrationCommand { get; }
-        IMvxCommand AddRelationShipCommand { get; }        
-        
+        IMvxCommand AddRelationShipCommand { get; }     
+
         bool IsBusy { get; set; }
 
         void ShowRegistry();
+
         void RemoveRelationship(RelationshipTemplate relationshipTemplate);
+        void StartEncounter(FormTemplate encounterTemplate);
+        void ResumeEncounter(EncounterTemplate encounterTemplate);
+        void ReviewEncounter(EncounterTemplate encounterTemplate);
+        void DiscardEncounter(EncounterTemplate encounterTemplate);
     }
 }
