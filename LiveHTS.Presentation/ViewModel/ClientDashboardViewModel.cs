@@ -24,7 +24,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _seletctedRelationShip;
         private List<RelationshipTemplateWrap> _relationships = new List<RelationshipTemplateWrap>();
         private Module _module;
-        private IEnumerable<Form> _forms;
+        private List<FormTemplateWrap> _forms;
 
         private IMvxCommand _manageRegistrationCommand;
         private IMvxCommand _addRelationShipCommand;
@@ -58,9 +58,18 @@ namespace LiveHTS.Presentation.ViewModel
         public Module Module
         {
             get { return _module; }
-            set { _module = value; RaisePropertyChanged(() => Module); }
+            set
+            {
+                _module = value; RaisePropertyChanged(() => Module);
+                var forms = Module.Forms.ToList();
+                foreach (var form in forms)
+                {
+                    form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                }
+                Forms = ConvertToWrapperClass(forms, this);
+            }
         }
-        public IEnumerable<Form> Forms
+        public List<FormTemplateWrap> Forms
         {
             get { return _forms; }
             set { _forms = value;RaisePropertyChanged(() => Forms); }
@@ -112,11 +121,6 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             Client = _dashboardService.LoadClient(new Guid(id));
             Module = _dashboardService.LoadModule();
-            Forms = Module.Forms.ToList();
-            foreach (var form in Forms)
-            {
-                form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
-            }
         }
         public void ShowRegistry()
         {
@@ -138,7 +142,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message,"Remove Relationship");
             }
         }
-        public void StartEncounter(FormTemplate encounterTemplate)
+        public void StartEncounter(FormTemplate formTemplate)
         {
             throw new NotImplementedException();
         }
@@ -148,6 +152,17 @@ namespace LiveHTS.Presentation.ViewModel
             foreach (var r in clientRelationships)
             {
                 list.Add(new RelationshipTemplateWrap(new RelationshipTemplate(r), clientDashboardViewModel));
+            }
+
+            return list;
+        }
+
+        private static List<FormTemplateWrap> ConvertToWrapperClass(List<Form> forms, ClientDashboardViewModel clientDashboardViewModel)
+        {
+            List<FormTemplateWrap> list = new List<FormTemplateWrap>();
+            foreach (var r in forms)
+            {
+                list.Add(new FormTemplateWrap(clientDashboardViewModel,new FormTemplate(r)));
             }
 
             return list;

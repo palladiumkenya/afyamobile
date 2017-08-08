@@ -10,6 +10,12 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         private  FormTemplate _formTemplate;
         private  IMvxCommand _startEncounterCommand;
 
+        public FormTemplateWrap(ClientDashboardViewModel parent, FormTemplate formTemplate)
+        {
+            _parent = parent;
+            _formTemplate = formTemplate;
+        }
+
         public FormTemplate FormTemplate
         {
             get { return _formTemplate; }

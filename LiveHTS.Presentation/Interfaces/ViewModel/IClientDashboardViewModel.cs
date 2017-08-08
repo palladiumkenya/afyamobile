@@ -10,11 +10,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientDashboardViewModel
     {
+        Module Module { get; set; }
         Client Client { get; set; }        
         Client SeletctedRelationShip { get; set; }
         List<RelationshipTemplateWrap> Relationships { get; set; }
-        Module Module { get; set; }
-        IEnumerable<Form> Forms { get; set; }
+        List<FormTemplateWrap> Forms { get; set; }
 
         IMvxCommand ManageRegistrationCommand { get; }
         IMvxCommand AddRelationShipCommand { get; }     

@@ -9,12 +9,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        local:MvxBind="Text Display" />
+        local:MvxBind="Text FormTemplate.Display" />
     <TextView
-        android:text="ENCOUNTERS"
+        android:text=""
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        local:MvxBind="Text FormTemplate.EncounterDisplay"/>
+  <TextView
+    android:text=""
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textSize="10dp"
+    local:MvxBind="Text FormTemplate.Id" />
     <Button
         android:text="Start"
         android:layout_width="wrap_content"
