@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Interview;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces;
@@ -38,7 +39,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
-                Relationships = ConvertToWrapperClass(Client.Relationships, this);
+                Relationships = ConvertToRelationshipWrapperClass(Client.Relationships, this);
             }
         }        
         public Client SeletctedRelationShip
@@ -66,7 +67,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
                 }
-                Forms = ConvertToWrapperClass(forms, this);
+                Forms = ConvertToFormWrapperClass(forms, this);
             }
         }
         public List<FormTemplateWrap> Forms
@@ -146,7 +147,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             throw new NotImplementedException();
         }
-        private static List<RelationshipTemplateWrap> ConvertToWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
+        private static List<RelationshipTemplateWrap> ConvertToRelationshipWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
         {
             List<RelationshipTemplateWrap> list = new List<RelationshipTemplateWrap>();
             foreach (var r in clientRelationships)
@@ -157,14 +158,26 @@ namespace LiveHTS.Presentation.ViewModel
             return list;
         }
 
-        private static List<FormTemplateWrap> ConvertToWrapperClass(List<Form> forms, ClientDashboardViewModel clientDashboardViewModel)
+        private static List<FormTemplateWrap> ConvertToFormWrapperClass(List<Form> forms, ClientDashboardViewModel clientDashboardViewModel)
         {
             List<FormTemplateWrap> list = new List<FormTemplateWrap>();
             foreach (var r in forms)
             {
-                list.Add(new FormTemplateWrap(clientDashboardViewModel,new FormTemplate(r)));
+                var f = new FormTemplate(r);
+                f.Encounters = ConvertToEncounterWrapperClass(r.ClientEncounters, clientDashboardViewModel);
+                var fw = new FormTemplateWrap(clientDashboardViewModel, f);                
+                list.Add(fw);
             }
+            return list;
+        }
 
+        private static List<EncounterTemplateWrap> ConvertToEncounterWrapperClass(List<Encounter> encounters, ClientDashboardViewModel clientDashboardViewModel)
+        {
+            List<EncounterTemplateWrap> list = new List<EncounterTemplateWrap>();
+            foreach (var r in encounters)
+            {
+                list.Add(new EncounterTemplateWrap(clientDashboardViewModel, new EncounterTemplate(r)));
+            }
             return list;
         }
 

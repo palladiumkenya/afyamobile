@@ -25,9 +25,14 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             get
             {
-                _startEncounterCommand = _startEncounterCommand ?? new MvxCommand(StartEncounter);
+                _startEncounterCommand = _startEncounterCommand ?? new MvxCommand(StartEncounter, CanStartEncounter);
                 return _startEncounterCommand;
             }
+        }
+
+        private bool CanStartEncounter()
+        {
+            return !_formTemplate.HasEncounters;
         }
 
         private void StartEncounter()

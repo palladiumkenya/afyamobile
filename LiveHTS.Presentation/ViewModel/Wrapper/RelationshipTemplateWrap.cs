@@ -19,11 +19,18 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             get
             {
-                _removeRelationshipCommand = _removeRelationshipCommand ?? new MvxCommand(RemoveRelationship);
+                _removeRelationshipCommand = _removeRelationshipCommand ?? new MvxCommand(RemoveRelationship, CanRemoveRelationship);
                 return _removeRelationshipCommand;
             }
         }
-        
+
+        private bool CanRemoveRelationship()
+        {
+            return
+                null != _relationshipTemplate &&
+                null != _relationshipTemplate.Id;
+        }
+
         public RelationshipTemplateWrap(RelationshipTemplate relationshipTemplate, ClientDashboardViewModel parent)
         {
             _relationshipTemplate = relationshipTemplate;

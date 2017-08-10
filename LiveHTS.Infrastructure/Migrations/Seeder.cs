@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Seed;
 using LiveHTS.Infrastructure.Seed.Config;
+using LiveHTS.Infrastructure.Seed.Interview;
 using LiveHTS.Infrastructure.Seed.Lookup;
 using LiveHTS.Infrastructure.Seed.Subject;
 using LiveHTS.Infrastructure.Seed.Survey;
@@ -23,6 +25,7 @@ namespace LiveHTS.Infrastructure.Migrations
             SeedLookup(db);
             SeedSurvey(db);
             SeedSubject(db);
+            SeedInterview(db);
         }
 
         private static void SeedConfig(SQLiteConnection db)
@@ -117,6 +120,17 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new ClientJson());
             InsertOrUpdate(db, new ClientIdentifierJson());
             InsertOrUpdate(db, new ClientRelationshipJson());
+        }
+
+        private static void SeedInterview(SQLiteConnection db)
+        {
+            #region Lookup
+
+            db.CreateTable<Encounter>();
+
+            #endregion
+
+            InsertOrUpdate(db, new EncounterJson());
         }
 
         private static void InsertOrUpdate<T>(SQLiteConnection db, ISeedJson<T> json) 

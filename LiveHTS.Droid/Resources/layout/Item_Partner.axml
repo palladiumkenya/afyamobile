@@ -8,17 +8,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="10dp"
-        local:MvxBind="Text PartnerItem.FullName" />
+        local:MvxBind="Text RelationshipTemplate.FullName" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="10dp"
-        local:MvxBind="Text PartnerItem.Gender" />
+        local:MvxBind="Text RelationshipTemplate.Gender" />
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="10dp"
-        local:MvxBind="Text PartnerItem.BirthDate, Converter=DMYDateTime" />
+        local:MvxBind="Text RelationshipTemplate.BirthDate, Converter=DMYDateTime" />
     <Button
         android:text="X"
         android:layout_width="match_parent"
