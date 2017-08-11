@@ -32,8 +32,18 @@ namespace LiveHTS.Core.Model.Interview
         [Indexed]
         public Guid UserId { get; set; }
         public bool IsComplete { get; set; }
+
         [Ignore]
-        public string Status { get; set; } 
+        public string Status
+        {
+            get
+            {
+                if (IsComplete)
+                    return "Completed";
+
+                return "Started";
+            }
+        }
 
         [Ignore]
         public bool HasObs
@@ -45,7 +55,7 @@ namespace LiveHTS.Core.Model.Interview
         
         public Encounter()
         {
-            Status = "Created";
+            //Status = "Created";
             Id = LiveGuid.NewGuid();
         }
         public Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId):this()
@@ -61,6 +71,7 @@ namespace LiveHTS.Core.Model.Interview
             var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId);
             return encounter;
         }
+
         public override string ToString()
         {
             return $"{Id} {EncounterDate:F} [{Status}]";

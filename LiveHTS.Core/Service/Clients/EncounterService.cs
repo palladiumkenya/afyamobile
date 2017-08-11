@@ -42,7 +42,6 @@ namespace LiveHTS.Core.Service.Clients
 
             if (null != exisitngEncounter)
             {
-                exisitngEncounter.Status = "Opened";
                 return exisitngEncounter;
             }
 

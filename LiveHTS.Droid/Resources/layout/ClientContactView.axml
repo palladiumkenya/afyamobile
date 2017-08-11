@@ -64,14 +64,14 @@
             local:MvxBind="Text ContactId;Visibility ShowId, Converter=Visibility"
             android:background="#1000FF"
             android:textColor="#FFFFFF" />
-      <TextView
-        android:text=""
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewAddressId"
-        local:MvxBind="Text AddressId;Visibility ShowId, Converter=Visibility"
-        android:background="#1000FF"
-        android:textColor="#FFFFFF" />
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewAddressId"
+            local:MvxBind="Text AddressId;Visibility ShowId, Converter=Visibility"
+            android:background="#1000FF"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

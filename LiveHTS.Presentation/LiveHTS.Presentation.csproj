@@ -42,6 +42,7 @@
     <Compile Include="DTO\ClientProfileDTO.cs" />
     <Compile Include="DTO\ClientContactAddressDTO.cs" />
     <Compile Include="DTO\ClientDemographicDTO.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientEncounterViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientProfileViewModel.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\ViewModel\IClientDashboardViewModel.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="ViewModel\AppDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IRelationshipTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IRelationshipTemplateWrap.cs" />
+    <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
     <Compile Include="ViewModel\Template\FormTemplate.cs" />
     <Compile Include="ViewModel\Template\EncounterTemplate.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />

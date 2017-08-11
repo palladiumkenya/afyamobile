@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
@@ -12,6 +13,7 @@ using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform.Platform;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -20,6 +22,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IDialogService _dialogService;
         private readonly IDashboardService _dashboardService;
         private readonly IInterviewService _interviewService;
+        protected readonly ISettings _settings;
 
         private Client _client;
         private Client _seletctedRelationShip;
@@ -101,11 +104,21 @@ namespace LiveHTS.Presentation.ViewModel
             set { _isBusy = value; RaisePropertyChanged(() => IsBusy); }
         }
 
-        public ClientDashboardViewModel(IDashboardService dashboardService, IDialogService dialogService, IInterviewService interviewService)
+        public ClientDashboardViewModel(IDashboardService dashboardService, IDialogService dialogService, IInterviewService interviewService, ISettings settings)
         {
             _dashboardService = dashboardService;
             _dialogService = dialogService;
             _interviewService = interviewService;
+            _settings = settings;
+        }
+
+        public override void ViewAppeared()
+        {
+//            ModelStore.Store = _settings.GetValue(GetType().Name, "");
+//            if (ModelStore.HasData)
+//            {
+//                LoadFromStore(ModelStore);
+//            }
         }
 
         private void ManageRegistration()
@@ -143,10 +156,15 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message,"Remove Relationship");
             }
         }
+
         public void StartEncounter(FormTemplate formTemplate)
         {
-            throw new NotImplementedException();
+            var clientId = Client.Id.ToString();
+            var json = JsonConvert.SerializeObject(Client);
+            _settings.AddOrUpdateValue(clientId, json);
+            ShowViewModel<ClientEncounterViewModel>(new {id = Client.Id.ToString()});
         }
+
         private static List<RelationshipTemplateWrap> ConvertToRelationshipWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
         {
             List<RelationshipTemplateWrap> list = new List<RelationshipTemplateWrap>();
@@ -180,12 +198,6 @@ namespace LiveHTS.Presentation.ViewModel
             }
             return list;
         }
-
-        private bool CanStartEncounter()
-        {
-            throw new NotImplementedException();
-        }
-      
 
         public void ResumeEncounter(EncounterTemplate encounterTemplate)
         {

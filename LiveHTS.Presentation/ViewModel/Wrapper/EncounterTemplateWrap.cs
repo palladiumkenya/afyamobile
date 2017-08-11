@@ -1,5 +1,6 @@
 ﻿using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using LiveHTS.Presentation.ViewModel.Template;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.ViewModel.Wrapper
@@ -56,7 +57,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanResumeEncounter()
         {
-            throw new System.NotImplementedException();
+            return null != EncounterTemplate && EncounterTemplate.Status == "Started";
         }
 
         private void ResumeEncounter()
@@ -66,7 +67,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanReviewEncounter()
         {
-            throw new System.NotImplementedException();
+            return null != EncounterTemplate && EncounterTemplate.Status == "Completed";
         }
 
         private void ReviewEncounter()
@@ -76,7 +77,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanDiscardEncounter()
         {
-            throw new System.NotImplementedException();
+            return null != EncounterTemplate && EncounterTemplate.Status == "Completed";
         }
 
         private void DiscardEncounter()

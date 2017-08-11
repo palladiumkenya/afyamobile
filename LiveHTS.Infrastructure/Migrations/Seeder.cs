@@ -130,7 +130,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-            InsertOrUpdate(db, new EncounterJson());
+            //InsertOrUpdate(db, new EncounterJson());
         }
 
         private static void InsertOrUpdate<T>(SQLiteConnection db, ISeedJson<T> json) 
