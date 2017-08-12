@@ -131,10 +131,18 @@ namespace LiveHTS.Presentation.ViewModel
         }
         public void Init(string id)
         {
+            MvxTrace.Error(".........................");
+            MvxTrace.Error("        ON INIT");
+            MvxTrace.Error(".........................");
+
             if (string.IsNullOrWhiteSpace(id))
                 return;
+
             Client = _dashboardService.LoadClient(new Guid(id));
             Module = _dashboardService.LoadModule();
+
+            var clientJson = JsonConvert.SerializeObject(Client);
+            var moduleJson = JsonConvert.SerializeObject(Module);
         }
         public void ShowRegistry()
         {
