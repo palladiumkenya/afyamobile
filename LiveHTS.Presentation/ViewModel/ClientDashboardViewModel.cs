@@ -157,11 +157,47 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (null != Client)
             {
+                var clientJson = JsonConvert.SerializeObject(Client);
+                _settings.AddOrUpdateValue("client.profie", clientJson);
+
                 var clientDto = ClientDTO.Create(Client);
                 var clientDtoJson = JsonConvert.SerializeObject(clientDto);
                 _settings.AddOrUpdateValue("client", clientDtoJson);
             }
+
+            if (null != Module)
+            {
+                var moduleJson = JsonConvert.SerializeObject(Module);
+                _settings.AddOrUpdateValue("module", moduleJson);
+            }
+
+            if (null != DefaultEncounterType)
+            {
+                var encounterTypeJson = JsonConvert.SerializeObject(DefaultEncounterType);
+                _settings.AddOrUpdateValue("encountertype", encounterTypeJson);
+            }
         }
+
+        public override void ViewAppearing()
+        {
+            var clientJson = _settings.GetValue("client.profie", "");
+            var moduleJson = _settings.GetValue("module", "");
+            var encounterTypeJson = _settings.GetValue("encountertype", "");
+
+            if (!string.IsNullOrWhiteSpace(clientJson))
+            {
+                Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+            if (!string.IsNullOrWhiteSpace(moduleJson))
+            {
+                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+            }
+            if (!string.IsNullOrWhiteSpace(encounterTypeJson))
+            {
+                DefaultEncounterType = JsonConvert.DeserializeObject<EncounterType>(encounterTypeJson);
+            }
+        }
+
         public void ShowRegistry()
         {
             ShowViewModel<RegistryViewModel>();
