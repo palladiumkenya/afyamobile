@@ -61,9 +61,11 @@
     <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
     <Compile Include="Interfaces\IObsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFormTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IQuestionTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IEncounterTemplateWrap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IMainViewModel.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
     <Compile Include="ViewModel\Template\FormTemplate.cs" />
     <Compile Include="ViewModel\Template\EncounterTemplate.cs" />
+    <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
+    <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\FormTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\RelationshipTemplateWrap.cs" />

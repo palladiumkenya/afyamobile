@@ -131,11 +131,22 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
-//            ModelStore.Store = _settings.GetValue(GetType().Name, "");
-//            if (ModelStore.HasData)
-//            {
-//                LoadFromStore(ModelStore);
-//            }
+            var clientJson = _settings.GetValue("client", "");
+            var moduleJson = _settings.GetValue("module", "");
+            var encounterTypeJson = _settings.GetValue("encountertype", "");
+
+            if (!string.IsNullOrWhiteSpace(clientJson))
+            {
+                Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+            if (!string.IsNullOrWhiteSpace(moduleJson))
+            {
+                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+            }
+            if (!string.IsNullOrWhiteSpace(encounterTypeJson))
+            {
+                DefaultEncounterType = JsonConvert.DeserializeObject<EncounterType>(encounterTypeJson);
+            }
         }
 
         private void ManageRegistration()
@@ -178,26 +189,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public override void ViewAppearing()
-        {
-            var clientJson = _settings.GetValue("client", "");
-            var moduleJson = _settings.GetValue("module", "");
-            var encounterTypeJson = _settings.GetValue("encountertype", "");
+        
 
-            if (!string.IsNullOrWhiteSpace(clientJson))
-            {
-                Client = JsonConvert.DeserializeObject<Client>(clientJson);
-            }
-            if (!string.IsNullOrWhiteSpace(moduleJson))
-            {
-                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
-            }
-            if (!string.IsNullOrWhiteSpace(encounterTypeJson))
-            {
-                DefaultEncounterType = JsonConvert.DeserializeObject<EncounterType>(encounterTypeJson);
-            }
-        }
-
+      
         public void ShowRegistry()
         {
             ShowViewModel<RegistryViewModel>();

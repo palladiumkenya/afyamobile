@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
@@ -6,6 +7,8 @@ using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.Presentation.ViewModel.Template;
+using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
 
@@ -21,6 +24,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Form _form;
         private Encounter _encounter;
         private ClientDTO _clientDTO;
+        private List<QuestionTemplateWrap> _questions;
 
         public Guid UserId
         {
@@ -69,7 +73,17 @@ namespace LiveHTS.Presentation.ViewModel
         public Form Form
         {
             get { return _form; }
-            set { _form = value; RaisePropertyChanged(() => Form); }
+            set
+            {
+                _form = value; RaisePropertyChanged(() => Form);
+                Questions = ConvertToQuestionWrapperClass(_form.Questions, this);
+            }
+        }
+
+        public List<QuestionTemplateWrap> Questions
+        {
+            get { return _questions; }
+            set { _questions = value; RaisePropertyChanged( () => Questions); }
         }
 
         public Encounter Encounter
@@ -108,9 +122,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(clientEncounterJson))
             {
                 ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterJson);
-            }
-
-            
+            }            
 
             if (mode == "new")
             {
@@ -148,8 +160,16 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Form = JsonConvert.DeserializeObject<Form>(formJson);
             }
-
         }
-        
+
+        private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, ClientEncounterViewModel clientDashboardViewModel)
+        {
+            List<QuestionTemplateWrap> list = new List<QuestionTemplateWrap>();
+            foreach (var r in questions)
+            {
+                list.Add(new QuestionTemplateWrap(clientDashboardViewModel,new QuestionTemplate(r)));
+            }
+            return list;
+        }
     }
 }

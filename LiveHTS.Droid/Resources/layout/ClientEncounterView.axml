@@ -56,14 +56,13 @@
       local:MvxBind="Text ClientEncounterDTO.FormDisplay"
       android:paddingRight="5dp" />
   </LinearLayout>
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
+  <FrameLayout
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    <TextView
-      android:text="Questions"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:id="@+id/textViewQuestions"/>
-  </LinearLayout>
+    <Mvx.MvxListView
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      local:MvxBind="ItemsSource Questions"
+      local:MvxItemTemplate="@layout/item_question" />
+  </FrameLayout>
 </LinearLayout>

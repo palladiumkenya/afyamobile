@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.ViewModel.Wrapper;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
@@ -15,6 +17,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         ClientDTO ClientDTO { get; set; }
         ClientEncounterDTO ClientEncounterDTO { get; set; }
         Form Form { get; set; }
+
+        List<QuestionTemplateWrap> Questions { get; set; }
         Encounter Encounter { get; set; }
     }
 }
