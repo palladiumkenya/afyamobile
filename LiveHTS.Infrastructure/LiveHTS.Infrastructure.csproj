@@ -63,6 +63,7 @@
     <Compile Include="Repository\Subject\PersonContactRepository.cs" />
     <Compile Include="Repository\Subject\PersonAddressRepository.cs" />
     <Compile Include="Repository\Subject\PersonRepository.cs" />
+    <Compile Include="Repository\Subject\ProviderRepository.cs" />
     <Compile Include="Repository\Subject\UserRepository.cs" />
     <Compile Include="Repository\Subject\ClientRepository.cs" />
     <Compile Include="Repository\Survey\ConceptRepository.cs" />

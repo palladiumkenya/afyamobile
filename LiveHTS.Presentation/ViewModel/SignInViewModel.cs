@@ -1,9 +1,12 @@
 ﻿using System;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Access;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -11,6 +14,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly IAuthService _authService;
         private readonly IDialogService _dialogService;
+        private readonly ISettings _settings;
 
         private User _user;
         private string _username;
@@ -66,10 +70,11 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
 
-        public SignInViewModel(IAuthService authService, IDialogService dialogService)
+        public SignInViewModel(IAuthService authService, IDialogService dialogService, ISettings settings)
         {
             _authService = authService;
             _dialogService = dialogService;
+            _settings = settings;
             IsBusy = false;
 
             //TODO:Remove default login
@@ -84,6 +89,16 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 _user = _authService.SignIn(Username, Password);
+                var provider = _authService.GetDefaultProvider();
+
+                
+                _settings.AddOrUpdateValue("livehts.userid", _user.Id.ToString());
+                _settings.AddOrUpdateValue("livehts.username", _user.UserName);
+                
+                _settings.AddOrUpdateValue("livehts.providerid", provider.Id.ToString());
+                _settings.AddOrUpdateValue("livehts.providername", provider.Person.FullName);
+
+
                 ShowViewModel<AppDashboardViewModel>(new { username= User.UserName });
             }
             catch (Exception e)

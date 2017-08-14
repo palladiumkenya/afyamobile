@@ -9,10 +9,17 @@ namespace LiveHTS.Core.Service.Access
     public class AuthService:IAuthService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IProviderRepository _providerRepository;
 
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IUserRepository userRepository, IProviderRepository providerRepository)
         {
             _userRepository = userRepository;
+            _providerRepository = providerRepository;
+        }
+
+        public Provider GetDefaultProvider()
+        {
+            return _providerRepository.GetDefaultProvider();
         }
 
         public User SignIn(string username, string password)

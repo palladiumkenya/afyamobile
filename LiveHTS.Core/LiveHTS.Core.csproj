@@ -59,6 +59,7 @@
     <Compile Include="Interfaces\Repository\Subject\IPersonContactRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IPersonAddressRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IPersonRepository.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IProviderRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IUserRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />

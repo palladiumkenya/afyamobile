@@ -7,7 +7,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
 {
     public interface IEncounterService
     {
-        Form LoadForm(Guid formId);
+        Form LoadForm(Guid formId, bool includeMetadata = true);
         Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId, bool includeObs = false);
         IEnumerable<Encounter> LoadEncounters(Guid formId, Guid clientId, bool includeObs = false);
         Encounter StartEncounter(Encounter encounter);

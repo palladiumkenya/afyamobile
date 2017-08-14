@@ -10,15 +10,15 @@ namespace LiveHTS.Presentation.DTO
     public class ClientDTO
     {
         public Guid Id { get; set; }
-        public virtual string FirstName { get; set; }
-        public virtual string MiddleName { get; set; }
-        public virtual string LastName { get; set; }
-        public virtual string Gender { get; set; }
-        public virtual DateTime? BirthDate { get; set; }
+        public  string FirstName { get; set; }
+        public  string MiddleName { get; set; }
+        public  string LastName { get; set; }
+        public  string Gender { get; set; }
+        public  DateTime? BirthDate { get; set; }
         public string Age { get; set; }
         public string IdentifierTypeId { get; set; }
         public string Identifier { get; set; }
-
+        
         private ClientDTO(Guid id, string firstName, string middleName, string lastName, string gender, DateTime? birthDate, string age, string identifierTypeId, string identifier)
         {
             Id = id;
@@ -44,8 +44,7 @@ namespace LiveHTS.Presentation.DTO
                 client.Person.BirthDate,
                 client.Person.AgeInfo,
                 ids.IdentifierTypeId,
-                ids.Identifier
-                );
+                ids.Identifier);
         }
     }
 }

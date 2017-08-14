@@ -37,8 +37,9 @@
     <Compile Include="AppStart.cs" />
     <Compile Include="Converters\ShowControlConverter.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />
-    <Compile Include="DTO\FormDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\FormDTO.cs" />
+    <Compile Include="DTO\ClientEncounterDTO.cs" />
     <Compile Include="DTO\ClientEnrollmentDTO.cs" />
     <Compile Include="DTO\ClientRegistrationDTO.cs" />
     <Compile Include="DTO\ClientProfileDTO.cs" />

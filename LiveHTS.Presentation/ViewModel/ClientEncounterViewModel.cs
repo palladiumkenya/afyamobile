@@ -17,14 +17,53 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IEncounterService _encounterService;
 
         private readonly ISettings _settings;
-        private ClientDTO _clientInfo;
+        private ClientEncounterDTO _clientEncounterInfo;
         private Form _form;
         private Encounter _encounter;
+        private ClientDTO _clientDTO;
+
+        public Guid UserId
+        {
+            get
+            {
+                return _settings.GetValue("livehts.userid",Guid.Empty);
+            }
+        }
+
+        public string UserName
+        {
+            get
+            {
+                return _settings.GetValue("livehts.username", "admin");
+            }
+        }
+
+        public Guid ProviderId
+        {
+            get
+            {
+                return _settings.GetValue("livehts.providerid", Guid.Empty);
+            }
+        }
+
+        public string ProviderName
+        {
+            get
+            {
+                return _settings.GetValue("livehts.providername", "");
+            }
+        }
 
         public ClientDTO ClientDTO
         {
-            get { return _clientInfo; }
-            set { _clientInfo = value; RaisePropertyChanged(() => ClientDTO); }
+            get { return _clientDTO; }
+            set { _clientDTO = value; ; RaisePropertyChanged(() => ClientDTO); }
+        }
+
+        public ClientEncounterDTO ClientEncounterDTO
+        {
+            get { return _clientEncounterInfo; }
+            set { _clientEncounterInfo = value; RaisePropertyChanged(() => ClientEncounterDTO); }
         }
 
         public Form Form
@@ -46,20 +85,71 @@ namespace LiveHTS.Presentation.ViewModel
             _encounterService = encounterService;
         }
 
-        public void Init(string clientId,string formId,string encounterTypeId)
+        public void Init(string formId,string mode)
         {
-            Form = _encounterService.LoadForm(new Guid(formId));
+            if (null == Form)
+            {
+                Form = _encounterService.LoadForm(new Guid(formId));
+                if (null != Form)
+                {
+                    var formJson = JsonConvert.SerializeObject(Form);
+                    _settings.AddOrUpdateValue("client.form", formJson);
+                }
+            }
 
+            var clientJson = _settings.GetValue("client", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+
+            if (!string.IsNullOrWhiteSpace(clientJson))
+            {
+                ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(clientEncounterJson))
+            {
+                ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterJson);
+            }
+
+            
+
+            if (mode == "new")
+            {
+                //  New Encounter
+
+                Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, ProviderId, UserId);
+            }
+            else
+            {
+                //  Load Encounter
+
+                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId,true);
+            }
         }
 
         public override void ViewAppeared()
         {
-            var client = _settings.GetValue("client", "");
+            var clientJson = _settings.GetValue("client", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+            var formJson = _settings.GetValue("client.form", "");
 
-            if (!string.IsNullOrWhiteSpace(client))
+            if (!string.IsNullOrWhiteSpace(clientJson))
             {
-                ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(client);
+                ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
             }
+
+            if (!string.IsNullOrWhiteSpace(clientEncounterJson))
+            {
+                ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(formJson))
+            {
+                Form = JsonConvert.DeserializeObject<Form>(formJson);
+            }
+
         }
+        
     }
 }

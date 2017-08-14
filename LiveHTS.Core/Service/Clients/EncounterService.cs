@@ -20,9 +20,9 @@ namespace LiveHTS.Core.Service.Clients
             _formRepository = formRepository;
         }
 
-        public Form LoadForm(Guid formId)
+        public Form LoadForm(Guid formId, bool includeMetadata = true)
         {
-            return _formRepository.GetWithQuestions(formId);
+            return _formRepository.GetWithQuestions(formId, includeMetadata);
         }
 
         public Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId, bool includeObs = false)

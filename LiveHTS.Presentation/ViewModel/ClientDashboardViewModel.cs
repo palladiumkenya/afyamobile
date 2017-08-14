@@ -147,11 +147,7 @@ namespace LiveHTS.Presentation.ViewModel
             ShowViewModel<ClientRelationshipsViewModel>(new {id = Client.Id});
         }
         public void Init(string id)
-        {
-            MvxTrace.Error(".........................");
-            MvxTrace.Error("        ON INIT");
-            MvxTrace.Error(".........................");
-
+        {           
             if (string.IsNullOrWhiteSpace(id))
                 return;
 
@@ -162,8 +158,8 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Client)
             {
                 var clientDto = ClientDTO.Create(Client);
-                var clientJson = JsonConvert.SerializeObject(clientDto);
-                _settings.AddOrUpdateValue("client", clientJson);
+                var clientDtoJson = JsonConvert.SerializeObject(clientDto);
+                _settings.AddOrUpdateValue("client", clientDtoJson);
             }
         }
         public void ShowRegistry()
@@ -189,8 +185,11 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void StartEncounter(FormTemplate formTemplate)
         {
-            var clientId = Client.Id.ToString();
-            ShowViewModel<ClientEncounterViewModel>(new { clientId = Client.Id.ToString(),formId=formTemplate.Id.ToString(), encounterTypeId = formTemplate.DefaultEncounterTypeId});
+            var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, formTemplate);
+            var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
+            _settings.AddOrUpdateValue("client.encounter", clientEncounterDTOJson);
+
+            ShowViewModel<ClientEncounterViewModel>(new {formId=formTemplate.Id,mode="new"});
         }
 
         private static List<RelationshipTemplateWrap> ConvertToRelationshipWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
