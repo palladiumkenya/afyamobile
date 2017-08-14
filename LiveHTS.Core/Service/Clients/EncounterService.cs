@@ -5,16 +5,24 @@ using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Survey;
 
 namespace LiveHTS.Core.Service.Clients
 {
     public class EncounterService:IEncounterService
     {
         private readonly IEncounterRepository _encounterRepository;
+        private readonly IFormRepository _formRepository;
 
-        public EncounterService(IEncounterRepository encounterRepository)
+        public EncounterService(IEncounterRepository encounterRepository, IFormRepository formRepository)
         {
             _encounterRepository = encounterRepository;
+            _formRepository = formRepository;
+        }
+
+        public Form LoadForm(Guid formId)
+        {
+            return _formRepository.GetWithQuestions(formId);
         }
 
         public Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId, bool includeObs = false)
