@@ -28,6 +28,20 @@ namespace LiveHTS.Core.Model.Subject
         [Ignore]
         public virtual IEnumerable<PersonContact> Contacts { get; set; }=new List<PersonContact>();
 
+        [Ignore]
+        public virtual string AgeInfo
+        {
+            get
+            {
+                if (null != BirthDate)
+                {
+                    var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate.Value);
+                    return personAge.ToFullAgeString();
+                }
+                return string.Empty;
+            }
+        }
+
         public Person()
         {
             Id = LiveGuid.NewGuid();

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.ViewModel;
@@ -15,7 +17,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Client SeletctedRelationShip { get; set; }
         List<RelationshipTemplateWrap> Relationships { get; set; }
         List<FormTemplateWrap> Forms { get; set; }
-
+        EncounterType DefaultEncounterType { get; set; }
         IMvxCommand ManageRegistrationCommand { get; }
         IMvxCommand AddRelationShipCommand { get; }     
 

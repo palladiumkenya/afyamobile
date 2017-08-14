@@ -19,7 +19,12 @@ namespace LiveHTS.Core.Model.Survey
         public List<Question> Questions { get; set; }=new List<Question>();
 
         [Ignore]
+        public Guid DefaultEncounterTypeId { get; set; }
+
+        [Ignore]
         public List<Encounter> ClientEncounters { get; set; }=new List<Encounter>();
+
+
 
         public Form()
         {

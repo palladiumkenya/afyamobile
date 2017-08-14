@@ -1,7 +1,9 @@
 ﻿using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -9,18 +11,33 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly ISettings _settings;
-        private string _clientInfo;
+        private ClientDTO _clientInfo;
 
-        public string ClientInfo
+        public ClientDTO ClientDTO
         {
             get { return _clientInfo; }
-            set { _clientInfo = value; RaisePropertyChanged(() => ClientInfo); }
+            set { _clientInfo = value; RaisePropertyChanged(() => ClientDTO); }
         }
 
         public ClientEncounterViewModel(ISettings settings, IDialogService dialogService)
         {
             _settings = settings;
             _dialogService = dialogService;
+        }
+
+        public void Init(string clientId,string formId,string encounterTypeId)
+        {
+        
+        }
+
+        public override void ViewAppeared()
+        {
+            var client = _settings.GetValue("client", "");
+
+            if (!string.IsNullOrWhiteSpace(client))
+            {
+                ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(client);
+            }
         }
     }
 }

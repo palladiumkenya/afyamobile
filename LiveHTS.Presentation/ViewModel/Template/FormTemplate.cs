@@ -12,7 +12,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string Display { get; set; }
         public string EncounterDisplay { get; set; }
         public bool HasEncounters { get; set; }
-
+        public Guid DefaultEncounterTypeId { get; set; }
         public List<EncounterTemplateWrap> Encounters { get; set; }=new List<EncounterTemplateWrap>();
 
         public FormTemplate(Form r, string encounterDisplay = "ENCOUNTRES")
@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Id = r.Id;
             Display = r.Display;
             EncounterDisplay = encounterDisplay;
+            DefaultEncounterTypeId = r.DefaultEncounterTypeId;
             HasEncounters = r.ClientEncounters.Count > 0;
         }
     }

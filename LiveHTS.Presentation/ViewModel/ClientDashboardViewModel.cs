@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
+using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Interfaces.Services.Interview;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
@@ -22,6 +25,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IDialogService _dialogService;
         private readonly IDashboardService _dashboardService;
         private readonly IInterviewService _interviewService;
+        private readonly ILookupService _lookupService;
         protected readonly ISettings _settings;
 
         private Client _client;
@@ -35,7 +39,8 @@ namespace LiveHTS.Presentation.ViewModel
         
 
         private bool _isBusy;
-       
+        private EncounterType _defaultEncounterType;
+
         public Client Client
         {
             get { return _client; }
@@ -68,6 +73,11 @@ namespace LiveHTS.Presentation.ViewModel
                 var forms = Module.Forms.ToList();
                 foreach (var form in forms)
                 {
+                    if (null == DefaultEncounterType)
+                    {
+                        DefaultEncounterType = _lookupService.GetDefaultEncounterType();
+                    }
+                    form.DefaultEncounterTypeId = DefaultEncounterType.Id;
                     form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
                 }
                 Forms = ConvertToFormWrapperClass(forms, this);
@@ -78,7 +88,13 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _forms; }
             set { _forms = value;RaisePropertyChanged(() => Forms); }
         }
-        
+
+        public EncounterType DefaultEncounterType
+        {
+            get { return _defaultEncounterType; }
+            set { _defaultEncounterType = value; RaisePropertyChanged(() => DefaultEncounterType); }
+        }
+
         public IMvxCommand ManageRegistrationCommand
         {
             get
@@ -104,12 +120,13 @@ namespace LiveHTS.Presentation.ViewModel
             set { _isBusy = value; RaisePropertyChanged(() => IsBusy); }
         }
 
-        public ClientDashboardViewModel(IDashboardService dashboardService, IDialogService dialogService, IInterviewService interviewService, ISettings settings)
+        public ClientDashboardViewModel(IDashboardService dashboardService, IDialogService dialogService, IInterviewService interviewService, ISettings settings, ILookupService lookupService)
         {
             _dashboardService = dashboardService;
             _dialogService = dialogService;
             _interviewService = interviewService;
             _settings = settings;
+            _lookupService = lookupService;
         }
 
         public override void ViewAppeared()
@@ -140,9 +157,14 @@ namespace LiveHTS.Presentation.ViewModel
 
             Client = _dashboardService.LoadClient(new Guid(id));
             Module = _dashboardService.LoadModule();
+            DefaultEncounterType = _lookupService.GetDefaultEncounterType();
 
-            var clientJson = JsonConvert.SerializeObject(Client);
-            var moduleJson = JsonConvert.SerializeObject(Module);
+            if (null != Client)
+            {
+                var clientDto = ClientDTO.Create(Client);
+                var clientJson = JsonConvert.SerializeObject(clientDto);
+                _settings.AddOrUpdateValue("client", clientJson);
+            }
         }
         public void ShowRegistry()
         {
@@ -168,9 +190,7 @@ namespace LiveHTS.Presentation.ViewModel
         public void StartEncounter(FormTemplate formTemplate)
         {
             var clientId = Client.Id.ToString();
-            var json = JsonConvert.SerializeObject(Client);
-            _settings.AddOrUpdateValue(clientId, json);
-            ShowViewModel<ClientEncounterViewModel>(new {id = Client.Id.ToString()});
+            ShowViewModel<ClientEncounterViewModel>(new { clientId = Client.Id.ToString(),formId=formTemplate.Id.ToString(), encounterTypeId = formTemplate.DefaultEncounterTypeId});
         }
 
         private static List<RelationshipTemplateWrap> ConvertToRelationshipWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)

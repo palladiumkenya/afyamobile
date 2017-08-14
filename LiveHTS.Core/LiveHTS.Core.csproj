@@ -43,6 +43,7 @@
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
     <Compile Include="Interfaces\Model\IEnrollment.cs" />
     <Compile Include="Interfaces\Model\IProfile.cs" />
+    <Compile Include="Interfaces\Repository\Config\IEncounterTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IRelationshipTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IIdentifierTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IMaritalStatusRepository.cs" />

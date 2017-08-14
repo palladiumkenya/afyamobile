@@ -1,7 +1,9 @@
-﻿namespace LiveHTS.Presentation.Interfaces.ViewModel
+﻿using LiveHTS.Presentation.DTO;
+
+namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientEncounterViewModel
     {
-        string ClientInfo { get; set; }
+        ClientDTO ClientDTO { get; set; }
     }
 }

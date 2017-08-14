@@ -17,8 +17,9 @@ namespace LiveHTS.Core.Service.Config
         private readonly IKeyPopRepository _keyPopRepository;
         private readonly IIdentifierTypeRepository _identifierTypeRepository;
         private readonly IRelationshipTypeRepository _relationshipTypeRepository;
+        private readonly IEncounterTypeRepository _encounterTypeRepository;
 
-        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository, IMaritalStatusRepository maritalStatusRepository, IKeyPopRepository keyPopRepository, IIdentifierTypeRepository identifierTypeRepository, IRelationshipTypeRepository relationshipTypeRepository)
+        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository, IMaritalStatusRepository maritalStatusRepository, IKeyPopRepository keyPopRepository, IIdentifierTypeRepository identifierTypeRepository, IRelationshipTypeRepository relationshipTypeRepository, IEncounterTypeRepository encounterTypeRepository)
         {
             _countyRepository = countyRepository;
             _subCountyRepository = subCountyRepository;
@@ -28,6 +29,7 @@ namespace LiveHTS.Core.Service.Config
             _keyPopRepository = keyPopRepository;
             _identifierTypeRepository = identifierTypeRepository;
             _relationshipTypeRepository = relationshipTypeRepository;
+            _encounterTypeRepository = encounterTypeRepository;
         }
 
         public IEnumerable<County> GetCounties()
@@ -78,6 +80,11 @@ namespace LiveHTS.Core.Service.Config
         public IEnumerable<RelationshipType> GetRelationshipTypes()
         {
             return _relationshipTypeRepository.GetAll().ToList();
+        }
+
+        public EncounterType GetDefaultEncounterType()
+        {
+            return _encounterTypeRepository.GetDefault();
         }
     }
 }

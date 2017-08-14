@@ -21,7 +21,6 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IObsRepository _obsRepository;
         
 
-
         public Manifest Manifest
         {
             get { return _manifest; }

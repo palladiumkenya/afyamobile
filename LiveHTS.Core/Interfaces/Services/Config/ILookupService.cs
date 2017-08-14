@@ -15,5 +15,6 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<KeyPop> GetKeyPops();
         IEnumerable<IdentifierType> GetIdentifierTypes();
         IEnumerable<RelationshipType> GetRelationshipTypes();
+        EncounterType GetDefaultEncounterType();
     }
 }
