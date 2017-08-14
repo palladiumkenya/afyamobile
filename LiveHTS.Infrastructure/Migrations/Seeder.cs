@@ -116,7 +116,7 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new PersonAddressJson());
             InsertOrUpdate(db, new PersonContactJson());
             InsertOrUpdate(db, new UserJson());
-            InsertOrUpdate(db, new ProviderTypeJson());
+            InsertOrUpdate(db, new ProviderJson());
             InsertOrUpdate(db, new ClientJson());
             InsertOrUpdate(db, new ClientIdentifierJson());
             InsertOrUpdate(db, new ClientRelationshipJson());

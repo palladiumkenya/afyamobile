@@ -4,11 +4,66 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  
-  <TextView
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewClientFirstName"
+        local:MvxBind="Text ClientDTO.FirstName"
+        android:paddingRight="5dp" />
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewClientMiddleName"
+        local:MvxBind="Text ClientDTO.MiddleName"
+        android:paddingRight="5dp" />
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewClientLastName"
+        local:MvxBind="Text ClientDTO.LastName"
+        android:paddingRight="5dp" />
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewClientGender"
+        local:MvxBind="Text ClientDTO.Gender"
+        android:paddingRight="5dp" />
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewClientAge"
+        local:MvxBind="Text ClientDTO.Age" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewContactClientInfo"
-    local:MvxBind="Text ClientInfo" />
-   
+    android:layout_height="wrap_content">
+    <TextView
+      android:text="Form"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/textViewForm"
+      local:MvxBind="Text ClientEncounterDTO.FormDisplay"
+      android:paddingRight="5dp" />
+  </LinearLayout>
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+      android:text="Questions"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:id="@+id/textViewQuestions"/>
+  </LinearLayout>
 </LinearLayout>

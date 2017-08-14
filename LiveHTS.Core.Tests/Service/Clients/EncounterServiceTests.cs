@@ -19,6 +19,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
     {
         private ILiveSetting _liveSetting;
         private IEncounterRepository _encounterRepository;
+        private IFormRepository _formRepository;
         private IEncounterService _encounterService;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
         private Guid _formId, _encounterTypeId, _clientId, _providerId, _userId;
@@ -29,8 +30,8 @@ namespace LiveHTS.Core.Tests.Service.Clients
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _encounterRepository = new EncounterRepository(_liveSetting);
-
-            _encounterService = new EncounterService(_encounterRepository);
+            _formRepository=new FormRepository(_liveSetting,new QuestionRepository(_liveSetting,new ConceptRepository(_liveSetting,new CategoryRepository(_liveSetting))));
+            _encounterService = new EncounterService(_encounterRepository,_formRepository);
 
             _formId = TestDataHelpers._formId;
             _encounterTypeId = TestDataHelpers._encounterTypeId;

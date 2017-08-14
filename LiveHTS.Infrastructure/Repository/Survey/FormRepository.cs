@@ -12,10 +12,6 @@ namespace LiveHTS.Infrastructure.Repository.Survey
     {
         private readonly IQuestionRepository _questionRepository;
 
-        public FormRepository(ILiveSetting liveSetting) : base(liveSetting)
-        {
-        }
-
         public FormRepository(ILiveSetting liveSetting, IQuestionRepository questionRepository) : base(liveSetting)
         {
             _questionRepository = questionRepository;

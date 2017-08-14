@@ -170,7 +170,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         public void should_SaveResponse()
         {
             // 1.Consent
-            _encounterNew = new EncounterService(_encounterRepository).StartEncounter(_encounterNew);
+           _encounterNew = new EncounterService(_encounterRepository,_formRepository).StartEncounter(_encounterNew);
             var currentQuestionId = _form.Questions.First(x => x.Rank == 1).Id;
             _obsService.Initialize(_encounterNew);
             _obsService.SaveResponse(_encounterNew.Id,currentQuestionId,TestDataHelpers._consentYes);

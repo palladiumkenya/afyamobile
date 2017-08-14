@@ -4,11 +4,8 @@ using System.Linq;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Interview;
-using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Model.Interview;
-using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository.Interview;
-using LiveHTS.Infrastructure.Repository.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLite;
 

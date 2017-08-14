@@ -15,6 +15,10 @@ namespace LiveHTS.Presentation.DTO
         public string FormDisplay { get; set; }
         public Guid EncounterTypeId { get; set; }
 
+        public ClientEncounterDTO()
+        {
+        }
+
         private ClientEncounterDTO(Guid clientId, Guid formId, string formDisplay, Guid encounterTypeId)
         {
             ClientId = clientId;

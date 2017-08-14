@@ -30,7 +30,7 @@ namespace LiveHTS.Core.Tests.Service.Config
         private IMaritalStatusRepository _maritalStatusRepository;
         private IKeyPopRepository _keyPopRepository;
         private IIdentifierTypeRepository _identifierTypeRepository;
-
+        private IEncounterTypeRepository _encounterTypeRepository;
 
         private ILookupService _lookupService;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
@@ -51,7 +51,8 @@ namespace LiveHTS.Core.Tests.Service.Config
             _identifierTypeRepository=new IdentifierTypeRepository(_liveSetting);
             _relationshipTypeRepository=new RelationshipTypeRepository(_liveSetting);
 
-        _lookupService = new LookupService(_countyRepository,_subCountyRepository,_practiceRepository,_practiceTypeRepository,_maritalStatusRepository,_keyPopRepository,_identifierTypeRepository,_relationshipTypeRepository);
+
+        _lookupService = new LookupService(_countyRepository,_subCountyRepository,_practiceRepository,_practiceTypeRepository,_maritalStatusRepository,_keyPopRepository,_identifierTypeRepository,_relationshipTypeRepository, _encounterTypeRepository);
 
             
         }

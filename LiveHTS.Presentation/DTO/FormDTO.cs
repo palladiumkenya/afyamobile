@@ -12,6 +12,10 @@ namespace LiveHTS.Presentation.DTO
         public Guid Id { get; set; }
         public  string Display { get; set; }
 
+        public FormDTO()
+        {
+        }
+
         public FormDTO(Guid id, string display)
         {
             Id = id;

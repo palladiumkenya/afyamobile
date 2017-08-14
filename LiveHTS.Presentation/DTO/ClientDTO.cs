@@ -18,7 +18,11 @@ namespace LiveHTS.Presentation.DTO
         public string Age { get; set; }
         public string IdentifierTypeId { get; set; }
         public string Identifier { get; set; }
-        
+
+        public ClientDTO()
+        {
+        }
+
         private ClientDTO(Guid id, string firstName, string middleName, string lastName, string gender, DateTime? birthDate, string age, string identifierTypeId, string identifier)
         {
             Id = id;

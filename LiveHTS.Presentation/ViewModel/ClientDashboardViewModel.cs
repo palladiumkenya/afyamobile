@@ -158,11 +158,11 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Client)
             {
                 var clientJson = JsonConvert.SerializeObject(Client);
-                _settings.AddOrUpdateValue("client.profie", clientJson);
+                _settings.AddOrUpdateValue("client", clientJson);
 
                 var clientDto = ClientDTO.Create(Client);
                 var clientDtoJson = JsonConvert.SerializeObject(clientDto);
-                _settings.AddOrUpdateValue("client", clientDtoJson);
+                _settings.AddOrUpdateValue("client.dto", clientDtoJson);
             }
 
             if (null != Module)
@@ -180,7 +180,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppearing()
         {
-            var clientJson = _settings.GetValue("client.profie", "");
+            var clientJson = _settings.GetValue("client", "");
             var moduleJson = _settings.GetValue("module", "");
             var encounterTypeJson = _settings.GetValue("encountertype", "");
 
@@ -225,7 +225,7 @@ namespace LiveHTS.Presentation.ViewModel
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter", clientEncounterDTOJson);
 
-            ShowViewModel<ClientEncounterViewModel>(new {formId=formTemplate.Id,mode="new"});
+            ShowViewModel<ClientEncounterViewModel>(new {formId=formTemplate.Id.ToString(),mode="new"});
         }
 
         private static List<RelationshipTemplateWrap> ConvertToRelationshipWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)

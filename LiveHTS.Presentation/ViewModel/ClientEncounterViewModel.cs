@@ -97,7 +97,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
-            var clientJson = _settings.GetValue("client", "");
+            var clientJson = _settings.GetValue("client.dto", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
 
             if (!string.IsNullOrWhiteSpace(clientJson))
@@ -130,7 +130,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
-            var clientJson = _settings.GetValue("client", "");
+            var clientJson = _settings.GetValue("client.dto", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var formJson = _settings.GetValue("client.form", "");
 

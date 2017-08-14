@@ -16,6 +16,7 @@ namespace LiveHTS.Core.Tests.Service.Access
 
         private ILiveSetting _liveSetting;
         private IUserRepository _userRepository;
+        private IProviderRepository _providerRepository;
         private IAuthService _authService;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
 
@@ -24,7 +25,8 @@ namespace LiveHTS.Core.Tests.Service.Access
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _userRepository = new UserRepository(_liveSetting);
-            _authService=new AuthService(_userRepository);
+            _providerRepository=new ProviderRepository(_liveSetting);
+            _authService=new AuthService(_userRepository,_providerRepository);
         }
 
         [Test]
