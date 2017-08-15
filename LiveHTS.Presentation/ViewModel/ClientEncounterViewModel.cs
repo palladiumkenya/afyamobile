@@ -188,11 +188,17 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveChanges()
         {
-            return false;
+            return true;
         }
 
         private void SaveChanges()
         {
+            //readResponses
+
+            
+
+            var response= Questions.Last().QuestionTemplate.Response;
+
             throw new NotImplementedException();
         }
     }

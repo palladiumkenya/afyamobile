@@ -11,7 +11,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         Guid Id { get; set; }
         string Display { get; set; }
         Concept Concept { get; set; }
-
+        string Response { get; set; }
         List<CategoryItem> SingleOptions { get; set; } 
         CategoryItem SelectedSingleOption { get; set; }
 
