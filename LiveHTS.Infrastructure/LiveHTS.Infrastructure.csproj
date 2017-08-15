@@ -74,6 +74,7 @@
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
     <Compile Include="Repository\Survey\QuestionRepository.cs" />
     <Compile Include="Seed\Config\EncounterTypeJson.cs" />
+    <Compile Include="Seed\Config\ConceptTypeJson.cs" />
     <Compile Include="Seed\Config\IdentifierTypeJson.cs" />
     <Compile Include="Seed\Config\KeyPopJson.cs" />
     <Compile Include="Seed\Config\MaritalStatusJson.cs" />

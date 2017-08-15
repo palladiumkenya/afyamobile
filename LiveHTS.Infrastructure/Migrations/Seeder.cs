@@ -40,6 +40,7 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<MaritalStatus>();
             db.CreateTable<EncounterType>();
             db.CreateTable<ProviderType>();
+            db.CreateTable<ConceptType>();
             #endregion
 
             InsertOrUpdate(db, new IdentifierTypeJson());
@@ -50,6 +51,7 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new MaritalStatusJson());
             InsertOrUpdate(db, new EncounterTypeJson());
             InsertOrUpdate(db, new ProviderTypeJson());
+            InsertOrUpdate(db, new ConceptTypeJson());
         }
 
         private static void SeedLookup(SQLiteConnection db)

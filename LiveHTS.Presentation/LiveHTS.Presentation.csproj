@@ -75,6 +75,7 @@
     <Compile Include="Interfaces\ViewModel\Template\IRelationshipTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IRelationshipTemplateWrap.cs" />
     <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
+    <Compile Include="Events\ConceptChangedEvent.cs" />
     <Compile Include="ViewModel\Template\FormTemplate.cs" />
     <Compile Include="ViewModel\Template\EncounterTemplate.cs" />
     <Compile Include="ViewModel\Template\QuestionTemplate.cs" />

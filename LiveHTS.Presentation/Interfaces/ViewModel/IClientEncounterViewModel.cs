@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
@@ -20,5 +21,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         List<QuestionTemplateWrap> Questions { get; set; }
         Encounter Encounter { get; set; }
+
+        event EventHandler<ConceptChangedEvent> ConceptChanged;
     }
 }

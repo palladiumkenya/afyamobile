@@ -27,6 +27,16 @@ namespace LiveHTS.Presentation.DTO
             EncounterTypeId = encounterTypeId;
         }
 
+        public static ClientEncounterDTO Create(Guid clientId, EncounterTemplate formTemplate)
+        {
+            return new ClientEncounterDTO(
+                clientId,
+                formTemplate.Id,
+                formTemplate.FormDisplay,
+                formTemplate.EncounterTypeId
+                );
+        }
+
         public static ClientEncounterDTO Create(Guid clientId, FormTemplate formTemplate)
         {
             return new ClientEncounterDTO(
@@ -34,7 +44,7 @@ namespace LiveHTS.Presentation.DTO
                 formTemplate.Id,
                 formTemplate.Display,
                 formTemplate.DefaultEncounterTypeId
-                );
+            );
         }
     }
 }

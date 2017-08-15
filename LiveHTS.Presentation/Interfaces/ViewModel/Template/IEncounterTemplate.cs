@@ -11,5 +11,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         string Status { get; set; }
         string Provider { get; set; }
         string ElapsedTime { get; set; }
+        Guid FormId { get; set; }
+
+        string FormDisplay { get; set; }
     }
 }

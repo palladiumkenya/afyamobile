@@ -219,7 +219,7 @@ namespace LiveHTS.Presentation.ViewModel
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter", clientEncounterDTOJson);
 
-            ShowViewModel<ClientEncounterViewModel>(new {formId=formTemplate.Id.ToString(),mode="new"});
+            ShowViewModel<ClientEncounterViewModel>(new {formId=formTemplate.Id.ToString(),mode="new", encounterId =""});
         }
 
         private static List<RelationshipTemplateWrap> ConvertToRelationshipWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
@@ -239,26 +239,30 @@ namespace LiveHTS.Presentation.ViewModel
             foreach (var r in forms)
             {
                 var f = new FormTemplate(r);
-                f.Encounters = ConvertToEncounterWrapperClass(r.ClientEncounters, clientDashboardViewModel);
+                f.Encounters = ConvertToEncounterWrapperClass(r.ClientEncounters, clientDashboardViewModel,f.Display);
                 var fw = new FormTemplateWrap(clientDashboardViewModel, f);                
                 list.Add(fw);
             }
             return list;
         }
 
-        private static List<EncounterTemplateWrap> ConvertToEncounterWrapperClass(List<Encounter> encounters, ClientDashboardViewModel clientDashboardViewModel)
+        private static List<EncounterTemplateWrap> ConvertToEncounterWrapperClass(List<Encounter> encounters, ClientDashboardViewModel clientDashboardViewModel, string fDisplay)
         {
             List<EncounterTemplateWrap> list = new List<EncounterTemplateWrap>();
             foreach (var r in encounters)
             {
-                list.Add(new EncounterTemplateWrap(clientDashboardViewModel, new EncounterTemplate(r)));
+                list.Add(new EncounterTemplateWrap(clientDashboardViewModel, new EncounterTemplate(r,fDisplay)));
             }
             return list;
         }
 
         public void ResumeEncounter(EncounterTemplate encounterTemplate)
         {
-            throw new NotImplementedException();
+            var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, encounterTemplate);
+            var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
+            _settings.AddOrUpdateValue("client.encounter", clientEncounterDTOJson);
+
+            ShowViewModel<ClientEncounterViewModel>(new { formId = encounterTemplate.FormId.ToString(), mode = "open" , encounterId = encounterTemplate .Id.ToString()});
         }
 
         public void ReviewEncounter(EncounterTemplate encounterTemplate)

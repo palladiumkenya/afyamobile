@@ -4,9 +4,25 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        local:MvxBind="Text QuestionTemplate.Display" />   
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:textSize="10dp"
+      local:MvxBind="Text QuestionTemplate.Display" />
+
+  <MvxRadioGroup
+    android:textSize="40dp"
+    android:orientation="horizontal"
+    local:MvxItemTemplate="@layout/obs_item_single"
+    local:MvxBind="ItemsSource QuestionTemplate.SingleOptions;SelectedItem QuestionTemplate.SelectedOption;Visibility ShowSingleObs, Converter=Visibility"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"/>
+
+  <EditText
+    android:text="XXXXXXXXXXXXXXXXX"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/editTextContactLandmark"
+    local:MvxBind="Text Landmark; Error Errors['Landmark']" />
 </LinearLayout>

@@ -5,6 +5,7 @@ using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
@@ -92,6 +93,9 @@ namespace LiveHTS.Presentation.ViewModel
             set { _encounter = value; RaisePropertyChanged(() => Encounter); }
         }
 
+        public event EventHandler<ConceptChangedEvent> ConceptChanged;
+
+
         public ClientEncounterViewModel(ISettings settings, IDialogService dialogService, IEncounterService encounterService)
         {
             _settings = settings;
@@ -99,7 +103,7 @@ namespace LiveHTS.Presentation.ViewModel
             _encounterService = encounterService;
         }
 
-        public void Init(string formId,string mode)
+        public void Init(string formId,string mode, string encounterId)
         {
             if (null == Form)
             {
