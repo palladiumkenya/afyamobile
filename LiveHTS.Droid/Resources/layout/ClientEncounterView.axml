@@ -83,8 +83,7 @@
     </LinearLayout>
     
     <!-- FIELDS -->
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
       <Mvx.MvxListView
@@ -92,6 +91,6 @@
           android:layout_height="wrap_content"
           local:MvxBind="ItemsSource Questions"
           local:MvxItemTemplate="@layout/item_question" />
-    </LinearLayout>
+    </FrameLayout>
   </LinearLayout>
 </ScrollView>

@@ -197,9 +197,9 @@ namespace LiveHTS.Presentation.ViewModel
 
             
 
-            var response= Questions.Last().QuestionTemplate.Response;
+            var response= Questions.Last().QuestionTemplate.ResponseText;
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

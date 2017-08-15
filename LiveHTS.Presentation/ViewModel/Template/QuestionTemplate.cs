@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
@@ -8,12 +9,12 @@ using MvvmCross.Platform.Platform;
 
 namespace LiveHTS.Presentation.ViewModel.Template
 {
-    public class QuestionTemplate : MvxViewModel, IQuestionTemplate
+    public class QuestionTemplate : MvxNotifyPropertyChanged, IQuestionTemplate
     {
         private Guid _id;
         private string _display;
         private Concept _concept;
-        private string _response;
+        private string _responseText;
         private List<CategoryItem> _singleOptions = new List<CategoryItem>();
         private CategoryItem _selectedSingleOption;
         private List<CategoryItem> _singleOptionsList = new List<CategoryItem>();
@@ -25,6 +26,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private bool _showTextObs;
         private bool _showNumericObs;
         private bool _showMultiObs;
+        private decimal _responseNumeric;
 
         public Guid Id
         {
@@ -56,16 +58,21 @@ namespace LiveHTS.Presentation.ViewModel.Template
             }
         }
 
-        public string Response
+        public string ResponseText
         {
-            get { return _response; }
+            get { return _responseText; }
             set
             {
-                _response = value;
-               RaisePropertyChanged(() => Response);
+                _responseText = value;
+               RaisePropertyChanged(() => ResponseText);
             }
         }
 
+        public decimal ResponseNumeric
+        {
+            get { return _responseNumeric; }
+            set { _responseNumeric = value; RaisePropertyChanged(() => ResponseNumeric); }
+        }
 
         public List<CategoryItem> SingleOptions
         {
@@ -84,6 +91,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedSingleOption = value;
                 RaisePropertyChanged(() => SelectedSingleOption);
+                
             }
         }
 
@@ -113,7 +121,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set
             {
                 _multiOptions = value;
-                RaisePropertyChanged(() => MultiOptions);
+                RaisePropertyChanged(() => MultiOptions);                
             }
         }
 
@@ -124,6 +132,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedMultiOption = value;
                 RaisePropertyChanged(() => SelectedMultiOption);
+                
             }
         }
 
@@ -219,7 +228,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             ShowNumericObs = Concept.ConceptTypeId == "Numeric";
             ShowMultiObs = Concept.ConceptTypeId == "Multi";
 
-            Response = response;
+            //ResponseText = response;
 
             //TODO:ShowSingleObsList
 
