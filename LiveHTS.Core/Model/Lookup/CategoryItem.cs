@@ -24,6 +24,9 @@ namespace LiveHTS.Core.Model.Lookup
 
         public Decimal Rank { get; set; }
 
+        [Ignore]
+        public bool Selected { get; set; }
+
         public CategoryItem()
         {
             Id = LiveGuid.NewGuid();
