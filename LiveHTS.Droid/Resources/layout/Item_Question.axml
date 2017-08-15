@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10dp"
         local:MvxBind="Text QuestionTemplate.Display" />
@@ -17,27 +17,17 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical" />
-    <!--<MvxSpinner
+<!--<MvxSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="40dp"
         local:MvxBind="ItemsSource QuestionTemplate.SingleOptionsList;SelectedItem QuestionTemplate.SelectedSingleOptionList;Visibility QuestionTemplate.ShowSingleObsList, Converter=Visibility" />-->
-
-
-
-
-  <LinearLayout android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-      <Mvx.MvxListView
+    <Mvx.MvxListView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         local:MvxBind="ItemsSource QuestionTemplate.MultiOptions;Visibility QuestionTemplate.ShowMultiObs, Converter=Visibility"
         local:MvxItemTemplate="@layout/obs_item_multi" />
-  </LinearLayout>
-  
-   
-  <EditText
+    <EditText
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +38,5 @@
         local:MvxBind="Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility"
         android:paddingRight="10dp"
         android:maxLength="3"
-        android:numeric="integer"
         android:inputType="number" />
-
 </LinearLayout>

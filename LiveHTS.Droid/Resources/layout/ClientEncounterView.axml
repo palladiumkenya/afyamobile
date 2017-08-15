@@ -1,68 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+  
   <LinearLayout
-      android:orientation="horizontal"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <TextView
+          android:text=""
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:id="@+id/textViewClientFirstName"
+          local:MvxBind="Text ClientDTO.FirstName"
+          android:paddingRight="5dp" />
+      <TextView
+          android:text=""
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:id="@+id/textViewClientMiddleName"
+          local:MvxBind="Text ClientDTO.MiddleName"
+          android:paddingRight="5dp" />
+      <TextView
+          android:text=""
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:id="@+id/textViewClientLastName"
+          local:MvxBind="Text ClientDTO.LastName"
+          android:paddingRight="5dp" />
+      <TextView
+          android:text=""
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:id="@+id/textViewClientGender"
+          local:MvxBind="Text ClientDTO.Gender"
+          android:paddingRight="5dp" />
+      <TextView
+          android:text=""
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:id="@+id/textViewClientAge"
+          local:MvxBind="Text ClientDTO.Age" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <TextView
+          android:text="Form"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:id="@+id/textViewForm"
+          local:MvxBind="Text ClientEncounterDTO.FormDisplay"
+          android:paddingRight="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/textViewClientFirstName"
-        local:MvxBind="Text ClientDTO.FirstName"
-        android:paddingRight="5dp" />
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/textViewClientMiddleName"
-        local:MvxBind="Text ClientDTO.MiddleName"
-        android:paddingRight="5dp" />
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/textViewClientLastName"
-        local:MvxBind="Text ClientDTO.LastName"
-        android:paddingRight="5dp" />
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/textViewClientGender"
-        local:MvxBind="Text ClientDTO.Gender"
-        android:paddingRight="5dp" />
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/textViewClientAge"
-        local:MvxBind="Text ClientDTO.Age" />
-  </LinearLayout>
+      
+      <Mvx.MvxListView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          local:MvxBind="ItemsSource Questions"
+          local:MvxItemTemplate="@layout/item_question" />
+    </LinearLayout>
 
-  <LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-      android:text="Form"
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:id="@+id/textViewForm"
-      local:MvxBind="Text ClientEncounterDTO.FormDisplay"
-      android:paddingRight="5dp" />
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <TextView
+        android:text="Errors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewErrors" />
+      <Button
+        android:text="Save Changes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSaveEncounter"
+        local:MvxBind="Click SaveChangesCommand" />
+    </LinearLayout>
+    
   </LinearLayout>
-  <FrameLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-    <Mvx.MvxListView
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      local:MvxBind="ItemsSource Questions"
-      local:MvxItemTemplate="@layout/item_question" />
-  </FrameLayout>
-</LinearLayout>
+</ScrollView>

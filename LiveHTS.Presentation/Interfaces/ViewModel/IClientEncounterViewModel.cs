@@ -5,6 +5,7 @@ using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
@@ -23,5 +24,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Encounter Encounter { get; set; }
 
         event EventHandler<ConceptChangedEvent> ConceptChanged;
+
+        IMvxCommand SaveChangesCommand { get; }
     }
 }

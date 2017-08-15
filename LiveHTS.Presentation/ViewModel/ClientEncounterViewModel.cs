@@ -26,6 +26,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Encounter _encounter;
         private ClientDTO _clientDTO;
         private List<QuestionTemplateWrap> _questions;
+        private IMvxCommand _saveChangesCommand;
 
         public Guid UserId
         {
@@ -95,6 +96,14 @@ namespace LiveHTS.Presentation.ViewModel
 
         public event EventHandler<ConceptChangedEvent> ConceptChanged;
 
+        public IMvxCommand SaveChangesCommand
+        {
+            get
+            {
+                _saveChangesCommand = _saveChangesCommand ?? new MvxCommand(SaveChanges, CanSaveChanges);
+                return _saveChangesCommand;
+            }
+        }
 
         public ClientEncounterViewModel(ISettings settings, IDialogService dialogService, IEncounterService encounterService)
         {
@@ -174,6 +183,16 @@ namespace LiveHTS.Presentation.ViewModel
                 list.Add(new QuestionTemplateWrap(clientDashboardViewModel,new QuestionTemplate(r)));
             }
             return list;
+        }
+
+        private bool CanSaveChanges()
+        {
+            return false;
+        }
+
+        private void SaveChanges()
+        {
+            throw new NotImplementedException();
         }
     }
 }
