@@ -13,7 +13,7 @@
         android:textSize="40dp"
         android:orientation="horizontal"
         local:MvxItemTemplate="@layout/obs_item_single"
-        local:MvxBind="ItemsSource QuestionTemplate.SingleOptions;SelectedItem QuestionTemplate.SelectedOption;Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility"
+        local:MvxBind="ItemsSource QuestionTemplate.SingleOptions;SelectedItem QuestionTemplate.SelectedOption;Visibility QuestionTemplate.ShowSingleObsValue"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical" />
@@ -21,21 +21,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="40dp"
-        local:MvxBind="ItemsSource QuestionTemplate.SingleOptionsList;SelectedItem QuestionTemplate.SelectedSingleOptionList;Visibility QuestionTemplate.ShowSingleObsList, Converter=Visibility" />-->
+        local:MvxBind="ItemsSource QuestionTemplate.SingleOptionsList;SelectedItem QuestionTemplate.SelectedSingleOptionList;Visibility QuestionTemplate.ShowSingleObsListValue" />-->
     <Mvx.MvxListView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        local:MvxBind="ItemsSource QuestionTemplate.MultiOptions;Visibility QuestionTemplate.ShowMultiObs, Converter=Visibility"
+        android:layout_height="wrap_content"
+        local:MvxBind="ItemsSource QuestionTemplate.MultiOptions;Visibility QuestionTemplate.ShowMultiObsValue"
         local:MvxItemTemplate="@layout/obs_item_multi" />
     <EditText
         android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        local:MvxBind="Visibility QuestionTemplate.ShowTextObs, Converter=Visibility" />
+        local:MvxBind="Visibility QuestionTemplate.ShowTextObsValue" />
     <EditText
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        local:MvxBind="Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility"
+        local:MvxBind="Visibility QuestionTemplate.ShowNumericObsValue"
         android:paddingRight="10dp"
         android:maxLength="3"
         android:inputType="number" />

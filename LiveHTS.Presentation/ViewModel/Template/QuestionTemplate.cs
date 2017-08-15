@@ -30,6 +30,31 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public bool ShowNumericObs { get; set; }
         public bool ShowMultiObs { get; set; }
 
+        public string ShowSingleObsValue
+        {
+            get { return ShowSingleObs ? "visible" : "gone"; }
+        }
+
+        public string ShowSingleObsListValue
+        {
+            get { return ShowSingleObsList ? "visible" : "gone"; }
+        }
+
+        public string ShowTextObsValue
+        {
+            get { return ShowTextObs ? "visible" : "gone"; }
+        }
+
+        public string ShowNumericObsValue
+        {
+            get { return ShowNumericObs ? "visible" : "gone"; }
+        }
+
+        public string ShowMultiObsValue
+        {
+            get { return ShowMultiObs ? "visible" : "gone"; }
+        }
+
         public QuestionTemplate(Question question)
         {
             Id = question.Id;
@@ -37,9 +62,11 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Concept = question.Concept;
 
             ShowTextObs = Concept.ConceptTypeId == "Text";
-            ShowSingleObs = ShowSingleObsList= Concept.ConceptTypeId == "Single";
+            ShowSingleObs = Concept.ConceptTypeId == "Single";
             ShowNumericObs = Concept.ConceptTypeId == "Numeric";
             ShowMultiObs = Concept.ConceptTypeId == "Multi";
+
+            //TODO:ShowSingleObsList
 
             if (ShowSingleObs)
             {
@@ -48,8 +75,6 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 
             if (ShowMultiObs)
                 MultiOptions = Concept.Category.Items;
-
-            MvxTrace.Error($"{Display}| Text:{ShowTextObs}, Single:{ShowSingleObs}");
         }
     }
 }

@@ -23,8 +23,15 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         
 
         bool ShowSingleObs { get; set; }
+        bool ShowSingleObsList { get; set; }
         bool ShowTextObs { get; set; }
         bool ShowNumericObs { get; set; }
         bool ShowMultiObs { get; set; }
+
+        string ShowSingleObsValue { get; }
+        string ShowSingleObsListValue { get; }
+        string ShowTextObsValue { get; }
+        string ShowNumericObsValue { get; }
+        string ShowMultiObsValue { get;  }
     }
 }

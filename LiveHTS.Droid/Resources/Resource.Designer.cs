@@ -5233,8 +5233,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0800d4
 			public const int buttonReview = 2131230932;
 			
-			// aapt resource value: 0x7f0800a4
-			public const int buttonSaveEncounter = 2131230884;
+			// aapt resource value: 0x7f0800a3
+			public const int buttonSaveEncounter = 2131230883;
 			
 			// aapt resource value: 0x7f0800fb
 			public const int buttonSearch = 2131230971;
@@ -5728,8 +5728,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0800a5
 			public const int textViewEnrollmentTitle = 2131230885;
 			
-			// aapt resource value: 0x7f0800a3
-			public const int textViewErrors = 2131230883;
+			// aapt resource value: 0x7f0800a4
+			public const int textViewErrors = 2131230884;
 			
 			// aapt resource value: 0x7f08008e
 			public const int textViewFirstName = 2131230862;
