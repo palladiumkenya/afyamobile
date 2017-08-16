@@ -76,9 +76,11 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
       <TextView
-        android:text="Errors"
+        android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="8dp"
+        android:textColor="@android:color/holo_red_dark"
         android:id="@+id/textViewErrors" />
     </LinearLayout>
     

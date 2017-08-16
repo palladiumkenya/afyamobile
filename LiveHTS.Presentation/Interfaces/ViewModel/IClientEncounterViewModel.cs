@@ -29,7 +29,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         IMvxCommand SaveChangesCommand { get; }
 
-        void ProcessQuestions(string mode);
+        void Refresh();
         void AllowNext(QuestionTemplate questionTemplate);
     }
 }

@@ -73,28 +73,37 @@ namespace LiveHTS.Presentation.ViewModel.Template
 
                 if (SingleOptions.Count > 0)
                 {
+                    var list = new List<CategoryItem>();
                     foreach (var singleOption in SingleOptions)
                     {
                         singleOption.Allow = Allow;
+                        list.Add(singleOption);
                     }
+                    SingleOptions = list;
                     RaisePropertyChanged(() => SingleOptions);
                 }
                 
                 if (SingleOptionsList.Count > 0)
                 {
+                    var list = new List<CategoryItem>();
                     foreach (var singleOption in SingleOptionsList)
                     {
                         singleOption.Allow = Allow;
+                        list.Add(singleOption);
                     }
+                    SingleOptionsList = list;
                     RaisePropertyChanged(() => SingleOptionsList);
                 }
 
                 if (MultiOptions.Count > 0)
                 {
+                    var list = new List<CategoryItem>();
                     foreach (var multiOption in MultiOptions)
                     {
                         multiOption.Allow = Allow;
+                        list.Add(multiOption);
                     }
+                    MultiOptions = list;
                     RaisePropertyChanged(() => MultiOptions);
                 }
             }

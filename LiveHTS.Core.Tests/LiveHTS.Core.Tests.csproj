@@ -76,6 +76,7 @@
     <Compile Include="Engine\NavigationEngineTests.cs" />
     <Compile Include="Engine\ValidationEngineTests.cs" />
     <Compile Include="Model\Interview\ManifestTests.cs" />
+    <Compile Include="Model\Interview\EncounterTests.cs" />
     <Compile Include="Model\Interview\ResponseTests.cs" />
     <Compile Include="Model\Survey\QuestionValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

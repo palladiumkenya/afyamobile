@@ -54,6 +54,7 @@ namespace LiveHTS.Core.Service.Clients
             }
 
             var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId);
+            encounter.Started=DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;
         }

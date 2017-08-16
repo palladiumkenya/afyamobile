@@ -50,13 +50,14 @@ namespace LiveHTS.Core.Model.Interview
         {
             get { return Obses.Any(); }
         }
+      
 
-        
-        
+
         public Encounter()
         {
             //Status = "Created";
             Id = LiveGuid.NewGuid();
+            EncounterDate = DateTime.Now;
         }
         public Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId):this()
         {
@@ -70,6 +71,26 @@ namespace LiveHTS.Core.Model.Interview
         {
             var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId);
             return encounter;
+        }
+
+        public void AddOrUpdate(Obs obs)
+        {
+            var obses = Obses.ToList();
+
+            if (obses.Any(x => x.QuestionId == obs.QuestionId))
+            {
+                var obsForUpdate = obses.First(x => x.QuestionId == obs.QuestionId);
+                obses.Remove(obsForUpdate);
+                obsForUpdate.UpdateFrom(obs);
+                obses.Add(obsForUpdate);
+            }
+            else
+            {
+                obs.EncounterId = Id;
+                obses.Add(obs);
+            }
+
+            Obses = obses;
         }
 
         public override string ToString()

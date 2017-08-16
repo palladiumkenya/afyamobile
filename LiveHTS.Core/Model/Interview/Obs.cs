@@ -106,5 +106,14 @@ namespace LiveHTS.Core.Model.Interview
             return $"{QuestionId} |{ObsDate:T}|";
         }
 
+        public void UpdateFrom(Obs obs)
+        {
+            ObsDate = obs.ObsDate;
+            ValueText = obs.ValueText;
+            ValueNumeric = obs.ValueNumeric;
+            ValueCoded = obs.ValueCoded;
+            ValueMultiCoded = obs.ValueMultiCoded;
+            ValueDateTime = obs.ValueDateTime;
+        }
     }
 }

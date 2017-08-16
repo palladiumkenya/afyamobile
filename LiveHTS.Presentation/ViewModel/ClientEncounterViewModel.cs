@@ -95,13 +95,13 @@ namespace LiveHTS.Presentation.ViewModel
         public Encounter Encounter
         {
             get { return _encounter; }
-            set { _encounter = value; RaisePropertyChanged(() => Encounter); }
+            set { _encounter = value; }
         }
 
         public Manifest Manifest
         {
             get { return _manifest; }
-            set { _manifest = value; RaisePropertyChanged(() => Manifest); }
+            set { _manifest = value; }
         }
 
         public event EventHandler<ConceptChangedEvent> ConceptChanged;
@@ -151,45 +151,32 @@ namespace LiveHTS.Presentation.ViewModel
             if (mode == "new")
             {
                 //  New Encounter
-
                 _settings.AddOrUpdateValue("client.form.mode", "new");
-
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
                     ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, ProviderId, UserId);
-
-
             }
             else
             {
                 //  Load Encounter
-
                 _settings.AddOrUpdateValue("client.form.mode", "open");
-
-                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
+               Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
                     ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId,true);
             }
-
 
             var e = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", e);
 
             _obsService.Initialize(Encounter);
-
             Manifest = _obsService.Manifest;
+            Manifest.UpdateEncounter(Encounter);
             var manifestJson = JsonConvert.SerializeObject(Manifest);
+            _settings.AddOrUpdateValue("client.manifest", manifestJson);
 
-            _settings.AddOrUpdateValue("manifest", manifestJson);
+            Refresh();
         }
 
-        public void ProcessQuestions(string mode)
+        public void Refresh()
         {
-            var manifestJson = _settings.GetValue("manifest", "");
-
-            if (!string.IsNullOrWhiteSpace(manifestJson))
-            {
-                Manifest = JsonConvert.DeserializeObject<Manifest>(manifestJson);
-            }
-
             if (null != Manifest)
             {
                 var current = _obsService.GetLiveQuestion(Manifest);
@@ -201,7 +188,6 @@ namespace LiveHTS.Presentation.ViewModel
                     liveQ.QuestionTemplate.Allow = true;
                 }
             }
-
         }
 
         public void AllowNext(QuestionTemplate questionTemplate)
@@ -221,27 +207,60 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (validate)
             {
-                
-            }
+                //update encounter
 
-            //allownext
-            MvxTrace.Error($"MODEL >>>>>> Validate {questionTemplate.Display}");
+                var liveResponse = new Response(Encounter.Id);
+
+                var question = _manifest.GetQuestion(questionTemplate.Id);
+                liveResponse.SetQuestion(question);
+                liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId, questionTemplate.GetResponse());
+
+                Encounter.AddOrUpdate(liveResponse.Obs);
+
+                //update manifest
+
+                Manifest.UpdateEncounter(Encounter);
+
+                //save
+
+                var encounterJson = JsonConvert.SerializeObject(Encounter);
+                _settings.AddOrUpdateValue("client.encounter", encounterJson);
+                
+                var manifestJson = JsonConvert.SerializeObject(Manifest);
+                _settings.AddOrUpdateValue("client.manifest", manifestJson);
+
+
+
+                if (null != Manifest)
+                {
+                    var nextQ = _obsService.GetNextQuestion(questionTemplate.Id,Manifest);
+
+                    var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == nextQ.Id);
+
+                    if (null != liveQ)
+                    {
+                        liveQ.QuestionTemplate.Allow = true;
+                    }
+                }
+            }
         }
 
         public override void ViewAppeared()
         {
             var clientJson = _settings.GetValue("client.dto", "");
-            var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
+            var clientEncounterDTOJson = _settings.GetValue("client.encounter.dto", "");
             var formJson = _settings.GetValue("client.form", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+            var clientManifestJson = _settings.GetValue("client.manifest", "");
 
             if (!string.IsNullOrWhiteSpace(clientJson))
             {
                 ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
             }
 
-            if (!string.IsNullOrWhiteSpace(clientEncounterJson))
+            if (!string.IsNullOrWhiteSpace(clientEncounterDTOJson))
             {
-                ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterJson);
+                ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterDTOJson);
             }
 
             if (!string.IsNullOrWhiteSpace(formJson))
@@ -249,9 +268,18 @@ namespace LiveHTS.Presentation.ViewModel
                 Form = JsonConvert.DeserializeObject<Form>(formJson);
             }
 
-            var mode = _settings.GetValue("client.form.mode", "new");
+            if (!string.IsNullOrWhiteSpace(clientEncounterJson))
+            {
+                Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
+            }
 
-            ProcessQuestions(mode);
+            if (!string.IsNullOrWhiteSpace(clientManifestJson))
+            {
+                Manifest = JsonConvert.DeserializeObject<Manifest>(clientManifestJson);
+            }
+
+            Manifest.UpdateEncounter(Encounter);
+            Refresh();
         }
 
         private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, ClientEncounterViewModel clientDashboardViewModel)
