@@ -53,14 +53,14 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
             _navigationEngine = new NavigationEngine();
             _validationEngine=new ValidationEngine();
-            _obsService=new ObsService(_formRepository,_encounterRepository,_obsRepository,_encounterNew,_navigationEngine,_validationEngine);
+            _obsService=new ObsService(_formRepository,_encounterRepository,_obsRepository,_navigationEngine,_validationEngine);
 
         }
 
         [Test]
         public void should_Initialize()
         {
-            _obsService.Initialize();
+            _obsService.Initialize(_encounterNew);
             var manifest = _obsService.Manifest;
             Assert.IsNotNull(manifest);
             Assert.IsTrue(manifest.HasQuestions());
@@ -83,7 +83,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         {
             //Q1.Consent
 
-            _obsService.Initialize();
+            _obsService.Initialize(_encounterNew);
             var question = _obsService.GetLiveQuestion();
             Assert.IsNotNull(question);
             Assert.AreEqual(1, question.Rank);

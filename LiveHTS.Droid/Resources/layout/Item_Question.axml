@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="40dp"
-        local:MvxBind="ItemsSource QuestionTemplate.SingleOptionsList;SelectedItem QuestionTemplate.SelectedSingleOptionList;Visibility QuestionTemplate.ShowSingleObsListValue" />-->
+        local:MvxBind="ItemsSource QuestionTemplate.SingleOptionsList;SelectedItem QuestionTemplate.SelectedSingleOptionList;Visibility QuestionTemplate.ShowSingleObsListValue;Enabled QuestionTemplate.Allow" />-->
     <Mvx.MvxListView
         android:layout_width="match_parent"
         android:layout_height="110dp"
@@ -32,11 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextResponse"
-        local:MvxBind="Text QuestionTemplate.ResponseText;Visibility QuestionTemplate.ShowTextObs, Converter=Visibility" />
+        local:MvxBind="Text QuestionTemplate.ResponseText;Visibility QuestionTemplate.ShowTextObs, Converter=Visibility;Enabled QuestionTemplate.Allow" />
     <EditText
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        local:MvxBind="Text QuestionTemplate.ResponseNumeric;Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility"
+        local:MvxBind="Text QuestionTemplate.ResponseNumeric;Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility;Enabled QuestionTemplate.Allow"
         android:paddingRight="10dp"
         android:maxLength="3"
         android:inputType="number" />

@@ -217,7 +217,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, formTemplate);
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
-            _settings.AddOrUpdateValue("client.encounter", clientEncounterDTOJson);
+            _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
 
             ShowViewModel<ClientEncounterViewModel>(new {formId=formTemplate.Id.ToString(),mode="new", encounterId =""});
         }
@@ -260,7 +260,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, encounterTemplate);
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
-            _settings.AddOrUpdateValue("client.encounter", clientEncounterDTOJson);
+            _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
 
             ShowViewModel<ClientEncounterViewModel>(new { formId = encounterTemplate.FormId.ToString(), mode = "open" , encounterId = encounterTemplate .Id.ToString()});
         }

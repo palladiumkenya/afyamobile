@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly IEncounterService _encounterService;
+        private readonly IObsService _obsService;
 
         private readonly ISettings _settings;
         private ClientEncounterDTO _clientEncounterInfo;
@@ -28,6 +29,7 @@ namespace LiveHTS.Presentation.ViewModel
         private ClientDTO _clientDTO;
         private List<QuestionTemplateWrap> _questions;
         private IMvxCommand _saveChangesCommand;
+        private Manifest _manifest;
 
         public Guid UserId
         {
@@ -95,6 +97,12 @@ namespace LiveHTS.Presentation.ViewModel
             set { _encounter = value; RaisePropertyChanged(() => Encounter); }
         }
 
+        public Manifest Manifest
+        {
+            get { return _manifest; }
+            set { _manifest = value; RaisePropertyChanged(() => Manifest); }
+        }
+
         public event EventHandler<ConceptChangedEvent> ConceptChanged;
 
         public IMvxCommand SaveChangesCommand
@@ -106,11 +114,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public ClientEncounterViewModel(ISettings settings, IDialogService dialogService, IEncounterService encounterService)
+        public ClientEncounterViewModel(ISettings settings, IDialogService dialogService, IEncounterService encounterService, IObsService obsService)
         {
             _settings = settings;
             _dialogService = dialogService;
             _encounterService = encounterService;
+            _obsService = obsService;
         }
 
         public void Init(string formId,string mode, string encounterId)
@@ -126,7 +135,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             var clientJson = _settings.GetValue("client.dto", "");
-            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
 
             if (!string.IsNullOrWhiteSpace(clientJson))
             {
@@ -142,22 +151,62 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
 
+                _settings.AddOrUpdateValue("client.form.mode", "new");
+
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
                     ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, ProviderId, UserId);
+
+
             }
             else
             {
                 //  Load Encounter
 
+                _settings.AddOrUpdateValue("client.form.mode", "open");
+
                 Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
                     ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId,true);
             }
+
+
+            var e = JsonConvert.SerializeObject(Encounter);
+            _settings.AddOrUpdateValue("client.encounter", e);
+
+            _obsService.Initialize(Encounter);
+
+            Manifest = _obsService.Manifest;
+            var manifestJson = JsonConvert.SerializeObject(Manifest);
+
+            _settings.AddOrUpdateValue("manifest", manifestJson);
+        }
+
+        public void ProcessQuestions(string mode)
+        {
+            var manifestJson = _settings.GetValue("manifest", "");
+
+            if (!string.IsNullOrWhiteSpace(manifestJson))
+            {
+                Manifest = JsonConvert.DeserializeObject<Manifest>(manifestJson);
+            }
+
+            if (null != Manifest)
+            {
+                var current = _obsService.GetLiveQuestion(Manifest);
+
+                var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == current.Id);
+
+                if (null != liveQ)
+                {
+                    liveQ.QuestionTemplate.Allow = true;
+                }
+            }
+
         }
 
         public override void ViewAppeared()
         {
             var clientJson = _settings.GetValue("client.dto", "");
-            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
             var formJson = _settings.GetValue("client.form", "");
 
             if (!string.IsNullOrWhiteSpace(clientJson))
@@ -174,6 +223,10 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Form = JsonConvert.DeserializeObject<Form>(formJson);
             }
+
+            var mode = _settings.GetValue("client.form.mode", "new");
+
+            ProcessQuestions(mode);
         }
 
         private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, ClientEncounterViewModel clientDashboardViewModel)
@@ -188,7 +241,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveChanges()
         {
-            return true;
+            return false;
         }
 
         private void SaveChanges()

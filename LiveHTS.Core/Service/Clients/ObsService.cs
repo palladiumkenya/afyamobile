@@ -30,32 +30,33 @@ namespace LiveHTS.Core.Service.Clients
             get { return _response; }
         }
 
-        public ObsService(IFormRepository formRepository, IEncounterRepository encounterRepository, IObsRepository obsRepository,Encounter encounter
+        public ObsService(IFormRepository formRepository, IEncounterRepository encounterRepository, IObsRepository obsRepository
             , INavigationEngine navigationEngine,IValidationEngine validationEngine)
         {
             _formRepository = formRepository;
             _encounterRepository = encounterRepository;
             _obsRepository = obsRepository;
-            _encounter = encounter;
             _navigationEngine = navigationEngine;
             _validationEngine = validationEngine;
         }
 
-        public void Initialize(Encounter encounter=null)
+        public void Initialize(Encounter encounter)
         {
-            var currentEncounter = null != encounter ? encounter : _encounter;
+            var currentEncounter = _encounter = encounter;
             
             var form = _formRepository.GetWithQuestions(currentEncounter.FormId, true);
             _manifest = Manifest.Create(form, currentEncounter);
         }
 
-        public Question GetLiveQuestion()
+        public Question GetLiveQuestion(Manifest manifest = null)
         {
+            _manifest = manifest ?? _manifest;
             return _navigationEngine.GetLiveQuestion(_manifest);
         }
 
-        public Question GetNextQuestion(Guid currentQuestionId)
+        public Question GetNextQuestion(Guid currentQuestionId, Manifest manifest = null)
         {
+            _manifest = manifest ?? _manifest;
             return _navigationEngine.GetNextQuestion(currentQuestionId,_manifest);
         }
 

@@ -9,10 +9,10 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Manifest Manifest { get; }
         Response Response { get; }
 
-        void Initialize(Encounter encounter = null);
+        void Initialize(Encounter encounter);
         
-        Question GetLiveQuestion();
-        Question GetNextQuestion(Guid currentQuestionId);
+        Question GetLiveQuestion(Manifest manifest=null);        
+        Question GetNextQuestion(Guid currentQuestionId, Manifest manifest = null);
         Question GetPreviousQuestion(Guid currentQuestionId);
         Question GetQuestion(Guid questionId, Manifest currentManifest);
 

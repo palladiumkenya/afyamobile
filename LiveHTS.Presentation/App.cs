@@ -36,6 +36,11 @@ namespace LiveHTS.Presentation
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
+            CreatableTypes(assemblyCore)
+                .EndingWith("Engine")
+                .AsInterfaces()
+                .RegisterAsLazySingleton();
+
             Mvx.RegisterSingleton<ILiveSetting>(new LiveSetting(_dbpath));
 
             Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);

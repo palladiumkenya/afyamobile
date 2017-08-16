@@ -26,6 +26,8 @@ namespace LiveHTS.Core.Model.Lookup
 
         [Ignore]
         public bool Selected { get; set; }
+        [Ignore]
+        public bool Allow { get; set; }
 
         public CategoryItem()
         {

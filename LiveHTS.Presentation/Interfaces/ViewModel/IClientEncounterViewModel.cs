@@ -22,9 +22,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         List<QuestionTemplateWrap> Questions { get; set; }
         Encounter Encounter { get; set; }
+        Manifest Manifest { get; set; }
 
         event EventHandler<ConceptChangedEvent> ConceptChanged;
 
         IMvxCommand SaveChangesCommand { get; }
+
+        void ProcessQuestions(string mode);
     }
 }

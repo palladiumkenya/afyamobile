@@ -27,6 +27,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private bool _showNumericObs;
         private bool _showMultiObs;
         private decimal _responseNumeric;
+        private bool _allow;
 
         public Guid Id
         {
@@ -55,6 +56,42 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _concept = value;
                 RaisePropertyChanged(() => Concept);
+            }
+        }
+
+        public bool Allow
+        {
+            get { return _allow; }
+            set
+            {
+                _allow = value; RaisePropertyChanged(() => Allow);
+
+                if (SingleOptions.Count > 0)
+                {
+                    foreach (var singleOption in SingleOptions)
+                    {
+                        singleOption.Allow = Allow;
+                    }
+                    RaisePropertyChanged(() => SingleOptions);
+                }
+                
+                if (SingleOptionsList.Count > 0)
+                {
+                    foreach (var singleOption in SingleOptionsList)
+                    {
+                        singleOption.Allow = Allow;
+                    }
+                    RaisePropertyChanged(() => SingleOptionsList);
+                }
+
+                if (MultiOptions.Count > 0)
+                {
+                    foreach (var multiOption in MultiOptions)
+                    {
+                        multiOption.Allow = Allow;
+                    }
+                    RaisePropertyChanged(() => MultiOptions);
+                }
             }
         }
 
@@ -91,7 +128,6 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedSingleOption = value;
                 RaisePropertyChanged(() => SelectedSingleOption);
-                
             }
         }
 
@@ -222,7 +258,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Id = question.Id;
             Display = question.ToString();
             Concept = question.Concept;
-
+            Allow = false;
             ShowTextObs = Concept.ConceptTypeId == "Text";
             ShowSingleObs = Concept.ConceptTypeId == "Single";
             ShowNumericObs = Concept.ConceptTypeId == "Numeric";

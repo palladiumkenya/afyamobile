@@ -27,13 +27,13 @@ namespace LiveHTS.Presentation.DTO
             EncounterTypeId = encounterTypeId;
         }
 
-        public static ClientEncounterDTO Create(Guid clientId, EncounterTemplate formTemplate)
+        public static ClientEncounterDTO Create(Guid clientId, EncounterTemplate encounterTemplate)
         {
             return new ClientEncounterDTO(
                 clientId,
-                formTemplate.Id,
-                formTemplate.FormDisplay,
-                formTemplate.EncounterTypeId
+                encounterTemplate.FormId,
+                encounterTemplate.FormDisplay,
+                encounterTemplate.EncounterTypeId
                 );
         }
 
