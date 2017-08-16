@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
+using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 {
     public interface IQuestionTemplate
     {
+        IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
+
         Guid Id { get; set; }
         string Display { get; set; }
         Concept Concept { get; set; }
         bool Allow { get; set; }
         string ResponseText { get; set; }
         decimal ResponseNumeric { get; set; }
+        string ErrorSummary { get; set; }
         List<CategoryItem> SingleOptions { get; set; } 
         CategoryItem SelectedSingleOption { get; set; }
 
@@ -23,7 +28,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         List<CategoryItem> MultiOptions { get; set; }
         CategoryItem SelectedMultiOption { get; set; }
         
-
         bool ShowSingleObs { get; set; }
         bool ShowSingleObsList { get; set; }
         bool ShowTextObs { get; set; }
@@ -35,5 +39,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         string ShowTextObsValue { get; }
         string ShowNumericObsValue { get; }
         string ShowMultiObsValue { get;  }
+
+        void MoveToQuestionNext();
+        object GetResponse();
     }
 }

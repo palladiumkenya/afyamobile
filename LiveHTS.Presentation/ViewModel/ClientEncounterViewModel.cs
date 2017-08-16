@@ -12,6 +12,7 @@ using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.Platform;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
@@ -201,6 +202,30 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
+        }
+
+        public void AllowNext(QuestionTemplate questionTemplate)
+        {
+            bool validate = false;
+
+            //validate
+            try
+            {
+                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
+                validate = true;
+            }
+            catch (Exception e)
+            {
+                questionTemplate.ErrorSummary = e.Message;
+            }
+
+            if (validate)
+            {
+                
+            }
+
+            //allownext
+            MvxTrace.Error($"MODEL >>>>>> Validate {questionTemplate.Display}");
         }
 
         public override void ViewAppeared()

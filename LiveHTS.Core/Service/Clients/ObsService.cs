@@ -70,6 +70,17 @@ namespace LiveHTS.Core.Service.Clients
             return _navigationEngine.GetQuestion(questionId, _manifest);
         }
 
+        public bool ValidateResponse(Guid encounterId, Guid questionId, object response)
+        {
+            var liveResponse = new Response(encounterId);
+
+            var question = _manifest.GetQuestion(questionId);
+            liveResponse.SetQuestion(question);
+            liveResponse.SetObs(encounterId, questionId, question.Concept.ConceptTypeId, response);
+
+            return _validationEngine.Validate(liveResponse);
+        }
+
         public void SaveResponse(Guid encounterId, Guid questionId, object response)
         {
             var liveResponse=new Response(encounterId);

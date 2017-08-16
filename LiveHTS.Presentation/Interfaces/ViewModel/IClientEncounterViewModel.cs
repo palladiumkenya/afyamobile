@@ -4,6 +4,7 @@ using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
+using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
 
@@ -29,5 +30,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand SaveChangesCommand { get; }
 
         void ProcessQuestions(string mode);
+        void AllowNext(QuestionTemplate questionTemplate);
     }
 }

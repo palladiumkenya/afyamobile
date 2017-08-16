@@ -4,6 +4,7 @@ using System.Linq;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
+using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform.Platform;
 
@@ -28,6 +29,10 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private bool _showMultiObs;
         private decimal _responseNumeric;
         private bool _allow;
+        private string _errorSummary;
+
+
+        public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
 
         public Guid Id
         {
@@ -102,13 +107,20 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _responseText = value;
                RaisePropertyChanged(() => ResponseText);
+                MoveToQuestionNext();
             }
         }
 
         public decimal ResponseNumeric
         {
             get { return _responseNumeric; }
-            set { _responseNumeric = value; RaisePropertyChanged(() => ResponseNumeric); }
+            set { _responseNumeric = value; RaisePropertyChanged(() => ResponseNumeric); MoveToQuestionNext(); }
+        }
+
+        public string ErrorSummary
+        {
+            get { return _errorSummary; }
+            set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary);}
         }
 
         public List<CategoryItem> SingleOptions
@@ -128,6 +140,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedSingleOption = value;
                 RaisePropertyChanged(() => SelectedSingleOption);
+                MoveToQuestionNext();
             }
         }
 
@@ -148,6 +161,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedSingleOptionList = value;
                 RaisePropertyChanged(() => SelectedSingleOptionList);
+                MoveToQuestionNext();
             }
         }
 
@@ -168,10 +182,9 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedMultiOption = value;
                 RaisePropertyChanged(() => SelectedMultiOption);
-                
+                MoveToQuestionNext();
             }
         }
-
 
         public bool ShowSingleObs
         {
@@ -253,8 +266,31 @@ namespace LiveHTS.Presentation.ViewModel.Template
             get { return ShowMultiObs ? "visible" : "gone"; }
         }
 
-        public QuestionTemplate(Question question, string response = "")
+        public void MoveToQuestionNext()
         {
+            QuestionTemplateWrap.MoveToNextQuestion(this);
+        }
+
+        public object GetResponse()
+        {
+            if (ShowTextObs) // Text
+                return ResponseText;
+            if (ShowSingleObs) //"Single";
+                return SelectedSingleOption.Id;
+            if (ShowNumericObs) //"Numeric";
+                return ResponseNumeric;
+            if (ShowMultiObs) //"Multi";
+            {
+                var options = MultiOptions.Where(x => x.Selected).ToList();
+                return string.Join(",", options);
+            }
+
+            return null;
+        }
+
+        public QuestionTemplate(Question question,  string response = "")
+        {
+            
             Id = question.Id;
             Display = question.ToString();
             Concept = question.Concept;
