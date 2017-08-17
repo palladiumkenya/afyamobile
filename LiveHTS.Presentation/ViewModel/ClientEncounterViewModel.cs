@@ -244,23 +244,8 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         if(liveQ.QuestionTemplate.Allow)
                             return;
-
-                        liveQ.QuestionTemplate.Allow = true;
-
-                        if (liveQ.QuestionTemplate.ShowSingleObs)
-                        {
-                            liveQ.QuestionTemplate.Display = $"HHH{DateTime.Now:T}";
-                            liveQ.QuestionTemplate.SingleOptions =new List<CategoryItem>(liveQ.QuestionTemplate.SingleOptions);
-                        }
-
-//                        if (liveQ.QuestionTemplate.ShowMultiObs)
-//                        {
-//                            foreach (var categoryItem in MultiOptions)
-//                            {
-//                                categoryItem.Allow = true;
-//                            }
-//                        }
-
+                       
+                            liveQ.QuestionTemplate.Allow = true;
                     }
                 }
             }

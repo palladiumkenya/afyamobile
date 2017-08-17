@@ -25,8 +25,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         List<CategoryItem> SingleOptionsList { get; set; }
         CategoryItem SelectedSingleOptionList { get; set; }
 
+        string Selection { get; set; }
         List<CategoryItem> MultiOptions { get; set; }
-        CategoryItem SelectedMultiOption { get; set; }
+        List<CategoryItem> SelectedMultiOptions { get; set; }
         
         bool ShowSingleObs { get; set; }
         bool ShowSingleObsList { get; set; }
@@ -42,5 +43,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 
         void MoveToQuestionNext();
         object GetResponse();
+
+        IMvxCommand CheckOptionCommand { get; }
     }
 }

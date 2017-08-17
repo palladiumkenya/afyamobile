@@ -40,6 +40,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event\OptionSelectedEventArgs.cs" />
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
     <Compile Include="Interfaces\Model\IEnrollment.cs" />
     <Compile Include="Interfaces\Model\IProfile.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />
     <Compile Include="Service\Clients\ObsService.cs" />

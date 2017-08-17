@@ -81,16 +81,6 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^QuestionId^: ^6206ac1c-6260-11e7-907b-a6006ad3dba0^,
     ^Id^: ^6206a3a2-6260-11e7-907b-a6006ad3dba0^,
     ^Voided^: 0
-  },
-  {
-    ^ValidatorId^: ^Range^,
-    ^ValidatorTypeId^: ^Numeric^,
-    ^Revision^: 1,
-    ^MinLimit^: 3,
-    ^MaxLimit^: 5,
-    ^QuestionId^: ^6206ac1c-6260-11e7-907b-a6006ad3dba0^,
-    ^Id^: ^6206a4a7-6260-11e7-907b-a6006ad3dba0^,
-    ^Voided^: 0
   }
 ]
 ";

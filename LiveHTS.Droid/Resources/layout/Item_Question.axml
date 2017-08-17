@@ -23,17 +23,29 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical" />
-<!--<MvxSpinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        local:MvxBind="ItemsSource QuestionTemplate.SingleOptionsList;SelectedItem QuestionTemplate.SelectedSingleOptionList;Visibility QuestionTemplate.ShowSingleObsListValue;Enabled QuestionTemplate.Allow" />-->
-    <Mvx.MvxListView
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:descendantFocusability="beforeDescendants"
-        local:MvxBind="ItemsSource QuestionTemplate.MultiOptions;Visibility QuestionTemplate.ShowMultiObs, Converter=Visibility"
-        local:MvxItemTemplate="@layout/obs_item_multi" />
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:local="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                local:MvxBind="Visibility QuestionTemplate.ShowMultiObs, Converter=Visibility;">
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textSize="10dp"
+      local:MvxBind="Text QuestionTemplate.Selection" />
+
+    <MvxSpinner
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    local:MvxItemTemplate="@layout/obs_item_multi_s"
+    local:MvxDropDownItemTemplate="@layout/obs_item_multi_d"
+    local:MvxBind="ItemsSource QuestionTemplate.MultiOptions;Enabled QuestionTemplate.Allow"/>
+  
+  </LinearLayout>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,3 +59,7 @@
         android:maxLength="3"
         android:inputType="number" />
 </LinearLayout>
+
+
+
+

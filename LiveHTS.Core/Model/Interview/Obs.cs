@@ -29,9 +29,17 @@ namespace LiveHTS.Core.Model.Interview
             EncounterId = encounterId;
         }
 
-        private Obs(Guid questionId, Guid encounterId, string value) : this(questionId, encounterId)
+        private Obs(Guid questionId, Guid encounterId, string value,bool multiCoded=false) : this(questionId, encounterId)
         {
-            ValueText = value;
+            if (multiCoded)
+            {
+                ValueMultiCoded = value;
+            }
+            else
+            {
+                ValueText = value;
+            }
+            
         }
 
         private Obs(Guid questionId, Guid encounterId, Guid? valueCoded):this(questionId,encounterId)
@@ -70,6 +78,10 @@ namespace LiveHTS.Core.Model.Interview
                 var val = string.IsNullOrWhiteSpace(value) ? new DateTime(1899,1,1) : Convert.ToDateTime(value);
                 return new Obs(questionId, encounterId,val);
             }
+            if (type == "Multi")
+            {
+                return new Obs(questionId, encounterId, value, true);
+            }
 
 
             return new Obs(questionId, encounterId, value);
@@ -92,11 +104,11 @@ namespace LiveHTS.Core.Model.Interview
             }
             if (type == "Multi")
             {
-                return string.IsNullOrWhiteSpace(ValueMultiCoded);
+                return !string.IsNullOrWhiteSpace(ValueMultiCoded);
             }
             if (type == "Text")
             {
-                return string.IsNullOrWhiteSpace(ValueText);
+                return !string.IsNullOrWhiteSpace(ValueText);
             }
             return false;
         }
