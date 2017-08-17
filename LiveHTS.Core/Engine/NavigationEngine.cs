@@ -32,7 +32,7 @@ namespace LiveHTS.Core.Engine
              
 
             // return FIRST Question
-            if (null == latestResponse)
+            if (null == latestResponse && null == currentManifest.GetFirstQuestion())
             {
                 candidateQuestion = currentManifest.GetFirstQuestion();
                 return candidateQuestion;
