@@ -4,6 +4,7 @@ using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
@@ -199,6 +200,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
                 validate = true;
+                questionTemplate.ErrorSummary = string.Empty;
             }
             catch (Exception e)
             {
@@ -213,7 +215,8 @@ namespace LiveHTS.Presentation.ViewModel
 
                 var question = _manifest.GetQuestion(questionTemplate.Id);
                 liveResponse.SetQuestion(question);
-                liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId, questionTemplate.GetResponse());
+                liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
+                    questionTemplate.GetResponse());
 
                 Encounter.AddOrUpdate(liveResponse.Obs);
 
@@ -225,7 +228,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 var encounterJson = JsonConvert.SerializeObject(Encounter);
                 _settings.AddOrUpdateValue("client.encounter", encounterJson);
-                
+
                 var manifestJson = JsonConvert.SerializeObject(Manifest);
                 _settings.AddOrUpdateValue("client.manifest", manifestJson);
 
@@ -233,13 +236,31 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null != Manifest)
                 {
-                    var nextQ = _obsService.GetNextQuestion(questionTemplate.Id,Manifest);
+                    var nextQ = _obsService.GetNextQuestion(questionTemplate.Id, Manifest);
 
                     var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == nextQ.Id);
 
                     if (null != liveQ)
                     {
+                        if(liveQ.QuestionTemplate.Allow)
+                            return;
+
                         liveQ.QuestionTemplate.Allow = true;
+
+                        if (liveQ.QuestionTemplate.ShowSingleObs)
+                        {
+                            liveQ.QuestionTemplate.Display = $"HHH{DateTime.Now:T}";
+                            liveQ.QuestionTemplate.SingleOptions =new List<CategoryItem>(liveQ.QuestionTemplate.SingleOptions);
+                        }
+
+//                        if (liveQ.QuestionTemplate.ShowMultiObs)
+//                        {
+//                            foreach (var categoryItem in MultiOptions)
+//                            {
+//                                categoryItem.Allow = true;
+//                            }
+//                        }
+
                     }
                 }
             }
@@ -253,17 +274,17 @@ namespace LiveHTS.Presentation.ViewModel
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var clientManifestJson = _settings.GetValue("client.manifest", "");
 
-            if (!string.IsNullOrWhiteSpace(clientJson))
+            if (null == ClientDTO && !string.IsNullOrWhiteSpace(clientJson))
             {
                 ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
             }
 
-            if (!string.IsNullOrWhiteSpace(clientEncounterDTOJson))
+            if (null == ClientEncounterDTO && !string.IsNullOrWhiteSpace(clientEncounterDTOJson))
             {
                 ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterDTOJson);
             }
 
-            if (!string.IsNullOrWhiteSpace(formJson))
+            if (null == Form && !string.IsNullOrWhiteSpace(formJson))
             {
                 Form = JsonConvert.DeserializeObject<Form>(formJson);
             }

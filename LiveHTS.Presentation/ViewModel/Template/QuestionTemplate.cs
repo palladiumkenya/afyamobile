@@ -70,42 +70,20 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set
             {
                 _allow = value; RaisePropertyChanged(() => Allow);
-
-                if (SingleOptions.Count > 0)
+                if (ShowSingleObs)
                 {
-                    var list = new List<CategoryItem>();
-                    foreach (var singleOption in SingleOptions)
+                    foreach (var categoryItem in SingleOptions)
                     {
-                        singleOption.Allow = Allow;
-                        list.Add(singleOption);
+                        categoryItem.Allow = true;
                     }
-                    SingleOptions = list;
-                    RaisePropertyChanged(() => SingleOptions);
                 }
-                
-                if (SingleOptionsList.Count > 0)
-                {
-                    var list = new List<CategoryItem>();
-                    foreach (var singleOption in SingleOptionsList)
-                    {
-                        singleOption.Allow = Allow;
-                        list.Add(singleOption);
-                    }
-                    SingleOptionsList = list;
-                    RaisePropertyChanged(() => SingleOptionsList);
-                }
-
-                if (MultiOptions.Count > 0)
-                {
-                    var list = new List<CategoryItem>();
-                    foreach (var multiOption in MultiOptions)
-                    {
-                        multiOption.Allow = Allow;
-                        list.Add(multiOption);
-                    }
-                    MultiOptions = list;
-                    RaisePropertyChanged(() => MultiOptions);
-                }
+//                if (ShowMultiObs)
+//                {
+//                    foreach (var categoryItem in MultiOptions)
+//                    {
+//                        categoryItem.Allow = true;
+//                    }
+//                }
             }
         }
 

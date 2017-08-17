@@ -112,8 +112,6 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-      
-
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -189,13 +187,11 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        
-
-      
         public void ShowRegistry()
         {
             ShowViewModel<RegistryViewModel>();
-        } 
+        }
+
         public async void RemoveRelationship(RelationshipTemplate template)
         {
             try
@@ -213,14 +209,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public void StartEncounter(FormTemplate formTemplate)
-        {
-            var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, formTemplate);
-            var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
-            _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
-
-            ShowViewModel<ClientEncounterViewModel>(new {formId=formTemplate.Id.ToString(),mode="new", encounterId =""});
-        }
+        
 
         private static List<RelationshipTemplateWrap> ConvertToRelationshipWrapperClass(IEnumerable<ClientRelationship> clientRelationships, ClientDashboardViewModel clientDashboardViewModel)
         {
@@ -256,13 +245,33 @@ namespace LiveHTS.Presentation.ViewModel
             return list;
         }
 
+
+        public void StartEncounter(FormTemplate formTemplate)
+        {
+            var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, formTemplate);
+            var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
+            _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
+
+            ShowViewModel<ClientEncounterViewModel>(new
+            {
+                formId = formTemplate.Id.ToString(),
+                mode = "new",
+                encounterId = ""
+            });
+        }
+
         public void ResumeEncounter(EncounterTemplate encounterTemplate)
         {
             var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, encounterTemplate);
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
 
-            ShowViewModel<ClientEncounterViewModel>(new { formId = encounterTemplate.FormId.ToString(), mode = "open" , encounterId = encounterTemplate .Id.ToString()});
+            ShowViewModel<ClientEncounterViewModel>(new
+            {
+                formId = encounterTemplate.FormId.ToString(),
+                mode = "open",
+                encounterId = encounterTemplate.Id.ToString()
+            });
         }
 
         public void ReviewEncounter(EncounterTemplate encounterTemplate)

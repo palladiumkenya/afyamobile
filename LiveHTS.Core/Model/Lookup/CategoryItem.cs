@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -25,9 +27,9 @@ namespace LiveHTS.Core.Model.Lookup
         public Decimal Rank { get; set; }
 
         [Ignore]
-        public bool Selected { get; set; }
+        public  bool Selected { get; set; }
         [Ignore]
-        public bool Allow { get; set; }
+        public  bool Allow { get; set; }
 
         public CategoryItem()
         {
@@ -38,5 +40,6 @@ namespace LiveHTS.Core.Model.Lookup
         {
             return Display;
         }
+
     }
 }
