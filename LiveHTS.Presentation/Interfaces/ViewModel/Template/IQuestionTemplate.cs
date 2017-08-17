@@ -43,7 +43,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 
         void MoveToQuestionNext();
         object GetResponse();
-
+        void SetResponse(object response);
         IMvxCommand CheckOptionCommand { get; }
     }
 }

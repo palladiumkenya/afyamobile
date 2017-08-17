@@ -101,6 +101,7 @@
     <Compile Include="Seed\Survey\QuestionRemoteTransformationJson.cs" />
     <Compile Include="Seed\Survey\QuestionReValidationJson.cs" />
     <Compile Include="Seed\Survey\ConceptJson.cs" />
+    <Compile Include="Seed\Survey\QuestionValidationJsonBak.cs" />
     <Compile Include="Seed\Survey\QuestionValidationJson.cs" />
     <Compile Include="Seed\Survey\ModuleJson.cs" />
   </ItemGroup>

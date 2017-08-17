@@ -193,6 +193,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void AllowNext(QuestionTemplate questionTemplate)
         {
+            AllowNextMultiple(questionTemplate);
+            return;
             bool validate = false;
 
             //validate
@@ -257,11 +259,104 @@ namespace LiveHTS.Presentation.ViewModel
                             skipQ.QuestionTemplate.Allow = false;
                         }
 
-                        if (liveQ.QuestionTemplate.Allow)
-                            return;
+                        if (!liveQ.QuestionTemplate.Allow)
+                            liveQ.QuestionTemplate.Allow = true;
 
-                        liveQ.QuestionTemplate.Allow = true;
+                        //set nextQ value
+
+                        var response = Manifest.GetResponse(liveQ.QuestionTemplate.Id);
+
+                        var responseValue = null == response ? null : response.GetValue().Value;
+                        liveQ.QuestionTemplate.SetResponse(responseValue);
+
+
                     }
+                }
+            }
+        }
+
+        public void AllowNextMultiple(QuestionTemplate questionTemplate)
+        {
+            bool validate = false;
+
+            //validate
+            try
+            {
+                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
+                validate = true;
+                questionTemplate.ErrorSummary = string.Empty;
+            }
+            catch (Exception e)
+            {
+                questionTemplate.ErrorSummary = e.Message;
+            }
+
+            if (validate)
+            {
+                //update encounter
+
+                var liveResponse = new Response(Encounter.Id);
+
+                var question = _manifest.GetQuestion(questionTemplate.Id);
+                liveResponse.SetQuestion(question);
+                liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
+                    questionTemplate.GetResponse());
+
+                Encounter.AddOrUpdate(liveResponse.Obs);
+
+                //update manifest
+
+                Manifest.UpdateEncounter(Encounter);
+
+                //save
+
+                var encounterJson = JsonConvert.SerializeObject(Encounter);
+                _settings.AddOrUpdateValue("client.encounter", encounterJson);
+
+                var manifestJson = JsonConvert.SerializeObject(Manifest);
+                _settings.AddOrUpdateValue("client.manifest", manifestJson);
+
+
+
+                if (null != Manifest)
+                {
+                    var liveSkipQs = new List<QuestionTemplateWrap>();
+
+                    var nextQs = _obsService.GetLiveQuestions(Manifest, questionTemplate.Id);
+
+                    if (null == nextQs||nextQs.Count==0)
+                        return;
+                                
+                    foreach (var nextQ in nextQs)
+                    {
+                        var skipQs = nextQ.SkippedQuestionIds;
+
+                        var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == nextQ.Id);
+
+                        if (skipQs.Count > 0)
+                            liveSkipQs = Questions.Where(x => skipQs.Contains(x.QuestionTemplate.Id)).ToList();
+
+                        if (null != liveQ)
+                        {
+                            foreach (var skipQ in liveSkipQs)
+                            {
+                                skipQ.QuestionTemplate.Allow = false;
+                            }
+
+                            if (!liveQ.QuestionTemplate.Allow)
+                                liveQ.QuestionTemplate.Allow = true;
+
+                            //set nextQ value
+
+                            var response = Manifest.GetResponse(liveQ.QuestionTemplate.Id);
+
+                            var responseValue = null == response ? null : response.GetValue().Value;
+                            liveQ.QuestionTemplate.SetResponse(responseValue);
+
+
+                        }
+                    }
+                    
                 }
             }
         }

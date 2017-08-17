@@ -31,5 +31,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         void Refresh();
         void AllowNext(QuestionTemplate questionTemplate);
+        void AllowNextMultiple(QuestionTemplate questionTemplate);
     }
 }

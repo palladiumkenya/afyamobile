@@ -43,6 +43,11 @@ namespace LiveHTS.Core.Model.Survey
             get { return null != Validations && Validations.Any(x=>x.Revision==0); }
         }
         [Ignore]
+        public bool IsRequired
+        {
+            get { return HasValidations && Validations.Any(x => x.ValidatorId == "Required"); }
+        }
+        [Ignore]
         public bool HasReValidations
         {
             get { return null != ReValidations && ReValidations.Any(); }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Interfaces.Engine;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Survey;
@@ -57,6 +58,29 @@ namespace LiveHTS.Core.Service.Clients
         public Question GetLiveQuestion(Manifest manifest, Guid currentQuestionId)
         {
             return _navigationEngine.GetLiveQuestion(_manifest,currentQuestionId);
+        }
+
+        public List<Question> GetLiveQuestions(Manifest manifest, Guid currentQuestionId)
+        {
+            var list=new List<Question>();
+            bool notRequired = true;
+
+            while (notRequired)
+            {
+                var nextQ= GetLiveQuestion(manifest, currentQuestionId);
+                if (null == nextQ)
+                {
+                    notRequired = false;
+                }
+                else
+                {
+                    currentQuestionId = nextQ.Id;
+                    list.Add(nextQ);
+                    notRequired = !nextQ.IsRequired;
+                }
+            }
+
+            return list;
         }
 
         public Question GetNextQuestion(Guid currentQuestionId, Manifest manifest = null)

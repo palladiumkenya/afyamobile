@@ -319,6 +319,62 @@ namespace LiveHTS.Presentation.ViewModel.Template
             return null;
         }
 
+        public void SetResponse(object response)
+        {
+            if (ShowTextObs) // Text
+                ResponseText = response.ToString();
+            if (ShowSingleObs) //"Single";
+            {
+                var text = response.ToString();
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    var option = SingleOptions.FirstOrDefault(x => x.ItemId == new Guid(text));
+                    SelectedSingleOption = option;
+                }
+            }
+            if (ShowNumericObs) //"Numeric";
+            {
+                var text = response.ToString();
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    decimal numeric;
+                    decimal.TryParse(text, out numeric);
+                    ResponseNumeric = numeric;
+                }
+            }
+            if (ShowMultiObs) //"Multi";
+            {
+                var itemIds=new List<Guid>();
+                var ids = response.ToString().Split(',');
+                foreach (var id in ids)
+                {
+                    itemIds.Add(new Guid(id));
+                }
+                if (itemIds.Count > 0)
+                {
+                    var multiOptions=new List<CategoryItem>();
+                    var options = MultiOptions
+                        .Where(
+                            x => itemIds.Contains(x.ItemId) &&
+                                 x.ItemId != Guid.Empty)
+                        .ToList();
+
+                    foreach (var categoryItem in MultiOptions)
+                    {
+                        
+                        if (options.Any(x => x.ItemId == categoryItem.ItemId))
+                        {
+                            if (!categoryItem.Selected)
+                                categoryItem.Selected = true;
+                        }                            
+                        multiOptions.Add(categoryItem);
+                    }
+                    MultiOptions = multiOptions;
+                }                                    
+            }
+
+        }
+
         public IMvxCommand CheckOptionCommand
         {
             get

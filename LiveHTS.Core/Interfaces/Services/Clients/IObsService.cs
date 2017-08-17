@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 
@@ -13,6 +14,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         
         Question GetLiveQuestion(Manifest manifest=null);
         Question GetLiveQuestion(Manifest manifest, Guid currentQuestionId);
+        List<Question> GetLiveQuestions(Manifest manifest, Guid currentQuestionId);
         Question GetNextQuestion(Guid currentQuestionId, Manifest manifest = null);
         Question GetPreviousQuestion(Guid currentQuestionId);
         Question GetQuestion(Guid questionId, Manifest currentManifest);
