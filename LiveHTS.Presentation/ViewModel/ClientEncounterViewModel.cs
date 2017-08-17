@@ -238,32 +238,29 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     var liveSkipQs = new List<QuestionTemplateWrap>();
 
-                    var nextQ = _obsService.GetLiveQuestion(Manifest);
-                    
-                    if(null==nextQ)
+                    var nextQ = _obsService.GetLiveQuestion(Manifest, questionTemplate.Id);
+
+                    if (null == nextQ)
                         return;
 
                     var skipQs = nextQ.SkippedQuestionIds;
 
                     var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == nextQ.Id);
-                    
-                    if(skipQs.Count>0)
+
+                    if (skipQs.Count > 0)
                         liveSkipQs = Questions.Where(x => skipQs.Contains(x.QuestionTemplate.Id)).ToList();
 
                     if (null != liveQ)
                     {
                         foreach (var skipQ in liveSkipQs)
                         {
-                            if (skipQ.QuestionTemplate.Allow)
-                            {
-                                skipQ.QuestionTemplate.Allow = false;
-                            }
+                            skipQ.QuestionTemplate.Allow = false;
                         }
-                      
-                        if(liveQ.QuestionTemplate.Allow)
+
+                        if (liveQ.QuestionTemplate.Allow)
                             return;
-                       
-                            liveQ.QuestionTemplate.Allow = true;
+
+                        liveQ.QuestionTemplate.Allow = true;
                     }
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Engine;
 using LiveHTS.Core.Model.Interview;
@@ -9,19 +10,29 @@ namespace LiveHTS.Core.Engine
 {
     public class NavigationEngine : INavigationEngine
     {
-        public Question GetLiveQuestion(Manifest currentManifest)
+        public Question GetLiveQuestion(Manifest currentManifest, Guid? currentQuestionId = null)
         {
             Question lastQuestion = null;
             Question candidateQuestion = null;
+            Response latestResponse;
 
             if (!currentManifest.HasQuestions())
                 throw new ArgumentException("No Fields in Form");
 
+            
             //Last Response
-            var lastResonse = currentManifest.GetLastResponse();
+            if (!currentQuestionId.IsNullOrEmpty())
+            {
+                 latestResponse = currentManifest.GetResponse(currentQuestionId.Value);
+            }
+            else
+            {
+                latestResponse = currentManifest.GetLastResponse();
+            }
+             
 
             // return FIRST Question
-            if (null == lastResonse)
+            if (null == latestResponse)
             {
                 candidateQuestion = currentManifest.GetFirstQuestion();
                 return candidateQuestion;
@@ -29,7 +40,7 @@ namespace LiveHTS.Core.Engine
 
             // return Next Question
 
-            lastQuestion = lastResonse.Question;            
+            lastQuestion = latestResponse.Question;            
 
             // Vet last Question
             if (null != lastQuestion)
@@ -42,7 +53,7 @@ namespace LiveHTS.Core.Engine
                         .ToList();
                     foreach (var questionBranch in postBranches)
                     {
-                        var gotoQuestionId = questionBranch.Evaluate(lastResonse.GetValue());
+                        var gotoQuestionId = questionBranch.Evaluate(latestResponse.GetValue());
                         if (!gotoQuestionId.IsNullOrEmpty())
                         {
                             candidateQuestion = currentManifest.GetQuestion(gotoQuestionId.Value);
@@ -58,8 +69,10 @@ namespace LiveHTS.Core.Engine
                     candidateQuestion = currentManifest.GetNextRankQuestionAfter(lastQuestion.Id);
             }
 
-            return EvaluateSelf(candidateQuestion, currentManifest);
+            return EvaluateSelf(candidateQuestion, currentManifest, currentQuestionId);
         }
+
+       
 
         public Question GetNextQuestion(Guid currentQuestionId, Manifest currentManifest)
         {
@@ -80,9 +93,11 @@ namespace LiveHTS.Core.Engine
         }
 
         //TODO: Evaluate self
-        public Question EvaluateSelf(Question question, Manifest currentManifest)
+        public Question EvaluateSelf(Question question, Manifest currentManifest, Guid? currentQuestionId = null)
         {
+            Response last;
             Question nextQuestion = question;
+            nextQuestion.SkippedQuestionIds = new List<Guid>();
 
             //TODO: Pre Branches          
 
@@ -92,11 +107,30 @@ namespace LiveHTS.Core.Engine
 
             //TODO: ReVailidations
 
-            var last = currentManifest.GetLastResponse();
+            //Last Response
+
+            if (!currentQuestionId.IsNullOrEmpty())
+            {
+                last = currentManifest.GetResponse(currentQuestionId.Value);
+            }
+            else
+            {
+                last = currentManifest.GetLastResponse();
+            }
+
+            
             if (null == last || null==nextQuestion)
                 return nextQuestion;
 
             var lastQ = last.Question;
+
+            if (!lastQ.HasConditionalBranches("Post"))
+            {
+                return nextQuestion;
+            }
+
+            
+
             var allQs = currentManifest.QuestionStore.OrderBy(x => x.Rank).ToList();
 
             var skippedQs = allQs

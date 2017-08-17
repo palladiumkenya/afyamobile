@@ -54,6 +54,11 @@ namespace LiveHTS.Core.Service.Clients
             return _navigationEngine.GetLiveQuestion(_manifest);
         }
 
+        public Question GetLiveQuestion(Manifest manifest, Guid currentQuestionId)
+        {
+            return _navigationEngine.GetLiveQuestion(_manifest,currentQuestionId);
+        }
+
         public Question GetNextQuestion(Guid currentQuestionId, Manifest manifest = null)
         {
             _manifest = manifest ?? _manifest;

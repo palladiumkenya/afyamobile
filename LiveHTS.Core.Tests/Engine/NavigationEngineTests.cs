@@ -70,6 +70,22 @@ namespace LiveHTS.Core.Tests.Engine
         }
 
         [Test]
+        public void should_GetLiveQuestion_From_LaestQ_Other()
+        {
+            //  4.Referall   >>  5.Discordant
+
+            var q4 = _encounter.Obses.Select(x => x.QuestionId).Skip(3).First();
+            
+
+            _manifest = Manifest.Create(_form, _encounter);
+
+            var question = _navigationEngine.GetLiveQuestion(_manifest, q4);
+            Assert.IsNotNull(question);
+            Assert.AreEqual(5, question.Rank);
+            Console.WriteLine(question);
+        }
+
+        [Test]
         public void should_GetLiveQuestion_Other_Branched()
         {
             //Q1.Consent=N GOTO Q4.Referall
@@ -85,6 +101,7 @@ namespace LiveHTS.Core.Tests.Engine
             Console.WriteLine(question);
         }
 
+       
         [Test]
         public void should_GetNextQuestion()
         {

@@ -77,12 +77,10 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 {
                     foreach (var categoryItem in SingleOptions)
                     {
-                        categoryItem.Allow = true;
+                        categoryItem.Allow = Allow;
                     }
                     SingleOptions=new List<CategoryItem>(SingleOptions);
                 }
-
-                
             }
         }
 
