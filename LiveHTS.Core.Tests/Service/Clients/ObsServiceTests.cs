@@ -88,6 +88,9 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.IsNotNull(question);
             Assert.AreEqual(1, question.Rank);
             Console.WriteLine(question);
+
+            Assert.IsFalse(question.SkippedQuestionIds.Any());
+            Console.WriteLine($"skipped {question.SkippedQuestionIds.Count}");
         }
         [Test]
         public void should_GetLiveQuestion_Other()
@@ -102,6 +105,9 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.IsNotNull(question);
             Assert.AreEqual(5, question.Rank);
             Console.WriteLine(question);
+
+            Assert.IsFalse(question.SkippedQuestionIds.Any());
+            Console.WriteLine($"skipped {question.SkippedQuestionIds.Count}");
         }
 
         
@@ -118,6 +124,9 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.IsNotNull(question);
             Assert.AreEqual(4, question.Rank);
             Console.WriteLine(question);
+
+            Assert.IsTrue(question.SkippedQuestionIds.Any());
+            Console.WriteLine($"skipped {question.SkippedQuestionIds.Count}");
         }
 
 
@@ -134,6 +143,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.IsNotNull(question);
             Assert.AreEqual(5, question.Rank);
             Console.WriteLine(question);
+
         }
         
         [Test]

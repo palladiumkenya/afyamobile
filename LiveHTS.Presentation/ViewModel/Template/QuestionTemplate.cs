@@ -309,13 +309,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
             if (ShowTextObs) // Text
                 return ResponseText;
             if (ShowSingleObs) //"Single";
-                return SelectedSingleOption.Id;
+                return SelectedSingleOption.ItemId;
             if (ShowNumericObs) //"Numeric";
                 return ResponseNumeric;
             if (ShowMultiObs) //"Multi";
             {
                 var options = MultiOptions.Where(x => x.Selected).ToList();
-                return string.Join(",", options);
+                return string.Join(",", options.Select(x=>x.ItemId));
             }
 
             return null;

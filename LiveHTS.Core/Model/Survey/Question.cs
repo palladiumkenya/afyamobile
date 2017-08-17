@@ -62,6 +62,8 @@ namespace LiveHTS.Core.Model.Survey
         {
             get { return null != RemoteTransformations && RemoteTransformations.Any(); }
         }
+        [Ignore]
+        public List<Guid> SkippedQuestionIds { get; set; } =new List<Guid>();
 
 
         public Question()

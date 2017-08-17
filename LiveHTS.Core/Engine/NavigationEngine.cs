@@ -80,8 +80,10 @@ namespace LiveHTS.Core.Engine
         }
 
         //TODO: Evaluate self
-        public Question EvaluateSelf(Question question,Manifest currentManifest)
+        public Question EvaluateSelf(Question question, Manifest currentManifest)
         {
+            Question nextQuestion = question;
+
             //TODO: Pre Branches          
 
             //TODO: Transformations
@@ -90,7 +92,23 @@ namespace LiveHTS.Core.Engine
 
             //TODO: ReVailidations
 
-            Question nextQuestion = question;
+            var last = currentManifest.GetLastResponse();
+            if (null == last || null==nextQuestion)
+                return nextQuestion;
+
+            var lastQ = last.Question;
+            var allQs = currentManifest.QuestionStore.OrderBy(x => x.Rank).ToList();
+
+            var skippedQs = allQs
+                .Where(x => x.Rank >= lastQ.Rank &&
+                            x.Rank <= nextQuestion.Rank &&
+                            x.Id!=lastQ.Id&&
+                            x.Id!=nextQuestion.Id)
+                .ToList();
+
+            if(skippedQs.Count>0)
+                nextQuestion.SkippedQuestionIds = skippedQs.Select(x => x.Id).ToList();
+
             return nextQuestion;
         }
     }
