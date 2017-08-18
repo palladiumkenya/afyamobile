@@ -4,8 +4,8 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:local="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
 
   <!-- Question Display -->
   <TextView
@@ -40,9 +40,9 @@
 
   <!-- Obs Single Dropdown -->
   <MvxSpinner
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:descendantFocusability="beforeDescendants"
+    android:layout_width="fill_parent"
+    android:layout_height="20dp"
+    
     local:MvxBind="ItemsSource QuestionTemplate.SingleOptions; SelectedItem  QuestionTemplate.SelectedSingleOption; Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
   
   <!-- Obs Muliselect Dropdown -->
@@ -59,9 +59,9 @@
       local:MvxBind="Text QuestionTemplate.Selection" />
 
     <MvxSpinner
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:descendantFocusability="beforeDescendants"
+      android:layout_width="fill_parent"
+      android:layout_height="20dp"
+      
       local:MvxItemTemplate="@layout/obs_item_multi_s"
       local:MvxDropDownItemTemplate="@layout/obs_item_multi_d"
       local:MvxBind="ItemsSource QuestionTemplate.MultiOptions; Enabled QuestionTemplate.Allow" />
@@ -71,4 +71,4 @@
 
 
 
-
+<!--android:descendantFocusability="beforeDescendants"-->

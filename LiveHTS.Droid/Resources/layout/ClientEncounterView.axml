@@ -91,7 +91,7 @@
         android:layout_height="fill_parent">
       <Mvx.MvxListView
           android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
+          android:layout_height="700dp"
           local:MvxBind="ItemsSource Questions"
           local:MvxItemTemplate="@layout/item_question" />
     </FrameLayout>

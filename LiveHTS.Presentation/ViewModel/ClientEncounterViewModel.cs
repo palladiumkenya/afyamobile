@@ -251,12 +251,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void LoadView()
         {
-
             if (null != Manifest)
-            {
-
-                
-
+            {                
                 if (Manifest.HasResponses())
                 {
 
@@ -272,9 +268,22 @@ namespace LiveHTS.Presentation.ViewModel
                         var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == r.QuestionId);
                         if (null != q)
                         {
+
+                            // determine if to Allow Response
+
                             if (!q.QuestionTemplate.Allow)
                                 q.QuestionTemplate.Allow = true;
-                            q.QuestionTemplate.SetResponse(r.GetValue().Value);
+
+                            
+                            // determine if to set Response
+                            var existingResponse = q.QuestionTemplate.GetResponse();
+
+                            if (null == existingResponse || string.IsNullOrWhiteSpace(existingResponse.ToString()))
+                            {
+                                q.QuestionTemplate.SetResponse(r.GetValue().Value);
+                            }
+                            
+                            
                         }
                     }
                 }
