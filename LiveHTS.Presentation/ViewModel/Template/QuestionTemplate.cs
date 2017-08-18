@@ -32,7 +32,6 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private string _errorSummary;
         private string _selection;
         private IMvxCommand _checkOptionCommand;
-        private bool _shout = true;
 
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
 
@@ -75,15 +74,11 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 
                 if (ShowSingleObs)
                 {
-                    var selected = SelectedSingleOption;
-
-                    _shout = false;
                     foreach (var categoryItem in SingleOptions)
                     {
                         categoryItem.Allow = Allow;
                     }
                     SingleOptions=new List<CategoryItem>(SingleOptions);
-                    SelectedSingleOption = selected;
                 }
             }
         }
@@ -139,11 +134,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedSingleOption = value;
                 RaisePropertyChanged(() => SelectedSingleOption);
-                if (_shout)
-                {
-                    MoveToQuestionNext();
-                    _shout = true;
-                }
+                MoveToQuestionNext();
             }
         }
 
