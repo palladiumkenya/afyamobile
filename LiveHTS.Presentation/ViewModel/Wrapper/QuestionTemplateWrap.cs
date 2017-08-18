@@ -26,9 +26,9 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
             get { return _questionTemplate; }
         }
 
-        public void MoveToNextQuestion(QuestionTemplate questionTemplate)
+        public void AllowNextQuestion(QuestionTemplate questionTemplate)
         {
-            _parent.AllowNext(questionTemplate);
+            _parent.AllowNextQuestion(questionTemplate);
         }
 
         

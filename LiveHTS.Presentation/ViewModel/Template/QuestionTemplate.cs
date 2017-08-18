@@ -6,6 +6,7 @@ using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
 
 namespace LiveHTS.Presentation.ViewModel.Template
@@ -13,73 +14,48 @@ namespace LiveHTS.Presentation.ViewModel.Template
     public class QuestionTemplate : MvxNotifyPropertyChanged, IQuestionTemplate
     {
         private Guid _id;
+
         private string _display;
-        private Concept _concept;
+        private string _errorSummary;
+
         private string _responseText;
+        private bool _showTextObs;
+        private decimal _responseNumeric;
+        private bool _showNumericObs;
+
         private List<CategoryItem> _singleOptions = new List<CategoryItem>();
         private CategoryItem _selectedSingleOption;
-        private List<CategoryItem> _singleOptionsList = new List<CategoryItem>();
-        private CategoryItem _selectedSingleOptionList;
-        private List<CategoryItem> _multiOptions = new List<CategoryItem>();
-        private List<CategoryItem> _selectedMultiOptions=new List<CategoryItem>();
         private bool _showSingleObs;
-        private bool _showSingleObsList;
-        private bool _showTextObs;
-        private bool _showNumericObs;
-        private bool _showMultiObs;
-        private decimal _responseNumeric;
-        private bool _allow;
-        private string _errorSummary;
-        private string _selection;
-        private IMvxCommand _checkOptionCommand;
 
+        private string _selection;
+        private List<CategoryItem> _multiOptions = new List<CategoryItem>();
+        private List<CategoryItem> _selectedMultiOptions = new List<CategoryItem>();
+        private bool _showMultiObs;
+        
+        private Concept _concept;
+        private bool _allow;
+        
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
 
         public Guid Id
         {
             get { return _id; }
-            set
-            {
-                _id = value;
-                RaisePropertyChanged(() => Id);
-            }
+            set { _id = value; RaisePropertyChanged(() => Id); }
         }
-
         public string Display
         {
             get { return _display; }
-            set
-            {
-                _display = value;
-                RaisePropertyChanged(() => Display);
-            }
+            set { _display = value; RaisePropertyChanged(() => Display); }
         }
-
-        public Concept Concept
+        public string ErrorSummary
         {
-            get { return _concept; }
+            get { return _errorSummary; }
             set
             {
-                _concept = value;
-                RaisePropertyChanged(() => Concept);
-            }
-        }
+                _errorSummary = value;
+                RaisePropertyChanged(() => ErrorSummary);
 
-        public bool Allow
-        {
-            get { return _allow; }
-            set
-            {
-                _allow = value; RaisePropertyChanged(() => Allow);
-                
-                if (ShowSingleObs)
-                {
-                    foreach (var categoryItem in SingleOptions)
-                    {
-                        categoryItem.Allow = Allow;
-                    }
-                    SingleOptions=new List<CategoryItem>(SingleOptions);
-                }
+                QuestionTemplateWrap.Parent.FormError = !string.IsNullOrWhiteSpace(ErrorSummary) ? "Please fix all errors before saving" : string.Empty;
             }
         }
 
@@ -89,44 +65,33 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set
             {
                 _responseText = value;
-               RaisePropertyChanged(() => ResponseText);
-                MoveToQuestionNext();
+                RaisePropertyChanged(() => ResponseText);
+                AllowNextQuestion();
             }
+        }
+        public bool ShowTextObs
+        {
+            get { return _showTextObs; }
+            set { _showTextObs = value; RaisePropertyChanged(() => ShowTextObs); }
         }
 
         public decimal ResponseNumeric
         {
             get { return _responseNumeric; }
-            set { _responseNumeric = value; RaisePropertyChanged(() => ResponseNumeric); MoveToQuestionNext(); }
+            set { _responseNumeric = value; RaisePropertyChanged(() => ResponseNumeric); AllowNextQuestion(); }
+        }
+        public bool ShowNumericObs
+        {
+            get { return _showNumericObs; }
+            set { _showNumericObs = value; RaisePropertyChanged(() => ShowNumericObs); }
         }
 
-        public string ErrorSummary
-        {
-            get { return _errorSummary; }
-            set
-            {
-                _errorSummary = value; RaisePropertyChanged(() => ErrorSummary);
-                if (!string.IsNullOrWhiteSpace(ErrorSummary))
-                {
-                    QuestionTemplateWrap.Parent.FormError = "Please fix all errors before saving";
-                }
-                else
-                {
-                    QuestionTemplateWrap.Parent.FormError = string.Empty;
-                }
-            }
-        }
 
         public List<CategoryItem> SingleOptions
         {
             get { return _singleOptions; }
-            set
-            {
-                _singleOptions = value;
-                RaisePropertyChanged(() => SingleOptions);
-            }
+            set { _singleOptions = value; RaisePropertyChanged(() => SingleOptions); }
         }
-
         public CategoryItem SelectedSingleOption
         {
             get { return _selectedSingleOption; }
@@ -134,29 +99,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedSingleOption = value;
                 RaisePropertyChanged(() => SelectedSingleOption);
-                MoveToQuestionNext();
+                AllowNextQuestion();
             }
         }
-
-        public List<CategoryItem> SingleOptionsList
+        public bool ShowSingleObs
         {
-            get { return _singleOptionsList; }
-            set
-            {
-                _singleOptionsList = value;
-                RaisePropertyChanged(() => SingleOptionsList);
-            }
-        }
-
-        public CategoryItem SelectedSingleOptionList
-        {
-            get { return _selectedSingleOptionList; }
-            set
-            {
-                _selectedSingleOptionList = value;
-                RaisePropertyChanged(() => SelectedSingleOptionList);
-                MoveToQuestionNext();
-            }
+            get { return _showSingleObs; }
+            set { _showSingleObs = value; RaisePropertyChanged(() => ShowSingleObs); }
         }
 
         public string Selection
@@ -164,47 +113,28 @@ namespace LiveHTS.Presentation.ViewModel.Template
             get { return _selection; }
             set { _selection = value; RaisePropertyChanged(() => Selection); }
         }
-
         public List<CategoryItem> MultiOptions
         {
             get { return _multiOptions; }
             set
             {
                 _multiOptions = value;
-                RaisePropertyChanged(() => MultiOptions);
                 foreach (var option in _multiOptions)
                 {
-                    option.OptionSelected += MultiOption_OptionSelected; 
+                    option.OptionSelected += MultiOption_OptionSelected;
                 }
+                RaisePropertyChanged(() => MultiOptions);
             }
         }
-
-        private void MultiOption_OptionSelected(object sender, Core.Event.OptionSelectedEventArgs e)
+        public bool ShowMultiObs
         {
-            AddOrUpdateMultiSelection(e.CategoryItem);
-        }
-
-        private void AddOrUpdateMultiSelection(CategoryItem option)
-        {
-            var multiOptions = SelectedMultiOptions.ToList();
-
-            if (multiOptions.Any(x => x.Id == option.Id))
+            get { return _showMultiObs; }
+            set
             {
-                var optionForUpdate = multiOptions.First(x => x.Id == option.Id);
-                multiOptions.Remove(optionForUpdate);
-                optionForUpdate.Selected = option.Selected;
-                multiOptions.Add(optionForUpdate);
+                _showMultiObs = value;
+                RaisePropertyChanged(() => ShowMultiObs);
             }
-            else
-            {
-              var newItem = MultiOptions.First(x => x.Id == option.Id);
-                multiOptions.Add(newItem);
-            }
-
-            SelectedMultiOptions = multiOptions;
         }
-
-
         public List<CategoryItem> SelectedMultiOptions
         {
             get { return _selectedMultiOptions; }
@@ -214,126 +144,72 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 RaisePropertyChanged(() => SelectedMultiOptions);
 
                 var selectedOptions = SelectedMultiOptions.Where(x => x.Selected).ToList();
-                if (selectedOptions.Count > 0)
-                {
-                    Selection = string.Join(",", selectedOptions);
-                }
-                else
-                {
-                    Selection = string.Empty;
-
-                }
-                MoveToQuestionNext();
+                Selection = selectedOptions.Count > 0 ? string.Join(",", selectedOptions) : string.Empty;
+                AllowNextQuestion();
             }
         }
 
-        public bool ShowSingleObs
+        public Concept Concept
         {
-            get { return _showSingleObs; }
-            set
+            get { return _concept; }
+            set { _concept = value; RaisePropertyChanged(() => Concept); }
+        }
+        public bool Allow
+        {
+            get { return _allow; }
+            set { _allow = value; RaisePropertyChanged(() => Allow); }
+        }
+
+        public QuestionTemplate(Question question, string response = "")
+        {
+            Id = question.Id;
+            Display = question.ToString();
+            Concept = question.Concept;
+            Allow = true;
+
+            ShowTextObs = Concept.ConceptTypeId == "Text";
+            ShowSingleObs = Concept.ConceptTypeId == "Single";
+            ShowNumericObs = Concept.ConceptTypeId == "Numeric";
+            ShowMultiObs = Concept.ConceptTypeId == "Multi";
+
+            if (ShowSingleObs|| ShowMultiObs)
             {
-                _showSingleObs = value;
-                RaisePropertyChanged(() => ShowSingleObs);
-                RaisePropertyChanged(() => ShowSingleObsValue);
+                var options = Concept.Category.Items;
+                options.Add(CategoryItem.CreateInitial("[Select Option]"));
+                options = options.OrderBy(x => x.Rank).ToList();
+
+                if (ShowSingleObs)
+                    _singleOptions = options;
+
+                if (ShowMultiObs)
+                    _multiOptions = options;
             }
         }
 
-        public bool ShowSingleObsList
+        public void AllowNextQuestion()
         {
-            get { return _showSingleObsList; }
-            set
-            {
-                _showSingleObsList = value;
-                RaisePropertyChanged(() => ShowSingleObsList);
-                RaisePropertyChanged(() => ShowSingleObsListValue);
-            }
-        }
-
-        public bool ShowTextObs
-        {
-            get { return _showTextObs; }
-            set
-            {
-                _showTextObs = value;
-                RaisePropertyChanged(() => ShowTextObs);
-                RaisePropertyChanged(() => ShowTextObsValue);
-            }
-        }
-
-        public bool ShowNumericObs
-        {
-            get { return _showNumericObs; }
-            set
-            {
-                _showNumericObs = value;
-                RaisePropertyChanged(() => ShowNumericObs);
-                RaisePropertyChanged(() => ShowNumericObsValue);
-            }
-        }
-
-        public bool ShowMultiObs
-        {
-            get { return _showMultiObs; }
-            set
-            {
-                _showMultiObs = value;
-                RaisePropertyChanged(() => ShowMultiObs);
-                RaisePropertyChanged(() => ShowMultiObsValue);
-            }
-        }
-
-        public string ShowSingleObsValue
-        {
-            get { return ShowSingleObs ? "visible" : "gone"; }
-        }
-
-        public string ShowSingleObsListValue
-        {
-            get { return ShowSingleObsList ? "visible" : "gone"; }
-        }
-
-        public string ShowTextObsValue
-        {
-            get { return ShowTextObs ? "visible" : "gone"; }
-        }
-
-        public string ShowNumericObsValue
-        {
-            get { return ShowNumericObs ? "visible" : "gone"; }
-        }
-
-        public string ShowMultiObsValue
-        {
-            get { return ShowMultiObs ? "visible" : "gone"; }
-        }
-
-        public void MoveToQuestionNext()
-        {
-            QuestionTemplateWrap.MoveToNextQuestion(this);
+            QuestionTemplateWrap.AllowNextQuestion(this);
         }
 
         public object GetResponse()
         {
-            if (ShowTextObs) // Text
-                return ResponseText;
-            if (ShowSingleObs) //"Single";
-                return SelectedSingleOption.ItemId;
-            if (ShowNumericObs) //"Numeric";
-                return ResponseNumeric;
-            if (ShowMultiObs) //"Multi";
+            try
             {
-                var options = MultiOptions.Where(x => x.Selected).ToList();
-                return string.Join(",", options.Select(x=>x.ItemId));
+                return ReadResponse();
             }
-
-            return null;
+            catch (Exception e)
+            {
+                Mvx.Error(e.Message);
+                return null;
+            }
         }
 
         public void SetResponse(object response)
         {
-            if (ShowTextObs) // Text
+            if (ShowTextObs)        // Text
                 ResponseText = response.ToString();
-            if (ShowSingleObs) //"Single";
+
+            if (ShowSingleObs)      //"Single";
             {
                 var text = response.ToString();
                 if (!string.IsNullOrWhiteSpace(text))
@@ -342,7 +218,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
                     SelectedSingleOption = option;
                 }
             }
-            if (ShowNumericObs) //"Numeric";
+
+            if (ShowNumericObs)     //"Numeric";
             {
                 var text = response.ToString();
                 if (!string.IsNullOrWhiteSpace(text))
@@ -352,7 +229,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
                     ResponseNumeric = numeric;
                 }
             }
-            if (ShowMultiObs) //"Multi";
+
+            if (ShowMultiObs)       //"Multi";
             {
                 var itemIds=new List<Guid>();
                 var ids = response.ToString().Split(',');
@@ -385,47 +263,46 @@ namespace LiveHTS.Presentation.ViewModel.Template
 
         }
 
-        public IMvxCommand CheckOptionCommand
+        private object ReadResponse()
         {
-            get
-            {
-                _checkOptionCommand = _checkOptionCommand ?? new MvxCommand(CheckOption);
-                return _checkOptionCommand;
-            }
-        }
+            if (ShowTextObs)        // Text
+                return ResponseText;
 
-        private void CheckOption()
+            if (ShowSingleObs)      //"Single";
+                return SelectedSingleOption.ItemId;
+
+            if (ShowNumericObs)     //"Numeric";
+                return ResponseNumeric;
+
+            if (ShowMultiObs)       //"Multi";
+            {
+                var options = MultiOptions.Where(x => x.Selected).ToList();
+                return string.Join(",", options.Select(x => x.ItemId));
+            }
+            return null;
+        }
+        private void MultiOption_OptionSelected(object sender, Core.Event.OptionSelectedEventArgs e)
         {
-            throw new NotImplementedException();
+            AddOrUpdateMultiSelection(e.CategoryItem);
         }
+        private void AddOrUpdateMultiSelection(CategoryItem option)
+        {
+            var multiOptions = SelectedMultiOptions.ToList();
 
-
-        public QuestionTemplate(Question question,  string response = "")
-        {            
-            Id = question.Id;
-            Display = question.ToString();
-            Concept = question.Concept;
-            Allow = true;
-            ShowTextObs = Concept.ConceptTypeId == "Text";
-            ShowSingleObs = Concept.ConceptTypeId == "Single";
-            ShowNumericObs = Concept.ConceptTypeId == "Numeric";
-            ShowMultiObs = Concept.ConceptTypeId == "Multi";
-
-            //ResponseText = response;
-
-            //TODO:ShowSingleObsList
-
-            if (ShowSingleObs)
+            if (multiOptions.Any(x => x.Id == option.Id))
             {
-                SingleOptions = SingleOptionsList = Concept.Category.Items;
+                var optionForUpdate = multiOptions.First(x => x.Id == option.Id);
+                multiOptions.Remove(optionForUpdate);
+                optionForUpdate.Selected = option.Selected;
+                multiOptions.Add(optionForUpdate);
+            }
+            else
+            {
+                var newItem = MultiOptions.First(x => x.Id == option.Id);
+                multiOptions.Add(newItem);
             }
 
-            if (ShowMultiObs)
-            {
-                var options= Concept.Category.Items;
-                options.Add(CategoryItem.CreateInitial("[Select Options]"));
-                MultiOptions = options.OrderBy(x => x.Rank).ToList();
-            }
+            SelectedMultiOptions = multiOptions;
         }
     }
 }

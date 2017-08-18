@@ -11,6 +11,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
         IClientEncounterViewModel Parent { get; }
         QuestionTemplate QuestionTemplate { get; }
 
-        void MoveToNextQuestion(QuestionTemplate questionTemplate);
+        void AllowNextQuestion(QuestionTemplate questionTemplate);
     }
 }

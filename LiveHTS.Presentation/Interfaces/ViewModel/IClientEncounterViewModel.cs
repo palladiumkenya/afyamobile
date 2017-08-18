@@ -12,25 +12,25 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientEncounterViewModel
     {
+        bool IsLoading { get; set; }
         Guid UserId { get; }
         string UserName { get; }
         Guid ProviderId { get; }
         string ProviderName { get; }
         string FormError { get; set; }
+        
         ClientDTO ClientDTO { get; set; }
         ClientEncounterDTO ClientEncounterDTO { get; set; }
-        Form Form { get; set; }
 
+        Form Form { get; set; }
         List<QuestionTemplateWrap> Questions { get; set; }
+
         Encounter Encounter { get; set; }
         Manifest Manifest { get; set; }
-
-        event EventHandler<ConceptChangedEvent> ConceptChanged;
-
+        
         IMvxCommand SaveChangesCommand { get; }
 
         void LoadView();
-        void AllowNext(QuestionTemplate questionTemplate);
-        void AllowNextMultiple(QuestionTemplate questionTemplate);
+        void AllowNextQuestion(QuestionTemplate questionTemplate);
     }
 }

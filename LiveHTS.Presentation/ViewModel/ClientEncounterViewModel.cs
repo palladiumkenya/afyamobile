@@ -35,6 +35,13 @@ namespace LiveHTS.Presentation.ViewModel
         private string _formError;
         private Encounter _encounter;
         private Manifest _manifest;
+        private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set { _isLoading = value; RaisePropertyChanged(() => IsLoading); }
+        }
 
         public Guid UserId
         {
@@ -114,8 +121,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _manifest = value; }
         }
 
-        public event EventHandler<ConceptChangedEvent> ConceptChanged;
-
+        
         public IMvxCommand SaveChangesCommand
         {
             get
@@ -148,6 +154,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
+            
             //Load Client and Encounter Type
 
             var clientJson = _settings.GetValue("client.dto", "");
@@ -223,125 +230,39 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public void AllowNext(QuestionTemplate questionTemplate)
+        public void AllowNextQuestion(QuestionTemplate questionTemplate)
         {
-            AllowNextMultiple(questionTemplate);
+            AllowAllInLine(questionTemplate);
             SaveChangesCommand.RaiseCanExecuteChanged();
-            return;
-            bool validate = false;
-
-            //validate
-            try
-            {
-                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
-                validate = true;
-                questionTemplate.ErrorSummary = string.Empty;
-            }
-            catch (Exception e)
-            {
-                questionTemplate.ErrorSummary = e.Message;
-            }
-
-            if (validate)
-            {
-                //update encounter
-
-                var liveResponse = new Response(Encounter.Id);
-
-                var question = Manifest.GetQuestion(questionTemplate.Id);
-                liveResponse.SetQuestion(question);
-                liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
-                    questionTemplate.GetResponse());
-
-                Encounter.AddOrUpdate(liveResponse.Obs);
-
-                //update manifest
-
-                Manifest.UpdateEncounter(Encounter);
-
-                //save
-
-                var encounterJson = JsonConvert.SerializeObject(Encounter);
-                _settings.AddOrUpdateValue("client.encounter", encounterJson);
-
-                var manifestJson = JsonConvert.SerializeObject(Manifest);
-                _settings.AddOrUpdateValue("client.manifest", manifestJson);
-
-
-
-                if (null != Manifest)
-                {
-                    var liveSkipQs = new List<QuestionTemplateWrap>();
-
-                    var nextQ = _obsService.GetLiveQuestion(Manifest, questionTemplate.Id);
-
-                    if (null == nextQ)
-                        return;
-
-                    var skipQs = nextQ.SkippedQuestionIds;
-
-                    var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == nextQ.Id);
-
-                    if (skipQs.Count > 0)
-                        liveSkipQs = Questions.Where(x => skipQs.Contains(x.QuestionTemplate.Id)).ToList();
-
-                    if (null != liveQ)
-                    {
-                        foreach (var skipQ in liveSkipQs)
-                        {
-                            skipQ.QuestionTemplate.Allow = false;
-                        }
-
-                        if (!liveQ.QuestionTemplate.Allow)
-                            liveQ.QuestionTemplate.Allow = true;
-
-                        //set nextQ value
-
-                        var response = Manifest.GetResponse(liveQ.QuestionTemplate.Id);
-
-                        var responseValue = null == response ? null : response.GetValue().Value;
-                        liveQ.QuestionTemplate.SetResponse(responseValue);
-
-
-                    }
-                }
-            }
         }
 
-        public void AllowNextMultiple(QuestionTemplate questionTemplate)
+        private void AllowAllInLine(QuestionTemplate questionTemplate)
         {
-            bool validate = false;
 
-            //validate
-            try
-            {
-                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
-                validate = true;
-                questionTemplate.ErrorSummary = string.Empty;
-            }
-            catch (Exception e)
-            {
-                questionTemplate.ErrorSummary = e.Message;
-            }
+            // validate Response
 
-            if (validate)
+            bool isResponseValid = ValidateResponse(questionTemplate);
+
+
+            if (isResponseValid)
             {
-                //update encounter
+                // create Response
 
                 var question = Manifest.GetQuestion(questionTemplate.Id);
-
                 var liveResponse = new Response(Encounter.Id);
                 liveResponse.SetQuestion(question);
                 liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
                     questionTemplate.GetResponse());
 
+                //update encounter with Response
+
                 Encounter.AddOrUpdate(liveResponse.Obs);
 
-                //update manifest
+                //update manifest from Encounter
 
                 Manifest.UpdateEncounter(Encounter);
 
-                //save
+                //temp store serialized Manifest + Encounter
 
                 var encounterJson = JsonConvert.SerializeObject(Encounter);
                 _settings.AddOrUpdateValue("client.encounter", encounterJson);
@@ -351,17 +272,25 @@ namespace LiveHTS.Presentation.ViewModel
 
 
 
+                //determine next Live Question
+
                 if (null != Manifest)
                 {
                     var liveSkipQs = new List<QuestionTemplateWrap>();
 
-                    var nextQs = _obsService.GetLiveQuestions(Manifest, questionTemplate.Id);
+                    // get all remaining Questions
 
-                    if (null == nextQs||nextQs.Count==0)
+                    var nextQuestions = _obsService.GetLiveQuestions(Manifest, questionTemplate.Id);
+
+                    if (null == nextQuestions||nextQuestions.Count==0)
                         return;
-                                
-                    foreach (var nextQ in nextQs)
+
+                    // process remaining Questions
+
+                    foreach (var nextQ in nextQuestions)
                     {
+                        // get all Questions to be skipped
+
                         var skipQs = nextQ.SkippedQuestionIds;
 
                         var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == nextQ.Id);
@@ -373,14 +302,20 @@ namespace LiveHTS.Presentation.ViewModel
                         {
                             foreach (var skipQ in liveSkipQs)
                             {
+                                // disable skipped Question
+
                                 if(skipQ.QuestionTemplate.Allow)
                                     skipQ.QuestionTemplate.Allow = false;
                             }
 
-                            if (!liveQ.QuestionTemplate.Allow)
-                                liveQ.QuestionTemplate.Allow = true;
+                            // enable current nextQuestion
 
-                            //set nextQ value
+                            if (!liveQ.QuestionTemplate.Allow)
+                            {
+                                liveQ.QuestionTemplate.Allow = true;
+                            }
+
+                            // restore response from Manifest
 
                             var response = Manifest.GetResponse(liveQ.QuestionTemplate.Id);
 
@@ -396,6 +331,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
+            
             var clientJson = _settings.GetValue("client.dto", "");
             var clientEncounterDTOJson = _settings.GetValue("client.encounter.dto", "");
             var formJson = _settings.GetValue("client.form", "");
@@ -429,9 +365,33 @@ namespace LiveHTS.Presentation.ViewModel
 
             Manifest.UpdateEncounter(Encounter);
             LoadView();
+            
         }
 
-        private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, ClientEncounterViewModel clientDashboardViewModel)
+
+        private bool ValidateResponse(QuestionTemplate questionTemplate)
+        {
+            bool validate = false;
+
+            try
+            {
+                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
+                validate = true;
+                questionTemplate.ErrorSummary = string.Empty;
+            }
+            catch (NullReferenceException ex)
+            {
+
+            }
+            catch (Exception e)
+            {
+                questionTemplate.ErrorSummary = e.Message;
+            }
+
+            return validate;
+        }
+
+        private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, IClientEncounterViewModel clientDashboardViewModel)
         {
             List<QuestionTemplateWrap> list = new List<QuestionTemplateWrap>();
             foreach (var r in questions)
@@ -448,8 +408,12 @@ namespace LiveHTS.Presentation.ViewModel
             return false;
         }
 
+        
         private void SaveChanges()
         {
+
+            //TODO : Save Enconter + Obs
+
             //readResponses
 
             var allResponses = Manifest.ResponseStore;

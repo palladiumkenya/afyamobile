@@ -14,6 +14,7 @@ namespace LiveHTS.Core.Model.Lookup
         private string _display;
         private bool _selected;
         private bool _allow = true;
+        private bool _itemChecked;
 
         [Indexed]
         public Guid CategoryId { get; set; }
@@ -43,6 +44,13 @@ namespace LiveHTS.Core.Model.Lookup
                     NotifyOptionChanged(Id, _selected);
                 }
             }
+        }
+
+        [Ignore]
+        public bool ItemChecked
+        {
+            get { return _itemChecked; }
+            set { _itemChecked = value; }
         }
 
         [Ignore]

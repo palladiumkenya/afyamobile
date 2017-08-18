@@ -1,35 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:local="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <!-- Question Display -->
+  <TextView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        local:MvxBind="Text QuestionTemplate.Display" />
+    android:layout_height="wrap_content"
+    android:textSize="10dp"
+    local:MvxBind="Text QuestionTemplate.Display" />
+
+  <!-- Question Error -->
   <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="8dp"
     android:textColor="@android:color/holo_red_dark"
     local:MvxBind="Text QuestionTemplate.ErrorSummary" />
-    <MvxRadioGroup
-        android:textSize="40dp"
-        android:orientation="horizontal"
-        local:MvxItemTemplate="@layout/obs_item_single"
-        local:MvxBind="ItemsSource QuestionTemplate.SingleOptions;SelectedItem QuestionTemplate.SelectedSingleOption;Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical" />
 
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:local="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                local:MvxBind="Visibility QuestionTemplate.ShowMultiObs, Converter=Visibility;">
+  <!-- Obs Text -->
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/editTextResponse"
+    local:MvxBind="Text QuestionTemplate.ResponseText; Visibility QuestionTemplate.ShowTextObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+
+  <!-- Obs Numeric -->
+  <EditText
+    android:layout_width="40dp"
+    android:layout_height="wrap_content"
+    local:MvxBind="Text QuestionTemplate.ResponseNumeric; Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility; Enabled QuestionTemplate.Allow"
+    android:paddingRight="10dp"
+    android:maxLength="3"
+    android:inputType="number" />
+
+  <!-- Obs Single Dropdown -->
+  <MvxSpinner
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    local:MvxBind="ItemsSource QuestionTemplate.SingleOptions; SelectedItem  QuestionTemplate.SelectedSingleOption; Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+  
+  <!-- Obs Muliselect Dropdown -->
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="Visibility QuestionTemplate.ShowMultiObs, Converter=Visibility;">
+
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -37,27 +59,14 @@
       local:MvxBind="Text QuestionTemplate.Selection" />
 
     <MvxSpinner
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:descendantFocusability="beforeDescendants"
-    local:MvxItemTemplate="@layout/obs_item_multi_s"
-    local:MvxDropDownItemTemplate="@layout/obs_item_multi_d"
-    local:MvxBind="ItemsSource QuestionTemplate.MultiOptions;Enabled QuestionTemplate.Allow"/>
-  
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:descendantFocusability="beforeDescendants"
+      local:MvxItemTemplate="@layout/obs_item_multi_s"
+      local:MvxDropDownItemTemplate="@layout/obs_item_multi_d"
+      local:MvxBind="ItemsSource QuestionTemplate.MultiOptions; Enabled QuestionTemplate.Allow" />
   </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editTextResponse"
-        local:MvxBind="Text QuestionTemplate.ResponseText;Visibility QuestionTemplate.ShowTextObs, Converter=Visibility;Enabled QuestionTemplate.Allow" />
-    <EditText
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        local:MvxBind="Text QuestionTemplate.ResponseNumeric;Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility;Enabled QuestionTemplate.Allow"
-        android:paddingRight="10dp"
-        android:maxLength="3"
-        android:inputType="number" />
 </LinearLayout>
 
 

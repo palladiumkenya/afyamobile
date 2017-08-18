@@ -16,12 +16,6 @@ namespace LiveHTS.Droid.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.ClientEncounterView);
-            ViewModel.ConceptChanged += ViewModel_ConceptChanged;
-        }
-
-        private void ViewModel_ConceptChanged(object sender, Presentation.Events.ConceptChangedEvent e)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
