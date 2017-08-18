@@ -13,7 +13,8 @@ namespace LiveHTS.Core.Model.Lookup
     {
         private string _display;
         private bool _selected;
-        
+        private bool _allow = true;
+
         [Indexed]
         public Guid CategoryId { get; set; }
         [Indexed]
@@ -45,7 +46,12 @@ namespace LiveHTS.Core.Model.Lookup
         }
 
         [Ignore]
-        public  bool Allow { get; set; }
+        public bool Allow
+        {
+            get { return _allow; }
+            set { _allow = value; }
+        }
+
         public event EventHandler<OptionSelectedEventArgs> OptionSelected;
 
         public CategoryItem()

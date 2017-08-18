@@ -27,12 +27,14 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly ISettings _settings;
         private ClientEncounterDTO _clientEncounterInfo;
         private Form _form;
-        private Encounter _encounter;
+        
         private ClientDTO _clientDTO;
         private List<QuestionTemplateWrap> _questions;
         private IMvxCommand _saveChangesCommand;
-        private Manifest _manifest;
+        
         private string _formError;
+        private Encounter _encounter;
+        private Manifest _manifest;
 
         public Guid UserId
         {
@@ -215,7 +217,8 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null != liveQuestion)
                 {
-                    liveQuestion.QuestionTemplate.Allow = true;
+                    if (!liveQuestion.QuestionTemplate.Allow)
+                        liveQuestion.QuestionTemplate.Allow = true;
                 }
             }
         }
@@ -245,7 +248,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 var liveResponse = new Response(Encounter.Id);
 
-                var question = _manifest.GetQuestion(questionTemplate.Id);
+                var question = Manifest.GetQuestion(questionTemplate.Id);
                 liveResponse.SetQuestion(question);
                 liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
                     questionTemplate.GetResponse());
@@ -325,9 +328,9 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //update encounter
 
-                var liveResponse = new Response(Encounter.Id);
+                var question = Manifest.GetQuestion(questionTemplate.Id);
 
-                var question = _manifest.GetQuestion(questionTemplate.Id);
+                var liveResponse = new Response(Encounter.Id);
                 liveResponse.SetQuestion(question);
                 liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
                     questionTemplate.GetResponse());
@@ -370,7 +373,8 @@ namespace LiveHTS.Presentation.ViewModel
                         {
                             foreach (var skipQ in liveSkipQs)
                             {
-                                skipQ.QuestionTemplate.Allow = false;
+                                if(skipQ.QuestionTemplate.Allow)
+                                    skipQ.QuestionTemplate.Allow = false;
                             }
 
                             if (!liveQ.QuestionTemplate.Allow)

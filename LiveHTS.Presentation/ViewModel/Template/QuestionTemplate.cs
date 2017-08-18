@@ -32,7 +32,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private string _errorSummary;
         private string _selection;
         private IMvxCommand _checkOptionCommand;
-
+        private bool _shout = true;
 
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
 
@@ -72,14 +72,18 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set
             {
                 _allow = value; RaisePropertyChanged(() => Allow);
-
+                
                 if (ShowSingleObs)
                 {
+                    var selected = SelectedSingleOption;
+
+                    _shout = false;
                     foreach (var categoryItem in SingleOptions)
                     {
                         categoryItem.Allow = Allow;
                     }
                     SingleOptions=new List<CategoryItem>(SingleOptions);
+                    SelectedSingleOption = selected;
                 }
             }
         }
@@ -135,7 +139,11 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedSingleOption = value;
                 RaisePropertyChanged(() => SelectedSingleOption);
-                MoveToQuestionNext();
+                if (_shout)
+                {
+                    MoveToQuestionNext();
+                    _shout = true;
+                }
             }
         }
 
@@ -402,12 +410,11 @@ namespace LiveHTS.Presentation.ViewModel.Template
 
 
         public QuestionTemplate(Question question,  string response = "")
-        {
-            
+        {            
             Id = question.Id;
             Display = question.ToString();
             Concept = question.Concept;
-            Allow = false;
+            Allow = true;
             ShowTextObs = Concept.ConceptTypeId == "Text";
             ShowSingleObs = Concept.ConceptTypeId == "Single";
             ShowNumericObs = Concept.ConceptTypeId == "Numeric";
