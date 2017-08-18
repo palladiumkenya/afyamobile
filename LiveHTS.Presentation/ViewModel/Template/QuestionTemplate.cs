@@ -55,7 +55,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 _errorSummary = value;
                 RaisePropertyChanged(() => ErrorSummary);
 
-                QuestionTemplateWrap.Parent.FormError = !string.IsNullOrWhiteSpace(ErrorSummary) ? "Please fix all errors before saving" : string.Empty;
+                QuestionTemplateWrap.Parent.FormError = !string.IsNullOrWhiteSpace(ErrorSummary) ? "Please fill all required fields" : string.Empty;
             }
         }
 
