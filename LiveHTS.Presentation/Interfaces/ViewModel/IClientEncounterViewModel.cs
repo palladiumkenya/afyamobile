@@ -31,6 +31,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand SaveChangesCommand { get; }
 
         void LoadView();
+        bool ValidateResponse(QuestionTemplate questionTemplate);
         void AllowNextQuestion(QuestionTemplate questionTemplate);
     }
 }

@@ -210,32 +210,116 @@ namespace LiveHTS.Presentation.ViewModel
             
             LoadView();
         }
+        public override void ViewAppeared()
+        {
+
+            var clientJson = _settings.GetValue("client.dto", "");
+            var clientEncounterDTOJson = _settings.GetValue("client.encounter.dto", "");
+            var formJson = _settings.GetValue("client.form", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+            var clientManifestJson = _settings.GetValue("client.manifest", "");
+
+            if (null == ClientDTO && !string.IsNullOrWhiteSpace(clientJson))
+            {
+                ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
+            }
+
+            if (null == ClientEncounterDTO && !string.IsNullOrWhiteSpace(clientEncounterDTOJson))
+            {
+                ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterDTOJson);
+            }
+
+            if (null == Form && !string.IsNullOrWhiteSpace(formJson))
+            {
+                Form = JsonConvert.DeserializeObject<Form>(formJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(clientEncounterJson))
+            {
+                Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(clientManifestJson))
+            {
+                Manifest = JsonConvert.DeserializeObject<Manifest>(clientManifestJson);
+            }
+
+            Manifest.UpdateEncounter(Encounter);
+            LoadView();
+
+        }
 
         public void LoadView()
         {
 
-            //Show First or Last Active Question
-
             if (null != Manifest)
             {
-                var activeQuestion = _obsService.GetLiveQuestion(Manifest);
 
-                var liveQuestion = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == activeQuestion.Id);
+                
 
-                if (null != liveQuestion)
+                if (Manifest.HasResponses())
                 {
-                    if (!liveQuestion.QuestionTemplate.Allow)
-                        liveQuestion.QuestionTemplate.Allow = true;
+
+                    // Load saved responses
+
+                    var responses = Manifest
+                        .ResponseStore
+                        .OrderBy(x => x.Question.Rank)
+                        .ToList();
+
+                    foreach (var r in responses)
+                    {
+                        var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == r.QuestionId);
+                        if (null != q)
+                        {
+                            if (!q.QuestionTemplate.Allow)
+                                q.QuestionTemplate.Allow = true;
+                            q.QuestionTemplate.SetResponse(r.GetValue().Value);
+                        }
+                    }
+                }
+                else
+                {
+                    // Load active Questsion
+
+                    var activeQuestion = _obsService.GetLiveQuestion(Manifest);
+
+                    var liveQuestion = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == activeQuestion.Id);
+
+                    if (null != liveQuestion)
+                    {
+                        if (!liveQuestion.QuestionTemplate.Allow)
+                            liveQuestion.QuestionTemplate.Allow = true;
+                    }
                 }
             }
         }
+        public bool ValidateResponse(QuestionTemplate questionTemplate)
+        {
+            bool validate = false;
 
+            try
+            {
+                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
+                validate = true;
+                questionTemplate.ErrorSummary = string.Empty;
+            }
+            catch (NullReferenceException ex)
+            {
+
+            }
+            catch (Exception e)
+            {
+                questionTemplate.ErrorSummary = e.Message;
+            }
+
+            return validate;
+        }
         public void AllowNextQuestion(QuestionTemplate questionTemplate)
         {
             AllowAllInLine(questionTemplate);
             SaveChangesCommand.RaiseCanExecuteChanged();
         }
-
         private void AllowAllInLine(QuestionTemplate questionTemplate)
         {
 
@@ -328,69 +412,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
         }
-
-        public override void ViewAppeared()
-        {
-            
-            var clientJson = _settings.GetValue("client.dto", "");
-            var clientEncounterDTOJson = _settings.GetValue("client.encounter.dto", "");
-            var formJson = _settings.GetValue("client.form", "");
-            var clientEncounterJson = _settings.GetValue("client.encounter", "");
-            var clientManifestJson = _settings.GetValue("client.manifest", "");
-
-            if (null == ClientDTO && !string.IsNullOrWhiteSpace(clientJson))
-            {
-                ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
-            }
-
-            if (null == ClientEncounterDTO && !string.IsNullOrWhiteSpace(clientEncounterDTOJson))
-            {
-                ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterDTOJson);
-            }
-
-            if (null == Form && !string.IsNullOrWhiteSpace(formJson))
-            {
-                Form = JsonConvert.DeserializeObject<Form>(formJson);
-            }
-
-            if (!string.IsNullOrWhiteSpace(clientEncounterJson))
-            {
-                Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
-            }
-
-            if (!string.IsNullOrWhiteSpace(clientManifestJson))
-            {
-                Manifest = JsonConvert.DeserializeObject<Manifest>(clientManifestJson);
-            }
-
-            Manifest.UpdateEncounter(Encounter);
-            LoadView();
-            
-        }
-
-
-        private bool ValidateResponse(QuestionTemplate questionTemplate)
-        {
-            bool validate = false;
-
-            try
-            {
-                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
-                validate = true;
-                questionTemplate.ErrorSummary = string.Empty;
-            }
-            catch (NullReferenceException ex)
-            {
-
-            }
-            catch (Exception e)
-            {
-                questionTemplate.ErrorSummary = e.Message;
-            }
-
-            return validate;
-        }
-
+        
         private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, IClientEncounterViewModel clientDashboardViewModel)
         {
             List<QuestionTemplateWrap> list = new List<QuestionTemplateWrap>();
@@ -400,15 +422,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
             return list;
         }
-
         private bool CanSaveChanges()
         {
             if (null != Manifest)
                 return string.IsNullOrWhiteSpace(FormError)&& Manifest.IsComplete();
             return false;
         }
-
-        
         private void SaveChanges()
         {
 
@@ -416,18 +435,29 @@ namespace LiveHTS.Presentation.ViewModel
 
             //readResponses
 
-            var allResponses = Manifest.ResponseStore;
+            var allowedQuestions = Questions.Where(x => x.QuestionTemplate.Allow).ToList();
 
-            var allLiveResponse = Questions.Where(x => x.QuestionTemplate.Allow).ToList();
+            if (allowedQuestions.Count > 0)
+            {
+                foreach (var q in allowedQuestions)
+                {
+                    if (!ValidateResponse(q.QuestionTemplate))
+                        return;
+                }
+            }
 
-             
+            foreach (var q in allowedQuestions)
+            {
+                _obsService.SaveResponse(Encounter.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
+                Manifest = _obsService.Manifest;
+            }
 
+            Encounter = Manifest.Encounter;
+            var encounterJson = JsonConvert.SerializeObject(Encounter);
+            _settings.AddOrUpdateValue("client.encounter", encounterJson);
 
-            
-
-            var response= Questions.Last().QuestionTemplate.ResponseText;
-
-            //throw new NotImplementedException();
+            var manifestJson = JsonConvert.SerializeObject(Manifest);
+            _settings.AddOrUpdateValue("client.manifest", manifestJson);
         }
     }
 }

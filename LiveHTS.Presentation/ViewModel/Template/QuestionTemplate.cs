@@ -119,11 +119,11 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set
             {
                 _multiOptions = value;
+                RaisePropertyChanged(() => MultiOptions);
                 foreach (var option in _multiOptions)
                 {
                     option.OptionSelected += MultiOption_OptionSelected;
                 }
-                RaisePropertyChanged(() => MultiOptions);
             }
         }
         public bool ShowMultiObs
@@ -179,10 +179,10 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 options = options.OrderBy(x => x.Rank).ToList();
 
                 if (ShowSingleObs)
-                    _singleOptions = options;
+                    SingleOptions = options;
 
                 if (ShowMultiObs)
-                    _multiOptions = options;
+                    MultiOptions = options;
             }
         }
 

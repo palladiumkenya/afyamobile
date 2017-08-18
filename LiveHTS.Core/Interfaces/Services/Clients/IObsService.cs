@@ -20,6 +20,6 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Question GetQuestion(Guid questionId, Manifest currentManifest);
 
         bool ValidateResponse(Guid encounterId, Guid questionId, object response);
-        void SaveResponse(Guid encounterId, Guid questionId, object response);
+        void SaveResponse(Guid encounterId, Guid questionId, object response,bool validated=false);
     }
 }

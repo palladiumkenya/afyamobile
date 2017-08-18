@@ -110,7 +110,7 @@ namespace LiveHTS.Core.Service.Clients
             return _validationEngine.Validate(liveResponse);
         }
 
-        public void SaveResponse(Guid encounterId, Guid questionId, object response)
+        public void SaveResponse(Guid encounterId, Guid questionId, object response, bool validated = false)
         {
             var liveResponse=new Response(encounterId);
 
@@ -118,7 +118,15 @@ namespace LiveHTS.Core.Service.Clients
             liveResponse.SetQuestion(question);
             liveResponse.SetObs(encounterId, questionId, question.Concept.ConceptTypeId, response);
 
-            if (_validationEngine.Validate(liveResponse))
+            if (validated)
+            {
+                if (_validationEngine.Validate(liveResponse))
+                {
+                    _obsRepository.SaveOrUpdate(liveResponse.Obs);
+                    UpdateManifest(encounterId);
+                }
+            }
+            else
             {
                 _obsRepository.SaveOrUpdate(liveResponse.Obs);
                 UpdateManifest(encounterId);
