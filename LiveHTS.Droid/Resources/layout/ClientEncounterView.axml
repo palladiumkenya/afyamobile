@@ -81,7 +81,8 @@
         android:layout_height="wrap_content"
         android:textSize="8dp"
         android:textColor="@android:color/holo_red_dark"
-        android:id="@+id/textViewErrors" />
+        android:id="@+id/textViewErrors"
+        local:MvxBind="Text FormError"/>
     </LinearLayout>
     
     <!-- FIELDS -->

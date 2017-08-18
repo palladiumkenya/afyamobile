@@ -107,7 +107,12 @@ namespace LiveHTS.Core.Engine
             Response last;
 
             if (null == question)
+            {
+                currentManifest.EndQuestionId = currentQuestionId;
+                currentManifest.ReachedEndQuestion = true;
                 return null;
+            }
+                
 
             Question nextQuestion = question;
             nextQuestion.SkippedQuestionIds = new List<Guid>();

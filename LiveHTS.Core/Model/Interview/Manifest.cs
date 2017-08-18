@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Model.Interview
 {
@@ -10,6 +11,9 @@ namespace LiveHTS.Core.Model.Interview
         public Encounter Encounter { get; set; }
         public List<Question> QuestionStore { get; set; } = new List<Question>();
         public List<Response> ResponseStore { get; set; } = new List<Response>();
+        public Guid? EndQuestionId { get; set; }
+        public bool ReachedEndQuestion { get; set; }
+        public bool HasResponseErrors { get; set; }
 
         public Manifest()
         {
@@ -84,6 +88,31 @@ namespace LiveHTS.Core.Model.Interview
         {
             return HasResponses() ? ResponseStore.OrderBy(x => x.Question.Rank).LastOrDefault() : null;
         }
+
+        public bool IsComplete()
+        {
+            if (
+                HasResponses() &&
+                ReachedEndQuestion &&
+                !EndQuestionId.IsNullOrEmpty()
+            )
+            {
+                var lastQ = GetQuestion(EndQuestionId.Value);
+                if (lastQ.IsRequired)
+                {
+                    var lastResponse = GetResponse(EndQuestionId.Value);
+
+                    var response = lastResponse.GetValue().Value;
+                    return null!=response&&!string.IsNullOrWhiteSpace(response.ToString());
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void UpdateResponseQuestions()
         {
             foreach (var response in ResponseStore)
@@ -117,4 +146,4 @@ namespace LiveHTS.Core.Model.Interview
             return $" Status:{stats} ,{summary}";
         }
     }
-}
+} 

@@ -8,6 +8,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
 {
     public interface IQuestionTemplateWrap
     {
+        IClientEncounterViewModel Parent { get; }
         QuestionTemplate QuestionTemplate { get; }
 
         void MoveToNextQuestion(QuestionTemplate questionTemplate);

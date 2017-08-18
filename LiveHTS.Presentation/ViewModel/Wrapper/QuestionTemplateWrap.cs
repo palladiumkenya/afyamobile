@@ -11,7 +11,8 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
     {
         private IClientEncounterViewModel _parent;
         private  QuestionTemplate _questionTemplate;
-        
+
+        public IClientEncounterViewModel Parent { get { return _parent; } }
 
         public QuestionTemplateWrap(IClientEncounterViewModel parent,QuestionTemplate questionTemplate )
         {
@@ -29,5 +30,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             _parent.AllowNext(questionTemplate);
         }
+
+        
     }
 }

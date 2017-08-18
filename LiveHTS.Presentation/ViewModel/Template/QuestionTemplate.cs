@@ -104,7 +104,18 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string ErrorSummary
         {
             get { return _errorSummary; }
-            set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary);}
+            set
+            {
+                _errorSummary = value; RaisePropertyChanged(() => ErrorSummary);
+                if (!string.IsNullOrWhiteSpace(ErrorSummary))
+                {
+                    QuestionTemplateWrap.Parent.FormError = "Please fix all errors before saving";
+                }
+                else
+                {
+                    QuestionTemplateWrap.Parent.FormError = string.Empty;
+                }
+            }
         }
 
         public List<CategoryItem> SingleOptions

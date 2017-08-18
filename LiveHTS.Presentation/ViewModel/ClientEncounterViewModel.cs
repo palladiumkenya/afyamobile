@@ -32,6 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<QuestionTemplateWrap> _questions;
         private IMvxCommand _saveChangesCommand;
         private Manifest _manifest;
+        private string _formError;
 
         public Guid UserId
         {
@@ -63,6 +64,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 return _settings.GetValue("livehts.providername", "");
             }
+        }
+
+        public string FormError
+        {
+            get { return _formError; }
+            set { _formError = value; RaisePropertyChanged(() => FormError); }
         }
 
         public ClientDTO ClientDTO
@@ -194,6 +201,7 @@ namespace LiveHTS.Presentation.ViewModel
         public void AllowNext(QuestionTemplate questionTemplate)
         {
             AllowNextMultiple(questionTemplate);
+            SaveChangesCommand.RaiseCanExecuteChanged();
             return;
             bool validate = false;
 
@@ -409,6 +417,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveChanges()
         {
+            if (null != Manifest)
+                return string.IsNullOrWhiteSpace(FormError)&& Manifest.IsComplete();
             return false;
         }
 

@@ -16,7 +16,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string UserName { get; }
         Guid ProviderId { get; }
         string ProviderName { get; }
-
+        string FormError { get; set; }
         ClientDTO ClientDTO { get; set; }
         ClientEncounterDTO ClientEncounterDTO { get; set; }
         Form Form { get; set; }
