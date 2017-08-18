@@ -22,6 +22,24 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
+    ^ConceptId^: ^00c2a60a-6246-11e7-907b-a6006ad3dba0^,
+    ^Ordinal^: ^1.a^,
+    ^Display^: ^Smoke ?^,
+    ^Rank^: 1.1,
+    ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
+    ^Id^: ^6206a9a6-6260-11e8-907b-a6006ad3dba0^,
+    ^Voided^: 0
+  },
+  {
+    ^ConceptId^: ^00c2a60a-6246-11e7-907b-a6006ad3dba0^,
+    ^Ordinal^: ^1.b^,
+    ^Display^: ^Drink ?^,
+    ^Rank^: 1.2,
+    ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
+    ^Id^: ^6206a9a6-6260-11e9-907b-a6006ad3dba0^,
+    ^Voided^: 0
+  },
+  {
     ^ConceptId^: ^00c2aa06-6246-11e7-907b-a6006ad3dba0^,
     ^Ordinal^: 2,
     ^Display^: ^Result^,

@@ -28,26 +28,35 @@ namespace LiveHTS.Core.Engine
             else
             {
                 latestResponse = currentManifest.GetLastResponse();
-            }
-             
+            }            
 
             // return FIRST Question
-            if (null == latestResponse && null == currentManifest.GetFirstQuestion())
+
+            if (null == latestResponse && !currentManifest.HasResponses())
             {
                 candidateQuestion = currentManifest.GetFirstQuestion();
                 return candidateQuestion;
             }
 
-            // return Next Question
-
-            lastQuestion = latestResponse.Question;            
+            // return NEXT Question without evaluation
+            
+            if (null == latestResponse && currentManifest.HasResponses()&& !currentQuestionId.IsNullOrEmpty())
+            {             
+                lastQuestion = currentManifest.GetQuestion(currentQuestionId.Value);
+            }
+            else
+            {             
+                lastQuestion = latestResponse.Question;
+            }
+            
+            
 
             // Vet last Question
             if (null != lastQuestion)
             {
                 #region Post Branches
 
-                if (lastQuestion.HasConditionalBranches("Post"))
+                if (lastQuestion.HasConditionalBranches("Post") && null != latestResponse)
                 {
                     var postBranches = lastQuestion.Branches.Where(x => x.ConditionId.ToLower() == "Post".ToLower())
                         .ToList();
@@ -96,6 +105,10 @@ namespace LiveHTS.Core.Engine
         public Question EvaluateSelf(Question question, Manifest currentManifest, Guid? currentQuestionId = null)
         {
             Response last;
+
+            if (null == question)
+                return null;
+
             Question nextQuestion = question;
             nextQuestion.SkippedQuestionIds = new List<Guid>();
 

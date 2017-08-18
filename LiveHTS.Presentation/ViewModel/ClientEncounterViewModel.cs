@@ -351,9 +351,8 @@ namespace LiveHTS.Presentation.ViewModel
                             var response = Manifest.GetResponse(liveQ.QuestionTemplate.Id);
 
                             var responseValue = null == response ? null : response.GetValue().Value;
-                            liveQ.QuestionTemplate.SetResponse(responseValue);
-
-
+                            if (null != responseValue)
+                                liveQ.QuestionTemplate.SetResponse(responseValue);
                         }
                     }
                     
