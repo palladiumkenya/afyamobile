@@ -13,7 +13,7 @@ namespace LiveHTS.Core.Model.Interview
         public List<Response> ResponseStore { get; set; } = new List<Response>();
         public Guid? EndQuestionId { get; set; }
         public bool ReachedEndQuestion { get; set; }
-        public bool HasResponseErrors { get; set; }
+        
 
         public Manifest()
         {

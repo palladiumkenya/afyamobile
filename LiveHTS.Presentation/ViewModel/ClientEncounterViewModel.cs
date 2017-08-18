@@ -133,6 +133,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string formId,string mode, string encounterId)
         {
+
+            //Load Form + Question Metadata
+
             if (null == Form)
             {
                 Form = _encounterService.LoadForm(new Guid(formId));
@@ -143,18 +146,22 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
-            var clientJson = _settings.GetValue("client.dto", "");
-            var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
+            //Load Client and Encounter Type
 
+            var clientJson = _settings.GetValue("client.dto", "");
             if (!string.IsNullOrWhiteSpace(clientJson))
             {
                 ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
             }
 
+            var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
             if (!string.IsNullOrWhiteSpace(clientEncounterJson))
             {
                 ClientEncounterDTO = JsonConvert.DeserializeObject<ClientEncounterDTO>(clientEncounterJson);
-            }            
+            }
+
+
+            //Load or Create Encounter 
 
             if (mode == "new")
             {
@@ -171,8 +178,18 @@ namespace LiveHTS.Presentation.ViewModel
                     ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId,true);
             }
 
-            var e = JsonConvert.SerializeObject(Encounter);
-            _settings.AddOrUpdateValue("client.encounter", e);
+            if (null == Encounter)
+            {
+                throw new ArgumentException("Encounter has not been Initialized");
+            }
+
+            //Store Encounter 
+
+            var encounterJson = JsonConvert.SerializeObject(Encounter);
+            _settings.AddOrUpdateValue("client.encounter", encounterJson);
+
+            
+            //Initialize and store Manifest
 
             _obsService.Initialize(Encounter);
             Manifest = _obsService.Manifest;
@@ -180,20 +197,25 @@ namespace LiveHTS.Presentation.ViewModel
             var manifestJson = JsonConvert.SerializeObject(Manifest);
             _settings.AddOrUpdateValue("client.manifest", manifestJson);
 
-            Refresh();
+            //Load View
+            
+            LoadView();
         }
 
-        public void Refresh()
+        public void LoadView()
         {
+
+            //Show First or Last Active Question
+
             if (null != Manifest)
             {
-                var current = _obsService.GetLiveQuestion(Manifest);
+                var activeQuestion = _obsService.GetLiveQuestion(Manifest);
 
-                var liveQ = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == current.Id);
+                var liveQuestion = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == activeQuestion.Id);
 
-                if (null != liveQ)
+                if (null != liveQuestion)
                 {
-                    liveQ.QuestionTemplate.Allow = true;
+                    liveQuestion.QuestionTemplate.Allow = true;
                 }
             }
         }
@@ -402,7 +424,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             Manifest.UpdateEncounter(Encounter);
-            Refresh();
+            LoadView();
         }
 
         private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, ClientEncounterViewModel clientDashboardViewModel)
@@ -425,6 +447,13 @@ namespace LiveHTS.Presentation.ViewModel
         private void SaveChanges()
         {
             //readResponses
+
+            var allResponses = Manifest.ResponseStore;
+
+            var allLiveResponse = Questions.Where(x => x.QuestionTemplate.Allow).ToList();
+
+             
+
 
             
 
