@@ -268,7 +268,7 @@ namespace LiveHTS.Presentation.ViewModel
                         .OrderBy(x => x.Question.Rank)
                         .ToList();
 
-                    if(null!=responses&& responses.Count>0)
+                    if (null != responses && responses.Count > 0)
                     {
                         var r = responses.First();
 

@@ -63,16 +63,6 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
-    ^ValidatorId^: ^Required^,
-    ^ValidatorTypeId^: ^None^,
-    ^Revision^: 0,
-    ^MinLimit^: ^^,
-    ^MaxLimit^: ^^,
-    ^QuestionId^: ^6206b13a-6260-11e7-907b-a6006ad3dba0^,
-    ^Id^: ^6206b13a-6260-11e7-907b-a6006ad5dba1^,
-    ^Voided^: 0
-  },  
-  {
     ^ValidatorId^: ^Range^,
     ^ValidatorTypeId^: ^Count^,
     ^Revision^: 0,
