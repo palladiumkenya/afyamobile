@@ -26,7 +26,6 @@
   <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/editTextResponse"
     local:MvxBind="Text QuestionTemplate.ResponseText; Visibility QuestionTemplate.ShowTextObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
 
   <!-- Obs Numeric -->
@@ -43,6 +42,12 @@
     android:layout_width="fill_parent"
     android:layout_height="20dp"
     local:MvxBind="ItemsSource QuestionTemplate.SingleOptions; SelectedItem QuestionTemplate.SelectedSingleOption; Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+
+  <!-- Obs Single Other Text -->
+  <EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="Text QuestionTemplate.OtherSingleResponseText; Visibility QuestionTemplate.ShowOtherSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
   
   <!-- Obs Muliselect Dropdown -->
   <LinearLayout
@@ -64,6 +69,13 @@
       local:MvxItemTemplate="@layout/obs_item_multi_s"
       local:MvxDropDownItemTemplate="@layout/obs_item_multi_d"
       local:MvxBind="ItemsSource QuestionTemplate.MultiOptions; Enabled QuestionTemplate.Allow" />
+
+    <!-- Obs Muliselect Other Text -->
+    <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      local:MvxBind="Text QuestionTemplate.OtherMultiResponseText; Visibility QuestionTemplate.ShowOtherMultiObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+    
   </LinearLayout>
 
 </LinearLayout>

@@ -28,11 +28,15 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         ObservableCollection<CategoryItem> SingleOptions { get; set; } 
         CategoryItem SelectedSingleOption { get; set; }
         bool ShowSingleObs { get; set; }
+        string OtherSingleResponseText { get; set; }
+        bool ShowOtherSingleObs { get; set; }
 
         string Selection { get; set; }
         List<CategoryItem> MultiOptions { get; set; }
         List<CategoryItem> SelectedMultiOptions { get; set; }
         bool ShowMultiObs { get; set; }
+        string OtherMultiResponseText { get; set; }
+        bool ShowOtherMultiObs { get; set; }
 
         Concept Concept { get; set; }
         bool Allow { get; set; }

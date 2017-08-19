@@ -36,8 +36,12 @@ namespace LiveHTS.Presentation.ViewModel.Template
         
         private Concept _concept;
         private bool _allow;
+        private string _otherSingleResponseText;
+        private bool _showOtherSingleObs;
+        private string _otherMultiResponseText;
+        private bool _showOtherMultiObs;
 
-        
+
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
 
         public Guid Id
@@ -110,6 +114,16 @@ namespace LiveHTS.Presentation.ViewModel.Template
             get { return _showSingleObs; }
             set { _showSingleObs = value; RaisePropertyChanged(() => ShowSingleObs); }
         }
+        public string OtherSingleResponseText
+        {
+            get { return _otherSingleResponseText; }
+            set { _otherSingleResponseText = value; RaisePropertyChanged(() => OtherSingleResponseText); }
+        }
+        public bool ShowOtherSingleObs
+        {
+            get { return _showOtherSingleObs; }
+            set { _showOtherSingleObs = value; RaisePropertyChanged(() => ShowOtherSingleObs); }
+        }
 
         public string Selection
         {
@@ -138,6 +152,17 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 RaisePropertyChanged(() => ShowMultiObs);
             }
         }
+        public string OtherMultiResponseText
+        {
+            get { return _otherMultiResponseText; }
+            set { _otherMultiResponseText = value; RaisePropertyChanged(() => OtherMultiResponseText); }
+        }
+        public bool ShowOtherMultiObs
+        {
+            get { return _showOtherMultiObs; }
+            set { _showOtherMultiObs = value; RaisePropertyChanged(() => ShowOtherMultiObs); }
+        }
+
         public List<CategoryItem> SelectedMultiOptions
         {
             get { return _selectedMultiOptions; }
