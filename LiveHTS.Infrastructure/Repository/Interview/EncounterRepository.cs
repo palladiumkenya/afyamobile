@@ -95,6 +95,11 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             }
 
             return encounters;
-        }       
+        }
+
+        public void ClearObs(Guid id)
+        {
+            _db.Execute("DELETE FROM Obs WHERE EncounterId=?", id.ToString());
+        }
     }
 }

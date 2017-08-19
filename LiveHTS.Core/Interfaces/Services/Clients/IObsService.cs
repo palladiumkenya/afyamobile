@@ -21,5 +21,6 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
 
         bool ValidateResponse(Guid encounterId, Guid questionId, object response);
         void SaveResponse(Guid encounterId, Guid questionId, object response,bool validated=false);
+        void ClearEncounter(Guid encounterId);
     }
 }

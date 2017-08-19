@@ -11,6 +11,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 {
     public interface IQuestionTemplate
     {
+        
         IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
 
         Guid Id { get; set; }

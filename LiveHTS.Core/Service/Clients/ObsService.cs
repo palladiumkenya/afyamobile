@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.Core.Interfaces.Engine;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Survey;
@@ -57,11 +58,13 @@ namespace LiveHTS.Core.Service.Clients
 
         public Question GetLiveQuestion(Manifest manifest, Guid currentQuestionId)
         {
-            return _navigationEngine.GetLiveQuestion(_manifest,currentQuestionId);
+            _manifest = manifest ?? _manifest;
+            return _navigationEngine.GetLiveQuestion(manifest, currentQuestionId);
         }
 
         public List<Question> GetLiveQuestions(Manifest manifest, Guid currentQuestionId)
         {
+            _manifest = manifest ?? _manifest;
             var list=new List<Question>();
             bool notRequired = true;
 
@@ -96,7 +99,8 @@ namespace LiveHTS.Core.Service.Clients
 
         public Question GetQuestion(Guid questionId, Manifest currentManifest)
         {
-            return _navigationEngine.GetQuestion(questionId, _manifest);
+            _manifest = currentManifest ?? _manifest;
+            return _navigationEngine.GetQuestion(questionId, currentManifest);
         }
 
         public bool ValidateResponse(Guid encounterId, Guid questionId, object response)
@@ -131,6 +135,11 @@ namespace LiveHTS.Core.Service.Clients
                 _obsRepository.SaveOrUpdate(liveResponse.Obs);
                 UpdateManifest(encounterId);
             }
+        }
+
+        public void ClearEncounter(Guid encounterId)
+        {
+            _encounterRepository.ClearObs(encounterId);
         }
 
         private void UpdateManifest(Guid encounterId)

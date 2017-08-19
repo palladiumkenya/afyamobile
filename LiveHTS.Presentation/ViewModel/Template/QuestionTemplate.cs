@@ -14,6 +14,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
 {
     public class QuestionTemplate : MvxNotifyPropertyChanged, IQuestionTemplate
     {
+        
         private Guid _id;
 
         private string _display;
@@ -35,6 +36,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         
         private Concept _concept;
         private bool _allow;
+
         
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
 
@@ -241,6 +243,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 }
                 if (itemIds.Count > 0)
                 {
+
+
                     var multiOptions=new List<CategoryItem>();
                     var options = MultiOptions
                         .Where(
@@ -258,6 +262,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
                         }                            
                         multiOptions.Add(categoryItem);
                     }
+
                     MultiOptions = multiOptions;
                 }                                    
             }

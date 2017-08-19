@@ -75,6 +75,29 @@ namespace LiveHTS.Core.Tests.Model.Interview
         }
 
         [Test]
+        public void should_Not_Add_Encounter_Obs_If_Null()
+        {
+            var encounter = _encounters.First();
+            var obsCount = encounter.Obses.ToList().Count;
+
+            var concept = Builder<Concept>.CreateNew().Build();
+            var question = Builder<Question>.CreateNew()
+                .With(x => x.Concept = concept)
+                .With(x => x.ConceptId = concept.Id)
+                .Build();
+            var obs = Builder<Obs>.CreateNew()
+                .With(x => x.QuestionId = question.Id)
+                .Build();
+
+            obs = Obs.Create(obs.QuestionId, obs.EncounterId, "Text", "");
+            encounter.AddOrUpdate(obs,false);
+
+            var newObs = encounter.Obses.FirstOrDefault(x => x.Id == obs.Id);
+            Assert.IsNull(newObs);
+            Assert.IsTrue(encounter.Obses.ToList().Count == obsCount);
+            
+        }
+        [Test]
         public void should_Update_Encounter_Obs()
         {
             var encounter = _encounters.First();
@@ -90,6 +113,24 @@ namespace LiveHTS.Core.Tests.Model.Interview
             Assert.AreEqual(updatedObs.EncounterId, encounter.Id);
             Assert.IsTrue(encounter.Obses.ToList().Count == obsCount);
             Console.WriteLine(updatedObs);
+        }
+        [Test]
+        public void should_Not_Update_Encounter_Obs_if_null()
+        {
+            var encounter = _encounters.First();
+            var obsCount = encounter.Obses.ToList().Count;
+            var obs = encounter.Obses.Last();
+            
+
+            var newObs = Obs.Create(obs.QuestionId, obs.EncounterId, "Single", null);
+            newObs.Id = obs.Id;
+            
+
+            encounter.AddOrUpdate(newObs, false);
+
+            var updatedObs = encounter.Obses.FirstOrDefault(x => x.Id == newObs.Id);
+            Assert.IsNull(updatedObs);
+            
         }
 
     }

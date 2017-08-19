@@ -73,7 +73,7 @@ namespace LiveHTS.Core.Model.Interview
             return encounter;
         }
 
-        public void AddOrUpdate(Obs obs)
+        public void AddOrUpdate(Obs obs,bool saveNulls=true)
         {
             var obses = Obses.ToList();
 
@@ -81,13 +81,32 @@ namespace LiveHTS.Core.Model.Interview
             {
                 var obsForUpdate = obses.First(x => x.QuestionId == obs.QuestionId);
                 obses.Remove(obsForUpdate);
-                obsForUpdate.UpdateFrom(obs);
-                obses.Add(obsForUpdate);
+                if (saveNulls)
+                {
+                    obsForUpdate.UpdateFrom(obs);
+                    obses.Add(obsForUpdate);
+                }
+                else
+                {
+                    if (!obs.IsNull)
+                    {
+                        obsForUpdate.UpdateFrom(obs);
+                        obses.Add(obsForUpdate);
+                    }
+                }
             }
             else
             {
                 obs.EncounterId = Id;
-                obses.Add(obs);
+                if (saveNulls)
+                {
+                    obses.Add(obs);
+                }
+                else
+                {
+                    if(!obs.IsNull)
+                        obses.Add(obs);
+                }
             }
 
             Obses = obses;

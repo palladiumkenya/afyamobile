@@ -14,7 +14,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
 [
   {
     ^ConceptId^: ^00c2a60a-6246-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: 1,
+    ^Ordinal^: ^1^,
     ^Display^: ^Consent^,
     ^Rank^: 1,
     ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
@@ -23,43 +23,25 @@ namespace LiveHTS.Infrastructure.Seed.Survey
   },
   {
     ^ConceptId^: ^00c2a60a-6246-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: ^1.a^,
+    ^Ordinal^: ^2^,
     ^Display^: ^Smoke ?^,
-    ^Rank^: 1.1,
+    ^Rank^: 2,
     ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
     ^Id^: ^6206a9a6-6260-11e8-907b-a6006ad3dba0^,
     ^Voided^: 0
   },
   {
-    ^ConceptId^: ^00c2a60a-6246-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: ^1.b^,
-    ^Display^: ^Drink ?^,
-    ^Rank^: 1.2,
-    ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
-    ^Id^: ^6206a9a6-6260-11e9-907b-a6006ad3dba0^,
-    ^Voided^: 0
-  },
-  {
     ^ConceptId^: ^00c2aa06-6246-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: 2,
+    ^Ordinal^: ^3^,
     ^Display^: ^Result^,
-    ^Rank^: 2,
+    ^Rank^: 3,
     ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
     ^Id^: ^6206aa78-6260-11e7-907b-a6006ad3dba0^,
     ^Voided^: 0
   },
   {
-    ^ConceptId^: ^00c2b14a-6246-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: 3,
-    ^Display^: ^No of Kits^,
-    ^Rank^: 3,
-    ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
-    ^Id^: ^6206ab4a-6260-11e7-907b-a6006ad3dba0^,
-    ^Voided^: 0
-  },
-  {
     ^ConceptId^: ^00c2b23a-6246-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: 4,
+    ^Ordinal^: ^4^,
     ^Display^: ^Referall^,
     ^Rank^: 4,
     ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
@@ -67,19 +49,10 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
-    ^ConceptId^: ^6203cad8-6260-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: 5,
-    ^Display^: ^Discordant^,
-    ^Rank^: 5,
-    ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
-    ^Id^: ^6206acf8-6260-11e7-907b-a6006ad3dba0^,
-    ^Voided^: 0
-  },
-  {
     ^ConceptId^: ^00c2b550-6246-11e7-907b-a6006ad3dba0^,
-    ^Ordinal^: 6,
+    ^Ordinal^: ^5^,
     ^Display^: ^Remarks^,
-    ^Rank^: 6,
+    ^Rank^: 5,
     ^FormId^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
     ^Id^: ^6206b13a-6260-11e7-907b-a6006ad3dba0^,
     ^Voided^: 0

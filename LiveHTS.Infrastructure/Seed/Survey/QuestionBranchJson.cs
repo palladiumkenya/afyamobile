@@ -24,19 +24,6 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^QuestionId^: ^6206a9a6-6260-11e7-907b-a6006ad3dba0^,
     ^Id^: ^6203d8de-6260-11e7-907b-a6006ad3dba0^,
     ^Voided^: 0
-  },
-  {
-    ^ConditionId^: ^Post^,
-    ^RefQuestionId^: ^^,
-    ^ResponseType^: ^=^,
-    ^Response^: ^00c2ad58-6246-11e7-907b-a6006ad3dba0^,
-    ^ResponseComplex^: ^^,
-    ^Group^: 0,
-    ^ActionId^: ^None^,
-    ^GotoQuestionId^: ^6206b13a-6260-11e7-907b-a6006ad3dba0^,
-    ^QuestionId^: ^6206aa78-6260-11e7-907b-a6006ad3dba0^,
-    ^Id^: ^6203dd3e-6260-11e7-907b-a6006ad3dba0^,
-    ^Voided^: 0
   }
 ]
 ";

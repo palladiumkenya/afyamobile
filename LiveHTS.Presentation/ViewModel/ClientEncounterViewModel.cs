@@ -38,6 +38,8 @@ namespace LiveHTS.Presentation.ViewModel
         private Manifest _manifest;
         private bool _isLoading;
 
+        public bool AtTheEnd { get; set; }
+
         public bool IsLoading
         {
             get { return _isLoading; }
@@ -142,8 +144,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string formId,string mode, string encounterId)
         {
-
             //Load Form + Question Metadata
+
+            
 
             if (null == Form)
             {
@@ -209,7 +212,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             //Load View
             
-            LoadView();
+            //LoadView();
         }
         public override void ViewAppeared()
         {
@@ -246,8 +249,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             Manifest.UpdateEncounter(Encounter);
-            LoadView();
 
+            AtTheEnd = false;
+            LoadView();
         }
 
         public void LoadView()
@@ -264,8 +268,10 @@ namespace LiveHTS.Presentation.ViewModel
                         .OrderBy(x => x.Question.Rank)
                         .ToList();
 
-                    foreach (var r in responses)
+                    if(null!=responses&& responses.Count>0)
                     {
+                        var r = responses.First();
+
                         var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == r.QuestionId);
                         if (null != q)
                         {
@@ -275,16 +281,15 @@ namespace LiveHTS.Presentation.ViewModel
                             if (!q.QuestionTemplate.Allow)
                                 q.QuestionTemplate.Allow = true;
 
-                            
+
                             // determine if to set Response
                             var existingResponse = q.QuestionTemplate.GetResponse();
 
                             if (null == existingResponse || string.IsNullOrWhiteSpace(existingResponse.ToString()))
                             {
-                                q.QuestionTemplate.SetResponse(r.GetValue().Value);
+                                var readRespnse = r.GetValue().Value;
+                                q.QuestionTemplate.SetResponse(readRespnse);
                             }
-                            
-                            
                         }
                     }
                 }
@@ -292,6 +297,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     // Load active Questsion
 
+                    
                     var activeQuestion = _obsService.GetLiveQuestion(Manifest);
 
                     var liveQuestion = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == activeQuestion.Id);
@@ -301,11 +307,13 @@ namespace LiveHTS.Presentation.ViewModel
                         if (!liveQuestion.QuestionTemplate.Allow)
                             liveQuestion.QuestionTemplate.Allow = true;
                     }
+                    
                 }
             }
         }
         public bool ValidateResponse(QuestionTemplate questionTemplate)
         {
+           
             bool validate = false;
 
             try
@@ -327,6 +335,9 @@ namespace LiveHTS.Presentation.ViewModel
         }
         public void AllowNextQuestion(QuestionTemplate questionTemplate)
         {
+            if (!questionTemplate.Allow)
+                return;
+                
             AllowAllInLine(questionTemplate);
             SaveChangesCommand.RaiseCanExecuteChanged();
         }
@@ -350,7 +361,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 //update encounter with Response
 
-                Encounter.AddOrUpdate(liveResponse.Obs);
+                Encounter.AddOrUpdate(liveResponse.Obs,false);
 
                 //update manifest from Encounter
 
@@ -376,8 +387,11 @@ namespace LiveHTS.Presentation.ViewModel
 
                     var nextQuestions = _obsService.GetLiveQuestions(Manifest, questionTemplate.Id);
 
-                    if (null == nextQuestions||nextQuestions.Count==0)
+                    if (null == nextQuestions || nextQuestions.Count == 0)
+                    {
+                        AtTheEnd = true;
                         return;
+                    }
 
                     // process remaining Questions
 
@@ -398,8 +412,11 @@ namespace LiveHTS.Presentation.ViewModel
                             {
                                 // disable skipped Question
 
-                                if(skipQ.QuestionTemplate.Allow)
+                                if (skipQ.QuestionTemplate.Allow)
+                                {
+                                    skipQ.QuestionTemplate.ErrorSummary = string.Empty;
                                     skipQ.QuestionTemplate.Allow = false;
+                                }
                             }
 
                             // enable current nextQuestion
@@ -415,7 +432,11 @@ namespace LiveHTS.Presentation.ViewModel
 
                             var responseValue = null == response ? null : response.GetValue().Value;
                             if (null != responseValue)
-                                liveQ.QuestionTemplate.SetResponse(responseValue);
+                            {
+                                //if (!liveQ.QuestionTemplate.ShowMultiObs)
+                                    liveQ.QuestionTemplate.SetResponse(responseValue);
+                            }
+
                         }
                     }
                     
@@ -455,6 +476,8 @@ namespace LiveHTS.Presentation.ViewModel
                         return;
                 }
             }
+
+            _obsService.ClearEncounter(Encounter.Id);
 
             foreach (var q in allowedQuestions)
             {

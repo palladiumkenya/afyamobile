@@ -16,6 +16,8 @@ namespace LiveHTS.Core.Model.Interview
         public DateTime? ValueDateTime { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }
+        [Ignore]
+        public bool IsNull { get; set; }
 
         public Obs()
         {
@@ -61,30 +63,36 @@ namespace LiveHTS.Core.Model.Interview
         {
             //  Single | Numeric | Multi | DateTime | Text
 
-            var value = obsValue.ToString();
+            var value = null == obsValue ? string.Empty : obsValue.ToString();
+
+            var obs= new Obs(questionId, encounterId, value);
+            obs.IsNull = true;
 
             if (type == "Single")
             {
                 var val = string.IsNullOrWhiteSpace(value)?Guid.Empty:new Guid(value);
-                return new Obs(questionId, encounterId, val);
+                obs= new Obs(questionId, encounterId, val); obs.IsNull = true;
+
             }
             if (type == "Numeric")
             {
                 var val = string.IsNullOrWhiteSpace(value) ? -0.01m : Convert.ToDecimal(value);
-                return new Obs(questionId, encounterId, val);
+                obs = new Obs(questionId, encounterId, val); obs.IsNull = true;
             }           
             if (type == "DateTime")
             {
                 var val = string.IsNullOrWhiteSpace(value) ? new DateTime(1899,1,1) : Convert.ToDateTime(value);
-                return new Obs(questionId, encounterId,val);
+                obs = new Obs(questionId, encounterId,val); obs.IsNull = true;
             }
             if (type == "Multi")
             {
-                return new Obs(questionId, encounterId, value, true);
+                obs = new Obs(questionId, encounterId, value, true); obs.IsNull = true;
             }
 
+            if (obs.HasValue(type))
+                obs.IsNull = false;
 
-            return new Obs(questionId, encounterId, value);
+            return obs;
         }
 
 

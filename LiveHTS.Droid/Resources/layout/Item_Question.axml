@@ -42,8 +42,7 @@
   <MvxSpinner
     android:layout_width="fill_parent"
     android:layout_height="20dp"
-    
-    local:MvxBind="ItemsSource QuestionTemplate.SingleOptions; SelectedItem  QuestionTemplate.SelectedSingleOption; Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+    local:MvxBind="ItemsSource QuestionTemplate.SingleOptions; SelectedItem QuestionTemplate.SelectedSingleOption; Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
   
   <!-- Obs Muliselect Dropdown -->
   <LinearLayout
