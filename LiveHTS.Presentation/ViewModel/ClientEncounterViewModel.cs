@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
@@ -29,7 +30,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Form _form;
         
         private ClientDTO _clientDTO;
-        private List<QuestionTemplateWrap> _questions;
+        private ObservableCollection<QuestionTemplateWrap> _questions=new ObservableCollection<QuestionTemplateWrap>();
         private IMvxCommand _saveChangesCommand;
         
         private string _formError;
@@ -103,7 +104,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public List<QuestionTemplateWrap> Questions
+        public ObservableCollection<QuestionTemplateWrap> Questions
         {
             get { return _questions; }
             set { _questions = value; RaisePropertyChanged( () => Questions); }
@@ -422,9 +423,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
         
-        private static List<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, IClientEncounterViewModel clientDashboardViewModel)
+        private static ObservableCollection<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, IClientEncounterViewModel clientDashboardViewModel)
         {
-            List<QuestionTemplateWrap> list = new List<QuestionTemplateWrap>();
+            ObservableCollection<QuestionTemplateWrap> list = new ObservableCollection<QuestionTemplateWrap>();
             foreach (var r in questions)
             {
                 list.Add(new QuestionTemplateWrap(clientDashboardViewModel,new QuestionTemplate(r)));

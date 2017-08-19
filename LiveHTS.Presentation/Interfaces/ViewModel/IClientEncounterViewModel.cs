@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
@@ -23,7 +24,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         ClientEncounterDTO ClientEncounterDTO { get; set; }
 
         Form Form { get; set; }
-        List<QuestionTemplateWrap> Questions { get; set; }
+        ObservableCollection<QuestionTemplateWrap> Questions { get; set; }
 
         Encounter Encounter { get; set; }
         Manifest Manifest { get; set; }

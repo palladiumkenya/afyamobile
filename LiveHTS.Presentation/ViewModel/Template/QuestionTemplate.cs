@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
@@ -23,7 +24,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private decimal _responseNumeric;
         private bool _showNumericObs;
 
-        private List<CategoryItem> _singleOptions = new List<CategoryItem>();
+        private ObservableCollection<CategoryItem> _singleOptions = new ObservableCollection<CategoryItem>();
         private CategoryItem _selectedSingleOption;
         private bool _showSingleObs;
 
@@ -87,7 +88,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         }
 
 
-        public List<CategoryItem> SingleOptions
+        public ObservableCollection<CategoryItem> SingleOptions
         {
             get { return _singleOptions; }
             set { _singleOptions = value; RaisePropertyChanged(() => SingleOptions); }
@@ -179,7 +180,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 options = options.OrderBy(x => x.Rank).ToList();
 
                 if (ShowSingleObs)
-                    SingleOptions = options;
+                    SingleOptions =new ObservableCollection<CategoryItem>(options);
 
                 if (ShowMultiObs)
                     MultiOptions = options;

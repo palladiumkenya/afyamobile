@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
@@ -23,7 +24,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         decimal ResponseNumeric { get; set; }
         bool ShowNumericObs { get; set; }
 
-        List<CategoryItem> SingleOptions { get; set; } 
+        ObservableCollection<CategoryItem> SingleOptions { get; set; } 
         CategoryItem SelectedSingleOption { get; set; }
         bool ShowSingleObs { get; set; }
 
