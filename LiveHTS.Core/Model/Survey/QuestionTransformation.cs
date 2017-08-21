@@ -17,6 +17,7 @@ namespace LiveHTS.Core.Model.Survey
         public decimal? Group { get; set; }
         [Indexed]
         public string ActionId { get; set; }
+        public decimal? Rank { get; set; }
         public string Content { get; set; }
         [Indexed]
         public Guid QuestionId { get; set; }
