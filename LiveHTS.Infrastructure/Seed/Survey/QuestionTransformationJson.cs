@@ -42,6 +42,20 @@ namespace LiveHTS.Infrastructure.Seed.Survey
   },
   {
     ^Id^: ^b261b16a-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b260401e-852f-11e7-bb31-be2e44b06b34^,
+    ^ConditionId^: ^Post^,
+    ^ResponseType^: ^=^,
+    ^Response^: ^b25ee0a2-852f-11e7-bb31-be2e44b06b34^,
+    ^ResponseComplex^: ^^,
+    ^Group^: ^^,
+    ^RefQuestionId^: ^b2605c98-852f-11e7-bb31-be2e44b06b34^,
+    ^ActionId^: ^Allow^,
+    ^Rank^: 3,
+    ^Content^: ^^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b261b3cc-852f-11e7-bb31-be2e44b06b34^,
     ^QuestionId^: ^b2604ce4-852f-11e7-bb31-be2e44b06b34^,
     ^ConditionId^: ^Post^,
     ^ResponseType^: ^=^,
@@ -55,7 +69,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
-    ^Id^: ^b261b3cc-852f-11e7-bb31-be2e44b06b34^,
+    ^Id^: ^b261b606-852f-11e7-bb31-be2e44b06b34^,
     ^QuestionId^: ^b2604ce4-852f-11e7-bb31-be2e44b06b34^,
     ^ConditionId^: ^Post^,
     ^ResponseType^: ^=^,
@@ -69,7 +83,21 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
-    ^Id^: ^b261b606-852f-11e7-bb31-be2e44b06b34^,
+    ^Id^: ^b261b8ae-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2604ce4-852f-11e7-bb31-be2e44b06b34^,
+    ^ConditionId^: ^Post^,
+    ^ResponseType^: ^=^,
+    ^Response^: ^b25efd8a-852f-11e7-bb31-be2e44b06b34^,
+    ^ResponseComplex^: ^^,
+    ^Group^: ^^,
+    ^RefQuestionId^: ^b2605964-852f-11e7-bb31-be2e44b06b34^,
+    ^ActionId^: ^Allow^,
+    ^Rank^: 3,
+    ^Content^: ^^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b261bb38-852f-11e7-bb31-be2e44b06b34^,
     ^QuestionId^: ^b260401e-852f-11e7-bb31-be2e44b06b34^,
     ^ConditionId^: ^Pre^,
     ^ResponseType^: ^^,
@@ -83,7 +111,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
-    ^Id^: ^b261b8ae-852f-11e7-bb31-be2e44b06b34^,
+    ^Id^: ^b261bd86-852f-11e7-bb31-be2e44b06b34^,
     ^QuestionId^: ^b260401e-852f-11e7-bb31-be2e44b06b34^,
     ^ConditionId^: ^Pre^,
     ^ResponseType^: ^^,
@@ -97,7 +125,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
-    ^Id^: ^b261bb38-852f-11e7-bb31-be2e44b06b34^,
+    ^Id^: ^b261c038-852f-11e7-bb31-be2e44b06b34^,
     ^QuestionId^: ^b260401e-852f-11e7-bb31-be2e44b06b34^,
     ^ConditionId^: ^Pre^,
     ^ResponseType^: ^^,
@@ -111,7 +139,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Voided^: 0
   },
   {
-    ^Id^: ^b261bd86-852f-11e7-bb31-be2e44b06b34^,
+    ^Id^: ^b261c29a-852f-11e7-bb31-be2e44b06b34^,
     ^QuestionId^: ^b260401e-852f-11e7-bb31-be2e44b06b34^,
     ^ConditionId^: ^Pre^,
     ^ResponseType^: ^^,

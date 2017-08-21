@@ -91,30 +91,7 @@ namespace LiveHTS.Core.Engine
             // Vet last Question
             if (null != lastQuestion)
             {
-                #region Post Transformations
-
-                if (lastQuestion.HasConditionalTransformations("Post") && null != latestResponse)
-                {
-                    var transformations = lastQuestion.Transformations
-                        .Where(x => x.ConditionId.ToLower() == "Post".ToLower())
-                        .OrderBy(x=>x.Rank)
-                        .ToList();
-
-                    
-                    foreach (var transformation in transformations)
-                    {
-                        var setResponse = transformation.Evaluate(latestResponse.GetValue());
-
-                        if (null!=setResponse)
-                        {
-                            candidateQuestion = currentManifest.GetQuestion(setResponse.Value);
-                            break;
-                        }
-                    }
-                }
-
-                #endregion
-
+                
 
                 #region Post Branches
 

@@ -386,8 +386,35 @@ namespace LiveHTS.Presentation.ViewModel
                     // TRANSFORMATION FIRST
                     
                     var actions = _obsService.GetTransformationActions(Manifest, questionTemplate.Id);
-                    
-                    
+
+                    foreach (var a in actions)
+                    {
+                        if (a.Action.ToLower() == "Set".ToLower())
+                        {
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
+                            {
+                                q.QuestionTemplate.SetResponse(a.Response);
+                            }
+                        }
+                        if (a.Action.ToLower() == "Block".ToLower())
+                        {
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
+                            {
+                                q.QuestionTemplate.Allow = false;
+                            }
+                        }
+                        if (a.Action.ToLower() == "Allow".ToLower())
+                        {
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
+                            {
+                                q.QuestionTemplate.Allow = true;
+                            }
+                        }
+                    }
+
 
 
 
