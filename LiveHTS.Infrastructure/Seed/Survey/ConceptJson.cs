@@ -121,7 +121,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Id^: ^b25fd78c-852f-11e7-bb31-be2e44b06b34^,
     ^Name^: ^Final Result Given?^,
     ^ConceptTypeId^: ^Single^,
-    ^CategoryId^: ^b25f86d8-852f-11e7-bb31-be2e44b06b42^,
+    ^CategoryId^: ^b25f86d8-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -135,12 +135,19 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Id^: ^b25fdb9c-852f-11e7-bb31-be2e44b06b34^,
     ^Name^: ^Linked to Care?^,
     ^ConceptTypeId^: ^Single^,
-    ^CategoryId^: ^b25f86d8-852f-11e7-bb31-be2e44b06b42^,
+    ^CategoryId^: ^b25f86d8-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
     ^Id^: ^b25fddea-852f-11e7-bb31-be2e44b06b34^,
     ^Name^: ^CCC Number^,
+    ^ConceptTypeId^: ^Text^,
+    ^CategoryId^: ^^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25fdf3e-852f-11e7-bb31-be2e44b06b34^,
+    ^Name^: ^Reason Result Not Given^,
     ^ConceptTypeId^: ^Text^,
     ^CategoryId^: ^^,
     ^Voided^: 0

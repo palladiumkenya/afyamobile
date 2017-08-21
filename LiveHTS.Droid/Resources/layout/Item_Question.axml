@@ -37,6 +37,15 @@
     android:maxLength="3"
     android:inputType="number" />
 
+  <!-- Obs Date Spinner -->
+  <MvxDatePicker
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textSize="20dp"
+    local:MvxBind="Value QuestionTemplate.ResponseDate;Visibility QuestionTemplate.ShowDateObs, Converter=Visibility; Enabled QuestionTemplate.Allow"
+    android:calendarViewShown="false"
+    android:datePickerMode="spinner" />
+
   <!-- Obs Single Dropdown -->
   <MvxSpinner
     android:layout_width="fill_parent"

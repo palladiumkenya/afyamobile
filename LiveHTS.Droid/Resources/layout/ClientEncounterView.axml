@@ -91,9 +91,12 @@
         android:layout_height="fill_parent">
       <Mvx.MvxListView
           android:layout_width="fill_parent"
-          android:layout_height="700dp"
+          android:layout_height="fill_parent"
           local:MvxBind="ItemsSource Questions"
-          local:MvxItemTemplate="@layout/item_question" />
+          local:MvxItemTemplate="@layout/item_question"
+          android:divider="@android:color/transparent"
+          android:dividerHeight="4dp"
+          />
     </FrameLayout>
   </LinearLayout>
 </ScrollView>

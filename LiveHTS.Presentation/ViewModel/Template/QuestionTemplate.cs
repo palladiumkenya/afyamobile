@@ -40,6 +40,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private bool _showOtherSingleObs;
         private string _otherMultiResponseText;
         private bool _showOtherMultiObs;
+        private DateTime _responseDate;
+        private bool _showDateObs;
 
 
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
@@ -91,6 +93,23 @@ namespace LiveHTS.Presentation.ViewModel.Template
         {
             get { return _showNumericObs; }
             set { _showNumericObs = value; RaisePropertyChanged(() => ShowNumericObs); }
+        }
+
+        public DateTime ResponseDate
+        {
+            get { return _responseDate; }
+            set
+            {
+                _responseDate = value;
+                RaisePropertyChanged(() => ResponseDate);
+                AllowNextQuestion();
+            }
+        }
+
+        public bool ShowDateObs
+        {
+            get { return _showDateObs; }
+            set { _showDateObs = value; RaisePropertyChanged(() => ShowDateObs); }
         }
 
 
@@ -199,6 +218,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             ShowSingleObs = Concept.ConceptTypeId == "Single";
             ShowNumericObs = Concept.ConceptTypeId == "Numeric";
             ShowMultiObs = Concept.ConceptTypeId == "Multi";
+            ShowDateObs = Concept.ConceptTypeId == "DateTime";
 
             if (ShowSingleObs|| ShowMultiObs)
             {
@@ -212,6 +232,9 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 if (ShowMultiObs)
                     MultiOptions = options;
             }
+
+            if(ShowDateObs)
+                _responseDate=DateTime.Today.Date.AddYears(1);
         }
 
         public void AllowNextQuestion()
@@ -292,6 +315,18 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 }                                    
             }
 
+            if (ShowDateObs)     //"Date";
+            {
+                var text = response.ToString();
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    DateTime dateTime;
+                    DateTime.TryParse(text, out dateTime);
+                    ResponseDate= dateTime;
+                }
+            }
+
+
         }
 
         private object ReadResponse()
@@ -309,6 +344,10 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 var options = MultiOptions.Where(x => x.Selected).ToList();
                 return string.Join(",", options.Select(x => x.ItemId));
+            }
+            if (ShowDateObs)       //"Multi";
+            {
+                return ResponseDate;
             }
             return null;
         }

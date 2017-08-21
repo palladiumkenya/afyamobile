@@ -30,6 +30,11 @@ namespace LiveHTS.Infrastructure.Seed.Config
     ^Name^: ^Text^,
     ^Id^: ^Text^,
     ^Voided^: 0
+  },
+  {
+    ^Name^: ^DateTime^,
+    ^Id^: ^DateTime^,
+    ^Voided^: 0
   }
 ]
 ";

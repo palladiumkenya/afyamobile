@@ -25,6 +25,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         decimal ResponseNumeric { get; set; }
         bool ShowNumericObs { get; set; }
 
+        DateTime ResponseDate { get; set; }
+        bool ShowDateObs { get; set; }
+
         ObservableCollection<CategoryItem> SingleOptions { get; set; } 
         CategoryItem SelectedSingleOption { get; set; }
         bool ShowSingleObs { get; set; }
@@ -37,6 +40,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         bool ShowMultiObs { get; set; }
         string OtherMultiResponseText { get; set; }
         bool ShowOtherMultiObs { get; set; }
+
 
         Concept Concept { get; set; }
         bool Allow { get; set; }

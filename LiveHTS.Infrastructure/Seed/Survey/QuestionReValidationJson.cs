@@ -10,23 +10,10 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     {
         public  List<QuestionReValidation> Read()
         {
-            string raw = @"
-[
-  {
-    ^ConditionId^: ^Pre^,
-    ^RefQuestionId^: ^6206aa78-6260-11e7-907b-a6006ad3dba0^,
-    ^ResponseType^: ^=^,
-    ^Response^: ^00c2ad58-6246-11e7-907b-a6006ad3dba0^,
-    ^ResponseComplex^: ^^,
-    ^Group^: ^^,
-    ^ActionId^: ^Rng^,
-    ^QuestionValidationId^: ^6206a2d0-6260-11e7-907b-a6006ad3dba0^,
-    ^QuestionId^: ^6206ab4a-6260-11e7-907b-a6006ad3dba0^,
-    ^Id^: ^6203e068-6260-11e7-907b-a6006ad3dba0^,
-    ^Voided^: 0
-  }
-]
-";
+            string raw = @"";
+            if(string.IsNullOrWhiteSpace(raw))
+                return new List<QuestionReValidation>();
+
             return JsonConvert.DeserializeObject<List<QuestionReValidation>>(raw.Replace("^","\""));
         }
     }
