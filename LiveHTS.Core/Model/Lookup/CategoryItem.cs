@@ -15,6 +15,7 @@ namespace LiveHTS.Core.Model.Lookup
         private bool _selected;
         private bool _allow = true;
         private bool _itemChecked;
+        private decimal _rank;
 
         [Indexed]
         public Guid CategoryId { get; set; }
@@ -29,7 +30,11 @@ namespace LiveHTS.Core.Model.Lookup
             set { _display = value; }
         }
 
-        public Decimal Rank { get; set; }
+        public Decimal Rank
+        {
+            get { return _rank; }
+            set { _rank = value; }
+        }
 
         [Ignore]
         public bool Selected

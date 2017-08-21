@@ -381,6 +381,16 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null != Manifest)
                 {
+
+
+                    // TRANSFORMATION FIRST
+                    
+                    var actions = _obsService.GetTransformationActions(Manifest, questionTemplate.Id);
+                    
+                    
+
+
+
                     var liveSkipQs = new List<QuestionTemplateWrap>();
 
                     // get all remaining Questions

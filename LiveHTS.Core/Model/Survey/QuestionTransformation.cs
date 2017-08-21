@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -25,6 +26,30 @@ namespace LiveHTS.Core.Model.Survey
         public QuestionTransformation()
         {
             Id = LiveGuid.NewGuid();
+        }
+
+        public SetResponse Evaluate(ObsValue current)
+        {
+            if (ResponseType.Equals("="))
+            {
+                object responseObject = Response;
+
+                if (current.Type == typeof(Guid?))
+                {
+                    responseObject = new Guid(Response);
+                }
+                if (current.Type == typeof(decimal?))
+                {
+                    responseObject = Convert.ToDecimal(Response);
+                }
+                if (current.Type == typeof(DateTime?))
+                {
+                    responseObject = Convert.ToDateTime(Response);
+                }
+
+                return responseObject.Equals(current.Value) ? new SetResponse(RefQuestionId,ActionId,Content, Rank) : null;
+            }
+            return null;
         }
 
         public override string ToString()

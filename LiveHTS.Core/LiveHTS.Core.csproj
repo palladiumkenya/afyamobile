@@ -75,6 +75,7 @@
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
+    <Compile Include="Model\Interview\SetResponse.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -70,6 +71,11 @@ namespace LiveHTS.Core.Model.Survey
         }
         [Ignore]
         public List<Guid> SkippedQuestionIds { get; set; } =new List<Guid>();
+        [Ignore]
+        public List<SetResponse> SetResponses { get; set; } = new List<SetResponse>();
+
+        [Ignore]
+        public List<Guid> BlockedQuestionIds { get; set; } = new List<Guid>();
 
 
         public Question()
@@ -80,6 +86,11 @@ namespace LiveHTS.Core.Model.Survey
         public bool HasConditionalBranches(string condition)
         {
             return null != Branches && Branches.Any(x => x.ConditionId.ToLower() == condition.ToLower());
+        }
+
+        public bool HasConditionalTransformations(string condition)
+        {
+            return null != Transformations && Transformations.Any(x => x.ConditionId.ToLower() == condition.ToLower());
         }
 
         public override string ToString()

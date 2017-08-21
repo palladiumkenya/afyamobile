@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.SharedKernel.Custom;
 

@@ -10,6 +10,43 @@ namespace LiveHTS.Core.Engine
 {
     public class NavigationEngine : INavigationEngine
     {
+        public List<SetResponse> GetActions(Manifest currentManifest, Guid currentQuestionId)
+        {
+            List<SetResponse> actions=new  List<SetResponse>();
+            Question lastQuestion = null;
+            Response latestResponse = null;
+
+            if (!currentManifest.HasQuestions())
+                throw new ArgumentException("No Fields in Form");
+
+            lastQuestion = currentManifest.GetQuestion(currentQuestionId);
+            latestResponse = currentManifest.GetResponse(currentQuestionId);
+            
+            if (null != lastQuestion&&null!= latestResponse)
+            {
+
+                if (lastQuestion.HasConditionalTransformations("Post"))
+                {
+                    var transformations = lastQuestion.Transformations
+                        .Where(x => x.ConditionId.ToLower() == "Post".ToLower())
+                        .OrderBy(x => x.Rank)
+                        .ToList();
+
+
+                    foreach (var transformation in transformations)
+                    {
+                        var setResponse = transformation.Evaluate(latestResponse.GetValue());
+                        if (null != setResponse)
+                        {
+                            actions.Add(setResponse);
+                        }
+                    }
+                }
+            }
+
+            return actions;
+        }
+
         public Question GetLiveQuestion(Manifest currentManifest, Guid? currentQuestionId = null)
         {
             Question lastQuestion = null;
@@ -54,6 +91,31 @@ namespace LiveHTS.Core.Engine
             // Vet last Question
             if (null != lastQuestion)
             {
+                #region Post Transformations
+
+                if (lastQuestion.HasConditionalTransformations("Post") && null != latestResponse)
+                {
+                    var transformations = lastQuestion.Transformations
+                        .Where(x => x.ConditionId.ToLower() == "Post".ToLower())
+                        .OrderBy(x=>x.Rank)
+                        .ToList();
+
+                    
+                    foreach (var transformation in transformations)
+                    {
+                        var setResponse = transformation.Evaluate(latestResponse.GetValue());
+
+                        if (null!=setResponse)
+                        {
+                            candidateQuestion = currentManifest.GetQuestion(setResponse.Value);
+                            break;
+                        }
+                    }
+                }
+
+                #endregion
+
+
                 #region Post Branches
 
                 if (lastQuestion.HasConditionalBranches("Post") && null != latestResponse)
