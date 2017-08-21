@@ -13,21 +13,12 @@ namespace LiveHTS.Infrastructure.Seed.Survey
             string raw = @"
 [
   {
-    ^Id^: ^62040dcc-6260-11e7-907b-a6006ad3dba0^,
+    ^Id^: ^b25ebcda-852f-11e7-bb31-be2e44b06b34^,
     ^Name^: ^HTS Lab Form^,
     ^Display^: ^HTS Lab Form^,
     ^Description^: ^HTS Lab Form^,
     ^Rank^: 1,
-    ^ModuleId^: ^62040ce6-6260-11e7-907b-a6006ad3dba0^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^62040eb2-6260-11e7-907b-a6006ad3dba0^,
-    ^Name^: ^HTS Linkage Form^,
-    ^Display^: ^HTS Linkage Form^,
-    ^Description^: ^HTS Linkage Form^,
-    ^Rank^: 2,
-    ^ModuleId^: ^62040ce6-6260-11e7-907b-a6006ad3dba0^,
+    ^ModuleId^: ^b260c688-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   }
 ]
@@ -36,3 +27,15 @@ namespace LiveHTS.Infrastructure.Seed.Survey
         }
     }
 }
+
+/*
+{
+    ^Id^: ^b25ec112-852f-11e7-bb31-be2e44b06b34^,
+    ^Name^: ^HTS Linkage Form^,
+    ^Display^: ^HTS Linkage Form^,
+    ^Description^: ^HTS Linkage Form^,
+    ^Rank^: 2,
+    ^ModuleId^: ^b260c688-852f-11e7-bb31-be2e44b06b34^,
+    ^Voided^: 0
+  }
+ */

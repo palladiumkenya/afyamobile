@@ -12,21 +12,52 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
             string raw = @"
 [
   {
-    ^Id^: ^62040a3e-6260-11e7-907b-a6006ad3dba0^,
+    ^Id^: ^b25f86d8-852f-11e7-bb31-be2e44b06b34^,
     ^Code^: ^YesNo^,
     ^Voided^: 0
   },
   {
-    ^Id^: ^62040b24-6260-11e7-907b-a6006ad3dba0^,
-    ^Code^: ^Result^,
+    ^Id^: ^b25f8926-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^Disability^,
     ^Voided^: 0
   },
   {
-    ^Id^: ^62040c00-6260-11e7-907b-a6006ad3dba0^,
-    ^Code^: ^Services^,
+    ^Id^: ^b25f8b88-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^TestedAs^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f8fa2-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^Strategy^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f911e-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^TBScreening^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f93d0-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^HIVTest^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f951a-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^TestResult^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f97a4-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^FinalResult^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f9952-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^YesNoNa^,
     ^Voided^: 0
   }
-]";
+]
+";
             return JsonConvert.DeserializeObject<List<Category>>(raw.Replace("^","\""));
         }
     }

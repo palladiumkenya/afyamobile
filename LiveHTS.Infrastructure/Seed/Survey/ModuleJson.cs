@@ -13,7 +13,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
             string raw = @"
 [
   {
-    ^Id^: ^62040ce6-6260-11e7-907b-a6006ad3dba0^,
+    ^Id^: ^b260c688-852f-11e7-bb31-be2e44b06b34^,
     ^Name^: ^HTS Module^,
     ^Display^: ^Hiv Testing Services Module^,
     ^Description^: ^Hiv Testing Services Module^,
