@@ -47,6 +47,41 @@ namespace LiveHTS.Core.Engine
             return actions;
         }
 
+        public List<SetResponse> GetActionsComplex(Manifest currentManifest, Guid currentQuestionId)
+        {
+            List<SetResponse> actions = new List<SetResponse>();
+            Question lastQuestion = null;
+            
+
+            if (!currentManifest.HasQuestions())
+                throw new ArgumentException("No Fields in Form");
+
+            lastQuestion = currentManifest.GetQuestion(currentQuestionId);
+            
+
+            if (null != lastQuestion)
+            {
+
+                if (lastQuestion.HasTransformations)
+                {
+                    var transformations = lastQuestion.Transformations
+                        .OrderBy(x => x.Rank)
+                        .ToList();
+
+
+                    foreach (var transformation in transformations)
+                    {
+                        if (!string.IsNullOrWhiteSpace(transformation.ResponseComplex))
+                        {
+                            actions.Add(transformation.GetComplex());
+                        }
+                    }
+                }
+            }
+
+            return actions;
+        }
+
         public Question GetLiveQuestion(Manifest currentManifest, Guid? currentQuestionId = null)
         {
             Question lastQuestion = null;
@@ -84,15 +119,12 @@ namespace LiveHTS.Core.Engine
             else
             {             
                 lastQuestion = latestResponse.Question;
-            }
-            
-            
+            }                       
 
             // Vet last Question
             if (null != lastQuestion)
             {
-                
-
+               
                 #region Post Branches
 
                 if (lastQuestion.HasConditionalBranches("Post") && null != latestResponse)

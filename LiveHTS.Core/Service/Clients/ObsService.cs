@@ -50,6 +50,12 @@ namespace LiveHTS.Core.Service.Clients
             _manifest = Manifest.Create(form, currentEncounter);
         }
 
+        public List<SetResponse> GetTransformationComplexActions(Manifest currentManifest, Guid currentQuestionId)
+        {
+            return _navigationEngine.GetActionsComplex(currentManifest, currentQuestionId);
+        }
+
+
         public List<SetResponse> GetTransformationActions(Manifest currentManifest, Guid currentQuestionId)
         {
             return _navigationEngine.GetActions(currentManifest, currentQuestionId);

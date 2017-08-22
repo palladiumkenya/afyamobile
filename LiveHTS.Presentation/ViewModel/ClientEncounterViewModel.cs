@@ -28,11 +28,14 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly ISettings _settings;
         private ClientEncounterDTO _clientEncounterInfo;
         private Form _form;
-        
+
         private ClientDTO _clientDTO;
-        private ObservableCollection<QuestionTemplateWrap> _questions=new ObservableCollection<QuestionTemplateWrap>();
+
+        private ObservableCollection<QuestionTemplateWrap> _questions =
+            new ObservableCollection<QuestionTemplateWrap>();
+
         private IMvxCommand _saveChangesCommand;
-        
+
         private string _formError;
         private Encounter _encounter;
         private Manifest _manifest;
@@ -43,57 +46,62 @@ namespace LiveHTS.Presentation.ViewModel
         public bool IsLoading
         {
             get { return _isLoading; }
-            set { _isLoading = value; RaisePropertyChanged(() => IsLoading); }
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged(() => IsLoading);
+            }
         }
 
         public Guid UserId
         {
-            get
-            {
-                return _settings.GetValue("livehts.userid",Guid.Empty);
-            }
+            get { return _settings.GetValue("livehts.userid", Guid.Empty); }
         }
 
         public string UserName
         {
-            get
-            {
-                return _settings.GetValue("livehts.username", "admin");
-            }
+            get { return _settings.GetValue("livehts.username", "admin"); }
         }
 
         public Guid ProviderId
         {
-            get
-            {
-                return _settings.GetValue("livehts.providerid", Guid.Empty);
-            }
+            get { return _settings.GetValue("livehts.providerid", Guid.Empty); }
         }
 
         public string ProviderName
         {
-            get
-            {
-                return _settings.GetValue("livehts.providername", "");
-            }
+            get { return _settings.GetValue("livehts.providername", ""); }
         }
 
         public string FormError
         {
             get { return _formError; }
-            set { _formError = value; RaisePropertyChanged(() => FormError); }
+            set
+            {
+                _formError = value;
+                RaisePropertyChanged(() => FormError);
+            }
         }
 
         public ClientDTO ClientDTO
         {
             get { return _clientDTO; }
-            set { _clientDTO = value; ; RaisePropertyChanged(() => ClientDTO); }
+            set
+            {
+                _clientDTO = value;
+                ;
+                RaisePropertyChanged(() => ClientDTO);
+            }
         }
 
         public ClientEncounterDTO ClientEncounterDTO
         {
             get { return _clientEncounterInfo; }
-            set { _clientEncounterInfo = value; RaisePropertyChanged(() => ClientEncounterDTO); }
+            set
+            {
+                _clientEncounterInfo = value;
+                RaisePropertyChanged(() => ClientEncounterDTO);
+            }
         }
 
         public Form Form
@@ -101,7 +109,8 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _form; }
             set
             {
-                _form = value; RaisePropertyChanged(() => Form);
+                _form = value;
+                RaisePropertyChanged(() => Form);
                 Questions = ConvertToQuestionWrapperClass(_form.Questions, this);
             }
         }
@@ -109,7 +118,11 @@ namespace LiveHTS.Presentation.ViewModel
         public ObservableCollection<QuestionTemplateWrap> Questions
         {
             get { return _questions; }
-            set { _questions = value; RaisePropertyChanged( () => Questions); }
+            set
+            {
+                _questions = value;
+                RaisePropertyChanged(() => Questions);
+            }
         }
 
         public Encounter Encounter
@@ -124,7 +137,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _manifest = value; }
         }
 
-        
+
         public IMvxCommand SaveChangesCommand
         {
             get
@@ -134,7 +147,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public ClientEncounterViewModel(ISettings settings, IDialogService dialogService, IEncounterService encounterService, IObsService obsService)
+        public ClientEncounterViewModel(ISettings settings, IDialogService dialogService,
+            IEncounterService encounterService, IObsService obsService)
         {
             _settings = settings;
             _dialogService = dialogService;
@@ -142,11 +156,11 @@ namespace LiveHTS.Presentation.ViewModel
             _obsService = obsService;
         }
 
-        public void Init(string formId,string mode, string encounterId)
+        public void Init(string formId, string mode, string encounterId)
         {
             //Load Form + Question Metadata
 
-            
+
 
             if (null == Form)
             {
@@ -158,7 +172,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
-            
+
             //Load Client and Encounter Type
 
             var clientJson = _settings.GetValue("client.dto", "");
@@ -187,8 +201,8 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  Load Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "open");
-               Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId,true);
+                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, true);
             }
 
             if (null == Encounter)
@@ -201,7 +215,7 @@ namespace LiveHTS.Presentation.ViewModel
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
 
-            
+
             //Initialize and store Manifest
 
             _obsService.Initialize(Encounter);
@@ -211,9 +225,10 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("client.manifest", manifestJson);
 
             //Load View
-            
+
             //LoadView();
         }
+
         public override void ViewAppeared()
         {
 
@@ -257,7 +272,7 @@ namespace LiveHTS.Presentation.ViewModel
         public void LoadView()
         {
             if (null != Manifest)
-            {                
+            {
                 if (Manifest.HasResponses())
                 {
 
@@ -297,7 +312,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     // Load active Questsion
 
-                    
+
                     var activeQuestion = _obsService.GetLiveQuestion(Manifest);
 
                     var liveQuestion = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == activeQuestion.Id);
@@ -307,13 +322,19 @@ namespace LiveHTS.Presentation.ViewModel
                         if (!liveQuestion.QuestionTemplate.Allow)
                             liveQuestion.QuestionTemplate.Allow = true;
                     }
-                    
+
                 }
             }
+
+            //set defaults
+
+            SetDefualts();
+
         }
+
         public bool ValidateResponse(QuestionTemplate questionTemplate)
         {
-           
+
             bool validate = false;
 
             try
@@ -333,14 +354,16 @@ namespace LiveHTS.Presentation.ViewModel
 
             return validate;
         }
+
         public void AllowNextQuestion(QuestionTemplate questionTemplate)
         {
             if (!questionTemplate.Allow)
                 return;
-                
+
             AllowAllInLine(questionTemplate);
             SaveChangesCommand.RaiseCanExecuteChanged();
         }
+
         private void AllowAllInLine(QuestionTemplate questionTemplate)
         {
 
@@ -361,7 +384,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 //update encounter with Response
 
-                Encounter.AddOrUpdate(liveResponse.Obs,false);
+                Encounter.AddOrUpdate(liveResponse.Obs, false);
 
                 //update manifest from Encounter
 
@@ -381,40 +404,110 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null != Manifest)
                 {
+                    #region MyRegion
 
+                    /*
+                    bool hasPartners = false;
+
+                    //Client 
+
+                    if (null == ClientDTO)
+                    {
+                        var clientJson = _settings.GetValue("client.dto", "");
+                        if (!string.IsNullOrWhiteSpace(clientJson))
+                        {
+                            ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
+                        }
+                    }
+
+                    if (null != ClientDTO)
+                        hasPartners = ClientDTO.HasPartners;
 
                     // TRANSFORMATION FIRST
-                    
-                    var actions = _obsService.GetTransformationActions(Manifest, questionTemplate.Id);
 
-                    foreach (var a in actions)
+
+                    var actions = _obsService.GetTransformationComplexActions(Manifest, questionTemplate.Id);
+
+                    if (actions.Count > 0)
                     {
-                        if (a.Action.ToLower() == "Set".ToLower())
+                        // pre
+
+                        var complext = hasPartners ? "Client.Partner.Yes" : "Client.Partner.No";
+
+                        var preActions = actions
+                            .Where(x => x.Condition == "Pre" &&
+                                        x.Complex.ToLower() == complext.ToLower())
+                            .ToList();
+
+
+                        foreach (var pre in preActions)
                         {
-                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
-                            if (null != q)
+                            if (pre.Action.ToLower() == "Set".ToLower())
                             {
-                                q.QuestionTemplate.SetResponse(a.Response);
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.SetResponse(pre.Response);
+                                }
+                            }
+                            if (pre.Action.ToLower() == "Block".ToLower())
+                            {
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.Allow = false;
+                                }
+                            }
+                            if (pre.Action.ToLower() == "Allow".ToLower())
+                            {
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.Allow = true;
+                                }
                             }
                         }
-                        if (a.Action.ToLower() == "Block".ToLower())
+
+                        // postActions
+
+                        var postActions = actions
+                            .Where(x => x.Condition == "Post" &&
+                                        x.Complex.ToLower() == complext.ToLower())
+                            .ToList();
+                        foreach (var post in postActions)
                         {
-                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
-                            if (null != q)
+
+                            if (post.Action.ToLower() == "Set".ToLower())
                             {
-                                q.QuestionTemplate.Allow = false;
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == post.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.SetResponse(post.Response);
+                                }
                             }
-                        }
-                        if (a.Action.ToLower() == "Allow".ToLower())
-                        {
-                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
-                            if (null != q)
+                            if (post.Action.ToLower() == "Block".ToLower())
                             {
-                                q.QuestionTemplate.Allow = true;
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == post.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.Allow = false;
+                                }
+                            }
+                            if (post.Action.ToLower() == "Allow".ToLower())
+                            {
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == post.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.Allow = true;
+                                }
                             }
                         }
                     }
 
+
+                    */
+
+                    #endregion
 
 
 
@@ -471,31 +564,109 @@ namespace LiveHTS.Presentation.ViewModel
                             if (null != responseValue)
                             {
                                 //if (!liveQ.QuestionTemplate.ShowMultiObs)
-                                    liveQ.QuestionTemplate.SetResponse(responseValue);
+                                liveQ.QuestionTemplate.SetResponse(responseValue);
                             }
 
                         }
                     }
-                    
+
                 }
             }
         }
-        
-        private static ObservableCollection<QuestionTemplateWrap> ConvertToQuestionWrapperClass(List<Question> questions, IClientEncounterViewModel clientDashboardViewModel)
+
+        private void SetDefualts()
+        {
+
+            bool hasPartners = false;
+
+            if (null != Manifest)
+            {
+
+                //Client 
+
+                if (null == ClientDTO)
+                {
+                    var clientJson = _settings.GetValue("client.dto", "");
+                    if (!string.IsNullOrWhiteSpace(clientJson))
+                    {
+                        ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
+                    }
+                }
+
+                if (null != ClientDTO)
+                    hasPartners = ClientDTO.HasPartners;
+
+
+                foreach (var qq in Questions)
+                {
+                    var actions = _obsService.GetTransformationComplexActions(Manifest, qq.QuestionTemplate.Id);
+
+                    if (actions.Count > 0)
+                    {
+
+                        // pre
+
+                        var complext = hasPartners ? "Client.Partner.Yes" : "Client.Partner.No";
+
+                        var preActions = actions
+                            .Where(x => x.Condition == "Pre" &&
+                                        x.Complex.ToLower() == complext.ToLower())
+                            .ToList();
+
+
+                        foreach (var pre in preActions)
+                        {
+                            if (pre.Action.ToLower() == "Set".ToLower())
+                            {
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.SetResponse(pre.Response);
+                                }
+                            }
+                            if (pre.Action.ToLower() == "Block".ToLower())
+                            {
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.Allow = false;
+                                }
+                            }
+                            if (pre.Action.ToLower() == "Allow".ToLower())
+                            {
+                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
+                                if (null != q)
+                                {
+                                    q.QuestionTemplate.Allow = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+
+        private static ObservableCollection<QuestionTemplateWrap> ConvertToQuestionWrapperClass(
+            List<Question> questions, IClientEncounterViewModel clientDashboardViewModel)
         {
             ObservableCollection<QuestionTemplateWrap> list = new ObservableCollection<QuestionTemplateWrap>();
             foreach (var r in questions)
             {
-                list.Add(new QuestionTemplateWrap(clientDashboardViewModel,new QuestionTemplate(r)));
+                list.Add(new QuestionTemplateWrap(clientDashboardViewModel, new QuestionTemplate(r)));
             }
             return list;
         }
+
         private bool CanSaveChanges()
         {
             if (null != Manifest)
-                return string.IsNullOrWhiteSpace(FormError)&& Manifest.IsComplete();
+                return string.IsNullOrWhiteSpace(FormError) && Manifest.IsComplete();
             return false;
         }
+
         private void SaveChanges()
         {
 

@@ -11,7 +11,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Response Response { get; }
 
         void Initialize(Encounter encounter);
-
+        List<SetResponse> GetTransformationComplexActions(Manifest currentManifest, Guid currentQuestionId);
         List<SetResponse> GetTransformationActions(Manifest currentManifest, Guid currentQuestionId);
         Question GetLiveQuestion(Manifest manifest=null);
         Question GetLiveQuestion(Manifest manifest, Guid currentQuestionId);

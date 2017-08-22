@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.Core.Model.Config;
@@ -18,6 +19,7 @@ namespace LiveHTS.Presentation.DTO
         public string Age { get; set; }
         public string IdentifierTypeId { get; set; }
         public string Identifier { get; set; }
+        public bool HasPartners { get; set; }
 
         public ClientDTO()
         {
@@ -33,14 +35,14 @@ namespace LiveHTS.Presentation.DTO
             BirthDate = birthDate;
             Age = age;
             IdentifierTypeId = identifierTypeId;
-            Identifier = identifier;
+            Identifier = identifier;            
         }
 
         public static ClientDTO Create(Client client)
         {
             var ids = client.Identifiers.FirstOrDefault();
 
-            return new ClientDTO(client.Id,
+            var dto= new ClientDTO(client.Id,
                 client.Person.FirstName,
                 client.Person.MiddleName,
                 client.Person.LastName,
@@ -49,6 +51,10 @@ namespace LiveHTS.Presentation.DTO
                 client.Person.AgeInfo,
                 ids.IdentifierTypeId,
                 ids.Identifier);
+
+            dto.HasPartners = client.Relationships.Any();
+
+            return dto;
         }
     }
 }

@@ -47,9 +47,14 @@ namespace LiveHTS.Core.Model.Survey
                     responseObject = Convert.ToDateTime(Response);
                 }
 
-                return responseObject.Equals(current.Value) ? new SetResponse(RefQuestionId,ActionId,Content, Rank) : null;
+                return responseObject.Equals(current.Value) ? new SetResponse(RefQuestionId,ActionId,Content, Rank, ConditionId, ResponseComplex) : null;
             }
             return null;
+        }
+
+        public SetResponse GetComplex()
+        {
+            return new SetResponse(RefQuestionId, ActionId, Content, Rank, ConditionId, ResponseComplex);
         }
 
         public override string ToString()

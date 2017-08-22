@@ -3,6 +3,7 @@ using System.Linq;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Survey;
+using LiveHTS.Infrastructure.Migrations;
 using LiveHTS.Infrastructure.Repository.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLite;
@@ -13,17 +14,17 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
     [TestClass]
     public class QuestionRepositoryTests
     {
-        private ILiveSetting _liveSetting;
-        private SQLiteConnection _database = TestHelpers.GetDatabase();
         private IQuestionRepository _questionRepository;
+        private SQLiteConnection _connection;
 
 
         [TestInitialize]
         public void SetUp()
         {
-            _liveSetting = new LiveSetting(_database.DatabasePath);
-            _questionRepository = new QuestionRepository(_liveSetting,
-                new ConceptRepository(_liveSetting, new CategoryRepository(_liveSetting)));
+            _connection = new SQLiteConnection("testlivehts.db");
+            Seeder.Seed(_connection);
+            _questionRepository = new QuestionRepository(new LiveSetting(_connection.DatabasePath), 
+                new ConceptRepository(new LiveSetting(_connection.DatabasePath), new CategoryRepository(new LiveSetting(_connection.DatabasePath))));
         }
 
         [TestMethod]
