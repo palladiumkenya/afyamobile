@@ -85,8 +85,8 @@ namespace LiveHTS.Infrastructure.Seed.Survey
   {
     ^Id^: ^b25fcd6e-852f-11e7-bb31-be2e44b06b34^,
     ^Name^: ^Kit Name:^,
-    ^ConceptTypeId^: ^Text^,
-    ^CategoryId^: ^^,
+    ^ConceptTypeId^: ^Single^,
+    ^CategoryId^: ^b25f9c72-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
