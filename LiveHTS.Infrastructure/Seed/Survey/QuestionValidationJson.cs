@@ -79,7 +79,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2604442-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b26045aa-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -89,7 +89,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b26045aa-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b260487a-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -99,7 +99,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b260487a-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b26049f6-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -109,7 +109,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b26049f6-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2604ce4-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -119,7 +119,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2604ce4-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b260511c-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -129,7 +129,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2604fb4-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b260525c-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -139,7 +139,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b260511c-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2605540-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -149,7 +149,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b260525c-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2605694-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -159,7 +159,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2605540-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2605964-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -169,7 +169,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2605694-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2605ab8-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -179,7 +179,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2605964-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b26067b0-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -189,7 +189,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2605ab8-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2605c98-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -199,7 +199,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2605c98-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b2605f54-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -209,7 +209,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b2605f54-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b26060bc-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -219,7 +219,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b26060bc-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b26062e2-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -229,7 +229,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b26062e2-852f-11e7-bb31-be2e44b06b34^,
+    ^QuestionId^: ^b260644a-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
@@ -239,21 +239,11 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Revision^: 0,
     ^MinLimit^: ^^,
     ^MaxLimit^: ^^,
-    ^QuestionId^: ^b260644a-852f-11e7-bb31-be2e44b06b34^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^b260f626-852f-11e7-bb31-be2e44b06b34^,
-    ^ValidatorId^: ^Required^,
-    ^ValidatorTypeId^: ^None^,
-    ^Revision^: 0,
-    ^MinLimit^: ^^,
-    ^MaxLimit^: ^^,
     ^QuestionId^: ^b260665c-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
-    ^Id^: ^b260f810-852f-11e7-bb31-be2e44b06b34^,
+    ^Id^: ^b260f626-852f-11e7-bb31-be2e44b06b34^,
     ^ValidatorId^: ^Range^,
     ^ValidatorTypeId^: ^Numeric^,
     ^Revision^: 0,

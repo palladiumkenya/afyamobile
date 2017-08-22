@@ -258,6 +258,38 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
     ^Display^: ^^,
     ^Rank^: 3,
     ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f6982-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25f9c72-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f0456-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 1,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f6ae0-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25f9c72-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f05aa-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 2,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f6df6-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25f9c72-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f0776-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 3,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f6f86-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25f9c72-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f0a50-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 4,
+    ^Voided^: 0
   }
 ]
 ";
