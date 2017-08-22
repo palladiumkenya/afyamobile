@@ -48,7 +48,7 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^ResponseComplex^: ^^,
     ^Group^: ^^,
     ^ActionId^: ^None^,
-    ^GotoQuestionId^: ^b2605964-852f-11e7-bb31-be2e44b06b34^,
+    ^GotoQuestionId^: ^b2605ab8-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
