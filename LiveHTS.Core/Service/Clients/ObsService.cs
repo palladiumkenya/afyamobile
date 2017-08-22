@@ -61,6 +61,11 @@ namespace LiveHTS.Core.Service.Clients
             return _navigationEngine.GetActions(currentManifest, currentQuestionId);
         }
 
+        public List<SetResponse> GetREmoteTransformationActions(Manifest currentManifest, Guid currentQuestionId)
+        {
+            return _navigationEngine.GetActions(currentManifest, currentQuestionId);
+        }
+
         public Question GetLiveQuestion(Manifest manifest = null)
         {
             _manifest = manifest ?? _manifest;
@@ -114,6 +119,11 @@ namespace LiveHTS.Core.Service.Clients
             return _navigationEngine.GetQuestion(questionId, currentManifest);
         }
 
+        public List<Obs> GetObs(Guid clientId, Guid questionId)
+        {
+            return _obsRepository.Find(clientId, questionId);
+        }
+
         public bool ValidateResponse(Guid encounterId, Guid questionId, object response)
         {
             var liveResponse = new Response(encounterId);
@@ -146,6 +156,11 @@ namespace LiveHTS.Core.Service.Clients
                 _obsRepository.SaveOrUpdate(liveResponse.Obs);
                 UpdateManifest(encounterId);
             }
+        }
+
+        public void SaveClientResponse(Guid cientId, Guid questionId, object response)
+        {
+            throw new NotImplementedException();
         }
 
         public void ClearEncounter(Guid encounterId)

@@ -47,6 +47,12 @@ namespace LiveHTS.Core.Engine
             return actions;
         }
 
+        public List<SetResponse> GetRemoteActions(Manifest currentManifest, Guid currentQuestionId)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public List<SetResponse> GetActionsComplex(Manifest currentManifest, Guid currentQuestionId)
         {
             List<SetResponse> actions = new List<SetResponse>();

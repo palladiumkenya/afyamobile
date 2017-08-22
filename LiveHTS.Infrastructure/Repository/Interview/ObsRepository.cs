@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Model.Interview;
@@ -22,6 +23,20 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             {
                 Save(obs);
             }
+        }
+
+        public List<Obs> Find(Guid clientId, Guid questionId)
+        {
+            return _db.Query<Obs>(@"
+SELECT 
+    Obs.*
+FROM 
+    Obs INNER JOIN Encounter ON Obs.EncounterId =Encounter.Id
+WHERE
+    Encounter.ClientId =? AND
+    Obs.QuestionId = ?
+", clientId,questionId);
+
         }
     }
 }

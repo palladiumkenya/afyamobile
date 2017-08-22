@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -35,5 +36,8 @@ namespace LiveHTS.Core.Model.Survey
         {
             return $"{ConditionId} {ClientAttributeId} {ActionId}";
         }
+
+   
+
     }
 }

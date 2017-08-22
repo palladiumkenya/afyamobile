@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.DTO
         public string IdentifierTypeId { get; set; }
         public string Identifier { get; set; }
         public bool HasPartners { get; set; }
+        public List<Guid> Partners { get; set; }
 
         public ClientDTO()
         {
@@ -41,6 +42,7 @@ namespace LiveHTS.Presentation.DTO
         public static ClientDTO Create(Client client)
         {
             var ids = client.Identifiers.FirstOrDefault();
+            
 
             var dto= new ClientDTO(client.Id,
                 client.Person.FirstName,
@@ -53,6 +55,25 @@ namespace LiveHTS.Presentation.DTO
                 ids.Identifier);
 
             dto.HasPartners = client.Relationships.Any();
+
+            if (dto.HasPartners)
+            {
+                var partnerIds=new List<Guid>();
+                var partners= client.Relationships.Select(x => x.ClientId).ToList();
+
+                if(partners.Count>0)
+                    partnerIds.AddRange(partners);
+
+                var otherPartnerss = client.Relationships.Select(x => x.RelatedClientId).ToList();
+
+                if (otherPartnerss.Count > 0)
+                    partnerIds.AddRange(otherPartnerss);
+
+                if (partnerIds.Count > 0) ;
+
+                dto.Partners = partnerIds.Where(x =>!x.Equals(dto.Id)).ToList();
+            }
+
 
             return dto;
         }

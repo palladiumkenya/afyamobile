@@ -18,6 +18,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         private SQLiteConnection _database = TestHelpers.GetDatabase();
         private IObsRepository _obsRepository;
         private Obs _obs;
+        private Encounter _encounter;
 
         [TestInitialize]
         public void SetUp()
@@ -26,7 +27,8 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
             _obsRepository = new ObsRepository(_liveSetting);
 
             var encounters = TestDataHelpers.Encounters;
-            _obs = encounters.First().Obses.First();
+            _encounter = encounters.First();
+            _obs = _encounter.Obses.First();
         }
 
         [TestMethod]
@@ -51,6 +53,12 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
             var savedNewObs = _obsRepository.Get(exisingObs.Id);
             Assert.IsNotNull(savedNewObs);
             Assert.AreEqual("TTTT", savedNewObs.ValueText);
+        }
+        [TestMethod]
+        public void should_Find_Obs()
+        {
+            var obses = _obsRepository.Find(_encounter.ClientId, _obs.QuestionId);
+            Assert.IsTrue(obses.Count>0);
         }
     }
 }

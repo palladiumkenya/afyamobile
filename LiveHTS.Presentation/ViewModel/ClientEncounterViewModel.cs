@@ -179,6 +179,23 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(clientJson))
             {
                 ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
+
+                // TODO: Partner Obs
+                if (ClientDTO.HasPartners)
+                {
+                    var p = ClientDTO.Partners.First();
+                    //b25fd62e-852f-11e7-bb31-be2e44b06b34
+                    var pObst = _obsService.GetObs(p, new Guid("b2605964-852f-11e7-bb31-be2e44b06b34"));
+                    if (null != pObst && pObst.Count > 0)
+                    {
+                        _settings.AddOrUpdateValue("client.partner.result", pObst.FirstOrDefault().ValueCoded.ToString());
+                    }
+                    else
+                    {
+                        _settings.AddOrUpdateValue("client.partner.result", "");
+                    }
+                }
+                
             }
 
             var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
@@ -223,6 +240,9 @@ namespace LiveHTS.Presentation.ViewModel
             Manifest.UpdateEncounter(Encounter);
             var manifestJson = JsonConvert.SerializeObject(Manifest);
             _settings.AddOrUpdateValue("client.manifest", manifestJson);
+
+
+          
 
             //Load View
 
@@ -404,108 +424,117 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null != Manifest)
                 {
-                    #region MyRegion
 
-                    /*
-                    bool hasPartners = false;
+                    #region Partner Result Check
 
-                    //Client 
+                    var partnerResult = _settings.GetValue("client.partner.result", "");
 
-                    if (null == ClientDTO)
+                    if (!string.IsNullOrWhiteSpace(partnerResult))
                     {
-                        var clientJson = _settings.GetValue("client.dto", "");
-                        if (!string.IsNullOrWhiteSpace(clientJson))
+                        var presult= new Guid(partnerResult);
+                        var inc = new Guid("b25f017c-852f-11e7-bb31-be2e44b06b34");
+                        var discordant =
+                            Questions.FirstOrDefault(
+                                x => x.QuestionTemplate.Id ==
+                                     new Guid("b2605c98-852f-11e7-bb31-be2e44b06b34"));
+
+                        if (questionTemplate.Id == new Guid("b2605964-852f-11e7-bb31-be2e44b06b34"))
                         {
-                            ClientDTO = JsonConvert.DeserializeObject<ClientDTO>(clientJson);
+                            var obsValue = questionTemplate.GetResponse();
+                            var value = null == obsValue ? Guid.Empty :new Guid(obsValue.ToString());
+
+                            if (value != inc && presult != inc)
+                            {
+                                if (value == presult)
+                                {
+                                    //discordant
+
+                                    discordant.QuestionTemplate.SetResponse(new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"));
+                                }
+                                else
+                                {
+                                    //not-discordant
+                                    
+                                    discordant.QuestionTemplate.SetResponse(new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"));
+                                }
+                            }                            
                         }
                     }
 
-                    if (null != ClientDTO)
-                        hasPartners = ClientDTO.HasPartners;
+                    #endregion
+
+
+
+
+
+                    #region TRANSFORMATION
 
                     // TRANSFORMATION FIRST
 
+                    //REMOTE
 
-                    var actions = _obsService.GetTransformationComplexActions(Manifest, questionTemplate.Id);
+                    var remactions = _obsService.GetTransformationActions(Manifest, questionTemplate.Id);
 
-                    if (actions.Count > 0)
+                    foreach (var a in remactions)
                     {
-                        // pre
-
-                        var complext = hasPartners ? "Client.Partner.Yes" : "Client.Partner.No";
-
-                        var preActions = actions
-                            .Where(x => x.Condition == "Pre" &&
-                                        x.Complex.ToLower() == complext.ToLower())
-                            .ToList();
-
-
-                        foreach (var pre in preActions)
+                        if (a.Action.ToLower() == "Set".ToLower())
                         {
-                            if (pre.Action.ToLower() == "Set".ToLower())
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
                             {
-                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
-                                if (null != q)
-                                {
-                                    q.QuestionTemplate.SetResponse(pre.Response);
-                                }
-                            }
-                            if (pre.Action.ToLower() == "Block".ToLower())
-                            {
-                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
-                                if (null != q)
-                                {
-                                    q.QuestionTemplate.Allow = false;
-                                }
-                            }
-                            if (pre.Action.ToLower() == "Allow".ToLower())
-                            {
-                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
-                                if (null != q)
-                                {
-                                    q.QuestionTemplate.Allow = true;
-                                }
+                                q.QuestionTemplate.SetResponse(a.Response);
                             }
                         }
-
-                        // postActions
-
-                        var postActions = actions
-                            .Where(x => x.Condition == "Post" &&
-                                        x.Complex.ToLower() == complext.ToLower())
-                            .ToList();
-                        foreach (var post in postActions)
+                        if (a.Action.ToLower() == "Block".ToLower())
                         {
-
-                            if (post.Action.ToLower() == "Set".ToLower())
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
                             {
-                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == post.QuestionId);
-                                if (null != q)
-                                {
-                                    q.QuestionTemplate.SetResponse(post.Response);
-                                }
+                                q.QuestionTemplate.Allow = false;
                             }
-                            if (post.Action.ToLower() == "Block".ToLower())
+                        }
+                        if (a.Action.ToLower() == "Allow".ToLower())
+                        {
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
                             {
-                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == post.QuestionId);
-                                if (null != q)
-                                {
-                                    q.QuestionTemplate.Allow = false;
-                                }
-                            }
-                            if (post.Action.ToLower() == "Allow".ToLower())
-                            {
-                                var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == post.QuestionId);
-                                if (null != q)
-                                {
-                                    q.QuestionTemplate.Allow = true;
-                                }
+                                q.QuestionTemplate.Allow = true;
                             }
                         }
                     }
 
 
-                    */
+                    //LOCAL
+
+                    var actions = _obsService.GetTransformationActions(Manifest, questionTemplate.Id);
+
+                    foreach (var a in actions)
+                    {
+                        if (a.Action.ToLower() == "Set".ToLower())
+                        {
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
+                            {
+                                q.QuestionTemplate.SetResponse(a.Response);
+                            }
+                        }
+                        if (a.Action.ToLower() == "Block".ToLower())
+                        {
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
+                            {
+                                q.QuestionTemplate.Allow = false;
+                            }
+                        }
+                        if (a.Action.ToLower() == "Allow".ToLower())
+                        {
+                            var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
+                            if (null != q)
+                            {
+                                q.QuestionTemplate.Allow = true;
+                            }
+                        }
+                    }
 
                     #endregion
 

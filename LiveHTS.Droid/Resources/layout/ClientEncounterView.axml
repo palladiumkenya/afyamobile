@@ -94,8 +94,9 @@
           android:layout_height="fill_parent"
           local:MvxBind="ItemsSource Questions"
           local:MvxItemTemplate="@layout/item_question"
-          android:divider="@android:color/transparent"
-          android:dividerHeight="4dp"
+          android:descendantFocusability="afterDescendants"
+          android:divider="@null"
+          android:dividerHeight="0dp"
           />
     </FrameLayout>
   </LinearLayout>

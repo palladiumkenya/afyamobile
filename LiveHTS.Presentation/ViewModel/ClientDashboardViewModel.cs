@@ -179,12 +179,13 @@ namespace LiveHTS.Presentation.ViewModel
                 var moduleJson = JsonConvert.SerializeObject(Module);
                 _settings.AddOrUpdateValue("module", moduleJson);
             }
-
+            
             if (null != DefaultEncounterType)
             {
                 var encounterTypeJson = JsonConvert.SerializeObject(DefaultEncounterType);
                 _settings.AddOrUpdateValue("encountertype", encounterTypeJson);
             }
+
         }
 
         public void ShowRegistry()
