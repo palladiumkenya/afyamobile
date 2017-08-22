@@ -246,7 +246,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             //Load View
 
-            //LoadView();
+            LoadView();
         }
 
         public override void ViewAppeared()
