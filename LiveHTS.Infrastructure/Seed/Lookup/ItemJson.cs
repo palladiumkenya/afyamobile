@@ -169,25 +169,19 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
   },
   {
     ^Id^: ^b25f0456-852f-11e7-bb31-be2e44b06b34^,
-    ^Code^: ^K1^,
-    ^Display^: ^Kit 1^,
+    ^Code^: ^KDT^,
+    ^Display^: ^Determine^,
     ^Voided^: 0
   },
   {
     ^Id^: ^b25f05aa-852f-11e7-bb31-be2e44b06b34^,
-    ^Code^: ^K2^,
-    ^Display^: ^Kit 2^,
+    ^Code^: ^KFR^,
+    ^Display^: ^First Response^,
     ^Voided^: 0
   },
   {
     ^Id^: ^b25f0776-852f-11e7-bb31-be2e44b06b34^,
-    ^Code^: ^K3^,
-    ^Display^: ^Kit 3^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^b25f0a50-852f-11e7-bb31-be2e44b06b34^,
-    ^Code^: ^Ko^,
+    ^Code^: ^KO^,
     ^Display^: ^Other Kit^,
     ^Voided^: 0
   }

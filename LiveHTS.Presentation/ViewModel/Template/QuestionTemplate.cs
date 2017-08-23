@@ -42,6 +42,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private bool _showOtherMultiObs;
         private DateTime _responseDate;
         private bool _showDateObs;
+        private int _scaling;
 
 
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
@@ -207,8 +208,16 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set { _allow = value; RaisePropertyChanged(() => Allow); }
         }
 
+        public int Scaling
+        {
+            get { return _scaling; }
+            set { _scaling = value; RaisePropertyChanged(() => Scaling); }
+        }
+
+
         public QuestionTemplate(Question question, string response = "")
         {
+            Scaling = 100;
             Id = question.Id;
             Display = question.ToString();
             Concept = question.Concept;
@@ -239,8 +248,11 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 }
             }
 
-            if(ShowDateObs)
-                _responseDate=DateTime.Today.Date.AddYears(1);
+            if (ShowDateObs)
+            {
+                Scaling = 200;
+                _responseDate = DateTime.Today.Date.AddYears(1);
+            }
         }
 
         public void AllowNextQuestion()

@@ -7,7 +7,7 @@ namespace LiveHTS.Presentation.Converters
     {
         protected override string Convert(bool value, Type targetType, object parameter,System.Globalization.CultureInfo culture)
         {
-            return value ? "visible" : "invisible";
+            return value ? "visible" : "gone";
         }
     }
 }
