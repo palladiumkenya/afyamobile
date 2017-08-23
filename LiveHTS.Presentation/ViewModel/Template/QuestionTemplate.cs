@@ -222,15 +222,21 @@ namespace LiveHTS.Presentation.ViewModel.Template
 
             if (ShowSingleObs|| ShowMultiObs)
             {
+                var initialSelected = CategoryItem.CreateInitial("[Select Option]");
                 var options = Concept.Category.Items;
-                options.Add(CategoryItem.CreateInitial("[Select Option]"));
+                options.Add(initialSelected);
                 options = options.OrderBy(x => x.Rank).ToList();
 
                 if (ShowSingleObs)
-                    SingleOptions =new ObservableCollection<CategoryItem>(options);
+                {
+                    SingleOptions = new ObservableCollection<CategoryItem>(options);
+                    _selectedSingleOption = initialSelected;
+                }
 
                 if (ShowMultiObs)
+                {
                     MultiOptions = options;
+                }
             }
 
             if(ShowDateObs)

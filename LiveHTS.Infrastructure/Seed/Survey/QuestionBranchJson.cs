@@ -57,11 +57,11 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^ConditionId^: ^Post^,
     ^RefQuestionId^: ^^,
     ^ResponseType^: ^=^,
-    ^Response^: ^b25eccd4-852f-11e7-bb31-be2e44b06b34^,
+    ^Response^: ^b25ed04e-852f-11e7-bb31-be2e44b06b34^,
     ^ResponseComplex^: ^^,
     ^Group^: ^^,
     ^ActionId^: ^None^,
-    ^GotoQuestionId^: ^b26062e2-852f-11e7-bb31-be2e44b06b34^,
+    ^GotoQuestionId^: ^b260644a-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
   },
   {
