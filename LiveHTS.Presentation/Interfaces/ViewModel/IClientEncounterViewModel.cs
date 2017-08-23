@@ -36,5 +36,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         void LoadView();
         bool ValidateResponse(QuestionTemplate questionTemplate);
         void AllowNextQuestion(QuestionTemplate questionTemplate);
+        
     }
 }

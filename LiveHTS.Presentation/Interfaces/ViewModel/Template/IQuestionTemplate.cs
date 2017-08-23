@@ -44,7 +44,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 
         Concept Concept { get; set; }
         bool Allow { get; set; }
-        
+        bool RequiresResponse { get; set; }
+        bool Required { get; set; }
+
         int Scaling { get; set; }
         void AllowNextQuestion();
         object GetResponse();

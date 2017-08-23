@@ -49,6 +49,7 @@ namespace LiveHTS.Core.Model.Interview
             Encounter = encounter;
             ResponseStore = ReadResponses(Encounter);
             UpdateResponseQuestions();
+
         }
 
         public Question GetQuestion(Guid value)
@@ -113,6 +114,11 @@ namespace LiveHTS.Core.Model.Interview
             }
             return false;
         }
+
+        public int Filled { get; set; }
+        public int Allowed { get; set; }
+        public int Required { get; set; }
+        public int TotalRequiredQuestions { get; set; }
 
         private void UpdateResponseQuestions()
         {

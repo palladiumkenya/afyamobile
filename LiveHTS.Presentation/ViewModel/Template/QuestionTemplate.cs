@@ -44,6 +44,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private DateTime _responseDate;
         private bool _showDateObs;
         private int _scaling;
+        private bool _required;
+        private bool _requiresResponse;
 
 
         public IQuestionTemplateWrap QuestionTemplateWrap { get; set; }
@@ -206,7 +208,23 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public bool Allow
         {
             get { return _allow; }
-            set { _allow = value; RaisePropertyChanged(() => Allow); }
+            set
+            {
+                _allow = value; RaisePropertyChanged(() => Allow);
+                RequiresResponse = Allow && Required;
+            }
+        }
+
+        public bool RequiresResponse
+        {
+            get { return _requiresResponse; }
+            set { _requiresResponse = value; RaisePropertyChanged(() => RequiresResponse); }
+        }
+
+        public bool Required
+        {
+            get { return _required; }
+            set { _required = value; RaisePropertyChanged(() => Required); }
         }
 
         public int Scaling
@@ -223,6 +241,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Display = question.ToString();
             Concept = question.Concept;
             Allow = true;
+            Required = question.IsRequired;
 
             ShowTextObs = Concept.ConceptTypeId == "Text";
             ShowSingleObs = Concept.ConceptTypeId == "Single";

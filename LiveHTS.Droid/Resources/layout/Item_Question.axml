@@ -19,7 +19,8 @@
             android:minHeight="80dp"
             android:paddingRight="40dp"
             android:paddingBottom="5dp"
-            android:paddingLeft="5dp">
+            android:paddingLeft="5dp"
+             local:MvxBind="Background QuestionTemplate.RequiresResponse, Converter=ShowRequiredConverter" >
         <!-- Question Display -->
             <TextView
                 android:layout_width="match_parent"
