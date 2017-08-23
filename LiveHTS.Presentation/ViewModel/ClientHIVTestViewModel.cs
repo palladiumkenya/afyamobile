@@ -35,6 +35,21 @@ namespace LiveHTS.Presentation.ViewModel
             set { _firstTests = value; RaisePropertyChanged(() => FirstTests); }
         }
 
+        public void SaveTest(Test test)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteTest(Test test)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RefreshTest()
+        {
+            throw new NotImplementedException();
+        }
+
         public ClientHIVTestViewModel(ILookupService lookupService, IDashboardService dashboardService)
         {
             _lookupService = lookupService;
@@ -56,6 +71,7 @@ namespace LiveHTS.Presentation.ViewModel
             var testResults = _lookupService.GetCategoryItems("TestResult").ToList();
 
             var newTest = Test.Create(1, kits, testResults);
+            newTest.Parent = this;
             var tests=new List<Test>();
             tests.Add(newTest);
             FirstTests = tests;

@@ -12,15 +12,20 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         string FirstTestName { get; set; }
         List<Test> FirstTests { get; set; }
-//        List<CategoryItem> FirstTestResults { get; set; }
-//        CategoryItem SelectedFirstTestResult { get; set; }
-//
-//        string SecondTestName { get; set; }
-//        List<Test> SecondTests { get; set; }
-//        List<CategoryItem> SecondTestResults { get; set; }
-//        CategoryItem SelectedSecondTestResult { get; set; }
-//
-//        List<CategoryItem> FinalTestResults { get; set; }
-//        CategoryItem SelectedFinalTestResult { get; set; }
+
+        void SaveTest(Test test);
+        void DeleteTest(Test test);
+        void RefreshTest();
+
+        //        List<CategoryItem> FirstTestResults { get; set; }
+        //        CategoryItem SelectedFirstTestResult { get; set; }
+        //
+        //        string SecondTestName { get; set; }
+        //        List<Test> SecondTests { get; set; }
+        //        List<CategoryItem> SecondTestResults { get; set; }
+        //        CategoryItem SelectedSecondTestResult { get; set; }
+        //
+        //        List<CategoryItem> FinalTestResults { get; set; }
+        //        CategoryItem SelectedFinalTestResult { get; set; }
     }
 }

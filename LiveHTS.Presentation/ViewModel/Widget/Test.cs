@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.ViewModel.Widget
 {
-    public class Test:MvxNotifyPropertyChanged
+    public class Test : MvxNotifyPropertyChanged
     {
         private CategoryItem _selectedTestKit;
         private List<CategoryItem> _testKits;
@@ -15,12 +16,28 @@ namespace LiveHTS.Presentation.ViewModel.Widget
         private DateTime _expiry;
         private List<CategoryItem> _testResults;
         private CategoryItem _selectedTestResult;
-        public int Attempt { get; set; }
+        private IMvxCommand<Test> _saveTestCommand;
+        private IMvxCommand<Test> _deleteTestCommand;
+        private int _attempt;
+
+        public IClientHIVTestViewModel Parent { get; set; }
+
+        public int Attempt
+        {
+            get { return _attempt; }
+            set
+            {
+                _attempt = value;
+                RaisePropertyChanged(() => Attempt);
+            }
+        }
 
         public List<CategoryItem> TestKits
         {
             get { return _testKits; }
-            set { _testKits = value;
+            set
+            {
+                _testKits = value;
                 RaisePropertyChanged(() => TestKits);
             }
         }
@@ -30,7 +47,8 @@ namespace LiveHTS.Presentation.ViewModel.Widget
             get { return _selectedTestKit; }
             set
             {
-                _selectedTestKit = value; RaisePropertyChanged(() => SelectedTestKit);
+                _selectedTestKit = value;
+                RaisePropertyChanged(() => SelectedTestKit);
                 ShowOther();
             }
         }
@@ -48,35 +66,90 @@ namespace LiveHTS.Presentation.ViewModel.Widget
         public string OtherTestKit
         {
             get { return _otherTestKit; }
-            set { _otherTestKit = value; RaisePropertyChanged(() => OtherTestKit); }
+            set
+            {
+                _otherTestKit = value;
+                RaisePropertyChanged(() => OtherTestKit);
+            }
         }
 
         public string LotNumber
         {
             get { return _lotNumber; }
-            set { _lotNumber = value; RaisePropertyChanged(() => LotNumber); }
+            set
+            {
+                _lotNumber = value;
+                RaisePropertyChanged(() => LotNumber);
+            }
         }
 
         public DateTime Expiry
         {
             get { return _expiry; }
-            set { _expiry = value; RaisePropertyChanged(() => Expiry); }
+            set
+            {
+                _expiry = value;
+                RaisePropertyChanged(() => Expiry);
+            }
         }
 
         public List<CategoryItem> TestResults
         {
             get { return _testResults; }
-            set { _testResults = value; RaisePropertyChanged(() => TestResults); }
+            set
+            {
+                _testResults = value;
+                RaisePropertyChanged(() => TestResults);
+            }
         }
 
         public CategoryItem SelectedTestResult
         {
             get { return _selectedTestResult; }
-            set { _selectedTestResult = value; RaisePropertyChanged(() => SelectedTestResult); }
+            set
+            {
+                _selectedTestResult = value;
+                RaisePropertyChanged(() => SelectedTestResult);
+            }
+        }
+        public IMvxCommand<Test> SaveTestCommand
+        {
+            get
+            {
+                _saveTestCommand = _saveTestCommand ?? new MvxCommand<Test>(SaveTest, CanSaveTest);
+                return _saveTestCommand;
+            }
+        }
+        public IMvxCommand<Test> DeleteTestCommand
+        {
+            get
+            {
+                _deleteTestCommand = _deleteTestCommand ?? new MvxCommand<Test>(DeleteTest, CanDeleteTest);
+                return _deleteTestCommand;
+            }
         }
 
-        public IMvxCommand SaveTestCommand { get; set; }
-        public IMvxCommand DeleteTestCommand { get; set; }
+        private bool CanSaveTest(Test arg)
+        {
+            return true;
+        }
+
+        private void SaveTest(Test obj)
+        {
+            obj = this;
+            Parent.SaveTest(obj);
+        }
+        private bool CanDeleteTest(Test arg)
+        {
+            return true;
+        }
+
+        private void DeleteTest(Test obj)
+        {
+            obj = this;
+            Parent.DeleteTest(obj);
+        }
+
 
         private Test(int attempt, List<CategoryItem> testKits, List<CategoryItem> testResults)
         {
@@ -87,7 +160,7 @@ namespace LiveHTS.Presentation.ViewModel.Widget
 
         public static Test Create(int attempt, List<CategoryItem> testKits, List<CategoryItem> testResults)
         {
-            return new Test(attempt,testKits,testResults);
+            return new Test(attempt, testKits, testResults);
         }
 
         private void ShowOther()
