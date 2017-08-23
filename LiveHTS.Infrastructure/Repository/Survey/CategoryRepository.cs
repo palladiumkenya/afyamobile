@@ -9,7 +9,7 @@ using SQLite;
 
 namespace LiveHTS.Infrastructure.Repository.Survey
 {
-    public class CategoryRepository : BaseRepository<Category,Guid>, ICategoryRepository
+    public class CategoryRepository : BaseRepository<Category, Guid>, ICategoryRepository
     {
         private readonly ILiveSetting _liveSetting;
 
@@ -19,11 +19,11 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             _db.CreateTable<CategoryItem>();
         }
 
-        public IEnumerable<Category> GetAllWithItems(Guid? conceptCategoryId=null)
+        public IEnumerable<Category> GetAllWithItems(Guid? conceptCategoryId = null)
         {
             //cat
 
-            var categories=new List<Category>();
+            var categories = new List<Category>();
 
             if (conceptCategoryId.IsNullOrEmpty())
             {
@@ -54,6 +54,30 @@ namespace LiveHTS.Infrastructure.Repository.Survey
                 }
             }
             return categories;
+        }
+
+        public Category GetWithCode(string code)
+        {
+            var category = GetAll(x => x.Code.ToLower() == code.ToLower()).ToList().FirstOrDefault();
+
+
+            try
+            {
+                var categoryItems = _db.Table<CategoryItem>().Where(x => x.CategoryId == category.Id).ToList();
+                foreach (var categoryItem in categoryItems)
+                {
+                    categoryItem.Item = _db.Find<Item>(categoryItem.ItemId);
+                }
+
+                if (categoryItems.Count > 0)
+                    category.Items = categoryItems;
+            }
+            catch
+            {
+                // ignored
+            }
+
+            return category;
         }
     }
 }

@@ -193,6 +193,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\ClientHIVTestActivity.cs" />
     <Compile Include="Activities\ClientDashboardActivity.cs" />
     <Compile Include="Activities\ClientEncounterActivity.cs" />
     <Compile Include="Activities\ClientRegistrationActivity.cs" />
@@ -307,6 +308,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Obs_Item_Multi_S.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Test.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ClientHIVTestView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

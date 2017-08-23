@@ -58,6 +58,7 @@
     <Compile Include="Interfaces\ViewModel\IClientContactViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientDemographicViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientTestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IRegistryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
     <Compile Include="Interfaces\IObsViewModel.cs" />
@@ -77,9 +78,12 @@
     <Compile Include="Interfaces\ViewModel\Wrapper\IRelationshipTemplateWrap.cs" />
     <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
     <Compile Include="Events\ConceptChangedEvent.cs" />
+    <Compile Include="ViewModel\ClientHIVTestViewModel.cs" />
     <Compile Include="ViewModel\Template\FormTemplate.cs" />
     <Compile Include="ViewModel\Template\EncounterTemplate.cs" />
     <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
+    <Compile Include="ViewModel\Widget\Test.cs" />
+    <Compile Include="ViewModel\Widget\HIVTest.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\FormTemplateWrap.cs" />

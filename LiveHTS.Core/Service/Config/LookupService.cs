@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Config;
+using LiveHTS.Core.Interfaces.Repository.Lookup;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Lookup;
 
 namespace LiveHTS.Core.Service.Config
 {
@@ -18,8 +20,8 @@ namespace LiveHTS.Core.Service.Config
         private readonly IIdentifierTypeRepository _identifierTypeRepository;
         private readonly IRelationshipTypeRepository _relationshipTypeRepository;
         private readonly IEncounterTypeRepository _encounterTypeRepository;
-
-        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository, IMaritalStatusRepository maritalStatusRepository, IKeyPopRepository keyPopRepository, IIdentifierTypeRepository identifierTypeRepository, IRelationshipTypeRepository relationshipTypeRepository, IEncounterTypeRepository encounterTypeRepository)
+        private readonly ICategoryRepository _categoryRepository;
+        public LookupService(ICountyRepository countyRepository, ISubCountyRepository subCountyRepository, IPracticeRepository practiceRepository, IPracticeTypeRepository practiceTypeRepository, IMaritalStatusRepository maritalStatusRepository, IKeyPopRepository keyPopRepository, IIdentifierTypeRepository identifierTypeRepository, IRelationshipTypeRepository relationshipTypeRepository, IEncounterTypeRepository encounterTypeRepository, ICategoryRepository categoryRepository)
         {
             _countyRepository = countyRepository;
             _subCountyRepository = subCountyRepository;
@@ -30,6 +32,7 @@ namespace LiveHTS.Core.Service.Config
             _identifierTypeRepository = identifierTypeRepository;
             _relationshipTypeRepository = relationshipTypeRepository;
             _encounterTypeRepository = encounterTypeRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public IEnumerable<County> GetCounties()
@@ -85,6 +88,15 @@ namespace LiveHTS.Core.Service.Config
         public EncounterType GetDefaultEncounterType()
         {
             return _encounterTypeRepository.GetDefault();
+        }
+
+        public IEnumerable<CategoryItem> GetCategoryItems(string code)
+        {
+            var categotry = _categoryRepository.GetWithCode(code);
+            if (null != categotry)
+                return categotry.Items.ToList();
+
+            return new List<CategoryItem>();
         }
     }
 }

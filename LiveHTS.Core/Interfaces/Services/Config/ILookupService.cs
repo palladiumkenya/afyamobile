@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Lookup;
 
 namespace LiveHTS.Core.Interfaces.Services.Config
 {
@@ -16,5 +17,7 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<IdentifierType> GetIdentifierTypes();
         IEnumerable<RelationshipType> GetRelationshipTypes();
         EncounterType GetDefaultEncounterType();
+
+        IEnumerable<CategoryItem> GetCategoryItems(string code);
     }
 }

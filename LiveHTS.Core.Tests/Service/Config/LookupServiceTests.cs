@@ -2,6 +2,7 @@
 using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Config;
+using LiveHTS.Core.Interfaces.Repository.Lookup;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Interfaces.Services.Config;
@@ -31,7 +32,7 @@ namespace LiveHTS.Core.Tests.Service.Config
         private IKeyPopRepository _keyPopRepository;
         private IIdentifierTypeRepository _identifierTypeRepository;
         private IEncounterTypeRepository _encounterTypeRepository;
-
+        private ICategoryRepository _categoryRepository;
         private ILookupService _lookupService;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
         private IRelationshipTypeRepository _relationshipTypeRepository;
@@ -50,9 +51,11 @@ namespace LiveHTS.Core.Tests.Service.Config
             _keyPopRepository=new KeyPopRepository(_liveSetting);
             _identifierTypeRepository=new IdentifierTypeRepository(_liveSetting);
             _relationshipTypeRepository=new RelationshipTypeRepository(_liveSetting);
+            _categoryRepository=new CategoryRepository(_liveSetting);
 
 
-        _lookupService = new LookupService(_countyRepository,_subCountyRepository,_practiceRepository,_practiceTypeRepository,_maritalStatusRepository,_keyPopRepository,_identifierTypeRepository,_relationshipTypeRepository, _encounterTypeRepository);
+
+        _lookupService = new LookupService(_countyRepository,_subCountyRepository,_practiceRepository,_practiceTypeRepository,_maritalStatusRepository,_keyPopRepository,_identifierTypeRepository,_relationshipTypeRepository, _encounterTypeRepository,_categoryRepository);
 
             
         }
@@ -95,6 +98,15 @@ namespace LiveHTS.Core.Tests.Service.Config
             var counties = _lookupService.GetRelationshipTypes().ToList();
             Assert.IsTrue(counties.Any());
         }
-
+        [Test]
+        public void should_Load_CategoryItems()
+        {
+            var items = _lookupService.GetCategoryItems("YesNo").ToList();
+            Assert.IsTrue(items.Any());
+            foreach (var categoryItem in items)
+            {
+                Console.WriteLine(categoryItem);
+            }
+        }
     }
 }
