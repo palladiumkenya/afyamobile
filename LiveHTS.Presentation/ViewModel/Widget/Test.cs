@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.ViewModel.Widget
@@ -19,8 +21,22 @@ namespace LiveHTS.Presentation.ViewModel.Widget
         private IMvxCommand<Test> _saveTestCommand;
         private IMvxCommand<Test> _deleteTestCommand;
         private int _attempt;
+        private string _testName;
+        private Guid _id;
 
         public IClientHIVTestViewModel Parent { get; set; }
+
+        public Guid Id
+        {
+            get { return _id; }
+            set { _id = value; RaisePropertyChanged(() => Id); }
+        }
+
+        public string TestName
+        {
+            get { return _testName; }
+            set { _testName = value; RaisePropertyChanged(() => TestName); }
+        }
 
         public int Attempt
         {
@@ -153,6 +169,7 @@ namespace LiveHTS.Presentation.ViewModel.Widget
 
         private Test(int attempt, List<CategoryItem> testKits, List<CategoryItem> testResults)
         {
+            Id = LiveGuid.NewGuid();
             Attempt = attempt;
             TestKits = testKits;
             TestResults = testResults;
@@ -169,6 +186,15 @@ namespace LiveHTS.Presentation.ViewModel.Widget
             if (null != SelectedTestKit && SelectedTestKit.Item.Display.ToLower().Contains("other".ToLower()))
             {
                 ShowOtherTestKit = true;
+            }
+        }
+
+        public ObsTestResult ObsTestResult
+        {
+            get
+            {
+                return ObsTestResult.Create(Id, TestName, Attempt, SelectedTestKit.ItemId, OtherTestKit, LotNumber, Expiry,
+                    SelectedTestResult.ItemId);
             }
         }
     }

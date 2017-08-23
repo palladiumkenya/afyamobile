@@ -126,10 +126,12 @@ namespace LiveHTS.Infrastructure.Migrations
 
         private static void SeedInterview(SQLiteConnection db)
         {
-            #region Lookup
+            #region Encounter
 
             db.CreateTable<Encounter>();
-
+            db.CreateTable<Obs>();
+            db.CreateTable<ObsTestResult>();
+            db.CreateTable<ObsFinalTestResult>();
             #endregion
 
             //InsertOrUpdate(db, new EncounterJson());

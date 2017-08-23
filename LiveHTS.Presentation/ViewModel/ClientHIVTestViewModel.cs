@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Widget;
@@ -14,7 +15,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private Client _client;
         private string _firstTestName;
-        private List<Test> _firstTests;
+        private List<ObsTestResult> _firstTests=new List<ObsTestResult>();
         private readonly IDashboardService _dashboardService;
         private readonly  ILookupService _lookupService;
         public Client Client
@@ -29,7 +30,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _firstTestName = value; RaisePropertyChanged(() => FirstTestName); }
         }
 
-        public List<Test> FirstTests
+        public List<ObsTestResult> FirstTests
         {
             get { return _firstTests; }
             set { _firstTests = value; RaisePropertyChanged(() => FirstTests); }

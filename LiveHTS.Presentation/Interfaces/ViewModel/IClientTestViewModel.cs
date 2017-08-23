@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.ViewModel.Widget;
@@ -11,7 +12,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Client Client { get; set; }
 
         string FirstTestName { get; set; }
-        List<Test> FirstTests { get; set; }
+        List<ObsTestResult> FirstTests { get; set; }
 
         void SaveTest(Test test);
         void DeleteTest(Test test);

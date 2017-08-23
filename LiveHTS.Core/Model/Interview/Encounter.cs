@@ -24,11 +24,14 @@ namespace LiveHTS.Core.Model.Interview
         public Guid PracticeId { get; set; }
         
         public DateTime? Started { get; set; }
-        public DateTime? Stopped { get; set; }
-        
+        public DateTime? Stopped { get; set; }        
 
         [Ignore]
         public IEnumerable<Obs> Obses { get; set; } = new List<Obs>();
+        [Ignore]
+        public IEnumerable<ObsTestResult> ObsTestResults { get; set; } = new List<ObsTestResult>();
+        [Ignore]
+        public IEnumerable<ObsFinalTestResult> ObsFinalTestResults { get; set; } = new List<ObsFinalTestResult>();
         [Indexed]
         public Guid UserId { get; set; }
         public bool IsComplete { get; set; }
