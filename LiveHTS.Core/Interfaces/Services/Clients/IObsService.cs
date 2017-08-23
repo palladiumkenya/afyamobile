@@ -28,5 +28,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         void SaveClientResponse(Guid cientId, Guid questionId, object response);
 
         void ClearEncounter(Guid encounterId);
+        void MarkEncounterCompleted(Guid encounterId,bool completed);
+
     }
 }

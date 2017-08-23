@@ -301,7 +301,7 @@ namespace LiveHTS.Presentation.ViewModel
 
 
             //set defaults
-            SetDefualts();
+            
 
             if (null != Manifest)
             {
@@ -358,9 +358,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
-            
-
-
+            SetDefualts();
         }
 
         public bool ValidateResponse(QuestionTemplate questionTemplate)
@@ -677,7 +675,8 @@ namespace LiveHTS.Presentation.ViewModel
                                 var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
                                 if (null != q)
                                 {
-                                    q.QuestionTemplate.Allow = true;
+                                    
+                                    //q.QuestionTemplate.Allow = true;
                                 }
                             }
                         }
@@ -739,9 +738,10 @@ namespace LiveHTS.Presentation.ViewModel
             foreach (var q in allowedQuestions)
             {
                 _obsService.SaveResponse(Encounter.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
-                Manifest = _obsService.Manifest;
+                //Manifest = _obsService.Manifest;
             }
-
+            _obsService.MarkEncounterCompleted(Encounter.Id,true);
+            Manifest = _obsService.Manifest;
             Encounter = Manifest.Encounter;
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);

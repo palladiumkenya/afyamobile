@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
@@ -16,13 +17,14 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IClientRepository _clientRepository;
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IModuleRepository _moduleRepository;
-        
+        private readonly IEncounterRepository _encounterRepository;
 
-        public DashboardService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IModuleRepository moduleRepository)
+        public DashboardService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IModuleRepository moduleRepository, IEncounterRepository encounterRepository)
         {
             _clientRepository = clientRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
             _moduleRepository = moduleRepository;
+            _encounterRepository = encounterRepository;
         }
 
         public Client LoadClient(Guid clientId)
@@ -41,6 +43,11 @@ namespace LiveHTS.Core.Service.Clients
         public void RemoveRelationShip(Guid id)
         {
             _clientRelationshipRepository.Delete(id);
+        }
+
+        public void RemoveEncounter(Guid id)
+        {
+            _encounterRepository.Delete(id);
         }
     }
 }

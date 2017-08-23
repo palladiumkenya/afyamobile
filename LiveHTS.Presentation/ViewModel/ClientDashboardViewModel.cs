@@ -129,18 +129,24 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
-            var clientJson = _settings.GetValue("client", "");
-            var moduleJson = _settings.GetValue("module", "");
+            //Reload
+
+            Module = _dashboardService.LoadModule();
+            if (null != Module)
+            {
+                var moduleJson = JsonConvert.SerializeObject(Module);
+                _settings.AddOrUpdateValue("module", moduleJson);
+            }
+
+
+            var clientJson = _settings.GetValue("client", "");         
             var encounterTypeJson = _settings.GetValue("encountertype", "");
 
             if (!string.IsNullOrWhiteSpace(clientJson))
             {
                 Client = JsonConvert.DeserializeObject<Client>(clientJson);
             }
-            if (!string.IsNullOrWhiteSpace(moduleJson))
-            {
-                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
-            }
+           
             if (!string.IsNullOrWhiteSpace(encounterTypeJson))
             {
                 DefaultEncounterType = JsonConvert.DeserializeObject<EncounterType>(encounterTypeJson);
@@ -188,6 +194,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         }
 
+      
         public void ShowRegistry()
         {
             ShowViewModel<RegistryViewModel>();
@@ -201,6 +208,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if ( result)
                 {
                     _dashboardService.RemoveRelationShip(template.Id);
+                    Client = _dashboardService.LoadClient(Client.Id);
                 }
             }
             catch (Exception e)
@@ -277,12 +285,25 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void ReviewEncounter(EncounterTemplate encounterTemplate)
         {
-            throw new NotImplementedException();
+            ResumeEncounter(encounterTemplate);
         }
 
-        public void DiscardEncounter(EncounterTemplate encounterTemplate)
+        public async void DiscardEncounter(EncounterTemplate encounterTemplate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _dialogService.ConfirmAction("Are you sure ?", "Delete this Encounter");
+                if (result)
+                {
+                    _dashboardService.RemoveEncounter(encounterTemplate.Id);
+                    Module = _dashboardService.LoadModule();
+                }
+            }
+            catch (Exception e)
+            {
+                MvxTrace.Error(e.Message);
+                _dialogService.Alert(e.Message, "Delete this Encounter");
+            }
         }
     }
 }

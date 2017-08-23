@@ -77,7 +77,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanDiscardEncounter()
         {
-            return null != EncounterTemplate && EncounterTemplate.Status == "Completed";
+            return null != EncounterTemplate;
         }
 
         private void DiscardEncounter()

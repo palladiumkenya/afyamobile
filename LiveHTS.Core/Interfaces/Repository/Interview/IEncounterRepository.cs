@@ -11,5 +11,6 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
         IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, bool includeObs = false);
         IEnumerable<Encounter> GetWithObs(Guid formId, Guid encounterTypeId, Guid clientId);
         void ClearObs(Guid id);
+        void UpdateStatus(Guid id,bool completed);
     }
 }

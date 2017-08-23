@@ -168,6 +168,11 @@ namespace LiveHTS.Core.Service.Clients
             _encounterRepository.ClearObs(encounterId);
         }
 
+        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        {
+         _encounterRepository.UpdateStatus(encounterId,completed);   
+        }
+
         private void UpdateManifest(Guid encounterId)
         {
             _encounter = _encounterRepository.Load(encounterId, true);
