@@ -40,6 +40,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Encounter _encounter;
         private Manifest _manifest;
         private bool _isLoading;
+        private string _formStatus;
 
         public bool AtTheEnd { get; set; }
 
@@ -81,6 +82,12 @@ namespace LiveHTS.Presentation.ViewModel
                 _formError = value;
                 RaisePropertyChanged(() => FormError);
             }
+        }
+
+        public string FormStatus
+        {
+            get { return _formStatus; }
+            set { _formStatus = value; RaisePropertyChanged(() => FormStatus); }
         }
 
         public ClientDTO ClientDTO
@@ -291,6 +298,11 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void LoadView()
         {
+
+
+            //set defaults
+            SetDefualts();
+
             if (null != Manifest)
             {
                 if (Manifest.HasResponses())
@@ -346,9 +358,8 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
-            //set defaults
+            
 
-            SetDefualts();
 
         }
 
@@ -691,8 +702,17 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveChanges()
         {
+            FormStatus = "Satus: In complete";
+
             if (null != Manifest)
-                return string.IsNullOrWhiteSpace(FormError) && Manifest.IsComplete();
+            {
+                if (string.IsNullOrWhiteSpace(FormError) && Manifest.IsComplete())
+                {
+                    FormStatus = "Satus: Completed";
+                    return true;
+                }
+                
+            }
             return false;
         }
 
@@ -728,6 +748,8 @@ namespace LiveHTS.Presentation.ViewModel
 
             var manifestJson = JsonConvert.SerializeObject(Manifest);
             _settings.AddOrUpdateValue("client.manifest", manifestJson);
+
+            Close(this);
         }
     }
 }

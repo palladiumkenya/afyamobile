@@ -118,6 +118,9 @@
     <Reference Include="MvvmCross.Plugins.Visibility.Droid, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmCross.Plugin.Visibility.5.1.1\lib\MonoAndroid\MvvmCross.Plugins.Visibility.Droid.dll</HintPath>
     </Reference>
+    <Reference Include="Refractored.FloatingActionButton, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Refractored.FloatingActionButton.1.4.0\lib\MonoAndroid10\Refractored.FloatingActionButton.dll</HintPath>
+    </Reference>
     <Reference Include="Refractored.PagerSlidingTabStrip, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Refractored.PagerSlidingTabStrip.1.1.6\lib\MonoAndroid10\Refractored.PagerSlidingTabStrip.dll</HintPath>
     </Reference>

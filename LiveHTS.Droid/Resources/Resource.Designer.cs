@@ -1549,6 +1549,41 @@ namespace LiveHTS.Droid
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_id = global::LiveHTS.Droid.Resource.Styleable.ViewStubCompat_android_id;
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_inflatedId = global::LiveHTS.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_layout = global::LiveHTS.Droid.Resource.Styleable.ViewStubCompat_android_layout;
+			global::com.refractored.fab.Resource.Attribute.fab_colorDisabled = global::LiveHTS.Droid.Resource.Attribute.fab_colorDisabled;
+			global::com.refractored.fab.Resource.Attribute.fab_colorNormal = global::LiveHTS.Droid.Resource.Attribute.fab_colorNormal;
+			global::com.refractored.fab.Resource.Attribute.fab_colorPressed = global::LiveHTS.Droid.Resource.Attribute.fab_colorPressed;
+			global::com.refractored.fab.Resource.Attribute.fab_colorRipple = global::LiveHTS.Droid.Resource.Attribute.fab_colorRipple;
+			global::com.refractored.fab.Resource.Attribute.fab_shadow = global::LiveHTS.Droid.Resource.Attribute.fab_shadow;
+			global::com.refractored.fab.Resource.Attribute.fab_size = global::LiveHTS.Droid.Resource.Attribute.fab_size;
+			global::com.refractored.fab.Resource.Attribute.layoutManager = global::LiveHTS.Droid.Resource.Attribute.layoutManager;
+			global::com.refractored.fab.Resource.Attribute.reverseLayout = global::LiveHTS.Droid.Resource.Attribute.reverseLayout;
+			global::com.refractored.fab.Resource.Attribute.spanCount = global::LiveHTS.Droid.Resource.Attribute.spanCount;
+			global::com.refractored.fab.Resource.Attribute.stackFromEnd = global::LiveHTS.Droid.Resource.Attribute.stackFromEnd;
+			global::com.refractored.fab.Resource.Color.fab_material_blue_500 = global::LiveHTS.Droid.Resource.Color.fab_material_blue_500;
+			global::com.refractored.fab.Resource.Dimension.fab_elevation_lollipop = global::LiveHTS.Droid.Resource.Dimension.fab_elevation_lollipop;
+			global::com.refractored.fab.Resource.Dimension.fab_scroll_threshold = global::LiveHTS.Droid.Resource.Dimension.fab_scroll_threshold;
+			global::com.refractored.fab.Resource.Dimension.fab_shadow_size = global::LiveHTS.Droid.Resource.Dimension.fab_shadow_size;
+			global::com.refractored.fab.Resource.Dimension.fab_size_mini = global::LiveHTS.Droid.Resource.Dimension.fab_size_mini;
+			global::com.refractored.fab.Resource.Dimension.fab_size_normal = global::LiveHTS.Droid.Resource.Dimension.fab_size_normal;
+			global::com.refractored.fab.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame = global::LiveHTS.Droid.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame;
+			global::com.refractored.fab.Resource.Drawable.fab_shadow = global::LiveHTS.Droid.Resource.Drawable.fab_shadow;
+			global::com.refractored.fab.Resource.Drawable.fab_shadow_mini = global::LiveHTS.Droid.Resource.Drawable.fab_shadow_mini;
+			global::com.refractored.fab.Resource.Id.item_touch_helper_previous_elevation = global::LiveHTS.Droid.Resource.Id.item_touch_helper_previous_elevation;
+			global::com.refractored.fab.Resource.Id.mini = global::LiveHTS.Droid.Resource.Id.mini;
+			global::com.refractored.fab.Resource.Id.normal = global::LiveHTS.Droid.Resource.Id.normal;
+			global::com.refractored.fab.Resource.Styleable.FloatingActionButton = global::LiveHTS.Droid.Resource.Styleable.FloatingActionButton;
+			global::com.refractored.fab.Resource.Styleable.FloatingActionButton_fab_colorDisabled = global::LiveHTS.Droid.Resource.Styleable.FloatingActionButton_fab_colorDisabled;
+			global::com.refractored.fab.Resource.Styleable.FloatingActionButton_fab_colorNormal = global::LiveHTS.Droid.Resource.Styleable.FloatingActionButton_fab_colorNormal;
+			global::com.refractored.fab.Resource.Styleable.FloatingActionButton_fab_colorPressed = global::LiveHTS.Droid.Resource.Styleable.FloatingActionButton_fab_colorPressed;
+			global::com.refractored.fab.Resource.Styleable.FloatingActionButton_fab_colorRipple = global::LiveHTS.Droid.Resource.Styleable.FloatingActionButton_fab_colorRipple;
+			global::com.refractored.fab.Resource.Styleable.FloatingActionButton_fab_shadow = global::LiveHTS.Droid.Resource.Styleable.FloatingActionButton_fab_shadow;
+			global::com.refractored.fab.Resource.Styleable.FloatingActionButton_fab_size = global::LiveHTS.Droid.Resource.Styleable.FloatingActionButton_fab_size;
+			global::com.refractored.fab.Resource.Styleable.RecyclerView = global::LiveHTS.Droid.Resource.Styleable.RecyclerView;
+			global::com.refractored.fab.Resource.Styleable.RecyclerView_android_orientation = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_android_orientation;
+			global::com.refractored.fab.Resource.Styleable.RecyclerView_layoutManager = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_layoutManager;
+			global::com.refractored.fab.Resource.Styleable.RecyclerView_reverseLayout = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_reverseLayout;
+			global::com.refractored.fab.Resource.Styleable.RecyclerView_spanCount = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_spanCount;
+			global::com.refractored.fab.Resource.Styleable.RecyclerView_stackFromEnd = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_stackFromEnd;
 			global::com.refractored.Resource.Animation.abc_fade_in = global::LiveHTS.Droid.Resource.Animation.abc_fade_in;
 			global::com.refractored.Resource.Animation.abc_fade_out = global::LiveHTS.Droid.Resource.Animation.abc_fade_out;
 			global::com.refractored.Resource.Animation.abc_grow_fade_in_from_bottom = global::LiveHTS.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
@@ -2900,26 +2935,26 @@ namespace LiveHTS.Droid
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f010156
-			public const int MvxBind = 2130772310;
-			
-			// aapt resource value: 0x7f01015a
-			public const int MvxDropDownItemTemplate = 2130772314;
-			
-			// aapt resource value: 0x7f01015b
-			public const int MvxGroupItemTemplate = 2130772315;
-			
-			// aapt resource value: 0x7f010159
-			public const int MvxItemTemplate = 2130772313;
-			
-			// aapt resource value: 0x7f010157
-			public const int MvxLang = 2130772311;
-			
 			// aapt resource value: 0x7f01015c
-			public const int MvxSource = 2130772316;
+			public const int MvxBind = 2130772316;
 			
-			// aapt resource value: 0x7f010158
-			public const int MvxTemplate = 2130772312;
+			// aapt resource value: 0x7f010160
+			public const int MvxDropDownItemTemplate = 2130772320;
+			
+			// aapt resource value: 0x7f010161
+			public const int MvxGroupItemTemplate = 2130772321;
+			
+			// aapt resource value: 0x7f01015f
+			public const int MvxItemTemplate = 2130772319;
+			
+			// aapt resource value: 0x7f01015d
+			public const int MvxLang = 2130772317;
+			
+			// aapt resource value: 0x7f010162
+			public const int MvxSource = 2130772322;
+			
+			// aapt resource value: 0x7f01015e
+			public const int MvxTemplate = 2130772318;
 			
 			// aapt resource value: 0x7f010050
 			public const int actionBarDivider = 2130772048;
@@ -3023,41 +3058,41 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f010073
 			public const int activityChooserViewStyle = 2130772083;
 			
-			// aapt resource value: 0x7f010160
-			public const int ahBarColor = 2130772320;
+			// aapt resource value: 0x7f010166
+			public const int ahBarColor = 2130772326;
 			
-			// aapt resource value: 0x7f010168
-			public const int ahBarLength = 2130772328;
+			// aapt resource value: 0x7f01016e
+			public const int ahBarLength = 2130772334;
+			
+			// aapt resource value: 0x7f01016d
+			public const int ahBarWidth = 2130772333;
+			
+			// aapt resource value: 0x7f01016b
+			public const int ahCircleColor = 2130772331;
+			
+			// aapt resource value: 0x7f01016a
+			public const int ahDelayMillis = 2130772330;
+			
+			// aapt resource value: 0x7f01016c
+			public const int ahRadius = 2130772332;
 			
 			// aapt resource value: 0x7f010167
-			public const int ahBarWidth = 2130772327;
+			public const int ahRimColor = 2130772327;
 			
-			// aapt resource value: 0x7f010165
-			public const int ahCircleColor = 2130772325;
+			// aapt resource value: 0x7f010168
+			public const int ahRimWidth = 2130772328;
 			
-			// aapt resource value: 0x7f010164
-			public const int ahDelayMillis = 2130772324;
-			
-			// aapt resource value: 0x7f010166
-			public const int ahRadius = 2130772326;
-			
-			// aapt resource value: 0x7f010161
-			public const int ahRimColor = 2130772321;
-			
-			// aapt resource value: 0x7f010162
-			public const int ahRimWidth = 2130772322;
+			// aapt resource value: 0x7f010169
+			public const int ahSpinSpeed = 2130772329;
 			
 			// aapt resource value: 0x7f010163
-			public const int ahSpinSpeed = 2130772323;
+			public const int ahText = 2130772323;
 			
-			// aapt resource value: 0x7f01015d
-			public const int ahText = 2130772317;
+			// aapt resource value: 0x7f010164
+			public const int ahTextColor = 2130772324;
 			
-			// aapt resource value: 0x7f01015e
-			public const int ahTextColor = 2130772318;
-			
-			// aapt resource value: 0x7f01015f
-			public const int ahTextSize = 2130772319;
+			// aapt resource value: 0x7f010165
+			public const int ahTextSize = 2130772325;
 			
 			// aapt resource value: 0x7f010097
 			public const int alertDialogButtonGroupStyle = 2130772119;
@@ -3376,6 +3411,24 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f010118
 			public const int fabSize = 2130772248;
+			
+			// aapt resource value: 0x7f010158
+			public const int fab_colorDisabled = 2130772312;
+			
+			// aapt resource value: 0x7f010157
+			public const int fab_colorNormal = 2130772311;
+			
+			// aapt resource value: 0x7f010156
+			public const int fab_colorPressed = 2130772310;
+			
+			// aapt resource value: 0x7f010159
+			public const int fab_colorRipple = 2130772313;
+			
+			// aapt resource value: 0x7f01015a
+			public const int fab_shadow = 2130772314;
+			
+			// aapt resource value: 0x7f01015b
+			public const int fab_size = 2130772315;
 			
 			// aapt resource value: 0x7f01011d
 			public const int foregroundInsidePadding = 2130772253;
@@ -4024,44 +4077,44 @@ namespace LiveHTS.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0a004b
-			public const int abc_background_cache_hint_selector_material_dark = 2131361867;
-			
 			// aapt resource value: 0x7f0a004c
-			public const int abc_background_cache_hint_selector_material_light = 2131361868;
+			public const int abc_background_cache_hint_selector_material_dark = 2131361868;
 			
 			// aapt resource value: 0x7f0a004d
-			public const int abc_btn_colored_borderless_text_material = 2131361869;
+			public const int abc_background_cache_hint_selector_material_light = 2131361869;
 			
 			// aapt resource value: 0x7f0a004e
-			public const int abc_btn_colored_text_material = 2131361870;
+			public const int abc_btn_colored_borderless_text_material = 2131361870;
 			
 			// aapt resource value: 0x7f0a004f
-			public const int abc_color_highlight_material = 2131361871;
+			public const int abc_btn_colored_text_material = 2131361871;
 			
 			// aapt resource value: 0x7f0a0050
-			public const int abc_hint_foreground_material_dark = 2131361872;
+			public const int abc_color_highlight_material = 2131361872;
 			
 			// aapt resource value: 0x7f0a0051
-			public const int abc_hint_foreground_material_light = 2131361873;
+			public const int abc_hint_foreground_material_dark = 2131361873;
+			
+			// aapt resource value: 0x7f0a0052
+			public const int abc_hint_foreground_material_light = 2131361874;
 			
 			// aapt resource value: 0x7f0a0005
 			public const int abc_input_method_navigation_guard = 2131361797;
 			
-			// aapt resource value: 0x7f0a0052
-			public const int abc_primary_text_disable_only_material_dark = 2131361874;
-			
 			// aapt resource value: 0x7f0a0053
-			public const int abc_primary_text_disable_only_material_light = 2131361875;
+			public const int abc_primary_text_disable_only_material_dark = 2131361875;
 			
 			// aapt resource value: 0x7f0a0054
-			public const int abc_primary_text_material_dark = 2131361876;
+			public const int abc_primary_text_disable_only_material_light = 2131361876;
 			
 			// aapt resource value: 0x7f0a0055
-			public const int abc_primary_text_material_light = 2131361877;
+			public const int abc_primary_text_material_dark = 2131361877;
 			
 			// aapt resource value: 0x7f0a0056
-			public const int abc_search_url_text = 2131361878;
+			public const int abc_primary_text_material_light = 2131361878;
+			
+			// aapt resource value: 0x7f0a0057
+			public const int abc_search_url_text = 2131361879;
 			
 			// aapt resource value: 0x7f0a0006
 			public const int abc_search_url_text_normal = 2131361798;
@@ -4072,32 +4125,32 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0a0008
 			public const int abc_search_url_text_selected = 2131361800;
 			
-			// aapt resource value: 0x7f0a0057
-			public const int abc_secondary_text_material_dark = 2131361879;
-			
 			// aapt resource value: 0x7f0a0058
-			public const int abc_secondary_text_material_light = 2131361880;
+			public const int abc_secondary_text_material_dark = 2131361880;
 			
 			// aapt resource value: 0x7f0a0059
-			public const int abc_tint_btn_checkable = 2131361881;
+			public const int abc_secondary_text_material_light = 2131361881;
 			
 			// aapt resource value: 0x7f0a005a
-			public const int abc_tint_default = 2131361882;
+			public const int abc_tint_btn_checkable = 2131361882;
 			
 			// aapt resource value: 0x7f0a005b
-			public const int abc_tint_edittext = 2131361883;
+			public const int abc_tint_default = 2131361883;
 			
 			// aapt resource value: 0x7f0a005c
-			public const int abc_tint_seek_thumb = 2131361884;
+			public const int abc_tint_edittext = 2131361884;
 			
 			// aapt resource value: 0x7f0a005d
-			public const int abc_tint_spinner = 2131361885;
+			public const int abc_tint_seek_thumb = 2131361885;
 			
 			// aapt resource value: 0x7f0a005e
-			public const int abc_tint_switch_thumb = 2131361886;
+			public const int abc_tint_spinner = 2131361886;
 			
 			// aapt resource value: 0x7f0a005f
-			public const int abc_tint_switch_track = 2131361887;
+			public const int abc_tint_switch_thumb = 2131361887;
+			
+			// aapt resource value: 0x7f0a0060
+			public const int abc_tint_switch_track = 2131361888;
 			
 			// aapt resource value: 0x7f0a0009
 			public const int accent_material_dark = 2131361801;
@@ -4156,8 +4209,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0a003f
 			public const int design_bottom_navigation_shadow_color = 2131361855;
 			
-			// aapt resource value: 0x7f0a0060
-			public const int design_error = 2131361888;
+			// aapt resource value: 0x7f0a0061
+			public const int design_error = 2131361889;
 			
 			// aapt resource value: 0x7f0a0040
 			public const int design_fab_shadow_end_color = 2131361856;
@@ -4189,8 +4242,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0a0049
 			public const int design_textinput_error_color_light = 2131361865;
 			
-			// aapt resource value: 0x7f0a0061
-			public const int design_tint_password_toggle = 2131361889;
+			// aapt resource value: 0x7f0a0062
+			public const int design_tint_password_toggle = 2131361890;
 			
 			// aapt resource value: 0x7f0a0017
 			public const int dim_foreground_disabled_material_dark = 2131361815;
@@ -4203,6 +4256,9 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f0a001a
 			public const int dim_foreground_material_light = 2131361818;
+			
+			// aapt resource value: 0x7f0a004b
+			public const int fab_material_blue_500 = 2131361867;
 			
 			// aapt resource value: 0x7f0a001b
 			public const int foreground_material_dark = 2131361819;
@@ -4312,11 +4368,11 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0a003c
 			public const int switch_thumb_disabled_material_light = 2131361852;
 			
-			// aapt resource value: 0x7f0a0062
-			public const int switch_thumb_material_dark = 2131361890;
-			
 			// aapt resource value: 0x7f0a0063
-			public const int switch_thumb_material_light = 2131361891;
+			public const int switch_thumb_material_dark = 2131361891;
+			
+			// aapt resource value: 0x7f0a0064
+			public const int switch_thumb_material_light = 2131361892;
 			
 			// aapt resource value: 0x7f0a003d
 			public const int switch_thumb_normal_material_dark = 2131361853;
@@ -4688,6 +4744,21 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f070055
 			public const int disabled_alpha_material_light = 2131165269;
 			
+			// aapt resource value: 0x7f070092
+			public const int fab_elevation_lollipop = 2131165330;
+			
+			// aapt resource value: 0x7f070091
+			public const int fab_scroll_threshold = 2131165329;
+			
+			// aapt resource value: 0x7f070090
+			public const int fab_shadow_size = 2131165328;
+			
+			// aapt resource value: 0x7f07008f
+			public const int fab_size_mini = 2131165327;
+			
+			// aapt resource value: 0x7f07008e
+			public const int fab_size_normal = 2131165326;
+			
 			// aapt resource value: 0x7f070056
 			public const int highlight_alpha_material_colored = 2131165270;
 			
@@ -5028,26 +5099,26 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020071
-			public const int avd_hide_password_1 = 2130837617;
-			
-			// aapt resource value: 0x7f020072
-			public const int avd_hide_password_2 = 2130837618;
-			
 			// aapt resource value: 0x7f020073
-			public const int avd_hide_password_3 = 2130837619;
+			public const int avd_hide_password_1 = 2130837619;
+			
+			// aapt resource value: 0x7f020074
+			public const int avd_hide_password_2 = 2130837620;
+			
+			// aapt resource value: 0x7f020075
+			public const int avd_hide_password_3 = 2130837621;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
-			// aapt resource value: 0x7f020074
-			public const int avd_show_password_1 = 2130837620;
-			
-			// aapt resource value: 0x7f020075
-			public const int avd_show_password_2 = 2130837621;
-			
 			// aapt resource value: 0x7f020076
-			public const int avd_show_password_3 = 2130837622;
+			public const int avd_show_password_1 = 2130837622;
+			
+			// aapt resource value: 0x7f020077
+			public const int avd_show_password_2 = 2130837623;
+			
+			// aapt resource value: 0x7f020078
+			public const int avd_show_password_3 = 2130837624;
 			
 			// aapt resource value: 0x7f020055
 			public const int design_bottom_navigation_item_background = 2130837589;
@@ -5068,70 +5139,76 @@ namespace LiveHTS.Droid
 			public const int design_snackbar_background = 2130837594;
 			
 			// aapt resource value: 0x7f02005b
-			public const int ic_errorstatus = 2130837595;
+			public const int fab_shadow = 2130837595;
 			
 			// aapt resource value: 0x7f02005c
-			public const int ic_successstatus = 2130837596;
+			public const int fab_shadow_mini = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int Icon = 2130837597;
+			public const int ic_errorstatus = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int livehts = 2130837598;
+			public const int ic_successstatus = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
-			public const int livehts_logo = 2130837599;
+			public const int Icon = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int navigation_empty_icon = 2130837600;
+			public const int livehts = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int notification_action_background = 2130837601;
+			public const int livehts_logo = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int notification_bg = 2130837602;
+			public const int navigation_empty_icon = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int notification_bg_low = 2130837603;
+			public const int notification_action_background = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int notification_bg_low_normal = 2130837604;
+			public const int notification_bg = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int notification_bg_low_pressed = 2130837605;
+			public const int notification_bg_low = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int notification_bg_normal = 2130837606;
+			public const int notification_bg_low_normal = 2130837606;
 			
 			// aapt resource value: 0x7f020067
-			public const int notification_bg_normal_pressed = 2130837607;
+			public const int notification_bg_low_pressed = 2130837607;
 			
 			// aapt resource value: 0x7f020068
-			public const int notification_icon_background = 2130837608;
-			
-			// aapt resource value: 0x7f02006f
-			public const int notification_template_icon_bg = 2130837615;
-			
-			// aapt resource value: 0x7f020070
-			public const int notification_template_icon_low_bg = 2130837616;
+			public const int notification_bg_normal = 2130837608;
 			
 			// aapt resource value: 0x7f020069
-			public const int notification_tile_bg = 2130837609;
+			public const int notification_bg_normal_pressed = 2130837609;
 			
 			// aapt resource value: 0x7f02006a
-			public const int notify_panel_notification_icon_bg = 2130837610;
+			public const int notification_icon_background = 2130837610;
+			
+			// aapt resource value: 0x7f020071
+			public const int notification_template_icon_bg = 2130837617;
+			
+			// aapt resource value: 0x7f020072
+			public const int notification_template_icon_low_bg = 2130837618;
 			
 			// aapt resource value: 0x7f02006b
-			public const int psts_background_tab = 2130837611;
+			public const int notification_tile_bg = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int roundedbg = 2130837612;
+			public const int notify_panel_notification_icon_bg = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int roundedbgdark = 2130837613;
+			public const int psts_background_tab = 2130837613;
 			
 			// aapt resource value: 0x7f02006e
-			public const int splash = 2130837614;
+			public const int roundedbg = 2130837614;
+			
+			// aapt resource value: 0x7f02006f
+			public const int roundedbgdark = 2130837615;
+			
+			// aapt resource value: 0x7f020070
+			public const int splash = 2130837616;
 			
 			static Drawable()
 			{
@@ -8658,7 +8735,13 @@ namespace LiveHTS.Droid
 					2130772248,
 					2130772249,
 					2130772250,
-					2130772251};
+					2130772251,
+					2130772310,
+					2130772311,
+					2130772312,
+					2130772313,
+					2130772314,
+					2130772315};
 			
 			// aapt resource value: 1
 			public const int FloatingActionButton_backgroundTint = 1;
@@ -8674,6 +8757,24 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 4
 			public const int FloatingActionButton_fabSize = 4;
+			
+			// aapt resource value: 10
+			public const int FloatingActionButton_fab_colorDisabled = 10;
+			
+			// aapt resource value: 9
+			public const int FloatingActionButton_fab_colorNormal = 9;
+			
+			// aapt resource value: 8
+			public const int FloatingActionButton_fab_colorPressed = 8;
+			
+			// aapt resource value: 11
+			public const int FloatingActionButton_fab_colorRipple = 11;
+			
+			// aapt resource value: 12
+			public const int FloatingActionButton_fab_shadow = 12;
+			
+			// aapt resource value: 13
+			public const int FloatingActionButton_fab_size = 13;
 			
 			// aapt resource value: 5
 			public const int FloatingActionButton_pressedTranslationZ = 5;
@@ -8905,8 +9006,8 @@ namespace LiveHTS.Droid
 			public const int MenuView_subMenuArrow = 8;
 			
 			public static int[] MvxBinding = new int[] {
-					2130772310,
-					2130772311};
+					2130772316,
+					2130772317};
 			
 			// aapt resource value: 0
 			public const int MvxBinding_MvxBind = 0;
@@ -8915,26 +9016,26 @@ namespace LiveHTS.Droid
 			public const int MvxBinding_MvxLang = 1;
 			
 			public static int[] MvxControl = new int[] {
-					2130772312};
+					2130772318};
 			
 			// aapt resource value: 0
 			public const int MvxControl_MvxTemplate = 0;
 			
 			public static int[] MvxExpandableListView = new int[] {
-					2130772315};
+					2130772321};
 			
 			// aapt resource value: 0
 			public const int MvxExpandableListView_MvxGroupItemTemplate = 0;
 			
 			public static int[] MvxImageView = new int[] {
-					2130772316};
+					2130772322};
 			
 			// aapt resource value: 0
 			public const int MvxImageView_MvxSource = 0;
 			
 			public static int[] MvxListView = new int[] {
-					2130772313,
-					2130772314};
+					2130772319,
+					2130772320};
 			
 			// aapt resource value: 1
 			public const int MvxListView_MvxDropDownItemTemplate = 1;
@@ -9075,18 +9176,18 @@ namespace LiveHTS.Droid
 			public const int PopupWindowBackgroundState_state_above_anchor = 0;
 			
 			public static int[] ProgressWheel = new int[] {
-					2130772317,
-					2130772318,
-					2130772319,
-					2130772320,
-					2130772321,
-					2130772322,
 					2130772323,
 					2130772324,
 					2130772325,
 					2130772326,
 					2130772327,
-					2130772328};
+					2130772328,
+					2130772329,
+					2130772330,
+					2130772331,
+					2130772332,
+					2130772333,
+					2130772334};
 			
 			// aapt resource value: 3
 			public const int ProgressWheel_ahBarColor = 3;

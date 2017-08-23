@@ -6,6 +6,7 @@ using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -352,11 +353,21 @@ namespace LiveHTS.Presentation.ViewModel.Template
             if (ShowTextObs)        // Text
                 return ResponseText;
 
-            if (ShowSingleObs)      //"Single";
-                return SelectedSingleOption.ItemId;
+            if (ShowSingleObs) //"Single";
+            {
+                var selected = SelectedSingleOption.ItemId;
+                if (selected.IsNullOrEmpty())
+                    return null;
+                return selected;
+            }
 
-            if (ShowNumericObs)     //"Numeric";
-                return ResponseNumeric;
+            if (ShowNumericObs) //"Numeric";
+            {
+                var selected = ResponseNumeric;
+                if (selected == 0)
+                    return null;
+                return selected;
+            }
 
             if (ShowMultiObs)       //"Multi";
             {
