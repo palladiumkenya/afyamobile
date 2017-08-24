@@ -30,6 +30,8 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _addTestCommand;
         private Encounter _encounter;
         private IMvxCommand _saveCommand;
+        private CategoryItem _selectedFirstTestResult;
+        private List<CategoryItem> _firstTestResults;
 
         public Guid EncounterTypeId
         {
@@ -69,6 +71,18 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public CategoryItem SelectedFirstTestResult
+        {
+            get { return _selectedFirstTestResult; }
+            set { _selectedFirstTestResult = value; RaisePropertyChanged(() => SelectedFirstTestResult);}
+        }
+
+        public List<CategoryItem> FirstTestResults
+        {
+            get { return _firstTestResults; }
+            set { _firstTestResults = value; RaisePropertyChanged(() => FirstTestResults);}
+        }
+
         public IMvxCommand SaveChangesCommand
         {
             get
@@ -98,6 +112,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string encounterTypeId, string mode, string clientId, string encounterId)
         {
+
+            FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
             // Load Client
             Client = _dashboardService.LoadClient(new Guid(clientId));
 

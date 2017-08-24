@@ -11,11 +11,13 @@ namespace LiveHTS.Core.Service.Interview
     {
         private readonly IEncounterRepository _encounterRepository;
         private readonly IObsTestResultRepository _obsTestResultRepository;
+        private readonly IObsFinalTestResultRepository _obsFinalTestResultRepository;
 
-        public HIVTestingService(IEncounterRepository encounterRepository, IObsTestResultRepository obsTestResultRepository)
+        public HIVTestingService(IEncounterRepository encounterRepository, IObsTestResultRepository obsTestResultRepository, IObsFinalTestResultRepository obsFinalTestResultRepository)
         {
             _encounterRepository = encounterRepository;
             _obsTestResultRepository = obsTestResultRepository;
+            _obsFinalTestResultRepository = obsFinalTestResultRepository;
         }
         public Encounter OpenEncounter(Guid encounterId)
         {
@@ -52,6 +54,23 @@ namespace LiveHTS.Core.Service.Interview
         public void SaveTest(ObsTestResult testResult)
         {
             _obsTestResultRepository.SaveOrUpdate(testResult);
+
+            if (testResult.TestName.Contains("1"))
+            {
+                var final = _obsFinalTestResultRepository.GetAll(x => x.EncounterId == testResult.EncounterId)
+                    .FirstOrDefault();
+
+                if (null != final)
+                {
+                    //update
+                }
+                else
+                {
+                    final=ObsFinalTestResult.CreateFirst(testResult.Result,testResult.EncounterId);
+                    //new
+                }
+
+            }
         }
 
         public void DeleteTest(ObsTestResult testResult)

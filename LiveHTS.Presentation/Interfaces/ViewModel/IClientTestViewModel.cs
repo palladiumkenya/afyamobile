@@ -13,7 +13,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientHIVTestViewModel
     {
-        
 
         Guid EncounterTypeId  { get; set; }
         Client Client { get; set; }
@@ -21,10 +20,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         string FirstTestName { get; set; }
         ObservableCollection<HIVTestTemplateWrap> FirstTests { get; set; }
+        CategoryItem SelectedFirstTestResult { get; set; }
+        List<CategoryItem> FirstTestResults { get; set; }
 
         IMvxCommand SaveChangesCommand { get; }
 
-        //CategoryItem SelectedFirstTestResult { get; set; }
+        
 
         IMvxCommand AddFirstTestCommand { get; }
 

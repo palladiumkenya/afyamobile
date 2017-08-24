@@ -25,7 +25,7 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             }
         }
 
-        public List<ObsFinalTestResult> Find(Guid clientId)
+        public List<ObsFinalTestResult> Find(Guid clientId, Guid encounterId)
         {
             return _db.Query<ObsFinalTestResult>(@"
 SELECT 
@@ -33,7 +33,7 @@ SELECT
 FROM 
     ObsFinalTestResult INNER JOIN Encounter ON ObsFinalTestResult.EncounterId =Encounter.Id
 WHERE
-    Encounter.ClientId =?", clientId);
+    Encounter.ClientId =?&&EncounterId =?", clientId, encounterId);
 
         }
     }
