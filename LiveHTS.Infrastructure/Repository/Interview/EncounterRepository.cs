@@ -4,6 +4,7 @@ using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Infrastructure.Repository.Interview
 {
@@ -74,28 +75,66 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounters;
         }
 
-        [System.Obsolete("User LoadAll instead.")]
-        public IEnumerable<Encounter> GetWithObs(Guid formId, Guid encounterTypeId, Guid clientId)
+        public Encounter LoadTest(Guid id, bool includeObs = false)
         {
-            var encounters = GetAll(
-                x => x.FormId == formId &&
-                     x.EncounterTypeId == encounterTypeId &&
-                     x.ClientId == clientId)
-                     .ToList();
+            var encounter = Get(id);
 
-            foreach (var e in encounters)
+            if (null != encounter && includeObs)
             {
-                if (null != e)
-                {
-                    var obses = _db.Table<Obs>()
-                        .Where(x => x.EncounterId == e.Id)
-                        .ToList();
-                    e.Obses = obses;
-                }
+                var obsTestResults = _db.Table<ObsTestResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsTestResults = obsTestResults;
+                var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsFinalTestResults = obsFinalTestResults;
             }
 
+            return encounter;
+        }
+
+        public Encounter LoadTest(Guid encounterTypeId, Guid clientId, bool includeObs = false)
+        {
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            if (null != encounter && includeObs)
+            {
+                var obsTestResults = _db.Table<ObsTestResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsTestResults = obsTestResults;
+                var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsFinalTestResults = obsFinalTestResults;
+            }
+
+            return encounter;
+        }
+
+        public List<Encounter> LoadTestAll(Guid encounterTypeId, Guid clientId, bool includeObs = false)
+        {
+            var encounters = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId).ToList();
+
+            foreach (var encounter in encounters)
+            {
+                if (null != encounter && includeObs)
+                {
+                    var obsTestResults = _db.Table<ObsTestResult>()
+                        .Where(x => x.EncounterId == encounter.Id)
+                        .ToList();
+                    encounter.ObsTestResults = obsTestResults;
+                    var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                        .Where(x => x.EncounterId == encounter.Id)
+                        .ToList();
+                    encounter.ObsFinalTestResults = obsFinalTestResults;
+                }
+            }
             return encounters;
         }
+
 
         public void ClearObs(Guid id)
         {

@@ -54,6 +54,8 @@
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsTestResultRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientRelationshipRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientIdentifierRepository.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
     <Compile Include="Interfaces\Services\Config\IDeviceSetupService.cs" />
     <Compile Include="Interfaces\Services\Config\ILookupService.cs" />
+    <Compile Include="Interfaces\Services\Interview\IHIVTestingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IInterviewService.cs" />
     <Compile Include="Interfaces\Services\Survey\ISurveyService.cs" />
     <Compile Include="Model\AppDashboard.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Service\Clients\RegistryService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
+    <Compile Include="Service\Interview\HIVTestingService.cs" />
     <Compile Include="Service\Interview\InterviewService.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -63,9 +63,11 @@
     <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
     <Compile Include="Interfaces\IObsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IHIVTestTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFormTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IHIVTestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IQuestionTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IEncounterTemplateWrap.cs" />
@@ -81,9 +83,9 @@
     <Compile Include="ViewModel\ClientHIVTestViewModel.cs" />
     <Compile Include="ViewModel\Template\FormTemplate.cs" />
     <Compile Include="ViewModel\Template\EncounterTemplate.cs" />
+    <Compile Include="ViewModel\Template\HIVTestTemplate.cs" />
     <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
-    <Compile Include="ViewModel\Widget\Test.cs" />
-    <Compile Include="ViewModel\Widget\HIVTest.cs" />
+    <Compile Include="ViewModel\Wrapper\HIVTestTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\FormTemplateWrap.cs" />

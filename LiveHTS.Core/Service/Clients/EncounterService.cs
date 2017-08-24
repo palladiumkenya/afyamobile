@@ -12,6 +12,9 @@ namespace LiveHTS.Core.Service.Clients
     public class EncounterService:IEncounterService
     {
         private readonly IEncounterRepository _encounterRepository;
+        
+
+            
         private readonly IFormRepository _formRepository;
 
         public EncounterService(IEncounterRepository encounterRepository, IFormRepository formRepository)

@@ -4,63 +4,80 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            local:MvxBind="Text Attempt" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Kit Name" />
-        <MvxSpinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"
-            local:MvxBind="ItemsSource TestKits;SelectedItem SelectedTestKit" />
-        <TextView
-            android:text="Other Kit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            local:MvxBind="Visibility ShowOtherTestKit, Converter=Visibility" />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            local:MvxBind="Text OtherTestKit;Visibility ShowOtherTestKit, Converter=Visibility" />
-    </LinearLayout>
+  
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    
     <TextView
-        android:text="Lot Number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        local:MvxBind="Text LotNumber" />
+        local:MvxBind="Text HIVTestTemplate.Id"
+        android:paddingRight="5dp" />
+
     <TextView
-        android:text="Expiry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <MvxDatePicker
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        local:MvxBind="Value Expiry;"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner" />
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Attempt" 
+      android:paddingRight="5dp" />
+    
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:text="Test Result" />
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      local:MvxBind="Text HIVTestTemplate.Attempt" />
+ </LinearLayout>
+  
+    <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="15dp"
+          android:text="Kit Name" />
     <MvxSpinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="40dp"
-        local:MvxBind="ItemsSource TestResults;SelectedItem SelectedTestResult" />
+        local:MvxBind="ItemsSource HIVTestTemplate.Kits;SelectedItem HIVTestTemplate.SelectedKit" />
+    <TextView
+        android:text="Other Kit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        local:MvxBind="Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        local:MvxBind="Text HIVTestTemplate.KitOther;Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility" />
+  
+  <TextView
+      android:text="Lot Number"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      local:MvxBind="Text HIVTestTemplate.LotNumber" />
+  <TextView
+      android:text="Expiry"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  <MvxDatePicker
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:textSize="40dp"
+      local:MvxBind="Value HIVTestTemplate.Expiry;"
+      android:calendarViewShown="false"
+      android:datePickerMode="spinner" />
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:textSize="15dp"
+      android:text="Test HIVTestTemplate.Result" />
+  <MvxSpinner
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textSize="40dp"
+      local:MvxBind="ItemsSource HIVTestTemplate.Results; SelectedItem HIVTestTemplate.SelectedResult" />
+  
   <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -75,7 +92,8 @@
         android:text="X"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonDelete" 
+        android:id="@+id/buttonDelete"
       local:MvxBind="Click DeleteTestCommand"/>
   </LinearLayout>
-</LinearLayout>
+  
+ </LinearLayout>
