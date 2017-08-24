@@ -271,7 +271,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
         }
         private ObsTestResult GenerateTest()
         {
-            return ObsTestResult.Create(Id,TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId);
+            var obs= ObsTestResult.Create(Id,TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId);
+            obs.IsValid = false;
+            if (null != SelectedResult.Item)
+            {
+                obs.IsValid = SelectedResult.Item.Code != "I";
+            }
+            return obs;
         }
     }
 }

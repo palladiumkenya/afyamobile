@@ -16,6 +16,7 @@ namespace LiveHTS.Core.Model.Interview
         public DateTime Expiry { get; set; }
         [Indexed]
         public Guid Result { get; set; }
+        public bool IsValid { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }
 

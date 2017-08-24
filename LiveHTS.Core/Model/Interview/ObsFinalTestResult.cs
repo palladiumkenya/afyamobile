@@ -47,5 +47,10 @@ namespace LiveHTS.Core.Model.Interview
         {
             return new ObsFinalTestResult(firstTestResult, null, null, encounterId);
         }
+
+        public void UpdateSetFirstResult(Guid? result)
+        {
+            FirstTestResult = result.IsNullOrEmpty() ? null : result;
+        }
     }
 }

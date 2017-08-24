@@ -24,7 +24,6 @@ namespace LiveHTS.Core.Service.Interview
             var exisitngEncounter = _encounterRepository.LoadTest(encounterId, true);
             return exisitngEncounter;
         }
-
         public Encounter StartEncounter(Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
         {
             var exisitngEncounter = _encounterRepository
@@ -41,10 +40,7 @@ namespace LiveHTS.Core.Service.Interview
             encounter.Started = DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;
-        }
-
-        
-
+        }       
         public IEnumerable<Encounter> LoadEncounter(Guid clientId, Guid encounterTypeId)
         {
             
@@ -62,17 +58,20 @@ namespace LiveHTS.Core.Service.Interview
 
                 if (null != final)
                 {
-                    //update
+                    //         update
+                    final.UpdateSetFirstResult(testResult.IsValid ? testResult.Result : Guid.Empty);
+                    _obsFinalTestResultRepository.SaveOrUpdate(final);
                 }
                 else
                 {
-                    final=ObsFinalTestResult.CreateFirst(testResult.Result,testResult.EncounterId);
-                    //new
+                    if (testResult.IsValid)
+                    {
+                        final = ObsFinalTestResult.CreateFirst(testResult.Result, testResult.EncounterId);
+                        _obsFinalTestResultRepository.Save(final);
+                    }
                 }
-
             }
         }
-
         public void DeleteTest(ObsTestResult testResult)
         {
             _obsTestResultRepository.Delete(testResult.Id);

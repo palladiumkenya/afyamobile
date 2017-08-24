@@ -112,8 +112,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string encounterTypeId, string mode, string clientId, string encounterId)
         {
-
             FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
+
             // Load Client
             Client = _dashboardService.LoadClient(new Guid(clientId));
 
@@ -138,6 +138,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 throw new ArgumentException("Encounter has not been Initialized");
             }
+
             RaisePropertyChanged(() => FirstTestName);
         }
 
@@ -166,6 +167,20 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Encounter)
             {
                 FirstTests = ConvertToHIVTestWrapperClass(this, Encounter, kits, results);
+                var finalResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
+
+                if (null != finalResult)
+                {
+                    var result = FirstTestResults.FirstOrDefault(x => x.ItemId == finalResult.FirstTestResult);
+                    if (null != result)
+                    {
+                        SelectedFirstTestResult = result;
+                    }
+                    else
+                    {
+                        SelectedFirstTestResult = FirstTestResults.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+                }
             }
         }
         private bool CanSaveChanges()
