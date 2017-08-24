@@ -52,5 +52,9 @@ namespace LiveHTS.Core.Model.Interview
         {
             FirstTestResult = result.IsNullOrEmpty() ? null : result;
         }
+        public void UpdateSetSecondResult(Guid? result)
+        {
+            SecondTestResult = result.IsNullOrEmpty() ? null : result;
+        }
     }
 }

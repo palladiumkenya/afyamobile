@@ -70,6 +70,21 @@ namespace LiveHTS.Core.Service.Interview
                         _obsFinalTestResultRepository.Save(final);
                     }
                 }
+                return;
+            }
+
+            if (testResult.TestName.Contains("2"))
+            {
+                var final = _obsFinalTestResultRepository.GetAll(x => x.EncounterId == testResult.EncounterId)
+                    .FirstOrDefault();
+
+                if (null != final)
+                {
+                    //         update
+                    final.UpdateSetSecondResult(testResult.IsValid ? testResult.Result : Guid.Empty);
+                    _obsFinalTestResultRepository.SaveOrUpdate(final);
+                }
+               
             }
         }
         public void DeleteTest(ObsTestResult testResult)

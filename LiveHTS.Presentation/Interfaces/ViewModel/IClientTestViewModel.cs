@@ -23,11 +23,16 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedFirstTestResult { get; set; }
         List<CategoryItem> FirstTestResults { get; set; }
 
-        IMvxCommand SaveChangesCommand { get; }
+        string SecondTestName { get; set; }
+        ObservableCollection<HIVTestTemplateWrap> SecondTests { get; set; }
+        CategoryItem SelectedSecondTestResult { get; set; }
+        List<CategoryItem> SecondTestResults { get; set; }
 
-        
+        CategoryItem SelectedFinalTestResult { get; set; }
+        List<CategoryItem> FinalTestResults { get; set; }
 
         IMvxCommand AddFirstTestCommand { get; }
+        IMvxCommand AddSecondTestCommand { get; }
 
         void SaveTest(ObsTestResult test);
         void DeleteTest(ObsTestResult test);
