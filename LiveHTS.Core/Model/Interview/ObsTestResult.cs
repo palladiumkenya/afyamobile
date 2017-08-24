@@ -41,6 +41,7 @@ namespace LiveHTS.Core.Model.Interview
             TestName = testName;
             Attempt = attempt;
             EncounterId = encounterId;
+            Expiry=DateTime.Today;
         }
 
         public static ObsTestResult Create(Guid id,string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId)

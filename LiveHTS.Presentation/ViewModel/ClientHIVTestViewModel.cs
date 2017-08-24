@@ -31,8 +31,6 @@ namespace LiveHTS.Presentation.ViewModel
         private Encounter _encounter;
         private IMvxCommand _saveCommand;
 
-
-
         public Guid EncounterTypeId
         {
             get { return _encounterTypeId; }
@@ -64,7 +62,11 @@ namespace LiveHTS.Presentation.ViewModel
         public ObservableCollection<HIVTestTemplateWrap> FirstTests
         {
             get { return _hivTests; }
-            set { _hivTests = value; RaisePropertyChanged(() => FirstTests); }
+            set
+            {
+                _hivTests = value; RaisePropertyChanged(() => FirstTests);
+                AddFirstTestCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public IMvxCommand SaveChangesCommand
@@ -76,58 +78,15 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        private bool CanSaveChanges()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SaveChanges()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IMvxCommand AddTestCommand
+        public IMvxCommand AddFirstTestCommand
         {
             get
             {
-                _addTestCommand = _addTestCommand ?? new MvxCommand(AddTest, CanAddTest);
+                _addTestCommand = _addTestCommand ?? new MvxCommand(AddFirstTest, CanAddFirstTest);
                 return _addTestCommand;
             }
         }
 
-        private bool CanAddTest()
-        {
-            return true;
-        }
-
-        private void AddTest()
-        {
-            int lastAttempt = FirstTests.Max(x => x.HIVTestTemplate.Attempt);
-            lastAttempt++;
-            var obs = ObsTestResult.CreateNew(FirstTestName, lastAttempt, Encounter.Id);
-
-            var list = Encounter.ObsTestResults.ToList();
-            list.Add(obs);
-            Encounter.ObsTestResults = list;
-            Encounter = Encounter;
-        }
-
-        public void SaveTest(ObsTestResult test)
-        {
-            _testingService.SaveTest(test);
-            Encounter = _testingService.OpenEncounter(Client.Id);
-        }
-
-        public void DeleteTest(ObsTestResult test)
-        {
-            _testingService.DeleteTest(test);
-            Encounter = _testingService.OpenEncounter(Client.Id);
-        }
-
-        public void RefreshTest()
-        {
-            throw new NotImplementedException();
-        }
 
         public ClientHIVTestViewModel(ILookupService lookupService, IDashboardService dashboardService, IHIVTestingService testingService, ISettings settings)
         {
@@ -150,13 +109,13 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "new");
-                Encounter = _testingService.StartEncounter(EncounterTypeId,Client.Id,Guid.Empty, Guid.Empty);
+                Encounter = _testingService.StartEncounter(EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
             }
             else
             {
                 //  Load Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "open");
-                Encounter = _testingService.OpenEncounter(Client.Id);
+                Encounter = _testingService.OpenEncounter(Encounter.Id);
             }
 
             if (null == Encounter)
@@ -166,16 +125,86 @@ namespace LiveHTS.Presentation.ViewModel
             RaisePropertyChanged(() => FirstTestName);
         }
 
+        public void SaveTest(ObsTestResult test)
+        {
+            _testingService.SaveTest(test);
+            Encounter = _testingService.OpenEncounter(Encounter.Id);
+        }
+
+        public void DeleteTest(ObsTestResult test)
+        {
+            _testingService.DeleteTest(test);
+            Encounter = _testingService.OpenEncounter(Encounter.Id);
+        }
+
+        public void RefreshTest()
+        {
+            throw new NotImplementedException();
+        }
+
         private void LoadTests()
         {
-            var kits = _lookupService.GetCategoryItems("KitName").ToList();
-            var results = _lookupService.GetCategoryItems("TestResult").ToList();
+            var kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
+            var results = _lookupService.GetCategoryItems("TestResult", true, "[Select Result]").ToList();
 
             if (null != Encounter)
             {
                 FirstTests = ConvertToHIVTestWrapperClass(this, Encounter, kits, results);
             }
         }
+        private bool CanSaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CanAddFirstTest()
+        {
+            //No Tests
+            if (null == FirstTests)
+                return true;
+
+            if (null != FirstTests)
+            {
+                //No Tests
+                if (FirstTests.Count == 0)
+                    return true;
+
+                //Is initial add
+                if (FirstTests.Count > 0 && FirstTests.Any(x => x.HIVTestTemplate.Result == Guid.Empty))
+                    return false;
+
+                //Has invalid
+                if (
+                    FirstTests.Count > 0 && 
+                    FirstTests.Any(x => x.HIVTestTemplate.SelectedResult.Item.Code =="P"||
+                                        x.HIVTestTemplate.SelectedResult.Item.Code == "N")
+                    
+                    )
+                    return false;
+            }
+                
+
+            return true;
+        }
+
+        private void AddFirstTest()
+        {
+            int lastAttempt = FirstTests.Max(x => x.HIVTestTemplate.Attempt);
+            lastAttempt++;
+            var obs = ObsTestResult.CreateNew(FirstTestName, lastAttempt, Encounter.Id);
+
+            var list = Encounter.ObsTestResults.ToList();
+            list.Add(obs);
+            Encounter.ObsTestResults = list;
+            Encounter = Encounter;
+        }
+
+
 
         private static ObservableCollection<HIVTestTemplateWrap> ConvertToHIVTestWrapperClass( IClientHIVTestViewModel clientDashboardViewModel, Encounter encounter, List<CategoryItem> kits, List<CategoryItem> results)
         {

@@ -26,7 +26,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         //CategoryItem SelectedFirstTestResult { get; set; }
 
-        IMvxCommand AddTestCommand { get; }
+        IMvxCommand AddFirstTestCommand { get; }
 
         void SaveTest(ObsTestResult test);
         void DeleteTest(ObsTestResult test);

@@ -90,13 +90,28 @@ namespace LiveHTS.Core.Service.Config
             return _encounterTypeRepository.GetDefault();
         }
 
-        public IEnumerable<CategoryItem> GetCategoryItems(string code)
+        public IEnumerable<CategoryItem> GetCategoryItems(string code,bool addSelectOption = false, string selectOption = "[Select Option]")
         {
+            var categoryItems = new List<CategoryItem>();
+
+            if (addSelectOption)
+            {
+                var initialSelected = CategoryItem.CreateInitial(selectOption);
+                categoryItems.Add(initialSelected);
+            }
+
             var categotry = _categoryRepository.GetWithCode(code);
             if (null != categotry)
-                return categotry.Items.ToList();
+            {
+                var items= categotry.Items.ToList();
+                if (null != items && items.Count > 0)
+                {
+                    categoryItems.AddRange(items);
+                    categoryItems = categoryItems.OrderBy(x => x.Rank).ToList();
+                }
+            }
 
-            return new List<CategoryItem>();
+            return categoryItems;
         }
     }
 }

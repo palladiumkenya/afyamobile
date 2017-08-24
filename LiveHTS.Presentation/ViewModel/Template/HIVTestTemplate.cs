@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
+using LiveHTS.Presentation.Validations;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
+using MvvmValidation;
 
 namespace LiveHTS.Presentation.ViewModel.Template
 {
     public class HIVTestTemplate: MvxNotifyPropertyChanged, IHIVTestTemplate
     {
+        
+
         private Guid _id;
         private string _testName;
         private int _attempt;
@@ -25,7 +31,17 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private CategoryItem _selectedResult;
         private IHIVTestTemplateWrap _hivTestTemplateWrap;
         private Guid _encounterId;
+        private string _errorSummary;
 
+
+        public string ErrorSummary
+        {
+            get { return _errorSummary; }
+            set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary); }
+        }
+
+        public ValidationHelper Validator { get; }
+        public ObservableDictionary<string, string> Errors { get; set; }
 
         public ObsTestResult TestResult
         {
@@ -107,6 +123,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedKit = value;
                 RaisePropertyChanged(() => SelectedKit);
+                if (null != SelectedKit)
+                    Kit = SelectedKit.ItemId;
                 ShowOther();
             }
         }
@@ -114,7 +132,12 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public CategoryItem SelectedResult
         {
             get { return _selectedResult; }
-            set { _selectedResult = value; RaisePropertyChanged(() => SelectedResult);}
+            set
+            {
+                _selectedResult = value; RaisePropertyChanged(() => SelectedResult);
+                if (null != SelectedResult)
+                    Result = SelectedResult.ItemId;
+            }
         }
 
         public List<CategoryItem> Kits
@@ -129,6 +152,102 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set { _results = value; RaisePropertyChanged(() => Results); }
         }
 
+       
+
+        public HIVTestTemplate(ObsTestResult testResult, List<CategoryItem> kits, List<CategoryItem> results)
+        {
+            Validator = new ValidationHelper();
+
+            Kits = kits;
+            Results = results;
+
+            if (null != Kits && Kits.Count > 0)
+            {
+                var kit = Kits.FirstOrDefault(x => x.ItemId == testResult.Kit);
+                if(null!=kit)
+                {
+
+                    SelectedKit = kit;
+                }
+                else
+                {
+                    SelectedKit = Kits.OrderBy(x => x.Rank).First();
+                }
+            }
+
+            if (null != Results && Results.Count > 0)
+            {
+                var result = Results.FirstOrDefault(x => x.ItemId == testResult.Result);
+                if (null != result)
+                {
+
+                    SelectedResult = result;
+                }
+                else
+                {
+                    SelectedResult = Results.OrderBy(x => x.Rank).First();
+                }
+                
+            }
+
+            Id = testResult.Id;
+            TestName = testResult.TestName;
+            Attempt = testResult.Attempt;
+            KitOther = testResult.KitOther;
+            LotNumber = testResult.LotNumber;
+            Expiry = testResult.Expiry;
+            EncounterId = testResult.EncounterId;
+        }
+
+        public bool Validate()
+        {
+            ErrorSummary=string.Empty;
+
+            Validator.AddRule(
+                nameof(Kit),
+                () => RuleResult.Assert(
+                    !Kit.IsNullOrEmpty(),
+                    $"{nameof(Kit)} is required"
+                )
+            );
+
+            if (ShowKitOther)
+            {
+                Validator.AddRule(
+                    nameof(KitOther),
+                    () => RuleResult.Assert(
+                        !string.IsNullOrWhiteSpace(KitOther),
+                        $"Specify Other Kit"
+                    )
+                );
+            }
+
+            Validator.AddRule(
+                nameof(LotNumber),
+                () => RuleResult.Assert(
+                    !string.IsNullOrWhiteSpace(LotNumber),
+                    $"{nameof(LotNumber)} is required"
+                )
+            );
+
+            Validator.AddRule(
+                nameof(Expiry),
+                () => RuleResult.Assert(
+                    Expiry > DateTime.Today,
+                    $"{nameof(Expiry)} should be a valid date"
+                )
+            );
+            
+            var result = Validator.ValidateAll();
+            Errors = result.AsObservableDictionary();
+            if (null != Errors && Errors.Count > 0)
+            {
+                ErrorSummary = Errors.First().Value;
+            }
+            return result.IsValid;
+        }
+
+
         public bool CanSave()
         {
             return true;
@@ -139,26 +258,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
             return true;
         }
 
-        public HIVTestTemplate(ObsTestResult testResult, List<CategoryItem> kits, List<CategoryItem> results)
-        {
-            Kits = kits;
-            Results = results;
 
-            Id = testResult.Id;
-            TestName = testResult.TestName;
-            Attempt = testResult.Attempt;
-            Kit = testResult.Kit;
-            KitOther = testResult.KitOther;
-            LotNumber = testResult.LotNumber;
-            Expiry = testResult.Expiry;
-            Result = testResult.Result;
-
-            EncounterId = testResult.EncounterId;
-        }
         private void ShowOther()
         {
             ShowKitOther = false;
-            if (null != SelectedKit && SelectedKit.Item.Display.ToLower().Contains("other".ToLower()))
+            if (null != SelectedKit && 
+                !SelectedKit.ItemId.IsNullOrEmpty()&&
+                SelectedKit.Item.Display.ToLower().Contains("other".ToLower()))
             {
                 ShowKitOther = true;
             }

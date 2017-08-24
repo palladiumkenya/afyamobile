@@ -56,7 +56,8 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private void SaveTest()
         {
-            Parent.SaveTest(HIVTestTemplate.TestResult);
+            if (HIVTestTemplate.Validate())
+                Parent.SaveTest(HIVTestTemplate.TestResult);
         }
 
         private bool CanDeleteTest()

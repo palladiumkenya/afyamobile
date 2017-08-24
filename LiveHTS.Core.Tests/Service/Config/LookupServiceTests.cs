@@ -108,5 +108,24 @@ namespace LiveHTS.Core.Tests.Service.Config
                 Console.WriteLine(categoryItem);
             }
         }
+
+        [Test]
+        public void should_Load_CategoryItems_Withheader()
+        {
+            var items = _lookupService.GetCategoryItems("YesNo",true,"Select Yes or No").ToList();
+            Assert.IsTrue(items.Any(x=>x.Display== "Select Yes or No"));
+            foreach (var categoryItem in items)
+            {
+                Console.WriteLine($"{categoryItem.Rank},{categoryItem}");
+            }
+            Console.WriteLine(new string('-',20));
+
+            items = _lookupService.GetCategoryItems("YesNo", true).ToList();
+            Assert.IsTrue(items.Any(x => x.Display.Contains("[")));
+            foreach (var categoryItem in items)
+            {
+                Console.WriteLine($"{categoryItem.Rank},{categoryItem}");
+            }
+        }
     }
 }

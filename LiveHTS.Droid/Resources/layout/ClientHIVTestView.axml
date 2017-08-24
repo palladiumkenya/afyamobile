@@ -30,7 +30,7 @@
     android:text="Add"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    local:MvxBind="Click AddTestCommand" />
+    local:MvxBind="Click AddFirstTestCommand" />
   
     <FrameLayout
         android:layout_width="fill_parent"

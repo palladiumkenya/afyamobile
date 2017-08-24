@@ -4,12 +4,18 @@ using System.Collections.ObjectModel;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
+using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
+using MvvmValidation;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 {
     public interface IHIVTestTemplate
     {
+        string ErrorSummary { get; set; }
+        ValidationHelper Validator { get; }
+        ObservableDictionary<string, string> Errors { get; set; }
+
         ObsTestResult TestResult { get; }
         IHIVTestTemplateWrap HIVTestTemplateWrap { get; set; }
         Guid Id { get; set; }
@@ -28,6 +34,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 
         List<CategoryItem> Kits { get; set; }
         List<CategoryItem> Results { get; set; }
+        
+
+        bool Validate();
         bool CanSave();
         bool CanDelete();
     }

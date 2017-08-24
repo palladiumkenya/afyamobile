@@ -18,6 +18,6 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<RelationshipType> GetRelationshipTypes();
         EncounterType GetDefaultEncounterType();
 
-        IEnumerable<CategoryItem> GetCategoryItems(string code);
+        IEnumerable<CategoryItem> GetCategoryItems(string code,bool addSelectOption=false,string selectOption="[Select Option]");
     }
 }
