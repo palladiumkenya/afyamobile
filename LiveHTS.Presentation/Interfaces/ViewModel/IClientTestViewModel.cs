@@ -39,7 +39,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         ExpiryDateDTO SelectedDate { get; set; }
 
-        void ShowDatePicker(Guid refId);
+        void ShowDatePicker(Guid refId,DateTime refDate);
         void SaveTest(ObsTestResult test);
         void DeleteTest(ObsTestResult test);
         void RefreshTest();

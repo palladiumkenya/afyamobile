@@ -28,7 +28,7 @@ namespace LiveHTS.Droid.Activities
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
             {
                 ViewModel.SelectedDate =new ExpiryDateDTO(e.Id, time.Date);
-            });
+            },e.Date);
             frag.Show(FragmentManager, DatePickerFragment.TAG);
         }
         

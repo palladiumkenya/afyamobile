@@ -24,7 +24,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private Client _client;
         private string _firstTestName = "HIV Test 1";
-        private ObservableCollection<HIVTestTemplateWrap> _hivTests=new ObservableCollection<HIVTestTemplateWrap>();
+        private ObservableCollection<HIVTestTemplateWrap> _firstTests=new ObservableCollection<HIVTestTemplateWrap>();
         private readonly ISettings _settings;
         private readonly IDashboardService _dashboardService;
         private readonly ILookupService _lookupService;
@@ -76,10 +76,10 @@ namespace LiveHTS.Presentation.ViewModel
 
         public ObservableCollection<HIVTestTemplateWrap> FirstTests
         {
-            get { return _hivTests; }
+            get { return _firstTests; }
             set
             {
-                _hivTests = value; RaisePropertyChanged(() => FirstTests);
+                _firstTests = value; RaisePropertyChanged(() => FirstTests);
                 AddFirstTestCommand.RaiseCanExecuteChanged();
             }
         }
@@ -173,14 +173,14 @@ namespace LiveHTS.Presentation.ViewModel
             var test1 = FirstTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
             if (null != test1)
             {
-                test1.HIVTestTemplate.LotNumber = $"{selectedDate.EventDate:F}";
+                test1.HIVTestTemplate.Expiry = selectedDate.EventDate;
                 return;
             }
 
             var test2 = SecondTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
             if (null != test2)
             {
-                test2.HIVTestTemplate.LotNumber = $"{selectedDate.EventDate:F}";
+                test2.HIVTestTemplate.Expiry =selectedDate.EventDate;
             }
         }
 
@@ -226,9 +226,9 @@ namespace LiveHTS.Presentation.ViewModel
             RaisePropertyChanged(() => FirstTestName);
         }
 
-        public void ShowDatePicker(Guid refId)
+        public void ShowDatePicker(Guid refId, DateTime refDate)
         {
-            OnChangedDate(new ChangedDateEvent(refId));
+            OnChangedDate(new ChangedDateEvent(refId, refDate));
         }
 
         public void SaveTest(ObsTestResult test)

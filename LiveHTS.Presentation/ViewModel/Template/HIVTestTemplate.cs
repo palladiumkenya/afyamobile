@@ -166,7 +166,6 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 var kit = Kits.FirstOrDefault(x => x.ItemId == testResult.Kit);
                 if(null!=kit)
                 {
-
                     SelectedKit = kit;
                 }
                 else

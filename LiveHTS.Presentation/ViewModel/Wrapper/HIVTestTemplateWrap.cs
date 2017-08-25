@@ -1,4 +1,5 @@
-﻿using LiveHTS.Presentation.Interfaces.ViewModel;
+﻿using System;
+using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using LiveHTS.Presentation.ViewModel.Template;
@@ -55,8 +56,8 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         }
         private void ShowDateDialog()
         {
-          
-            Parent.ShowDatePicker(HIVTestTemplate.Id);
+
+            Parent.ShowDatePicker(HIVTestTemplate.Id, HIVTestTemplate.Expiry);
         }
         private void Parent_DateSelected(object sender, System.EventArgs e)
         {
