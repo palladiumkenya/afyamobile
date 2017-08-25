@@ -198,6 +198,7 @@
     <Compile Include="Activities\ClientEncounterActivity.cs" />
     <Compile Include="Activities\ClientRegistrationActivity.cs" />
     <Compile Include="Activities\ClientRelationshipsActivity.cs" />
+    <Compile Include="Activities\HIVTestActivity.cs" />
     <Compile Include="Activities\RegistryActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ObsActivity.cs" />
@@ -217,6 +218,8 @@
     <Compile Include="Setup.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Views\ClientContactFragment.cs" />
+    <Compile Include="Views\FirstHIVTestFragment.cs" />
+    <Compile Include="Views\SecondHIVTestFragment.cs" />
     <Compile Include="Views\ClientProfileFragment.cs" />
     <Compile Include="Views\ClientDemographicFragment.cs" />
     <Compile Include="Views\ClientEnrollmentFragment.cs" />
@@ -315,6 +318,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ClientHIVTestView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\HIVTestView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FirstHIVTestView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SecondHIVTestView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
