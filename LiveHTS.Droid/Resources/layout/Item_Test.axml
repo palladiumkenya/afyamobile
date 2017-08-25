@@ -4,12 +4,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="match_parent"
+
+  <EditText
+    android:text="Pick Date"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="10dp"
+    local:MvxBind="Click ShowDateDialogCommand" />
+    <Button
+        android:text="Pick Date"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="8dp"
-        android:textColor="@android:color/holo_red_dark"
-        local:MvxBind="Text HIVTestTemplate.ErrorSummary" />
+        local:MvxBind="Click ShowDateDialogCommand" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -17,49 +23,45 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            local:MvxBind="Text HIVTestTemplate.Id"
+            android:textSize="10dp"
+            android:text="Kit"
             android:paddingRight="5dp" />
-        <TextView
+        <MvxSpinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Attempt"
+            android:textSize="10dp"
+            local:MvxBind="ItemsSource HIVTestTemplate.Kits;SelectedItem HIVTestTemplate.SelectedKit"
             android:paddingRight="5dp" />
         <TextView
+            android:text="Other"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            local:MvxBind="Text HIVTestTemplate.Attempt" />
+            android:textSize="10dp"
+            local:MvxBind="Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility"
+            android:paddingRight="5dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            local:MvxBind="Text HIVTestTemplate.KitOther;Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility" />
     </LinearLayout>
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        android:text="Kit Name" />
-    <MvxSpinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        local:MvxBind="ItemsSource HIVTestTemplate.Kits;SelectedItem HIVTestTemplate.SelectedKit" />
-    <TextView
-        android:text="Other Kit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        local:MvxBind="Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        local:MvxBind="Text HIVTestTemplate.KitOther;Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility" />
-    <TextView
-        android:text="Lot Number"
-        android:layout_width="match_parent"
-        android:textSize="10dp"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        local:MvxBind="Text HIVTestTemplate.LotNumber" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Lot Number"
+            android:layout_width="wrap_content"
+            android:textSize="10dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            local:MvxBind="Text HIVTestTemplate.LotNumber"
+            android:paddingRight="5dp" />
+    </LinearLayout>
     <TextView
         android:text="Expiry"
         android:layout_width="match_parent"

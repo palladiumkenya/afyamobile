@@ -5,7 +5,8 @@ using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
-
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
 
@@ -33,7 +34,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         IMvxCommand AddFirstTestCommand { get; }
         IMvxCommand AddSecondTestCommand { get; }
+                
+        event EventHandler<ChangedDateEvent> ChangedDate;
 
+        ExpiryDateDTO SelectedDate { get; set; }
+
+        void ShowDatePicker(Guid refId);
         void SaveTest(ObsTestResult test);
         void DeleteTest(ObsTestResult test);
         void RefreshTest();

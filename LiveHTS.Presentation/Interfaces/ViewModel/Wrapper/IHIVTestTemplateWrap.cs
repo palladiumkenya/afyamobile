@@ -11,5 +11,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
         IHIVTestTemplate HIVTestTemplate { get; }
         IMvxCommand SaveTestCommand { get; }
         IMvxCommand DeleteTestCommand { get; }
+        IMvxCommand ShowDateDialogCommand { get; }
     }
 }

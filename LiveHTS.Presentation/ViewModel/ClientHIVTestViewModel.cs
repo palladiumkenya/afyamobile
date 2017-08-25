@@ -10,10 +10,13 @@ using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform.Platform;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -39,6 +42,9 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _addSecondTestCommand;
         private CategoryItem _selectedFinalTestResult;
         private List<CategoryItem> _finalTestResults;
+        private IMvxCommand _showDateCommand;
+        private IMvxCommand _showDateDialogCommand;
+        private ExpiryDateDTO _selectedDate;
 
         public Guid EncounterTypeId
         {
@@ -148,7 +154,35 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-       
+        public event EventHandler<ChangedDateEvent> ChangedDate;
+        
+
+        
+
+        public ExpiryDateDTO SelectedDate
+        {
+            get { return _selectedDate; }
+            set { _selectedDate = value;
+                RaisePropertyChanged(() => SelectedDate);
+                UpdateExpiryDate(SelectedDate);
+            }
+        }
+
+        private void UpdateExpiryDate(ExpiryDateDTO selectedDate)
+        {
+            var test1 = FirstTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
+            if (null != test1)
+            {
+                test1.HIVTestTemplate.LotNumber = $"{selectedDate.EventDate:F}";
+                return;
+            }
+
+            var test2 = SecondTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
+            if (null != test2)
+            {
+                test2.HIVTestTemplate.LotNumber = $"{selectedDate.EventDate:F}";
+            }
+        }
 
         public ClientHIVTestViewModel(ILookupService lookupService, IDashboardService dashboardService, IHIVTestingService testingService, ISettings settings)
         {
@@ -158,10 +192,11 @@ namespace LiveHTS.Presentation.ViewModel
             _settings = settings;
         }
 
+
         public void Init(string encounterTypeId, string mode, string clientId, string encounterId)
         {
             SecondTestResults= FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
-
+            FinalTestResults= _lookupService.GetCategoryItems("FinalResult", true, "").ToList();
 
             // Load Client
             Client = _dashboardService.LoadClient(new Guid(clientId));
@@ -189,6 +224,11 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             RaisePropertyChanged(() => FirstTestName);
+        }
+
+        public void ShowDatePicker(Guid refId)
+        {
+            OnChangedDate(new ChangedDateEvent(refId));
         }
 
         public void SaveTest(ObsTestResult test)
@@ -370,6 +410,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             return list;
+        }
+
+      
+        protected virtual void OnChangedDate(ChangedDateEvent e)
+        {
+            ChangedDate?.Invoke(this, e);
         }
     }
 }

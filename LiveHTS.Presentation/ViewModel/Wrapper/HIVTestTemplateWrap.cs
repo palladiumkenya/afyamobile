@@ -12,6 +12,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         private IMvxCommand _saveTestCommand;
         private IMvxCommand _deleteTestCommand;
         private readonly IHIVTestTemplate _hivTestTemplate;
+        private IMvxCommand _showDateDialogCommand;
 
         public HIVTestTemplateWrap(IClientHIVTestViewModel parent, IHIVTestTemplate formTemplate)
         {
@@ -24,13 +25,10 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             get { return _parent; }
         }
-
         public IHIVTestTemplate HIVTestTemplate
         {
             get { return _hivTestTemplate; }
         }
-
-
         public IMvxCommand SaveTestCommand
         {
             get
@@ -39,7 +37,6 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
                 return _saveTestCommand;
             }
         }
-
         public IMvxCommand DeleteTestCommand
         {
             get
@@ -48,23 +45,37 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
                 return _deleteTestCommand;
             }
         }
-
+        public IMvxCommand ShowDateDialogCommand
+        {
+            get
+            {
+                _showDateDialogCommand = _showDateDialogCommand ?? new MvxCommand(ShowDateDialog);         
+                return _showDateDialogCommand;
+            }
+        }
+        private void ShowDateDialog()
+        {
+          
+            Parent.ShowDatePicker(HIVTestTemplate.Id);
+        }
+        private void Parent_DateSelected(object sender, System.EventArgs e)
+        {
+            HIVTestTemplate.LotNumber = $"{Parent.SelectedDate:F}";
+            
+        }
         private bool CanSaveTest()
         {
             return HIVTestTemplate.CanSave();
         }
-
         private void SaveTest()
         {
             if (HIVTestTemplate.Validate())
                 Parent.SaveTest(HIVTestTemplate.TestResult);
         }
-
         private bool CanDeleteTest()
         {
             return HIVTestTemplate.CanDelete();
         }
-
         private void DeleteTest()
         {
             Parent.DeleteTest(HIVTestTemplate.TestResult);

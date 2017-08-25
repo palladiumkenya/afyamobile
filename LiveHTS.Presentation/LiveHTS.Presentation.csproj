@@ -39,6 +39,7 @@
     <Compile Include="Converters\ShowControlConverter.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\ExpiryDateDTO.cs" />
     <Compile Include="DTO\FormDTO.cs" />
     <Compile Include="DTO\ClientEncounterDTO.cs" />
     <Compile Include="DTO\ClientEnrollmentDTO.cs" />
@@ -46,6 +47,8 @@
     <Compile Include="DTO\ClientProfileDTO.cs" />
     <Compile Include="DTO\ClientContactAddressDTO.cs" />
     <Compile Include="DTO\ClientDemographicDTO.cs" />
+    <Compile Include="Events\ChangedDateEvent.cs" />
+    <Compile Include="Events\DateChangedEvent.cs" />
     <Compile Include="Interfaces\ViewModel\IClientEncounterViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientProfileViewModel.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
