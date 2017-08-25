@@ -13,121 +13,109 @@
 <!--    android:clickable="true"-->
 <!--    android:editable="false"-->
 <!--    local:MvxBind="Click ShowDateDialogCommand" />-->
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:paddingLeft="5dp"
-      android:textSize="8dp"
-      android:textColor="@android:color/holo_red_dark"
-      local:MvxBind="Text HIVTestTemplate.ErrorSummary" />
-  </LinearLayout>
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <TextView
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight=".4"
-      android:text="Kit"
-      android:paddingRight="2dp"/>
-    <MvxSpinner
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="2"
-      android:paddingRight="2dp"
-      local:MvxBind="ItemsSource HIVTestTemplate.Kits;SelectedItem HIVTestTemplate.SelectedKit"/>
-
-    <TextView
-      android:layout_width="0dp"
-      android:layout_weight=".6"
-      android:layout_height="wrap_content"
-      android:text="Other"
-      local:MvxBind="Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility"
-      android:paddingRight="2dp"/>
-    <EditText
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="2"
-      local:MvxBind="Text HIVTestTemplate.KitOther;Visibility HIVTestTemplate.ShowKitOther, Converter=Visibility"/>
-  </LinearLayout>
-
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <TextView
-      android:layout_width="0dp"
-      android:layout_weight=".4"
-      android:layout_height="wrap_content"
-      android:text="Lot"
-      android:paddingRight="2dp"/>
-    <EditText
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="2"
-      local:MvxBind="Text HIVTestTemplate.LotNumber"
-      android:paddingRight="2dp"/>
-    <TextView
-      android:layout_width="0dp"
-      android:layout_weight=".6"
-      android:layout_height="wrap_content"
-      android:text="Expiry"
-      android:paddingRight="2dp"/>
-
-    <EditText
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="2"
-      local:MvxBind="Click ShowDateDialogCommand; Text HIVTestTemplate.Expiry;"
-      android:clickable="true"
-      android:editable="false"/>
-
-  </LinearLayout>
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/holo_blue_dark"
-    android:orientation="horizontal">
-
-    <TextView
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_gravity="end"
-      android:layout_weight=".4"
-      android:paddingRight="2dp"
-      android:text="RESULT"
-      android:textAlignment="center" />
-
-    <MvxSpinner
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:paddingRight="2dp"
-      local:MvxBind="ItemsSource HIVTestTemplate.Results; SelectedItem HIVTestTemplate.SelectedResult"/>
-
-
-    <Button
-      android:text="Save"
-      android:layout_width="60dp"
-      android:layout_height="31dp"
-      android:textSize="8dp"
-      local:MvxBind="Click SaveTestCommand" />
-    <Button
-      android:text="X"
-      android:layout_width="60dp"
-      android:layout_height="31dp"
-      android:textSize="8dp"
-      local:MvxBind="Click DeleteTestCommand" />
-
-  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:textSize="8dp"
+            android:textColor="@android:color/holo_red_dark"
+            local:MvxBind="Text HIVTestTemplate.ErrorSummary" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".4"
+            android:text="Kit"
+            android:paddingRight="2dp" />
+        <MvxSpinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingRight="2dp"
+            android:textAlignment="textStart"
+            local:MvxBind="ItemsSource HIVTestTemplate.Kits;SelectedItem HIVTestTemplate.SelectedKit" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".6"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            local:MvxBind="Visibility HIVTestTemplate.ShowKitOther, Converter=ShowControl"
+            android:paddingRight="2dp" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            local:MvxBind="Text HIVTestTemplate.KitOther;Visibility HIVTestTemplate.ShowKitOther, Converter=ShowControl" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".4"
+            android:layout_height="wrap_content"
+            android:text="Lot"
+            android:paddingRight="2dp" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            local:MvxBind="Text HIVTestTemplate.LotNumber"
+            android:paddingRight="2dp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".6"
+            android:layout_height="wrap_content"
+            android:text="Expiry"
+            android:paddingRight="2dp" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            local:MvxBind="Text HIVTestTemplate.Expiry, Converter=Dmy; Click ShowDateDialogCommand"
+            android:clickable="true"
+            android:editable="false" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight=".4"
+            android:paddingRight="2dp"
+            android:text="RESULT"
+            android:textAlignment="center" />
+        <MvxSpinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingRight="2dp"
+            android:textAlignment="textStart"
+            local:MvxBind="ItemsSource HIVTestTemplate.Results; SelectedItem HIVTestTemplate.SelectedResult" />
+        <Button
+            android:text="Save"
+            android:layout_width="60dp"
+            android:layout_height="31dp"
+            android:textSize="8dp"
+            local:MvxBind="Click SaveTestCommand" />
+        <Button
+            android:text="X"
+            android:layout_width="60dp"
+            android:layout_height="31dp"
+            android:textSize="8dp"
+            local:MvxBind="Click DeleteTestCommand" />
+    </LinearLayout>
 </LinearLayout>

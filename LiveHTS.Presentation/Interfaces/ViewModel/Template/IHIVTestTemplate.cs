@@ -28,6 +28,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         DateTime Expiry { get; set; }
         Guid Result { get; set; }
         Guid EncounterId { get; set; }
+        string ResultCode { get; set; }
 
         CategoryItem SelectedKit { get; set; }
         CategoryItem SelectedResult { get; set; }

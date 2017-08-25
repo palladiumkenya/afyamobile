@@ -16,6 +16,7 @@ namespace LiveHTS.Core.Model.Interview
         public DateTime Expiry { get; set; }
         [Indexed]
         public Guid Result { get; set; }
+        public string ResultCode { get; set; }
         public bool IsValid { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }
@@ -25,7 +26,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        private ObsTestResult(string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId) :this()
+        private ObsTestResult(string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId, string resultCode="") :this()
         {
             TestName = testName;
             Attempt = attempt;
@@ -35,6 +36,7 @@ namespace LiveHTS.Core.Model.Interview
             Expiry = expiry;
             Result = result;
             EncounterId = encounterId;
+            ResultCode = resultCode;
         }
 
         private ObsTestResult(string testName, int attempt, Guid encounterId):this()
@@ -42,18 +44,18 @@ namespace LiveHTS.Core.Model.Interview
             TestName = testName;
             Attempt = attempt;
             EncounterId = encounterId;
-            Expiry=DateTime.Today;
+            Expiry = DateTime.Today.AddYears(1);
         }
 
-        public static ObsTestResult Create(Guid id,string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId)
+        public static ObsTestResult Create(Guid id,string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId, string resultCode = "")
         {
-            var obs=new ObsTestResult(testName, attempt, kit, kitOther, lotNumber, expiry, result, encounterId);
+            var obs=new ObsTestResult(testName, attempt, kit, kitOther, lotNumber, expiry, result, encounterId, resultCode);
             obs.Id = id;
             return obs;
         }
-        public static ObsTestResult Create(string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId)
+        public static ObsTestResult Create(string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId, string resultCode = "")
         {
-            return new ObsTestResult(testName, attempt, kit, kitOther, lotNumber, expiry, result, encounterId);
+            return new ObsTestResult(testName, attempt, kit, kitOther, lotNumber, expiry, result, encounterId, resultCode);
         }
         public static ObsTestResult CreateNew(string testName, int attempt, Guid encounterId)
         {

@@ -49,7 +49,7 @@ namespace LiveHTS.Droid
             get
             {
                 var toReturn = base.ValueConverterAssemblies.ToList();
-                toReturn.Add(typeof(DMYDateTimeValueConverter).Assembly);
+                toReturn.Add(typeof(DmyValueConverter).Assembly);
                 toReturn.Add(typeof(ShowControlConverter).Assembly);
                 toReturn.Add(typeof(ShowRequiredConverter).Assembly);
                 return toReturn;

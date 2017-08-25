@@ -14,20 +14,23 @@
     android:orientation="horizontal">
   
   <TextView
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:textSize="20dp"
-      local:MvxBind="Text Client.Person.FullName" />
-  <TextView
-      android:layout_width="fill_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textSize="10dp"
-      local:MvxBind="Text Client.Person.Gender" />
+      local:MvxBind="Text Client.Person.FullName" 
+      android:paddingRight="2dp"/>
   <TextView
-      android:layout_width="fill_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textSize="10dp"
-      local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime" />
+      local:MvxBind="Text Client.Person.Gender"
+      android:paddingRight="2dp"/>
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="10dp"
+      local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime"
+      android:paddingRight="2dp"/>
   </LinearLayout>
 
   <!--  TEST 1   -->

@@ -11,5 +11,6 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
         IEnumerable<Encounter> LoadEncounter(Guid clientId,Guid encounterTypeId);
         void SaveTest(ObsTestResult testResult);
         void DeleteTest(ObsTestResult testResult);
+        void UpdateFinalResult(Guid encounterId);
     }
 }

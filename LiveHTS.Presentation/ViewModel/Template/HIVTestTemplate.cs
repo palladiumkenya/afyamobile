@@ -32,6 +32,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         private IHIVTestTemplateWrap _hivTestTemplateWrap;
         private Guid _encounterId;
         private string _errorSummary;
+        private string _resultCode;
 
 
         public string ErrorSummary
@@ -116,6 +117,12 @@ namespace LiveHTS.Presentation.ViewModel.Template
             set { _encounterId = value; RaisePropertyChanged(() => EncounterId); }
         }
 
+        public string ResultCode
+        {
+            get { return _resultCode; }
+            set { _resultCode = value; RaisePropertyChanged(() => ResultCode);}
+        }
+
         public CategoryItem SelectedKit
         {
             get { return _selectedKit; }
@@ -136,7 +143,10 @@ namespace LiveHTS.Presentation.ViewModel.Template
             {
                 _selectedResult = value; RaisePropertyChanged(() => SelectedResult);
                 if (null != SelectedResult)
+                {
                     Result = SelectedResult.ItemId;
+                    ResultCode = null == SelectedResult.Item ? string.Empty : SelectedResult.Item.Code;
+                }
             }
         }
 
@@ -196,6 +206,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             LotNumber = testResult.LotNumber;
             Expiry = testResult.Expiry;
             EncounterId = testResult.EncounterId;
+            ResultCode = testResult.ResultCode;
         }
 
         public bool Validate()
@@ -270,7 +281,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         }
         private ObsTestResult GenerateTest()
         {
-            var obs= ObsTestResult.Create(Id,TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId);
+            var obs= ObsTestResult.Create(Id,TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId,ResultCode);
             obs.IsValid = false;
             if (null != SelectedResult.Item)
             {
