@@ -27,6 +27,7 @@ namespace LiveHTS.Presentation.ViewModel
         private RelationshipType _selectedRelationshipType;
         private string _clientId;
         private bool _showId;
+        private string _partnerName;
 
         public ClientRelationshipsViewModel(IRegistryService registryService, IDialogService dialogService,
             ILookupService lookupService)
@@ -84,9 +85,22 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _selectedClient = value; RaisePropertyChanged(() => SelectedClient);
+
+                PartnerName = string.Empty;
+                if (null != _selectedClient)
+                {
+                    PartnerName = SelectedClient.Person.FullName;
+                }
                 AddRelationshipCommand.RaiseCanExecuteChanged();
             }
         }
+
+        public string PartnerName
+        {
+            get { return _partnerName; }
+            set { _partnerName = value; RaisePropertyChanged(() => PartnerName); }
+        }
+
         public IEnumerable<Client> Clients
         {
             get { return _clients; }

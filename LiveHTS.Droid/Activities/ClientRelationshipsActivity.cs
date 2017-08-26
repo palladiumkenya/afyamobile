@@ -2,13 +2,13 @@
 using Android.Content.PM;
 using Android.OS;
 using LiveHTS.Presentation.ViewModel;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Registry", LaunchMode = LaunchMode.SingleTop, ParentActivity = typeof(ClientDashboardActivity),
-        Theme = "@android:style/Theme.Material.Light")]
-    public class ClientRelationshipsActivity : MvxActivity<ClientRelationshipsViewModel>
+    [Activity(Label = "Registry", LaunchMode = LaunchMode.SingleTop, ParentActivity = typeof(ClientDashboardActivity))]
+    public class ClientRelationshipsActivity : MvxAppCompatActivity<ClientRelationshipsViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {

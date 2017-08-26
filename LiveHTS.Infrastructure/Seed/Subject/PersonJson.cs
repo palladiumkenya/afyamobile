@@ -53,7 +53,7 @@ namespace LiveHTS.Infrastructure.Seed.Subject
    ^BirthDateEstimated^: 1,
    ^Email^: ^funderwood@gmail.com^,
    ^Id^: ^e8d87aa0-3970-4467-b2f4-a7b7016df22e^,
-   ^Voided^: 1
+   ^Voided^: 0
  }
 ]
 ";

@@ -13,6 +13,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         string Search { get; set; }
         Client SelectedClient { get; set; }
+        string PartnerName { get; set; }
         IEnumerable<Client> Clients { get; set; }
         IEnumerable<RelationshipType> RelationshipTypes { get; set; }
         RelationshipType SelectedRelationshipType { get; set; }
@@ -20,5 +21,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand ClearSearchCommand { get; }
         IMvxCommand<Client> ClientSelectedCommand { get; }
         IMvxCommand AddRelationshipCommand { get; }
+        
     }
 }
