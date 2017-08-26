@@ -44,6 +44,16 @@ namespace LiveHTS.Droid
 
         }
 
+        protected override IEnumerable<Assembly> AndroidViewAssemblies
+        {
+            get
+            {
+                var assemblies = base.AndroidViewAssemblies.ToList();
+                assemblies.Add(typeof(com.refractored.fab.FloatingActionButton).Assembly);
+                return assemblies;
+            }
+        }
+
         protected override IEnumerable<Assembly> ValueConverterAssemblies
         {
             get
