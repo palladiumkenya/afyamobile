@@ -7,8 +7,7 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Dashboard",LaunchMode = LaunchMode.SingleTop,
-        Theme = "@android:style/Theme.Material.Light")]
+    [Activity(Label = "Dashboard",LaunchMode = LaunchMode.SingleTop)]
     public class AppDashboardActivity : MvxActivity<AppDashboardViewModel>
     {
         protected override void OnCreate(Bundle bundle)

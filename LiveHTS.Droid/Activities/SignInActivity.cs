@@ -6,7 +6,7 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Sign In",Theme = "@android:style/Theme.Material.Light")]
+    [Activity(Label = "Sign In")]
     public class SignInActivity: MvxActivity<SignInViewModel>
     {
         protected override void OnCreate(Bundle bundle)
