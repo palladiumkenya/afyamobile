@@ -4,25 +4,41 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linearLayoutContent">
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:paddingLeft="5dp"
-          android:textSize="8dp"
-          android:textColor="@android:color/holo_red_dark"
-          local:MvxBind="Text ErrorSummary" />
-      </LinearLayout>
+
+  <!--  CLIENT   -->
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="10dp"
+      local:MvxBind="Text Client.Person.FullName"
+      android:paddingRight="2dp"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="10dp"
+      local:MvxBind="Text Client.Person.Gender"
+      android:paddingRight="2dp"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="10dp"
+      local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime"
+      android:paddingRight="2dp"/>
+  </LinearLayout>
+
+  <LinearLayout
+   android:orientation="vertical"
+   android:minWidth="25px"
+   android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/linearLayoutContent">
       <com.refractored.PagerSlidingTabStrip
         android:id="@+id/content_frame"
         android:padding="10dip"

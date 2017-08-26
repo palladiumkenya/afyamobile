@@ -7,7 +7,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
 {
     public interface IHIVTestTemplateWrap
     {
-        IClientHIVTestViewModel Parent { get; }
+        IHIVTestViewModel Parent { get; }
         IHIVTestTemplate HIVTestTemplate { get; }
         IMvxCommand SaveTestCommand { get; }
         IMvxCommand DeleteTestCommand { get; }

@@ -115,7 +115,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string encounterTypeId, string mode, string clientId, string encounterId)
         {
-            SecondTestResults = FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
+            SecondHIVTestViewModel.SecondTestResults = FirstHIVTestViewModel.FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
             FinalTestResults = _lookupService.GetCategoryItems("FinalResult", true, "").ToList();
 
             // Load Client
@@ -143,7 +143,7 @@ namespace LiveHTS.Presentation.ViewModel
                 throw new ArgumentException("Encounter has not been Initialized");
             }
 
-            RaisePropertyChanged(() => FirstTestName);
+            //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
         }
 
         public void ShowDatePicker(Guid refId, DateTime refDate)
@@ -176,37 +176,37 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (null != Encounter)
             {
-                FirstTests = ConvertToHIVTestWrapperClass(this, Encounter, FirstTestName, kits, results);
+              FirstHIVTestViewModel.FirstTests = ConvertToHIVTestWrapperClass(this, Encounter, FirstHIVTestViewModel.FirstTestName, kits, results);
 
                 var finalTestResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
 
                 if (null != finalTestResult)
                 {
-                    var result = FirstTestResults.FirstOrDefault(x => x.ItemId == finalTestResult.FirstTestResult);
+                    var result = FirstHIVTestViewModel.FirstTestResults.FirstOrDefault(x => x.ItemId == finalTestResult.FirstTestResult);
                     if (null != result)
                     {
-                        SelectedFirstTestResult = result;
+                        FirstHIVTestViewModel.SelectedFirstTestResult = result;
                     }
                     else
                     {
-                        SelectedFirstTestResult = FirstTestResults.OrderBy(x => x.Rank).FirstOrDefault();
+                        FirstHIVTestViewModel.SelectedFirstTestResult = FirstHIVTestViewModel.FirstTestResults.OrderBy(x => x.Rank).FirstOrDefault();
                     }
                 }
 
-                SecondTests = ConvertToHIVTestWrapperClass(this, Encounter, SecondTestName, kits, results);
+               SecondHIVTestViewModel.SecondTests = ConvertToHIVTestWrapperClass(this, Encounter, SecondHIVTestViewModel.SecondTestName, kits, results);
 
                 var finalSecondResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
 
                 if (null != finalSecondResult)
                 {
-                    var result = SecondTestResults.FirstOrDefault(x => x.ItemId == finalSecondResult.SecondTestResult);
+                    var result = SecondHIVTestViewModel.SecondTestResults.FirstOrDefault(x => x.ItemId == finalSecondResult.SecondTestResult);
                     if (null != result)
                     {
-                        SelectedSecondTestResult = result;
+                        SecondHIVTestViewModel.SelectedSecondTestResult = result;
                     }
                     else
                     {
-                        SelectedSecondTestResult = SecondTestResults.OrderBy(x => x.Rank).FirstOrDefault();
+                        SecondHIVTestViewModel.SelectedSecondTestResult = SecondHIVTestViewModel.SecondTestResults.OrderBy(x => x.Rank).FirstOrDefault();
                     }
                 }
 
@@ -229,7 +229,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
       
-        private static ObservableCollection<HIVTestTemplateWrap> ConvertToHIVTestWrapperClass(IClientHIVTestViewModel clientDashboardViewModel, Encounter encounter, string testname, List<CategoryItem> kits, List<CategoryItem> results)
+        private static ObservableCollection<HIVTestTemplateWrap> ConvertToHIVTestWrapperClass(IHIVTestViewModel clientDashboardViewModel, Encounter encounter, string testname, List<CategoryItem> kits, List<CategoryItem> results)
         {
             ObservableCollection<HIVTestTemplateWrap> list = new ObservableCollection<HIVTestTemplateWrap>();
 
@@ -255,14 +255,14 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void UpdateExpiryDate(ExpiryDateDTO selectedDate)
         {
-            var test1 = FirstTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
+            var test1 = FirstHIVTestViewModel.FirstTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
             if (null != test1)
             {
                 test1.HIVTestTemplate.Expiry = selectedDate.EventDate;
                 return;
             }
 
-            var test2 = SecondTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
+            var test2 = SecondHIVTestViewModel.SecondTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
             if (null != test2)
             {
                 test2.HIVTestTemplate.Expiry = selectedDate.EventDate;

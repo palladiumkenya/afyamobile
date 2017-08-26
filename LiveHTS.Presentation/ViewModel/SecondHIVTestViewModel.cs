@@ -103,12 +103,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             int lastAttempt = SecondTests.Max(x => x.HIVTestTemplate.Attempt);
             lastAttempt++;
-            var obs = ObsTestResult.CreateNew(SecondTestName, lastAttempt, Encounter.Id);
+            var obs = ObsTestResult.CreateNew(SecondTestName, lastAttempt, Parent.Encounter.Id);
 
-            var list = Encounter.ObsTestResults.ToList();
+            var list = Parent.Encounter.ObsTestResults.ToList();
             list.Add(obs);
-            Encounter.ObsTestResults = list;
-            Encounter = Encounter;
+            Parent.Encounter.ObsTestResults = list;
+            Parent.Encounter = Parent.Encounter;
         }
 
         private bool CanAddSecondTest()

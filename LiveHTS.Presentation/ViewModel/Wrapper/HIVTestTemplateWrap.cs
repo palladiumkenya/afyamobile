@@ -9,20 +9,22 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 {
     public class HIVTestTemplateWrap : IHIVTestTemplateWrap
     {
-        private IClientHIVTestViewModel _parent;
+        private IHIVTestViewModel _parent;
         private IMvxCommand _saveTestCommand;
         private IMvxCommand _deleteTestCommand;
         private readonly IHIVTestTemplate _hivTestTemplate;
         private IMvxCommand _showDateDialogCommand;
 
-        public HIVTestTemplateWrap(IClientHIVTestViewModel parent, IHIVTestTemplate formTemplate)
+        public HIVTestTemplateWrap(IHIVTestViewModel parent, IHIVTestTemplate formTemplate)
         {
             _parent = parent;
             _hivTestTemplate = formTemplate;
             _hivTestTemplate.HIVTestTemplateWrap = this;
         }
 
-        public IClientHIVTestViewModel Parent
+      
+
+        public IHIVTestViewModel Parent
         {
             get { return _parent; }
         }

@@ -406,7 +406,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
             foreach (var r in testResults)
             {
-                list.Add(new HIVTestTemplateWrap(clientDashboardViewModel, new HIVTestTemplate(r,kits,results)));
+              //  list.Add(new HIVTestTemplateWrap(clientDashboardViewModel, new HIVTestTemplate(r,kits,results)));
             }
 
             return list;
