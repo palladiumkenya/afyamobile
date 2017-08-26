@@ -17,9 +17,9 @@ namespace LiveHTS.Droid.Activities
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.RegistryView);
 
-            var listView = FindViewById<ListView>(Resource.Id.list);
-            var fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.AttachToListView(listView);
+//            var listView = FindViewById<ListView>(Resource.Id.list);
+//            var fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+//            fab.AttachToListView(listView);
         }
     }
 }

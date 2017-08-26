@@ -84,6 +84,13 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+      
+
+        private void DeletePerson()
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void RegisterClient()
         {
             ClearCache(_settings);
