@@ -1,4 +1,5 @@
-﻿using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
+﻿using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using LiveHTS.Presentation.ViewModel.Template;
 using MvvmCross.Core.ViewModels;
 
@@ -10,6 +11,12 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private RelationshipTemplate _relationshipTemplate;
         private  IMvxCommand _removeRelationshipCommand;
+        private readonly IPartnerViewModel _partnerViewModel;
+
+        public IPartnerViewModel PartnerViewModel
+        {
+            get { return _partnerViewModel; }
+        }
 
         public RelationshipTemplate RelationshipTemplate
         {
@@ -31,11 +38,20 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
                 null != _relationshipTemplate.Id;
         }
 
+        public RelationshipTemplateWrap(RelationshipTemplate relationshipTemplate, IPartnerViewModel partnerViewModel)
+        {
+            _relationshipTemplate = relationshipTemplate;
+            _partnerViewModel = partnerViewModel;
+        }
+
+
         public RelationshipTemplateWrap(RelationshipTemplate relationshipTemplate, ClientDashboardViewModel parent)
         {
             _relationshipTemplate = relationshipTemplate;
             _parent = parent;
         }
+
+
         private void RemoveRelationship()
         {
             _parent.RemoveRelationship(RelationshipTemplate);

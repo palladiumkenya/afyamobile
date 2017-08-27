@@ -62,6 +62,9 @@
     <Compile Include="Interfaces\ViewModel\IClientDemographicViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientTestViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IPartnerViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISecondHIVTestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IFirstHIVTestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IHIVTestViewModel.cs" />
@@ -69,14 +72,17 @@
     <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
     <Compile Include="Interfaces\IObsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ISummaryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IHIVTestTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFormTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IHIVTestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IQuestionTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IEncounterTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IPartnerTemplateWrap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IMainViewModel.cs" />
     <Compile Include="Validations\ObservableDictionary.cs" />
@@ -84,20 +90,25 @@
     <Compile Include="ViewModel\AppDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IRelationshipTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IRelationshipTemplateWrap.cs" />
+    <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="ViewModel\EncounterViewModel.cs" />
     <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
     <Compile Include="Events\ConceptChangedEvent.cs" />
     <Compile Include="ViewModel\ClientHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\HIVTestViewModel.cs" />
+    <Compile Include="ViewModel\SummaryViewModel.cs" />
     <Compile Include="ViewModel\Template\FormTemplate.cs" />
     <Compile Include="ViewModel\Template\EncounterTemplate.cs" />
     <Compile Include="ViewModel\Template\HIVTestTemplate.cs" />
     <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
+    <Compile Include="ViewModel\Template\PartnerTemplate.cs" />
     <Compile Include="ViewModel\Wrapper\HIVTestTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\FormTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\PartnerTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\RelationshipTemplateWrap.cs" />
     <Compile Include="ViewModel\ClientDashboardViewModel.cs" />
     <Compile Include="ViewModel\ClientEnrollmentViewModel.cs" />
@@ -114,6 +125,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ObsViewModel.cs" />
     <Compile Include="ViewModel\StepViewModel.cs" />
+    <Compile Include="ViewModel\PartnerViewModel.cs" />
     <Compile Include="VMStore.cs" />
   </ItemGroup>
   <ItemGroup>

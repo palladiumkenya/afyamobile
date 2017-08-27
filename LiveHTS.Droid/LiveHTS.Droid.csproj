@@ -208,6 +208,7 @@
     <Compile Include="Bootstrap\FilePluginBootstrap.cs" />
     <Compile Include="Bootstrap\SettingsPluginBootstrap.cs" />
     <Compile Include="Bootstrap\VisibilityPluginBootstrap.cs" />
+    <Compile Include="Activities\DashboardActivity.cs" />
     <Compile Include="Custom\DatePickerFragment.cs" />
     <Compile Include="Custom\ViewScalingCustomBinding.cs" />
     <Compile Include="DebugTrace.cs" />
@@ -218,6 +219,9 @@
     <Compile Include="Setup.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Views\ClientContactFragment.cs" />
+    <Compile Include="Views\EncounterFragment.cs" />
+    <Compile Include="Views\PartnerFragment.cs" />
+    <Compile Include="Views\SummaryFragment.cs" />
     <Compile Include="Views\FirstHIVTestFragment.cs" />
     <Compile Include="Views\SecondHIVTestFragment.cs" />
     <Compile Include="Views\ClientProfileFragment.cs" />
@@ -341,6 +345,21 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SecondHIVTestView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\DashboardView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SummaryView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\EncounterView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PartnerView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Client_Partner.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -37,6 +37,8 @@ namespace LiveHTS.Presentation.ViewModel
             _lookupService = lookupService;
 
             RelationshipTypes = _lookupService.GetRelationshipTypes().ToList();
+            if (RelationshipTypes.ToList().Count > 0)
+                SelectedRelationshipType = RelationshipTypes.FirstOrDefault();
             //TODO: Remove ShowId
             ShowId = true;
         }
