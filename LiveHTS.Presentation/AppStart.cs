@@ -12,12 +12,14 @@ namespace LiveHTS.Presentation
             var migrator=Mvx.Resolve<IMigrator>();
             migrator.Migrate();
 
-            //ShowViewModel<SignInViewModel>();
+            
+            ShowViewModel<SignInViewModel>();
+            /*
             ShowViewModel<DashboardViewModel>(new
             {
                 id = "4547b7e0-98c7-4c6f-9d2a-a7b7016df232",
             });
-            /*
+            
             ShowViewModel<HIVTestViewModel>(new
                         {
                             encounterTypeId= "b262f4ee-852f-11e7-bb31-be2e44b06b34",

@@ -1,63 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:local="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+
+             android:paddingBottom="@dimen/activity_vertical_margin"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:paddingTop="@dimen/activity_vertical_margin"
+             tools:context="ke.co.livesystems.livehts.PartnerFragment">
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:background="@color/colorPrimary"
+      android:orientation="vertical">
+
+      <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
         <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textSize="10dp"
-            android:paddingRight="5dp"
-            local:MvxBind="Text Format('{0:dd-MMM-yyyy}', EncounterTemplate.EncounterDate)" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          local:MvxBind="Text Format('{0:dd-MMM-yyyy}', EncounterTemplate.EncounterDate)"
+          android:paddingRight="10dp"/>
         <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textSize="10dp"
-            android:paddingRight="5dp"
-            local:MvxBind="Text EncounterTemplate.Status" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          local:MvxBind="Text EncounterTemplate.Status" />
+      </LinearLayout>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
         <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textSize="10dp"
-            android:paddingRight="5dp"
-            local:MvxBind="Text EncounterTemplate.Provider" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Provider:"
+          android:paddingRight="10dp"/>
         <TextView
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:textSize="10dp"
-            android:paddingRight="5dp"
-            local:MvxBind="Text EncounterTemplate.Id" />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          local:MvxBind="Text EncounterTemplate.Provider"  />
+      </LinearLayout>
+
     </LinearLayout>
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:text="Resume"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonResume"
-            local:MvxBind="Click ResumeEncounterCommand" />
-        <Button
-            android:text="Review"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonReview"
-            local:MvxBind="Click ReviewEncounterCommand" />
-        <Button
-            android:text="X"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonDiscard"
-            local:MvxBind="Click DiscardEncounterCommand" />
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_edit"
+        local:MvxBind="Click ResumeEncounterCommand"
+        android:text="Open" />
+
+      <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_edit"
+        local:MvxBind="Click ReviewEncounterCommand"
+        android:text="Review" />
+
+      <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_delete_forever"
+        android:text="Delete"
+        local:MvxBind="Click DiscardEncounterCommand" />
     </LinearLayout>
-</LinearLayout>
+  </LinearLayout>
+</FrameLayout>
