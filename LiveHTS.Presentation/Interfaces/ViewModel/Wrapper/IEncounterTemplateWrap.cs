@@ -7,6 +7,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
 {
     public interface IEncounterTemplateWrap
     {
+        IEncounterViewModel EncounterViewModel { get; }
+
         EncounterTemplate EncounterTemplate { get; }        
         IMvxCommand ResumeEncounterCommand { get; }
         IMvxCommand ReviewEncounterCommand { get; }

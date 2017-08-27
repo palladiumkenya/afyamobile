@@ -1,4 +1,5 @@
-﻿using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
+﻿using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
@@ -13,11 +14,23 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         private IMvxCommand _resumeEncounterCommand;
         private IMvxCommand _reviewEncounterCommand;
         private IMvxCommand _discardEncounterCommand;
+        private readonly IEncounterViewModel _encounterViewModel;
 
         public EncounterTemplateWrap(ClientDashboardViewModel parent, EncounterTemplate encounterTemplate)
         {
             _parent = parent;
             _encounterTemplate = encounterTemplate;
+        }
+
+        public EncounterTemplateWrap(IEncounterViewModel encounterViewModel, EncounterTemplate encounterTemplate)
+        {
+            _encounterTemplate = encounterTemplate;
+            _encounterViewModel = encounterViewModel;
+        }
+
+        public IEncounterViewModel EncounterViewModel
+        {
+            get { return _encounterViewModel; }
         }
 
         public EncounterTemplate EncounterTemplate

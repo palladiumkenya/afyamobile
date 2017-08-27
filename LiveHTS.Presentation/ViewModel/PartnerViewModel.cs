@@ -22,8 +22,6 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IDialogService _dialogService;
         private readonly IDashboardService _dashboardService;
         
-        protected readonly ISettings _settings;
-
         private List<PartnerTemplateWrap> _partners=new List<PartnerTemplateWrap>();
         
         private Client _client;

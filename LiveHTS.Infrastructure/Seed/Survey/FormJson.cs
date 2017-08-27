@@ -20,7 +20,26 @@ namespace LiveHTS.Infrastructure.Seed.Survey
     ^Rank^: 1,
     ^ModuleId^: ^b260c688-852f-11e7-bb31-be2e44b06b34^,
     ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25ec568-852f-11e7-bb31-be2e44b06b34^,
+    ^Name^: ^HTS Linkage Form^,
+    ^Display^: ^HIV Test Form^,
+    ^Description^: ^HIV Test Form^,
+    ^Rank^: 2,
+    ^ModuleId^: ^b260c688-852f-11e7-bb31-be2e44b06b34^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25ec112-852f-11e7-bb31-be2e44b06b34^,
+    ^Name^: ^HTS Linkage Form^,
+    ^Display^: ^HTS Linkage Form^,
+    ^Description^: ^HTS Linkage Form^,
+    ^Rank^: 3,
+    ^ModuleId^: ^b260c688-852f-11e7-bb31-be2e44b06b34^,
+    ^Voided^: 0
   }
+
 ]
 ";
             return JsonConvert.DeserializeObject<List<Form>>(raw.Replace("^", "\""));
@@ -29,13 +48,4 @@ namespace LiveHTS.Infrastructure.Seed.Survey
 }
 
 /*
-{
-    ^Id^: ^b25ec112-852f-11e7-bb31-be2e44b06b34^,
-    ^Name^: ^HTS Linkage Form^,
-    ^Display^: ^HTS Linkage Form^,
-    ^Description^: ^HTS Linkage Form^,
-    ^Rank^: 2,
-    ^ModuleId^: ^b260c688-852f-11e7-bb31-be2e44b06b34^,
-    ^Voided^: 0
-  }
  */
