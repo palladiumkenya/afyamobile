@@ -72,6 +72,7 @@
     <Compile Include="Repository\Survey\CategoryRepository.cs" />
     <Compile Include="Repository\Interview\ObsRepository.cs" />
     <Compile Include="Repository\Interview\EncounterRepository.cs" />
+    <Compile Include="Repository\Survey\ProgramRepository.cs" />
     <Compile Include="Repository\Survey\FormRepository.cs" />
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
     <Compile Include="Repository\Survey\QuestionRepository.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Seed\Subject\PersonAddressJson.cs" />
     <Compile Include="Seed\Subject\ClientRelationshipJson.cs" />
     <Compile Include="Seed\Subject\ProviderJson.cs" />
+    <Compile Include="Seed\Survey\ProgramJson.cs" />
     <Compile Include="Seed\Survey\FormJson.cs" />
     <Compile Include="Seed\Config\PracticeTypeJson.cs" />
     <Compile Include="Seed\Config\PracticeJson.cs" />

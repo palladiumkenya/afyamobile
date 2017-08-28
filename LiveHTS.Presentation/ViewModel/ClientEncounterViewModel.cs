@@ -163,7 +163,7 @@ namespace LiveHTS.Presentation.ViewModel
             _obsService = obsService;
         }
 
-        public void Init(string formId, string mode, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string encounterId)
         {
             //Load Form + Question Metadata
 

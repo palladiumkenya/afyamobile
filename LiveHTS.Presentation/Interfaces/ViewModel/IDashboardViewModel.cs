@@ -14,7 +14,5 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         Client Client { get; set; }
         Module Module { get; set; }
-        EncounterType DefaultEncounterType { get; set; }
-
     }
 }

@@ -75,6 +75,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             db.CreateTable<Module>();
             db.CreateTable<Form>();
+            db.CreateTable<Program>();
 
             db.CreateTable<Concept>();
             db.CreateTable<Question>();
@@ -88,6 +89,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             InsertOrUpdate(db, new ModuleJson());
             InsertOrUpdate(db, new FormJson());
+            InsertOrUpdate(db, new ProgramJson());
 
             InsertOrUpdate(db, new ConceptJson());
             InsertOrUpdate(db, new QuestionJson());
@@ -139,14 +141,24 @@ namespace LiveHTS.Infrastructure.Migrations
 
         private static void InsertOrUpdate<T>(SQLiteConnection db, ISeedJson<T> json) 
         {
-            foreach (var entity in json.Read())
-            {
-                var rowsAffected = db.Update(entity);
-                if (rowsAffected == 0)
+//            try
+//            {
+                foreach (var entity in json.Read())
                 {
-                    db.Insert(entity);
+                    var rowsAffected = db.Update(entity);
+                    if (rowsAffected == 0)
+                    {
+                        db.Insert(entity);
+                    }
                 }
-            }
+//            }
+//            catch (Exception e)
+//            {
+//                var s = json;
+//                var m = e.Message;
+//                throw;
+//            }
+            
         }
     }
 }

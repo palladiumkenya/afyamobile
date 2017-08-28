@@ -209,7 +209,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "new");
-                Encounter = _testingService.StartEncounter(EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
+                Encounter = _testingService.StartEncounter(Guid.Empty, EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
             }
             else
             {

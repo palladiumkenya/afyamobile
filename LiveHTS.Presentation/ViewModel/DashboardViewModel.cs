@@ -28,7 +28,6 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _client;
         private List<RelationshipTemplateWrap> _relationships = new List<RelationshipTemplateWrap>();
         private Module _module;
-        private EncounterType _defaultEncounterType;
 
         public IEncounterViewModel EncounterViewModel { get; }
         public IPartnerViewModel PartnerViewModel { get; }
@@ -54,16 +53,6 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public EncounterType DefaultEncounterType
-        {
-            get { return _defaultEncounterType; }
-            set
-            {
-                _defaultEncounterType = value; RaisePropertyChanged(() => DefaultEncounterType);
-                EncounterViewModel.DefaultEncounterType = DefaultEncounterType;
-            }
-        }
-
         public DashboardViewModel(ISettings settings, IDialogService dialogService, IDashboardService dashboardService, ILookupService lookupService)
         {
             _settings = settings;
@@ -81,8 +70,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
 
             Client = _dashboardService.LoadClient(new Guid(id));
-            Module = _dashboardService.LoadModule();
-            DefaultEncounterType = _lookupService.GetDefaultEncounterType();
+            Module = _dashboardService.LoadModule();            
 
             if (null != Client)
             {
@@ -97,12 +85,6 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var moduleJson = JsonConvert.SerializeObject(Module);
                 _settings.AddOrUpdateValue("module", moduleJson);
-            }
-
-            if (null != DefaultEncounterType)
-            {
-                var encounterTypeJson = JsonConvert.SerializeObject(DefaultEncounterType);
-                _settings.AddOrUpdateValue("encountertype", encounterTypeJson);
             }
         }
     }

@@ -27,6 +27,12 @@ namespace LiveHTS.Infrastructure.Repository.Survey
                 try
                 {
                     var forms = _db.Table<Form>().Where(x => x.ModuleId == module.Id).ToList();
+
+                    foreach (var f in forms)
+                    {
+                        f.Programs = _db.Table<Program>().Where(x => x.FormId == f.Id).ToList();
+                    }
+
                     if (forms.Count > 0)
                         module.Forms = forms;
                 }

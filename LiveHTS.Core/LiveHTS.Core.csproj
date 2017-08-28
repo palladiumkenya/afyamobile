@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\Repository\Subject\IPersonRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IProviderRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IUserRepository.cs" />
+    <Compile Include="Interfaces\Repository\Survey\IProgramRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />
     <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Model\Interview\ObsFinalTestResult.cs" />
     <Compile Include="Model\Interview\ObsTestResult.cs" />
     <Compile Include="Model\Interview\SetResponse.cs" />
+    <Compile Include="Model\Survey\Program.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />

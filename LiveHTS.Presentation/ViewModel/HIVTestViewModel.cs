@@ -113,7 +113,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
 
-        public void Init(string encounterTypeId, string mode, string clientId, string encounterId)
+        public void Init(string formId,string encounterTypeId, string mode, string clientId, string encounterId)
         {
             SecondHIVTestViewModel.SecondTestResults = FirstHIVTestViewModel.FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
             FinalTestResults = _lookupService.GetCategoryItems("FinalResult", true, "").ToList();
@@ -129,7 +129,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "new");
-                Encounter = _testingService.StartEncounter(EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
+                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
             }
             else
             {

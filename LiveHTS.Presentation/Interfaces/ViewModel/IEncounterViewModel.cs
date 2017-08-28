@@ -13,7 +13,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string Title { get; set; }
         Module Module { get; set; }
         Client Client { get; set; }
-        EncounterType DefaultEncounterType { get; set; }
         List<FormTemplateWrap> Forms { get; set; }
         void StartEncounter(FormTemplate encounterTemplate);
         void ResumeEncounter(EncounterTemplate encounterTemplate);

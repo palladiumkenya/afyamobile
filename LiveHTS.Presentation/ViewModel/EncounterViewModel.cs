@@ -51,11 +51,6 @@ namespace LiveHTS.Presentation.ViewModel
                 var forms = Module.Forms.ToList();
                 foreach (var form in forms)
                 {
-                    if (null == DefaultEncounterType)
-                    {
-                        DefaultEncounterType = _lookupService.GetDefaultEncounterType();
-                    }
-                    form.DefaultEncounterTypeId = DefaultEncounterType.Id;
                     form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
                 }
                 Forms = ConvertToFormWrapperClass(forms, this);
@@ -66,12 +61,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _forms; }
             set { _forms = value; RaisePropertyChanged(() => Forms); }
         }
-        public EncounterType DefaultEncounterType
-        {
-            get { return _defaultEncounterType; }
-            set { _defaultEncounterType = value; RaisePropertyChanged(() => DefaultEncounterType); }
-        }
-
+   
         public EncounterViewModel()
         {
             Title = "ENCOUNTERS";
@@ -92,7 +82,8 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 ShowViewModel<HIVTestViewModel>(new
                 {
-                    encounterTypeId = "b262f4ee-852f-11e7-bb31-be2e44b06b34",
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                     mode = "new",
                     clientId =Client.Id.ToString(),
                     encounterId = ""
@@ -102,6 +93,7 @@ namespace LiveHTS.Presentation.ViewModel
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
+                encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                 mode = "new",
                 encounterId = ""
             });
@@ -117,7 +109,8 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 ShowViewModel<HIVTestViewModel>(new
                 {
-                    encounterTypeId = "b262f4ee-852f-11e7-bb31-be2e44b06b34",
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
                     mode = "open",
                     clientId = Client.Id.ToString(),
                     encounterId = encounterTemplate.Id.ToString()
@@ -128,6 +121,7 @@ namespace LiveHTS.Presentation.ViewModel
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = encounterTemplate.FormId.ToString(),
+                encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
                 mode = "open",
                 encounterId = encounterTemplate.Id.ToString()
             });
@@ -160,11 +154,15 @@ namespace LiveHTS.Presentation.ViewModel
             List<FormTemplateWrap> list = new List<FormTemplateWrap>();
             foreach (var r in forms)
             {
-                var f = new FormTemplate(r);
-                f.Encounters = ConvertToEncounterWrapperClass(r.ClientEncounters, encounterViewModel, f.Display);
-                var fw = new FormTemplateWrap(encounterViewModel, f);
-                list.Add(fw);
+                foreach (var program in r.Programs)
+                {
+                    var f = new FormTemplate(r,program);
+                    f.Encounters = ConvertToEncounterWrapperClass(r.ClientEncounters, encounterViewModel, f.Display);
+                    var fw = new FormTemplateWrap(encounterViewModel, f);
+                    list.Add(fw);
+                }
             }
+            list = list.OrderBy(x => x.FormTemplate.Rank).ToList();
             return list;
         }
 

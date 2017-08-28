@@ -58,10 +58,10 @@ namespace LiveHTS.Presentation.DTO
 
             if (dto.HasPartners)
             {
-                var partnerIds=new List<Guid>();
-                var partners= client.Relationships.Select(x => x.ClientId).ToList();
+                var partnerIds = new List<Guid>();
+                var partners = client.Relationships.Select(x => x.ClientId).ToList();
 
-                if(partners.Count>0)
+                if (partners.Count > 0)
                     partnerIds.AddRange(partners);
 
                 var otherPartnerss = client.Relationships.Select(x => x.RelatedClientId).ToList();
@@ -69,9 +69,9 @@ namespace LiveHTS.Presentation.DTO
                 if (otherPartnerss.Count > 0)
                     partnerIds.AddRange(otherPartnerss);
 
-                if (partnerIds.Count > 0) ;
+                if (partnerIds.Count > 0)
 
-                dto.Partners = partnerIds.Where(x =>!x.Equals(dto.Id)).ToList();
+                    dto.Partners = partnerIds.Where(x => !x.Equals(dto.Id)).ToList();
             }
 
 

@@ -19,6 +19,8 @@ namespace LiveHTS.Core.Model.Survey
         public List<Question> Questions { get; set; }=new List<Question>();
 
         [Ignore]
+        public List<Program> Programs { get; set; } = new List<Program>();
+        [Ignore]
         public Guid DefaultEncounterTypeId { get; set; }
 
         [Ignore]

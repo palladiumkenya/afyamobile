@@ -1,9 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:local="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-
              android:paddingBottom="2dp"
              android:paddingLeft="2dp"
              android:paddingRight="2dp"
@@ -11,7 +9,7 @@
 
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -19,22 +17,34 @@
       android:layout_height="wrap_content"
       android:orientation="horizontal">
 
-      <TextView
+      <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight=".8"
-        android:textSize="16dp"
-        android:text="HTS Form"
-        local:MvxBind="Text FormTemplate.Display" />
-
+        android:layout_weight=".2"
+        android:orientation="horizontal">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="16dp"
+          android:text="HTS Form"
+          android:paddingRight="4dp"
+          local:MvxBind="Text FormTemplate.Display" />
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/colorPrimaryDark"
+          android:textSize="16dp"
+          android:text="Initial"
+          local:MvxBind="Text FormTemplate.EncounterTypeDisplay" />
+      </LinearLayout>
       <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".2"
         android:orientation="vertical">
         <ImageButton
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
           android:layout_gravity="right"
           android:src="@drawable/ic_create_new_folder"
           local:MvxBind="Click StartEncounterCommand;Visibility ShowStart, Converter=ShowControl" />

@@ -43,7 +43,7 @@ namespace LiveHTS.Presentation.DTO
                 clientId,
                 formTemplate.Id,
                 formTemplate.Display,
-                formTemplate.DefaultEncounterTypeId
+                formTemplate.EncounterTypeId
             );
         }
     }
