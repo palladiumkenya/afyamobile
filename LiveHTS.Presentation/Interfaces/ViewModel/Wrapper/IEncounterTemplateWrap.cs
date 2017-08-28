@@ -9,9 +9,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
     {
         IEncounterViewModel EncounterViewModel { get; }
 
-        EncounterTemplate EncounterTemplate { get; }        
+        EncounterTemplate EncounterTemplate { get; }
         IMvxCommand ResumeEncounterCommand { get; }
         IMvxCommand ReviewEncounterCommand { get; }
         IMvxCommand DiscardEncounterCommand { get; }
+
+        bool ShowResume { get; set; }
+        bool ShowReview { get; set; }
+        bool ShowDiscard { get; set; }
     }
 }

@@ -15,6 +15,9 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         private IMvxCommand _reviewEncounterCommand;
         private IMvxCommand _discardEncounterCommand;
         private readonly IEncounterViewModel _encounterViewModel;
+        private bool _showResume;
+        private bool _showReview;
+        private bool _showDiscard;
 
         public EncounterTemplateWrap(ClientDashboardViewModel parent, EncounterTemplate encounterTemplate)
         {
@@ -68,9 +71,28 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
             }
         }
 
+        public bool ShowResume
+        {
+            get { return _showResume; }
+            set { _showResume = value; }
+        }
+
+        public bool ShowReview
+        {
+            get { return _showReview; }
+            set { _showReview = value; }
+        }
+
+        public bool ShowDiscard
+        {
+            get { return _showDiscard; }
+            set { _showDiscard = value; }
+        }
+
         private bool CanResumeEncounter()
         {
-            return null != EncounterTemplate && EncounterTemplate.Status == "Started";
+            ShowResume= null != EncounterTemplate && EncounterTemplate.Status == "Started";
+            return ShowResume;
         }
 
         private void ResumeEncounter()
@@ -80,7 +102,8 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanReviewEncounter()
         {
-            return null != EncounterTemplate && EncounterTemplate.Status == "Completed";
+            ShowReview= null != EncounterTemplate && EncounterTemplate.Status == "Completed";
+            return ShowReview;
         }
 
         private void ReviewEncounter()
@@ -90,7 +113,8 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanDiscardEncounter()
         {
-            return null != EncounterTemplate;
+            ShowDiscard =null != EncounterTemplate;
+            return ShowDiscard;
         }
 
         private void DiscardEncounter()

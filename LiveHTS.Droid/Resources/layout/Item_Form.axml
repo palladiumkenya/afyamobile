@@ -1,7 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:local="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+
              android:paddingBottom="2dp"
              android:paddingLeft="2dp"
              android:paddingRight="2dp"
@@ -11,6 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -18,23 +21,30 @@
 
       <TextView
         android:layout_width="0dp"
-        android:layout_weight=".7"
         android:layout_height="wrap_content"
+        android:layout_weight=".8"
+        android:textSize="16dp"
+        android:text="HTS Form"
         local:MvxBind="Text FormTemplate.Display" />
 
-      <Button
+      <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight=".3"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_create_new_folder"
-        android:text="New"
-        local:MvxBind="Click StartEncounterCommand" />
-
+        android:layout_weight=".2"
+        android:orientation="vertical">
+        <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="right"
+          android:src="@drawable/ic_create_new_folder"
+          local:MvxBind="Click StartEncounterCommand;Visibility ShowStart, Converter=ShowControl" />
+      </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
+
       <Mvx.MvxListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

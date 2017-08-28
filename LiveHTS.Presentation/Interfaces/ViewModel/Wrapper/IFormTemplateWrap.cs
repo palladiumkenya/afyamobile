@@ -10,5 +10,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
         IEncounterViewModel EncounterViewModel { get; }
         FormTemplate FormTemplate { get; }
         IMvxCommand StartEncounterCommand { get; }
+        bool ShowStart { get; set; }
     }
 }

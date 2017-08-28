@@ -53,27 +53,25 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal">
-
-      <Button
+      
+      <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_folder_open"
-        local:MvxBind="Click ResumeEncounterCommand"
-        android:text="Open" />
+        android:src="@drawable/ic_folder_open"
+        local:MvxBind="Click ResumeEncounterCommand;Visibility ShowResume, Converter=Visibility"/>
 
-      <Button
+      <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_review"
-        local:MvxBind="Click ReviewEncounterCommand"
-        android:text="Review" />
+        android:src="@drawable/ic_review"
+        local:MvxBind="Click ReviewEncounterCommand;Visibility ShowReview, Converter=Visibility"/>
 
-      <Button
+      <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_delete_forever"
-        android:text="Delete"
-        local:MvxBind="Click DiscardEncounterCommand" />
+        android:src="@drawable/ic_delete_forever"
+        local:MvxBind="Click DiscardEncounterCommand;Visibility ShowDiscard, Converter=Visibility"/>
+      
     </LinearLayout>
   </LinearLayout>
 </FrameLayout>
