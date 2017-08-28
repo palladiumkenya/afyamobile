@@ -49,7 +49,15 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private void StartEncounter()
         {
-            _parent.StartEncounter(_formTemplate);
+            if (null != _parent)
+            {
+                _parent.StartEncounter(_formTemplate);
+            }
+            if (null != _encounterViewModel)
+            {
+                _encounterViewModel.StartEncounter(_formTemplate);
+            }
+            
         }
     }
 }

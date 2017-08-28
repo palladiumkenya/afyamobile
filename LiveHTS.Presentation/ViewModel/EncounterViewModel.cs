@@ -88,6 +88,17 @@ namespace LiveHTS.Presentation.ViewModel
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
 
+            if (formTemplate.Display.ToLower().Contains("Test Form".ToLower()))
+            {
+                ShowViewModel<HIVTestViewModel>(new
+                {
+                    encounterTypeId = "b262f4ee-852f-11e7-bb31-be2e44b06b34",
+                    mode = "new",
+                    clientId =Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
@@ -101,6 +112,18 @@ namespace LiveHTS.Presentation.ViewModel
             var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, encounterTemplate);
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
+
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Test Form".ToLower()))
+            {
+                ShowViewModel<HIVTestViewModel>(new
+                {
+                    encounterTypeId = "b262f4ee-852f-11e7-bb31-be2e44b06b34",
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
 
             ShowViewModel<ClientEncounterViewModel>(new
             {
