@@ -14,57 +14,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:paddingBottom="10dp"
       local:MvxBind="Text Module.Display" />
 
     <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".7"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical">
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          local:MvxBind="Text FormTemplate.Display" />
-
-      </LinearLayout>
-
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".3"
-        android:background="@color/colorPrimaryDark"
-        android:orientation="vertical">
-
-        <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:drawableLeft="@drawable/ic_edit"
-          android:text="New"
-          local:MvxBind="Click StartEncounterCommand" />
-
-      </LinearLayout>
-
+      android:layout_height="2dp"
+      android:background="@color/colorPrimaryDark"
+      android:orientation="horizontal"
+      android:paddingBottom="3dp">
     </LinearLayout>
 
-    <FrameLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
 
+    <FrameLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
       <Mvx.MvxListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        local:MvxBind="ItemsSource FormTemplate.Encounters"
-        local:MvxItemTemplate="@layout/item_encounter" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        local:MvxBind="ItemsSource Forms"
+        local:MvxItemTemplate="@layout/item_form" />
     </FrameLayout>
   </LinearLayout>
 </FrameLayout>
