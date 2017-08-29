@@ -4,50 +4,121 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-  <!--  CLIENT   -->
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="10dp"
-      local:MvxBind="Text Client.Person.FullName"
-      android:paddingRight="2dp"/>
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="10dp"
-      local:MvxBind="Text Client.Person.Gender"
-      android:paddingRight="2dp"/>
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="10dp"
-      local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime"
-      android:paddingRight="2dp"/>
-  </LinearLayout>
-
-  <LinearLayout
-   android:orientation="vertical"
-   android:minWidth="25px"
-   android:minHeight="25px"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/linearLayoutContent">
-      <com.refractored.PagerSlidingTabStrip
-        android:id="@+id/content_frame"
-        android:padding="10dip"
+<!--  CLIENT   -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
-      
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            local:MvxBind="Text Client.Person.FullName"
+            android:paddingRight="2dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            local:MvxBind="Text Client.Person.Gender"
+            android:paddingRight="2dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime"
+            android:paddingRight="2dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:id="@+id/linearLayoutContent">
+        <com.refractored.PagerSlidingTabStrip
+            android:id="@+id/content_frame"
+            android:padding="10dip"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" />
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="match_parent" />
+    </LinearLayout>
+<!--  FINAL   -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Final Result"
+                android:layout_weight="0.33" />
+            <Spinner
+                android:id="@+id/spinner11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                local:MvxBind="ItemsSource FinalTestResults; SelectedItem SelectedFinalTestResult" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Final Result Given?"
+                android:layout_weight="0.10" />
+            <Spinner
+                android:id="@+id/spinner33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                local:MvxBind="ItemsSource FinalTestResults; SelectedItem SelectedFinalTestResult" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <TextView
+                android:id="@+id/textView444"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="Couple Discordant" />
+            <Spinner
+                android:id="@+id/spinner44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                local:MvxBind="ItemsSource FinalTestResults; SelectedItem SelectedFinalTestResult" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/textView46"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="5dp"
+                android:text="HIV self-test in the past 12 months" />
+            <Spinner
+                android:id="@+id/spinner56"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                local:MvxBind="ItemsSource FinalTestResults; SelectedItem SelectedFinalTestResult" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

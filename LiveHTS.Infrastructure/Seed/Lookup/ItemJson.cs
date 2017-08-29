@@ -184,6 +184,35 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
     ^Code^: ^KO^,
     ^Display^: ^Other Kit^,
     ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f0776-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^KO^,
+    ^Display^: ^Other Kit^,
+    ^Voided^: 0
+  },
+  {
+    ^Code^: ^C^,
+    ^Display^: ^C: Contacted^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f102c-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^NC^,
+    ^Display^: ^NC: Not Contacted^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f136a-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^PHN^,
+    ^Display^: ^Phone^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f159a-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^PHY^,
+    ^Display^: ^Physical^,
+    ^Voided^: 0
   }
 ]
 ";

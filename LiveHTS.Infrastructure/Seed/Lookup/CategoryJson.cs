@@ -60,6 +60,16 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
     ^Id^: ^b25f9c72-852f-11e7-bb31-be2e44b06b34^,
     ^Code^: ^KitName^,
     ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f9e16-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^TraceOutcome^,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25fa190-852f-11e7-bb31-be2e44b06b34^,
+    ^Code^: ^TraceMode^,
+    ^Voided^: 0
   }
 ]
 ";

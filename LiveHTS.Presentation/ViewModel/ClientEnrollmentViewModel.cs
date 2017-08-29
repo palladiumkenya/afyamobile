@@ -133,7 +133,7 @@ namespace LiveHTS.Presentation.ViewModel
                 var client = clientRegistrationDTO.Generate();
                 _registryService.SaveOrUpdate(client);
                 clientRegistrationDTO.ClearCache(_settings);
-                ShowViewModel<ClientDashboardViewModel>(new {id = client.Id.ToString()});
+                ShowViewModel<DashboardViewModel>(new {id = client.Id.ToString()});
             }
             catch (Exception e)
             {

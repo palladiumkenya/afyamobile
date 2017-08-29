@@ -102,7 +102,7 @@ namespace LiveHTS.Presentation.ViewModel
             if(null==selectedClient)
                 return;
             SelectedClient = selectedClient;
-            ShowViewModel<ClientDashboardViewModel>(new {id = SelectedClient.Id});
+            ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
         }
 
 

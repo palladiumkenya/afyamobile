@@ -282,7 +282,39 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
     ^Display^: ^^,
     ^Rank^: 3,
     ^Voided^: 0
-  }  
+  },
+  {
+    ^Id^: ^b25f6f86-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25f9e16-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f0a50-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 1,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f70c6-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25f9e16-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f102c-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 2,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f73a0-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25fa190-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f136a-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 1,
+    ^Voided^: 0
+  },
+  {
+    ^Id^: ^b25f7508-852f-11e7-bb31-be2e44b06b34^,
+    ^CategoryId^: ^b25fa190-852f-11e7-bb31-be2e44b06b34^,
+    ^ItemId^: ^b25f159a-852f-11e7-bb31-be2e44b06b34^,
+    ^Display^: ^^,
+    ^Rank^: 2,
+    ^Voided^: 0
+  }
 ]
 ";
             return JsonConvert.DeserializeObject<List<CategoryItem>>(raw.Replace("^","\""));
