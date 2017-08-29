@@ -28,7 +28,7 @@ namespace LiveHTS.Droid.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.LinkageView);
-           ViewModel.ChangedDate += ViewModel_ChangedDate;
+          // ViewModel.ChangedDate += ViewModel_ChangedDate;
 
 
             var viewPager = FindViewById<ViewPager>(Resource.Id.viewpagerlink);
@@ -36,8 +36,8 @@ namespace LiveHTS.Droid.Activities
             var fragments = new List<MvxCachingFragmentStatePagerAdapter.FragmentInfo>();
             
             
-            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.ReferralViewModel.Title, typeof(EncounterFragment), ViewModel.ReferralViewModel));
-            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.LinkedToCareViewModel.Title, typeof(PartnerFragment), ViewModel.LinkedToCareViewModel));
+            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.ReferralViewModel.Title, typeof(ReferralFragment), ViewModel.ReferralViewModel));
+            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.LinkedToCareViewModel.Title, typeof(LinkedToCareFragment), ViewModel.LinkedToCareViewModel));
             
 
             viewPager.Adapter = new MvxCachingFragmentStatePagerAdapter(this, SupportFragmentManager, fragments);
@@ -49,7 +49,7 @@ namespace LiveHTS.Droid.Activities
         {
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
             {
-                ViewModel.SelectedDate =new TraceDateDTO(e.Id, time.Date);
+                //ViewModel.SelectedDate =new TraceDateDTO(e.Id, time.Date);
             },e.Date);
             frag.Show(FragmentManager, DatePickerFragment.TAG);
         }

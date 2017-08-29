@@ -48,7 +48,7 @@
       android:layout_weight="1"
       android:paddingRight="2dp"
       android:textAlignment="textStart"
-      local:MvxBind="ItemsSource TraceTemplate.Modes;SelectedItem HIVTestTemplate.SelectedMode" />
+      local:MvxBind="ItemsSource TraceTemplate.Modes;SelectedItem TraceTemplate.SelectedMode" />
   </LinearLayout>
   <LinearLayout
     android:layout_width="match_parent"

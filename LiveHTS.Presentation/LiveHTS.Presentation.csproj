@@ -103,6 +103,8 @@
     <Compile Include="ViewModel\ClientHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
     <Compile Include="ViewModel\LinkageViewModel.cs" />
+    <Compile Include="ViewModel\LinkedToCareViewModel.cs" />
+    <Compile Include="ViewModel\ReferralViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\HIVTestViewModel.cs" />
     <Compile Include="ViewModel\SummaryViewModel.cs" />

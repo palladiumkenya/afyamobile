@@ -83,13 +83,23 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public CategoryItem SelectedMode
         {
             get { return _selectedMode; }
-            set { _selectedMode = value; RaisePropertyChanged(() => SelectedMode); }
+            set
+            {
+                _selectedMode = value; RaisePropertyChanged(() => SelectedMode);
+                if (null != SelectedMode)
+                    Mode = SelectedMode.ItemId;
+            }
         }
 
         public CategoryItem SelectedOutcome
         {
             get { return _selectedOutcome; }
-            set { _selectedOutcome = value; RaisePropertyChanged(() => SelectedOutcome); }
+            set
+            {
+                _selectedOutcome = value; RaisePropertyChanged(() => SelectedOutcome);
+                if (null != SelectedOutcome)
+                    Outcome = SelectedOutcome.ItemId;
+            }
         }
 
         public List<CategoryItem> Modes
@@ -171,7 +181,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Validator.AddRule(
                 nameof(Outcome),
                 () => RuleResult.Assert(
-                    !Mode.IsNullOrEmpty(),
+                    !Outcome.IsNullOrEmpty(),
                     $"{nameof(Outcome)} is required"
                 )
             );

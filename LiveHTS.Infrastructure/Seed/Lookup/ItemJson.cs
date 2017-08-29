@@ -192,6 +192,7 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
     ^Voided^: 0
   },
   {
+    ^Id^: ^b25f0a50-852f-11e7-bb31-be2e44b06b34^,
     ^Code^: ^C^,
     ^Display^: ^C: Contacted^,
     ^Voided^: 0

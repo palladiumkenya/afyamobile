@@ -20,7 +20,7 @@ namespace LiveHTS.Droid.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.ClientHIVTestView);
-            ViewModel.ChangedDate += ViewModel_ChangedDate; ;
+            ViewModel.ChangedDate += ViewModel_ChangedDate; 
         }
 
         private void ViewModel_ChangedDate(object sender, Presentation.Events.ChangedDateEvent e)

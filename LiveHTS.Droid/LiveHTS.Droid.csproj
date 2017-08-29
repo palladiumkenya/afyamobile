@@ -210,6 +210,7 @@
     <Compile Include="Bootstrap\SettingsPluginBootstrap.cs" />
     <Compile Include="Bootstrap\VisibilityPluginBootstrap.cs" />
     <Compile Include="Activities\DashboardActivity.cs" />
+    <Compile Include="Custom\DatePickerFragmentV4.cs" />
     <Compile Include="Custom\DatePickerFragment.cs" />
     <Compile Include="Custom\ViewScalingCustomBinding.cs" />
     <Compile Include="DebugTrace.cs" />
@@ -221,6 +222,8 @@
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Views\ClientContactFragment.cs" />
     <Compile Include="Views\EncounterFragment.cs" />
+    <Compile Include="Views\ReferralFragment.cs" />
+    <Compile Include="Views\LinkedToCareFragment.cs" />
     <Compile Include="Views\PartnerFragment.cs" />
     <Compile Include="Views\SummaryFragment.cs" />
     <Compile Include="Views\FirstHIVTestFragment.cs" />

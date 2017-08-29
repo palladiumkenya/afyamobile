@@ -13,18 +13,18 @@ namespace LiveHTS.Core.Service.Interview
     public class LinkageService : ILinkageService
     {
         private readonly IEncounterRepository _encounterRepository;
-        private readonly IObsTraceResultRepository _obsTestResultRepository;
-        private readonly IObsLinkageRepository _obsFinalTestResultRepository;
+        private readonly IObsTraceResultRepository _obsTraceResultRepository;
+        private readonly IObsLinkageRepository _obsLinkageRepository;
         private readonly ICategoryRepository _categoryRepository;
 
         private List<CategoryItem> _categoryItems;
         
         public LinkageService(IEncounterRepository encounterRepository,
-            IObsTraceResultRepository obsTestResultRepository,IObsLinkageRepository obsFinalTestResultRepository, ICategoryRepository categoryRepository)
+            IObsTraceResultRepository obsTraceResultRepository,IObsLinkageRepository obsLinkageRepository, ICategoryRepository categoryRepository)
         {
             _encounterRepository = encounterRepository;
-            _obsTestResultRepository = obsTestResultRepository;
-            _obsFinalTestResultRepository = obsFinalTestResultRepository;
+            _obsTraceResultRepository = obsTraceResultRepository;
+            _obsLinkageRepository = obsLinkageRepository;
             _categoryRepository = categoryRepository;
             LoadItems();
         }
@@ -59,14 +59,19 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.LoadTestAll(encounterTypeId, clientId, true).ToList();
         }
 
+        public void SaveLinkage(ObsLinkage testResult)
+        {
+            _obsLinkageRepository.SaveOrUpdate(testResult);
+        }
+
         public void SaveTest(ObsTraceResult testResult)
         {
-            _obsTestResultRepository.SaveOrUpdate(testResult);            
+            _obsTraceResultRepository.SaveOrUpdate(testResult);            
         }
 
         public void DeleteTest(ObsTraceResult testResult)
         {
-            _obsTestResultRepository.Delete(testResult.Id);
+            _obsTraceResultRepository.Delete(testResult.Id);
 
            
         }

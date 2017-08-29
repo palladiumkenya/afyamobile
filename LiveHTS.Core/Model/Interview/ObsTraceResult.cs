@@ -41,6 +41,14 @@ namespace LiveHTS.Core.Model.Interview
         {
             return new ObsTraceResult(date, mode, outcome, encounterId);
         }
+        public static ObsTraceResult CreateNew(Guid encounterId)
+        {
+            var obs= new ObsTraceResult();
+            obs.Date=DateTime.Today;
+            obs.EncounterId = encounterId;
+            return obs;
+        }
+
 
     }
 }

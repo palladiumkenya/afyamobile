@@ -47,22 +47,26 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayoutContent">
-            <com.refractored.PagerSlidingTabStrip
-                android:id="@+id/content_frame_link"
-                android:padding="10dip"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent" />
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpagerlink"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent" />
-        </LinearLayout>
+      <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/linearLayoutContent">
+        <com.refractored.PagerSlidingTabStrip
+          android:id="@+id/content_frame_link"
+          android:padding="10dip"
+          android:layout_height="wrap_content"
+          android:layout_width="match_parent" />
+        <android.support.v4.view.ViewPager
+          android:id="@+id/viewpagerlink"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+
+      </LinearLayout>
+    
+
     </LinearLayout>
 </LinearLayout>

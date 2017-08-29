@@ -10,8 +10,16 @@ using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
-    public interface ILinkedToCareViewModel
+    public interface ILinkedToCareViewModel: IMvxViewModel
     {
+        ILinkageViewModel ParentViewModel { get; set; }
         string Title { get; set; }
+       
+        string FacilityHandedTo { get; set; }
+        string HandedTo { get; set; }
+        string WorkerCarde { get; set; }
+        DateTime? DateEnrolled { get; set; }
+        string EnrollmentId { get; set; }
+        string Remarks { get; set; }
     }
 }

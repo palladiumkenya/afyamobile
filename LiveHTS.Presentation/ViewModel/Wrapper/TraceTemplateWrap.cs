@@ -7,13 +7,13 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 {
     public class TraceTemplateWrap: ITraceTemplateWrap
     {
-        private ILinkageViewModel _parent;
+        private IReferralViewModel _parent;
         private ITraceTemplate _traceTemplate;
         private IMvxCommand _saveTraceCommand;
         private IMvxCommand _deleteTraceCommand;
         private IMvxCommand _showDateDialogCommand;
 
-        public ILinkageViewModel Parent
+        public IReferralViewModel Parent
         {
             get { return _parent; }
         }
@@ -40,7 +40,10 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         private void SaveTrace()
         {
             if (TraceTemplate.Validate())
-                Parent.SaveTrace(TraceTemplate.TraceResult);
+            {
+                
+                 Parent.SaveTrace(TraceTemplate.TraceResult);
+            }
 
         }
 
@@ -60,7 +63,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private void DeleteTrace()
         {
-            Parent.DeleteTrace(TraceTemplate.TraceResult);
+            //Parent.DeleteTrace(TraceTemplate.TraceResult);
         }
 
         public IMvxCommand ShowDateDialogCommand
@@ -74,10 +77,10 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         private void ShowDateDialog()
         {
 
-            Parent.ShowDatePicker(TraceTemplate.Id,TraceTemplate.Date);
+            //Parent.ShowDatePicker(TraceTemplate.Id,TraceTemplate.Date);
         }
 
-        public TraceTemplateWrap(ILinkageViewModel parent, ITraceTemplate traceTemplate)
+        public TraceTemplateWrap(IReferralViewModel parent, ITraceTemplate traceTemplate)
         {
             _parent = parent;
             _traceTemplate = traceTemplate;

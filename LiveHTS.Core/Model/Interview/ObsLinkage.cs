@@ -45,5 +45,13 @@ namespace LiveHTS.Core.Model.Interview
             obs.Id = id;
             return obs;
         }
+        public static ObsLinkage CreateNew(string referredTo, DateTime? datePromised, Guid encounterId)
+        {
+            var obs = new ObsLinkage();
+            obs.ReferredTo = referredTo;
+            obs.DatePromised = datePromised;
+            obs.EncounterId = encounterId;
+            return obs;
+        }
     }
 }
