@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
@@ -25,6 +27,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         void RemoveTrace(TraceTemplate template);
 
+        event EventHandler<ChangedDateEvent> ChangedDate;
+
+        TraceDateDTO SelectedDate { get; set; }
         void ShowDatePicker(Guid refId, DateTime refDate);
         void SaveTrace(ObsTraceResult test);
         void DeleteTrace(ObsTraceResult test);

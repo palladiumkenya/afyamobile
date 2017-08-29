@@ -20,17 +20,17 @@ namespace LiveHTS.Droid.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.LinkageView);
-           // ViewModel.ChangedDate += ViewModel_ChangedDate; 
+           ViewModel.ChangedDate += ViewModel_ChangedDate; 
         }
 
-//        private void ViewModel_ChangedDate(object sender, Presentation.Events.ChangedDateEvent e)
-//        {
-//            DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
-//            {
-//                ViewModel.SelectedDate =new ExpiryDateDTO(e.Id, time.Date);
-//            },e.Date);
-//            frag.Show(FragmentManager, DatePickerFragment.TAG);
-//        }
+        private void ViewModel_ChangedDate(object sender, Presentation.Events.ChangedDateEvent e)
+        {
+            DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+            {
+                ViewModel.SelectedDate =new TraceDateDTO(e.Id, time.Date);
+            },e.Date);
+            frag.Show(FragmentManager, DatePickerFragment.TAG);
+        }
         
     }
 }
