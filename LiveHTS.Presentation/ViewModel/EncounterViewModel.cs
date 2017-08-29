@@ -90,6 +90,21 @@ namespace LiveHTS.Presentation.ViewModel
                 });
                 return;
             }
+
+            //Linkage
+            if (formTemplate.Display.ToLower().Contains("Linkage".ToLower()))
+            {
+                ShowViewModel<LinkageViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
+
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
@@ -117,7 +132,19 @@ namespace LiveHTS.Presentation.ViewModel
                 });
                 return;
             }
-
+            //Linkage
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Linkage".ToLower()))
+            {
+                ShowViewModel<LinkageViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = encounterTemplate.FormId.ToString(),

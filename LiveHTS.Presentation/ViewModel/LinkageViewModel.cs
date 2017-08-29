@@ -6,6 +6,7 @@ using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces.ViewModel;
@@ -20,7 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly ISettings _settings;
         private readonly IDashboardService _dashboardService;
         private readonly ILookupService _lookupService;
-        private readonly IHIVTestingService _testingService;
+        private readonly ILinkageService _testingService;
 
         private string _referredTo;
         private DateTime? _datePromised;
@@ -33,6 +34,30 @@ namespace LiveHTS.Presentation.ViewModel
         private List<TraceTemplateWrap> _traces;
         private IMvxCommand _addTraceCommand;
         private TraceDateDTO _selectedDate;
+        private Guid _encounterTypeId;
+        private Client _client;
+        private Encounter _encounter;
+
+        public Guid EncounterTypeId
+        {
+            get { return _encounterTypeId; }
+            set { _encounterTypeId = value; }
+        }
+
+        public Client Client
+        {
+            get { return _client; }
+            set { _client = value; RaisePropertyChanged(() => Client); }
+        }
+        public Encounter Encounter
+        {
+            get { return _encounter; }
+            set
+            {
+                _encounter = value; RaisePropertyChanged(() => Encounter);
+                LoadTraces();
+            }
+        }
 
         public string ReferredTo
         {
@@ -128,7 +153,45 @@ namespace LiveHTS.Presentation.ViewModel
                 UpdateExpiryDate(SelectedDate);
             }
         }
+        public LinkageViewModel(ILookupService lookupService, IDashboardService dashboardService, ILinkageService testingService, ISettings settings)
+        {
+            _lookupService = lookupService;
+            _dashboardService = dashboardService;
+            _testingService = testingService;
+            _settings = settings;
+        }
 
+
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
+        {
+         
+            // Load Client
+            Client = _dashboardService.LoadClient(new Guid(clientId));
+
+            // Load or Create Encounter
+
+            EncounterTypeId = new Guid(encounterTypeId);
+
+            if (mode == "new")
+            {
+                //  New Encounter
+                _settings.AddOrUpdateValue("client.test.mode", "new");
+                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
+            }
+            else
+            {
+                //  Load Encounter
+                _settings.AddOrUpdateValue("client.test.mode", "open");
+                Encounter = _testingService.OpenEncounter(Encounter.Id);
+            }
+
+            if (null == Encounter)
+            {
+                throw new ArgumentException("Encounter has not been Initialized");
+            }
+
+            //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
+        }
         public void ShowDatePicker(Guid refId, DateTime refDate)
         {
             OnChangedDate(new ChangedDateEvent(refId, refDate));

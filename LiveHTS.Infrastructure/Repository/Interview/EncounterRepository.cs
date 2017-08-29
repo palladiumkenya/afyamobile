@@ -79,6 +79,16 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                             .Where(x => x.EncounterId == e.Id)
                             .ToList();
                         e.ObsFinalTestResults = obsFinalTestResults;
+
+                        var obsTraceResults = _db.Table<ObsTraceResult>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsTraceResults = obsTraceResults;
+
+                        var obsLinkages = _db.Table<ObsLinkage>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsLinkages = obsLinkages;
                     }
                 }
             }
