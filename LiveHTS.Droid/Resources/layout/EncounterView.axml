@@ -32,10 +32,10 @@
 
     <FrameLayout
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="match_parent">
       <Mvx.MvxListView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         local:MvxBind="ItemsSource Forms"
         local:MvxItemTemplate="@layout/item_form" />
     </FrameLayout>
