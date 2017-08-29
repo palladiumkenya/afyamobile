@@ -64,6 +64,8 @@
     <Compile Include="Interfaces\ViewModel\IClientTestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ILinkageViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ITraceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPartnerViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISecondHIVTestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IFirstHIVTestViewModel.cs" />
@@ -73,11 +75,13 @@
     <Compile Include="Interfaces\IObsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISummaryViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\ITraceTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IHIVTestTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFormTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\ITraceTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IHIVTestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IQuestionTemplateWrap.cs" />
@@ -96,6 +100,7 @@
     <Compile Include="Events\ConceptChangedEvent.cs" />
     <Compile Include="ViewModel\ClientHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
+    <Compile Include="ViewModel\LinkageViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\HIVTestViewModel.cs" />
     <Compile Include="ViewModel\SummaryViewModel.cs" />
@@ -104,6 +109,7 @@
     <Compile Include="ViewModel\Template\HIVTestTemplate.cs" />
     <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
     <Compile Include="ViewModel\Template\PartnerTemplate.cs" />
+    <Compile Include="ViewModel\Template\TraceTemplate.cs" />
     <Compile Include="ViewModel\Wrapper\HIVTestTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />
@@ -126,6 +132,7 @@
     <Compile Include="ViewModel\ObsViewModel.cs" />
     <Compile Include="ViewModel\StepViewModel.cs" />
     <Compile Include="ViewModel\PartnerViewModel.cs" />
+    <Compile Include="ViewModel\Wrapper\TraceTemplateWrap.cs" />
     <Compile Include="VMStore.cs" />
   </ItemGroup>
   <ItemGroup>

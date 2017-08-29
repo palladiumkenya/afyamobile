@@ -193,6 +193,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\LinkageActivity.cs" />
     <Compile Include="Activities\ClientHIVTestActivity.cs" />
     <Compile Include="Activities\ClientDashboardActivity.cs" />
     <Compile Include="Activities\ClientEncounterActivity.cs" />
@@ -360,6 +361,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Item_Client_Partner.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\LinkageView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Trace.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

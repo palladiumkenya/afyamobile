@@ -80,6 +80,8 @@
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
     <Compile Include="Model\Interview\ObsFinalTestResult.cs" />
+    <Compile Include="Model\Interview\ObsLinkage.cs" />
+    <Compile Include="Model\Interview\ObsTraceResult.cs" />
     <Compile Include="Model\Interview\ObsTestResult.cs" />
     <Compile Include="Model\Interview\SetResponse.cs" />
     <Compile Include="Model\Survey\Program.cs" />

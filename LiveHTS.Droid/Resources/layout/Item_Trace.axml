@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:paddingLeft="5dp"
+      android:textSize="8dp"
+      android:textColor="@android:color/holo_red_dark"
+      local:MvxBind="Text TraceTemplate.ErrorSummary" />
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+      android:id="@+id/textView2"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".5"
+      android:paddingRight="2dp"
+      android:text="Date" />
+
+    <EditText
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".8"
+      local:MvxBind="Text TraceTemplate.Date, Converter=Dmy; Click ShowDateDialogCommand"
+      android:clickable="true"
+      android:editable="false" />
+    <TextView
+      android:layout_width="0dp"
+      android:layout_weight=".3"
+      android:layout_height="wrap_content"
+      android:text="Mode"
+      android:paddingRight="2dp" />
+    <MvxSpinner
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:paddingRight="2dp"
+      android:textAlignment="textStart"
+      local:MvxBind="ItemsSource TraceTemplate.Modes;SelectedItem HIVTestTemplate.SelectedMode" />
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+      android:layout_width="0dp"
+      android:layout_weight=".5"
+      android:layout_height="wrap_content"
+      android:text="Outcome"
+      android:paddingRight="2dp" />
+
+    <MvxSpinner
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight=".8"
+      android:paddingRight="2dp"
+      android:textAlignment="textStart"
+      local:MvxBind="ItemsSource TraceTemplate.Outcomes;SelectedItem TraceTemplate.SelectedOutcome" />
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_weight="1.5"
+      android:layout_height="wrap_content"
+      android:layout_gravity="right">
+      <Button
+        android:text="Save"
+        android:layout_width="60dp"
+        android:layout_height="31dp"
+        android:textSize="8dp"
+        local:MvxBind="Click SaveTraceCommand" />
+      <Button
+        android:text="X"
+        android:layout_width="60dp"
+        android:layout_height="31dp"
+        android:textSize="8dp"
+        local:MvxBind="Click DeleteTraceCommand" />
+    </LinearLayout>
+
+  </LinearLayout>
+</LinearLayout>
