@@ -65,8 +65,9 @@
     <Compile Include="Interfaces\ViewModel\IClientTestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ILinkedToCareViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IReferralViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ILinkageViewModel.cs" />
-    <Compile Include="Interfaces\ViewModel\ITraceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPartnerViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISecondHIVTestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IFirstHIVTestViewModel.cs" />

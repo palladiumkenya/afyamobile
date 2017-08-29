@@ -13,6 +13,10 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface ILinkageViewModel
     {
 
+        IReferralViewModel ReferralViewModel { get; set; }
+        ILinkedToCareViewModel LinkedToCareViewModel { get; set; }
+
+
         Guid EncounterTypeId { get; set; }
         Client Client { get; set; }
         Encounter Encounter { get; set; }

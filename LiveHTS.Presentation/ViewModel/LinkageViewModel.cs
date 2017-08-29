@@ -37,6 +37,20 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _encounterTypeId;
         private Client _client;
         private Encounter _encounter;
+        private IReferralViewModel _referralViewModel;
+        private ILinkedToCareViewModel _linkedToCareViewModel;
+
+        public IReferralViewModel ReferralViewModel
+        {
+            get { return _referralViewModel; }
+            set { _referralViewModel = value; }
+        }
+
+        public ILinkedToCareViewModel LinkedToCareViewModel
+        {
+            get { return _linkedToCareViewModel; }
+            set { _linkedToCareViewModel = value; }
+        }
 
         public Guid EncounterTypeId
         {
