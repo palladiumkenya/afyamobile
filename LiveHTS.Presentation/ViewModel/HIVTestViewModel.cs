@@ -135,7 +135,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  Load Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "open");
-                Encounter = _testingService.OpenEncounter(Encounter.Id);
+                Encounter = _testingService.OpenEncounter(new Guid(encounterId));
             }
 
             if (null == Encounter)
