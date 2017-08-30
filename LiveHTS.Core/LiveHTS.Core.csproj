@@ -76,6 +76,10 @@
     <Compile Include="Interfaces\Services\Interview\IHIVTestingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IInterviewService.cs" />
     <Compile Include="Interfaces\Services\Survey\ISurveyService.cs" />
+    <Compile Include="Interfaces\Services\Sync\ISync.cs" />
+    <Compile Include="Interfaces\Services\Sync\ISyncPatientEncounter.cs" />
+    <Compile Include="Interfaces\Services\Sync\ISyncPatient.cs" />
+    <Compile Include="Interfaces\Services\Sync\ISyncUser.cs" />
     <Compile Include="Model\AppDashboard.cs" />
     <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
