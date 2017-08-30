@@ -109,6 +109,16 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                     .Where(x => x.EncounterId == encounter.Id)
                     .ToList();
                 encounter.ObsFinalTestResults = obsFinalTestResults;
+
+                var obsTraceResults = _db.Table<ObsTraceResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsTraceResults = obsTraceResults;
+
+                var obsLinkages = _db.Table<ObsLinkage>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsLinkages = obsLinkages;
             }
 
             return encounter;
@@ -129,7 +139,19 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                     .Where(x => x.EncounterId == encounter.Id)
                     .ToList();
                 encounter.ObsFinalTestResults = obsFinalTestResults;
+
+                var obsTraceResults = _db.Table<ObsTraceResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsTraceResults = obsTraceResults;
+
+                var obsLinkages = _db.Table<ObsLinkage>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsLinkages = obsLinkages;
             }
+
+        
 
             return encounter;
         }

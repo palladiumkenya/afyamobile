@@ -97,7 +97,15 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private void ResumeEncounter()
         {
-            _parent.ResumeEncounter(EncounterTemplate);
+            if (null != _parent)
+            {
+                _parent.ResumeEncounter(EncounterTemplate);
+            }
+            if (null != _encounterViewModel)
+            {
+
+                _encounterViewModel.ResumeEncounter(EncounterTemplate);
+            }
         }
 
         private bool CanReviewEncounter()
@@ -108,7 +116,15 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private void ReviewEncounter()
         {
-            _parent.ReviewEncounter(EncounterTemplate);
+            if (null != _parent)
+            {
+                _parent.ReviewEncounter(EncounterTemplate);
+            }
+            if (null != _encounterViewModel)
+            {
+
+                _encounterViewModel.ReviewEncounter(EncounterTemplate);
+            }
         }
 
         private bool CanDiscardEncounter()
@@ -119,7 +135,18 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private void DiscardEncounter()
         {
-            _parent.DiscardEncounter(EncounterTemplate);
+
+
+            if (null != _parent)
+            {
+                _parent.DiscardEncounter(EncounterTemplate);
+            }
+            if (null != _encounterViewModel)
+            {
+                
+                _encounterViewModel.DiscardEncounter(EncounterTemplate);
+            }
+            
         }
     }
 }

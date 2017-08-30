@@ -85,7 +85,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  Load Encounter
                 _settings.AddOrUpdateValue("client.link.mode", "open");
-                Encounter = _linkageService.OpenEncounter(Encounter.Id);
+                Encounter = _linkageService.OpenEncounter(new Guid(encounterId));
             }
 
             if (null == Encounter)
