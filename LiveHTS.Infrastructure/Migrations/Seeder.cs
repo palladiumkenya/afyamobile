@@ -134,6 +134,8 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<Obs>();
             db.CreateTable<ObsTestResult>();
             db.CreateTable<ObsFinalTestResult>();
+            db.CreateTable<ObsLinkage>();
+            db.CreateTable<ObsTraceResult>();
             #endregion
 
             //InsertOrUpdate(db, new EncounterJson());

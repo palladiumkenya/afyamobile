@@ -12,9 +12,11 @@ using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
+using MvvmValidation;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -44,6 +46,22 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _showDateCommand;
         private IMvxCommand _showDateDialogCommand;
         private ExpiryDateDTO _selectedDate;
+        private CategoryItem _selectedResultGiven;
+        private List<CategoryItem> _resultGivenOptions;
+        private CategoryItem _selectedCoupleDiscordant;
+        private List<CategoryItem> _coupleDiscordantOptions;
+        private CategoryItem _selectedSelfTest;
+        private List<CategoryItem> _selfTestOptions;
+        private IMvxCommand _saveTestInfoCommand;
+        private string _errorSummary;
+        private ValidationHelper _validator;
+        private ObservableDictionary<string, string> _errors;
+        private ObsFinalTestResult _obsFinalTestResult;
+        private Guid _obsFinalTestResultId;
+        private Guid _endResult;
+        private Guid _resultGiven;
+        private Guid _coupleDiscordant;
+        private Guid _selfTestOption;
 
 
         public IFirstHIVTestViewModel FirstHIVTestViewModel { get; set; }
@@ -69,25 +87,127 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        
+        public ObsFinalTestResult ObsFinalTestResult
+        {
+            get { return _obsFinalTestResult; }
+            set { _obsFinalTestResult = value; RaisePropertyChanged(() => ObsFinalTestResult);}
+        }
+
+        public Guid ObsFinalTestResultId
+        {
+            get { return _obsFinalTestResultId; }
+            set { _obsFinalTestResultId = value; RaisePropertyChanged(() => ObsFinalTestResultId); }
+        }
+
+        public Guid EndResult
+        {
+            get { return _endResult; }
+            set { _endResult = value; RaisePropertyChanged(() => EndResult); }
+        }
+
+        public ValidationHelper Validator
+        {
+            get { return _validator; }
+            set { _validator = value; }
+        }
+        public string ErrorSummary
+        {
+            get { return _errorSummary; }
+            set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary); }
+        }
 
         public CategoryItem SelectedFinalTestResult
         {
             get { return _selectedFinalTestResult; }
             set { _selectedFinalTestResult = value; RaisePropertyChanged(() => SelectedFinalTestResult); }
         }
-
         public List<CategoryItem> FinalTestResults
         {
             get { return _finalTestResults; }
             set { _finalTestResults = value; RaisePropertyChanged(() => FinalTestResults); }
         }
 
-        
+        public Guid ResultGiven
+        {
+            get { return _resultGiven; }
+            set { _resultGiven = value; RaisePropertyChanged(() => ResultGiven); }
+        }
+
+        public CategoryItem SelectedResultGiven
+        {
+            get { return _selectedResultGiven; }
+            set { _selectedResultGiven = value; RaisePropertyChanged(() => SelectedResultGiven);}
+        }
+
+        public List<CategoryItem> ResultGivenOptions
+        {
+            get { return _resultGivenOptions; }
+            set { _resultGivenOptions = value; RaisePropertyChanged(() => ResultGivenOptions);}
+        }
+
+        public Guid CoupleDiscordant
+        {
+            get { return _coupleDiscordant; }
+            set { _coupleDiscordant = value; RaisePropertyChanged(() => CoupleDiscordant); }
+        }
+
+        public CategoryItem SelectedCoupleDiscordant
+        {
+            get { return _selectedCoupleDiscordant; }
+            set { _selectedCoupleDiscordant = value; RaisePropertyChanged(() => SelectedCoupleDiscordant);}
+        }
+
+        public List<CategoryItem> CoupleDiscordantOptions
+        {
+            get { return _coupleDiscordantOptions; }
+            set { _coupleDiscordantOptions = value; RaisePropertyChanged(() => CoupleDiscordantOptions); }
+        }
+
+        public Guid SelfTestOption
+        {
+            get { return _selfTestOption; }
+            set { _selfTestOption = value; RaisePropertyChanged(() => SelfTestOption);}
+        }
+
+        public CategoryItem SelectedSelfTest
+        {
+            get { return _selectedSelfTest; }
+            set { _selectedSelfTest = value; RaisePropertyChanged(() => SelectedSelfTest); }
+        }
+
+        public List<CategoryItem> SelfTestOptions
+        {
+            get { return _selfTestOptions; }
+            set { _selfTestOptions = value; RaisePropertyChanged(() => SelfTestOptions); }
+        }
+
+
+        public IMvxCommand SaveTestInfoCommand
+        {
+            get
+            {
+                _saveTestInfoCommand = _saveTestInfoCommand ?? new MvxCommand(SaveTestInfo);
+                return _saveTestInfoCommand;
+            }
+        }
+
+        private void SaveTestInfo()
+        {
+            if (Validate())
+            {
+                
+            }
+            throw new NotImplementedException();
+        }
+
         public event EventHandler<ChangedDateEvent> ChangedDate;
 
 
-
+        public ObservableDictionary<string, string> Errors
+        {
+            get { return _errors; }
+            set { _errors = value; RaisePropertyChanged(() => Errors); }
+        }
 
         public ExpiryDateDTO SelectedDate
         {
@@ -110,13 +230,18 @@ namespace LiveHTS.Presentation.ViewModel
 
             FirstHIVTestViewModel = new FirstHIVTestViewModel();
             SecondHIVTestViewModel = new SecondHIVTestViewModel();
+            Validator=new ValidationHelper();
         }
 
 
         public void Init(string formId,string encounterTypeId, string mode, string clientId, string encounterId)
         {
             SecondHIVTestViewModel.SecondTestResults = FirstHIVTestViewModel.FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
-            FinalTestResults = _lookupService.GetCategoryItems("FinalResult", true, "").ToList();
+            FinalTestResults = _lookupService.GetCategoryItems("FinalResult", true).ToList();
+
+            ResultGivenOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
+            CoupleDiscordantOptions = _lookupService.GetCategoryItems("YesNoNa", true).ToList();
+            SelfTestOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
 
             // Load Client
             Client = _dashboardService.LoadClient(new Guid(clientId));
@@ -167,6 +292,53 @@ namespace LiveHTS.Presentation.ViewModel
         public void RefreshTest()
         {
             throw new NotImplementedException();
+        }
+
+        public bool Validate()
+        {
+            ErrorSummary = string.Empty;
+
+//            Validator.AddRule(
+//                nameof(FacilityHandedTo),
+//                () => RuleResult.Assert(
+//                    !string.IsNullOrWhiteSpace(FacilityHandedTo),
+//                    $"{nameof(FacilityHandedTo)} is required"
+//                )
+//            );
+//
+//            Validator.AddRule(
+//                nameof(HandedTo),
+//                () => RuleResult.Assert(
+//                    !string.IsNullOrWhiteSpace(HandedTo),
+//                    $"{nameof(HandedTo)} is required"
+//                )
+//            );
+//
+//
+//            Validator.AddRule(
+//                nameof(EnrollmentId),
+//                () => RuleResult.Assert(
+//                    !string.IsNullOrWhiteSpace(EnrollmentId),
+//                    $"CCC {nameof(EnrollmentId)} is required"
+//                )
+//            );
+//
+//
+//            Validator.AddRule(
+//                nameof(DateEnrolled),
+//                () => RuleResult.Assert(
+//                    DateEnrolled >= DateTime.Today,
+//                    $"{nameof(DateEnrolled)} should be a valid date"
+//                )
+//            );
+
+            var result = Validator.ValidateAll();
+            Errors = result.AsObservableDictionary();
+            if (null != Errors && Errors.Count > 0)
+            {
+                ErrorSummary = Errors.First().Value;
+            }
+            return result.IsValid;
         }
 
         private void LoadTests()

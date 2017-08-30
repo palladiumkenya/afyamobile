@@ -34,8 +34,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         CategoryItem SelectedResult { get; set; }
 
         List<CategoryItem> Kits { get; set; }
-        List<CategoryItem> Results { get; set; }
-        
+        List<CategoryItem> Results { get; set; }        
 
         bool Validate();
         bool CanSave();
