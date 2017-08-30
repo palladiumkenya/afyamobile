@@ -15,7 +15,13 @@
     android:orientation="vertical">
 
 
-
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:paddingLeft="5dp"
+      android:textSize="8dp"
+      android:textColor="@android:color/holo_red_dark"
+      local:MvxBind="Text ErrorSummary" />
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
@@ -90,7 +96,7 @@
           android:layout_width="90dp"
           android:layout_height="wrap_content"
           android:paddingRight="2dp"
-          local:MvxBind="Text DateEnrolled, Converter=Dmy; Click ShowDateDialogCommand"/>
+          local:MvxBind="Text DateEnrolled, Converter=Dmy; Click ShowDateEnrolledDialogCommand"/>
 
         <TextView
           android:layout_width="wrap_content"
@@ -121,6 +127,16 @@
           android:paddingRight="2dp"
           local:MvxBind="Text Remarks"/>
 
+      </LinearLayout>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".17">
+        <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Save"
+          local:MvxBind="Click SaveLinkingCommand"/>
       </LinearLayout>
     </LinearLayout>
   </LinearLayout>

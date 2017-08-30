@@ -14,7 +14,9 @@ using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -71,7 +73,18 @@ namespace LiveHTS.Presentation.ViewModel
             // Load Client
             Client = _dashboardService.LoadClient(new Guid(clientId));
 
+            if (null != Client)
+            {
+                var clientJson = JsonConvert.SerializeObject(Client);
+                _settings.AddOrUpdateValue("client", clientJson);
+            }
+
             // Load or Create Encounter
+
+            if (!string.IsNullOrWhiteSpace(encounterTypeId))
+            {
+                _settings.AddOrUpdateValue("encounterTypeId", encounterTypeId);
+            }
 
             EncounterTypeId = new Guid(encounterTypeId);
 
@@ -92,12 +105,38 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 throw new ArgumentException("Encounter has not been Initialized");
             }
+            //Store Encounter 
 
-            //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
+            var encounterJson = JsonConvert.SerializeObject(Encounter);
+            _settings.AddOrUpdateValue("client.encounter", encounterJson);
         }
-    
 
-      
+        public override void ViewAppeared()
+        {
+
+            var clientJson = _settings.GetValue("client.dto", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+            var encounterTypeId = _settings.GetValue("encounterTypeId", "");
+
+            if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
+            {
+                Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+
+            if (EncounterTypeId.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(encounterTypeId))
+            {
+                EncounterTypeId =new Guid(encounterTypeId);
+            }
+
+
+            if (null==Encounter&& !string.IsNullOrWhiteSpace(clientEncounterJson))
+            {
+                Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
+            }
+        }
+
+
+
         private void LoadTraces()
         {
             var modes = _lookupService.GetCategoryItems("TraceMode", true, "[Select Mode]").ToList();
@@ -112,6 +151,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null != linkage)
                 {
                     ReferralViewModel.ObsLinkage = linkage;
+                    LinkedToCareViewModel.ObsLinkage = linkage;
                 }
             }
         }

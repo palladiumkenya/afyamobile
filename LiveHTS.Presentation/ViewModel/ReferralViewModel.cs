@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Presentation.DTO;
@@ -18,6 +19,7 @@ namespace LiveHTS.Presentation.ViewModel
     public class ReferralViewModel:MvxViewModel, IReferralViewModel
     {
         private readonly ILinkageService _linkageService;
+        private readonly ISettings _settings;
         private string _referredTo;
         private DateTime _datePromised;
         private string _title = "REFFERALS";
@@ -145,8 +147,80 @@ namespace LiveHTS.Presentation.ViewModel
             DatePromised=DateTime.Today;
             _validator = new ValidationHelper();
             _linkageService = Mvx.Resolve<ILinkageService>();
+            _settings = Mvx.Resolve<ISettings>();
+
+        }
+        /*
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
+        {
+
+            // Load Client
+            Client = _dashboardService.LoadClient(new Guid(clientId));
+
+            if (null != Client)
+            {
+                var clientJson = JsonConvert.SerializeObject(Client);
+                _settings.AddOrUpdateValue("client", clientJson);
+            }
+
+            // Load or Create Encounter
+
+            if (!string.IsNullOrWhiteSpace(encounterTypeId))
+            {
+                _settings.AddOrUpdateValue("encounterTypeId", encounterTypeId);
+            }
+
+            EncounterTypeId = new Guid(encounterTypeId);
+
+            if (mode == "new")
+            {
+                //  New Encounter
+                _settings.AddOrUpdateValue("client.link.mode", "new");
+                Encounter = _linkageService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
+            }
+            else
+            {
+                //  Load Encounter
+                _settings.AddOrUpdateValue("client.link.mode", "open");
+                Encounter = _linkageService.OpenEncounter(new Guid(encounterId));
+            }
+
+            if (null == Encounter)
+            {
+                throw new ArgumentException("Encounter has not been Initialized");
+            }
+            //Store Encounter 
+
+            var encounterJson = JsonConvert.SerializeObject(Encounter);
+            _settings.AddOrUpdateValue("client.encounter", encounterJson);
+
+            
         }
 
+        public override void ViewAppeared()
+        {
+
+            var clientJson = _settings.GetValue("client.dto", "");
+            var clientEncounterJson = _settings.GetValue("client.encounter", "");
+            var encounterTypeId = _settings.GetValue("encounterTypeId", "");
+
+            if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
+            {
+                Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+
+            if (EncounterTypeId.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(encounterTypeId))
+            {
+                EncounterTypeId = new Guid(encounterTypeId);
+            }
+
+
+            if (null == Encounter && !string.IsNullOrWhiteSpace(clientEncounterJson))
+            {
+                Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
+            }
+        }
+        */
         private bool CanSaveReferral()
         {
             return true;

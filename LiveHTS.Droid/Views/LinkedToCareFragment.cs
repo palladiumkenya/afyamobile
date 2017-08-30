@@ -1,6 +1,9 @@
-﻿using Android.OS;
+﻿using System;
+using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using LiveHTS.Droid.Custom;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Binding.Droid.BindingContext;
 using MvvmCross.Droid.Support.V4;
@@ -17,7 +20,20 @@ namespace LiveHTS.Droid.Views
         {
             this.EnsureBindingContextIsSet(savedInstanceState);
             var ignored = base.OnCreateView(inflater, container, savedInstanceState);
+
+            ViewModel.ChangedEnrollDate += ViewModel_ChangedEnrollDate;
+
             return this.BindingInflate(Resource.Layout.LinkedToCareView, null);
+        }
+
+        private void ViewModel_ChangedEnrollDate(object sender, Presentation.Events.ChangedDateEvent e)
+        {
+            DatePickerFragmentV4 frag = DatePickerFragmentV4.NewInstance(delegate (DateTime time)
+            {
+                ViewModel.SelectedEnrolDate = new TraceDateDTO(e.Id, time.Date);
+            }, e.Date);
+
+            frag.Show(FragmentManager, DatePickerFragmentV4.TAG);
         }
     }
 }
