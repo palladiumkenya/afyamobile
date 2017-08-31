@@ -184,7 +184,8 @@ namespace LiveHTS.Presentation.ViewModel
                 foreach (var program in r.Programs)
                 {
                     var f = new FormTemplate(r,program);
-                    f.Encounters = ConvertToEncounterWrapperClass(r.ClientEncounters, encounterViewModel, f.Display);
+                    var pe = r.ClientEncounters.Where(x => x.EncounterTypeId == program.EncounterTypeId).ToList();
+                    f.Encounters = ConvertToEncounterWrapperClass(pe, encounterViewModel, f.Display);
                     var fw = new FormTemplateWrap(encounterViewModel, f);
                     list.Add(fw);
                 }
