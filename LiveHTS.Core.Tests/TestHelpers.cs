@@ -14,6 +14,7 @@ using SQLite;
 
 namespace LiveHTS.Core.Tests
 {
+
     public class TestHelpers
     {
         public static bool UseNunit;
