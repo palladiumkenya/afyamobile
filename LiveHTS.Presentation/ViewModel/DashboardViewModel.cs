@@ -28,11 +28,24 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _client;
         private List<RelationshipTemplateWrap> _relationships = new List<RelationshipTemplateWrap>();
         private Module _module;
+        private MvxCommand _manageRegistrationCommand;
 
         public IEncounterViewModel EncounterViewModel { get; }
         public IPartnerViewModel PartnerViewModel { get; }
         public ISummaryViewModel SummaryViewModel { get; }
+        public IMvxCommand ManageRegistrationCommand
+        {
+            get
+            {
+                _manageRegistrationCommand = _manageRegistrationCommand ?? new MvxCommand(ManageRegistration);
+                return _manageRegistrationCommand;
+            }
+        }
 
+        private void ManageRegistration()
+        {
+            ShowViewModel<ClientRegistrationViewModel>(new { id = Client.Id });
+        }
         public Client Client
         {
             get { return _client; }
@@ -85,6 +98,34 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var moduleJson = JsonConvert.SerializeObject(Module);
                 _settings.AddOrUpdateValue("module", moduleJson);
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            //Reload
+
+            var clientJson = _settings.GetValue("client", "");
+            var moduleJson = _settings.GetValue("module", "");
+
+
+            if (null == Client)
+            {
+                if (!string.IsNullOrWhiteSpace(clientJson))
+                {
+                    Client = JsonConvert.DeserializeObject<Client>(clientJson);
+                    var clientDto = ClientDTO.Create(Client);
+                    var clientDtoJson = JsonConvert.SerializeObject(clientDto);
+                    _settings.AddOrUpdateValue("client.dto", clientDtoJson);
+                }
+            }
+            if (null == Module)
+            {
+
+                if (!string.IsNullOrWhiteSpace(moduleJson))
+                {
+                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+                }
             }
         }
     }
