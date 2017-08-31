@@ -172,5 +172,9 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
 
+        public void GoBack()
+        {
+            ShowViewModel<DashboardViewModel>();
+        }
     }
 }

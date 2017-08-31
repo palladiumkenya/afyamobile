@@ -8,14 +8,19 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Client Encounter", LaunchMode = LaunchMode.SingleTop,
-        Theme = "@android:style/Theme.Material.Light",WindowSoftInputMode = SoftInput.AdjustPan)]
+    [Activity(Label = "Client Encounter", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan,ParentActivity = typeof(DashboardActivity))]
     public class ClientEncounterActivity : MvxActivity<ClientEncounterViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.ClientEncounterView);
+            
+        }
+
+        public override void OnBackPressed()
+        {
+            ViewModel.GoBack();
         }
     }
 }

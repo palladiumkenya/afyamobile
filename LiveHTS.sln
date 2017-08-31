@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveHTS.SharedKernel", "LiveHTS.SharedKernel\LiveHTS.SharedKernel.csproj", "{11312AFD-1E57-48C8-A628-D6BE2E55D8B6}"
 EndProject
@@ -86,5 +86,8 @@ Global
 		{352469CE-927D-42D6-A1EA-8FF940FDC133} = {7252F33F-6567-48AB-A538-8C0D2863C9FE}
 		{889A71E1-517F-46E8-AF28-C2F59B5AF760} = {EEB86DEA-401F-463F-8611-4022AFDACA8A}
 		{4D19AFAF-674A-49B1-9F9C-98341D678912} = {E15B63D4-4E65-4389-95C2-4F5E8F8FDD02}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA3B05F5-8DD7-4647-A7BC-B34FAA715EAC}
 	EndGlobalSection
 EndGlobal

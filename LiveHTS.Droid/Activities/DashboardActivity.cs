@@ -13,7 +13,7 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Client Dashboard", LaunchMode = LaunchMode.SingleTop)]
+    [Activity(Label = "Client Dashboard", LaunchMode = LaunchMode.SingleTop,ParentActivity = typeof(AppDashboardActivity))]
     public class DashboardActivity : MvxAppCompatActivity<DashboardViewModel>
     {
         protected override void OnCreate(Bundle bundle)
@@ -31,6 +31,11 @@ namespace LiveHTS.Droid.Activities
             viewPager.Adapter = new MvxCachingFragmentStatePagerAdapter(this, SupportFragmentManager, fragments);
             var pageIndicator = FindViewById<PagerSlidingTabStrip>(Resource.Id.content_frame);
             pageIndicator.SetViewPager(viewPager);
+        }
+
+        public override void OnBackPressed()
+        {
+            ViewModel.GoBack();
         }
     }
 }

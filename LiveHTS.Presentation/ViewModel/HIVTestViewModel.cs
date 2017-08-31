@@ -15,6 +15,7 @@ using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmValidation;
 
@@ -197,7 +198,6 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 
             }
-            throw new NotImplementedException();
         }
 
         public event EventHandler<ChangedDateEvent> ChangedDate;
@@ -298,39 +298,17 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ErrorSummary = string.Empty;
 
-//            Validator.AddRule(
-//                nameof(FacilityHandedTo),
-//                () => RuleResult.Assert(
-//                    !string.IsNullOrWhiteSpace(FacilityHandedTo),
-//                    $"{nameof(FacilityHandedTo)} is required"
-//                )
-//            );
-//
-//            Validator.AddRule(
-//                nameof(HandedTo),
-//                () => RuleResult.Assert(
-//                    !string.IsNullOrWhiteSpace(HandedTo),
-//                    $"{nameof(HandedTo)} is required"
-//                )
-//            );
-//
-//
-//            Validator.AddRule(
-//                nameof(EnrollmentId),
-//                () => RuleResult.Assert(
-//                    !string.IsNullOrWhiteSpace(EnrollmentId),
-//                    $"CCC {nameof(EnrollmentId)} is required"
-//                )
-//            );
-//
-//
-//            Validator.AddRule(
-//                nameof(DateEnrolled),
-//                () => RuleResult.Assert(
-//                    DateEnrolled >= DateTime.Today,
-//                    $"{nameof(DateEnrolled)} should be a valid date"
-//                )
-//            );
+            //Results Given
+            var given = SelectedResultGiven.ItemId;
+
+            Validator.AddRule(
+                "Result Given",
+                () => RuleResult.Assert(
+                    !given.IsNullOrEmpty(),
+                    $"Result Given is required"
+                )
+            );
+
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
@@ -441,5 +419,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public void GoBack()
+        {
+            ShowViewModel<DashboardViewModel>();
+        }
     }
 }

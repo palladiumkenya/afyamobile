@@ -749,7 +749,12 @@ namespace LiveHTS.Presentation.ViewModel
             var manifestJson = JsonConvert.SerializeObject(Manifest);
             _settings.AddOrUpdateValue("client.manifest", manifestJson);
 
-            Close(this);
+            GoBack();
+        }
+
+        public void GoBack()
+        {
+            ShowViewModel<DashboardViewModel>();
         }
     }
 }

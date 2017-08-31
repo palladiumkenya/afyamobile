@@ -10,7 +10,7 @@ using MvvmCross.Droid.Support.V4;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "HIV Tests", Theme = "@android:style/Theme.Material.Light", NoHistory = true)]
+    [Activity(Label = "HIV Tests",  NoHistory = true, ParentActivity = typeof(DashboardViewModel))]
     public class HIVTestActivity : MvxCachingFragmentActivity<HIVTestViewModel>
     {
         protected override void OnCreate(Bundle bundle)
@@ -27,6 +27,11 @@ namespace LiveHTS.Droid.Activities
             viewPager.Adapter = new MvxCachingFragmentStatePagerAdapter(this, SupportFragmentManager, fragments);
            var pageIndicator = FindViewById<PagerSlidingTabStrip>(Resource.Id.content_frame);
             pageIndicator.SetViewPager(viewPager);
+        }
+
+        public override void OnBackPressed()
+        {
+         ViewModel.GoBack();
         }
     }
 }

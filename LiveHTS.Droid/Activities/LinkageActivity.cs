@@ -53,6 +53,11 @@ namespace LiveHTS.Droid.Activities
             },e.Date);
             frag.Show(FragmentManager, DatePickerFragment.TAG);
         }
-        
+
+        public override void OnBackPressed()
+        {
+            ViewModel.GoBack();
+        }
+
     }
 }

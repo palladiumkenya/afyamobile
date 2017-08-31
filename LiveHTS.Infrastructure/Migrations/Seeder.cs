@@ -94,9 +94,9 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new ConceptJson());
             InsertOrUpdate(db, new QuestionJson());
             InsertOrUpdate(db, new QuestionBranchJson());
-            InsertOrUpdate(db, new QuestionRemoteTransformationJson());
-            InsertOrUpdate(db, new QuestionReValidationJson());
-            InsertOrUpdate(db, new QuestionTransformationJson());
+            //InsertOrUpdate(db, new QuestionRemoteTransformationJson());
+            //InsertOrUpdate(db, new QuestionReValidationJson());
+            //InsertOrUpdate(db, new QuestionTransformationJson());
             InsertOrUpdate(db, new QuestionValidationJson());
 
         }

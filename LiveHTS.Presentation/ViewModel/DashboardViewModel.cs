@@ -128,5 +128,15 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
         }
+
+        public void GoBack()
+        {
+            var profile = _settings.GetValue("livehts.username", "");
+            if (!string.IsNullOrWhiteSpace(profile))
+            {
+                ShowViewModel<AppDashboardViewModel>(new { username = profile });
+            }
+          
+        }
     }
 }

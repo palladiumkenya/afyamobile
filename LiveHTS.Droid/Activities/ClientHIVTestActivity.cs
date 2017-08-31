@@ -12,8 +12,7 @@ using MvvmCross.Platform.Platform;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Client HIV Test", LaunchMode = LaunchMode.SingleTop,
-        Theme = "@android:style/Theme.Material.Light", WindowSoftInputMode = SoftInput.AdjustPan)]
+    [Activity(Label = "Client HIV Test", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan)]
     public class ClientHIVTestActivity : MvxActivity<ClientHIVTestViewModel>
     {
         protected override void OnCreate(Bundle bundle)
