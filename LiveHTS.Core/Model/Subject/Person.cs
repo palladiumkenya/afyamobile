@@ -14,7 +14,7 @@ namespace LiveHTS.Core.Model.Subject
         public virtual string MiddleName { get; set; }
         public virtual string LastName { get; set; }
         public virtual string Gender { get; set; }
-        public virtual DateTime? BirthDate { get; set; }
+        public virtual DateTime BirthDate { get; set; }
         public virtual bool? BirthDateEstimated { get; set; }
         public virtual string Email { get; set; }
 
@@ -35,7 +35,7 @@ namespace LiveHTS.Core.Model.Subject
             {
                 if (null != BirthDate)
                 {
-                    var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate.Value);
+                    var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
                     return personAge.ToFullAgeString();
                 }
                 return string.Empty;
@@ -47,7 +47,7 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private Person(string firstName, string middleName, string lastName, string gender, DateTime? birthDate, bool? birthDateEstimated, string email):this()
+        private Person(string firstName, string middleName, string lastName, string gender, DateTime birthDate, bool? birthDateEstimated, string email):this()
         {
             FirstName = firstName;
             MiddleName = middleName;
@@ -58,11 +58,11 @@ namespace LiveHTS.Core.Model.Subject
             Email = email;
         }
 
-        public static Person Create(string firstName, string middleName, string lastName, string gender,DateTime? birthDate, bool? birthDateEstimated, string email)
+        public static Person Create(string firstName, string middleName, string lastName, string gender,DateTime birthDate, bool? birthDateEstimated, string email)
         {
             return new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
         }
-        public static Person Create(string firstName, string middleName, string lastName, string gender, DateTime? birthDate, bool? birthDateEstimated, string email,Guid personId)
+        public static Person Create(string firstName, string middleName, string lastName, string gender, DateTime birthDate, bool? birthDateEstimated, string email,Guid personId)
         {
             var person=Create(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
             person.Id = personId;

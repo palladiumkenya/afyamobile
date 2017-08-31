@@ -30,7 +30,7 @@ namespace LiveHTS.Presentation.Tests.ViewModel
         [Test]
         public void should_Validate_BirthDate()
         {
-            _demographicDTO.BirthDate = null;
+            _demographicDTO.BirthDate = DateTime.Now;
             Assert.IsFalse(_viewModel.Validate());
             foreach (var error in _viewModel.Errors)
             {

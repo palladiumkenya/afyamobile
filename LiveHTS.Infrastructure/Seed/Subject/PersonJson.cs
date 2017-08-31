@@ -36,7 +36,7 @@ namespace LiveHTS.Infrastructure.Seed.Subject
  {
    ^FirstName^: ^HTS^,
    ^MiddleName^: ^^,
-   ^LastName^: ^Admin^,
+   ^LastName^: ^Provider^,
    ^Gender^: ^M^,
    ^BirthDate^: ^1983-07-03^,
    ^BirthDateEstimated^: 0,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
@@ -28,11 +29,18 @@ namespace LiveHTS.Presentation.ViewModel
         private CustomItem _selectedGender;
         private decimal _age;
         private CustomItem _selectedAgeUnit;
-        private DateTime? _birthDate;
-        private string _birthDateError;
+        private DateTime _birthDate;
+        
         private string _personId;
+        private MvxCommand _showDateDialogCommand;
+        private TraceDateDTO _selectedDate;
+        private ClientDemographicDTO _demographic;
 
-        public ClientDemographicDTO Demographic { get; set; }
+        public ClientDemographicDTO Demographic
+        {
+            get { return _demographic; }
+            set { _demographic = value; RaisePropertyChanged(() => Demographic); }
+        }
 
         public List<CustomItem> GenderOptions
         {
@@ -109,28 +117,14 @@ namespace LiveHTS.Presentation.ViewModel
                 CalculateBirthDate();
             }
         }
-        public string BirthDateError
-        {
-            get { return _birthDateError; }
-            set
-            {
-                _birthDateError = value;
-                RaisePropertyChanged(() => BirthDateError);
-            }
-        }
-        public DateTime? BirthDate
+       
+        public DateTime BirthDate
         {
             get { return _birthDate; }
             set
             {
                 _birthDate = value;
-                RaisePropertyChanged(() => BirthDate);
-                BirthDateError = string.Empty;
-                try
-                {
-                    Errors.Remove("BirthDate");
-                }
-                catch{}
+                RaisePropertyChanged(() => BirthDate);             
             }
         }
 
@@ -145,7 +139,42 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public event EventHandler<ChangedDateEvent> ChangedDate;
+        public TraceDateDTO SelectedDate
+        {
+            get { return _selectedDate; }
+            set
+            {
+                _selectedDate = value;
+                RaisePropertyChanged(() => SelectedDate);
+                UpdatePromiseDate(SelectedDate);
+            }
+        }
+        public IMvxCommand ShowDateDialogCommand
+        {
+            get
+            {
+                _showDateDialogCommand = _showDateDialogCommand ?? new MvxCommand(ShowDateDialog);
+                return _showDateDialogCommand;
+            }
+        }
+        private void ShowDateDialog()
+        {
 
+            ShowDatePicker(Guid.Empty, BirthDate);
+        }
+        private void UpdatePromiseDate(TraceDateDTO selectedDate)
+        {
+            BirthDate = selectedDate.EventDate;
+        }
+        public void ShowDatePicker(Guid refId, DateTime refDate)
+        {
+            OnChangedDate(new ChangedDateEvent(refId, refDate));
+        }
+        protected virtual void OnChangedDate(ChangedDateEvent e)
+        {
+            ChangedDate?.Invoke(this, e);
+        }
         public ClientDemographicViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
         {
             Step = 1;
@@ -160,7 +189,7 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
-   
+
         public override bool Validate()
         {
             Validator.AddRule(
@@ -179,7 +208,7 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-           
+
 
             Validator.AddRule(
                 nameof(Age),
@@ -189,22 +218,14 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-//            Validator.AddRule(
-//                nameof(Age),
-//                () => RuleResult.Assert(
-//                    Age > 0,
-//                    $"valid {nameof(Age)} is required"
-//                )
-//            );
-
             Validator.AddRequiredRule(() => BirthDate, $"{nameof(BirthDate)} is required");
 
-            if (null != BirthDate)
-                Validator.AddRule(
-                    nameof(BirthDate),
-                    () => RuleResult.Assert(
-                        BirthDate.Value < DateTime.Today,
-                        $"{nameof(BirthDate)} should be a valid date"));
+
+            Validator.AddRule(
+                nameof(BirthDate),
+                () => RuleResult.Assert(
+                    BirthDate < DateTime.Today,
+                    $"{nameof(BirthDate)} should be a valid date"));
 
             return base.Validate();
         }
@@ -221,7 +242,7 @@ namespace LiveHTS.Presentation.ViewModel
         
             if (null != BirthDate)
             {
-                var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate.Value);
+                var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
                 Age = personAge.Age;
                 var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
                 SelectedAgeUnit = ageUnit;
@@ -231,8 +252,8 @@ namespace LiveHTS.Presentation.ViewModel
         public override void MoveNext()
         {
             if (Validate())
-            {              
-                Demographic=ClientDemographicDTO.CreateFromView(this);
+            {
+                Demographic =ClientDemographicDTO.CreateFromView(this);
                 var json = JsonConvert.SerializeObject(Demographic);
                 _settings.AddOrUpdateValue(GetType().Name, json);
 

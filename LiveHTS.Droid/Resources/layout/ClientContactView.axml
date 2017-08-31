@@ -27,27 +27,37 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewContactClientInfo"
             local:MvxBind="Text ClientInfo" />
-        <TextView
-            android:text="Telephone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewTelephone" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextContactTelephone"
-            local:MvxBind="Text Telephone; Error Errors['Telephone']"
-            android:inputType="number" />
-        <TextView
-            android:text="Landmark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewLandmark" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextContactLandmark"
-            local:MvxBind="Text Landmark; Error Errors['Landmark']" />
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <AutoCompleteTextView
+          android:id="@+id/txtageTelephone"
+          android:layout_width="100dp"
+          android:layout_height="wrap_content"
+          android:hint="Telephone"
+          android:maxLines="1"
+          android:singleLine="true"
+          android:numeric="integer"
+          android:inputType="number"
+          local:MvxBind="Text Telephone; Error Errors['Telephone']"  />
+      </android.support.design.widget.TextInputLayout>
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <AutoCompleteTextView
+          android:id="@+id/txtageLandmark"
+          android:layout_width="100dp"
+          android:layout_height="wrap_content"
+          android:hint="Landmark"
+          android:maxLines="1"
+          android:singleLine="true"
+      
+          local:MvxBind="Text Landmark; Error Errors['Landmark']"  />
+      </android.support.design.widget.TextInputLayout>
+
+
+      
         <TextView
             android:text=""
             android:layout_width="match_parent"

@@ -90,7 +90,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _user = _authService.SignIn(Username, Password);
                 var provider = _authService.GetDefaultProvider();
-
+                
                 
                 _settings.AddOrUpdateValue("livehts.userid", _user.Id.ToString());
                 _settings.AddOrUpdateValue("livehts.username", _user.UserName);

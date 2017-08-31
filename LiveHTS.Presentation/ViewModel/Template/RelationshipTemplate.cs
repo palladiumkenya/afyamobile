@@ -16,7 +16,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Id = relationship.Id;
             FullName = relationship.Person.FullName;
             Gender = relationship.Person.Gender;
-            BirthDate = relationship.Person.BirthDate.Value;
+            BirthDate = relationship.Person.BirthDate;
         }
     }
 }

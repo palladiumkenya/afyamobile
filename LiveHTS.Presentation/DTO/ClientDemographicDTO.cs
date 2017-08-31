@@ -2,6 +2,7 @@
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.Presentation.ViewModel;
 
 namespace LiveHTS.Presentation.DTO
 {
@@ -15,7 +16,7 @@ namespace LiveHTS.Presentation.DTO
         public string Gender { get; set; }
         public decimal Age { get; set; }
         public string AgeUnit { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public bool? BirthDateEstimated { get; set; }
 
         public bool HasAnyData
@@ -36,7 +37,7 @@ namespace LiveHTS.Presentation.DTO
         {
             BirthDateEstimated = false;
         }
-        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime? birthDate) : this()
+        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime birthDate) : this()
         {
             FirstName = firstName;
             MiddleName = middleName;
@@ -46,13 +47,13 @@ namespace LiveHTS.Presentation.DTO
             BirthDate = birthDate;
         }
 
-        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime? birthDate, decimal age, string ageUnit ) :this(firstName, middleName,  lastName, gender,  birthDate)
+        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime birthDate, decimal age, string ageUnit ) :this(firstName, middleName,  lastName, gender,  birthDate)
         {
             Age = age;
             AgeUnit = ageUnit;
         }
 
-        public static ClientDemographicDTO CreateFromView(IClientDemographicViewModel model)
+        public static ClientDemographicDTO CreateFromView(ClientDemographicViewModel model)
         {
 
             var demographicDTO= new ClientDemographicDTO(

@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
@@ -8,6 +9,7 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class AppDashboardViewModel:MvxViewModel,IAppDashboardViewModel
     {
+        private readonly ISettings _settings;
         private readonly IDialogService _dialogService;
         private readonly IAppDashboardService _dashboardService;
         private string _profile;
@@ -46,7 +48,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public string Profile
         {
-            get { return _profile; }
+            get { return $"Signed in as {_profile}"; }
             set
             {
                 _profile = value;
@@ -64,16 +66,35 @@ namespace LiveHTS.Presentation.ViewModel
         public string Greeting => string.IsNullOrWhiteSpace(_profile) ? string.Empty : $"Karibu {_profile}";
 
 
-        public AppDashboardViewModel(IAppDashboardService dashboardService, IDialogService dialogService, IUserDialogs userDialogs)
+        public AppDashboardViewModel(IAppDashboardService dashboardService, IDialogService dialogService, IUserDialogs userDialogs, ISettings settings)
         {
             _dashboardService = dashboardService;
             _dialogService = dialogService;
-            
+            _settings = settings;
         }
 
         public void Init(string username)
         {
             Profile = username;
+        }
+
+        public override void ViewAppeared()
+        {
+            /*
+             _settings.AddOrUpdateValue("livehts.userid", _user.Id.ToString());
+                _settings.AddOrUpdateValue("livehts.username", _user.UserName);
+                
+                _settings.AddOrUpdateValue("livehts.providerid", provider.Id.ToString());
+                _settings.AddOrUpdateValue("livehts.providername", provider.Person.FullName);
+
+
+        
+             */
+            var profile = _settings.GetValue("livehts.username", "");
+            if (!string.IsNullOrWhiteSpace(profile))
+            {
+                Profile = profile;
+            }
         }
 
         private void ShowRegistry()

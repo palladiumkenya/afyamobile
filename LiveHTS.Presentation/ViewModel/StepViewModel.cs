@@ -102,7 +102,7 @@ namespace LiveHTS.Presentation.ViewModel
             _dialogService = dialogService;
             _settings = settings;
             //TODO remove IDS
-            ShowId = true;
+            ShowId = false;
             Validator = new ValidationHelper();
             ModelStore=new VMStore();
         }

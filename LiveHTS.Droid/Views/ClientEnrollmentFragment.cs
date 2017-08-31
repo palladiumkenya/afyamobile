@@ -3,8 +3,9 @@ using Android.Runtime;
 using Android.Views;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Binding.Droid.BindingContext;
-using MvvmCross.Droid.FullFragging.Fragments;
+
 using MvvmCross.Droid.Shared.Attributes;
+using MvvmCross.Droid.Support.V4;
 
 
 namespace LiveHTS.Droid.Views
