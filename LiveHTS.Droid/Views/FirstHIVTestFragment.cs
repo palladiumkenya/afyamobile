@@ -18,6 +18,17 @@ namespace LiveHTS.Droid.Views
             this.EnsureBindingContextIsSet(savedInstanceState);
             var ignored = base.OnCreateView(inflater, container, savedInstanceState);
             return this.BindingInflate(Resource.Layout.FirstHIVTestView, null);
+
+//            var vm = new PersonViewModel();
+//
+//            ViewModel.ShowTaskCommandAction = () => {
+//                var dialogFragment = new PersonFragment()
+//                {
+//                    DataContext = vm
+//                };
+//
+//                dialogFragment.Show(SupportFragmentManager, "Person");
+//            };
         }
     }
 }
