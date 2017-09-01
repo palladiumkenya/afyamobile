@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Lookup;
 
@@ -16,7 +17,7 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<KeyPop> GetKeyPops();
         IEnumerable<IdentifierType> GetIdentifierTypes();
         IEnumerable<RelationshipType> GetRelationshipTypes();
-        EncounterType GetDefaultEncounterType();
+        EncounterType GetDefaultEncounterType(Guid? id=null);
 
         IEnumerable<CategoryItem> GetCategoryItems(string code,bool addSelectOption=false,string selectOption="[Select Option]");
     }

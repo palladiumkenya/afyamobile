@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
@@ -6,6 +7,7 @@ using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service.Config
 {
@@ -85,9 +87,14 @@ namespace LiveHTS.Core.Service.Config
             return _relationshipTypeRepository.GetAll().ToList();
         }
 
-        public EncounterType GetDefaultEncounterType()
+        public EncounterType GetDefaultEncounterType(Guid? id)
         {
-            return _encounterTypeRepository.GetDefault();
+            if (id.IsNullOrEmpty())
+            {
+                return _encounterTypeRepository.GetDefault();
+            }
+
+            return _encounterTypeRepository.Get(id.Value);
         }
 
         public IEnumerable<CategoryItem> GetCategoryItems(string code,bool addSelectOption = false, string selectOption = "[Select Option]")

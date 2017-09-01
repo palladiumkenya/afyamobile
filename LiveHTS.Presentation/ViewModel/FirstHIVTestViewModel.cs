@@ -19,7 +19,7 @@ namespace LiveHTS.Presentation.ViewModel
     public class FirstHIVTestViewModel : MvxViewModel, IFirstHIVTestViewModel
     {
         private string _firstTestName = "HIV Test 1";
-        private ObservableCollection<HIVTestTemplateWrap> _firstTests = new ObservableCollection<HIVTestTemplateWrap>();
+        private List<ObsTestResult> _firstTests = new List<ObsTestResult>();
         private IMvxCommand _addTestCommand;
         private CategoryItem _selectedFirstTestResult;
         private List<CategoryItem> _firstTestResults;
@@ -37,7 +37,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _firstTestName = value; RaisePropertyChanged(() => FirstTestName); }
         }
 
-        public ObservableCollection<HIVTestTemplateWrap> FirstTests
+        public List<ObsTestResult> FirstTests
         {
             get { return _firstTests; }
             set

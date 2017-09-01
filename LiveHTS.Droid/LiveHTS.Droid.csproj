@@ -223,6 +223,7 @@
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Views\ClientContactFragment.cs" />
     <Compile Include="Views\EncounterFragment.cs" />
+    <Compile Include="Views\TestFragment.cs" />
     <Compile Include="Views\ReferralFragment.cs" />
     <Compile Include="Views\LinkedToCareFragment.cs" />
     <Compile Include="Views\PartnerFragment.cs" />
@@ -377,6 +378,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\LinkedToCareView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\TestView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

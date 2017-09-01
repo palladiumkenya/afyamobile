@@ -56,7 +56,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _secondTestName; }
             set { _secondTestName = value; RaisePropertyChanged(() => SecondTestName); }
         }
-        public ObservableCollection<HIVTestTemplateWrap> SecondTests
+        public List<ObsTestResult> SecondTests
         {
             get { return _secondTests; }
             set

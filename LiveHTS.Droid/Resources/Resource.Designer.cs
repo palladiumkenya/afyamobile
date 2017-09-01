@@ -5138,8 +5138,26 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
+			// aapt resource value: 0x7f020086
+			public const int avd_hide_password_1 = 2130837638;
+			
+			// aapt resource value: 0x7f020087
+			public const int avd_hide_password_2 = 2130837639;
+			
+			// aapt resource value: 0x7f020088
+			public const int avd_hide_password_3 = 2130837640;
+			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
+			
+			// aapt resource value: 0x7f020089
+			public const int avd_show_password_1 = 2130837641;
+			
+			// aapt resource value: 0x7f02008a
+			public const int avd_show_password_2 = 2130837642;
+			
+			// aapt resource value: 0x7f02008b
+			public const int avd_show_password_3 = 2130837643;
 			
 			// aapt resource value: 0x7f020055
 			public const int design_bottom_navigation_item_background = 2130837589;
@@ -5427,6 +5445,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900ff
 			public const int button2 = 2131296511;
 			
+			// aapt resource value: 0x7f090113
+			public const int buttonCancel = 2131296531;
+			
 			// aapt resource value: 0x7f09008d
 			public const int buttonContactNext = 2131296397;
 			
@@ -5453,6 +5474,9 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f0900c0
 			public const int buttonProfilePrev = 2131296448;
+			
+			// aapt resource value: 0x7f090112
+			public const int buttonSave = 2131296530;
 			
 			// aapt resource value: 0x7f0900a2
 			public const int buttonSaveEncounter = 2131296418;
@@ -5528,6 +5552,12 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f090014
 			public const int disableHome = 2131296276;
+			
+			// aapt resource value: 0x7f090110
+			public const int editText = 2131296528;
+			
+			// aapt resource value: 0x7f090111
+			public const int editText2 = 2131296529;
 			
 			// aapt resource value: 0x7f0900ac
 			public const int editTextIdentifier = 2131296428;
@@ -5685,8 +5715,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f09010c
 			public const int login_progress = 2131296524;
 			
-			// aapt resource value: 0x7f09010e
-			public const int masked = 2131296526;
+			// aapt resource value: 0x7f090115
+			public const int masked = 2131296533;
 			
 			// aapt resource value: 0x7f0900ee
 			public const int media_actions = 2131296494;
@@ -5862,6 +5892,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900bc
 			public const int spinnerKeyPop = 2131296444;
 			
+			// aapt resource value: 0x7f09010f
+			public const int spinnerKit = 2131296527;
+			
 			// aapt resource value: 0x7f0900ba
 			public const int spinnerMaritalStatus = 2131296442;
 			
@@ -5994,6 +6027,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900a4
 			public const int textViewEnrollmentTitle = 2131296420;
 			
+			// aapt resource value: 0x7f09010d
+			public const int textViewError = 2131296525;
+			
 			// aapt resource value: 0x7f0900a3
 			public const int textViewErrors = 2131296419;
 			
@@ -6011,6 +6047,9 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f0900a9
 			public const int textViewIdentifierType = 2131296425;
+			
+			// aapt resource value: 0x7f09010e
+			public const int textViewKit = 2131296526;
 			
 			// aapt resource value: 0x7f090099
 			public const int textViewPersonId = 2131296409;
@@ -6105,8 +6144,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900e0
 			public const int viewpagerlink = 2131296480;
 			
-			// aapt resource value: 0x7f09010d
-			public const int visible = 2131296525;
+			// aapt resource value: 0x7f090114
+			public const int visible = 2131296532;
 			
 			// aapt resource value: 0x7f090029
 			public const int withText = 2131296297;
@@ -6487,6 +6526,9 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f04006a
 			public const int support_simple_spinner_dropdown_item = 2130968682;
+			
+			// aapt resource value: 0x7f04006b
+			public const int TestView = 2130968683;
 			
 			static Layout()
 			{
