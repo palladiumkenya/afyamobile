@@ -17,9 +17,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<ObsTestResult> Tests { get; set; }
         ObsTestResult Test { get; set; }
         List<TestTemplateWrap> HivTests { get; set; }
-        CategoryItem SelectedTestResult { get; set; }
-        List<CategoryItem> TestResults { get; set; }
-
+        
         IMvxCommand AddTestCommand { get; }
         IMvxCommand CloseTestCommand { get; }
         Action AddTestCommandAction { get; set; }

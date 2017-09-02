@@ -27,18 +27,18 @@ namespace LiveHTS.Presentation.ViewModel
     {
 
         private Client _client;
-        
+
         private readonly ISettings _settings;
         private readonly IDashboardService _dashboardService;
         private readonly ILookupService _lookupService;
         private readonly IHIVTestingService _testingService;
         private Encounter _encounter;
-        
-        
-        
+
+
+
         private CategoryItem _selectedFinalTestResult;
         private List<CategoryItem> _finalTestResults;
-        
+
         private ExpiryDateDTO _selectedDate;
         private CategoryItem _selectedResultGiven;
         private List<CategoryItem> _resultGivenOptions;
@@ -46,7 +46,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _coupleDiscordantOptions;
         private CategoryItem _selectedSelfTest;
         private List<CategoryItem> _selfTestOptions;
-        
+
         private string _errorSummary;
         private ObservableDictionary<string, string> _errors;
         private ObsFinalTestResult _obsFinalTestResult;
@@ -58,137 +58,323 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _saveTestingCommand;
         private List<CategoryItem> _kits;
         private bool _enableFinalResult;
+        private bool _enableSecondResult;
+        private bool _enableFirstResult;
+        private CategoryItem _selectedFirstTestResult;
+        private List<CategoryItem> _FirstTestResults;
+        private CategoryItem _selectedSecondTestResult;
+        private List<CategoryItem> _SecondTestResults;
 
         public ValidationHelper Validator { get; set; }
+
         public string ErrorSummary
         {
             get { return _errorSummary; }
-            set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary); }
+            set
+            {
+                _errorSummary = value;
+                RaisePropertyChanged(() => ErrorSummary);
+            }
         }
+
         public ITestEpisodeViewModel FirstTestEpisodeViewModel { get; set; }
         public ITestEpisodeViewModel SecondTestEpisodeViewModel { get; set; }
 
         public EncounterType EncounterType
         {
             get { return _encounterType; }
-            set { _encounterType = value; RaisePropertyChanged(() => EncounterType);}
+            set
+            {
+                _encounterType = value;
+                RaisePropertyChanged(() => EncounterType);
+            }
         }
+
         public Client Client
         {
             get { return _client; }
-            set { _client = value; RaisePropertyChanged(() => Client); }
+            set
+            {
+                _client = value;
+                RaisePropertyChanged(() => Client);
+            }
         }
+
         public Encounter Encounter
         {
             get { return _encounter; }
             set
             {
-                _encounter = value; RaisePropertyChanged(() => Encounter);
+                _encounter = value;
+                RaisePropertyChanged(() => Encounter);
                 LoadTests();
             }
         }
+
         public ObsFinalTestResult ObsFinalTestResult
         {
             get { return _obsFinalTestResult; }
-            set { _obsFinalTestResult = value; RaisePropertyChanged(() => ObsFinalTestResult);}
+            set
+            {
+                _obsFinalTestResult = value;
+                RaisePropertyChanged(() => ObsFinalTestResult);
+            }
         }
+
+        public bool EnableFirstResult
+        {
+            get { return _enableFirstResult; }
+            set
+            {
+                _enableFirstResult = value;
+                RaisePropertyChanged(() => EnableFirstResult);
+            }
+        }
+
+        public Guid FirstResult
+        {
+            get { return _endResult; }
+            set
+            {
+                _endResult = value;
+                RaisePropertyChanged(() => FirstResult);
+            }
+        }
+
+        public CategoryItem SelectedFirstTestResult
+        {
+            get { return _selectedFirstTestResult; }
+            set
+            {
+                _selectedFirstTestResult = value;
+                RaisePropertyChanged(() => SelectedFirstTestResult);
+            }
+        }
+
+        public List<CategoryItem> FirstTestResults
+        {
+            get { return _FirstTestResults; }
+            set
+            {
+                _FirstTestResults = value;
+                RaisePropertyChanged(() => FirstTestResults);
+            }
+        }
+
+
+
+        public bool EnableSecondResult
+        {
+            get { return _enableSecondResult; }
+            set
+            {
+                _enableSecondResult = value;
+                RaisePropertyChanged(() => EnableSecondResult);
+            }
+        }
+
+        public Guid SecondResult
+        {
+            get { return _endResult; }
+            set
+            {
+                _endResult = value;
+                RaisePropertyChanged(() => SecondResult);
+            }
+        }
+
+        public CategoryItem SelectedSecondTestResult
+        {
+            get { return _selectedSecondTestResult; }
+            set
+            {
+                _selectedSecondTestResult = value;
+                RaisePropertyChanged(() => SelectedSecondTestResult);
+            }
+        }
+
+        public List<CategoryItem> SecondTestResults
+        {
+            get { return _SecondTestResults; }
+            set
+            {
+                _SecondTestResults = value;
+                RaisePropertyChanged(() => SecondTestResults);
+            }
+        }
+
+
 
         public bool EnableFinalResult
         {
             get { return _enableFinalResult; }
-            set { _enableFinalResult = value; RaisePropertyChanged(() => EnableFinalResult);}
+            set
+            {
+                _enableFinalResult = value;
+                RaisePropertyChanged(() => EnableFinalResult);
+            }
         }
 
         public Guid FinalResult
         {
             get { return _endResult; }
-            set { _endResult = value; RaisePropertyChanged(() => FinalResult); }
-        }      
+            set
+            {
+                _endResult = value;
+                RaisePropertyChanged(() => FinalResult);
+            }
+        }
+
         public CategoryItem SelectedFinalTestResult
         {
             get { return _selectedFinalTestResult; }
-            set { _selectedFinalTestResult = value; RaisePropertyChanged(() => SelectedFinalTestResult); }
+            set
+            {
+                _selectedFinalTestResult = value;
+                RaisePropertyChanged(() => SelectedFinalTestResult);
+                SaveTestingCommand.RaiseCanExecuteChanged();
+            }
         }
+
         public List<CategoryItem> FinalTestResults
         {
             get { return _finalTestResults; }
-            set { _finalTestResults = value; RaisePropertyChanged(() => FinalTestResults); }
+            set
+            {
+                _finalTestResults = value;
+                RaisePropertyChanged(() => FinalTestResults);
+            }
         }
 
         public Guid ResultGiven
         {
             get { return _resultGiven; }
-            set { _resultGiven = value; RaisePropertyChanged(() => ResultGiven); }
+            set
+            {
+                _resultGiven = value;
+                RaisePropertyChanged(() => ResultGiven);
+            }
         }
 
         public CategoryItem SelectedResultGiven
         {
             get { return _selectedResultGiven; }
-            set { _selectedResultGiven = value; RaisePropertyChanged(() => SelectedResultGiven);}
+            set
+            {
+                _selectedResultGiven = value;
+                RaisePropertyChanged(() => SelectedResultGiven);
+                SaveTestingCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public List<CategoryItem> ResultGivenOptions
         {
             get { return _resultGivenOptions; }
-            set { _resultGivenOptions = value; RaisePropertyChanged(() => ResultGivenOptions);}
+            set
+            {
+                _resultGivenOptions = value;
+                RaisePropertyChanged(() => ResultGivenOptions);
+            }
         }
 
         public Guid CoupleDiscordant
         {
             get { return _coupleDiscordant; }
-            set { _coupleDiscordant = value; RaisePropertyChanged(() => CoupleDiscordant); }
+            set
+            {
+                _coupleDiscordant = value;
+                RaisePropertyChanged(() => CoupleDiscordant);
+            }
         }
 
         public CategoryItem SelectedCoupleDiscordant
         {
             get { return _selectedCoupleDiscordant; }
-            set { _selectedCoupleDiscordant = value; RaisePropertyChanged(() => SelectedCoupleDiscordant);}
+            set
+            {
+                _selectedCoupleDiscordant = value;
+                RaisePropertyChanged(() => SelectedCoupleDiscordant);
+            }
         }
 
         public List<CategoryItem> CoupleDiscordantOptions
         {
             get { return _coupleDiscordantOptions; }
-            set { _coupleDiscordantOptions = value; RaisePropertyChanged(() => CoupleDiscordantOptions); }
+            set
+            {
+                _coupleDiscordantOptions = value;
+                RaisePropertyChanged(() => CoupleDiscordantOptions);
+            }
         }
 
         public Guid SelfTestOption
         {
             get { return _selfTestOption; }
-            set { _selfTestOption = value; RaisePropertyChanged(() => SelfTestOption);}
+            set
+            {
+                _selfTestOption = value;
+                RaisePropertyChanged(() => SelfTestOption);
+            }
         }
 
         public CategoryItem SelectedSelfTest
         {
             get { return _selectedSelfTest; }
-            set { _selectedSelfTest = value; RaisePropertyChanged(() => SelectedSelfTest); }
+            set
+            {
+                _selectedSelfTest = value;
+                RaisePropertyChanged(() => SelectedSelfTest);
+            }
         }
 
         public List<CategoryItem> SelfTestOptions
         {
             get { return _selfTestOptions; }
-            set { _selfTestOptions = value; RaisePropertyChanged(() => SelfTestOptions); }
+            set
+            {
+                _selfTestOptions = value;
+                RaisePropertyChanged(() => SelfTestOptions);
+            }
         }
 
         public List<CategoryItem> Kits
         {
             get { return _kits; }
-            set { _kits = value; RaisePropertyChanged(() => Kits);}
+            set
+            {
+                _kits = value;
+                RaisePropertyChanged(() => Kits);
+            }
         }
 
         public IMvxCommand SaveTestingCommand
         {
             get
             {
-                _saveTestingCommand = _saveTestingCommand ?? new MvxCommand(SaveTesting);
+                _saveTestingCommand = _saveTestingCommand ?? new MvxCommand(SaveTesting, CanSaveTesting);
                 return _saveTestingCommand;
             }
+        }
+
+        private bool CanSaveTesting()
+        {
+            var final = SelectedResultGiven.ItemId;
+            var given = SelectedFinalTestResult.ItemId;
+            return !final.IsNullOrEmpty() && !given.IsNullOrEmpty();
         }
 
         private void SaveTesting()
         {
             if (Validate())
             {
-
+                if (null != ObsFinalTestResult)
+                {
+                    ObsFinalTestResult.ResultGiven = SelectedResultGiven.ItemId;
+                    ObsFinalTestResult.CoupleDiscordant = SelectedCoupleDiscordant.ItemId;
+                    ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
+                    _testingService.SaveFinalTest(ObsFinalTestResult);
+                    Encounter = _testingService.OpenEncounter(Encounter.Id);
+                }
             }
         }
 
@@ -198,22 +384,17 @@ namespace LiveHTS.Presentation.ViewModel
         public ObservableDictionary<string, string> Errors
         {
             get { return _errors; }
-            set { _errors = value; RaisePropertyChanged(() => Errors); }
-        }
-
-        public ExpiryDateDTO SelectedDate
-        {
-            get { return _selectedDate; }
             set
             {
-                _selectedDate = value;
-                RaisePropertyChanged(() => SelectedDate);
-                UpdateExpiryDate(SelectedDate);
+                _errors = value;
+                RaisePropertyChanged(() => Errors);
             }
         }
 
-       
-        public TestingViewModel(ILookupService lookupService, IDashboardService dashboardService, IHIVTestingService testingService, ISettings settings)
+   
+
+        public TestingViewModel(ILookupService lookupService, IDashboardService dashboardService,
+            IHIVTestingService testingService, ISettings settings)
         {
             _lookupService = lookupService;
             _dashboardService = dashboardService;
@@ -224,14 +405,14 @@ namespace LiveHTS.Presentation.ViewModel
             FirstTestEpisodeViewModel.Parent = this;
             SecondTestEpisodeViewModel = new SecondTestEpisodeViewModel();
             SecondTestEpisodeViewModel.Parent = this;
-            Validator=new ValidationHelper();
+            Validator = new ValidationHelper();
         }
 
 
-        public void Init(string formId,string encounterTypeId, string mode, string clientId, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
         {
             var results = _lookupService.GetCategoryItems("TestResult", true, "[Select Result]").ToList();
-            SecondTestEpisodeViewModel.TestResults = FirstTestEpisodeViewModel.TestResults = results;
+            FirstTestResults = SecondTestResults = results;
 
             FinalTestResults = _lookupService.GetCategoryItems("FinalResult", true).ToList();
             ResultGivenOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
@@ -239,13 +420,14 @@ namespace LiveHTS.Presentation.ViewModel
             SelfTestOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
 
             Kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
-            
+
             EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
 
             _settings.AddOrUpdateValue("lookup.TestResult", JsonConvert.SerializeObject(results));
             _settings.AddOrUpdateValue("lookup.FinalResult", JsonConvert.SerializeObject(FinalTestResults));
             _settings.AddOrUpdateValue("lookup.ResultGivenOptions", JsonConvert.SerializeObject(ResultGivenOptions));
-            _settings.AddOrUpdateValue("lookup.CoupleDiscordantOptions", JsonConvert.SerializeObject(CoupleDiscordantOptions));
+            _settings.AddOrUpdateValue("lookup.CoupleDiscordantOptions",
+                JsonConvert.SerializeObject(CoupleDiscordantOptions));
             _settings.AddOrUpdateValue("lookup.SelfTestOptions", JsonConvert.SerializeObject(SelfTestOptions));
             _settings.AddOrUpdateValue("lookup.KitName", JsonConvert.SerializeObject(Kits));
             _settings.AddOrUpdateValue("lookup.EncounterType", JsonConvert.SerializeObject(EncounterType));
@@ -253,8 +435,8 @@ namespace LiveHTS.Presentation.ViewModel
 
             // Load Client
 
-            var clientJson = _settings.GetValue("client", "");           
-       
+            var clientJson = _settings.GetValue("client", "");
+
             if (null == Client)
             {
                 if (!string.IsNullOrWhiteSpace(clientJson))
@@ -283,13 +465,14 @@ namespace LiveHTS.Presentation.ViewModel
                     EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
                     _settings.AddOrUpdateValue("client", JsonConvert.SerializeObject(EncounterType));
                 }
-            }            
+            }
 
             if (mode == "new")
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "new");
-                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterType.Id, Client.Id, Guid.Empty, Guid.Empty);
+                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterType.Id, Client.Id, Guid.Empty,
+                    Guid.Empty);
             }
             else
             {
@@ -309,11 +492,7 @@ namespace LiveHTS.Presentation.ViewModel
             //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
         }
 
-        public void ShowDatePicker(Guid refId, DateTime refDate)
-        {
-            OnChangedDate(new ChangedDateEvent(refId, refDate));
-        }
-
+ 
         public void SaveTest(ObsTestResult test)
         {
 
@@ -344,6 +523,17 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ErrorSummary = string.Empty;
 
+            //FInal Result Given
+            var final = SelectedResultGiven.ItemId;
+
+            Validator.AddRule(
+                "Final Result",
+                () => RuleResult.Assert(
+                    !final.IsNullOrEmpty(),
+                    $"Final Result is required"
+                )
+            );
+
             //Results Given
             var given = SelectedResultGiven.ItemId;
 
@@ -354,6 +544,7 @@ namespace LiveHTS.Presentation.ViewModel
                     $"Result Given is required"
                 )
             );
+
 
 
             var result = Validator.ValidateAll();
@@ -367,49 +558,33 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void LoadTests()
         {
-          
-            
             if (null != Encounter)
             {
-                var tests= Encounter.ObsTestResults.Where(x => x.TestName == FirstTestEpisodeViewModel.TestName).ToList();
+                var tests = Encounter.ObsTestResults.Where(x => x.TestName == FirstTestEpisodeViewModel.TestName)
+                    .ToList();
                 foreach (var obsTestResult in tests)
                 {
                     try
                     {
-                        obsTestResult.ResultDisplay = FirstTestEpisodeViewModel.TestResults
-                            .FirstOrDefault(x => x.ItemId == obsTestResult.Result).Display;
+                        obsTestResult.ResultDisplay =
+                            FirstTestResults.FirstOrDefault(x => x.ItemId == obsTestResult.Result).Display;
 
                         obsTestResult.KitDisplay = Kits.FirstOrDefault(x => x.ItemId == obsTestResult.Kit).Display;
                     }
                     catch (Exception e)
                     {
                     }
-                      
+
                 }
                 FirstTestEpisodeViewModel.Tests = tests;
-                
 
-                var finalTestResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
-
-                if (null != finalTestResult)
-                {
-                    var result = FirstTestEpisodeViewModel.TestResults.FirstOrDefault(x => x.ItemId == finalTestResult.FirstTestResult);
-                    if (null != result)
-                    {
-                        FirstTestEpisodeViewModel.SelectedTestResult = result;
-                    }
-                    else
-                    {
-                        FirstTestEpisodeViewModel.SelectedTestResult = FirstTestEpisodeViewModel.TestResults.OrderBy(x => x.Rank).FirstOrDefault();
-                    }
-                }
-
-                var tests2 = Encounter.ObsTestResults.Where(x => x.TestName == SecondTestEpisodeViewModel.TestName).ToList();
+                var tests2 = Encounter.ObsTestResults.Where(x => x.TestName == SecondTestEpisodeViewModel.TestName)
+                    .ToList();
                 foreach (var obsTestResult in tests2)
                 {
                     try
                     {
-                        obsTestResult.ResultDisplay = FirstTestEpisodeViewModel.TestResults
+                        obsTestResult.ResultDisplay = SecondTestResults
                             .FirstOrDefault(x => x.ItemId == obsTestResult.Result).Item.Display;
 
                         obsTestResult.KitDisplay = Kits.FirstOrDefault(x => x.ItemId == obsTestResult.Kit).Display;
@@ -419,63 +594,79 @@ namespace LiveHTS.Presentation.ViewModel
                     }
 
                 }
-
                 SecondTestEpisodeViewModel.Tests = tests2;
 
-                var finalSecondResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
-
-                if (null != finalSecondResult)
-                {
-                    var result = SecondTestEpisodeViewModel.TestResults.FirstOrDefault(x => x.ItemId == finalSecondResult.SecondTestResult);
-                    if (null != result)
-                    {
-                        SecondTestEpisodeViewModel.SelectedTestResult = result;
-                    }
-                    else
-                    {
-                        SecondTestEpisodeViewModel.SelectedTestResult = SecondTestEpisodeViewModel.TestResults.OrderBy(x => x.Rank).FirstOrDefault();
-                    }
-                }
-
-
-                var finalResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
+                var finalResult =ObsFinalTestResult= Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
 
                 if (null != finalResult)
                 {
-                    var result = FinalTestResults.FirstOrDefault(x => x.ItemId == finalResult.FinalResult);
-                    if (null != result)
+                    //  Test 1
+                    var result1 = FirstTestResults.FirstOrDefault(x => x.ItemId == finalResult.FirstTestResult);
+
+                    if (null != result1)
                     {
-                        SelectedFinalTestResult = result;
+                        SelectedFirstTestResult = result1;
+                    }
+                    else
+                    {
+                        SelectedFirstTestResult = FinalTestResults.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+                    //  Test 2
+
+                    var result2 = SecondTestResults.FirstOrDefault(x => x.ItemId == finalResult.SecondTestResult);
+
+                    if (null != result2)
+                    {
+                        SelectedSecondTestResult = result2;
+                    }
+                    else
+                    {
+                        SelectedSecondTestResult = SecondTestResults.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+                    //  Final
+                    var result3 = FinalTestResults.FirstOrDefault(x => x.ItemId == finalResult.FinalResult);
+
+                    if (null != result3)
+                    {
+                        SelectedFinalTestResult = result3;
                     }
                     else
                     {
                         SelectedFinalTestResult = FinalTestResults.OrderBy(x => x.Rank).FirstOrDefault();
                     }
-                }
-            }
-            
-        }
 
-      
-  
-        protected virtual void OnChangedDate(ChangedDateEvent e)
-        {
-            ChangedDate?.Invoke(this, e);
-        }
-        private void UpdateExpiryDate(ExpiryDateDTO selectedDate)
-        {
-//            var test1 = FirstHIVTestViewModel.FirstTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
-//            if (null != test1)
-//            {
-//                test1.HIVTestTemplate.Expiry = selectedDate.EventDate;
-//                return;
-//            }
-//
-//            var test2 = SecondHIVTestViewModel.SecondTests.FirstOrDefault(x => x.HIVTestTemplate.Id == selectedDate.Id);
-//            if (null != test2)
-//            {
-//                test2.HIVTestTemplate.Expiry = selectedDate.EventDate;
-//            }
+                    
+                    var resultg = ResultGivenOptions.FirstOrDefault(x => x.ItemId == finalResult.ResultGiven);
+                    if (null != resultg)
+                    {
+                        SelectedResultGiven = resultg;
+                    }
+                    else
+                    {
+                        SelectedResultGiven = ResultGivenOptions.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+                    var resultcd = CoupleDiscordantOptions.FirstOrDefault(x => x.ItemId == finalResult.CoupleDiscordant);
+                    if (null != resultcd)
+                    {
+                        SelectedCoupleDiscordant = resultcd;
+                    }
+                    else
+                    {
+                        SelectedCoupleDiscordant = CoupleDiscordantOptions.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+                    var resultst = SelfTestOptions.FirstOrDefault(x => x.ItemId == finalResult.SelfTestOption);
+                    if (null != resultst)
+                    {
+                        SelectedSecondTestResult = resultst;
+                    }
+                    else
+                    {
+                        SelectedSecondTestResult = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+
+                }
+
+            }
         }
 
         public void GoBack()

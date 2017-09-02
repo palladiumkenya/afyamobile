@@ -1,16 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:local="http://schemas.android.com/apk/res-auto"
-              xmlns:fab="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:padding="2dp">
+              android:padding="5dp">
 
   <LinearLayout
-    android:padding="5dp"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight=".25">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -24,43 +22,12 @@
   </LinearLayout>
 
   <LinearLayout
-    android:padding="5dp"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="2">
-
+    android:layout_height="match_parent">
     <Mvx.MvxListView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       local:MvxBind="ItemsSource HivTests"
       local:MvxItemTemplate="@layout/item_test" />
   </LinearLayout>
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight=".25"
-    android:orientation="vertical"
-    android:padding="5dp">
-
-
-    <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="5dp"
-        android:text="HIV Test 2 Result:" />
-
-      <MvxSpinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        local:MvxBind="ItemsSource TestResults; SelectedItem SelectedTestResult;Enabled EnableResult" />
-
-    </LinearLayout>
-  </LinearLayout>
-
 </LinearLayout>

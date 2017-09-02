@@ -99,6 +99,18 @@ namespace LiveHTS.Core.Service.Interview
             UpdateFinalResult(testResult.EncounterId);
         }
 
+        public void SaveFinalTest(ObsFinalTestResult testResult)
+        {
+            var test = _obsFinalTestResultRepository.Get(testResult.Id);
+            if (null != test)
+            {
+                test.ResultGiven = testResult.ResultGiven;
+                test.CoupleDiscordant = testResult.ResultGiven;
+                test.SelfTestOption = testResult.SelfTestOption;
+                _obsFinalTestResultRepository.SaveOrUpdate(test);
+            }
+        }
+
         public void DeleteTest(ObsTestResult testResult)
         {
             _obsTestResultRepository.Delete(testResult.Id);

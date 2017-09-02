@@ -27,14 +27,10 @@ namespace LiveHTS.Presentation.ViewModel
         private string _testName = "HIV Test 1";
         private List<ObsTestResult> _tests = new List<ObsTestResult>();
         private IMvxCommand _addTestCommand;
-        private List<CategoryItem> _testResults;
         private ITestingViewModel _parent;
-        private string _testNameResult;
         private IMvxCommand _closeTestCommand;
         
-        
-        private List<TestTemplateWrap> _hivTests;
-        private CategoryItem _selectedTestResult;
+        private List<TestTemplateWrap> _hivTests;        
         private ObsTestResult _test;
         private bool _enableResult;
 
@@ -82,18 +78,7 @@ namespace LiveHTS.Presentation.ViewModel
             set { _hivTests = value; RaisePropertyChanged(() => HivTests); }
         }
      
-        public CategoryItem SelectedTestResult
-        {
-            get { return _selectedTestResult; }
-            set { _selectedTestResult = value; RaisePropertyChanged(() => SelectedTestResult); }
-        }
-
-        public List<CategoryItem> TestResults
-        {
-            get { return _testResults; }
-            set { _testResults = value; RaisePropertyChanged(() => TestResults); }
-        }
-
+      
         public IMvxCommand CloseTestCommand
         {
             get

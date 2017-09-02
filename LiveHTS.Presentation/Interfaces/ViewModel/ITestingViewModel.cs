@@ -20,7 +20,17 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Client Client { get; set; }
         Encounter Encounter { get; set; }
         ObsFinalTestResult ObsFinalTestResult { get; set; }
-       
+
+        bool EnableFirstResult { get; set; }
+        Guid FirstResult { get; set; }
+        CategoryItem SelectedFirstTestResult { get; set; }
+        List<CategoryItem> FirstTestResults { get; set; }
+
+        bool EnableSecondResult { get; set; }
+        Guid SecondResult { get; set; }
+        CategoryItem SelectedSecondTestResult { get; set; }
+        List<CategoryItem> SecondTestResults { get; set; }
+
         bool EnableFinalResult { get; set; }
         Guid FinalResult { get; set; }
         CategoryItem SelectedFinalTestResult { get; set; }
@@ -40,15 +50,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         List<CategoryItem> Kits { get; set; }
         
-
         IMvxCommand SaveTestingCommand { get; }
 
-
-
-        event EventHandler<ChangedDateEvent> ChangedDate;
-        ExpiryDateDTO SelectedDate { get; set; }
-
-        void ShowDatePicker(Guid refId, DateTime refDate);
         void SaveTest(ObsTestResult test);
         void DeleteTest(ObsTestResult test);
         void Referesh(Guid encounterId);
