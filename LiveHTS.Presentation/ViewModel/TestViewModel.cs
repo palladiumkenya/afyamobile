@@ -44,8 +44,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         private readonly IHIVTestingService _testingService;
         private readonly ISettings _settings;
-        private TraceDateDTO _selectedDate;
-        private MvxCommand _showDateDialogCommand;
+        
+        
         private ITestEpisodeViewModel _parent;
         private bool _editMode;
 
@@ -78,15 +78,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public ObsTestResult TestResult
         {
-            get
-            {
-                return _testResult=GenerateTest();
-            }
+            get { return _testResult; }
             set { _testResult = value; RaisePropertyChanged(() => TestResult);}
         }
-
-
-     
         public Guid Id
         {
             get { return _id; }
@@ -162,49 +156,6 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-
-
-
-        public event EventHandler<ChangedDateEvent> ChangedDate;
-        public TraceDateDTO SelectedDate
-        {
-            get { return _selectedDate; }
-            set
-            {
-                _selectedDate = value;
-                RaisePropertyChanged(() => SelectedDate);
-                UpdatePromiseDate(SelectedDate);
-            }
-        }
-        public IMvxCommand ShowDateDialogCommand
-        {
-            get
-            {
-                _showDateDialogCommand = _showDateDialogCommand ?? new MvxCommand(ShowDateDialog);
-                return _showDateDialogCommand;
-            }
-        }
-        private void ShowDateDialog()
-        {
-
-            ShowDatePicker(Guid.Empty, Expiry);
-        }
-        private void UpdatePromiseDate(TraceDateDTO selectedDate)
-        {
-            Expiry = selectedDate.EventDate;
-        }
-        public void ShowDatePicker(Guid refId, DateTime refDate)
-        {
-            OnChangedDate(new ChangedDateEvent(refId, refDate));
-        }
-        protected virtual void OnChangedDate(ChangedDateEvent e)
-        {
-            ChangedDate?.Invoke(this, e);
-        }
-
-
-
-
         public CategoryItem SelectedKit
         {
             get { return _selectedKit; }
@@ -263,21 +214,15 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Results = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
             }
-            if (!EditMode)
-            {
-                Clear();
-            }
-            else
-            {
-                LoadTest();
-            }
+          
         }
 
         private void LoadTest()
         {
             if (null != TestResult)
             {
-                SelectedKit = Kits.FirstOrDefault(x=>x.ItemId==TestResult.Kit);
+                Id = TestResult.Id;
+                SelectedKit = Kits.FirstOrDefault(x=>x.ItemId== TestResult.Kit);
                 KitOther = TestResult.KitOther;
                 LotNumber = TestResult.LotNumber;
                 Expiry = TestResult.Expiry;
@@ -314,6 +259,16 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(resultsJson))
             {
                 Results = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
+            }
+
+            if (!EditMode)
+            {
+                Clear();
+            }
+            else
+            {
+                _testResult = Parent.Test;
+                LoadTest();
             }
 
         }
@@ -370,6 +325,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (Validate())
             {
+                TestResult= GenerateTest();
                 _testingService.SaveTest(TestResult);
                 Parent.Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
@@ -395,6 +351,9 @@ namespace LiveHTS.Presentation.ViewModel
         private ObsTestResult GenerateTest()
         {
             var obs= ObsTestResult.Create(TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId,ResultCode);
+            if (EditMode)
+                obs.Id = Id;
+
             obs.IsValid = false;
             if (null != SelectedResult.Item)
             {

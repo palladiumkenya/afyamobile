@@ -35,11 +35,19 @@ namespace LiveHTS.Presentation.ViewModel
         
         private List<TestTemplateWrap> _hivTests;
         private CategoryItem _selectedTestResult;
+        private ObsTestResult _test;
+        private bool _enableResult;
 
         public ITestingViewModel Parent
         {
             get { return _parent; }
             set { _parent = value; }
+        }
+
+        public bool EnableResult
+        {
+            get { return _enableResult; }
+            set { _enableResult = value; }
         }
 
         public string TestName
@@ -48,14 +56,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _testName = value; RaisePropertyChanged(() => TestName);
-                TestNameResult = $"{TestName} Result";
             }
-        }
-
-        public string TestNameResult
-        {
-            get { return _testNameResult; }
-            set { _testNameResult = value; RaisePropertyChanged(() => TestNameResult); }
         }
 
         public List<ObsTestResult> Tests
@@ -67,6 +68,12 @@ namespace LiveHTS.Presentation.ViewModel
                 AddTestCommand.RaiseCanExecuteChanged();
                 HivTests = ConvertToWrapperClass(Tests, this);
             }
+        }
+
+        public ObsTestResult Test
+        {
+            get { return _test; }
+            set { _test = value; RaisePropertyChanged(() => Test); }
         }
 
         public List<TestTemplateWrap> HivTests
@@ -105,6 +112,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public Action AddTestCommandAction { get; set; }
 
+        public Action EditTestCommandAction { get; set; }
+
+
         public Action CloseTestCommandAction { get; set; }
 
         public IMvxCommand AddTestCommand
@@ -122,6 +132,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             _testingService = Mvx.Resolve<IHIVTestingService>();
             _dialogService = Mvx.Resolve<IDialogService>();
+            EnableResult = false;
         }
 
  
@@ -139,12 +150,6 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
         }
-
-        public void EditTest(ObsTestResult testResult)
-        {
-            throw new NotImplementedException();
-        }
-
         private bool CanAddTest()
         {
             //No Tests
@@ -178,14 +183,11 @@ namespace LiveHTS.Presentation.ViewModel
         private void AddTest()
         {
             AddTestCommandAction?.Invoke();
-            //            int lastAttempt = FirstTests.Max(x => x.HIVTestTemplate.Attempt);
-            //            lastAttempt++;
-            //            var obs = ObsTestResult.CreateNew(FirstTestName, lastAttempt, Parent.Encounter.Id);
-            //
-            //            var list = Parent.Encounter.ObsTestResults.ToList();
-            //            list.Add(obs);
-            //            Parent.Encounter.ObsTestResults = list;
-            //            Parent.Encounter = Parent.Encounter;
+        }
+        public void EditTest(ObsTestResult testResult)
+        {
+            Test = testResult;
+            EditTestCommandAction?.Invoke();
         }
 
         private static List<TestTemplateWrap> ConvertToWrapperClass(List<ObsTestResult> forms, ITestEpisodeViewModel clientDashboardViewModel)

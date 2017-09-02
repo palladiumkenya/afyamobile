@@ -4,14 +4,21 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="10dp">
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp" >
 
   <TextView
-    
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     local:MvxBind="Text TestName"/>
-  
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="@color/colorPrimary">
+  </LinearLayout>
+
   <TextView
     android:id="@+id/textViewError"
     android:layout_width="match_parent"
@@ -55,20 +62,18 @@
       android:hint="Lot"
       local:MvxBind="Text LotNumber" />
   </android.support.design.widget.TextInputLayout>
-
-  <android.support.design.widget.TextInputLayout
+  <TextView
+    android:id="@+id/textViewKit"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <EditText
-      android:id="@+id/editText2"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:clickable="true"
-      android:editable="false"
-      android:hint="Expiry"
-      local:MvxBind="Text Expiry, Converter=Dmy; Click ShowDateDialogCommand" />
-  </android.support.design.widget.TextInputLayout>
+    android:layout_height="wrap_content"
+    android:text="Expiry" />
+  <MvxDatePicker
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="Value Expiry;"
+    android:calendarViewShown="false"
+    android:datePickerMode="spinner"
+    android:id="@+id/spinnerRegistrationDate" />
 
   <TextView
     android:id="@+id/textViewKit"
@@ -85,8 +90,13 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="@color/colorPrimary">
+    </LinearLayout>
     <Button
       android:id="@+id/buttonSave"
       android:layout_width="wrap_content"

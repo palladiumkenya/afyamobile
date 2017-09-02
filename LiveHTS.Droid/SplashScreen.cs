@@ -7,10 +7,9 @@ using MvvmCross.Droid.Views;
 namespace LiveHTS.Droid
 {
     [Activity(
-        Label = "LiveHTS"
-        , MainLauncher = true
+        
+         MainLauncher = true
         , Icon = "@drawable/livehts"
-        , Theme = "@android:style/Theme.Material.Light"
         , NoHistory = true
         , ScreenOrientation = ScreenOrientation.Portrait)]
     public class SplashScreen : MvxSplashScreenActivity

@@ -21,7 +21,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Encounter Encounter { get; set; }
         ObsFinalTestResult ObsFinalTestResult { get; set; }
        
-
+        bool EnableFinalResult { get; set; }
         Guid FinalResult { get; set; }
         CategoryItem SelectedFinalTestResult { get; set; }
         List<CategoryItem> FinalTestResults { get; set; }

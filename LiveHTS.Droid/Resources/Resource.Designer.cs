@@ -5472,8 +5472,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900c0
 			public const int buttonProfilePrev = 2131296448;
 			
-			// aapt resource value: 0x7f090112
-			public const int buttonSave = 2131296530;
+			// aapt resource value: 0x7f090111
+			public const int buttonSave = 2131296529;
 			
 			// aapt resource value: 0x7f0900a2
 			public const int buttonSaveEncounter = 2131296418;
@@ -5552,9 +5552,6 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f090110
 			public const int editText = 2131296528;
-			
-			// aapt resource value: 0x7f090111
-			public const int editText2 = 2131296529;
 			
 			// aapt resource value: 0x7f0900ac
 			public const int editTextIdentifier = 2131296428;
@@ -5712,8 +5709,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f09010c
 			public const int login_progress = 2131296524;
 			
-			// aapt resource value: 0x7f090114
-			public const int masked = 2131296532;
+			// aapt resource value: 0x7f090113
+			public const int masked = 2131296531;
 			
 			// aapt resource value: 0x7f0900ef
 			public const int media_actions = 2131296495;
@@ -6141,8 +6138,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900e1
 			public const int viewpagerlink = 2131296481;
 			
-			// aapt resource value: 0x7f090113
-			public const int visible = 2131296531;
+			// aapt resource value: 0x7f090112
+			public const int visible = 2131296530;
 			
 			// aapt resource value: 0x7f090029
 			public const int withText = 2131296297;

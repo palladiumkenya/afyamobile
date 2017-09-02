@@ -36,10 +36,5 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid EncounterId { get; set; }
         string ResultCode { get; set; }
         IMvxCommand SaveTestCommand { get; }
-
-        IMvxCommand ShowDateDialogCommand { get; }
-        event EventHandler<ChangedDateEvent> ChangedDate;
-        TraceDateDTO SelectedDate { get; set; }
-        void ShowDatePicker(Guid refId, DateTime refDate);
     }
 }

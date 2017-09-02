@@ -11,9 +11,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface ITestEpisodeViewModel:IMvxViewModel
     {
         ITestingViewModel Parent { get; set; }
+        bool EnableResult { get; set; }
+
         string TestName { get; set; }
-        string TestNameResult { get; set; }
         List<ObsTestResult> Tests { get; set; }
+        ObsTestResult Test { get; set; }
         List<TestTemplateWrap> HivTests { get; set; }
         CategoryItem SelectedTestResult { get; set; }
         List<CategoryItem> TestResults { get; set; }
@@ -21,6 +23,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand AddTestCommand { get; }
         IMvxCommand CloseTestCommand { get; }
         Action AddTestCommandAction { get; set; }
+        Action EditTestCommandAction { get; set; }
         Action CloseTestCommandAction { get; set; }
 
         void DeleteTest(ObsTestResult testResult);

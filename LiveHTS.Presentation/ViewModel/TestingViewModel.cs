@@ -57,6 +57,7 @@ namespace LiveHTS.Presentation.ViewModel
         private EncounterType _encounterType;
         private IMvxCommand _saveTestingCommand;
         private List<CategoryItem> _kits;
+        private bool _enableFinalResult;
 
         public ValidationHelper Validator { get; set; }
         public string ErrorSummary
@@ -90,6 +91,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _obsFinalTestResult; }
             set { _obsFinalTestResult = value; RaisePropertyChanged(() => ObsFinalTestResult);}
+        }
+
+        public bool EnableFinalResult
+        {
+            get { return _enableFinalResult; }
+            set { _enableFinalResult = value; RaisePropertyChanged(() => EnableFinalResult);}
         }
 
         public Guid FinalResult
@@ -212,7 +219,7 @@ namespace LiveHTS.Presentation.ViewModel
             _dashboardService = dashboardService;
             _testingService = testingService;
             _settings = settings;
-
+            EnableFinalResult = false;
             FirstTestEpisodeViewModel = new FirstTestEpisodeViewModel();
             FirstTestEpisodeViewModel.Parent = this;
             SecondTestEpisodeViewModel = new SecondTestEpisodeViewModel();

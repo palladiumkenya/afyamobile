@@ -23,26 +23,41 @@ namespace LiveHTS.Droid.Views
             this.EnsureBindingContextIsSet(savedInstanceState);
             var ignored = base.OnCreateView(inflater, container, savedInstanceState);
             var view = this.BindingInflate(Resource.Layout.FirstTestEpisodeView, null);
-
-
             var vm = new TestViewModel();
             vm.Parent = ViewModel;
-            ViewModel.AddTestCommandAction = () => {
+
+            ViewModel.AddTestCommandAction = () =>
+            {
+                vm.EditMode = false;
+
                 var dialogFragment = new TestFragment()
                 {
                     
                     DataContext = vm
                 };
                 
-                dialogFragment.Show(FragmentManager, "Episode01");
+                dialogFragment.Show(FragmentManager, "T1Episode01");
             };
 
             ViewModel.CloseTestCommandAction = () =>
             {
-                var frag= FragmentManager.FindFragmentByTag("Episode01");
+                var frag= FragmentManager.FindFragmentByTag("T1Episode01");
                 if(null!=frag)
-                    ((TestFragment)frag).DismissAllowingStateLoss();
+                    ((TestFragment)frag).Dismiss();
             };
+
+            ViewModel.EditTestCommandAction = () =>
+            {
+                vm.EditMode = true;
+                var dialogFragment = new TestFragment()
+                {
+
+                    DataContext = vm
+                };
+
+                dialogFragment.Show(FragmentManager, "T1Episode01");
+            };
+
             return view;
         }
     }
