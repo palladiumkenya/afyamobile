@@ -14,11 +14,16 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string TestName { get; set; }
         string TestNameResult { get; set; }
         List<ObsTestResult> Tests { get; set; }
+        List<TestTemplateWrap> HivTests { get; set; }
         CategoryItem SelectedTestResult { get; set; }
         List<CategoryItem> TestResults { get; set; }
+
         IMvxCommand AddTestCommand { get; }
         IMvxCommand CloseTestCommand { get; }
         Action AddTestCommandAction { get; set; }
         Action CloseTestCommandAction { get; set; }
+
+        void DeleteTest(ObsTestResult testResult);
+        void EditTest(ObsTestResult testResult);
     }
 }

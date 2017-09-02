@@ -47,6 +47,13 @@ namespace LiveHTS.Presentation.ViewModel
         private TraceDateDTO _selectedDate;
         private MvxCommand _showDateDialogCommand;
         private ITestEpisodeViewModel _parent;
+        private bool _editMode;
+
+        public bool EditMode
+        {
+            get { return _editMode; }
+            set { _editMode = value; }
+        }
 
         public ITestEpisodeViewModel Parent
         {
@@ -256,6 +263,35 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Results = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
             }
+            if (!EditMode)
+            {
+                Clear();
+            }
+            else
+            {
+                LoadTest();
+            }
+        }
+
+        private void LoadTest()
+        {
+            if (null != TestResult)
+            {
+                SelectedKit = Kits.FirstOrDefault(x=>x.ItemId==TestResult.Kit);
+                KitOther = TestResult.KitOther;
+                LotNumber = TestResult.LotNumber;
+                Expiry = TestResult.Expiry;
+                SelectedResult = Results.FirstOrDefault(x => x.ItemId == TestResult.Result);
+            }
+        }
+
+        private void Clear()
+        {
+            ShowKitOther = false;
+            Expiry = DateTime.Today;
+            KitOther =LotNumber=String.Empty;
+            SelectedKit = Kits.OrderBy(x => x.Rank).FirstOrDefault();
+            SelectedResult = Results.OrderBy(x => x.Rank).FirstOrDefault();
         }
 
         public void Init(string id)

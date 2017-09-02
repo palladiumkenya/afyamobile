@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:paddingRight="5dp"
         android:text="POSITIVE"
-        local:MvxBind="Text ResultDisplay"/>
+        local:MvxBind="Text TestTemplate.ResultDisplay"/>
     </LinearLayout>
 
     <LinearLayout
@@ -42,19 +42,20 @@
           android:layout_height="wrap_content"
           android:paddingRight="10dp"
           android:text="First Response Kit"
-          local:MvxBind="Text KitDisplay"/>
+          local:MvxBind="Text TestTemplate.KitDisplay"/>
         <TextView
           android:layout_width="50dp"
           android:layout_height="wrap_content"
-          android:text="Other:"
+          android:text="Name:"
           android:textAlignment="textEnd"
-          android:paddingRight="5dp"/>
+          android:paddingRight="5dp"
+          local:MvxBind="Visibility TestTemplate.ShowKitOther, Converter=Visibility"/>
         <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:paddingRight="2dp"
           android:text="Other Kit XXX"
-          local:MvxBind="Text KitOther" />
+          local:MvxBind="Text TestTemplate.KitOther;Visibility TestTemplate.ShowKitOther, Converter=Visibility" />
       </LinearLayout>
       <LinearLayout
         android:layout_width="match_parent"
@@ -76,7 +77,7 @@
           android:layout_height="wrap_content"
           android:paddingRight="2dp"
           android:text="123551212"
-          local:MvxBind="Text LotNumber"/>
+          local:MvxBind="Text TestTemplate.LotNumber"/>
 
         <TextView
           android:id="@+id/textView4"
@@ -92,10 +93,29 @@
           android:layout_weight="1"
           android:layout_height="wrap_content"
           android:text="20 AUG 2018"
-          local:MvxBind="Text Expiry, Converter=Dmy"
+          local:MvxBind="Text TestTemplate.Expiry, Converter=Dmy"
           android:paddingLeft="2dp"/>
       </LinearLayout>
     </LinearLayout>
+
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+
+  >
+
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Edit"
+      local:MvxBind="Click EditTestCommand"/>
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Delete"
+      local:MvxBind="Click RemoveTestCommand"/>
   </LinearLayout>
 
 </LinearLayout>

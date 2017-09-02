@@ -26,6 +26,11 @@ namespace LiveHTS.Presentation.ViewModel
         private ITestingViewModel _parent;
         private string _testNameResult;
         private IMvxCommand _closeTestCommand;
+        private ObsTestResult _selectedTest;
+        private IMvxCommand<ObsTestResult> _editTestCommand;
+        private IMvxCommand _deleteTestCommand;
+        private IMvxCommand<ObsTestResult> _selectedTestCommand;
+        private List<TestTemplateWrap> _hivTests;
 
         public ITestingViewModel Parent
         {
@@ -58,6 +63,13 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public List<TestTemplateWrap> HivTests
+        {
+            get { return _hivTests; }
+            set { _hivTests = value; }
+        }
+
+
         public CategoryItem SelectedTestResult
         {
             get { return _selectedTestResult; }
@@ -79,6 +91,21 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public IMvxCommand<ObsTestResult> SelectedTestCommand
+        {
+            get { return _selectedTestCommand; }
+        }
+
+        public IMvxCommand<ObsTestResult> EditTestCommand
+        {
+            get { return _editTestCommand; }
+        }
+
+        public IMvxCommand DeleteTestCommand
+        {
+            get { return _deleteTestCommand; }
+        }
+
         private void CloseTest()
         {
             CloseTestCommandAction?.Invoke();
@@ -87,6 +114,15 @@ namespace LiveHTS.Presentation.ViewModel
         public Action AddTestCommandAction { get; set; }
 
         public Action CloseTestCommandAction { get; set; }
+        public void DeleteTest(ObsTestResult testResult)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditTest(ObsTestResult testResult)
+        {
+            throw new NotImplementedException();
+        }
 
         public IMvxCommand AddTestCommand
         {

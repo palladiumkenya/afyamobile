@@ -27,14 +27,13 @@ namespace LiveHTS.Droid.Views
 
             var vm = new TestViewModel();
             vm.Parent = ViewModel;
-            
-
             ViewModel.AddTestCommandAction = () => {
                 var dialogFragment = new TestFragment()
                 {
+                    
                     DataContext = vm
                 };
-
+                
                 dialogFragment.Show(FragmentManager, "Episode01");
             };
 
@@ -42,7 +41,7 @@ namespace LiveHTS.Droid.Views
             {
                 var frag= FragmentManager.FindFragmentByTag("Episode01");
                 if(null!=frag)
-                    ((TestFragment)frag).Dismiss();
+                    ((TestFragment)frag).DismissAllowingStateLoss();
             };
             return view;
         }

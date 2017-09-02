@@ -13,6 +13,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface ITestViewModel
     { 
+        bool EditMode { get; set; }
         ITestEpisodeViewModel Parent { get; set; }
         string ErrorSummary { get; set; }
         ValidationHelper Validator { get; }

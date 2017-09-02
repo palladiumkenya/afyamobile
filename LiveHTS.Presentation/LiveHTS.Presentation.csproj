@@ -78,11 +78,13 @@
     <Compile Include="Interfaces\IObsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISummaryViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\ITestTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\ITraceTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFormTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\ITestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\ITraceTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IQuestionTemplateWrap.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="ViewModel\FirstTestEpisodeViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
+    <Compile Include="ViewModel\Template\TestTemplate.cs" />
     <Compile Include="ViewModel\TestViewModel.cs" />
     <Compile Include="ViewModel\LinkageViewModel.cs" />
     <Compile Include="ViewModel\LinkedToCareViewModel.cs" />
@@ -114,6 +117,7 @@
     <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
     <Compile Include="ViewModel\Template\PartnerTemplate.cs" />
     <Compile Include="ViewModel\Template\TraceTemplate.cs" />
+    <Compile Include="ViewModel\Wrapper\TestTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\FormTemplateWrap.cs" />
