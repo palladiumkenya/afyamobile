@@ -22,7 +22,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         ObsFinalTestResult ObsFinalTestResult { get; set; }
        
 
-        Guid EndResult { get; set; }
+        Guid FinalResult { get; set; }
         CategoryItem SelectedFinalTestResult { get; set; }
         List<CategoryItem> FinalTestResults { get; set; }
 
@@ -37,6 +37,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid SelfTestOption { get; set; }
         CategoryItem SelectedSelfTest { get; set; }
         List<CategoryItem> SelfTestOptions { get; set; }
+
+        List<CategoryItem> Kits { get; set; }
+        
 
         IMvxCommand SaveTestingCommand { get; }
 

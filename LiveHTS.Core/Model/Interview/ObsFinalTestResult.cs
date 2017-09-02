@@ -12,13 +12,13 @@ namespace LiveHTS.Core.Model.Interview
     {
         [Indexed]
         public Guid? FirstTestResult { get; set; }
-
+        public string FirstTestResultCode { get; set; }
         [Indexed]
         public Guid? SecondTestResult { get; set; }
-
+        public string SecondTestResultCode { get; set; }
         [Indexed]
-        public Guid? EndResult { get; set; }
-
+        public Guid? FinalResult { get; set; }
+        public string FinalResultCode { get; set; }
         [Indexed]
         public Guid? ResultGiven { get; set; }
         [Indexed]
@@ -40,7 +40,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = id;
             FirstTestResult = firstTestResult;
             SecondTestResult = secondTestResult;
-            EndResult = endResult;
+            FinalResult = endResult;
             EncounterId = encounterId;
         }
 
@@ -79,7 +79,7 @@ namespace LiveHTS.Core.Model.Interview
 
         public void UpdateSetEndResult(Guid? result)
         {
-            EndResult = result.IsNullOrEmpty() ? null : result;
+            FinalResult = result.IsNullOrEmpty() ? null : result;
         }
 
         public void ProcessEndResult(List<CategoryItem> _categoryItems)

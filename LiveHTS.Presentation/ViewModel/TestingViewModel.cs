@@ -19,6 +19,7 @@ using LiveHTS.Presentation.ViewModel.Wrapper;
 using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmValidation;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -26,7 +27,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
 
         private Client _client;
-        private ObservableCollection<HIVTestTemplateWrap> _firstTests = new ObservableCollection<HIVTestTemplateWrap>();
+        
         private readonly ISettings _settings;
         private readonly IDashboardService _dashboardService;
         private readonly ILookupService _lookupService;
@@ -55,6 +56,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _selfTestOption;
         private EncounterType _encounterType;
         private IMvxCommand _saveTestingCommand;
+        private List<CategoryItem> _kits;
 
         public ValidationHelper Validator { get; set; }
         public string ErrorSummary
@@ -90,10 +92,10 @@ namespace LiveHTS.Presentation.ViewModel
             set { _obsFinalTestResult = value; RaisePropertyChanged(() => ObsFinalTestResult);}
         }
 
-        public Guid EndResult
+        public Guid FinalResult
         {
             get { return _endResult; }
-            set { _endResult = value; RaisePropertyChanged(() => EndResult); }
+            set { _endResult = value; RaisePropertyChanged(() => FinalResult); }
         }      
         public CategoryItem SelectedFinalTestResult
         {
@@ -160,6 +162,12 @@ namespace LiveHTS.Presentation.ViewModel
             set { _selfTestOptions = value; RaisePropertyChanged(() => SelfTestOptions); }
         }
 
+        public List<CategoryItem> Kits
+        {
+            get { return _kits; }
+            set { _kits = value; RaisePropertyChanged(() => Kits);}
+        }
+
         public IMvxCommand SaveTestingCommand
         {
             get
@@ -213,18 +221,60 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string formId,string encounterTypeId, string mode, string clientId, string encounterId)
         {
-            SecondHIVTestViewModel.SecondTestResults = FirstHIVTestViewModel.FirstTestResults = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
+            var results = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
+            SecondHIVTestViewModel.SecondTestResults = FirstHIVTestViewModel.FirstTestResults = results;
 
             FinalTestResults = _lookupService.GetCategoryItems("FinalResult", true).ToList();
             ResultGivenOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
             CoupleDiscordantOptions = _lookupService.GetCategoryItems("YesNoNa", true).ToList();
             SelfTestOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
 
+            Kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
+            
+            EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
+
+            _settings.AddOrUpdateValue("lookup.TestResult", JsonConvert.SerializeObject(results));
+            _settings.AddOrUpdateValue("lookup.FinalResult", JsonConvert.SerializeObject(FinalTestResults));
+            _settings.AddOrUpdateValue("lookup.ResultGivenOptions", JsonConvert.SerializeObject(ResultGivenOptions));
+            _settings.AddOrUpdateValue("lookup.CoupleDiscordantOptions", JsonConvert.SerializeObject(CoupleDiscordantOptions));
+            _settings.AddOrUpdateValue("lookup.SelfTestOptions", JsonConvert.SerializeObject(SelfTestOptions));
+            _settings.AddOrUpdateValue("lookup.KitName", JsonConvert.SerializeObject(Kits));
+            _settings.AddOrUpdateValue("lookup.EncounterType", JsonConvert.SerializeObject(EncounterType));
+
+
             // Load Client
-            Client = _dashboardService.LoadClient(new Guid(clientId));
+
+            var clientJson = _settings.GetValue("client", "");           
+       
+            if (null == Client)
+            {
+                if (!string.IsNullOrWhiteSpace(clientJson))
+                {
+                    Client = JsonConvert.DeserializeObject<Client>(clientJson);
+                }
+                else
+                {
+                    Client = _dashboardService.LoadClient(new Guid(clientId));
+                    _settings.AddOrUpdateValue("client", JsonConvert.SerializeObject(Client));
+                }
+            }
 
             // Load or Create Encounter
-            EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
+
+            var etypeJson = _settings.GetValue("lookup.EncounterType", "");
+
+            if (null == EncounterType)
+            {
+                if (!string.IsNullOrWhiteSpace(etypeJson))
+                {
+                    EncounterType = JsonConvert.DeserializeObject<EncounterType>(etypeJson);
+                }
+                else
+                {
+                    EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
+                    _settings.AddOrUpdateValue("client", JsonConvert.SerializeObject(EncounterType));
+                }
+            }            
 
             if (mode == "new")
             {
@@ -243,6 +293,9 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 throw new ArgumentException("Encounter has not been Initialized");
             }
+
+            var encounterJson = JsonConvert.SerializeObject(Encounter);
+            _settings.AddOrUpdateValue("client.encounter", encounterJson);
 
             //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
         }
@@ -295,8 +348,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void LoadTests()
         {
-            var kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
-            var results = _lookupService.GetCategoryItems("TestResult", true, "[Select Result]").ToList();
+          
 
             if (null != Encounter)
             {
@@ -340,7 +392,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null != finalResult)
                 {
-                    var result = FinalTestResults.FirstOrDefault(x => x.ItemId == finalResult.EndResult);
+                    var result = FinalTestResults.FirstOrDefault(x => x.ItemId == finalResult.FinalResult);
                     if (null != result)
                     {
                         SelectedFinalTestResult = result;

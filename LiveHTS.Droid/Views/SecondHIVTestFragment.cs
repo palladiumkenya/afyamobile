@@ -11,7 +11,7 @@ namespace LiveHTS.Droid.Views
 {
 //    [MvxFragment(typeof(HIVTestViewModel), Resource.Id.content_frame)]
 //    [Register("livehts.droid.views.SecondHIVTestFragment")]
-    public class SecondHIVTestFragment : MvxFragment<SecondHIVTestViewModel>
+    public class SecondHIVTestFragment : MvxFragment
     {
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {

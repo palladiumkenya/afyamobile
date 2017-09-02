@@ -23,9 +23,9 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _addTestCommand;
         private CategoryItem _selectedFirstTestResult;
         private List<CategoryItem> _firstTestResults;
-        private IHIVTestViewModel _parent;
+        private ITestingViewModel _parent;
 
-        public IHIVTestViewModel Parent
+        public ITestingViewModel Parent
         {
             get { return _parent; }
             set { _parent = value; }
@@ -58,6 +58,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _firstTestResults; }
             set { _firstTestResults = value; RaisePropertyChanged(() => FirstTestResults); }
         }
+        public Action AddTestCommandAction { get; set; }
 
         public IMvxCommand AddFirstTestCommand
         {
@@ -81,14 +82,14 @@ namespace LiveHTS.Presentation.ViewModel
                     return true;
 
                 //Is initial add
-                if (FirstTests.Count > 0 && FirstTests.Any(x => x.HIVTestTemplate.Result == Guid.Empty))
+                if (FirstTests.Count > 0 && FirstTests.Any(x => x.Result == Guid.Empty))
                     return false;
 
                 //Has invalid
                 if (
                     FirstTests.Count > 0 &&
-                    FirstTests.Any(x => x.HIVTestTemplate.SelectedResult.Item.Code == "P" ||
-                                        x.HIVTestTemplate.SelectedResult.Item.Code == "N")
+                    FirstTests.Any(x => x.ResultCode == "P" ||
+                                        x.ResultCode == "N")
 
                 )
                     return false;
@@ -100,14 +101,15 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void AddFirstTest()
         {
-            int lastAttempt = FirstTests.Max(x => x.HIVTestTemplate.Attempt);
-            lastAttempt++;
-            var obs = ObsTestResult.CreateNew(FirstTestName, lastAttempt, Parent.Encounter.Id);
-
-            var list = Parent.Encounter.ObsTestResults.ToList();
-            list.Add(obs);
-            Parent.Encounter.ObsTestResults = list;
-            Parent.Encounter = Parent.Encounter;
+            AddTestCommandAction?.Invoke();
+            //            int lastAttempt = FirstTests.Max(x => x.HIVTestTemplate.Attempt);
+            //            lastAttempt++;
+            //            var obs = ObsTestResult.CreateNew(FirstTestName, lastAttempt, Parent.Encounter.Id);
+            //
+            //            var list = Parent.Encounter.ObsTestResults.ToList();
+            //            list.Add(obs);
+            //            Parent.Encounter.ObsTestResults = list;
+            //            Parent.Encounter = Parent.Encounter;
         }
 
 

@@ -11,7 +11,7 @@ using MvvmCross.Droid.Support.V4;
 namespace LiveHTS.Droid.Activities
 {
     [Activity(Label = "HIV Tests",  NoHistory = true, ParentActivity = typeof(DashboardViewModel))]
-    public class HIVTestActivity : MvxCachingFragmentActivity<HIVTestViewModel>
+    public class HIVTestActivity : MvxCachingFragmentActivity<TestingViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -22,7 +22,7 @@ namespace LiveHTS.Droid.Activities
 
             var fragments = new List<MvxCachingFragmentStatePagerAdapter.FragmentInfo>();
             fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo("FIRST TEST", typeof(FirstHIVTestFragment), ViewModel.FirstHIVTestViewModel));
-            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo("SECOND TEST", typeof(SecondHIVTestFragment), ViewModel.SecondHIVTestViewModel));
+           // fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo("SECOND TEST", typeof(SecondHIVTestFragment), ViewModel.SecondHIVTestViewModel));
 
             viewPager.Adapter = new MvxCachingFragmentStatePagerAdapter(this, SupportFragmentManager, fragments);
            var pageIndicator = FindViewById<PagerSlidingTabStrip>(Resource.Id.content_frame);

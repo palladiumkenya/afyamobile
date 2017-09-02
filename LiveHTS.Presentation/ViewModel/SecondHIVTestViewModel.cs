@@ -18,34 +18,14 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class SecondHIVTestViewModel : MvxViewModel, ISecondHIVTestViewModel
     {
-
-        private Client _client;
-        private string _firstTestName = "HIV Test 1";
-        private ObservableCollection<HIVTestTemplateWrap> _firstTests = new ObservableCollection<HIVTestTemplateWrap>();
-        private readonly ISettings _settings;
-        private readonly IDashboardService _dashboardService;
-        private readonly ILookupService _lookupService;
-        private readonly IHIVTestingService _testingService;
-        private Guid _encounterTypeId;
+        private string _SecondTestName = "HIV Test 1";
+        private List<ObsTestResult> _SecondTests = new List<ObsTestResult>();
         private IMvxCommand _addTestCommand;
-        private Encounter _encounter;
-        private IMvxCommand _saveCommand;
-        private CategoryItem _selectedFirstTestResult;
-        private List<CategoryItem> _firstTestResults;
-        private string _secondTestName = "HIV Test 2";
-        private ObservableCollection<HIVTestTemplateWrap> _secondTests;
         private CategoryItem _selectedSecondTestResult;
-        private List<CategoryItem> _secondTestResults;
-        private IMvxCommand _addSecondTestCommand;
-        private CategoryItem _selectedFinalTestResult;
-        private List<CategoryItem> _finalTestResults;
-        private IMvxCommand _showDateCommand;
-        private IMvxCommand _showDateDialogCommand;
-        private ExpiryDateDTO _selectedDate;
-        private IHIVTestViewModel _parent;
+        private List<CategoryItem> _SecondTestResults;
+        private ITestingViewModel _parent;
 
-
-        public IHIVTestViewModel Parent
+        public ITestingViewModel Parent
         {
             get { return _parent; }
             set { _parent = value; }
@@ -53,15 +33,16 @@ namespace LiveHTS.Presentation.ViewModel
 
         public string SecondTestName
         {
-            get { return _secondTestName; }
-            set { _secondTestName = value; RaisePropertyChanged(() => SecondTestName); }
+            get { return _SecondTestName; }
+            set { _SecondTestName = value; RaisePropertyChanged(() => SecondTestName); }
         }
+
         public List<ObsTestResult> SecondTests
         {
-            get { return _secondTests; }
+            get { return _SecondTests; }
             set
             {
-                _secondTests = value; RaisePropertyChanged(() => SecondTests);
+                _SecondTests = value; RaisePropertyChanged(() => SecondTests);
                 AddSecondTestCommand.RaiseCanExecuteChanged();
             }
         }
@@ -74,41 +55,18 @@ namespace LiveHTS.Presentation.ViewModel
 
         public List<CategoryItem> SecondTestResults
         {
-            get { return _secondTestResults; }
-            set { _secondTestResults = value; RaisePropertyChanged(() => SecondTestResults); }
+            get { return _SecondTestResults; }
+            set { _SecondTestResults = value; RaisePropertyChanged(() => SecondTestResults); }
         }
-
-        public CategoryItem SelectedFinalTestResult
-        {
-            get { return _selectedFinalTestResult; }
-            set { _selectedFinalTestResult = value; RaisePropertyChanged(() => SelectedFinalTestResult); }
-        }
-
-        public List<CategoryItem> FinalTestResults
-        {
-            get { return _finalTestResults; }
-            set { _finalTestResults = value; RaisePropertyChanged(() => FinalTestResults); }
-        }
+        public Action AddTestCommandAction { get; set; }
 
         public IMvxCommand AddSecondTestCommand
         {
             get
             {
-                _addSecondTestCommand = _addSecondTestCommand ?? new MvxCommand(AddSecondTest, CanAddSecondTest);
-                return _addSecondTestCommand;
+                _addTestCommand = _addTestCommand ?? new MvxCommand(AddSecondTest, CanAddSecondTest);
+                return _addTestCommand;
             }
-        }
-
-        private void AddSecondTest()
-        {
-            int lastAttempt = SecondTests.Max(x => x.HIVTestTemplate.Attempt);
-            lastAttempt++;
-            var obs = ObsTestResult.CreateNew(SecondTestName, lastAttempt, Parent.Encounter.Id);
-
-            var list = Parent.Encounter.ObsTestResults.ToList();
-            list.Add(obs);
-            Parent.Encounter.ObsTestResults = list;
-            Parent.Encounter = Parent.Encounter;
         }
 
         private bool CanAddSecondTest()
@@ -124,14 +82,14 @@ namespace LiveHTS.Presentation.ViewModel
                     return true;
 
                 //Is initial add
-                if (SecondTests.Count > 0 && SecondTests.Any(x => x.HIVTestTemplate.Result == Guid.Empty))
+                if (SecondTests.Count > 0 && SecondTests.Any(x => x.Result == Guid.Empty))
                     return false;
 
                 //Has invalid
                 if (
                     SecondTests.Count > 0 &&
-                    SecondTests.Any(x => x.HIVTestTemplate.SelectedResult.Item.Code == "P" ||
-                                         x.HIVTestTemplate.SelectedResult.Item.Code == "N")
+                    SecondTests.Any(x => x.ResultCode == "P" ||
+                                        x.ResultCode == "N")
 
                 )
                     return false;
@@ -140,6 +98,21 @@ namespace LiveHTS.Presentation.ViewModel
 
             return true;
         }
+
+        private void AddSecondTest()
+        {
+            AddTestCommandAction?.Invoke();
+            //            int lastAttempt = SecondTests.Max(x => x.HIVTestTemplate.Attempt);
+            //            lastAttempt++;
+            //            var obs = ObsTestResult.CreateNew(SecondTestName, lastAttempt, Parent.Encounter.Id);
+            //
+            //            var list = Parent.Encounter.ObsTestResults.ToList();
+            //            list.Add(obs);
+            //            Parent.Encounter.ObsTestResults = list;
+            //            Parent.Encounter = Parent.Encounter;
+        }
+
+
 
     }
 }

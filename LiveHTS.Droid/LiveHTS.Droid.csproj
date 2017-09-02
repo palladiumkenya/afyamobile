@@ -195,7 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\LinkageActivity.cs" />
-    <Compile Include="Activities\ClientHIVTestActivity.cs" />
     <Compile Include="Activities\ClientDashboardActivity.cs" />
     <Compile Include="Activities\ClientEncounterActivity.cs" />
     <Compile Include="Activities\ClientRegistrationActivity.cs" />

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using LiveHTS.Presentation.Validations;
@@ -11,6 +13,7 @@ using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmValidation;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -29,7 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _showKitOther;
         private CategoryItem _selectedKit;
         private CategoryItem _selectedResult;
-        private IHIVTestTemplateWrap _hivTestTemplateWrap;
+        
         private Guid _encounterId;
         private string _errorSummary;
         private string _resultCode;
@@ -38,7 +41,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _cancelTestCommand;
 
         private readonly IHIVTestingService _testingService;
-
+        private readonly ISettings _settings;
 
         public string ErrorSummary
         {
@@ -191,45 +194,61 @@ namespace LiveHTS.Presentation.ViewModel
 
             _testingService =  Mvx.Resolve<IHIVTestingService>();
 
-//            Kits = kits;
-//            Results = results;
-//
-//            if (null != Kits && Kits.Count > 0)
-//            {
-//                var kit = Kits.FirstOrDefault(x => x.ItemId == testResult.Kit);
-//                if (null != kit)
-//                {
-//                    SelectedKit = kit;
-//                }
-//                else
-//                {
-//                    SelectedKit = Kits.OrderBy(x => x.Rank).First();
-//                }
-//            }
-//
-//            if (null != Results && Results.Count > 0)
-//            {
-//                var result = Results.FirstOrDefault(x => x.ItemId == testResult.Result);
-//                if (null != result)
-//                {
-//
-//                    SelectedResult = result;
-//                }
-//                else
-//                {
-//                    SelectedResult = Results.OrderBy(x => x.Rank).First();
-//                }
-//
-//            }
-//
-//            Id = testResult.Id;
-//            TestName = testResult.TestName;
-//            Attempt = testResult.Attempt;
-//            KitOther = testResult.KitOther;
-//            LotNumber = testResult.LotNumber;
-//            Expiry = testResult.Expiry;
-//            EncounterId = testResult.EncounterId;
-//            ResultCode = testResult.ResultCode;
+         //   Kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
+
+         //   _settings.AddOrUpdateValue("lookup.TestResult", JsonConvert.SerializeObject(results));
+           
+
+            // Load Client
+
+            var kitsJson = _settings.GetValue("KitName", "");
+
+               if (!string.IsNullOrWhiteSpace(kitsJson))
+                {
+                    Client = JsonConvert.DeserializeObject<Client>(kitsJson);
+                }
+            
+
+
+            //            Kits = kits;
+            //            Results = results;
+            //
+            //            if (null != Kits && Kits.Count > 0)
+            //            {
+            //                var kit = Kits.FirstOrDefault(x => x.ItemId == testResult.Kit);
+            //                if (null != kit)
+            //                {
+            //                    SelectedKit = kit;
+            //                }
+            //                else
+            //                {
+            //                    SelectedKit = Kits.OrderBy(x => x.Rank).First();
+            //                }
+            //            }
+            //
+            //            if (null != Results && Results.Count > 0)
+            //            {
+            //                var result = Results.FirstOrDefault(x => x.ItemId == testResult.Result);
+            //                if (null != result)
+            //                {
+            //
+            //                    SelectedResult = result;
+            //                }
+            //                else
+            //                {
+            //                    SelectedResult = Results.OrderBy(x => x.Rank).First();
+            //                }
+            //
+            //            }
+            //
+            //            Id = testResult.Id;
+            //            TestName = testResult.TestName;
+            //            Attempt = testResult.Attempt;
+            //            KitOther = testResult.KitOther;
+            //            LotNumber = testResult.LotNumber;
+            //            Expiry = testResult.Expiry;
+            //            EncounterId = testResult.EncounterId;
+            //            ResultCode = testResult.ResultCode;
         }
 
         public void Init(string id)
@@ -288,7 +307,10 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void SaveTest()
         {
-            throw new NotImplementedException();
+            if (Validate())
+            {
+                
+            }
         }
         private void CancelTest()
         {

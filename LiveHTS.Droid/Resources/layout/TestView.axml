@@ -12,7 +12,7 @@
     android:layout_height="wrap_content"
     android:text="Error"
     android:textColor="@android:color/holo_red_dark"
-    local:MvxBind="Text HIVTestTemplate.ErrorSummary" />
+    local:MvxBind="Text ErrorSummary" />
 
   <TextView
     android:id="@+id/textViewKit"
@@ -24,18 +24,18 @@
     android:id="@+id/spinnerKit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    local:MvxBind="ItemsSource HIVTestTemplate.Kits;SelectedItem HIVTestTemplate.SelectedKit" />
+    local:MvxBind="ItemsSource Kits;SelectedItem SelectedKit" />
 
   <android.support.design.widget.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    local:MvxBind="Visibility HIVTestTemplate.ShowKitOther, Converter=ShowControl">
+    local:MvxBind="Visibility ShowKitOther, Converter=ShowControl">
 
     <EditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:hint="other kit name"
-      local:MvxBind="Text HIVTestTemplate.KitOther;Visibility HIVTestTemplate.ShowKitOther, Converter=ShowControl" />
+      local:MvxBind="Text KitOther;Visibility ShowKitOther, Converter=ShowControl" />
   </android.support.design.widget.TextInputLayout>
 
   <android.support.design.widget.TextInputLayout
@@ -47,7 +47,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:hint="Lot"
-      local:MvxBind="Text HIVTestTemplate.LotNumber" />
+      local:MvxBind="Text LotNumber" />
   </android.support.design.widget.TextInputLayout>
 
   <android.support.design.widget.TextInputLayout
@@ -61,7 +61,7 @@
       android:clickable="true"
       android:editable="false"
       android:hint="Expiry"
-      local:MvxBind="Text HIVTestTemplate.Expiry, Converter=Dmy; Click ShowDateDialogCommand" />
+      local:MvxBind="Text Expiry, Converter=Dmy; Click ShowDateDialogCommand" />
   </android.support.design.widget.TextInputLayout>
 
   <TextView
@@ -74,7 +74,7 @@
     android:id="@+id/spinnerKit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    local:MvxBind="ItemsSource HIVTestTemplate.Results; SelectedItem HIVTestTemplate.SelectedResult" />
+    local:MvxBind="ItemsSource Results; SelectedItem SelectedResult" />
 
   <LinearLayout
     android:layout_width="match_parent"

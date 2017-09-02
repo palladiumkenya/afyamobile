@@ -9,7 +9,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface ISecondHIVTestViewModel : IMvxViewModel
     {
-        IHIVTestViewModel Parent { get; set; }
+     //   IHIVTestViewModel Parent { get; set; }
         string SecondTestName { get; set; }
         List<ObsTestResult> SecondTests { get; set; }
         CategoryItem SelectedSecondTestResult { get; set; }
