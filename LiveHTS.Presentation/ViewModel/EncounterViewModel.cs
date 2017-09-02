@@ -122,7 +122,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (encounterTemplate.FormDisplay.ToLower().Contains("Test Form".ToLower()))
             {
-                ShowViewModel<TestViewModel>(new
+                ShowViewModel<TestingViewModel>(new
                 {
                     formId = encounterTemplate.FormId.ToString(),
                     encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),

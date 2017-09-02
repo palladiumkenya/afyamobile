@@ -146,25 +146,25 @@ namespace LiveHTS.Infrastructure.Seed.Lookup
   {
     ^Id^: ^b25efb78-852f-11e7-bb31-be2e44b06b34^,
     ^Code^: ^N^,
-    ^Display^: ^N: Negative (non-reactive)^,
+    ^Display^: ^Negative^,
     ^Voided^: 0
   },
   {
     ^Id^: ^b25efd8a-852f-11e7-bb31-be2e44b06b34^,
     ^Code^: ^P^,
-    ^Display^: ^P: Positive (Reactive)^,
+    ^Display^: ^Positive^,
     ^Voided^: 0
   },
   {
     ^Id^: ^b25f001e-852f-11e7-bb31-be2e44b06b34^,
     ^Code^: ^I^,
-    ^Display^: ^I: Invalid^,
+    ^Display^: ^Invalid^,
     ^Voided^: 0
   },
   {
     ^Id^: ^b25f017c-852f-11e7-bb31-be2e44b06b34^,
     ^Code^: ^Ic^,
-    ^Display^: ^Ic: Inconclusive^,
+    ^Display^: ^Inconclusive^,
     ^Voided^: 0
   },
   {

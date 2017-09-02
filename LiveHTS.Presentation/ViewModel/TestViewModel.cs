@@ -6,6 +6,8 @@ using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using LiveHTS.Presentation.Validations;
@@ -38,10 +40,25 @@ namespace LiveHTS.Presentation.ViewModel
         private string _resultCode;
         private ObsTestResult _testResult;
         private IMvxCommand _saveTestCommand;
-        private IMvxCommand _cancelTestCommand;
+        
 
         private readonly IHIVTestingService _testingService;
         private readonly ISettings _settings;
+        private TraceDateDTO _selectedDate;
+        private MvxCommand _showDateDialogCommand;
+        private ITestEpisodeViewModel _parent;
+
+        public ITestEpisodeViewModel Parent
+        {
+            get { return _parent; }
+            set
+            {
+                _parent = value;
+
+                TestName = Parent.TestName;
+                EncounterId = Parent.Parent.Encounter.Id;
+            }
+        }
 
         public string ErrorSummary
         {
@@ -138,16 +155,48 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public IMvxCommand CancelTestCommand
+
+
+
+        public event EventHandler<ChangedDateEvent> ChangedDate;
+        public TraceDateDTO SelectedDate
+        {
+            get { return _selectedDate; }
+            set
+            {
+                _selectedDate = value;
+                RaisePropertyChanged(() => SelectedDate);
+                UpdatePromiseDate(SelectedDate);
+            }
+        }
+        public IMvxCommand ShowDateDialogCommand
         {
             get
             {
-                _cancelTestCommand = _cancelTestCommand ?? new MvxCommand(CancelTest);
-                return _cancelTestCommand;
+                _showDateDialogCommand = _showDateDialogCommand ?? new MvxCommand(ShowDateDialog);
+                return _showDateDialogCommand;
             }
         }
+        private void ShowDateDialog()
+        {
 
-    
+            ShowDatePicker(Guid.Empty, Expiry);
+        }
+        private void UpdatePromiseDate(TraceDateDTO selectedDate)
+        {
+            Expiry = selectedDate.EventDate;
+        }
+        public void ShowDatePicker(Guid refId, DateTime refDate)
+        {
+            OnChangedDate(new ChangedDateEvent(refId, refDate));
+        }
+        protected virtual void OnChangedDate(ChangedDateEvent e)
+        {
+            ChangedDate?.Invoke(this, e);
+        }
+
+
+
 
         public CategoryItem SelectedKit
         {
@@ -191,70 +240,46 @@ namespace LiveHTS.Presentation.ViewModel
         public TestViewModel()
         {
             Validator = new ValidationHelper();
-
-            _testingService =  Mvx.Resolve<IHIVTestingService>();
-
-         //   Kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
-
-         //   _settings.AddOrUpdateValue("lookup.TestResult", JsonConvert.SerializeObject(results));
-           
-
-            // Load Client
-
-            var kitsJson = _settings.GetValue("KitName", "");
-
-               if (!string.IsNullOrWhiteSpace(kitsJson))
-                {
-                    Client = JsonConvert.DeserializeObject<Client>(kitsJson);
-                }
+            Expiry=DateTime.Today;
             
+            _testingService =  Mvx.Resolve<IHIVTestingService>();
+            _settings = Mvx.Resolve<ISettings>();
 
+            var kitsJson = _settings.GetValue("lookup.KitName", "");
+            var resultsJson = _settings.GetValue("lookup.TestResult", "");
 
-            //            Kits = kits;
-            //            Results = results;
-            //
-            //            if (null != Kits && Kits.Count > 0)
-            //            {
-            //                var kit = Kits.FirstOrDefault(x => x.ItemId == testResult.Kit);
-            //                if (null != kit)
-            //                {
-            //                    SelectedKit = kit;
-            //                }
-            //                else
-            //                {
-            //                    SelectedKit = Kits.OrderBy(x => x.Rank).First();
-            //                }
-            //            }
-            //
-            //            if (null != Results && Results.Count > 0)
-            //            {
-            //                var result = Results.FirstOrDefault(x => x.ItemId == testResult.Result);
-            //                if (null != result)
-            //                {
-            //
-            //                    SelectedResult = result;
-            //                }
-            //                else
-            //                {
-            //                    SelectedResult = Results.OrderBy(x => x.Rank).First();
-            //                }
-            //
-            //            }
-            //
-            //            Id = testResult.Id;
-            //            TestName = testResult.TestName;
-            //            Attempt = testResult.Attempt;
-            //            KitOther = testResult.KitOther;
-            //            LotNumber = testResult.LotNumber;
-            //            Expiry = testResult.Expiry;
-            //            EncounterId = testResult.EncounterId;
-            //            ResultCode = testResult.ResultCode;
+            if (!string.IsNullOrWhiteSpace(kitsJson))
+            {
+                Kits = JsonConvert.DeserializeObject<List<CategoryItem>>(kitsJson);
+            }
+            if (!string.IsNullOrWhiteSpace(resultsJson))
+            {
+                Results = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
+            }
         }
 
         public void Init(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return;
+        }
+
+        public override void ViewAppeared()
+        {
+            // Load Client
+
+            var kitsJson = _settings.GetValue("lookup.KitName", "");
+            var resultsJson = _settings.GetValue("lookup.TestResult", "");
+
+            if (!string.IsNullOrWhiteSpace(kitsJson))
+            {
+                Kits = JsonConvert.DeserializeObject<List<CategoryItem>>(kitsJson);
+            }
+            if (!string.IsNullOrWhiteSpace(resultsJson))
+            {
+                Results = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
+            }
+
         }
 
         public bool Validate()
@@ -309,13 +334,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (Validate())
             {
-                
+                _testingService.SaveTest(TestResult);
+                Parent.Parent.Referesh(TestResult.EncounterId);
+                Parent.CloseTestCommand.Execute();
             }
         }
-        private void CancelTest()
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public bool CanSaveTest()
         {
@@ -334,7 +358,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private ObsTestResult GenerateTest()
         {
-            var obs= ObsTestResult.Create(Id,TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId,ResultCode);
+            var obs= ObsTestResult.Create(TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId,ResultCode);
             obs.IsValid = false;
             if (null != SelectedResult.Item)
             {

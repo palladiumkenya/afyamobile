@@ -7,6 +7,12 @@
               android:padding="10dp">
 
   <TextView
+    
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    local:MvxBind="Text TestName"/>
+  
+  <TextView
     android:id="@+id/textViewError"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,13 +35,13 @@
   <android.support.design.widget.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    local:MvxBind="Visibility ShowKitOther, Converter=ShowControl">
+    local:MvxBind="Visibility ShowKitOther, Converter=Visibility">
 
     <EditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="other kit name"
-      local:MvxBind="Text KitOther;Visibility ShowKitOther, Converter=ShowControl" />
+      android:hint="Specify kit name"
+      local:MvxBind="Text KitOther;Visibility ShowKitOther, Converter=Visibility" />
   </android.support.design.widget.TextInputLayout>
 
   <android.support.design.widget.TextInputLayout
@@ -85,17 +91,8 @@
       android:id="@+id/buttonSave"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
       android:text="Save"
       local:MvxBind="Click SaveTestCommand" />
-
-    <Button
-      android:id="@+id/buttonCancel"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:text="Cancel"
-      local:MvxBind="Click CancelTestCommand" />
   </LinearLayout>
 </LinearLayout>
 

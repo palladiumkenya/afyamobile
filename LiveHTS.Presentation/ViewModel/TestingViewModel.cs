@@ -64,8 +64,8 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _errorSummary; }
             set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary); }
         }
-        public IFirstHIVTestViewModel FirstHIVTestViewModel { get; set; }
-        public ISecondHIVTestViewModel SecondHIVTestViewModel { get; set; }
+        public ITestEpisodeViewModel FirstTestEpisodeViewModel { get; set; }
+        public ITestEpisodeViewModel SecondTestEpisodeViewModel { get; set; }
 
         public EncounterType EncounterType
         {
@@ -213,16 +213,18 @@ namespace LiveHTS.Presentation.ViewModel
             _testingService = testingService;
             _settings = settings;
 
-            FirstHIVTestViewModel = new FirstHIVTestViewModel();
-            SecondHIVTestViewModel = new SecondHIVTestViewModel();
+            FirstTestEpisodeViewModel = new FirstTestEpisodeViewModel();
+            FirstTestEpisodeViewModel.Parent = this;
+            SecondTestEpisodeViewModel = new SecondTestEpisodeViewModel();
+            SecondTestEpisodeViewModel.Parent = this;
             Validator=new ValidationHelper();
         }
 
 
         public void Init(string formId,string encounterTypeId, string mode, string clientId, string encounterId)
         {
-            var results = _lookupService.GetCategoryItems("TestResult", true, "").ToList();
-            SecondHIVTestViewModel.SecondTestResults = FirstHIVTestViewModel.FirstTestResults = results;
+            var results = _lookupService.GetCategoryItems("TestResult", true, "[Select Result]").ToList();
+            SecondTestEpisodeViewModel.TestResults = FirstTestEpisodeViewModel.TestResults = results;
 
             FinalTestResults = _lookupService.GetCategoryItems("FinalResult", true).ToList();
             ResultGivenOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
@@ -318,7 +320,17 @@ namespace LiveHTS.Presentation.ViewModel
             Encounter = _testingService.OpenEncounter(Encounter.Id);
         }
 
-       
+        public void Referesh(Guid encounterId)
+        {
+            Encounter = _testingService.OpenEncounter(encounterId);
+            if (null == Encounter)
+            {
+                throw new ArgumentException("Encounter has not been Initialized");
+            }
+
+            var encounterJson = JsonConvert.SerializeObject(Encounter);
+            _settings.AddOrUpdateValue("client.encounter", encounterJson);
+        }
 
 
         public bool Validate()
@@ -349,41 +361,72 @@ namespace LiveHTS.Presentation.ViewModel
         private void LoadTests()
         {
           
-
+            
             if (null != Encounter)
             {
+                var tests= Encounter.ObsTestResults.Where(x => x.TestName == FirstTestEpisodeViewModel.TestName).ToList();
+                foreach (var obsTestResult in tests)
+                {
+                    try
+                    {
+                        obsTestResult.ResultDisplay = FirstTestEpisodeViewModel.TestResults
+                            .FirstOrDefault(x => x.ItemId == obsTestResult.Result).Display;
 
-              FirstHIVTestViewModel.FirstTests = Encounter.ObsTestResults.Where(x => x.TestName == FirstHIVTestViewModel.FirstTestName).ToList();
+                        obsTestResult.KitDisplay = Kits.FirstOrDefault(x => x.ItemId == obsTestResult.Kit).Display;
+                    }
+                    catch (Exception e)
+                    {
+                    }
+                      
+                }
+                FirstTestEpisodeViewModel.Tests = tests;
+                
 
                 var finalTestResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
 
                 if (null != finalTestResult)
                 {
-                    var result = FirstHIVTestViewModel.FirstTestResults.FirstOrDefault(x => x.ItemId == finalTestResult.FirstTestResult);
+                    var result = FirstTestEpisodeViewModel.TestResults.FirstOrDefault(x => x.ItemId == finalTestResult.FirstTestResult);
                     if (null != result)
                     {
-                        FirstHIVTestViewModel.SelectedFirstTestResult = result;
+                        FirstTestEpisodeViewModel.SelectedTestResult = result;
                     }
                     else
                     {
-                        FirstHIVTestViewModel.SelectedFirstTestResult = FirstHIVTestViewModel.FirstTestResults.OrderBy(x => x.Rank).FirstOrDefault();
+                        FirstTestEpisodeViewModel.SelectedTestResult = FirstTestEpisodeViewModel.TestResults.OrderBy(x => x.Rank).FirstOrDefault();
                     }
                 }
 
-               SecondHIVTestViewModel.SecondTests = Encounter.ObsTestResults.Where(x => x.TestName == SecondHIVTestViewModel.SecondTestName).ToList();
+                var tests2 = Encounter.ObsTestResults.Where(x => x.TestName == SecondTestEpisodeViewModel.TestName).ToList();
+                foreach (var obsTestResult in tests2)
+                {
+                    try
+                    {
+                        obsTestResult.ResultDisplay = FirstTestEpisodeViewModel.TestResults
+                            .FirstOrDefault(x => x.ItemId == obsTestResult.Result).Item.Display;
+
+                        obsTestResult.KitDisplay = Kits.FirstOrDefault(x => x.ItemId == obsTestResult.Kit).Display;
+                    }
+                    catch (Exception e)
+                    {
+                    }
+
+                }
+
+                SecondTestEpisodeViewModel.Tests = tests2;
 
                 var finalSecondResult = Encounter.ObsFinalTestResults.ToList().FirstOrDefault();
 
                 if (null != finalSecondResult)
                 {
-                    var result = SecondHIVTestViewModel.SecondTestResults.FirstOrDefault(x => x.ItemId == finalSecondResult.SecondTestResult);
+                    var result = SecondTestEpisodeViewModel.TestResults.FirstOrDefault(x => x.ItemId == finalSecondResult.SecondTestResult);
                     if (null != result)
                     {
-                        SecondHIVTestViewModel.SelectedSecondTestResult = result;
+                        SecondTestEpisodeViewModel.SelectedTestResult = result;
                     }
                     else
                     {
-                        SecondHIVTestViewModel.SelectedSecondTestResult = SecondHIVTestViewModel.SecondTestResults.OrderBy(x => x.Rank).FirstOrDefault();
+                        SecondTestEpisodeViewModel.SelectedTestResult = SecondTestEpisodeViewModel.TestResults.OrderBy(x => x.Rank).FirstOrDefault();
                     }
                 }
 
@@ -403,6 +446,7 @@ namespace LiveHTS.Presentation.ViewModel
                     }
                 }
             }
+            
         }
 
       

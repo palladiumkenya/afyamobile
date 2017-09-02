@@ -199,12 +199,12 @@
     <Compile Include="Activities\ClientEncounterActivity.cs" />
     <Compile Include="Activities\ClientRegistrationActivity.cs" />
     <Compile Include="Activities\ClientRelationshipsActivity.cs" />
-    <Compile Include="Activities\HIVTestActivity.cs" />
     <Compile Include="Activities\RegistryActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ObsActivity.cs" />
     <Compile Include="Activities\AppDashboardActivity.cs" />
     <Compile Include="Activities\SignInActivity.cs" />
+    <Compile Include="Activities\TestingActivity.cs" />
     <Compile Include="Adapters\MvxViewPagerFragmentAdapter.cs" />
     <Compile Include="Bootstrap\FilePluginBootstrap.cs" />
     <Compile Include="Bootstrap\SettingsPluginBootstrap.cs" />
@@ -222,6 +222,8 @@
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Views\ClientContactFragment.cs" />
     <Compile Include="Views\EncounterFragment.cs" />
+    <Compile Include="Views\FirstTestEpisodeFragment.cs" />
+    <Compile Include="Views\SecondTestEpisodeFragment.cs" />
     <Compile Include="Views\TestFragment.cs" />
     <Compile Include="Views\ReferralFragment.cs" />
     <Compile Include="Views\LinkedToCareFragment.cs" />
@@ -380,6 +382,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\TestView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\TestingView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FirstTestEpisodeView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SecondTestEpisodeView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

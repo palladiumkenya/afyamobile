@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
@@ -10,7 +12,8 @@ using MvvmValidation;
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface ITestViewModel
-    {
+    { 
+        ITestEpisodeViewModel Parent { get; set; }
         string ErrorSummary { get; set; }
         ValidationHelper Validator { get; }
         ObservableDictionary<string, string> Errors { get; set; }
@@ -31,8 +34,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid Result { get; set; }
         Guid EncounterId { get; set; }
         string ResultCode { get; set; }
-
         IMvxCommand SaveTestCommand { get; }
-        IMvxCommand CancelTestCommand { get; }
+
+        IMvxCommand ShowDateDialogCommand { get; }
+        event EventHandler<ChangedDateEvent> ChangedDate;
+        TraceDateDTO SelectedDate { get; set; }
+        void ShowDatePicker(Guid refId, DateTime refDate);
     }
 }

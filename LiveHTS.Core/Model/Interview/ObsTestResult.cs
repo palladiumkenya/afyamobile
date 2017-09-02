@@ -11,12 +11,17 @@ namespace LiveHTS.Core.Model.Interview
         public int Attempt {get; set; }
         [Indexed]
         public Guid Kit { get; set; }
+        [Ignore]
+        public string KitDisplay { get; set; }
         public string KitOther { get; set; }
         public string LotNumber { get; set; }
         public DateTime Expiry { get; set; }
         [Indexed]
         public Guid Result { get; set; }
         public string ResultCode { get; set; }
+
+        [Ignore]
+        public string ResultDisplay { get; set; }
         public bool IsValid { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }

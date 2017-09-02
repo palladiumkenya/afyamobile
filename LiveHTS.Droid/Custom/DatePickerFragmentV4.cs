@@ -2,6 +2,8 @@
 
 using System;
 using Android.App;
+using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Util;
 using Android.Widget;
@@ -13,14 +15,21 @@ namespace LiveHTS.Droid.Custom
         DatePickerDialog.IOnDateSetListener
     {
         private static DateTime CurrentDate;
+        private static bool useSpinner;
+        private static bool allowOld;
+        private static bool allowFuture;
+
         // TAG can be any string of your choice.
         public static readonly string TAG = "X:" + typeof(DatePickerFragmentV4).Name.ToUpper();
 
         // Initialize this value to prevent NullReferenceExceptions.
         Action<DateTime> _dateSelectedHandler = delegate { };
 
-        public static DatePickerFragmentV4 NewInstance(Action<DateTime> onDateSelected,DateTime currentDate)
+        public static DatePickerFragmentV4 NewInstance(Action<DateTime> onDateSelected,DateTime currentDate,bool spinner=false,bool allowold=true,bool allowfuture=true)
         {
+            useSpinner = spinner;
+            allowOld = allowold;
+            allowFuture = allowfuture;
             CurrentDate = currentDate;
             DatePickerFragmentV4 frag = new DatePickerFragmentV4();
             frag._dateSelectedHandler = onDateSelected;
@@ -30,12 +39,30 @@ namespace LiveHTS.Droid.Custom
         public override Dialog OnCreateDialog(Bundle savedInstanceState)
         {
             DateTime currently = CurrentDate;
+            DatePickerDialog dialog;
+            if (useSpinner)
+            {
+                dialog = new DatePickerDialog(Activity,Android.Resource.Style.ThemeHoloLightDialog,this,
+                    currently.Year,
+                    currently.Month,
+                    currently.Day);
+            }
+            else
+            {
+                dialog = new DatePickerDialog(Activity,
+                    this,
+                    currently.Year,
+                    currently.Month,
+                    currently.Day);
+            }
+            dialog.Window.SetBackgroundDrawable(new ColorDrawable(Color.Transparent));
 
-            DatePickerDialog dialog = new DatePickerDialog(Activity,
-                this,
-                currently.Year,
-                currently.Month,
-                currently.Day);
+            //if (!allowFuture)
+            //    dialog.DatePicker.MaxDate = DateTime.Today.Ticks;
+
+            //if (!allowOld)
+            //    dialog.DatePicker.MinDate = DateTime.Today.Ticks;
+
             return dialog;
         }
 

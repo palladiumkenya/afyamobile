@@ -13,8 +13,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface ITestingViewModel
     {
         string ErrorSummary { get; set; }
-        IFirstHIVTestViewModel FirstHIVTestViewModel { get; set; }
-        ISecondHIVTestViewModel SecondHIVTestViewModel { get; set; }
+        ITestEpisodeViewModel FirstTestEpisodeViewModel { get; set; }
+        ITestEpisodeViewModel SecondTestEpisodeViewModel { get; set; }
 
         EncounterType EncounterType { get; set; }
         Client Client { get; set; }
@@ -51,7 +51,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         void ShowDatePicker(Guid refId, DateTime refDate);
         void SaveTest(ObsTestResult test);
         void DeleteTest(ObsTestResult test);
-        
+        void Referesh(Guid encounterId);
         bool Validate();
     }
 }

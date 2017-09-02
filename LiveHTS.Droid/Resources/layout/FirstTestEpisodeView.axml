@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="2dp">
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="HIV Test 1"
+    local:MvxBind="Text TestName"/>
+  <LinearLayout
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1">
+
+    <Mvx.MvxListView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      local:MvxBind="ItemsSource Tests"
+      local:MvxItemTemplate="@layout/item_test" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical">
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Add"
+      local:MvxBind="Click AddTestCommand"/>
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HIV Test 1 Result"
+        local:MvxBind="Text TestNameResult"
+        android:paddingRight="5dp"/>
+
+      <MvxSpinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        local:MvxBind="ItemsSource TestResults; SelectedItem SelectedTestResult"/>
+
+
+    </LinearLayout>
+  </LinearLayout>
+
+</LinearLayout>

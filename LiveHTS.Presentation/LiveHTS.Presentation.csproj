@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ITestEpisodeViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ITestViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ILinkedToCareViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IReferralViewModel.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="ViewModel\EncounterViewModel.cs" />
     <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
     <Compile Include="Events\ConceptChangedEvent.cs" />
+    <Compile Include="ViewModel\SecondTestEpisodeViewModel.cs" />
+    <Compile Include="ViewModel\FirstTestEpisodeViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
     <Compile Include="ViewModel\TestViewModel.cs" />
