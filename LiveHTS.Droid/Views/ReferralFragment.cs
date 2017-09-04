@@ -21,7 +21,43 @@ namespace LiveHTS.Droid.Views
             this.EnsureBindingContextIsSet(savedInstanceState);
             var ignored = base.OnCreateView(inflater, container, savedInstanceState);
             var view= this.BindingInflate(Resource.Layout.ReferralView, null);
-            ViewModel.ChangedDate += ViewModel_ChangedDate; ;
+            ViewModel.ChangedDate += ViewModel_ChangedDate;
+
+            var vm = new TraceViewModel();;
+            vm.Parent = ViewModel;
+
+            ViewModel.AddTraceCommandAction = () =>
+            {
+                vm.EditMode = false;
+
+                var dialogFragment = new TraceFragment()
+                {
+
+                    DataContext = vm
+                };
+
+                dialogFragment.Show(FragmentManager, "Trace01");
+            };
+
+            ViewModel.CloseTestCommandAction = () =>
+            {
+                var frag = FragmentManager.FindFragmentByTag("Trace01");
+                if (null != frag)
+                    ((TraceFragment)frag).Dismiss();
+            };
+
+            ViewModel.EditTestCommandAction = () =>
+            {
+                vm.EditMode = true;
+                var dialogFragment = new TraceFragment()
+                {
+
+                    DataContext = vm
+                };
+
+                dialogFragment.Show(FragmentManager, "Trace01");
+            };
+
             return view;
         }
 

@@ -24,15 +24,19 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid LinkageId { get; set; }
         string ReferredTo { get; set; }
         DateTime DatePromised { get; set; }
+        ObsTraceResult Trace { get; set; }
         List<TraceTemplateWrap> Traces { get; set; }
 
         IMvxCommand AddTraceCommand { get; }
-
+        IMvxCommand CloseTestCommand { get; }
+        Action AddTraceCommandAction { get; set; }
+        Action EditTestCommandAction { get; set; }
+        Action CloseTestCommandAction { get; set; }
         IMvxCommand SaveReferralCommand { get; }
 
         IMvxCommand ShowDateDialogCommand { get; }
 
-        void RemoveTrace(TraceTemplate template);
+        
         event EventHandler<ChangedDateEvent> ChangedDate;
 
         TraceDateDTO SelectedPromiseDate { get; set; }
@@ -42,5 +46,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         void SaveTrace(ObsTraceResult test);
         void DeleteTrace(ObsTraceResult test);
         bool Validate();
+
+
+        
+        void EditTrace(ObsTraceResult testResult);
+        void Referesh(Guid encounterId);
+        
+        
     }
 }

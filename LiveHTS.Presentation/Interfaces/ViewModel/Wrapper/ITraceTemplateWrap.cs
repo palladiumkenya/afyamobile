@@ -9,8 +9,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
     {
         IReferralViewModel Parent { get; }
         ITraceTemplate TraceTemplate { get; }
-        IMvxCommand SaveTraceCommand { get; }
+        IMvxCommand EditTraceCommand { get; }
         IMvxCommand DeleteTraceCommand { get; }
-        IMvxCommand ShowDateDialogCommand { get; }
     }
 }

@@ -234,6 +234,7 @@
     <Compile Include="Views\ClientProfileFragment.cs" />
     <Compile Include="Views\ClientDemographicFragment.cs" />
     <Compile Include="Views\ClientEnrollmentFragment.cs" />
+    <Compile Include="Views\TraceFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_facility.png" />
@@ -391,6 +392,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\SecondTestEpisodeView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\TraceView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

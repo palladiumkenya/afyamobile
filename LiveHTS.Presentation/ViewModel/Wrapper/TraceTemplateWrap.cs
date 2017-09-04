@@ -9,9 +9,15 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
     {
         private IReferralViewModel _parent;
         private ITraceTemplate _traceTemplate;
-        private IMvxCommand _saveTraceCommand;
+        
         private IMvxCommand _deleteTraceCommand;
-        private IMvxCommand _showDateDialogCommand;
+        private IMvxCommand _editTraceCommand;
+
+        public TraceTemplateWrap(IReferralViewModel parent, ITraceTemplate traceTemplate)
+        {
+            _parent = parent;
+            _traceTemplate = traceTemplate;
+        }
 
         public IReferralViewModel Parent
         {
@@ -20,71 +26,40 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         public ITraceTemplate TraceTemplate
         {
-            get { return _traceTemplate; }
+            get
+            {
+                return _traceTemplate;
+            }
         }
 
-        public IMvxCommand SaveTraceCommand
+        public IMvxCommand EditTraceCommand
         {
             get
             {
-                _saveTraceCommand = _saveTraceCommand ?? new MvxCommand(SaveTrace, CanSaveTrace);
-                return _saveTraceCommand;
+                _editTraceCommand = _editTraceCommand ?? new MvxCommand(EditTrace);
+                return _editTraceCommand;
             }
         }
-
-        private bool CanSaveTrace()
-        {
-            return TraceTemplate.CanSave();
-        }
-
-        private void SaveTrace()
-        {
-            if (TraceTemplate.Validate())
-            {
-                
-                 Parent.SaveTrace(TraceTemplate.TraceResult);
-            }
-
-        }
-
         public IMvxCommand DeleteTraceCommand
         {
             get
             {
-                _deleteTraceCommand = _deleteTraceCommand ?? new MvxCommand(DeleteTrace, CanDeleteTrace);
+                _deleteTraceCommand = _deleteTraceCommand ?? new MvxCommand(DeleteTrace);
                 return _deleteTraceCommand;
             }
         }
 
-        private bool CanDeleteTrace()
+        private void EditTrace()
         {
-            return TraceTemplate.CanDelete();
+            Parent.EditTrace(TraceTemplate.TraceResult);
         }
 
         private void DeleteTrace()
         {
-            //Parent.DeleteTrace(TraceTemplate.TraceResult);
+            Parent.DeleteTrace(TraceTemplate.TraceResult);
         }
 
-        public IMvxCommand ShowDateDialogCommand
-        {
-            get
-            {
-                _showDateDialogCommand = _showDateDialogCommand ?? new MvxCommand(ShowDateDialog);
-                return _showDateDialogCommand;
-            }
-        }
-        private void ShowDateDialog()
-        {
 
-            //Parent.ShowDatePicker(TraceTemplate.Id,TraceTemplate.Date);
-        }
-
-        public TraceTemplateWrap(IReferralViewModel parent, ITraceTemplate traceTemplate)
-        {
-            _parent = parent;
-            _traceTemplate = traceTemplate;
-            _traceTemplate.TraceTemplateWrap = this;
-        }
+        
     }
 }

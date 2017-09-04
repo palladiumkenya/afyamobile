@@ -10,8 +10,12 @@ namespace LiveHTS.Core.Model.Interview
         public DateTime Date { get; set; }
         [Indexed]
         public Guid Mode { get; set; }
+        [Ignore]
+        public string ModeDisplay { get; set; }
         [Indexed]
         public Guid Outcome { get; set; }
+        [Ignore]
+        public string OutcomeDisplay { get; set; }
         public Guid EncounterId { get; set; }
 
         public ObsTraceResult()
@@ -19,7 +23,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsTraceResult(DateTime date, Guid mode, Guid outcome, Guid encounterId)
+        public ObsTraceResult(DateTime date, Guid mode, Guid outcome, Guid encounterId):this()
         {
             Date = date;
             Mode = mode;

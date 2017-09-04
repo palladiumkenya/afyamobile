@@ -46,6 +46,7 @@ namespace LiveHTS.Droid.Custom
                     currently.Year,
                     currently.Month,
                     currently.Day);
+                dialog.Window.SetBackgroundDrawable(new ColorDrawable(Color.Transparent));
             }
             else
             {
@@ -55,7 +56,7 @@ namespace LiveHTS.Droid.Custom
                     currently.Month,
                     currently.Day);
             }
-            dialog.Window.SetBackgroundDrawable(new ColorDrawable(Color.Transparent));
+            
 
             //if (!allowFuture)
             //    dialog.DatePicker.MaxDate = DateTime.Today.Ticks;

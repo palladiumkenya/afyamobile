@@ -109,6 +109,18 @@ namespace LiveHTS.Presentation.ViewModel
 
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
+
+
+       
+
+            var modes = _lookupService.GetCategoryItems("TraceMode", true, "[Select Mode]").ToList();
+            _settings.AddOrUpdateValue("lookup.Mode", JsonConvert.SerializeObject(modes));
+            var outcomes = _lookupService.GetCategoryItems("TraceOutcome", true, "[Select Outcome]").ToList();
+            _settings.AddOrUpdateValue("lookup.Outcome", JsonConvert.SerializeObject(outcomes));
+
+
+
+
         }
 
         public override void ViewAppeared()
@@ -139,8 +151,23 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void LoadTraces()
         {
-            var modes = _lookupService.GetCategoryItems("TraceMode", true, "[Select Mode]").ToList();
-            var outcomes = _lookupService.GetCategoryItems("TraceOutcome", true, "[Select Outcome]").ToList();
+
+            var modesJson = _settings.GetValue("lookup.Mode", "");
+            var outcomeJson = _settings.GetValue("lookup.Outcome", "");
+
+            List<CategoryItem> modes=new List<CategoryItem>();
+            if (!string.IsNullOrWhiteSpace(modesJson))
+            {
+                modes = JsonConvert.DeserializeObject<List<CategoryItem>>(modesJson);
+            }
+
+            List<CategoryItem> outcomes=new List<CategoryItem>();
+            if ( !string.IsNullOrWhiteSpace(outcomeJson))
+            {
+                outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(outcomeJson);
+            }
+
+      
 
             if (null != Encounter)
             {

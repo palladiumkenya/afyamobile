@@ -6,6 +6,7 @@ using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
@@ -20,6 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly ILinkageService _linkageService;
         private readonly ISettings _settings;
+        private readonly IDialogService _dialogService;
         private string _referredTo;
         private DateTime _datePromised;
         private string _title = "REFFERALS";
@@ -35,6 +37,12 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _showDateDialogCommand;
         private TraceDateDTO _selectedPromiseDate;
         private ILinkageViewModel _parentViewModel;
+        private ObsTraceResult _trace;
+        private IMvxCommand _closeTestCommand;
+        private Action _closeTestCommandAction;
+        private Action _addTraceCommandAction;
+        private Action _editTestCommandAction;
+
 
         public ILinkageViewModel ParentViewModel
         {
@@ -99,6 +107,12 @@ namespace LiveHTS.Presentation.ViewModel
             set { _datePromised = value; RaisePropertyChanged(() => DatePromised); }
         }
 
+        public ObsTraceResult Trace
+        {
+            get { return _trace; }
+            set { _trace = value; RaisePropertyChanged(() => Trace);}
+        }
+
         public List<TraceTemplateWrap> Traces
         {
             get { return _traces; }
@@ -135,6 +149,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return _showDateDialogCommand;
             }
         }
+
     private void ShowDateDialog()
             {
 
@@ -147,6 +162,7 @@ namespace LiveHTS.Presentation.ViewModel
             DatePromised=DateTime.Today;
             _validator = new ValidationHelper();
             _linkageService = Mvx.Resolve<ILinkageService>();
+            _dialogService = Mvx.Resolve<IDialogService>();
             _settings = Mvx.Resolve<ISettings>();
 
         }
@@ -251,46 +267,38 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void AddTrace()
         {
-            var obs = ObsTraceResult.CreateNew(ParentViewModel.Encounter.Id);
-
-            var list = ParentViewModel.Encounter.ObsTraceResults.ToList();
-            list.Add(obs);
-            ParentViewModel.Encounter.ObsTraceResults = list;
-            ParentViewModel.Encounter = ParentViewModel.Encounter;
+           AddTraceCommandAction?.Invoke();
         }
 
         private bool CanAddTrace()
         {
-            //No Tests
-            if (null == Traces)
-                return true;
-
-            if (null != Traces)
-            {
-                //No Tests
-                if (Traces.Count == 0)
-                    return true;
-
-                //Is initial add
-                if (Traces.Count > 0 && Traces.Any(x => x.TraceTemplate.Outcome == Guid.Empty))
-                    return false;
-
-                //Has invalid
-                if (
-                    Traces.Count > 0 &&
-                    Traces.Any(x => x.TraceTemplate.SelectedOutcome.Item.Code == "C" )
-                )
-                    return false;
-            }
+//            //No Tests
+//            if (null == Traces)
+//                return true;
+//
+//            if (null != Traces)
+//            {
+//                //No Tests
+//                if (Traces.Count == 0)
+//                    return true;
+//
+//                //Is initial add
+//                if (Traces.Count > 0 && Traces.Any(x => x.TraceTemplate.Outcome == Guid.Empty))
+//                    return false;
+//
+//                //Has invalid
+//                if (
+//                    Traces.Count > 0 &&
+//                    Traces.Any(x => x.TraceTemplate.OutcomeDisplay.ToLower() == "C" )
+//                )
+//                    return false;
+//            }
 
 
             return true;
         }
 
-        public void RemoveTrace(TraceTemplate template)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public event EventHandler<ChangedDateEvent> ChangedDate;
 
@@ -317,9 +325,18 @@ namespace LiveHTS.Presentation.ViewModel
             ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
         }
 
-        public void DeleteTrace(ObsTraceResult test)
+        public async void DeleteTrace(ObsTraceResult testResult)
         {
-            throw new NotImplementedException();
+            if (null != testResult)
+            {
+                var result = await _dialogService.ConfirmAction("Are you sure ?", "Delete this Trace");
+                if (result)
+                {
+
+                    _linkageService.DeleteTest(testResult);
+                    Referesh(testResult.EncounterId);
+                }
+            }
         }
 
         public bool Validate()
@@ -350,6 +367,50 @@ namespace LiveHTS.Presentation.ViewModel
             }
             return result.IsValid;
         }
+
+        public void EditTrace(ObsTraceResult testResult)
+        {
+            Trace = testResult;
+            EditTestCommandAction?.Invoke();
+        }
+
+        public void Referesh(Guid encounterId)
+        {
+            ParentViewModel.Encounter = _linkageService.OpenEncounter(encounterId);
+        }
+
+        public IMvxCommand CloseTestCommand
+        {
+            get
+            {
+                _closeTestCommand = _closeTestCommand ?? new MvxCommand(CloseTest);
+                return _closeTestCommand;
+            }
+        }
+
+        private void CloseTest()
+        {
+            CloseTestCommandAction?.Invoke();
+        }
+
+        public Action AddTraceCommandAction
+        {
+            get { return _addTraceCommandAction; }
+            set { _addTraceCommandAction = value; }
+        }
+
+        public Action EditTestCommandAction
+        {
+            get { return _editTestCommandAction; }
+            set { _editTestCommandAction = value; }
+        }
+
+        public Action CloseTestCommandAction
+        {
+            get { return _closeTestCommandAction; }
+            set { _closeTestCommandAction = value; }
+        }
+
         private void UpdatePromiseDate(TraceDateDTO selectedDate)
         {
             DatePromised = selectedDate.EventDate;

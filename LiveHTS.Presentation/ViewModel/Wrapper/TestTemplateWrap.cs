@@ -6,7 +6,8 @@ using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.ViewModel.Wrapper
 {
-    public class TestTemplateWrap : ITestTemplateWrap
+    public class 
+        TestTemplateWrap : ITestTemplateWrap
     {
         private readonly ITestEpisodeViewModel _episodeViewModel;
         private readonly ITestTemplate _testTemplate;
