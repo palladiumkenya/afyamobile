@@ -204,6 +204,13 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
 
+        public bool HasFinalResult
+        {
+            get
+            {
+                return null != SelectedFinalTestResult && !SelectedFinalTestResult.ItemId.IsNullOrEmpty(); 
+            }
+        }
 
         public bool EnableFinalResult
         {
@@ -233,6 +240,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedFinalTestResult = value;
                 RaisePropertyChanged(() => SelectedFinalTestResult);
                 SaveTestingCommand.RaiseCanExecuteChanged();
+                SecondTestEpisodeViewModel.AddTestCommand.RaiseCanExecuteChanged();
             }
         }
 

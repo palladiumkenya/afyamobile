@@ -31,6 +31,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedSecondTestResult { get; set; }
         List<CategoryItem> SecondTestResults { get; set; }
 
+        bool HasFinalResult { get;  }
         bool EnableFinalResult { get; set; }
         Guid FinalResult { get; set; }
         CategoryItem SelectedFinalTestResult { get; set; }

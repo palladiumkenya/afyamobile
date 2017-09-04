@@ -141,6 +141,9 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private bool CanAddTest()
         {
+            if (Parent.HasFinalResult)
+                return false;
+
             //No Tests
             if (null == Tests)
                 return true;
