@@ -635,6 +635,7 @@ namespace LiveHTS.Presentation.ViewModel
                         SelectedFinalTestResult = FinalTestResults.OrderBy(x => x.Rank).FirstOrDefault();
                     }
 
+                    //  Result given
                     
                     var resultg = ResultGivenOptions.FirstOrDefault(x => x.ItemId == finalResult.ResultGiven);
                     if (null != resultg)
@@ -645,6 +646,9 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         SelectedResultGiven = ResultGivenOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
+
+                    //  couple discodant
+
                     var resultcd = CoupleDiscordantOptions.FirstOrDefault(x => x.ItemId == finalResult.CoupleDiscordant);
                     if (null != resultcd)
                     {
@@ -654,14 +658,16 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         SelectedCoupleDiscordant = CoupleDiscordantOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
+
+                    //  Self test
                     var resultst = SelfTestOptions.FirstOrDefault(x => x.ItemId == finalResult.SelfTestOption);
                     if (null != resultst)
                     {
-                        SelectedSecondTestResult = resultst;
+                        SelectedSelfTest = resultst;
                     }
                     else
                     {
-                        SelectedSecondTestResult = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
+                        SelectedSelfTest = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
 
                 }
