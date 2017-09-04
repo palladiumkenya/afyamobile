@@ -115,17 +115,13 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-
-
         public SecondTestEpisodeViewModel()
         {
             _testingService = Mvx.Resolve<IHIVTestingService>();
             _dialogService = Mvx.Resolve<IDialogService>();
             EnableResult = false;
         }
-
  
-
         public async void DeleteTest(ObsTestResult testResult)
         {
             if (null != testResult)
