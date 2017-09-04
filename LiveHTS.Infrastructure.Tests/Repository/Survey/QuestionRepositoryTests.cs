@@ -2,9 +2,8 @@
 using System.Linq;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
-using LiveHTS.Core.Interfaces.Repository.Lookup;
 using LiveHTS.Core.Interfaces.Repository.Survey;
-using LiveHTS.Core.Model.Survey;
+using LiveHTS.Infrastructure.Migrations;
 using LiveHTS.Infrastructure.Repository.Survey;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SQLite;
@@ -15,17 +14,17 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
     [TestClass]
     public class QuestionRepositoryTests
     {
-        private ILiveSetting _liveSetting;
-        private SQLiteConnection _database = TestHelpers.GetDatabase();
         private IQuestionRepository _questionRepository;
+        private SQLiteConnection _connection;
 
 
         [TestInitialize]
         public void SetUp()
         {
-            _liveSetting = new LiveSetting(_database.DatabasePath);
-            _questionRepository = new QuestionRepository(_liveSetting,
-                new ConceptRepository(_liveSetting, new CategoryRepository(_liveSetting)));
+            _connection = new SQLiteConnection("testlivehts.db");
+            Seeder.Seed(_connection);
+            _questionRepository = new QuestionRepository(new LiveSetting(_connection.DatabasePath), 
+                new ConceptRepository(new LiveSetting(_connection.DatabasePath), new CategoryRepository(new LiveSetting(_connection.DatabasePath))));
         }
 
         [TestMethod]
@@ -59,32 +58,89 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Survey
         }
 
         [TestMethod]
+        public void should_Get_Question_with_Metadata_Branches()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasBranches).ToList();
+            Assert.IsTrue(questionMetadata.Count>0);
+            foreach (var question in questionMetadata)
+            {
+                Console.Write(question);
+                foreach (var branch in question.Branches)
+                {
+                    Console.WriteLine(branch);
+                }
+            }
+
+        }
+        [TestMethod]
         public void should_Get_Question_with_Metadata_Validations()
         {
             var questions = _questionRepository.GetWithMetadata().ToList();
             Assert.IsTrue(questions.Count > 0);
-            foreach (var question in questions)
+            var questionMetadata = questions.Where(x => x.HasValidations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
             {
-                Assert.IsNotNull(question);
-                Console.Write(question);
-                Console.WriteLine();
-
-                if (question.HasValidations)
-                    Assert.IsTrue(question.Validations.Count > 0);
-
-                if (question.HasReValidations)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
-                if (question.HasBranches)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
-                if (question.HasTransform)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
-                if (question.HasRemoteTreans)
-                    Assert.IsTrue(question.ReValidations.Count > 0);
-
+                Console.WriteLine(question);
+                foreach (var validation in question.Validations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
             }
-        }       
+
+        }
+        [TestMethod]
+        public void should_Get_Question_with_Metadata_ReValidations()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasReValidations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
+            {
+                Console.WriteLine(question);
+                foreach (var validation in question.ReValidations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
+            }
+
+        }
+        [TestMethod]
+        public void should_Get_Question_with_Metadata_Transformation()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasTransformations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
+            {
+                Console.WriteLine(question);
+                foreach (var validation in question.Transformations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
+            }
+
+        }
+        [TestMethod]
+        public void should_Get_Question_with_Metadata_RemoteTransformation()
+        {
+            var questions = _questionRepository.GetWithMetadata().ToList();
+            Assert.IsTrue(questions.Count > 0);
+            var questionMetadata = questions.Where(x => x.HasRemoteTransformations).ToList();
+            Assert.IsTrue(questionMetadata.Count > 0);
+            foreach (var question in questionMetadata)
+            {
+                Console.WriteLine(question);
+                foreach (var validation in question.RemoteTransformations)
+                {
+                    Console.WriteLine($" >. {validation}");
+                }
+            }
+
+        }
     }
 }

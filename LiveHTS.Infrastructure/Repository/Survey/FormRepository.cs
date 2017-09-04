@@ -17,13 +17,29 @@ namespace LiveHTS.Infrastructure.Repository.Survey
             _questionRepository = questionRepository;
         }
         
-        public Form GetWithQuestions(Guid moduleId, Guid formId)
+        public Form GetWithQuestions(Guid formId, bool includeMetadata = false)
         {
-            var form= GetAll(x => x.ModuleId == moduleId && x.Id == formId).FirstOrDefault();
+            var form= GetAll(x => x.Id == formId).FirstOrDefault();
 
-            if(null!=form)
+            if (null != form)
             {
-                var questions = _questionRepository.GetWithConcepts(null, form.Id).ToList();
+                var questions = new List<Question>();
+
+                if (includeMetadata)
+                {
+                    questions = _questionRepository
+                        .GetWithMetadata(null, form.Id)
+                        .OrderBy(x => x.Rank)
+                        .ToList();
+                }
+                else
+                {
+                    questions = _questionRepository
+                        .GetWithConcepts(null, form.Id)
+                        .OrderBy(x => x.Rank)
+                        .ToList();
+                }
+                
                 form.Questions = questions;
             }
             return form;

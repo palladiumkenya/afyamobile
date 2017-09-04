@@ -18,6 +18,7 @@ namespace LiveHTS.Infrastructure.Repository
         {
             _liveSetting = liveSetting;
             _db = new SQLiteConnection(_liveSetting.DatasePath);
+            
             _db.CreateTable<T>();
         }
 
@@ -38,7 +39,7 @@ namespace LiveHTS.Infrastructure.Repository
             return results;
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate, bool voided = false)
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate, bool voided = false)
         {
             var results= _db.Table<T>()
                 .Where(predicate);
@@ -51,6 +52,24 @@ namespace LiveHTS.Infrastructure.Repository
             _db.Insert(entity);
         }
 
+        public virtual void InsertOrUpdate(T entity)
+        {
+            var rowsAffected = _db.Update(entity);
+            if (rowsAffected == 0)
+            {
+                _db.Insert(entity);
+            }
+        }
+
+        public void InsertOrUpdateAny(object entity)
+        {
+            var rowsAffected = _db.Update(entity);
+            if (rowsAffected == 0)
+            {
+                _db.Insert(entity);
+            }
+        }
+
         public virtual void Update(T entity)
         {
             _db.Update(entity);
@@ -61,7 +80,7 @@ namespace LiveHTS.Infrastructure.Repository
             _db.Delete<T>(id);
         }
 
-        public void Void(TId id)
+        public virtual void Void(TId id)
         {
             var entity = Get(id);
             if (null != entity)

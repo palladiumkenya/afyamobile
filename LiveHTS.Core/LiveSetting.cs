@@ -1,5 +1,4 @@
 ﻿using LiveHTS.Core.Interfaces;
-using SQLite;
 
 namespace LiveHTS.Core
 {

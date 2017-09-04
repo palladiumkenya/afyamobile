@@ -1,6 +1,4 @@
-﻿using SQLite;
-
-namespace LiveHTS.Core.Interfaces
+﻿namespace LiveHTS.Core.Interfaces
 {
     public interface ILiveSetting
     {

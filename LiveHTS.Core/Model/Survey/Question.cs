@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -16,6 +18,7 @@ namespace LiveHTS.Core.Model.Survey
 
         public string Ordinal { get; set; }
         public string Display { get; set; }
+        public string Description { get; set; }
         public Decimal Rank { get; set; }
 
         [Ignore]
@@ -26,7 +29,6 @@ namespace LiveHTS.Core.Model.Survey
 
         [Ignore]
         public List<QuestionBranch> Branches { get; set; } = new List<QuestionBranch>();
-
         [Ignore]
         public List<QuestionTransformation> Transformations { get; set; } = new List<QuestionTransformation>();
 
@@ -40,32 +42,55 @@ namespace LiveHTS.Core.Model.Survey
         [Ignore]
         public bool HasValidations
         {
-            get { return null != Validations && Validations.Count > 0; }
+            get { return null != Validations && Validations.Any(x=>x.Revision==0); }
         }
-
+        [Ignore]
+        public bool IsRequired
+        {
+            get { return HasValidations && Validations.Any(x => x.ValidatorId == "Required"); }
+        }
+        [Ignore]
         public bool HasReValidations
         {
-            get { return null != ReValidations && ReValidations.Count > 0; }
+            get { return null != ReValidations && ReValidations.Any(); }
         }
-
+        [Ignore]
         public bool HasBranches
         {
-            get { return null != Branches && ReValidations.Count > 0; }
+            get { return null != Branches && Branches.Any(); }
         }
-
-        public bool HasTransform
+        [Ignore]
+        public bool HasTransformations
         {
-            get { return null != Transformations && ReValidations.Count > 0; }
+            get { return null != Transformations && Transformations.Any(); }
         }
-
-        public bool HasRemoteTreans
+        [Ignore]
+        public bool HasRemoteTransformations
         {
-            get { return null != RemoteTransformations && ReValidations.Count > 0; }
+            get { return null != RemoteTransformations && RemoteTransformations.Any(); }
         }
+        [Ignore]
+        public List<Guid> SkippedQuestionIds { get; set; } =new List<Guid>();
+        [Ignore]
+        public List<SetResponse> SetResponses { get; set; } = new List<SetResponse>();
+
+        [Ignore]
+        public List<Guid> BlockedQuestionIds { get; set; } = new List<Guid>();
+
 
         public Question()
         {
             Id = LiveGuid.NewGuid();
+        }
+
+        public bool HasConditionalBranches(string condition)
+        {
+            return null != Branches && Branches.Any(x => x.ConditionId.ToLower() == condition.ToLower());
+        }
+
+        public bool HasConditionalTransformations(string condition)
+        {
+            return null != Transformations && Transformations.Any(x => x.ConditionId.ToLower() == condition.ToLower());
         }
 
         public override string ToString()

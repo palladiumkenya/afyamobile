@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
+using Acr.UserDialogs;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
-using LiveHTS.Core.Interfaces.Repository;
-using LiveHTS.Core.Model;
-using LiveHTS.Infrastructure.Repository;
+using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository.Survey;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -14,7 +13,7 @@ namespace LiveHTS.Presentation
     public class App:MvxApplication
     {
         private readonly string _dbpath;
-
+    
         public App(string dbpath)
         {
             _dbpath = dbpath;
@@ -24,7 +23,7 @@ namespace LiveHTS.Presentation
         {
             base.Initialize();
 
-            var assemblyCore = typeof(Module).GetTypeInfo().Assembly;
+            var assemblyCore = typeof(Concept).GetTypeInfo().Assembly;
             var assemblyInfrastructure = typeof(ModuleRepository).GetTypeInfo().Assembly;
 
             CreatableTypes(assemblyCore)
@@ -37,7 +36,16 @@ namespace LiveHTS.Presentation
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
+            CreatableTypes(assemblyCore)
+                .EndingWith("Engine")
+                .AsInterfaces()
+                .RegisterAsLazySingleton();
+
             Mvx.RegisterSingleton<ILiveSetting>(new LiveSetting(_dbpath));
+
+            Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
+            
+
 
             CreatableTypes(assemblyInfrastructure)
                 .EndingWith("Migrator")
@@ -45,6 +53,7 @@ namespace LiveHTS.Presentation
                 .RegisterAsLazySingleton();
 
             RegisterAppStart(new AppStart());
+
         }
     }
 }

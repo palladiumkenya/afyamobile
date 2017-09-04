@@ -7,5 +7,6 @@ namespace LiveHTS.Core.Interfaces.Repository.Lookup
     public interface ICategoryRepository:IRepository<Category,Guid>
     {
         IEnumerable<Category> GetAllWithItems(Guid? conceptCategoryId=null);
+        Category GetWithCode(string code);
     }
 }

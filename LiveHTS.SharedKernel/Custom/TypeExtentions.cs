@@ -9,7 +9,16 @@ namespace LiveHTS.SharedKernel.Custom
         /// </summary>
         public static bool IsNullOrEmpty(this Guid? guid)
         {
-            return !guid.HasValue || guid.Value == Guid.Empty;
+            if (null == guid)
+                return true;
+
+            if (guid.HasValue && guid.Value == Guid.Empty)
+                return true;
+
+            if (!guid.HasValue)
+                return true;
+
+            return false;
         }
 
         /// <summary>

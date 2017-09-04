@@ -14,13 +14,13 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
         public QuestionRepository(ILiveSetting liveSetting, IConceptRepository conceptRepository) : base(liveSetting)
         {
+
             _conceptRepository = conceptRepository;
         }
 
-        public IEnumerable<Question> GetWithConcepts(Guid? questionId = null,Guid ? formId = null)
+        private IEnumerable<Question> GetQuestions(Guid? questionId = null, Guid? formId = null)
         {
             var questions = new List<Question>();
-
             if (formId.IsNullOrEmpty())
             {
                 if (questionId.IsNullOrEmpty())
@@ -46,6 +46,13 @@ namespace LiveHTS.Infrastructure.Repository.Survey
                         .ToList();
                 }
             }
+            return questions;
+        }
+
+
+        public IEnumerable<Question> GetWithConcepts(Guid? questionId = null,Guid ? formId = null)
+        {
+            var questions = GetQuestions(questionId, formId);
 
             foreach (var question in questions)
             {
@@ -64,33 +71,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
         public IEnumerable<Question> GetWithMetadata(Guid? questionId = null, Guid? formId = null)
         {
-            var questions = new List<Question>();
-
-            if (formId.IsNullOrEmpty())
-            {
-                if (questionId.IsNullOrEmpty())
-                {
-                    questions = _db.Table<Question>().ToList();
-                }
-                else
-                {
-                    questions = GetAll(x => x.Id == questionId.Value).ToList();
-                }
-            }
-            else
-            {
-                if (questionId.IsNullOrEmpty())
-                {
-                    questions = GetAll(x => x.FormId == formId.Value).ToList();
-                }
-                else
-                {
-                    questions = GetAll(
-                            x => x.FormId == formId.Value &&
-                                 x.Id == questionId.Value)
-                        .ToList();
-                }
-            }
+            var questions = GetWithConcepts(questionId, formId).ToList();
 
             foreach (var question in questions)
             {
@@ -98,7 +79,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
                 {
                     var validations = _db.Table<QuestionValidation>().Where(x => x.QuestionId == question.Id).ToList();
                     question.Validations = validations;
-
+                    
                     var reValidations = _db.Table<QuestionReValidation>().Where(x => x.QuestionId == question.Id).ToList();
                     question.ReValidations = reValidations;
 
@@ -110,7 +91,6 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
                     var remoteTransformations = _db.Table<QuestionRemoteTransformation>().Where(x => x.QuestionId == question.Id).ToList();
                     question.RemoteTransformations = remoteTransformations;
-                    
                 }
                 catch
                 {

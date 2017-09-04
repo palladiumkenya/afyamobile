@@ -8,7 +8,7 @@ namespace LiveHTS.Core.Model.Survey
     public class QuestionReValidation : Entity<Guid>
     {
         [Indexed]
-        public int ConditionId { get; set; }
+        public string ConditionId { get; set; }
         [Indexed]
         public Guid? RefQuestionId { get; set; }
         public string ResponseType { get; set; }
@@ -16,14 +16,19 @@ namespace LiveHTS.Core.Model.Survey
         public string ResponseComplex { get; set; }
         public decimal? Group { get; set; }
         [Indexed]
-        public int ActionId { get; set; }
+        public string ActionId { get; set; }
         [Indexed]
-        public int QuestionValidationId { get; set; }
+        public Guid QuestionValidationId { get; set; }
         public Guid QuestionId { get; set; }
 
         public QuestionReValidation()
         {
             Id = LiveGuid.NewGuid();
+        }
+
+        public override string ToString()
+        {
+            return $"{ConditionId} {ActionId} {QuestionValidationId}";
         }
     }
 }

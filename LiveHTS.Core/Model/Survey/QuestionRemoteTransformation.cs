@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -8,9 +9,9 @@ namespace LiveHTS.Core.Model.Survey
     public class QuestionRemoteTransformation : Entity<Guid>
     {
         [Indexed]
-        public int ConditionId { get; set; }
+        public string ConditionId { get; set; }
         [Indexed]
-        public int SubjectAttributeId { get; set; }
+        public string ClientAttributeId { get; set; }
         [Indexed]
         public Guid? RemoteQuestionId { get; set; }
         [Indexed]
@@ -20,9 +21,9 @@ namespace LiveHTS.Core.Model.Survey
         public string ResponseComplex { get; set; }
         public decimal? Group { get; set; }
         [Indexed]
-        public int ActionId { get; set; }
-        public int Content { get; set; }
-        public int  AltContent { get; set; }
+        public string ActionId { get; set; }
+        public string Content { get; set; }
+        public string  AltContent { get; set; }
         [Indexed]
         public Guid QuestionId { get; set; }
 
@@ -30,5 +31,13 @@ namespace LiveHTS.Core.Model.Survey
         {
             Id = LiveGuid.NewGuid();
         }
+
+        public override string ToString()
+        {
+            return $"{ConditionId} {ClientAttributeId} {ActionId}";
+        }
+
+   
+
     }
 }
