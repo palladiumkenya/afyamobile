@@ -35,26 +35,114 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
+    <Compile Include="Converters\ShowRequiredConverter.cs" />
+    <Compile Include="Converters\ShowControlConverter.cs" />
+    <Compile Include="Converters\DateTimeConverter .cs" />
+    <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\TraceDateDTO.cs" />
+    <Compile Include="DTO\ExpiryDateDTO.cs" />
+    <Compile Include="DTO\FormDTO.cs" />
+    <Compile Include="DTO\ClientEncounterDTO.cs" />
+    <Compile Include="DTO\ClientEnrollmentDTO.cs" />
+    <Compile Include="DTO\ClientRegistrationDTO.cs" />
+    <Compile Include="DTO\ClientProfileDTO.cs" />
+    <Compile Include="DTO\ClientContactAddressDTO.cs" />
+    <Compile Include="DTO\ClientDemographicDTO.cs" />
+    <Compile Include="Events\ChangedDateEvent.cs" />
+    <Compile Include="Events\DateChangedEvent.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientEncounterViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientProfileViewModel.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientDashboardViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IAppDashboardViewModel.cs" />
+    <Compile Include="Interfaces\IInterviewViewModel.cs" />
+    <Compile Include="Interfaces\ICounsellingViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientRegistrationViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientEnrollmentViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientContactViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientDemographicViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ITestEpisodeViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ITraceViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ITestViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ILinkedToCareViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IReferralViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ILinkageViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IPartnerViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ISecondHIVTestViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IFirstHIVTestViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ITestingViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IRegistryViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ISignInViewModel.cs" />
+    <Compile Include="Interfaces\IObsViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ISummaryViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\ITestTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\ITraceTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IFormTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\ITestTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\ITraceTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IQuestionTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IEncounterTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IPartnerTemplateWrap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IMainViewModel.cs" />
+    <Compile Include="Validations\ObservableDictionary.cs" />
+    <Compile Include="Validations\ValidationResultExtension.cs" />
+    <Compile Include="ViewModel\AppDashboardViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IRelationshipTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IRelationshipTemplateWrap.cs" />
+    <Compile Include="ViewModel\DashboardViewModel.cs" />
+    <Compile Include="ViewModel\EncounterViewModel.cs" />
+    <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
+    <Compile Include="Events\ConceptChangedEvent.cs" />
+    <Compile Include="ViewModel\SecondTestEpisodeViewModel.cs" />
+    <Compile Include="ViewModel\FirstTestEpisodeViewModel.cs" />
+    <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
+    <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
+    <Compile Include="ViewModel\Template\TestTemplate.cs" />
+    <Compile Include="ViewModel\TraceViewModel.cs" />
+    <Compile Include="ViewModel\TestViewModel.cs" />
+    <Compile Include="ViewModel\LinkageViewModel.cs" />
+    <Compile Include="ViewModel\LinkedToCareViewModel.cs" />
+    <Compile Include="ViewModel\ReferralViewModel.cs" />
+    <Compile Include="ViewModel\TestingViewModel.cs" />
+    <Compile Include="ViewModel\SummaryViewModel.cs" />
+    <Compile Include="ViewModel\Template\FormTemplate.cs" />
+    <Compile Include="ViewModel\Template\EncounterTemplate.cs" />
+    <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
+    <Compile Include="ViewModel\Template\PartnerTemplate.cs" />
+    <Compile Include="ViewModel\Template\TraceTemplate.cs" />
+    <Compile Include="ViewModel\Wrapper\TestTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\FormTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\PartnerTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\RelationshipTemplateWrap.cs" />
+    <Compile Include="ViewModel\ClientDashboardViewModel.cs" />
+    <Compile Include="ViewModel\ClientEnrollmentViewModel.cs" />
+    <Compile Include="ViewModel\ClientProfileViewModel.cs" />
+    <Compile Include="ViewModel\ClientDemographicViewModel.cs" />
+    <Compile Include="ViewModel\ClientContactViewModel.cs" />
+    <Compile Include="ViewModel\ClientRegistrationViewModel.cs" />
+    <Compile Include="ViewModel\ClientRelationshipsViewModel.cs" />
+    <Compile Include="ViewModel\InterviewViewModel.cs" />
+    <Compile Include="ViewModel\CounsellingViewModel.cs" />
+    <Compile Include="ViewModel\Template\RelationshipTemplate.cs" />
+    <Compile Include="ViewModel\RegistryViewModel.cs" />
+    <Compile Include="ViewModel\SignInViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="MvvmCross.Binding, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmCross.Binding.5.0.4\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.Core, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmCross.Core.5.0.4\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.Localization, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmCross.Binding.5.0.4\lib\portable-net45+win+wpa81+wp80\MvvmCross.Localization.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.Platform, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmCross.Platform.5.0.4\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="ViewModel\ObsViewModel.cs" />
+    <Compile Include="ViewModel\StepViewModel.cs" />
+    <Compile Include="ViewModel\PartnerViewModel.cs" />
+    <Compile Include="ViewModel\Wrapper\TraceTemplateWrap.cs" />
+    <Compile Include="VMStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LiveHTS.Core\LiveHTS.Core.csproj">
@@ -70,5 +158,57 @@
       <Name>LiveHTS.SharedKernel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Acr.UserDialogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Acr.UserDialogs.6.5.1\lib\netstandard1.1\Acr.UserDialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Acr.UserDialogs.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Acr.UserDialogs.6.5.1\lib\netstandard1.1\Acr.UserDialogs.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="Cheesebaron.MvxPlugins.Settings, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cheesebaron.MvxPlugins.Settings.3.1.0\lib\portable-net45+win+wpa81+wp80\Cheesebaron.MvxPlugins.Settings.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Binding, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Binding.5.1.1\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Core, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Core.5.1.1\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Localization, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Binding.5.1.1\lib\portable-net45+win+wpa81+wp80\MvvmCross.Localization.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Platform, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Platform.5.1.1\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmCross.Plugins.File, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmCross.Plugin.File.5.1.1\lib\portable-net45+win+wpa81+wp80\MvvmCross.Plugins.File.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmValidation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=113792d2053ac461, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmValidation.3.0.0\lib\netstandard1.0\MvvmValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Splat, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Splat.2.0.0\lib\netstandard1.1\Splat.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\sqlite-net-pcl.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_green, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a84b7dcfb1391f7f, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_green.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8226ea5df37bcae9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.0\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.1.1.0\lib\portable-net45+netcore45+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

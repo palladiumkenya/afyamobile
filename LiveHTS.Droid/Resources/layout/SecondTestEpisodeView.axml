@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="5dp">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="HIV Test 2"
+      local:MvxBind="Text TestName"/>
+    <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Add Test"
+      local:MvxBind="Click AddTestCommand"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Mvx.MvxListView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      local:MvxBind="ItemsSource HivTests"
+      local:MvxItemTemplate="@layout/item_test" />
+  </LinearLayout>
+</LinearLayout>

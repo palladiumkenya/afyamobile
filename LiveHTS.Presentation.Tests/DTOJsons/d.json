@@ -1,0 +1,11 @@
+{
+  "FirstName": "John",
+  "MiddleName": "P",
+  "LastName": "Magufuli",
+  "Gender": "M",
+  "Age": 23.0,
+  "AgeUnit": "Y",
+  "BirthDate": "1994-08-02T00:00:00+03:00",
+  "BirthDateEstimated": false,
+  "FullName": "John P Magufuli"
+}

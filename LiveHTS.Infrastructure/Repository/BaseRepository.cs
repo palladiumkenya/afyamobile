@@ -1,26 +1,93 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.SharedKernel.Model;
+using SQLite;
+
 
 namespace LiveHTS.Infrastructure.Repository
 {
-    public abstract class BaseRepository<T>: IRepository<T> where T:Entity
+    public abstract class BaseRepository<T, TId> : IRepository<T, TId> where T : Entity<TId>, new()
     {
-        internal List<T> _entities;
+        private readonly ILiveSetting _liveSetting;
+        protected SQLiteConnection _db;
 
-        protected BaseRepository()
+        protected BaseRepository(ILiveSetting liveSetting)
         {
-            _entities=new List<T>();
+            _liveSetting = liveSetting;
+            _db = new SQLiteConnection(_liveSetting.DatasePath);
+            
+            _db.CreateTable<T>();
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual T Get(TId id, bool voided = false)
         {
-            return _entities;
+            var entity = _db.Find<T>(id);
+            if (null == entity)
+                return null;
+
+            return entity.Voided == voided ? entity : null;
+        }
+
+        public virtual IEnumerable<T> GetAll(bool voided = false)
+        {
+            var results= _db.Table<T>()
+                .Where(x => x.Voided == voided);
+
+            return results;
+        }
+
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate, bool voided = false)
+        {
+            var results= _db.Table<T>()
+                .Where(predicate);
+
+            return results.Where(x=>x.Voided==voided);
         }
 
         public virtual void Save(T entity)
         {
-            _entities.Add(entity);
+            _db.Insert(entity);
+        }
+
+        public virtual void InsertOrUpdate(T entity)
+        {
+            var rowsAffected = _db.Update(entity);
+            if (rowsAffected == 0)
+            {
+                _db.Insert(entity);
+            }
+        }
+
+        public void InsertOrUpdateAny(object entity)
+        {
+            var rowsAffected = _db.Update(entity);
+            if (rowsAffected == 0)
+            {
+                _db.Insert(entity);
+            }
+        }
+
+        public virtual void Update(T entity)
+        {
+            _db.Update(entity);
+        }
+
+        public virtual void Delete(TId id)
+        {
+            _db.Delete<T>(id);
+        }
+
+        public virtual void Void(TId id)
+        {
+            var entity = Get(id);
+            if (null != entity)
+            {
+                entity.Voided = true;
+                _db.Update(entity);
+            }
         }
     }
 }

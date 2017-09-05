@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp" >
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    local:MvxBind="Text TestName"/>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="@color/colorPrimary">
+  </LinearLayout>
+
+  <TextView
+    android:id="@+id/textViewError"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Error"
+    android:textColor="@android:color/holo_red_dark"
+    local:MvxBind="Text ErrorSummary" />
+
+  <TextView
+    android:id="@+id/textViewKit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Kit" />
+
+  <MvxSpinner
+    android:id="@+id/spinnerKit"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="ItemsSource Kits;SelectedItem SelectedKit" />
+
+  <android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="Visibility ShowKitOther, Converter=Visibility">
+
+    <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Specify kit name"
+      local:MvxBind="Text KitOther;Visibility ShowKitOther, Converter=Visibility" />
+  </android.support.design.widget.TextInputLayout>
+
+  <android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+      android:id="@+id/editText"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Lot"
+      local:MvxBind="Text LotNumber" />
+  </android.support.design.widget.TextInputLayout>
+  <TextView
+    android:id="@+id/textViewKit"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Expiry" />
+  <MvxDatePicker
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="Value Expiry;"
+    android:calendarViewShown="false"
+    android:datePickerMode="spinner"
+    android:id="@+id/spinnerRegistrationDate" />
+
+  <TextView
+    android:id="@+id/textViewKit"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Result" />
+
+  <MvxSpinner
+    android:id="@+id/spinnerKit"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="ItemsSource Results; SelectedItem SelectedResult" />
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="@color/colorPrimary">
+    </LinearLayout>
+    <Button
+      android:id="@+id/buttonSave"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Save"
+      local:MvxBind="Click SaveTestCommand" />
+  </LinearLayout>
+</LinearLayout>
+
