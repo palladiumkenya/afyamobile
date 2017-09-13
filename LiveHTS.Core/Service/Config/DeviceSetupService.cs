@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
@@ -14,7 +15,12 @@ namespace LiveHTS.Core.Service.Config
             _deviceRepository = deviceRepository;
         }
 
-        public Device GetDefault(string serial="")
+        public Device GetDefault(Guid deviceId)
+        {
+            return _deviceRepository.Get(deviceId);
+        }
+
+        public Device GetDefault(string serial)
         {
             return _deviceRepository.GetDefault(serial);
         }

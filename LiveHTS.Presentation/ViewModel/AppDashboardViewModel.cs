@@ -17,6 +17,7 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _isBusy;
         private IMvxCommand _registerNewClientCommand;
         private IMvxCommand _quitCommand;
+        private IMvxCommand _deviceCommand;
 
         public IMvxCommand RegistryCommand
         {
@@ -44,6 +45,17 @@ namespace LiveHTS.Presentation.ViewModel
                 return _quitCommand;
             }
         }
+
+        public IMvxCommand DeviceCommand
+        {
+            get
+            {
+                _deviceCommand = _deviceCommand ?? new MvxCommand(ShowDevice);
+                return _deviceCommand;
+            }
+        }
+
+       
 
 
         public string Profile
@@ -105,7 +117,10 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowViewModel<ClientRegistrationViewModel>();
         }
-
+        private void ShowDevice()
+        {
+            ShowViewModel<DeviceViewModel>();
+        }
         public  void Quit()
         {
           _dialogService.ConfirmExit();

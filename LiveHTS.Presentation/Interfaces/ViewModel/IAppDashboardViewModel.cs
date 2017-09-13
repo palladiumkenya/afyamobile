@@ -7,6 +7,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand RegistryCommand { get; }
         IMvxCommand RegisterNewClientCommand { get; }
         IMvxCommand QuitCommand { get; }
+        IMvxCommand DeviceCommand { get; }
         string Profile { get; set; }
         bool IsBusy { get; set; }
     }
