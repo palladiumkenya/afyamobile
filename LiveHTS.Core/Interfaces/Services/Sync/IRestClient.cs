@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace LiveHTS.Core.Interfaces.Services.Sync
@@ -7,5 +9,6 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
     {
         Task<TResult> MakeApiCall<TResult>(string url, HttpMethod method, object data = null)
             where TResult : class;
+        Exception Error { get; }
     }
 }

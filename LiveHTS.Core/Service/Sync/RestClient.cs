@@ -11,7 +11,8 @@ namespace LiveHTS.Core.Service.Sync
 {
     public class RestClient : IRestClient
     {
-        
+        private Exception _error;
+
         public async Task<TResult> MakeApiCall<TResult>(string url, HttpMethod method, object data = null) where TResult : class
         {
             
@@ -27,14 +28,24 @@ namespace LiveHTS.Core.Service.Sync
                         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
                     }
 
-                    HttpResponseMessage response = new HttpResponseMessage();
+                    HttpResponseMessage response = null;
                     try
                     {
                         response = await httpClient.SendAsync(request).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
+                        _error = ex;
                         // log error
+                    }
+
+                    if (null==response)
+                    {
+                        return null;
+                    }
+                    if (null == response.Content)
+                    {
+                        return null;
                     }
 
                     var stringSerialized = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -43,6 +54,11 @@ namespace LiveHTS.Core.Service.Sync
                     return JsonConvert.DeserializeObject<TResult>(stringSerialized);
                 }
             }
+        }
+
+        public Exception Error
+        {
+            get { return _error; }
         }
     }
 }

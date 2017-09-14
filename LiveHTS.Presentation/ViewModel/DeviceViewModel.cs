@@ -143,7 +143,7 @@ namespace LiveHTS.Presentation.ViewModel
             var hapiCentral = _settings.GetValue("hapi.central", "");
             var hapiLocal = _settings.GetValue("hapi.local", "");
 
-            if (!string.IsNullOrWhiteSpace(deviceJson))
+            if (null== Device&&!string.IsNullOrWhiteSpace(deviceJson))
             {
                 Device = JsonConvert.DeserializeObject<Device>(deviceJson);
             }
@@ -151,12 +151,19 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Device = _deviceSetupService.GetDefault(Serial);
                 if (null == Device)
+                {
                     Device = new Device();
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(Device);
+                    _settings.AddOrUpdateValue("device.id", json);
+                }
             }
             Code = Device.Code;
 
 
-            if (!string.IsNullOrWhiteSpace(hapiCentral))
+            if (null== Central&&!string.IsNullOrWhiteSpace(hapiCentral))
             {
                 Central = JsonConvert.DeserializeObject<ServerConfig>(hapiCentral);
             }
@@ -164,20 +171,34 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Central = _deviceSetupService.GetCentral();
                 if (null == Central)
+                {
                     Central = new ServerConfig();
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(Central);
+                    _settings.AddOrUpdateValue("hapi.central", json);
+                }
             }
             CentralAddress = Central.Address;
             CentralName = Central.Name;
 
-            if (!string.IsNullOrWhiteSpace(hapiLocal))
+            if (null==Local&&!string.IsNullOrWhiteSpace(hapiLocal))
             {
                 Local = JsonConvert.DeserializeObject<ServerConfig>(hapiLocal);
             }
             else
             {
                 Local = _deviceSetupService.GetLocal();
-                if (null == Device)
+                if (null == Local)
+                {
                     Local = new ServerConfig();
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(Local);
+                    _settings.AddOrUpdateValue("hapi.local", json);
+                }
             }
             LocalAddress = Local.Address;
             LocalName = Local.Name;
@@ -191,14 +212,20 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void VerifyCentral()
         {
-            _dialogService.ShowWait();
+            _dialogService.ShowWait("Verifying,Please wait...");
             Central = new ServerConfig("hapi.central");
             var practice = await _activationService.GetCentral(CentralAddress);
-            if (null != practice)
-                Central = ServerConfig.CreateCentral(practice, CentralAddress);
-
-            CentralName = Central.Name;
             _dialogService.HideWait();
+            if (null != practice)
+            {
+                Central = ServerConfig.CreateCentral(practice, CentralAddress);
+            }
+            else
+            {
+                _dialogService.Alert("Address could not be verified");
+            }
+            CentralName = Central.Name;
+            
         }
 
         private bool CanVerifyLocal()
@@ -208,14 +235,23 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void VerifyLocal()
         {
-            _dialogService.ShowWait();
+            _dialogService.ShowWait("Verifying,Please wait...");
             Local = new ServerConfig("hapi.local");
-            var practice = await _activationService.GetLocal(CentralAddress);
+            var practice = await _activationService.GetLocal(LocalAddress);
+            _dialogService.HideWait();
             if (null != practice)
-                Local = ServerConfig.CreateLocal(practice, CentralAddress);
+            {
+                
+                Local = ServerConfig.CreateLocal(practice, LocalAddress);
+            }
+            else
+            {
+                _dialogService.Alert("Address could not be verified");
+            }
+
 
             LocalName = Local.Name;
-            _dialogService.HideWait();
+            
         }
         private bool CanSaveDevice()
         {
@@ -241,17 +277,26 @@ namespace LiveHTS.Presentation.ViewModel
                 _deviceSetupService.SaveLocal(Local);
 
                 Device = _deviceSetupService.GetDefault(Device.Id);
+                if (null != Device)
+                    _settings.AddOrUpdateValue("device.id", JsonConvert.SerializeObject(Device));
+
                 Central = _deviceSetupService.GetCentral();
+                if (null != Central)
+                    _settings.AddOrUpdateValue("hapi.central", JsonConvert.SerializeObject(Central));
+
                 Local = _deviceSetupService.GetLocal();
+                if (null != Local)
+                    _settings.AddOrUpdateValue("hapi.local", JsonConvert.SerializeObject(Local));
+
 
                 _dialogService.ShowToast("Device info saved successfully");
             }
             catch (Exception e)
             {
-                
+
                 throw;
             }
-            
+
         }
     }
 }
