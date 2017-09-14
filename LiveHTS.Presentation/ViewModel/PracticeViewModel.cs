@@ -161,7 +161,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             _practiceSetupService.Save(Practice);
             Practice = _practiceSetupService.GetDefault();
-            _settings.AddOrUpdateValue("hapi.practice", JsonConvert.SerializeObject(Practice));
+            _settings.AddOrUpdateValue("device.practice", JsonConvert.SerializeObject(Practice));
             _dialogService.ShowToast($"Saved {Practice} Successfully");
         }
         private bool CanSearchPractice()
