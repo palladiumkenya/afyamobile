@@ -18,6 +18,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _registerNewClientCommand;
         private IMvxCommand _quitCommand;
         private IMvxCommand _deviceCommand;
+        private IMvxCommand _practiceCommand;
 
         public IMvxCommand RegistryCommand
         {
@@ -55,8 +56,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-       
+        public IMvxCommand PracticeCommand
+        {
+            get
+            {
+                _practiceCommand = _practiceCommand ?? new MvxCommand(ShowPractice);
+                return _practiceCommand;
+            }
+        }
 
+      
 
         public string Profile
         {
@@ -121,7 +130,13 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowViewModel<DeviceViewModel>();
         }
-        public  void Quit()
+
+        private void ShowPractice()
+        {
+            ShowViewModel<PracticeViewModel>();
+        }
+
+        public void Quit()
         {
           _dialogService.ConfirmExit();
         }

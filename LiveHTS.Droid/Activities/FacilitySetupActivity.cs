@@ -14,16 +14,14 @@ using MvvmCross.Droid.FullFragging.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Device Setup")]
-    public class DeviceSetupActivity : MvxActivity<DeviceViewModel>
+    [Activity(Label = "FacilitySetupActivity")]
+    public class FacilitySetupActivity : MvxActivity<PracticeViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.DeviceSetupView);
-
-            ViewModel.LoadDeviceInfo(Android.OS.Build.Serial,Android.OS.Build.Model, Android.OS.Build.Manufacturer);
-            
+            SetContentView(Resource.Layout.FacilitySetupView);
+            // Create your application here
         }
     }
 }

@@ -14,8 +14,6 @@ namespace LiveHTS.Core.Service.Sync
 {
   public  class ActivationService : IActivationService
   {
-      
-
         private readonly IRestClient _restClient;
 
         public ActivationService(IRestClient restClient)
@@ -23,18 +21,42 @@ namespace LiveHTS.Core.Service.Sync
             _restClient = restClient;
         }
 
-        public Task<Practice> GetCentral(string url = null)
-        {
-            return string.IsNullOrEmpty(url)
-                ? _restClient.MakeApiCall<Practice>($"http://data.kenyahmis.org:6000/api/activate/central/", HttpMethod.Get)
-                : _restClient.MakeApiCall<Practice>($"{url.HasToEndWith("/")}api/activate/central/", HttpMethod.Get);
+      public Task<Practice> SearchLocal(string url,string code)
+      {
+          url = GetActivateUrl(url, $"enroll/{code}");
+
+          return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
         }
 
-        public Task<Practice> GetLocal(string url = null)
-        {
-            return string.IsNullOrEmpty(url)
-                ? _restClient.MakeApiCall<Practice>($"http://192.168.1.167:6000/api/activate/local/", HttpMethod.Get)
-                : _restClient.MakeApiCall<Practice>($"{url.HasToEndWith("/")}api/activate/local/", HttpMethod.Get);
+      public Task<Practice> SearchCentral(string url, string code)
+      {
+          url = GetActivateUrl(url, $"enroll/{code}");
+
+          return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
         }
-    }
+
+      public Task<Practice> GetCentral(string url)
+        {
+            url = GetActivateUrl(url, "central");
+
+            return  _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<Practice> GetLocal(string url)
+        {
+            url =GetActivateUrl(url, "local");
+
+            return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
+        }
+
+      public Task<Practice> Register(string device, string url)
+      {
+          throw new NotImplementedException();
+      }
+
+      private string GetActivateUrl(string url,string endpoint)
+      {
+          return $"{url.HasToEndWith("/")}api/activate/{endpoint}".HasToEndWith("/");
+      }
+  }
 }

@@ -70,7 +70,6 @@
     <Compile Include="Interfaces\Repository\Survey\IProgramRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />
-    <Compile Include="Interfaces\Services\Config\IServerConfigService.cs" />
     <Compile Include="Interfaces\Services\Config\IPracticeSetupService.cs" />
     <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
     <Compile Include="Interfaces\Services\Config\IDeviceSetupService.cs" />
@@ -165,8 +164,8 @@
     <Compile Include="Service\Clients\EncounterService.cs" />
     <Compile Include="Engine\ValidationEngine.cs" />
     <Compile Include="Service\Clients\RegistryService.cs" />
-    <Compile Include="Service\Config\ServerConfigService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
+    <Compile Include="Service\Config\PracticeSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
     <Compile Include="Service\Interview\LinkageService.cs" />
     <Compile Include="Service\Interview\HIVTestingService.cs" />

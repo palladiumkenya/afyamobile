@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
 
@@ -14,9 +15,10 @@ namespace LiveHTS.Core.Model.Config
 
         public Device()
         {
+            Id = LiveGuid.NewGuid();
         }
 
-        public Device(string serial, string code, string name, Guid practiceId)
+        public Device(string serial, string code, string name, Guid practiceId):this()
         {
             Serial = serial;
             Code = code;

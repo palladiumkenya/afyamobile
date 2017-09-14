@@ -218,6 +218,8 @@ namespace LiveHTS.Presentation.ViewModel
             _dialogService.HideWait();
             if (null != practice)
             {
+                //Activate Device
+
                 Central = ServerConfig.CreateCentral(practice, CentralAddress);
             }
             else
@@ -241,7 +243,8 @@ namespace LiveHTS.Presentation.ViewModel
             _dialogService.HideWait();
             if (null != practice)
             {
-                
+                //Activate Device
+                Device.PracticeId = practice.Id;
                 Local = ServerConfig.CreateLocal(practice, LocalAddress);
             }
             else
