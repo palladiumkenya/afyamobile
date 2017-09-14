@@ -2,7 +2,9 @@
 using Acr.UserDialogs;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Services.Sync;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.Core.Service.Sync;
 using LiveHTS.Infrastructure.Repository.Survey;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -44,7 +46,8 @@ namespace LiveHTS.Presentation
             Mvx.RegisterSingleton<ILiveSetting>(new LiveSetting(_dbpath));
 
             Mvx.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
-            
+
+            Mvx.RegisterSingleton<IRestClient>(() => new RestClient());
 
 
             CreatableTypes(assemblyInfrastructure)

@@ -1,6 +1,7 @@
 ﻿using System;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Config;
+using LiveHTS.Core.Interfaces.Services.Sync;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
@@ -14,14 +15,25 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly IDeviceSetupService _deviceSetupService;
-        protected readonly ISettings _settings;
+        private readonly IActivationService _activationService;
+        private readonly ISettings _settings;
 
         private string _serial;
         private string _code;
         private string _name;
         private IMvxCommand _saveDeviceCommand;
+        private string _centralAddress;
+        private string _centralName;
+        private string _localAddress;
+        private string _localName;
+        private IMvxCommand _verifyCentralCommand;
+        private IMvxCommand _verifyLocalCommand;
 
         public Device Device { get; set; }
+
+        public ServerConfig Central { get; set; }
+
+        public ServerConfig Local { get; set; }
 
         public string Serial
         {
@@ -45,6 +57,30 @@ namespace LiveHTS.Presentation.ViewModel
             set { _name = value;  RaisePropertyChanged(() => Name);}
         }
 
+        public string CentralAddress
+        {
+            get { return _centralAddress; }
+            set { _centralAddress = value; RaisePropertyChanged(() => CentralAddress);VerifyCentralCommand.RaiseCanExecuteChanged(); }
+        }
+
+        public string CentralName
+        {
+            get { return _centralName; }
+            set { _centralName = value; RaisePropertyChanged(() => CentralName); }
+        }
+
+        public string LocalAddress
+        {
+            get { return _localAddress; }
+            set { _localAddress = value; RaisePropertyChanged(() => LocalAddress); VerifyLocalCommand.RaiseCanExecuteChanged();}
+        }
+
+        public string LocalName
+        {
+            get { return _localName; }
+            set { _localName = value; RaisePropertyChanged(() => LocalName); }
+        }
+
         public IMvxCommand SaveDeviceCommand
         {
             get
@@ -54,24 +90,59 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public IMvxCommand VerifyCentralCommand
+        {
+            get
+            {
+                _verifyCentralCommand = _verifyCentralCommand ?? new MvxCommand(VerifyCentral, CanVerifyCentral);
+                return _verifyCentralCommand;
+            }
+        }
 
-        public void LoadDeviceInfo(string serial, string name,string manufacturer)
+        public IMvxCommand VerifyLocalCommand
+        {
+            get
+            {
+                _verifyLocalCommand = _verifyLocalCommand ?? new MvxCommand(VerifyLocal, CanVerifyLocal);
+                return _verifyLocalCommand;
+            }
+        }
+
+       
+
+
+       
+
+
+        public DeviceViewModel(ISettings settings,IDialogService dialogService, IDeviceSetupService deviceSetupService, IActivationService activationService)
+        {
+            _dialogService = dialogService;
+            _deviceSetupService = deviceSetupService;
+            _activationService = activationService;
+            _settings = settings;
+        }
+
+
+        public void Init()
+        {
+            LoadInit();
+        }
+
+        public override void ViewAppeared()
+        {
+           LoadInit();
+        }
+        public void LoadDeviceInfo(string serial, string name, string manufacturer)
         {
             Serial = serial;
             Name = $"{manufacturer},{name}";
         }
-
-
-        public DeviceViewModel(ISettings settings,IDialogService dialogService, IDeviceSetupService deviceSetupService)
-        {
-            _dialogService = dialogService;
-            _deviceSetupService = deviceSetupService;
-            _settings = settings;
-        }
-
-        public void Init()
+        private void LoadInit()
         {
             var deviceJson = _settings.GetValue("device.id", "");
+            var hapiCentral = _settings.GetValue("hapi.central", "");
+            var hapiLocal = _settings.GetValue("hapi.local", "");
+
             if (!string.IsNullOrWhiteSpace(deviceJson))
             {
                 Device = JsonConvert.DeserializeObject<Device>(deviceJson);
@@ -82,26 +153,69 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null == Device)
                     Device = new Device();
             }
-
-            
             Code = Device.Code;
-        }
 
-        public override void ViewAppeared()
-        {
-            var deviceJson = _settings.GetValue("device.id", "");
-            if (!string.IsNullOrWhiteSpace(deviceJson))
+
+            if (!string.IsNullOrWhiteSpace(hapiCentral))
             {
-                Device= JsonConvert.DeserializeObject<Device>(deviceJson);
+                Central = JsonConvert.DeserializeObject<ServerConfig>(hapiCentral);
             }
             else
             {
-                Device = _deviceSetupService.GetDefault(Serial);
-                if(null==Device)
-                    Device=new Device();
+                Central = _deviceSetupService.GetCentral();
+                if (null == Central)
+                    Central = new ServerConfig();
             }
-            
-            Code = Device.Code;
+            CentralAddress = Central.Address;
+            CentralName = Central.Name;
+
+            if (!string.IsNullOrWhiteSpace(hapiLocal))
+            {
+                Local = JsonConvert.DeserializeObject<ServerConfig>(hapiLocal);
+            }
+            else
+            {
+                Local = _deviceSetupService.GetLocal();
+                if (null == Device)
+                    Local = new ServerConfig();
+            }
+            LocalAddress = Local.Address;
+            LocalName = Local.Name;
+
+        }
+
+        private bool CanVerifyCentral()
+        {
+            return !string.IsNullOrWhiteSpace(CentralAddress);
+        }
+
+        private async void VerifyCentral()
+        {
+            _dialogService.ShowWait();
+            Central = new ServerConfig("hapi.central");
+            var practice = await _activationService.GetCentral(CentralAddress);
+            if (null != practice)
+                Central = ServerConfig.CreateCentral(practice, CentralAddress);
+
+            CentralName = Central.Name;
+            _dialogService.HideWait();
+        }
+
+        private bool CanVerifyLocal()
+        {
+            return !string.IsNullOrWhiteSpace(LocalAddress);
+        }
+
+        private async void VerifyLocal()
+        {
+            _dialogService.ShowWait();
+            Local = new ServerConfig("hapi.local");
+            var practice = await _activationService.GetLocal(CentralAddress);
+            if (null != practice)
+                Local = ServerConfig.CreateLocal(practice, CentralAddress);
+
+            LocalName = Local.Name;
+            _dialogService.HideWait();
         }
         private bool CanSaveDevice()
         {
@@ -114,10 +228,22 @@ namespace LiveHTS.Presentation.ViewModel
             Device.Name = Name;
             Device.Code = Code;
 
+            Central.Name = CentralName;
+            Central.Address = CentralAddress;
+
+            Local.Name = LocalName;
+            Local.Address = LocalAddress;
+
             try
             {
                 _deviceSetupService.Register(Device);
+                _deviceSetupService.SaveCentral(Central);
+                _deviceSetupService.SaveLocal(Local);
+
                 Device = _deviceSetupService.GetDefault(Device.Id);
+                Central = _deviceSetupService.GetCentral();
+                Local = _deviceSetupService.GetLocal();
+
                 _dialogService.ShowToast("Device info saved successfully");
             }
             catch (Exception e)

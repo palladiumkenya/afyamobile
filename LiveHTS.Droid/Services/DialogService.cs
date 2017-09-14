@@ -18,6 +18,16 @@ namespace LiveHTS.Droid.Services
             _userDialogs = Mvx.Resolve<IUserDialogs>();
         }
 
+        public void ShowWait(string message="Loading")
+        {
+            _userDialogs.ShowLoading(message, MaskType.Black);
+        }
+
+        public void HideWait()
+        {
+            _userDialogs.HideLoading();
+        }
+
         public void Alert(string message, string title="LiveHTS", string okbtnText="Ok")
         {
             var top = Mvx.Resolve<IMvxAndroidCurrentTopActivity>();

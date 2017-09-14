@@ -45,6 +45,7 @@
     <Compile Include="Interfaces\Model\IEnrollment.cs" />
     <Compile Include="Interfaces\Model\IProfile.cs" />
     <Compile Include="Interfaces\Repository\Config\IEncounterTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\IServerConfigRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IRelationshipTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IIdentifierTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IMaritalStatusRepository.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="Interfaces\Repository\Survey\IProgramRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />
+    <Compile Include="Interfaces\Services\Config\IServerConfigService.cs" />
+    <Compile Include="Interfaces\Services\Config\IPracticeSetupService.cs" />
     <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
     <Compile Include="Interfaces\Services\Config\IDeviceSetupService.cs" />
     <Compile Include="Interfaces\Services\Config\ILookupService.cs" />
@@ -76,8 +79,10 @@
     <Compile Include="Interfaces\Services\Interview\IHIVTestingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IInterviewService.cs" />
     <Compile Include="Interfaces\Services\Survey\ISurveyService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IActivationService.cs" />
     <Compile Include="Interfaces\Services\Sync\IMetaSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IRestClient.cs" />
+    <Compile Include="Interfaces\Services\Sync\ISyncDeviceService.cs" />
     <Compile Include="Interfaces\Services\Sync\ISyncPerson.cs" />
     <Compile Include="Interfaces\Services\Sync\ISyncUser.cs" />
     <Compile Include="Model\AppDashboard.cs" />
@@ -87,6 +92,7 @@
     <Compile Include="Model\Class1.cs" />
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
+    <Compile Include="Model\Config\ServerConfig.cs" />
     <Compile Include="Model\Interview\ObsFinalTestResult.cs" />
     <Compile Include="Model\Interview\ObsLinkage.cs" />
     <Compile Include="Model\Interview\ObsTraceResult.cs" />
@@ -159,11 +165,13 @@
     <Compile Include="Service\Clients\EncounterService.cs" />
     <Compile Include="Engine\ValidationEngine.cs" />
     <Compile Include="Service\Clients\RegistryService.cs" />
+    <Compile Include="Service\Config\ServerConfigService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
     <Compile Include="Service\Interview\LinkageService.cs" />
     <Compile Include="Service\Interview\HIVTestingService.cs" />
     <Compile Include="Service\Interview\InterviewService.cs" />
+    <Compile Include="Service\Sync\ActivationService.cs" />
     <Compile Include="Service\Sync\MetaSyncService.cs" />
     <Compile Include="Service\Sync\RestClient.cs" />
     <Compile Include="Service\Sync\SyncPerson.cs" />

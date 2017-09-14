@@ -34,6 +34,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             db.CreateTable<IdentifierType>();
             db.CreateTable<PracticeType>();
+            db.CreateTable<ServerConfig>();
             db.CreateTable<Practice>();
             db.CreateTable<RelationshipType>();
             db.CreateTable<KeyPop>();
@@ -43,6 +44,7 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<ConceptType>();
             #endregion
 
+            InsertOrUpdate(db, new ServerConfigJson());
             InsertOrUpdate(db, new IdentifierTypeJson());
             InsertOrUpdate(db, new PracticeTypeJson());
             InsertOrUpdate(db, new PracticeJson());
