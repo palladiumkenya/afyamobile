@@ -11,11 +11,12 @@ using Android.Views;
 using Android.Widget;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Droid.FullFragging.Views;
+using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
     [Activity(Label = "Device Setup")]
-    public class DeviceSetupActivity : MvxActivity<DeviceViewModel>
+    public class DeviceSetupActivity : MvxAppCompatActivity<DeviceViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

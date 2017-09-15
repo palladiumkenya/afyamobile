@@ -19,6 +19,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _quitCommand;
         private IMvxCommand _deviceCommand;
         private IMvxCommand _practiceCommand;
+        private IMvxCommand _pullCommand;
 
         public IMvxCommand RegistryCommand
         {
@@ -65,8 +66,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-      
+        public IMvxCommand PullDataCommand
+        {
+            get
+            {
+                _pullCommand = _pullCommand ?? new MvxCommand(PullData);
+                return _pullCommand;
+            }
+        }
 
+      
         public string Profile
         {
             get { return $"Signed in as {_profile}"; }
@@ -135,6 +144,11 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowViewModel<PracticeViewModel>();
         }
+        private void PullData()
+        {
+            ShowViewModel<PullDataViewModel>();
+        }
+
 
         public void Quit()
         {

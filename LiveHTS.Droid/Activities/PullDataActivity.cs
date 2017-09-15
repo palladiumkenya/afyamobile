@@ -10,19 +10,17 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using LiveHTS.Presentation.ViewModel;
-using MvvmCross.Droid.FullFragging.Views;
 using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "FacilitySetupActivity")]
-    public class FacilitySetupActivity : MvxAppCompatActivity<PracticeViewModel>
+    [Activity(Label = "Pull Data")]
+    public class PullDataActivity  : MvxAppCompatActivity<PullDataViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.FacilitySetupView);
-            // Create your application here
+            SetContentView(Resource.Layout.PullDataView);
         }
     }
 }

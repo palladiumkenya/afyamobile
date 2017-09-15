@@ -175,6 +175,7 @@
     <Compile Include="Service\Sync\RestClient.cs" />
     <Compile Include="Service\Sync\SyncPerson.cs" />
     <Compile Include="Service\Sync\SyncUser.cs" />
+    <Compile Include="SyncModel\Meta.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

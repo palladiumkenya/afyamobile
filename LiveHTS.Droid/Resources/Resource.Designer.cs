@@ -5454,8 +5454,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900c0
 			public const int buttonProfilePrev = 2131296448;
 			
-			// aapt resource value: 0x7f090111
-			public const int buttonSave = 2131296529;
+			// aapt resource value: 0x7f090112
+			public const int buttonSave = 2131296530;
 			
 			// aapt resource value: 0x7f0900a2
 			public const int buttonSaveEncounter = 2131296418;
@@ -5547,11 +5547,11 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900c3
 			public const int email = 2131296451;
 			
-			// aapt resource value: 0x7f090109
-			public const int email_login_form = 2131296521;
+			// aapt resource value: 0x7f09010a
+			public const int email_login_form = 2131296522;
 			
-			// aapt resource value: 0x7f09010c
-			public const int email_sign_in_button = 2131296524;
+			// aapt resource value: 0x7f09010d
+			public const int email_sign_in_button = 2131296525;
 			
 			// aapt resource value: 0x7f090023
 			public const int end = 2131296291;
@@ -5574,8 +5574,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f09005e
 			public const int expanded_menu = 2131296350;
 			
-			// aapt resource value: 0x7f090106
-			public const int fab = 2131296518;
+			// aapt resource value: 0x7f090107
+			public const int fab = 2131296519;
 			
 			// aapt resource value: 0x7f090103
 			public const int fabpartners = 2131296515;
@@ -5622,8 +5622,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900c5
 			public const int imageButton2 = 2131296453;
 			
-			// aapt resource value: 0x7f090107
-			public const int imageView = 2131296519;
+			// aapt resource value: 0x7f090108
+			public const int imageView = 2131296520;
 			
 			// aapt resource value: 0x7f0900f8
 			public const int info = 2131296504;
@@ -5658,8 +5658,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f09008b
 			public const int linearLayoutNav = 2131296395;
 			
-			// aapt resource value: 0x7f090105
-			public const int list = 2131296517;
+			// aapt resource value: 0x7f090106
+			public const int list = 2131296518;
 			
 			// aapt resource value: 0x7f090011
 			public const int listMode = 2131296273;
@@ -5682,17 +5682,17 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900e7
 			public const int loadingProgressWheel = 2131296487;
 			
-			// aapt resource value: 0x7f09010b
-			public const int login = 2131296523;
+			// aapt resource value: 0x7f09010c
+			public const int login = 2131296524;
 			
-			// aapt resource value: 0x7f090108
-			public const int login_form = 2131296520;
+			// aapt resource value: 0x7f090109
+			public const int login_form = 2131296521;
 			
-			// aapt resource value: 0x7f09010d
-			public const int login_progress = 2131296525;
+			// aapt resource value: 0x7f09010e
+			public const int login_progress = 2131296526;
 			
-			// aapt resource value: 0x7f090113
-			public const int masked = 2131296531;
+			// aapt resource value: 0x7f090114
+			public const int masked = 2131296532;
 			
 			// aapt resource value: 0x7f0900f1
 			public const int media_actions = 2131296497;
@@ -5742,11 +5742,14 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f090051
 			public const int parentPanel = 2131296337;
 			
-			// aapt resource value: 0x7f09010a
-			public const int password = 2131296522;
+			// aapt resource value: 0x7f09010b
+			public const int password = 2131296523;
 			
 			// aapt resource value: 0x7f09003a
 			public const int pin = 2131296314;
+			
+			// aapt resource value: 0x7f090105
+			public const int progressBar = 2131296517;
 			
 			// aapt resource value: 0x7f090006
 			public const int progress_circular = 2131296262;
@@ -5868,8 +5871,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900bc
 			public const int spinnerKeyPop = 2131296444;
 			
-			// aapt resource value: 0x7f090110
-			public const int spinnerKit = 2131296528;
+			// aapt resource value: 0x7f090111
+			public const int spinnerKit = 2131296529;
 			
 			// aapt resource value: 0x7f0900ba
 			public const int spinnerMaritalStatus = 2131296442;
@@ -6003,8 +6006,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900a4
 			public const int textViewEnrollmentTitle = 2131296420;
 			
-			// aapt resource value: 0x7f09010e
-			public const int textViewError = 2131296526;
+			// aapt resource value: 0x7f09010f
+			public const int textViewError = 2131296527;
 			
 			// aapt resource value: 0x7f0900a3
 			public const int textViewErrors = 2131296419;
@@ -6024,8 +6027,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900a9
 			public const int textViewIdentifierType = 2131296425;
 			
-			// aapt resource value: 0x7f09010f
-			public const int textViewKit = 2131296527;
+			// aapt resource value: 0x7f090110
+			public const int textViewKit = 2131296528;
 			
 			// aapt resource value: 0x7f090099
 			public const int textViewPersonId = 2131296409;
@@ -6120,8 +6123,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900e2
 			public const int viewpagerlink = 2131296482;
 			
-			// aapt resource value: 0x7f090112
-			public const int visible = 2131296530;
+			// aapt resource value: 0x7f090113
+			public const int visible = 2131296531;
 			
 			// aapt resource value: 0x7f090029
 			public const int withText = 2131296297;
@@ -6483,46 +6486,49 @@ namespace LiveHTS.Droid
 			public const int psts_tab = 2130968675;
 			
 			// aapt resource value: 0x7f040064
-			public const int ReferralView = 2130968676;
+			public const int PullDataView = 2130968676;
 			
 			// aapt resource value: 0x7f040065
-			public const int RegistryView = 2130968677;
+			public const int ReferralView = 2130968677;
 			
 			// aapt resource value: 0x7f040066
-			public const int SecondHIVTestView = 2130968678;
+			public const int RegistryView = 2130968678;
 			
 			// aapt resource value: 0x7f040067
-			public const int SecondTestEpisodeView = 2130968679;
+			public const int SecondHIVTestView = 2130968679;
 			
 			// aapt resource value: 0x7f040068
-			public const int select_dialog_item_material = 2130968680;
+			public const int SecondTestEpisodeView = 2130968680;
 			
 			// aapt resource value: 0x7f040069
-			public const int select_dialog_multichoice_material = 2130968681;
+			public const int select_dialog_item_material = 2130968681;
 			
 			// aapt resource value: 0x7f04006a
-			public const int select_dialog_singlechoice_material = 2130968682;
+			public const int select_dialog_multichoice_material = 2130968682;
 			
 			// aapt resource value: 0x7f04006b
-			public const int SignInView = 2130968683;
+			public const int select_dialog_singlechoice_material = 2130968683;
 			
 			// aapt resource value: 0x7f04006c
-			public const int SplashScreen = 2130968684;
+			public const int SignInView = 2130968684;
 			
 			// aapt resource value: 0x7f04006d
-			public const int SummaryView = 2130968685;
+			public const int SplashScreen = 2130968685;
 			
 			// aapt resource value: 0x7f04006e
-			public const int support_simple_spinner_dropdown_item = 2130968686;
+			public const int SummaryView = 2130968686;
 			
 			// aapt resource value: 0x7f04006f
-			public const int TestingView = 2130968687;
+			public const int support_simple_spinner_dropdown_item = 2130968687;
 			
 			// aapt resource value: 0x7f040070
-			public const int TestView = 2130968688;
+			public const int TestingView = 2130968688;
 			
 			// aapt resource value: 0x7f040071
-			public const int TraceView = 2130968689;
+			public const int TestView = 2130968689;
+			
+			// aapt resource value: 0x7f040072
+			public const int TraceView = 2130968690;
 			
 			static Layout()
 			{

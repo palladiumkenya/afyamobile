@@ -201,6 +201,7 @@
     <Compile Include="Activities\ClientEncounterActivity.cs" />
     <Compile Include="Activities\ClientRegistrationActivity.cs" />
     <Compile Include="Activities\ClientRelationshipsActivity.cs" />
+    <Compile Include="Activities\PullDataActivity.cs" />
     <Compile Include="Activities\RegistryActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ObsActivity.cs" />
@@ -403,6 +404,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\FacilitySetupView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PullDataView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

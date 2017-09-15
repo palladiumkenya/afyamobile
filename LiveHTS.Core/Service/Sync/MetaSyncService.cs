@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Services.Sync;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Core.SyncModel;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service.Sync
 {
@@ -20,11 +23,46 @@ namespace LiveHTS.Core.Service.Sync
         {
             _restClient = restClient;
         }
-        public Task<List<County>> GetAll(string url = null)
+     
+
+        Task<Meta> IMetaSyncService.GetMetaData(string url)
         {
-            return string.IsNullOrEmpty(url)
-                ? _restClient.MakeApiCall<List<County>>($"http://localhost:5000/api/counties/", HttpMethod.Get)
-                : _restClient.MakeApiCall<List<County>>(url, HttpMethod.Get);
+            url = GetActivateUrl(url, "data");
+
+            return _restClient.MakeApiCall<Meta>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<List<County>> GetCounties(string url)
+        {
+            url = GetActivateUrl(url, "counties");
+
+            return _restClient.MakeApiCall<List<County>>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<List<Category>> GetCategories(string url)
+        {
+            url = GetActivateUrl(url, "categories");
+
+            return _restClient.MakeApiCall<List<Category>>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<List<Item>> GetItems(string url)
+        {
+            url = GetActivateUrl(url, "items");
+
+            return _restClient.MakeApiCall<List<Item>>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<List<CategoryItem>> GetCatItems(string url)
+        {
+            url = GetActivateUrl(url, "catitems");
+
+            return _restClient.MakeApiCall<List<CategoryItem>>($"{url}", HttpMethod.Get);
+        }
+
+        private string GetActivateUrl(string url, string endpoint)
+        {
+            return $"{url.HasToEndWith("/")}api/meta/{endpoint}".HasToEndWith("/");
         }
     }
 }

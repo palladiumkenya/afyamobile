@@ -21,7 +21,7 @@ namespace LiveHTS.Core.Tests.Service.Sync
         [Test]
         public void should_load_counties()
         {
-            var counties = _metaSyncService.GetAll().Result;
+            var counties = _metaSyncService.GetMetaData().Result;
 
             Assert.IsTrue(counties.Count>0);
             foreach (var county in counties)
