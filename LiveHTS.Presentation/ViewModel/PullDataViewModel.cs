@@ -17,6 +17,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IActivationService _activationService;
         private readonly IMetaSyncService _metaSyncService;
         private readonly IDeviceSetupService _deviceSetupService;
+        private readonly ISyncDataService _syncDataService;
         private string _address;
         private string _currentStatus;
         private int _currentStatusProgress;
@@ -24,6 +25,7 @@ namespace LiveHTS.Presentation.ViewModel
         private int _overallStatusProgress;
         private IMvxCommand _pullDataCommand;
         private bool _isBusy;
+        
 
         public Device Device { get; set; }
         public ServerConfig Local { get; set; }
@@ -72,13 +74,14 @@ namespace LiveHTS.Presentation.ViewModel
                 return _pullDataCommand;
             }
         }
-        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService)
+        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService)
         {
             _dialogService = dialogService;
             _settings = settings;
             _deviceSetupService = deviceSetupService;
             _activationService = activationService;
             _metaSyncService = metaSyncService;
+            _syncDataService = syncDataService;
         }
 
         public void Init()
@@ -142,27 +145,33 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void PullData()
         {
+            
             IsBusy = true;
             CurrentStatus = $"connecting...";
             var practice = await _activationService.GetLocal(Address);
             if (null != practice)
             {
                 CurrentStatus= showPerc("Metas",1, 5);
-                var m = await _metaSyncService.GetMetaData(Address); 
+                var meta = await _metaSyncService.GetMetaData(Address); 
+                _syncDataService.Update(meta);
+
 
                 CurrentStatus = showPerc("Counties", 2, 5);
-                var c = await  _metaSyncService.GetCounties(Address);
-
+                var counties = await  _metaSyncService.GetCounties(Address);
+                _syncDataService.Update(counties);
 
                 CurrentStatus = showPerc("Categories", 3, 5);
-                var ct = await _metaSyncService.GetCategories(Address);
+                var categories = await _metaSyncService.GetCategories(Address);
+                _syncDataService.Update(categories);
 
                 CurrentStatus = showPerc("Items", 4, 5);
-                var i = await _metaSyncService.GetItems(Address);
+                var items = await _metaSyncService.GetItems(Address);
+                _syncDataService.Update(items);
 
                 CurrentStatus = showPerc("CategoryItems", 5, 5);
-                var ci = await _metaSyncService.GetCatItems(Address);
-                
+                var categoryItems = await _metaSyncService.GetCatItems(Address);
+                _syncDataService.Update(categoryItems);
+
                 CurrentStatus = "done!";
                 _dialogService.ShowToast("completed successfully");
             }
@@ -177,6 +186,8 @@ namespace LiveHTS.Presentation.ViewModel
             IsBusy = false;
             
         }
+
+   
 
         private string showPerc(string message, int complete,int total)
         {

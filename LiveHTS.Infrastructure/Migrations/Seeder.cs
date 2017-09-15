@@ -24,10 +24,10 @@ namespace LiveHTS.Infrastructure.Migrations
         public static void Seed(SQLiteConnection db)
         {
             SeedConfig(db);
-            SeedLookup(db);
-            SeedSurvey(db);
+            //SeedLookup(db);
+            //SeedSurvey(db);
             SeedSubject(db);
-            SeedInterview(db);
+            //SeedInterview(db);
         }
 
         private static void SeedConfig(SQLiteConnection db)
@@ -48,6 +48,7 @@ namespace LiveHTS.Infrastructure.Migrations
             #endregion
 
             InsertOnly<ServerConfig,string>(db, new ServerConfigJson());
+            /*
             InsertOrUpdate(db, new IdentifierTypeJson());
             InsertOrUpdate(db, new PracticeTypeJson());
             InsertOnly<Practice, Guid>(db, new PracticeJson());
@@ -57,6 +58,7 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new EncounterTypeJson());
             InsertOrUpdate(db, new ProviderTypeJson());
             InsertOrUpdate(db, new ConceptTypeJson());
+            */
         }
 
         private static void SeedLookup(SQLiteConnection db)
@@ -91,6 +93,7 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<QuestionValidation>();
 
             #endregion
+
 
             InsertOrUpdate(db, new ModuleJson());
             InsertOrUpdate(db, new FormJson());
