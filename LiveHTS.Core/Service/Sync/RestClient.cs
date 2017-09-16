@@ -21,14 +21,17 @@ namespace LiveHTS.Core.Service.Sync
             {
                 using (var request = new HttpRequestMessage { RequestUri = new Uri(url), Method = method })
                 {
+                    
                     // add content
+
                     if (method != HttpMethod.Get)
                     {
                         var json = JsonConvert.SerializeObject(data);
                         request.Content = new StringContent(json, Encoding.UTF8, "application/json");
                     }
-
+                  
                     HttpResponseMessage response = null;
+
                     try
                     {
                         response = await httpClient.SendAsync(request).ConfigureAwait(false);

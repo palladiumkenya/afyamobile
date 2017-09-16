@@ -20,26 +20,23 @@ namespace LiveHTS.Core.Service.Sync
             _restClient = restClient;
         }
 
-        public Task<List<Module>> GetModules(string url)
-        {
-            url = GetActivateUrl(url, "modules");
-
-            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Get);
-        }
-
         public Task SendClients(string url, List<Client> clients)
         {
-            throw new System.NotImplementedException();
+            url = GetActivateUrl(url, "demographics");
+
+            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post);
         }
 
         public Task SendClientEncounters(string url, List<Encounter> encounters)
         {
-            throw new System.NotImplementedException();
+            url = GetActivateUrl(url, "encounters");
+
+            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post);
         }
 
         private string GetActivateUrl(string url, string endpoint)
         {
-            return $"{url.HasToEndWith("/")}api/forms/{endpoint}".HasToEndWith("/");
+            return $"{url.HasToEndWith("/")}api/clients/{endpoint}".HasToEndWith("/");
         }
 
 
