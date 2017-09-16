@@ -11,7 +11,7 @@ namespace LiveHTS.Infrastructure.Repository
         private readonly ILiveSetting _liveSetting;
         protected SQLiteConnection _db;
 
-        protected SyncDataRepository(ILiveSetting liveSetting)
+        public SyncDataRepository(ILiveSetting liveSetting)
         {
             _liveSetting = liveSetting;
             _db = new SQLiteConnection(_liveSetting.DatasePath);

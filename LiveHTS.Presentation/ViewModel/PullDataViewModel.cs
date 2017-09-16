@@ -16,6 +16,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly ISettings _settings;
         private readonly IActivationService _activationService;
         private readonly IMetaSyncService _metaSyncService;
+        private readonly IFormsSyncService _formsSyncService;
         private readonly IDeviceSetupService _deviceSetupService;
         private readonly ISyncDataService _syncDataService;
         private string _address;
@@ -74,7 +75,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return _pullDataCommand;
             }
         }
-        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService)
+        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService)
         {
             _dialogService = dialogService;
             _settings = settings;
@@ -82,6 +83,7 @@ namespace LiveHTS.Presentation.ViewModel
             _activationService = activationService;
             _metaSyncService = metaSyncService;
             _syncDataService = syncDataService;
+            _formsSyncService = formsSyncService;
         }
 
         public void Init()
@@ -145,32 +147,55 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void PullData()
         {
-            
+            int total = 9;
+            int current = 0;
             IsBusy = true;
             CurrentStatus = $"connecting...";
             var practice = await _activationService.GetLocal(Address);
             if (null != practice)
             {
-                CurrentStatus= showPerc("Metas",1, 5);
+                current++;
+                CurrentStatus = showPerc("Metas",current, total);
                 var meta = await _metaSyncService.GetMetaData(Address); 
-                _syncDataService.Update(meta);
+                _syncDataService.UpdateMeta(meta);
 
-
-                CurrentStatus = showPerc("Counties", 2, 5);
+                current++;
+                CurrentStatus = showPerc("Counties", current, total);
                 var counties = await  _metaSyncService.GetCounties(Address);
                 _syncDataService.Update(counties);
 
-                CurrentStatus = showPerc("Categories", 3, 5);
+                current++;
+                CurrentStatus = showPerc("Categories", current, total);
                 var categories = await _metaSyncService.GetCategories(Address);
                 _syncDataService.Update(categories);
 
-                CurrentStatus = showPerc("Items", 4, 5);
+                current++;
+                CurrentStatus = showPerc("Items", current, total);
                 var items = await _metaSyncService.GetItems(Address);
                 _syncDataService.Update(items);
 
-                CurrentStatus = showPerc("CategoryItems", 5, 5);
-                var categoryItems = await _metaSyncService.GetCatItems(Address);
-                _syncDataService.Update(categoryItems);
+                current++;
+                CurrentStatus = showPerc("Modules", current, total);
+                var modules = await _formsSyncService.GetModules(Address);
+                _syncDataService.UpdateModules(modules);
+
+                current++;
+                CurrentStatus = showPerc("Forms", current, total);
+                var forms = await _formsSyncService.GetForms(Address);
+                _syncDataService.UpdateForms(forms);
+
+                current++;
+                CurrentStatus = showPerc("Concepts", current, total);
+                var concepts = await _formsSyncService.GetConcepts(Address);
+                _syncDataService.UpdateConcepts(concepts);
+
+                current++;
+                CurrentStatus = showPerc("Questions", current, total);
+                var questions = await _formsSyncService.GetQuestions(Address);
+                _syncDataService.UpdateQuestions(questions);
+
+
+
 
                 CurrentStatus = "done!";
                 _dialogService.ShowToast("completed successfully");

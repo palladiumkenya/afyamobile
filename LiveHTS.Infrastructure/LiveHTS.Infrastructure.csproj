@@ -80,6 +80,12 @@
     <Compile Include="Repository\Survey\ModuleRepository.cs" />
     <Compile Include="Repository\Survey\QuestionRepository.cs" />
     <Compile Include="Repository\SyncDataRepository.cs" />
+    <Compile Include="Seed\Config\CountyJson.cs" />
+    <Compile Include="Seed\Config\SubCountyJson.cs" />
+    <Compile Include="Seed\Config\ValidatorJson.cs" />
+    <Compile Include="Seed\Config\ValidatorTypeJson.cs" />
+    <Compile Include="Seed\Config\ActionJson.cs" />
+    <Compile Include="Seed\Config\ConditionJson.cs" />
     <Compile Include="Seed\Config\ServerConfigJson.cs" />
     <Compile Include="Seed\Config\EncounterTypeJson.cs" />
     <Compile Include="Seed\Config\ConceptTypeJson.cs" />

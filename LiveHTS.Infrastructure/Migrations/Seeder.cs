@@ -15,6 +15,7 @@ using LiveHTS.Infrastructure.Seed.Subject;
 using LiveHTS.Infrastructure.Seed.Survey;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
+using Action = LiveHTS.Core.Model.Config.Action;
 using Module = LiveHTS.Core.Model.Survey.Module;
 
 namespace LiveHTS.Infrastructure.Migrations
@@ -24,10 +25,10 @@ namespace LiveHTS.Infrastructure.Migrations
         public static void Seed(SQLiteConnection db)
         {
             SeedConfig(db);
-            //SeedLookup(db);
-            //SeedSurvey(db);
+            SeedLookup(db);
+            SeedSurvey(db);
             SeedSubject(db);
-            //SeedInterview(db);
+            SeedInterview(db);
         }
 
         private static void SeedConfig(SQLiteConnection db)
@@ -44,12 +45,21 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<EncounterType>();
             db.CreateTable<ProviderType>();
             db.CreateTable<ConceptType>();
+            db.CreateTable<Action>();
+            db.CreateTable<Condition>();
+            db.CreateTable<Validator>();
+            db.CreateTable<ValidatorType>();
 
+            db.CreateTable<County>();
+            db.CreateTable<SubCounty>();
             #endregion
 
+            InsertOrUpdate(db, new CountyJson());
+            InsertOrUpdate(db, new SubCountyJson());
+
             InsertOnly<ServerConfig,string>(db, new ServerConfigJson());
-            /*
-            InsertOrUpdate(db, new IdentifierTypeJson());
+            
+            
             InsertOrUpdate(db, new PracticeTypeJson());
             InsertOnly<Practice, Guid>(db, new PracticeJson());
             InsertOrUpdate(db, new RelationshipTypeJson());
@@ -58,7 +68,10 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new EncounterTypeJson());
             InsertOrUpdate(db, new ProviderTypeJson());
             InsertOrUpdate(db, new ConceptTypeJson());
-            */
+            InsertOrUpdate(db, new ActionJson());
+            InsertOrUpdate(db, new ConditionJson());
+            InsertOrUpdate(db, new ValidatorJson());
+            InsertOrUpdate(db, new ValidatorTypeJson());
         }
 
         private static void SeedLookup(SQLiteConnection db)
@@ -71,9 +84,9 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-            InsertOrUpdate(db, new CategoryJson());
-            InsertOrUpdate(db, new ItemJson());
-            InsertOrUpdate(db, new CategoryItemJson());
+//            InsertOrUpdate(db, new CategoryJson());
+//            InsertOrUpdate(db, new ItemJson());
+//            InsertOrUpdate(db, new CategoryItemJson());
         }
 
         private static void SeedSurvey(SQLiteConnection db)
@@ -94,7 +107,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-
+            /*
             InsertOrUpdate(db, new ModuleJson());
             InsertOrUpdate(db, new FormJson());
             InsertOrUpdate(db, new ProgramJson());
@@ -106,7 +119,7 @@ namespace LiveHTS.Infrastructure.Migrations
             //InsertOrUpdate(db, new QuestionReValidationJson());
             //InsertOrUpdate(db, new QuestionTransformationJson());
             InsertOrUpdate(db, new QuestionValidationJson());
-
+            */
         }
 
         private static void SeedSubject(SQLiteConnection db)
