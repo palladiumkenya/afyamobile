@@ -18,6 +18,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IMetaSyncService _metaSyncService;
         private readonly IFormsSyncService _formsSyncService;
         private readonly IDeviceSetupService _deviceSetupService;
+        private readonly IDataSyncService _dataSyncService;
         private readonly ISyncDataService _syncDataService;
         private string _address;
         private string _currentStatus;
@@ -75,7 +76,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return _pullDataCommand;
             }
         }
-        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService)
+        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService, IDataSyncService dataSyncService)
         {
             _dialogService = dialogService;
             _settings = settings;
@@ -84,6 +85,7 @@ namespace LiveHTS.Presentation.ViewModel
             _metaSyncService = metaSyncService;
             _syncDataService = syncDataService;
             _formsSyncService = formsSyncService;
+            _dataSyncService = dataSyncService;
         }
 
         public void Init()
@@ -147,7 +149,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void PullData()
         {
-            int total = 9;
+            int total = 11;
             int current = 0;
             IsBusy = true;
             CurrentStatus = $"connecting...";
@@ -190,9 +192,28 @@ namespace LiveHTS.Presentation.ViewModel
                 _syncDataService.UpdateConcepts(concepts);
 
                 current++;
-                CurrentStatus = showPerc("Questions", current, total);
-                var questions = await _formsSyncService.GetQuestions(Address);
-                _syncDataService.UpdateQuestions(questions);
+                CurrentStatus = showPerc("Staff", current, total);
+                var persons = await _dataSyncService.GetStaff(Address);
+                _syncDataService.UpdateStaff(persons);
+
+
+                current++;
+                CurrentStatus = showPerc("Staff", current, total);
+                var persons = await _dataSyncService.GetUsers(Address);
+                _syncDataService.UpdateStaff(persons);
+
+
+                current++;
+                CurrentStatus = showPerc("Staff", current, total);
+                var persons = await _dataSyncService.GetProviders(Address);
+                _syncDataService.UpdateStaff(persons);
+
+
+                current++;
+                CurrentStatus = showPerc("Staff", current, total);
+                var persons = await _dataSyncService.GetStaff(Address);
+                _syncDataService.UpdateStaff(persons);
+
 
 
 

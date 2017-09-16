@@ -2,16 +2,16 @@
 using System.Threading.Tasks;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.SyncModel;
 
 namespace LiveHTS.Core.Interfaces.Services.Sync
 {
-    public interface IFormsSyncService
+    public interface IDataSyncService
     {
-        Task<List<Module>> GetModules(string url);
-        Task<List<Form>> GetForms(string url);
-        Task<List<Concept>> GetConcepts(string url);
-        Task<List<Question>> GetQuestions(string url);      
+        Task<List<Person>> GetStaff(string url);
+        Task<List<User>> GetUsers(string url);
+        Task<List<Provider>> GetProviders(string url);
     }
 }

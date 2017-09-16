@@ -13,7 +13,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
 [
   {
     ^Id^: ^hapi.central^,    
-    ^Address^: ^http://data.kenyahmis.org:6000/^,
+    ^Address^: ^http://data.kenyahmis.org:4747/^,
     ^Code^: ^1^,
     ^Name^: ^^,
     ^Instance^: ^00000000-0000-0000-0000-000000000000^,
@@ -21,7 +21,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
   },
   {
     ^Id^: ^hapi.local^,    
-    ^Address^: ^http://192.168.100.8:6000/^,
+    ^Address^: ^http://192.168.100.8:4747/^,
     ^Code^: ^^,
     ^Name^: ^^,
     ^Instance^: ^00000000-0000-0000-0000-000000000000^,

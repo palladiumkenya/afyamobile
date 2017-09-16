@@ -2,6 +2,7 @@
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Interfaces.Services.Sync;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.SyncModel;
 using SQLite;
@@ -68,6 +69,16 @@ namespace LiveHTS.Core.Service.Sync
                 Update(question.Transformations);
                 Update(question.RemoteTransformations);
 
+            }
+        }
+
+        public void UpdateStaff(List<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                Update(person);
+                Update(person.Addresses);
+                Update(person.Contacts);
             }
         }
 
