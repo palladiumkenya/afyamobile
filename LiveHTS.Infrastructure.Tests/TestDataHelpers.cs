@@ -23,7 +23,7 @@ namespace LiveHTS.Infrastructure.Tests
         public static readonly string _providerTypeId = "HW"; //HW|Health Worker|0
         public static readonly Guid _encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0"); // |HTS Initial|0
         public static readonly string _identifierTypeId = "Serial"; // |Serial|0
-        public static readonly Guid _practiceId =new Guid("7e51629e-6b99-11e7-907b-a6006ad3dba0"); //     |13023|Kenyatta National Hospital|Facility|47|0
+        public static readonly Guid _practiceId =new Guid("AB054358-98B9-11E7-ABC4-CEC278B6B50A"); //     |13023|Kenyatta National Hospital|Facility|47|0
         public static readonly string _relationshipType = "Partner"; //   |Partner|Partner|0
         public static readonly int _countyId = 47;
         public static readonly Guid _deviceId = new Guid("7e51658c-6b99-11e7-907b-a6006ad3dba0"); //       |12345|V01|VCT-01|0

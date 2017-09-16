@@ -12,7 +12,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
 {
     public interface IClientSyncService
     {
-        Task SendClients(string url,List<SyncClientDTO> clients);
+        Task SendClients(string url,SyncClientDTO client);
         Task SendClientEncounters(string url, List<Encounter> encounters);
     }
 }

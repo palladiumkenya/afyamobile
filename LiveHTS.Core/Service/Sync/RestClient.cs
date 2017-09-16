@@ -33,7 +33,7 @@ namespace LiveHTS.Core.Service.Sync
                     if (method != HttpMethod.Get)
                     {
                         var json = JsonConvert.SerializeObject(data,microsoftDateFormatSettings);
-                        request.Content = new StringContent(json);
+                        request.Content = new StringContent(json,Encoding.UTF8, "application/json");
                     }
                   
                     HttpResponseMessage response = null;

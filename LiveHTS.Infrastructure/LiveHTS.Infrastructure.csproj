@@ -94,7 +94,6 @@
     <Compile Include="Seed\Config\MaritalStatusJson.cs" />
     <Compile Include="Seed\Config\ProviderTypeJson.cs" />
     <Compile Include="Seed\Config\RelationshipTypeJson.cs" />
-    <Compile Include="Seed\Interview\EncounterJson.cs" />
     <Compile Include="Seed\Lookup\CategoryJson.cs" />
     <Compile Include="Seed\Lookup\ItemJson.cs" />
     <Compile Include="Seed\Lookup\CategoryItemJson.cs" />

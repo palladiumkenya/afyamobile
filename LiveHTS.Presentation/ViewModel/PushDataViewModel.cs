@@ -169,9 +169,8 @@ namespace LiveHTS.Presentation.ViewModel
                     if (null != client)
                     {
                         var clientInfo = new SyncClientDTO(client);
-                        var list=new List<SyncClientDTO>(){clientInfo};
                         CurrentStatus = showPerc("Clients", n, count);
-                        await _clientSyncService.SendClients(Address, list);
+                        await _clientSyncService.SendClients(Address, clientInfo);
                     }
                     
                 }

@@ -21,11 +21,11 @@ namespace LiveHTS.Core.Service.Sync
             _restClient = restClient;
         }
 
-        public Task SendClients(string url, List<SyncClientDTO> clients)
+        public Task SendClients(string url, SyncClientDTO client)
         {
             url = GetActivateUrl(url, "demographics");
 
-            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post,clients);
+            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post,client);
         }
 
         public Task SendClientEncounters(string url, List<Encounter> encounters)

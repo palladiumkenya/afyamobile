@@ -17,7 +17,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
    ^IsDefault^: 1,
    ^PracticeTypeId^: ^Facility^,
    ^CountyId^: 47,
-   ^Id^: ^7e51629e-6b99-11e7-907b-a6006ad3dba0^,
+   ^Id^: ^AB054358-98B9-11E7-ABC4-CEC278B6B50A^,
    ^Voided^: 0
  }
 ]

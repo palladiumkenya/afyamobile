@@ -9,7 +9,6 @@ using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Seed;
 using LiveHTS.Infrastructure.Seed.Config;
-using LiveHTS.Infrastructure.Seed.Interview;
 using LiveHTS.Infrastructure.Seed.Lookup;
 using LiveHTS.Infrastructure.Seed.Subject;
 using LiveHTS.Infrastructure.Seed.Survey;
