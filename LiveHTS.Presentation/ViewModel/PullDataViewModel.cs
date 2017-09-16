@@ -18,7 +18,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IMetaSyncService _metaSyncService;
         private readonly IFormsSyncService _formsSyncService;
         private readonly IDeviceSetupService _deviceSetupService;
-        private readonly IDataSyncService _dataSyncService;
+        private readonly IStaffSyncService _staffSyncService;
         private readonly ISyncDataService _syncDataService;
         private string _address;
         private string _currentStatus;
@@ -76,7 +76,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return _pullDataCommand;
             }
         }
-        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService, IDataSyncService dataSyncService)
+        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService, IStaffSyncService staffSyncService)
         {
             _dialogService = dialogService;
             _settings = settings;
@@ -85,7 +85,7 @@ namespace LiveHTS.Presentation.ViewModel
             _metaSyncService = metaSyncService;
             _syncDataService = syncDataService;
             _formsSyncService = formsSyncService;
-            _dataSyncService = dataSyncService;
+            _staffSyncService = staffSyncService;
         }
 
         public void Init()
@@ -149,7 +149,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void PullData()
         {
-            int total = 11;
+            int total = 12;
             int current = 0;
             IsBusy = true;
             CurrentStatus = $"connecting...";
@@ -193,26 +193,22 @@ namespace LiveHTS.Presentation.ViewModel
 
                 current++;
                 CurrentStatus = showPerc("Staff", current, total);
-                var persons = await _dataSyncService.GetStaff(Address);
+                var persons = await _staffSyncService.GetStaff(Address);
                 _syncDataService.UpdateStaff(persons);
 
 
                 current++;
-                CurrentStatus = showPerc("Staff", current, total);
-                var persons = await _dataSyncService.GetUsers(Address);
-                _syncDataService.UpdateStaff(persons);
+                CurrentStatus = showPerc("Users", current, total);
+                var users = await _staffSyncService.GetUsers(Address);
+                _syncDataService.Update(users);
 
 
                 current++;
-                CurrentStatus = showPerc("Staff", current, total);
-                var persons = await _dataSyncService.GetProviders(Address);
-                _syncDataService.UpdateStaff(persons);
+                CurrentStatus = showPerc("Providers", current, total);
+                var providers = await _staffSyncService.GetProviders(Address);
+                _syncDataService.Update(providers);
 
 
-                current++;
-                CurrentStatus = showPerc("Staff", current, total);
-                var persons = await _dataSyncService.GetStaff(Address);
-                _syncDataService.UpdateStaff(persons);
 
 
 

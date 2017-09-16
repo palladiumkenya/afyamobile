@@ -8,7 +8,7 @@ using LiveHTS.Core.SyncModel;
 
 namespace LiveHTS.Core.Interfaces.Services.Sync
 {
-    public interface IDataSyncService
+    public interface IStaffSyncService
     {
         Task<List<Person>> GetStaff(string url);
         Task<List<User>> GetUsers(string url);

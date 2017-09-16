@@ -9,12 +9,12 @@ using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service.Sync
 {
-    public class DataSyncService : IDataSyncService
+    public class StaffSyncService : IStaffSyncService
     {
 
         private readonly IRestClient _restClient;
 
-        public DataSyncService(IRestClient restClient)
+        public StaffSyncService(IRestClient restClient)
         {
             _restClient = restClient;
         }

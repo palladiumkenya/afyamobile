@@ -24,9 +24,9 @@ namespace LiveHTS.Core.Model.Subject
             get { return $"{FirstName} {MiddleName} {LastName}"; }
         }
         [Ignore]
-        public virtual IEnumerable<PersonAddress> Addresses { get; set; }=new List<PersonAddress>();
+        public virtual List<PersonAddress> Addresses { get; set; }=new List<PersonAddress>();
         [Ignore]
-        public virtual IEnumerable<PersonContact> Contacts { get; set; }=new List<PersonContact>();
+        public virtual List<PersonContact> Contacts { get; set; }=new List<PersonContact>();
 
         [Ignore]
         public virtual string AgeInfo
