@@ -2,6 +2,7 @@
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
+using Newtonsoft.Json;
 using SQLite;
 
 namespace LiveHTS.Core.Model.Subject
@@ -13,7 +14,9 @@ namespace LiveHTS.Core.Model.Subject
         public int? CountyId { get; set; }
         public bool Preferred { get; set; }
         [Indexed]
+        [JsonIgnore]
         public decimal? Lat { get; set; }
+        [JsonIgnore]
         public decimal? Lng { get; set; }
         public Guid PersonId { get; set; }
 

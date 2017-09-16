@@ -21,13 +21,19 @@ namespace LiveHTS.Core.Service.Sync
             {
                 using (var request = new HttpRequestMessage { RequestUri = new Uri(url), Method = method })
                 {
-                    
+
                     // add content
+
+
+                        JsonSerializerSettings microsoftDateFormatSettings = new JsonSerializerSettings
+                        {
+                            DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+                        };
 
                     if (method != HttpMethod.Get)
                     {
-                        var json = JsonConvert.SerializeObject(data);
-                        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                        var json = JsonConvert.SerializeObject(data,microsoftDateFormatSettings);
+                        request.Content = new StringContent(json);
                     }
                   
                     HttpResponseMessage response = null;
@@ -53,6 +59,8 @@ namespace LiveHTS.Core.Service.Sync
 
                     var stringSerialized = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
+                    if (string.IsNullOrWhiteSpace(stringSerialized))
+                        return null;
                     // deserialize content
                     return JsonConvert.DeserializeObject<TResult>(stringSerialized);
                 }
