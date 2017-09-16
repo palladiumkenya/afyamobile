@@ -60,5 +60,7 @@ namespace LiveHTS.Core.Model.Subject
         {
             return $"{Person} ,{Person.Gender}";
         }
+
+     
     }
 }

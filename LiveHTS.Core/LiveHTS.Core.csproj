@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
+    <Compile Include="Interfaces\Services\Clients\IClientReaderService.cs" />
     <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IStaffSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IFormsSyncService.cs" />
@@ -103,9 +104,11 @@
     <Compile Include="Model\Interview\ObsTestResult.cs" />
     <Compile Include="Model\Interview\SetResponse.cs" />
     <Compile Include="Model\Survey\Program.cs" />
+    <Compile Include="Model\SyncClientDTO.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />
+    <Compile Include="Service\Clients\ClientReaderService.cs" />
     <Compile Include="Service\Clients\ObsService.cs" />
     <Compile Include="Engine\NavigationEngine.cs" />
     <Compile Include="Interfaces\Engine\INavigationEngine.cs" />

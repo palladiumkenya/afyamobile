@@ -119,6 +119,12 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
         }
 
+        public IEnumerable<Guid> GetAllClientIds()
+        {
+            var clients = _db.Table<Client>().ToList().Select(x => x.Id).ToList();
+            return clients;
+        }
+
         public void SaveOrUpdate(Client obs)
         {
             var existingObs = _db.Find<Client>(obs.Id);

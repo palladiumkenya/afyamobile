@@ -6507,46 +6507,49 @@ namespace LiveHTS.Droid
 			public const int PullDataView = 2130968676;
 			
 			// aapt resource value: 0x7f040065
-			public const int ReferralView = 2130968677;
+			public const int PushDataView = 2130968677;
 			
 			// aapt resource value: 0x7f040066
-			public const int RegistryView = 2130968678;
+			public const int ReferralView = 2130968678;
 			
 			// aapt resource value: 0x7f040067
-			public const int SecondHIVTestView = 2130968679;
+			public const int RegistryView = 2130968679;
 			
 			// aapt resource value: 0x7f040068
-			public const int SecondTestEpisodeView = 2130968680;
+			public const int SecondHIVTestView = 2130968680;
 			
 			// aapt resource value: 0x7f040069
-			public const int select_dialog_item_material = 2130968681;
+			public const int SecondTestEpisodeView = 2130968681;
 			
 			// aapt resource value: 0x7f04006a
-			public const int select_dialog_multichoice_material = 2130968682;
+			public const int select_dialog_item_material = 2130968682;
 			
 			// aapt resource value: 0x7f04006b
-			public const int select_dialog_singlechoice_material = 2130968683;
+			public const int select_dialog_multichoice_material = 2130968683;
 			
 			// aapt resource value: 0x7f04006c
-			public const int SignInView = 2130968684;
+			public const int select_dialog_singlechoice_material = 2130968684;
 			
 			// aapt resource value: 0x7f04006d
-			public const int SplashScreen = 2130968685;
+			public const int SignInView = 2130968685;
 			
 			// aapt resource value: 0x7f04006e
-			public const int SummaryView = 2130968686;
+			public const int SplashScreen = 2130968686;
 			
 			// aapt resource value: 0x7f04006f
-			public const int support_simple_spinner_dropdown_item = 2130968687;
+			public const int SummaryView = 2130968687;
 			
 			// aapt resource value: 0x7f040070
-			public const int TestingView = 2130968688;
+			public const int support_simple_spinner_dropdown_item = 2130968688;
 			
 			// aapt resource value: 0x7f040071
-			public const int TestView = 2130968689;
+			public const int TestingView = 2130968689;
 			
 			// aapt resource value: 0x7f040072
-			public const int TraceView = 2130968690;
+			public const int TestView = 2130968690;
+			
+			// aapt resource value: 0x7f040073
+			public const int TraceView = 2130968691;
 			
 			static Layout()
 			{

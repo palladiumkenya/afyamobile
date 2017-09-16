@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Services.Sync;
+using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
@@ -20,18 +21,18 @@ namespace LiveHTS.Core.Service.Sync
             _restClient = restClient;
         }
 
-        public Task SendClients(string url, List<Client> clients)
+        public Task SendClients(string url, List<SyncClientDTO> clients)
         {
             url = GetActivateUrl(url, "demographics");
 
-            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post);
+            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post,clients);
         }
 
         public Task SendClientEncounters(string url, List<Encounter> encounters)
         {
             url = GetActivateUrl(url, "encounters");
 
-            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post);
+            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post,encounters);
         }
 
         private string GetActivateUrl(string url, string endpoint)

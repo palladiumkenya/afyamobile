@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
@@ -11,7 +12,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
 {
     public interface IClientSyncService
     {
-        Task SendClients(string url,List<Client> clients);
+        Task SendClients(string url,List<SyncClientDTO> clients);
         Task SendClientEncounters(string url, List<Encounter> encounters);
     }
 }
