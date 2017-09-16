@@ -53,6 +53,45 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounter;
         }
 
+        public IEnumerable<Encounter> LoadAll(Guid clientId)
+        {
+            var encounters = GetAll(x => x.ClientId == clientId)
+                .ToList();
+
+            foreach (var e in encounters)
+            {
+                if (null != e)
+                {
+                    var obses = _db.Table<Obs>()
+                        .Where(x => x.EncounterId == e.Id)
+                        .ToList();
+                    e.Obses = obses;
+
+                    var obsTestResults = _db.Table<ObsTestResult>()
+                        .Where(x => x.EncounterId == e.Id)
+                        .ToList();
+                    e.ObsTestResults = obsTestResults;
+
+                    var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                        .Where(x => x.EncounterId == e.Id)
+                        .ToList();
+                    e.ObsFinalTestResults = obsFinalTestResults;
+
+                    var obsTraceResults = _db.Table<ObsTraceResult>()
+                        .Where(x => x.EncounterId == e.Id)
+                        .ToList();
+                    e.ObsTraceResults = obsTraceResults;
+
+                    var obsLinkages = _db.Table<ObsLinkage>()
+                        .Where(x => x.EncounterId == e.Id)
+                        .ToList();
+                    e.ObsLinkages = obsLinkages;
+                }
+
+            }
+            return encounters;
+        }
+
         public IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, bool includeObs = false)
         {
             var encounters = GetAll(x => x.FormId == formId &&

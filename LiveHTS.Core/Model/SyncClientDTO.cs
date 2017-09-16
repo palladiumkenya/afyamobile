@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Core.Model

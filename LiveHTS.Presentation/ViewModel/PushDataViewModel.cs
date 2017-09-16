@@ -151,8 +151,6 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void PushData()
         {
-            int total = 12;
-            int current = 0;
             IsBusy = true;
             CurrentStatus = $"connecting...";
             var practice = await _activationService.GetLocal(Address);
@@ -166,13 +164,21 @@ namespace LiveHTS.Presentation.ViewModel
                     n++;
                     
                     var client = _clientReaderService.LoadClient(id);
+                    
+                    
                     if (null != client)
                     {
                         var clientInfo = new SyncClientDTO(client);
                         CurrentStatus = showPerc("Clients", n, count);
                         await _clientSyncService.SendClients(Address, clientInfo);
                     }
-                    
+
+                    var encounters = _clientReaderService.LoadEncounters(id);
+                    if (null != encounters && encounters.Count > 0)
+                    {
+                        await _clientSyncService.SendClientEncounters(Address, encounters);
+                    }
+
                 }
                     //Send
 
