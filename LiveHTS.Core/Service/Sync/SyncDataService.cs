@@ -6,9 +6,9 @@ using SQLite;
 
 namespace LiveHTS.Core.Service.Sync
 {
-    public class SyncDataService:ISyncDataService
+    public class SyncDataService : ISyncDataService
     {
-        private ISyncDataRepository _syncDataRepository;
+        private readonly ISyncDataRepository _syncDataRepository;
 
         public SyncDataService(ISyncDataRepository syncDataRepository)
         {

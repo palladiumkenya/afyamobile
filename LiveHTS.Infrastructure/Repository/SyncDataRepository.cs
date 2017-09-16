@@ -6,7 +6,7 @@ using SQLite;
 
 namespace LiveHTS.Infrastructure.Repository
 {
-    public class SyncDataRepository :ISyncDataRepository
+    public class SyncDataRepository : ISyncDataRepository
     {
         private readonly ILiveSetting _liveSetting;
         protected SQLiteConnection _db;
