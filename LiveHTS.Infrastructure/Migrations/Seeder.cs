@@ -36,6 +36,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             db.CreateTable<IdentifierType>();
             db.CreateTable<PracticeType>();
+            db.CreateTable<Device>();
             db.CreateTable<ServerConfig>();
             db.CreateTable<Practice>();
             db.CreateTable<RelationshipType>();

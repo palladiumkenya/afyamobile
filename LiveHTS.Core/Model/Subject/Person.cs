@@ -39,7 +39,7 @@ namespace LiveHTS.Core.Model.Subject
                 if (null != BirthDate)
                 {
                     var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                    return personAge.ToFullAgeString();
+                    return personAge.ToString();
                 }
                 return string.Empty;
             }

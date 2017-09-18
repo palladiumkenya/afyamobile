@@ -16,50 +16,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textViewDemographicTitle"
+          android:textStyle="bold"
+          android:textAllCaps="true"
             local:MvxBind="Text Title" />
-        <TextView
+       
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewDemographicDescription"
-            local:MvxBind="Text Description" />
-
-
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-          android:id="@+id/fname"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="First Name"
-          android:maxLines="1"
-          android:singleLine="true"
-          local:MvxBind="Text FirstName; Error Errors['FirstName']"  />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-          android:id="@+id/mname"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Middle Name"
-          android:maxLines="1"
-          android:singleLine="true"
-          local:MvxBind="Text MiddleName; Error Errors['MiddleName']" />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-          android:id="@+id/lname"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Last Name"
-          android:maxLines="1"
-          android:singleLine="true"
-          local:MvxBind="Text LastName; Error Errors['LastName']"  />
-      </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content">
+            <AutoCompleteTextView
+                android:id="@+id/fname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:maxLines="1"
+                android:singleLine="true"
+                local:MvxBind="Text FirstName; Error Errors['FirstName']" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <AutoCompleteTextView
+                android:id="@+id/mname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Middle Name"
+                android:maxLines="1"
+                android:singleLine="true"
+                local:MvxBind="Text MiddleName; Error Errors['MiddleName']" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <AutoCompleteTextView
+                android:id="@+id/lname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:maxLines="1"
+                android:singleLine="true"
+                local:MvxBind="Text LastName; Error Errors['LastName']" />
+        </android.support.design.widget.TextInputLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -87,21 +83,20 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/linearLayoutAge">
-
-          <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <AutoCompleteTextView
-              android:id="@+id/txtage"
-              android:layout_width="100dp"
-              android:layout_height="wrap_content"
-              android:hint="Age"
-              android:maxLines="1"
-              android:singleLine="true"
-              android:numeric="integer"
-              android:inputType="number" 
-              local:MvxBind="Text Age; Error Errors['Age']"  />
-          </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtage"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Age"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:numeric="integer"
+                    android:inputType="number"
+                    local:MvxBind="Text Age; Error Errors['Age']" />
+            </android.support.design.widget.TextInputLayout>
             <MvxSpinner
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -109,28 +104,28 @@
                 android:gravity="center_vertical"
                 local:MvxBind="ItemsSource AgeUnitOptions;SelectedItem SelectedAgeUnit" />
         </LinearLayout>
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-          android:id="@+id/txtage"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="BirthDate"
-          android:maxLines="1"
-          android:singleLine="true"
-          android:clickable="true"
-          android:editable="false" 
-          local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']"  />
-      </android.support.design.widget.TextInputLayout>
-      <TextView
-        android:text=""
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewPersonId"
-        local:MvxBind="Text PersonId;Visibility ShowId, Converter=Visibility"
-        android:background="#0000FF"
-        android:textColor="#FFFFFF"  />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <AutoCompleteTextView
+                android:id="@+id/txtage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="BirthDate"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:clickable="true"
+                android:editable="false"
+                local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']" />
+        </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:text=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPersonId"
+            local:MvxBind="Text PersonId;Visibility ShowId, Converter=Visibility"
+            android:background="#0000FF"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

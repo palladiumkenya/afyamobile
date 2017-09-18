@@ -120,7 +120,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private bool CanSearch()
         {
-            return !string.IsNullOrWhiteSpace(Search) && Search.Length > 2;
+            return !string.IsNullOrWhiteSpace(Search) && Search.Length > 0;
         }
 
         public bool IsBusy

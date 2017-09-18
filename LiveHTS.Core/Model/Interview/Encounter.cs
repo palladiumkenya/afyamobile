@@ -66,17 +66,19 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
             EncounterDate = DateTime.Now;
         }
-        public Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId):this()
+        private Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId,Guid practiceId,Guid deviceId):this()
         {
             FormId = formId;
             EncounterTypeId = encounterTypeId;
             ClientId = clientId;
             ProviderId = providerId;
             UserId = userId;
+            PracticeId = practiceId;
+            DeviceId = deviceId;
         }
-        public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
+        public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId)
         {
-            var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId);
+            var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId,practiceId,deviceId);
             return encounter;
         }
 

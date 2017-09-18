@@ -12,5 +12,6 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         void SaveCentral(ServerConfig config);
         void SaveLocal(ServerConfig config);
         void Register(Device device);
+        void CheckRegister(Device device);
     }
 }

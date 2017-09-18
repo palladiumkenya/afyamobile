@@ -21,7 +21,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
   },
   {
     ^Id^: ^hapi.local^,    
-    ^Address^: ^http://192.168.100.8:4747/^,
+    ^Address^: ^http://DESKTOP-VO0N4SS:4747/^,
     ^Code^: ^^,
     ^Name^: ^^,
     ^Instance^: ^00000000-0000-0000-0000-000000000000^,

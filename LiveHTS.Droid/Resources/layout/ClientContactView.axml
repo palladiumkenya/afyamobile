@@ -16,48 +16,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textViewContactTitle"
+            android:text="Client Contact"
+          android:textStyle="bold"
+          android:textAllCaps="true"
             local:MvxBind="Text Title" />
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewContactDescription"
-            local:MvxBind="Text Description" />
-        <TextView
+            android:layout_height="30dp"
+            android:background="@android:color/holo_orange_light"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Maun Maun"
+                android:id="@+id/textViewContactClientInfo"
+                local:MvxBind="Text ClientInfo" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewContactClientInfo"
-            local:MvxBind="Text ClientInfo" />
-
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-          android:id="@+id/txtageTelephone"
-          android:layout_width="100dp"
-          android:layout_height="wrap_content"
-          android:hint="Telephone"
-          android:maxLines="1"
-          android:singleLine="true"
-          android:numeric="integer"
-          android:inputType="number"
-          local:MvxBind="Text Telephone; Error Errors['Telephone']"  />
-      </android.support.design.widget.TextInputLayout>
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-          android:id="@+id/txtageLandmark"
-          android:layout_width="100dp"
-          android:layout_height="wrap_content"
-          android:hint="Landmark"
-          android:maxLines="1"
-          android:singleLine="true"
-      
-          local:MvxBind="Text Landmark; Error Errors['Landmark']"  />
-      </android.support.design.widget.TextInputLayout>
-
-
-      
+            android:layout_height="2dp"
+            android:background="@android:color/holo_blue_light"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Summary" />
+        </LinearLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <AutoCompleteTextView
+                android:id="@+id/txtageTelephone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telephone"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:numeric="integer"
+                android:inputType="number"
+                local:MvxBind="Text Telephone; Error Errors['Telephone']" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <AutoCompleteTextView
+                android:id="@+id/txtageLandmark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Landmark"
+                android:maxLines="1"
+                android:singleLine="true"
+                local:MvxBind="Text Landmark; Error Errors['Landmark']" />
+        </android.support.design.widget.TextInputLayout>
         <TextView
             android:text=""
             android:layout_width="match_parent"

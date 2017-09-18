@@ -30,6 +30,27 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _client;
         private Encounter _encounter;
 
+
+        public Guid AppUserId
+        {
+            get { return GetGuid("livehts.userid"); }
+        }
+
+        public Guid AppProviderId
+        {
+            get { return GetGuid("livehts.providerid"); }
+        }
+
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
+
+        public Guid AppDeviceId
+        {
+            get { return GetGuid("livehts.deviceid"); }
+        }
+
         public IReferralViewModel ReferralViewModel { get; set; }
         public ILinkedToCareViewModel LinkedToCareViewModel { get; set; }
 
@@ -71,7 +92,8 @@ namespace LiveHTS.Presentation.ViewModel
         {
          
             // Load Client
-            Client = _dashboardService.LoadClient(new Guid(clientId));
+            
+                Client = _dashboardService.LoadClient(new Guid(clientId));
 
             if (null != Client)
             {
@@ -92,7 +114,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.link.mode", "new");
-                Encounter = _linkageService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, Guid.Empty, Guid.Empty);
+                Encounter = _linkageService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id,AppProviderId,AppUserId,AppPracticeId,AppDeviceId);
             }
             else
             {
@@ -198,6 +220,15 @@ namespace LiveHTS.Presentation.ViewModel
             return list;
         }
 
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
+        }
 
         public void GoBack()
         {

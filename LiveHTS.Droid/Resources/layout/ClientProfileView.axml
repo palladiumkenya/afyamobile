@@ -4,89 +4,105 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linearLayoutContent"
-        android:layout_weight="2">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewProfileTitle"
-            local:MvxBind="Text Title" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewProfileDescription"
-            local:MvxBind="Text Description" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewProfileClientInfo"
-            local:MvxBind="Text ClientInfo" />
-        <TextView
-            android:text="Marital Status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewProfileMaritalStatus" />
-        <MvxSpinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"
-            android:id="@+id/spinnerMaritalStatus"
-            local:MvxBind="ItemsSource MaritalStatus;SelectedItem SelectedMaritalStatus" />
-        <TextView
-            android:text="Key Population"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewProfileKeyPop" />
-        <MvxSpinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="40dp"
-            android:id="@+id/spinnerKeyPop"
-            local:MvxBind="ItemsSource KeyPops;SelectedItem SelectedKeyPop" />
-        <TextView
-            android:text="Other Key Population"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewProfileOtherKeyPop"
-            local:MvxBind="ItemsSource KeyPops;SelectedItem SelectedKeyPop;Visibility IsOtherKeyPop" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextProfileKeyOtherPop"
-            local:MvxBind="Text OtherKeyPop; Visibility IsOtherKeyPop; Error Errors['OtherKeyPop']" />
-        <TextView
-            android:text=""
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewProfileClientId"
-            local:MvxBind="Text ClientId;Visibility ShowId, Converter=Visibility"
-            android:background="#0000FF"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-    <LinearLayout
+  <LinearLayout
+      android:orientation="vertical"
+      android:minWidth="25px"
+      android:minHeight="25px"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:id="@+id/linearLayoutContent"
+      android:layout_weight="2">
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayoutNav"
-        android:layout_weight="1"
-        android:minHeight="80dp">
-        <Button
-            android:id="@+id/buttonProfilePrev"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
-        <Button
-            android:id="@+id/buttonProfileNext"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
+        android:id="@+id/textViewProfileTitle"
+        android:text="Profile"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        local:MvxBind="Text Title" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@android:color/holo_orange_light"
+        android:orientation="vertical">
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Maun Maun"
+          android:id="@+id/textViewProfileClientInfo"
+          local:MvxBind="Text ClientInfo" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/holo_blue_light"
+        android:orientation="vertical">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Summary" />
+    </LinearLayout>
+
+    <TextView
+        android:text="Marital Status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewProfileMaritalStatus" />
+    <MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:id="@+id/spinnerMaritalStatus"
+        local:MvxBind="ItemsSource MaritalStatus;SelectedItem SelectedMaritalStatus" />
+    <TextView
+        android:text="Key Population"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewProfileKeyPop" />
+    <MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:id="@+id/spinnerKeyPop"
+        local:MvxBind="ItemsSource KeyPops;SelectedItem SelectedKeyPop" />
+    <TextView
+        android:text="Other Key Population"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewProfileOtherKeyPop"
+        local:MvxBind="ItemsSource KeyPops;SelectedItem SelectedKeyPop;Visibility IsOtherKeyPop" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextProfileKeyOtherPop"
+        local:MvxBind="Text OtherKeyPop; Visibility IsOtherKeyPop; Error Errors['OtherKeyPop']" />
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewProfileClientId"
+        local:MvxBind="Text ClientId;Visibility ShowId, Converter=Visibility"
+        android:background="#0000FF"
+        android:textColor="#FFFFFF" />
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:id="@+id/linearLayoutNav"
+      android:layout_weight="1"
+      android:minHeight="80dp">
+    <Button
+        android:id="@+id/buttonProfilePrev"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
+    <Button
+        android:id="@+id/buttonProfileNext"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
+  </LinearLayout>
 </LinearLayout>

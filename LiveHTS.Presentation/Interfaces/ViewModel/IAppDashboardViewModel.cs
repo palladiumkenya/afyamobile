@@ -4,6 +4,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IAppDashboardViewModel
     {
+
         IMvxCommand RegistryCommand { get; }
         IMvxCommand RegisterNewClientCommand { get; }
         IMvxCommand QuitCommand { get; }
@@ -12,6 +13,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand PullDataCommand { get; }
         IMvxCommand PushDataCommand { get; }
         string Profile { get; set; }
+        string PracticeName { get; set; }
         bool IsBusy { get; set; }
     }
 }

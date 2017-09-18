@@ -21,6 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _practiceCommand;
         private IMvxCommand _pullCommand;
         private  IMvxCommand _pushDataCommand;
+        private string _practiceName;
 
         public IMvxCommand RegistryCommand
         {
@@ -99,6 +100,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public string PracticeName
+        {
+            get { return _practiceName; }
+            set { _practiceName = value; RaisePropertyChanged(() => PracticeName);}
+        }
+
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -136,6 +143,11 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(profile))
             {
                 Profile = profile;
+            }
+            var practicename = _settings.GetValue("livehts.practicename", "");
+            if (!string.IsNullOrWhiteSpace(practicename))
+            {
+                PracticeName = practicename;
             }
         }
 

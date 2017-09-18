@@ -14,6 +14,12 @@ namespace LiveHTS.Droid.Activities
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.SignInView);
+            ViewModel.LoadDeviceInfo(Android.OS.Build.Serial, Android.OS.Build.Model, Android.OS.Build.Manufacturer);
+        }
+
+        public override void OnBackPressed()
+        {
+            ViewModel.Quit();
         }
     }
 }

@@ -113,6 +113,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 if (!string.IsNullOrWhiteSpace(clientJson))
                 {
+                    var client= JsonConvert.DeserializeObject<Client>(clientJson);
                     Client = JsonConvert.DeserializeObject<Client>(clientJson);
                     var clientDto = ClientDTO.Create(Client);
                     var clientDtoJson = JsonConvert.SerializeObject(clientDto);

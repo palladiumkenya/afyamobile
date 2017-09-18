@@ -149,7 +149,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void PullData()
         {
-            int total = 12;
+            int total = 14;
             int current = 0;
             IsBusy = true;
             CurrentStatus = $"connecting...";
@@ -177,6 +177,11 @@ namespace LiveHTS.Presentation.ViewModel
                 _syncDataService.Update(items);
 
                 current++;
+                CurrentStatus = showPerc("Category Items", current, total);
+                var catitems = await _metaSyncService.GetCatItems(Address);
+                _syncDataService.Update(catitems);
+
+                current++;
                 CurrentStatus = showPerc("Modules", current, total);
                 var modules = await _formsSyncService.GetModules(Address);
                 _syncDataService.UpdateModules(modules);
@@ -190,6 +195,11 @@ namespace LiveHTS.Presentation.ViewModel
                 CurrentStatus = showPerc("Concepts", current, total);
                 var concepts = await _formsSyncService.GetConcepts(Address);
                 _syncDataService.UpdateConcepts(concepts);
+
+                current++;
+                CurrentStatus = showPerc("Questions", current, total);
+                var questions = await _formsSyncService.GetQuestions(Address);
+                _syncDataService.UpdateQuestions(questions);
 
                 current++;
                 CurrentStatus = showPerc("Staff", current, total);

@@ -42,6 +42,27 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _isLoading;
         private string _formStatus;
 
+        public Guid AppUserId
+        {
+            get { return GetGuid("livehts.userid"); }
+        }
+
+        public Guid AppProviderId
+        {
+            get { return GetGuid("livehts.providerid"); }
+        }
+
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
+
+        public Guid AppDeviceId
+        {
+            get { return GetGuid("livehts.deviceid"); }
+        }
+
+
         public bool AtTheEnd { get; set; }
 
         public bool IsLoading
@@ -219,7 +240,7 @@ namespace LiveHTS.Presentation.ViewModel
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "new");
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, ProviderId, UserId);
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId);
             }
             else
             {
@@ -754,7 +775,17 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void GoBack()
         {
-            ShowViewModel<DashboardViewModel>();
+            ShowViewModel<DashboardViewModel>(new { id = ClientDTO.Id });
+        }
+
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
         }
     }
 }

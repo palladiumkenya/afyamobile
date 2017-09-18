@@ -16,7 +16,7 @@ namespace LiveHTS.Infrastructure.Repository.Config
         {
             if (string.IsNullOrWhiteSpace(serial))
 
-                return GetAll().FirstOrDefault();
+                return GetAll(x=>x.IsDefault).FirstOrDefault();
 
             return GetAll(x => x.Serial.ToLower() == serial.ToLower())
                 .FirstOrDefault();

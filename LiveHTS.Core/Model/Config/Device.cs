@@ -10,6 +10,7 @@ namespace LiveHTS.Core.Model.Config
         public string Serial { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public bool IsDefault { get; set; }
         [Indexed]
         public Guid PracticeId { get; set; }
 

@@ -12,6 +12,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface ITestingViewModel
     {
+
+        Guid AppUserId { get; }
+        Guid AppProviderId { get;  }
+        Guid AppPracticeId { get;  }
+        Guid AppDeviceId { get;  }
+
         string ErrorSummary { get; set; }
         ITestEpisodeViewModel FirstTestEpisodeViewModel { get; set; }
         ITestEpisodeViewModel SecondTestEpisodeViewModel { get; set; }

@@ -65,7 +65,28 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedSecondTestResult;
         private List<CategoryItem> _SecondTestResults;
 
+
         public ValidationHelper Validator { get; set; }
+
+        public Guid AppUserId
+        {
+            get { return GetGuid("livehts.userid"); }
+        }
+
+        public Guid AppProviderId
+        {
+            get { return GetGuid("livehts.providerid"); }
+        }
+
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
+
+        public Guid AppDeviceId
+        {
+            get { return GetGuid("livehts.deviceid"); }
+        }
 
         public string ErrorSummary
         {
@@ -445,6 +466,8 @@ namespace LiveHTS.Presentation.ViewModel
 
             var clientJson = _settings.GetValue("client", "");
 
+            
+
             if (null == Client)
             {
                 if (!string.IsNullOrWhiteSpace(clientJson))
@@ -479,8 +502,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "new");
-                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterType.Id, Client.Id, Guid.Empty,
-                    Guid.Empty);
+                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterType.Id, Client.Id,AppProviderId,AppUserId,AppPracticeId,AppDeviceId);
             }
             else
             {
@@ -686,6 +708,16 @@ namespace LiveHTS.Presentation.ViewModel
         public void GoBack()
         {
             ShowViewModel<DashboardViewModel>();
+        }
+
+        public Guid GetGuid(string key)
+        {
+            var guid=_settings.GetValue(key, "");
+
+            if(string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+            
+            return new Guid(guid);
         }
     }
 }

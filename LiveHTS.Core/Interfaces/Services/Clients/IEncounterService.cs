@@ -11,7 +11,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Encounter LoadEncounter(Guid formId, Guid encounterTypeId, Guid clientId, bool includeObs = false);
         IEnumerable<Encounter> LoadEncounters(Guid formId, Guid clientId, bool includeObs = false);
         Encounter StartEncounter(Encounter encounter);
-        Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId);
+        Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,Guid practiceId, Guid deviceId);
         Encounter OpenEncounter(Guid encounterId);
         void DiscardEncounter(Guid encounterId);
     }

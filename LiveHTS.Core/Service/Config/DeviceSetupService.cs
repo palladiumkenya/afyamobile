@@ -55,10 +55,18 @@ namespace LiveHTS.Core.Service.Config
 
             foreach (var d in currentDevices)
             {
-                _deviceRepository.Delete(d.Id);
+                d.IsDefault = false;
+                _deviceRepository.Update(d);
             }
+            device.IsDefault = true;
+            _deviceRepository.InsertOrUpdate(device);
+        }
 
-            _deviceRepository.Save(device);
+        public void CheckRegister(Device device)
+        {
+            var ddevice = _deviceRepository.GetDefault(device.Serial);
+            if(null== ddevice)
+                Register(device);
         }
     }
 }

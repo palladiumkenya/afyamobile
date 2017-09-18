@@ -131,6 +131,14 @@ namespace LiveHTS.Presentation.ViewModel
             base.Start();
             MaritalStatus = _lookupService.GetMaritalStatuses().ToList();
             KeyPops = _lookupService.GetKeyPops().ToList();
+            try
+            {
+                SelectedMaritalStatus = MaritalStatus.FirstOrDefault();
+                SelectedKeyPop = KeyPops.FirstOrDefault();
+            }
+            catch 
+            {
+            }
         }
 
         public override bool Validate()
