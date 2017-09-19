@@ -102,6 +102,15 @@ namespace LiveHTS.Presentation.ViewModel
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
             Practices = _lookupService.GetDefaultPractices().ToList();
             SelectedPractice = _lookupService.GetDefault();
+            try
+            {
+                SelectedIdentifierType = IdentifierTypes.FirstOrDefault();
+            }
+            catch
+            {
+                
+            }
+            
             base.Start();
         }
 

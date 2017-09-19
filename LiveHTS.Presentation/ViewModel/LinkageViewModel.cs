@@ -232,7 +232,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void GoBack()
         {
-            ShowViewModel<DashboardViewModel>();
+            ShowViewModel<DashboardViewModel>(new { id = Client.Id });
         }
     }
 }

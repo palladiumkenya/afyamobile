@@ -43,7 +43,7 @@
                         android:paddingRight="5dp"
                         android:text="01 JUL 1989"
                         android:textSize="10dp"
-                        local:MvxBind="Text Client.Person.BirthDate, Converter=DMYDateTime" />
+                        local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

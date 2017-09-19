@@ -8,4 +8,7 @@
   <color name="ripple">#F06292</color>
   <color name="accent">#E91E63</color>
   <color name="accent_pressed">#C2185B</color>
+  <color name="ripple2">#73E8FF</color>
+  <color name="accent2">#5EB8FF</color>
+  <color name="accent_pressed2">#303F9F</color>
 </resources>

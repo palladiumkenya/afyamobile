@@ -1,50 +1,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:local="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="5dp">
-
-  <LinearLayout
+    xmlns:local="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:padding="5dp">
 
-    <TextView
-      android:layout_width="0dp"
-      android:layout_weight=".3"
-      android:layout_height="wrap_content"
-      android:paddingRight="5dp"
-      local:MvxBind="Text TraceTemplate.Date, Converter=Dmy" />
-
-    <TextView
-      android:layout_width="0dp"
-      android:layout_weight=".4"
-      android:layout_height="wrap_content"
-      android:paddingRight="5dp"
-      local:MvxBind="Text TraceTemplate.ModeDisplay" />
-
-    <TextView
-      android:layout_width="0dp"
-      android:layout_weight=".4"
-      android:layout_height="wrap_content"
-      android:paddingRight="5dp"
-      local:MvxBind="Text TraceTemplate.OutcomeDisplay" />
-
-  </LinearLayout>
   <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
-    <Button
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Edit"
-      local:MvxBind="Click EditTraceCommand"/>
-    <Button
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Delete"
-      local:MvxBind="Click DeleteTraceCommand"/>
+      android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight=".7"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:text="20 Jul 2017"
+          local:MvxBind="Text TraceTemplate.Date, Converter=Dmy" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:text="Phone"
+          local:MvxBind="Text TraceTemplate.ModeDisplay" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Contacted"
+          android:paddingRight="5dp"
+          local:MvxBind="Text TraceTemplate.OutcomeDisplay" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight=".3"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          local:MvxBind="Click EditTraceCommand"
+          android:src="@drawable/ic_edit"/>
+      <ImageButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          local:MvxBind="Click DeleteTraceCommand"
+          android:src="@drawable/ic_delete_forever"/>
+
+
+    </LinearLayout>
   </LinearLayout>
+
+
+
 </LinearLayout>

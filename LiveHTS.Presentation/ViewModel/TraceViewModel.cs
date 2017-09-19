@@ -233,7 +233,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator.AddRule(
                 nameof(Outcome),
                 () => RuleResult.Assert(
-                    !Mode.IsNullOrEmpty(),
+                    !Outcome.IsNullOrEmpty(),
                     $"{nameof(Outcome)} is required"
                 )
             );

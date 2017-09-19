@@ -14,11 +14,12 @@ using com.refractored;
 using LiveHTS.Droid.Views;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Droid.Support.V4;
+using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
     [Activity(Label = "HIV Tests", NoHistory = true, ParentActivity = typeof(DashboardViewModel))]
-    public class TestingActivity : MvxCachingFragmentActivity<TestingViewModel>
+    public class TestingActivity : MvxCachingFragmentCompatActivity<TestingViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
