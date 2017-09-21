@@ -25,14 +25,14 @@ namespace LiveHTS.Core.Service.Sync
         {
             url = GetActivateUrl(url, "demographics");
 
-            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post,client);
+            return _restClient.MakeApiCall($"{url}", HttpMethod.Post,client);
         }
 
         public Task SendClientEncounters(string url, List<Encounter> encounters)
         {
             url = GetActivateUrl(url, "encounters");
 
-            return _restClient.MakeApiCall<List<Module>>($"{url}", HttpMethod.Post,encounters);
+            return _restClient.MakeApiCall($"{url}", HttpMethod.Post,encounters);
         }
 
         private string GetActivateUrl(string url, string endpoint)
