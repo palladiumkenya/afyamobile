@@ -16,6 +16,7 @@ using System.Linq;
 using MvvmCross.Binding.Bindings.Target.Construction;
 using LiveHTS.Droid.Custom;
 using Android.Views;
+using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid
 {
@@ -68,12 +69,20 @@ namespace LiveHTS.Droid
 
         protected override void FillTargetFactories(IMvxTargetBindingFactoryRegistry registry)
         {
-            base.FillTargetFactories(registry);
-            registry.RegisterCustomBindingFactory<View>(
-                "ScaleMe",
-                v => new ViewScalingCustomBinding(v));
+            MvxAppCompatSetupHelper.FillTargetFactories(registry);
             base.FillTargetFactories(registry);
         }
+
+//        protected override void FillTargetFactories(IMvxTargetBindingFactoryRegistry registry)
+//        {
+//            base
+//            base.FillTargetFactories(registry);
+//            registry.RegisterCustomBindingFactory<View>(
+//                "ScaleMe",
+//                v => new ViewScalingCustomBinding(v));
+//            MvxAppCompatSetupHelper.FillTargetFactories;
+//            base.FillTargetFactories(registry);
+//        }
 
         protected override IMvxAndroidViewPresenter CreateViewPresenter()
         {
