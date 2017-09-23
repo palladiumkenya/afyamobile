@@ -104,6 +104,7 @@
     <Compile Include="Model\Interview\ObsTestResult.cs" />
     <Compile Include="Model\Interview\SetResponse.cs" />
     <Compile Include="Model\Survey\Program.cs" />
+    <Compile Include="Model\SyncClientEncounterDTO.cs" />
     <Compile Include="Model\SyncClientDTO.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\Access\AuthService.cs" />

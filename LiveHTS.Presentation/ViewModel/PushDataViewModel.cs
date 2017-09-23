@@ -176,7 +176,8 @@ namespace LiveHTS.Presentation.ViewModel
                     var encounters = _clientReaderService.LoadEncounters(id);
                     if (null != encounters && encounters.Count > 0)
                     {
-                        await _clientSyncService.SendClientEncounters(Address, encounters);
+                        var syncEncounters = SyncClientEncounterDTO.Create(encounters,client);
+                        await _clientSyncService.SendClientEncounters(Address, syncEncounters);
                     }
 
                 }

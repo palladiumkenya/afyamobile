@@ -28,7 +28,7 @@ namespace LiveHTS.Core.Service.Sync
             return _restClient.MakeApiCall($"{url}", HttpMethod.Post,client);
         }
 
-        public Task SendClientEncounters(string url, List<Encounter> encounters)
+        public Task SendClientEncounters(string url, List<SyncClientEncounterDTO> encounters)
         {
             url = GetActivateUrl(url, "encounters");
 
