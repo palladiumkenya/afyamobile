@@ -182,6 +182,7 @@ namespace LiveHTS.Presentation.ViewModel
                 ClientId = Enrollment.ClientId;
                 SelectedIdentifierType = IdentifierTypes.FirstOrDefault(x => x.Id == Enrollment.IdentifierTypeId);
                 Identifier = Enrollment.Identifier;
+                RegistrationDate = Enrollment.RegistrationDate;
                 Id = Enrollment.Id;
             }
             catch (Exception e)

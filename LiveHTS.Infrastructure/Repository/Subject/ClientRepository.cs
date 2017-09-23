@@ -74,8 +74,6 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         {
             base.Save(entity);
 
-            _db.CreateTable<ClientIdentifier>();
-            _db.CreateTable<ClientRelationship>();
 
             //Create identifiers
             if (entity.Identifiers.Any())
@@ -95,8 +93,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         public override void InsertOrUpdate(Client entity)
         {
             base.InsertOrUpdate(entity);
-            _db.CreateTable<ClientIdentifier>();
-            _db.CreateTable<ClientRelationship>();
+       
 
             //Create identifiers
             if (entity.Identifiers.Any())
