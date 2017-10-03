@@ -98,6 +98,14 @@ namespace LiveHTS.Core.Service.Clients
                 var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId);
                 _clientRelationshipRepository.Save(newRelation);
             }
+
+            var exisitngRelationshipReverse = _clientRelationshipRepository.Find(relationshipTypeId, otherClientId, clientId);
+            if (null == exisitngRelationshipReverse)
+            {
+                //otherClientId  clientId
+                var newRelationReverse = ClientRelationship.Create(relationshipTypeId, clientId, true, otherClientId);
+                _clientRelationshipRepository.Save(newRelationReverse);
+            }
         }
 
       
