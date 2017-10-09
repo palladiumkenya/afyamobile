@@ -32,3 +32,5 @@ using Android.App;
 [assembly: UsesPermission(Manifest.Permission.AccessFineLocation)]
 [assembly: UsesPermission(Manifest.Permission.AccessCoarseLocation)]
 [assembly: UsesPermission(Manifest.Permission.Internet)]
+[assembly: Application(Icon = "@mipmap/icon")]
+
