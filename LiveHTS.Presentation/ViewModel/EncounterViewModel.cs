@@ -49,6 +49,10 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _module = value; RaisePropertyChanged(() => Module);
                 var forms = Module.Forms.ToList();
+                if (forms.Count == 0)
+                {
+                    _dialogService.ShowToast("No Forms Found!.Please Pull data from Server.");
+                }
                 foreach (var form in forms)
                 {
                     form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
@@ -179,6 +183,7 @@ namespace LiveHTS.Presentation.ViewModel
         private static List<FormTemplateWrap> ConvertToFormWrapperClass(List<Form> forms, IEncounterViewModel encounterViewModel)
         {
             List<FormTemplateWrap> list = new List<FormTemplateWrap>();
+           
             foreach (var r in forms)
             {
                 foreach (var program in r.Programs)
