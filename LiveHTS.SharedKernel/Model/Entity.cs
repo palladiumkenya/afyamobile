@@ -1,7 +1,5 @@
 ﻿using System;
-using LiveHTS.SharedKernel.Custom;
 using SQLite;
-
 
 namespace LiveHTS.SharedKernel.Model
 {
@@ -10,7 +8,7 @@ namespace LiveHTS.SharedKernel.Model
         TId Id { get; set; }
         bool Voided { get; set; }
     }
-
+   
     public abstract class Entity<TId> : IEntity<TId>
     {
         [PrimaryKey]

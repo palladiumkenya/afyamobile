@@ -6,6 +6,10 @@ namespace LiveHTS.Core.Model.Config
     {
         public string Name { get; set; }
 
+        public County()
+        {
+        }
+
         public override string ToString()
         {
             return $"{Name}";
