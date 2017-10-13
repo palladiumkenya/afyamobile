@@ -76,6 +76,22 @@ namespace LiveHTS.Presentation.ViewModel
             _settings = Mvx.Resolve<ISettings>();
         }
 
+        public override void ViewAppeared()
+        {
+            //Reload
+
+            var moduleJson = _settings.GetValue("module", "");
+
+
+            
+
+                if (!string.IsNullOrWhiteSpace(moduleJson))
+                {
+                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+                }
+          
+        }
+
         public void StartEncounter(FormTemplate formTemplate)
         {
             var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, formTemplate);

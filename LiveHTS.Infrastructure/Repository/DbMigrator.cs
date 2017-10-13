@@ -5,7 +5,7 @@ using SQLite;
 
 namespace LiveHTS.Infrastructure.Repository
 {
-    public class DbMigrator:IMigrator
+    public class DbMigrator:IDbMigrator
     {
         private readonly ILiveSetting _liveSetting;
 

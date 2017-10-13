@@ -13,7 +13,7 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Client Dashboard", LaunchMode = LaunchMode.SingleTop,ParentActivity = typeof(AppDashboardActivity))]
+    [Activity(Label = "Client Dashboard",LaunchMode = LaunchMode.SingleTop,ParentActivity = typeof(AppDashboardActivity))]
     public class DashboardActivity : MvxAppCompatActivity<DashboardViewModel>
     {
         protected override void OnCreate(Bundle bundle)

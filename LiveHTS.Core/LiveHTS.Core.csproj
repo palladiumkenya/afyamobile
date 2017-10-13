@@ -115,7 +115,7 @@
     <Compile Include="Interfaces\Engine\INavigationEngine.cs" />
     <Compile Include="Interfaces\ILiveSetting.cs" />
     <Compile Include="Interfaces\Repository\Lookup\ICategoryRepository.cs" />
-    <Compile Include="Interfaces\Repository\IMigrator.cs" />
+    <Compile Include="Interfaces\Repository\IDbMigrator.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />

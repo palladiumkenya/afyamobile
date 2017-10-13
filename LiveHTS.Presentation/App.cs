@@ -33,6 +33,8 @@ namespace LiveHTS.Presentation
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
+      
+
             CreatableTypes(assemblyInfrastructure)
                 .EndingWith("Repository")
                 .AsInterfaces()
@@ -50,10 +52,10 @@ namespace LiveHTS.Presentation
             Mvx.RegisterSingleton<IRestClient>(() => new RestClient());
 
 
-            CreatableTypes(assemblyInfrastructure)
-                .EndingWith("Migrator")
-                .AsInterfaces()
-                .RegisterAsLazySingleton();
+            //CreatableTypes(assemblyInfrastructure)
+            //    .EndingWith("Migrator")
+            //    .AsInterfaces()
+            //    .RegisterAsLazySingleton();
 
             RegisterAppStart(new AppStart());
 
