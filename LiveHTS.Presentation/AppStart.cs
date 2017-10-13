@@ -11,9 +11,9 @@ namespace LiveHTS.Presentation
     {
         public void Start(object hint = null)
         {
-            var settings = Mvx.Resolve<ILiveSetting>();
+           
 
-            var migrator=new DbMigrator(settings);
+            var migrator= Mvx.Resolve<IDbMigrator>();
             migrator.Migrate();
 
             
