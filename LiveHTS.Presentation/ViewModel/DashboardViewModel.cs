@@ -120,10 +120,7 @@ namespace LiveHTS.Presentation.ViewModel
                     _settings.AddOrUpdateValue("client.dto", clientDtoJson);
                 }
             }
-            else
-            {
-                Client = Client;
-            }
+          
             if (null == Module)
             {
 
@@ -132,10 +129,15 @@ namespace LiveHTS.Presentation.ViewModel
                     Module = JsonConvert.DeserializeObject<Module>(moduleJson);
                 }
             }
-            else
+            if (null != Client)
             {
-                Module = Module;
+                PartnerViewModel.Client = EncounterViewModel.Client = Client;
             }
+            if (null != Module)
+            {
+                EncounterViewModel.Module = Module;
+            }
+
         }
 
         public void GoBack()

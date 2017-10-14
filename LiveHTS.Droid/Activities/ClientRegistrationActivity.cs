@@ -16,7 +16,7 @@ using MvvmCross.Platform.Platform;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Registration",NoHistory = true)]
+    [Activity(Label = "Registration",NoHistory = true,ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class ClientRegistrationActivity:    MvxCachingFragmentCompatActivity<ClientRegistrationViewModel>
     {
         protected override void OnCreate(Bundle bundle)

@@ -79,17 +79,12 @@ namespace LiveHTS.Presentation.ViewModel
         public override void ViewAppeared()
         {
             //Reload
-
             var moduleJson = _settings.GetValue("module", "");
 
-
-            
-
-                if (!string.IsNullOrWhiteSpace(moduleJson))
-                {
-                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
-                }
-          
+            if (!string.IsNullOrWhiteSpace(moduleJson))
+            {
+                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+            }
         }
 
         public void StartEncounter(FormTemplate formTemplate)

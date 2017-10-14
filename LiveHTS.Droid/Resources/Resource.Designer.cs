@@ -5562,8 +5562,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900bf
 			public const int email = 2131296447;
 			
-			// aapt resource value: 0x7f090107
-			public const int email_login_form = 2131296519;
+			// aapt resource value: 0x7f090106
+			public const int email_login_form = 2131296518;
 			
 			// aapt resource value: 0x7f09010a
 			public const int email_sign_in_button = 2131296522;
@@ -5640,8 +5640,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0900c1
 			public const int imageButton2 = 2131296449;
 			
-			// aapt resource value: 0x7f090105
-			public const int imageView = 2131296517;
+			// aapt resource value: 0x7f090107
+			public const int imageView = 2131296519;
 			
 			// aapt resource value: 0x7f0900f4
 			public const int info = 2131296500;
@@ -5703,8 +5703,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f090109
 			public const int login = 2131296521;
 			
-			// aapt resource value: 0x7f090106
-			public const int login_form = 2131296518;
+			// aapt resource value: 0x7f090105
+			public const int login_form = 2131296517;
 			
 			// aapt resource value: 0x7f09010b
 			public const int login_progress = 2131296523;

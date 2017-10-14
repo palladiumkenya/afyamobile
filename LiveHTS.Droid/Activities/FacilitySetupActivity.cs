@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -15,7 +16,7 @@ using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "FacilitySetupActivity")]
+    [Activity(Label = "FacilitySetupActivity",ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class FacilitySetupActivity : MvxAppCompatActivity<PracticeViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
