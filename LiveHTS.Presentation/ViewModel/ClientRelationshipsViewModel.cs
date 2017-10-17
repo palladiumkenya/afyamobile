@@ -56,6 +56,8 @@ namespace LiveHTS.Presentation.ViewModel
             set { _selectedRelationshipType = value;RaisePropertyChanged(() => SelectedRelationshipType); }
         }
 
+        public string RelType { get; private set; }
+
         public string ClientId
         {
             get { return _clientId; }
@@ -160,10 +162,17 @@ namespace LiveHTS.Presentation.ViewModel
             Clients = _registryService.GetAllClients(Search);
         }
 
-        public void Init(string id)
+        public void Init(string id,string reltype)
         {
+            RelType = reltype;
             ClientId = id;
         }
+
+        public override void ViewAppeared()
+        {
+            RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == RelType.ToLower()).ToList();
+        }
+
         private bool CanSearch()
         {
             return !string.IsNullOrWhiteSpace(Search) && Search.Length > 2;

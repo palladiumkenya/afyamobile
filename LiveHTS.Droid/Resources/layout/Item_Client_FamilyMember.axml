@@ -17,10 +17,22 @@
             android:orientation="vertical"
             android:paddingLeft="4dp"
             android:background="#FFFFFF">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                local:MvxBind="Text PartnerTemplate.FullName" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    local:MvxBind="Text FamilyMemberTemplate.FullName" />
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_width="0dp"
+                    android:layout_weight=".2"
+                    android:layout_height="wrap_content"
+                    local:MvxBind="Text FamilyMemberTemplate.RelationshipTypeId" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,13 +41,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10dp"
-                    local:MvxBind="Text PartnerTemplate.Gender"
+                    local:MvxBind="Text FamilyMemberTemplate.Gender"
                     android:paddingRight="5dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10dp"
-                    local:MvxBind="Text PartnerTemplate.BirthDate, Converter=Dmy"
+                    local:MvxBind="Text FamilyMemberTemplate.BirthDate, Converter=Dmy"
                     android:paddingRight="5dp" />
             </LinearLayout>
         </LinearLayout>
@@ -50,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:background="#FFFFFF"
                 android:src="@drawable/ic_delete_forever"
-                local:MvxBind="Click RemovePartnerCommand" />
+                local:MvxBind="Click RemoveFamilyMemberCommand" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

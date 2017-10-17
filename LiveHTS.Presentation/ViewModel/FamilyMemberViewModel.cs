@@ -49,19 +49,15 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-
-
         public FamilyMemberViewModel()
         {
             Title = "FAMILY";
-
             _dialogService = Mvx.Resolve<IDialogService>();
             _dashboardService = Mvx.Resolve<IDashboardService>();
-
         }
         private void AddRelationShip()
         {
-            ShowViewModel<ClientRelationshipsViewModel>(new { id = Client.Id });
+            ShowViewModel<ClientRelationshipsViewModel>(new { id = Client.Id, reltype = "Family" });
         }
         public async void RemoveFamilyMember(FamilyMemberTemplate template)
         {
@@ -82,7 +78,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private static List<FamilyMemberTemplateWrap> ConvertToFamilyMemberWrapperClass(Client client, IFamilyMemberViewModel familyMemberViewModel)
         {
-            var clientRelationships = client.Relationships.ToList();
+            var clientRelationships = client.Relationships.Where(x => x.RelationshipTypeId.ToLower() != "Partner".ToLower()).ToList();
 
             List<FamilyMemberTemplateWrap> list = new List<FamilyMemberTemplateWrap>();
             foreach (var r in clientRelationships)

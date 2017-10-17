@@ -10,7 +10,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         string ClientId { get; set; }
         bool ShowId { get; set; }
-
+        string RelType { get;  }
         string Search { get; set; }
         Client SelectedClient { get; set; }
         string PartnerName { get; set; }

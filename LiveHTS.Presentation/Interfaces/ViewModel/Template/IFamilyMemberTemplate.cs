@@ -6,6 +6,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
     {
         Guid Id { get; set; }
         string FullName { get; set; }
+        string RelationshipTypeId { get; set; }
         string Gender { get; set; }
         DateTime BirthDate { get; set; }
     }

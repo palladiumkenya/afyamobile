@@ -53,7 +53,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
-                PartnerViewModel.Client = EncounterViewModel.Client = Client;
+                PartnerViewModel.Client = EncounterViewModel.Client =FamilyMemberViewModel.Client= Client;
             }
         }
 
