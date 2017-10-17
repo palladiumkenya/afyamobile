@@ -28,6 +28,7 @@ namespace LiveHTS.Presentation.ViewModel
         private string _clientId;
         private bool _showId;
         private string _partnerName;
+        private IMvxCommand _addPersonCommand;
 
         public ClientRelationshipsViewModel(IRegistryService registryService, IDialogService dialogService,
             ILookupService lookupService)
@@ -143,6 +144,17 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public IMvxCommand AddPersonCommand
+        {
+            get
+            {
+                _addPersonCommand = _addPersonCommand ?? new MvxCommand(AddPerson, CanAddPerson);
+                return _addPersonCommand;
+            }
+        }
+
+    
+
         private void SearchClient()
         {
             Clients = _registryService.GetAllClients(Search);
@@ -181,6 +193,15 @@ namespace LiveHTS.Presentation.ViewModel
         private bool CanAddRelationship()
         {
             return null != SelectedClient && !string.IsNullOrEmpty(ClientId);
+        }
+
+        private void AddPerson()
+        {
+            throw new NotImplementedException();
+        }
+        private bool CanAddPerson()
+        {
+            throw new NotImplementedException();
         }
     }
 }

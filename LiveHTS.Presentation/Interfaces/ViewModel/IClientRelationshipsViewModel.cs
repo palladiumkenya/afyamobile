@@ -21,6 +21,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand ClearSearchCommand { get; }
         IMvxCommand<Client> ClientSelectedCommand { get; }
         IMvxCommand AddRelationshipCommand { get; }
-        
+        IMvxCommand AddPersonCommand { get; }
+
     }
 }
