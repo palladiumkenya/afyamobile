@@ -11,11 +11,60 @@ namespace LiveHTS.Infrastructure.Seed.Config
         {
             string raw = @"
 [
- {
-   ^Name^: ^Partner^,
-   ^Id^: ^Partner^,
-   ^Voided^: 0
- }
+  {
+    ^Name^: ^Partner^,
+    ^Description^: ^Partner^,
+    ^Id^: ^Partner^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Brother^,
+    ^Description^: ^Family^,
+    ^Id^: ^Brother^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Cowife^,
+    ^Description^: ^Family^,
+    ^Id^: ^Cowife^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Daugther^,
+    ^Description^: ^Family^,
+    ^Id^: ^Daugther^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Father^,
+    ^Description^: ^Family^,
+    ^Id^: ^Father^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Mother^,
+    ^Description^: ^Family^,
+    ^Id^: ^Mother^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Sister^,
+    ^Description^: ^Family^,
+    ^Id^: ^Sister^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Son^,
+    ^Description^: ^Family^,
+    ^Id^: ^Son^,
+    ^Voided^: 0
+  },
+  {
+    ^Name^: ^Spouse^,
+    ^Description^: ^Family^,
+    ^Id^: ^Spouse^,
+    ^Voided^: 0
+  }
 ]
 ";
             return JsonConvert.DeserializeObject<List<RelationshipType>>(raw.Replace("^","\""));
