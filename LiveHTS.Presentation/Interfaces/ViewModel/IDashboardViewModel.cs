@@ -10,6 +10,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface IDashboardViewModel
     {
         IEncounterViewModel EncounterViewModel { get; }
+        IFamilyMemberViewModel FamilyMemberViewModel { get; }
         IPartnerViewModel PartnerViewModel { get; }
         ISummaryViewModel SummaryViewModel { get; }
 

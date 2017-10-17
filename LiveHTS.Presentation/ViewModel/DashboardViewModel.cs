@@ -31,6 +31,7 @@ namespace LiveHTS.Presentation.ViewModel
         private MvxCommand _manageRegistrationCommand;
 
         public IEncounterViewModel EncounterViewModel { get; }
+        public IFamilyMemberViewModel FamilyMemberViewModel { get; }
         public IPartnerViewModel PartnerViewModel { get; }
         public ISummaryViewModel SummaryViewModel { get; }
         public IMvxCommand ManageRegistrationCommand
@@ -74,6 +75,7 @@ namespace LiveHTS.Presentation.ViewModel
             _lookupService = lookupService;
 
             EncounterViewModel = new EncounterViewModel();
+            FamilyMemberViewModel=new FamilyMemberViewModel();
             PartnerViewModel =new PartnerViewModel();
             SummaryViewModel = new SummaryViewModel();
        }

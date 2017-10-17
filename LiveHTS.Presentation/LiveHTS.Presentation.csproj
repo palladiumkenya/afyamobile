@@ -65,6 +65,7 @@
     <Compile Include="Interfaces\ViewModel\IClientDemographicViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IFamilyMemberViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPracticeViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDeviceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />
@@ -85,12 +86,14 @@
     <Compile Include="Interfaces\IObsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISummaryViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IFamilyMemberTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\ITestTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\ITraceTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFormTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyMemberTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\ITestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\ITraceTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="ViewModel\EncounterViewModel.cs" />
     <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
     <Compile Include="Events\ConceptChangedEvent.cs" />
+    <Compile Include="ViewModel\FamilyMemberViewModel.cs" />
     <Compile Include="ViewModel\PracticeViewModel.cs" />
     <Compile Include="ViewModel\PushDataViewModel.cs" />
     <Compile Include="ViewModel\PullDataViewModel.cs" />
@@ -116,6 +120,7 @@
     <Compile Include="ViewModel\FirstTestEpisodeViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
+    <Compile Include="ViewModel\Template\FamilyMemberTemplate.cs" />
     <Compile Include="ViewModel\Template\TestTemplate.cs" />
     <Compile Include="ViewModel\TraceViewModel.cs" />
     <Compile Include="ViewModel\TestViewModel.cs" />
@@ -129,6 +134,7 @@
     <Compile Include="ViewModel\Template\QuestionTemplate.cs" />
     <Compile Include="ViewModel\Template\PartnerTemplate.cs" />
     <Compile Include="ViewModel\Template\TraceTemplate.cs" />
+    <Compile Include="ViewModel\Wrapper\FamilyMemberTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\TestTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />

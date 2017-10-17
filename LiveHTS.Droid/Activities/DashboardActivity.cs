@@ -26,6 +26,7 @@ namespace LiveHTS.Droid.Activities
             var fragments = new List<MvxCachingFragmentStatePagerAdapter.FragmentInfo>();
 
             fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.EncounterViewModel.Title, typeof(EncounterFragment), ViewModel.EncounterViewModel));
+            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.FamilyMemberViewModel.Title, typeof(FamilyMemberFragment), ViewModel.FamilyMemberViewModel));
             fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.PartnerViewModel.Title, typeof(PartnerFragment), ViewModel.PartnerViewModel));
             fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo(ViewModel.SummaryViewModel.Title, typeof(SummaryFragment), ViewModel.SummaryViewModel));
 

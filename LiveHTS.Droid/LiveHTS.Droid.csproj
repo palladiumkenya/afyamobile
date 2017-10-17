@@ -231,6 +231,7 @@
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Views\ClientContactFragment.cs" />
     <Compile Include="Views\EncounterFragment.cs" />
+    <Compile Include="Views\FamilyMemberFragment.cs" />
     <Compile Include="Views\FirstTestEpisodeFragment.cs" />
     <Compile Include="Views\SecondTestEpisodeFragment.cs" />
     <Compile Include="Views\TestFragment.cs" />
@@ -416,6 +417,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\PushDataView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\FamilyMemberView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Client_FamilyMember.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
