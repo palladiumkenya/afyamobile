@@ -28,7 +28,14 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly ILookupService _lookupService;
         private string _isOtherKeyPop;
         private string _clientId;
-        
+        private IndexClientDTO _indexClientDTO;
+
+
+        public IndexClientDTO IndexClientDTO
+        {
+            get { return _indexClientDTO; }
+            set { _indexClientDTO = value; }
+        }
 
         public ClientProfileDTO Profile { get; set; }
 
@@ -121,9 +128,30 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
-        public void Init(string clientinfo)
+        public void Init(string clientinfo, string indexId)
         {
             ClientInfo = clientinfo;
+            if (!string.IsNullOrWhiteSpace(indexId))
+            {
+                var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+                if (!string.IsNullOrWhiteSpace(indexJson))
+                {
+                    IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                    if (null != IndexClientDTO)
+                        Title = $"Profile [{IndexClientDTO.RelType}]";
+                }
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+            if (!string.IsNullOrWhiteSpace(indexJson))
+            {
+                IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                if (null != IndexClientDTO)
+                    Title = $"Profile [{IndexClientDTO.RelType}]";
+            }
         }
 
         public override void Start()
@@ -176,7 +204,8 @@ namespace LiveHTS.Presentation.ViewModel
                 var json = JsonConvert.SerializeObject(Profile);
                 _settings.AddOrUpdateValue(GetType().Name, json);
 
-                ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo});
+                var indexId = null != IndexClientDTO ? IndexClientDTO.Id.ToString() : string.Empty;
+                ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo, indexId = indexId });
             }
         }
         public override void MovePrevious()

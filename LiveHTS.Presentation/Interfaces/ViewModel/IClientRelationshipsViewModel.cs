@@ -14,6 +14,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string Search { get; set; }
         Client SelectedClient { get; set; }
         string PartnerName { get; set; }
+        string AddPersonLabel { get; set; }
         IEnumerable<Client> Clients { get; set; }
         IEnumerable<RelationshipType> RelationshipTypes { get; set; }
         RelationshipType SelectedRelationshipType { get; set; }

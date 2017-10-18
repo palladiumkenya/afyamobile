@@ -29,6 +29,13 @@ namespace LiveHTS.Presentation.ViewModel
         private IEnumerable<Practice> _practices;
         private string _clientId;
         private string _id;
+        private IndexClientDTO _indexClientDTO;
+
+        public IndexClientDTO IndexClientDTO
+        {
+            get { return _indexClientDTO; }
+            set { _indexClientDTO = value; }
+        }
 
         public ClientEnrollmentDTO Enrollment { get; set; }
         public string ClientInfo
@@ -93,9 +100,29 @@ namespace LiveHTS.Presentation.ViewModel
             RegistrationDate = DateTime.Today;
         }
 
-        public void Init(string clientinfo)
+        public void Init(string clientinfo, string indexId)
         {
             ClientInfo = clientinfo;
+            if (!string.IsNullOrWhiteSpace(indexId))
+            {
+                var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+                if (!string.IsNullOrWhiteSpace(indexJson))
+                {
+                    IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                    if (null != IndexClientDTO)
+                        Title = $"Enrollment [{IndexClientDTO.RelType}]";
+                }
+            }
+        }
+        public override void ViewAppeared()
+        {
+            var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+            if (!string.IsNullOrWhiteSpace(indexJson))
+            {
+                IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                if (null != IndexClientDTO)
+                    Title = $"Enrollment [{IndexClientDTO.RelType}]";
+            }
         }
         public override void Start()
         {

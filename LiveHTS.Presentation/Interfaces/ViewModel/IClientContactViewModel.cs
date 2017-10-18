@@ -4,6 +4,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientContactViewModel : IStepViewModel
     {
+        IndexClientDTO IndexClientDTO { get; set; }
         ClientContactAddressDTO ContactAddress { get; set; }
         string ClientInfo { get; set; }
         int? Telephone { get; set; }

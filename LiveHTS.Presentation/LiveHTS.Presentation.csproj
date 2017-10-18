@@ -38,6 +38,7 @@
     <Compile Include="Converters\ShowRequiredConverter.cs" />
     <Compile Include="Converters\ShowControlConverter.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />
+    <Compile Include="DTO\IndexClientDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
     <Compile Include="DTO\PracticeDTO.cs" />
     <Compile Include="DTO\SessionDTO.cs" />
