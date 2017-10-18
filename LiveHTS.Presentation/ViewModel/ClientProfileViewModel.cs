@@ -32,6 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IEnumerable<RelationshipType> _relationshipTypes;
         private RelationshipType _selectedRelationshipType;
         private bool _isRelation;
+        private string _indexClientName;
 
 
         public bool IsRelation
@@ -41,6 +42,16 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _isRelation = value;
                 RaisePropertyChanged(() => IsRelation);
+            }
+        }
+
+        public string IndexClientName
+        {
+            get { return _indexClientName; }
+            set
+            {
+                _indexClientName = value; 
+                RaisePropertyChanged(() => IndexClientName);
             }
         }
 
@@ -155,11 +166,13 @@ namespace LiveHTS.Presentation.ViewModel
             Title = "Profile";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
-            IsRelation = false;
+            
         }
 
         public void Init(string clientinfo, string indexId)
         {
+            IndexClientName = string.Empty;
+            IsRelation = false;
             ClientInfo = clientinfo;
             if (!string.IsNullOrWhiteSpace(indexId))
             {
@@ -170,6 +183,7 @@ namespace LiveHTS.Presentation.ViewModel
                     IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                     if (null != IndexClientDTO)
                     {
+                        IndexClientName = IndexClientDTO.ToString();
                         Title = $"Profile [{IndexClientDTO.RelType}]";
                         RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
                     }
@@ -179,6 +193,10 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
+            IndexClientName = string.Empty;
+            IsRelation = false;
+
+            base.ViewAppeared();
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
             if (!string.IsNullOrWhiteSpace(indexJson))
             {
@@ -186,6 +204,7 @@ namespace LiveHTS.Presentation.ViewModel
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
                 {
+                    IndexClientName = IndexClientDTO.ToString();
                     Title = $"Profile [{IndexClientDTO.RelType}]";
                     RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
                 }
@@ -268,6 +287,7 @@ namespace LiveHTS.Presentation.ViewModel
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);
                 OtherKeyPop = Profile.OtherKeyPop;
+                SelectedRelationshipType = RelationshipTypes.FirstOrDefault(x=>x.Description.ToLower()==Profile.RelTypeId.ToLower());
             }
             catch (Exception e)
             {

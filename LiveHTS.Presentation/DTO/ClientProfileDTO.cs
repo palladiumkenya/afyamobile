@@ -12,6 +12,7 @@ namespace LiveHTS.Presentation.DTO
         public string MaritalStatus { get; set; }
         public string KeyPop { get; set; }
         public string OtherKeyPop { get; set; }
+        public string RelTypeId { get; set; }
 
         public bool HasAnyData
         {
@@ -25,16 +26,21 @@ namespace LiveHTS.Presentation.DTO
         public ClientProfileDTO()
         {
         }
-        private ClientProfileDTO(string maritalStatus, string keyPop, string otherKeyPop)
+        private ClientProfileDTO(string maritalStatus, string keyPop, string otherKeyPop,string relTypeId)
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
             OtherKeyPop = otherKeyPop;
+            RelTypeId = relTypeId;
         }
 
         public static ClientProfileDTO CreateFromView(ClientProfileViewModel clientProfileViewModel)
         {
-            var profileDTO= new ClientProfileDTO(clientProfileViewModel.SelectedMaritalStatus.Id, clientProfileViewModel.SelectedKeyPop.Id, clientProfileViewModel.OtherKeyPop);
+            var relTypeId = null != clientProfileViewModel.SelectedRelationshipType
+                ? clientProfileViewModel.SelectedRelationshipType.Id
+                : "";
+
+            var profileDTO= new ClientProfileDTO(clientProfileViewModel.SelectedMaritalStatus.Id, clientProfileViewModel.SelectedKeyPop.Id, clientProfileViewModel.OtherKeyPop, relTypeId);
             profileDTO.ClientId = clientProfileViewModel.ClientId;
             return profileDTO;
         }

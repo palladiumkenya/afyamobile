@@ -85,13 +85,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewIndexClient"
-        local:MvxBind="Visibility IsRelation"/>
+        local:MvxBind="Text IndexClientName;Visibility IsRelation, Converter=Visibility"/>
       <MvxSpinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerRelationshipType"
         android:paddingRight="5dp"
-        local:MvxBind="ItemsSource RelationshipTypes;SelectedItem SelectedRelationshipType;Visibility IsRelation" />
+        local:MvxBind="ItemsSource RelationshipTypes;SelectedItem SelectedRelationshipType;Visibility IsRelation, Converter=Visibility" />
       <TextView
           android:text=""
           android:layout_width="match_parent"

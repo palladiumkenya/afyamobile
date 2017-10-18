@@ -158,6 +158,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
+            base.ViewAppeared();
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
             if (!string.IsNullOrWhiteSpace(indexJson))
             {
@@ -210,8 +211,21 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var clientRegistrationDTO = new ClientRegistrationDTO(_settings);
                 var client = clientRegistrationDTO.Generate();
+
+                if (null != IndexClientDTO)
+                {
+                    if (IndexClientDTO.RelType.ToLower() == "Family".ToLower())
+                        client.IsFamilyMember = true;
+
+                    if (IndexClientDTO.RelType.ToLower() == "Partner".ToLower())
+                        client.IsPartner = true;
+                }
                 _registryService.SaveOrUpdate(client);
                 clientRegistrationDTO.ClearCache(_settings);
+                if (null != IndexClientDTO)
+                {
+                    _registryService.UpdateRelationShips(clientRegistrationDTO.ClientProfile.RelTypeId,IndexClientDTO.Id, client.Id);
+                }
                 ShowViewModel<DashboardViewModel>(new {id = client.Id.ToString()});
             }
             catch (Exception e)

@@ -90,6 +90,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
+            base.ViewAppeared();
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
             if (!string.IsNullOrWhiteSpace(indexJson))
             {

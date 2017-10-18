@@ -33,6 +33,7 @@ namespace LiveHTS.Presentation.ViewModel
                 var indexClientDTO=new IndexClientDTO(new Guid(indexId), reltype);
                 if (null != indexClient)
                 {
+                    indexClientDTO.Names = indexClient.Person.FullName;
                     indexClientDTO.Gender = indexClient.Person.Gender;
                 }
                 

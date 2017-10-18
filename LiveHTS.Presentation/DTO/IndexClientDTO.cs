@@ -9,6 +9,7 @@ namespace LiveHTS.Presentation.DTO
     {
         public Guid Id { get; set; }
         public string Gender { get; set; }
+        public string Names { get; set; }
         public int Age { get; set; }
         public  string RelType { get; set; }
 
@@ -17,6 +18,11 @@ namespace LiveHTS.Presentation.DTO
             Id = id;
             RelType = relType;
             
+        }
+
+        public override string ToString()
+        {
+            return $"{Names},{Gender}";
         }
     }
 }
