@@ -12,26 +12,6 @@ namespace LiveHTS.Infrastructure.Seed.Subject
             string raw = @"
 [
  {
-   ^FirstName^: ^HTS^,
-   ^MiddleName^: ^^,
-   ^LastName^: ^Provider^,
-   ^Gender^: ^M^,
-   ^BirthDate^: ^1983-07-03^,
-   ^BirthDateEstimated^: 0,
-   ^Email^: ^koskedk@gmail.com^,
-   ^Id^: ^b4d18679-ed7e-4e02-8cc5-a7b7016df233^,
-   ^Voided^: 0
- }
-]
-";
-            return JsonConvert.DeserializeObject<List<Person>>(raw.Replace("^","\""));
-        }
-    }
-}
-/*
-   string raw = @"
-[
- {
    ^FirstName^: ^Bob^,
    ^MiddleName^: ^Lee^,
    ^LastName^: ^Swagger^,
@@ -77,4 +57,34 @@ namespace LiveHTS.Infrastructure.Seed.Subject
  }
 ]
 ";
+            return JsonConvert.DeserializeObject<List<Person>>(raw.Replace("^","\""));
+        }
+    }
+
+    public class PersonUserJson : ISeedJson<Person>
+    {
+        public List<Person> Read()
+        {
+            string raw = @"
+[
+ {
+   ^FirstName^: ^HTS^,
+   ^MiddleName^: ^^,
+   ^LastName^: ^Provider^,
+   ^Gender^: ^M^,
+   ^BirthDate^: ^1983-07-03^,
+   ^BirthDateEstimated^: 0,
+   ^Email^: ^koskedk@gmail.com^,
+   ^Id^: ^b4d18679-ed7e-4e02-8cc5-a7b7016df233^,
+   ^Voided^: 0
+ }
+]
+";
+            return JsonConvert.DeserializeObject<List<Person>>(raw.Replace("^", "\""));
+        }
+    }
+}
+
+/*
+   
  */

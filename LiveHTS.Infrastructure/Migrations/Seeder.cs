@@ -138,7 +138,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-            InsertOrUpdate(db, new PersonJson());
+            InsertOrUpdate(db, new PersonUserJson());
 //            InsertOrUpdate(db, new PersonAddressJson());
 //            InsertOrUpdate(db, new PersonContactJson());
             InsertOrUpdate(db, new UserJson());

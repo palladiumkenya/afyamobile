@@ -19,6 +19,8 @@ namespace LiveHTS.Presentation.ViewModel
         private string _contactId;
         private string _addressId;
         private IndexClientDTO _indexClientDTO;
+        private double? _lat;
+        private double? _lng;
 
         public IndexClientDTO IndexClientDTO
         {
@@ -63,6 +65,18 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _addressId; }
             set { _addressId = value; RaisePropertyChanged(() => AddressId); }
+        }
+
+        public double? Lat
+        {
+            get { return _lat; }
+            set { _lat = value; RaisePropertyChanged(() => Lat); }
+        }
+
+        public double? Lng
+        {
+            get { return _lng; }
+            set { _lng = value; RaisePropertyChanged(() => Lng); }
         }
 
         public ClientContactViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)

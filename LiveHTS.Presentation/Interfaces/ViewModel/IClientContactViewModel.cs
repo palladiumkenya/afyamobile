@@ -12,5 +12,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string PersonId { get; set; }
         string ContactId { get; set; }
         string AddressId { get; set; }
+        double? Lat { get; set; }
+        double? Lng { get; set; }
     }
 }
