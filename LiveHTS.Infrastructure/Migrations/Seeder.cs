@@ -63,6 +63,7 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new PracticeTypeJson());
             InsertOnly<Practice, Guid>(db, new PracticeJson());
             InsertOrUpdate(db, new RelationshipTypeJson());
+            InsertOrUpdate(db, new IdentifierTypeJson());
             InsertOrUpdate(db, new KeyPopJson());
             InsertOrUpdate(db, new MaritalStatusJson());
             InsertOrUpdate(db, new EncounterTypeJson());
