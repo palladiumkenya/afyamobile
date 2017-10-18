@@ -81,6 +81,18 @@
           android:id="@+id/editTextProfileKeyOtherPop"
           local:MvxBind="Text OtherKeyPop; Visibility IsOtherKeyPop; Error Errors['OtherKeyPop']" />
       <TextView
+        android:text="Relation To Index Client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewIndexClient"
+        local:MvxBind="Visibility IsRelation"/>
+      <MvxSpinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerRelationshipType"
+        android:paddingRight="5dp"
+        local:MvxBind="ItemsSource RelationshipTypes;SelectedItem SelectedRelationshipType;Visibility IsRelation" />
+      <TextView
           android:text=""
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

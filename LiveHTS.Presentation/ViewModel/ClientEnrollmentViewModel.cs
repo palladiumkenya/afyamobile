@@ -38,58 +38,99 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
         public ClientEnrollmentDTO Enrollment { get; set; }
+
         public string ClientInfo
         {
             get { return _clientInfo; }
-            set { _clientInfo = value;RaisePropertyChanged(() => ClientInfo); }
+            set
+            {
+                _clientInfo = value;
+                RaisePropertyChanged(() => ClientInfo);
+            }
         }
+
         public IEnumerable<IdentifierType> IdentifierTypes
         {
             get { return _identifierTypes; }
-            set { _identifierTypes = value;RaisePropertyChanged(() => IdentifierTypes); }
+            set
+            {
+                _identifierTypes = value;
+                RaisePropertyChanged(() => IdentifierTypes);
+            }
         }
 
         public IEnumerable<Practice> Practices
         {
             get { return _practices; }
-            set { _practices = value;RaisePropertyChanged(() => Practices); }
+            set
+            {
+                _practices = value;
+                RaisePropertyChanged(() => Practices);
+            }
         }
 
         public Practice SelectedPractice
         {
             get { return _selectedPractice; }
-            set { _selectedPractice = value; RaisePropertyChanged(() => SelectedPractice);}
+            set
+            {
+                _selectedPractice = value;
+                RaisePropertyChanged(() => SelectedPractice);
+            }
         }
 
         public IdentifierType SelectedIdentifierType
         {
             get { return _selectedIdentifierType; }
-            set { _selectedIdentifierType = value;RaisePropertyChanged(() => SelectedIdentifierType); }
+            set
+            {
+                _selectedIdentifierType = value;
+                RaisePropertyChanged(() => SelectedIdentifierType);
+            }
         }
+
         public string Identifier
         {
             get { return _identifier; }
-            set { _identifier = value;RaisePropertyChanged(() => Identifier); }
+            set
+            {
+                _identifier = value;
+                RaisePropertyChanged(() => Identifier);
+            }
         }
+
         public DateTime RegistrationDate
         {
             get { return _registrationDate; }
-            set { _registrationDate = value; RaisePropertyChanged(() => RegistrationDate);}
+            set
+            {
+                _registrationDate = value;
+                RaisePropertyChanged(() => RegistrationDate);
+            }
         }
 
         public string ClientId
         {
             get { return _clientId; }
-            set { _clientId = value;RaisePropertyChanged(() => ClientId); }
+            set
+            {
+                _clientId = value;
+                RaisePropertyChanged(() => ClientId);
+            }
         }
 
         public string Id
         {
             get { return _id; }
-            set { _id = value; RaisePropertyChanged(() => Id);}
+            set
+            {
+                _id = value;
+                RaisePropertyChanged(() => Id);
+            }
         }
 
-        public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService, IRegistryService registryService) : base(dialogService, settings)
+        public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService,
+            IRegistryService registryService) : base(dialogService, settings)
         {
             Step = 4;
             _lookupService = lookupService;
@@ -114,6 +155,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
         }
+
         public override void ViewAppeared()
         {
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
@@ -124,6 +166,7 @@ namespace LiveHTS.Presentation.ViewModel
                     Title = $"Enrollment [{IndexClientDTO.RelType}]";
             }
         }
+
         public override void Start()
         {
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
@@ -135,9 +178,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
             catch
             {
-                
+
             }
-            
+
             base.Start();
         }
 
@@ -185,22 +228,25 @@ namespace LiveHTS.Presentation.ViewModel
                 Enrollment = ClientEnrollmentDTO.CreateFromView(this);
                 var json = JsonConvert.SerializeObject(Enrollment);
                 _settings.AddOrUpdateValue(GetType().Name, json);
-                Save();                
+                Save();
             }
         }
+
         public override void MovePrevious()
         {
-            ShowViewModel<ClientProfileViewModel>(new { clientinfo = ClientInfo });
+            ShowViewModel<ClientProfileViewModel>(new {clientinfo = ClientInfo});
         }
+
         public override bool CanMoveNext()
         {
             return true;
         }
+
         public override bool CanMovePrevious()
         {
             return true;
         }
-   
+
         public override void LoadFromStore(VMStore modelStore)
         {
             try

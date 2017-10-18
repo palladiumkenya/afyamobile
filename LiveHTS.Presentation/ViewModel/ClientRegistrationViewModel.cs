@@ -29,7 +29,13 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (!string.IsNullOrWhiteSpace(indexId) && !string.IsNullOrWhiteSpace(reltype))
             {
+               var indexClient = _registryService.Find(new Guid(indexId));
                 var indexClientDTO=new IndexClientDTO(new Guid(indexId), reltype);
+                if (null != indexClient)
+                {
+                    indexClientDTO.Gender = indexClient.Person.Gender;
+                }
+                
                 var json = JsonConvert.SerializeObject(indexClientDTO);
                 _settings.AddOrUpdateValue(nameof(IndexClientDTO), json);
 

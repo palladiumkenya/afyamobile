@@ -29,7 +29,36 @@ namespace LiveHTS.Presentation.ViewModel
         private string _isOtherKeyPop;
         private string _clientId;
         private IndexClientDTO _indexClientDTO;
+        private IEnumerable<RelationshipType> _relationshipTypes;
+        private RelationshipType _selectedRelationshipType;
+        private bool _isRelation;
 
+
+        public bool IsRelation
+        {
+            get { return _isRelation; }
+            set
+            {
+                _isRelation = value;
+                RaisePropertyChanged(() => IsRelation);
+            }
+        }
+
+        public IEnumerable<RelationshipType> RelationshipTypes
+        {
+            get { return _relationshipTypes; }
+            set { _relationshipTypes = value; }
+        }
+
+        public RelationshipType SelectedRelationshipType
+        {
+            get { return _selectedRelationshipType; }
+            set
+            {
+                _selectedRelationshipType = value;
+                RaisePropertyChanged(() => SelectedRelationshipType);
+            }
+        }
 
         public IndexClientDTO IndexClientDTO
         {
@@ -121,11 +150,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             Step = 3;
             _lookupService = lookupService;
-
+            RelationshipTypes = _lookupService.GetRelationshipTypes().ToList();
             IsOtherKeyPop = "invisible";
             Title = "Profile";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
+            IsRelation = false;
         }
 
         public void Init(string clientinfo, string indexId)
@@ -136,9 +166,13 @@ namespace LiveHTS.Presentation.ViewModel
                 var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
                 if (!string.IsNullOrWhiteSpace(indexJson))
                 {
+                    IsRelation = true;
                     IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                     if (null != IndexClientDTO)
+                    {
                         Title = $"Profile [{IndexClientDTO.RelType}]";
+                        RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
+                    }
                 }
             }
         }
@@ -148,9 +182,13 @@ namespace LiveHTS.Presentation.ViewModel
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
             if (!string.IsNullOrWhiteSpace(indexJson))
             {
+                IsRelation = true;
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
+                {
                     Title = $"Profile [{IndexClientDTO.RelType}]";
+                    RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
+                }
             }
         }
 

@@ -8,12 +8,15 @@ namespace LiveHTS.Presentation.DTO
     public class IndexClientDTO
     {
         public Guid Id { get; set; }
+        public string Gender { get; set; }
+        public int Age { get; set; }
         public  string RelType { get; set; }
 
         public IndexClientDTO(Guid id, string relType)
         {
             Id = id;
             RelType = relType;
+            
         }
     }
 }

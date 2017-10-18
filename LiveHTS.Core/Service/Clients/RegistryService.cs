@@ -21,7 +21,10 @@ namespace LiveHTS.Core.Service.Clients
             _personRepository = personRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
         }
-
+        public Client Load(Guid id)
+        {
+            return _clientRepository.Load(id);
+        }
         public Client Find(Guid id)
         {
             return _clientRepository.Get(id);
