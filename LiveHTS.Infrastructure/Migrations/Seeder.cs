@@ -139,13 +139,13 @@ namespace LiveHTS.Infrastructure.Migrations
             #endregion
 
             InsertOrUpdate(db, new PersonJson());
-            InsertOrUpdate(db, new PersonAddressJson());
-            InsertOrUpdate(db, new PersonContactJson());
+//            InsertOrUpdate(db, new PersonAddressJson());
+//            InsertOrUpdate(db, new PersonContactJson());
             InsertOrUpdate(db, new UserJson());
             InsertOrUpdate(db, new ProviderJson());
-            InsertOrUpdate(db, new ClientJson());
-            InsertOrUpdate(db, new ClientIdentifierJson());
-            InsertOrUpdate(db, new ClientRelationshipJson());
+//            InsertOrUpdate(db, new ClientJson());
+//            InsertOrUpdate(db, new ClientIdentifierJson());
+//            InsertOrUpdate(db, new ClientRelationshipJson());
         }
 
         private static void SeedInterview(SQLiteConnection db)
