@@ -33,8 +33,33 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _client;
         private List<FormTemplateWrap> _forms;
         private EncounterType _defaultEncounterType;
+        private List<Module> _modules=new List<Module>();
+        private Module _modulePartner;
+        private Module _moduleFamily;
+        private List<FormTemplateWrap> _formsFamily;
+        private List<FormTemplateWrap> _formsPartner;
 
         public string Title { get; set; }
+
+        public List<Module> Modules
+        {
+            get { return _modules; }
+            set
+            {
+                _modules = value; 
+                RaisePropertyChanged(() => Modules);
+                var forms = Modules.SelectMany(x=>x.Forms).ToList();
+                if (forms.Count == 0)
+                {
+                    _dialogService.ShowToast("No Forms Found!.Please Pull data from Server.");
+                }
+                foreach (var form in forms)
+                {
+                    form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                }
+                Forms = ConvertToFormWrapperClass(forms, this);
+            }
+        }
 
         public Client Client
         {
@@ -60,12 +85,35 @@ namespace LiveHTS.Presentation.ViewModel
                 Forms = ConvertToFormWrapperClass(forms, this);
             }
         }
+
+        public Module ModuleFamily
+        {
+            get { return _moduleFamily; }
+            set { _moduleFamily = value; }
+        }
+ public Module ModulePartner
+        {
+            get { return _modulePartner; }
+            set { _modulePartner = value; }
+        }
         public List<FormTemplateWrap> Forms
         {
             get { return _forms; }
             set { _forms = value; RaisePropertyChanged(() => Forms); }
         }
-   
+
+        public List<FormTemplateWrap> FormsFamily
+        {
+            get { return _formsFamily; }
+            set { _formsFamily = value; }
+        }
+
+        public List<FormTemplateWrap> FormsPartner
+        {
+            get { return _formsPartner; }
+            set { _formsPartner = value; }
+        }
+
         public EncounterViewModel()
         {
             Title = "ENCOUNTERS";
@@ -80,10 +128,16 @@ namespace LiveHTS.Presentation.ViewModel
         {
             //Reload
             var moduleJson = _settings.GetValue("module", "");
+            var modulesJson = _settings.GetValue("modules", "");
 
             if (!string.IsNullOrWhiteSpace(moduleJson))
             {
                 Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+
+            }
+            if (!string.IsNullOrWhiteSpace(modulesJson))
+            {
+                Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
             }
         }
 

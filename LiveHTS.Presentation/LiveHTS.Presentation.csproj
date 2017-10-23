@@ -88,6 +88,7 @@
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISummaryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFamilyMemberTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IModuleTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\ITestTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\ITraceTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IQuestionTemplate.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyMemberTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IModuleTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\ITestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\ITraceTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFormTemplateWrap.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
     <Compile Include="ViewModel\Template\FamilyMemberTemplate.cs" />
+    <Compile Include="ViewModel\Template\ModuleTemplate.cs" />
     <Compile Include="ViewModel\Template\TestTemplate.cs" />
     <Compile Include="ViewModel\TraceViewModel.cs" />
     <Compile Include="ViewModel\TestViewModel.cs" />

@@ -9,6 +9,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
     {
         Client LoadClient(Guid clientId);
         Module LoadModule();
+        List<Module> LoadModules();
         void RemoveRelationShip(Guid id);
         void RemoveEncounter(Guid id);
     }

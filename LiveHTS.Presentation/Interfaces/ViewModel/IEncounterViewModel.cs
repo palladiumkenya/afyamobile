@@ -12,8 +12,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         string Title { get; set; }
         Module Module { get; set; }
+        Module ModuleFamily { get; set; }
+        Module ModulePartner { get; set; }
+        List<Module> Modules { get; set; }
         Client Client { get; set; }
         List<FormTemplateWrap> Forms { get; set; }
+        List<FormTemplateWrap> FormsFamily { get; set; }
+        List<FormTemplateWrap> FormsPartner { get; set; }
         void StartEncounter(FormTemplate encounterTemplate);
         void ResumeEncounter(EncounterTemplate encounterTemplate);
         void ReviewEncounter(EncounterTemplate encounterTemplate);
