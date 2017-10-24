@@ -43,7 +43,7 @@ namespace LiveHTS.Core.Service.Clients
 
         public List<Module> LoadModules()
         {
-            return _moduleRepository.GetAll().ToList();
+            return _moduleRepository.GetAll().Take(1).ToList();
         }
 
         public void RemoveRelationShip(Guid id)

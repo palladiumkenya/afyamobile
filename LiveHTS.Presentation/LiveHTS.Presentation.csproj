@@ -139,6 +139,7 @@
     <Compile Include="ViewModel\Template\PartnerTemplate.cs" />
     <Compile Include="ViewModel\Template\TraceTemplate.cs" />
     <Compile Include="ViewModel\Wrapper\FamilyMemberTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\ModuleTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\TestTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\EncounterTemplateWrap.cs" />

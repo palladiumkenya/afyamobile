@@ -67,7 +67,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _module = value; RaisePropertyChanged(() => Module);
-                EncounterViewModel.Module = Module;
+               // EncounterViewModel.Module = Module;
             }
         }
         public List<Module> Modules
@@ -76,7 +76,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _modules = value;
-              RaisePropertyChanged( () => Modules);
+                RaisePropertyChanged(() => Modules);
                 EncounterViewModel.Modules = Modules;
             }
         }
@@ -99,7 +99,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
 
             Client = _dashboardService.LoadClient(new Guid(id));
-            Module = _dashboardService.LoadModule();
+            //Module = _dashboardService.LoadModule();
             Modules = _dashboardService.LoadModules();
 
             if (null != Client)
@@ -111,11 +111,11 @@ namespace LiveHTS.Presentation.ViewModel
                 var clientDtoJson = JsonConvert.SerializeObject(clientDto);
                 _settings.AddOrUpdateValue("client.dto", clientDtoJson);
             }
-            if (null != Module)
-            {
-                var moduleJson = JsonConvert.SerializeObject(Module);
-                _settings.AddOrUpdateValue("module", moduleJson);
-            }
+//            if (null != Module)
+//            {
+//                var moduleJson = JsonConvert.SerializeObject(Module);
+//                _settings.AddOrUpdateValue("module", moduleJson);
+//            }
             if (null != Modules)
             {
                 var modulesJson = JsonConvert.SerializeObject(Modules);
@@ -128,7 +128,7 @@ namespace LiveHTS.Presentation.ViewModel
             //Reload
 
             var clientJson = _settings.GetValue("client", "");
-            var moduleJson = _settings.GetValue("module", "");
+            //var moduleJson = _settings.GetValue("module", "");
             var modulesJson = _settings.GetValue("modules", "");
 
             if (null == Client)
@@ -143,14 +143,14 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
           
-            if (null == Module)
-            {
-
-                if (!string.IsNullOrWhiteSpace(moduleJson))
-                {
-                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
-                }
-            }
+//            if (null == Module)
+//            {
+//
+//                if (!string.IsNullOrWhiteSpace(moduleJson))
+//                {
+//                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+//                }
+//            }
             if (null == Modules)
             {
 
@@ -163,10 +163,10 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 PartnerViewModel.Client = EncounterViewModel.Client = Client;
             }
-            if (null != Module)
-            {
-                EncounterViewModel.Module = Module;
-            }
+//            if (null != Module)
+//            {
+//                EncounterViewModel.Module = Module;
+//            }
             if (null != Modules)
             {
                 EncounterViewModel.Modules = Modules;

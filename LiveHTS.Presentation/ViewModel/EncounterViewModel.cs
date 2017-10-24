@@ -38,26 +38,29 @@ namespace LiveHTS.Presentation.ViewModel
         private Module _moduleFamily;
         private List<FormTemplateWrap> _formsFamily;
         private List<FormTemplateWrap> _formsPartner;
+        private List<ModuleTemplateWrap> _allModules;
 
         public string Title { get; set; }
+
+        public List<ModuleTemplateWrap> AllModules
+        {
+            get { return _allModules; }
+            set { _allModules = value; RaisePropertyChanged(() => AllModules);}
+        }
 
         public List<Module> Modules
         {
             get { return _modules; }
             set
             {
-                _modules = value; 
+                _modules = value;
                 RaisePropertyChanged(() => Modules);
-                var forms = Modules.SelectMany(x=>x.Forms).ToList();
-                if (forms.Count == 0)
+                if (Modules.Count == 0)
                 {
-                    _dialogService.ShowToast("No Forms Found!.Please Pull data from Server.");
+                    _dialogService.ShowToast("No Modules Found!.Please Pull data from Server.");
                 }
-                foreach (var form in forms)
-                {
-                    form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
-                }
-                Forms = ConvertToFormWrapperClass(forms, this);
+               
+                AllModules = ConvertToModuleWrapperClass(_modules,this);
             }
         }
 
@@ -127,14 +130,14 @@ namespace LiveHTS.Presentation.ViewModel
         public override void ViewAppeared()
         {
             //Reload
-            var moduleJson = _settings.GetValue("module", "");
+          //  var moduleJson = _settings.GetValue("module", "");
             var modulesJson = _settings.GetValue("modules", "");
 
-            if (!string.IsNullOrWhiteSpace(moduleJson))
-            {
-                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
-
-            }
+//            if (!string.IsNullOrWhiteSpace(moduleJson))
+//            {
+//                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+//
+//            }
             if (!string.IsNullOrWhiteSpace(modulesJson))
             {
                 Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
@@ -245,6 +248,35 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message, "Delete this Encounter");
             }
         }
+        private static List<ModuleTemplateWrap> ConvertToModuleWrapperClass(List<Module> modules, IEncounterViewModel encounterViewModel)
+        {
+            List<ModuleTemplateWrap> moduleTemplateWraps = new List<ModuleTemplateWrap>();
+
+            foreach (var module in modules)
+            {
+                var moduleTemplate = new ModuleTemplate(module);
+
+                var formTemplateWraps = new List<FormTemplateWrap>();
+                foreach (var form in module.Forms)
+                {
+                    foreach (var program in form.Programs)
+                    {
+                        var formTemplate = new FormTemplate(form, program);
+                        var encounters = form.ClientEncounters.Where(x => x.EncounterTypeId == program.EncounterTypeId).ToList();
+                        formTemplate.Encounters = ConvertToEncounterWrapperClass(encounters, encounterViewModel, formTemplate.Display);
+                        var formTemplateWrap = new FormTemplateWrap(encounterViewModel, formTemplate);
+                        formTemplateWraps.Add(formTemplateWrap);
+                    }
+                }
+                moduleTemplate.AllForms = formTemplateWraps;
+                var moduleTemplateWrap = new ModuleTemplateWrap(encounterViewModel,moduleTemplate);
+                moduleTemplateWraps.Add(moduleTemplateWrap);
+               
+            }
+            moduleTemplateWraps = moduleTemplateWraps.OrderBy(x => x.ModuleTemplate.Rank).ToList();
+            return moduleTemplateWraps;
+        }
+
         private static List<FormTemplateWrap> ConvertToFormWrapperClass(List<Form> forms, IEncounterViewModel encounterViewModel)
         {
             List<FormTemplateWrap> list = new List<FormTemplateWrap>();
