@@ -1,39 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:local="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:paddingBottom="2dp"
              android:paddingLeft="2dp"
              android:paddingRight="2dp"
-             android:paddingTop="2dp">
+             android:paddingTop="2dp"
+             android:orientation="vertical">
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    local:MvxBind="Text ModuleTemplate.Display" />
 
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingBottom="10dp"
-      local:MvxBind="Text ModuleTemplate.Display" />
-
-    <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="2dp"
-      android:background="@color/colorPrimaryDark"
-      android:orientation="horizontal"
-      android:paddingBottom="3dp">
-    </LinearLayout>
-
-    <FrameLayout
-      android:layout_width="fill_parent"
-      android:layout_height="match_parent">
-      <Mvx.MvxListView
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        local:MvxBind="ItemsSource ModuleTemplate.AllForms"
-        local:MvxItemTemplate="@layout/item_form" />
-    </FrameLayout>
-    
+    android:layout_height="2dp"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="horizontal"
+    android:paddingBottom="3dp">
   </LinearLayout>
-</FrameLayout>
+
+  <Mvx.MvxListView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    local:MvxBind="ItemsSource ModuleTemplate.AllForms"
+    local:MvxItemTemplate="@layout/item_form" />
+</LinearLayout>
