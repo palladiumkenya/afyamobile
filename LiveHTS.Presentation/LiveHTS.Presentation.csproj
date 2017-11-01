@@ -67,6 +67,10 @@
     <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IFamilyMemberViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IMemberScreeningViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IMemberTracingViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IPartnerScreeningViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IPersonTracingViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPracticeViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDeviceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />

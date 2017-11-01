@@ -12,9 +12,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         string Title { get; set; }
         List<ModuleTemplateWrap> AllModules { get; set; }
-        Module ModuleFamily { get; set; }
-        Module ModulePartner { get; set; }
-       Module Module { get; set; }
+        Module Module { get; set; }
         List<Module> Modules { get; set; }
         Client Client { get; set; }
         List<FormTemplateWrap> Forms { get; set; }

@@ -99,6 +99,7 @@
     <Compile Include="Model\Config\MaritalStatus.cs" />
     <Compile Include="Model\Config\ServerConfig.cs" />
     <Compile Include="Model\Interview\ObsFinalTestResult.cs" />
+    <Compile Include="Model\Interview\ObsMemberScreening.cs" />
     <Compile Include="Model\Interview\ObsLinkage.cs" />
     <Compile Include="Model\Interview\ObsTraceResult.cs" />
     <Compile Include="Model\Interview\ObsTestResult.cs" />

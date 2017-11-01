@@ -33,7 +33,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
                     foreach (var f in forms)
                     {
-                        f.Programs = _db.Table<Program>().Where(x => x.FormId == f.Id).ToList();
+                        f.Programs = _db.Table<Program>().Where(x => x.FormId == f.Id&&x.Voided==false).ToList();
                     }
 
                     if (forms.Count > 0)

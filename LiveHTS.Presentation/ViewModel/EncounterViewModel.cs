@@ -25,7 +25,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly IDashboardService _dashboardService;
-        private readonly IInterviewService _interviewService;
+        private static  IInterviewService _interviewService;
         private readonly ILookupService _lookupService;
         protected readonly ISettings _settings;
 
@@ -34,11 +34,15 @@ namespace LiveHTS.Presentation.ViewModel
         private List<FormTemplateWrap> _forms;
         private EncounterType _defaultEncounterType;
         private List<Module> _modules=new List<Module>();
+
+        private Module _moduleTesting;
         private Module _modulePartner;
         private Module _moduleFamily;
+
         private List<FormTemplateWrap> _formsFamily;
         private List<FormTemplateWrap> _formsPartner;
         private List<ModuleTemplateWrap> _allModules;
+        
 
         public string Title { get; set; }
 
@@ -46,6 +50,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _allModules; }
             set { _allModules = value; RaisePropertyChanged(() => AllModules);}
+        }
+
+        public Module ModuleTesting
+        {
+            get { return _moduleTesting; }
+            set { _moduleTesting = value; RaisePropertyChanged(() => ModuleTesting); }
         }
 
         public List<Module> Modules
@@ -59,7 +69,13 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     _dialogService.ShowToast("No Modules Found!.Please Pull data from Server.");
                 }
-               
+                foreach (var module in _modules)
+                {
+                    foreach (var form in module.Forms)
+                    {
+                        form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                    }
+                }
                 AllModules = ConvertToModuleWrapperClass(_modules,this);
             }
         }
@@ -92,12 +108,12 @@ namespace LiveHTS.Presentation.ViewModel
         public Module ModuleFamily
         {
             get { return _moduleFamily; }
-            set { _moduleFamily = value; }
+            set { _moduleFamily = value; RaisePropertyChanged(() => ModuleFamily); }
         }
  public Module ModulePartner
         {
             get { return _modulePartner; }
-            set { _modulePartner = value; }
+            set { _modulePartner = value; RaisePropertyChanged(() => ModulePartner); }
         }
         public List<FormTemplateWrap> Forms
         {
@@ -177,6 +193,15 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
+/*
+Member Screening
+Member Tracing
+Partner Screening
+Partner Tracing
+*/
+
+
+
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
@@ -252,6 +277,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             List<ModuleTemplateWrap> moduleTemplateWraps = new List<ModuleTemplateWrap>();
 
+
             foreach (var module in modules)
             {
                 var moduleTemplate = new ModuleTemplate(module);
@@ -259,6 +285,8 @@ namespace LiveHTS.Presentation.ViewModel
                 var formTemplateWraps = new List<FormTemplateWrap>();
                 foreach (var form in module.Forms)
                 {
+                   // form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+
                     foreach (var program in form.Programs)
                     {
                         var formTemplate = new FormTemplate(form, program);
@@ -268,7 +296,7 @@ namespace LiveHTS.Presentation.ViewModel
                         formTemplateWraps.Add(formTemplateWrap);
                     }
                 }
-                moduleTemplate.AllForms = formTemplateWraps;
+                moduleTemplate.AllForms = formTemplateWraps.Count > 0 ? formTemplateWraps.OrderBy(x=>x.FormTemplate.Rank).ToList() : formTemplateWraps;
                 var moduleTemplateWrap = new ModuleTemplateWrap(encounterViewModel,moduleTemplate);
                 moduleTemplateWraps.Add(moduleTemplateWrap);
                
@@ -276,6 +304,7 @@ namespace LiveHTS.Presentation.ViewModel
             moduleTemplateWraps = moduleTemplateWraps.OrderBy(x => x.ModuleTemplate.Rank).ToList();
             return moduleTemplateWraps;
         }
+        
 
         private static List<FormTemplateWrap> ConvertToFormWrapperClass(List<Form> forms, IEncounterViewModel encounterViewModel)
         {

@@ -1549,6 +1549,45 @@ namespace LiveHTS.Droid
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_id = global::LiveHTS.Droid.Resource.Styleable.ViewStubCompat_android_id;
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_inflatedId = global::LiveHTS.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_layout = global::LiveHTS.Droid.Resource.Styleable.ViewStubCompat_android_layout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxBind = global::LiveHTS.Droid.Resource.Attribute.MvxBind;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxDropDownItemTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxGroupItemTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxGroupItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxItemTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxLang = global::LiveHTS.Droid.Resource.Attribute.MvxLang;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxSource = global::LiveHTS.Droid.Resource.Attribute.MvxSource;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxTemplate = global::LiveHTS.Droid.Resource.Attribute.MvxTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxTemplateSelector = global::LiveHTS.Droid.Resource.Attribute.MvxTemplateSelector;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.layoutManager = global::LiveHTS.Droid.Resource.Attribute.layoutManager;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.reverseLayout = global::LiveHTS.Droid.Resource.Attribute.reverseLayout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.spanCount = global::LiveHTS.Droid.Resource.Attribute.spanCount;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.stackFromEnd = global::LiveHTS.Droid.Resource.Attribute.stackFromEnd;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame = global::LiveHTS.Droid.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity = global::LiveHTS.Droid.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.item_touch_helper_swipe_escape_velocity = global::LiveHTS.Droid.Resource.Dimension.item_touch_helper_swipe_escape_velocity;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.MvvmCrossTagId = global::LiveHTS.Droid.Resource.Id.MvvmCrossTagId;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.MvxBindingTagUnique = global::LiveHTS.Droid.Resource.Id.MvxBindingTagUnique;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.item_touch_helper_previous_elevation = global::LiveHTS.Droid.Resource.Id.item_touch_helper_previous_elevation;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxBinding = global::LiveHTS.Droid.Resource.Styleable.MvxBinding;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxBinding_MvxBind = global::LiveHTS.Droid.Resource.Styleable.MvxBinding_MvxBind;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxBinding_MvxLang = global::LiveHTS.Droid.Resource.Styleable.MvxBinding_MvxLang;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxControl = global::LiveHTS.Droid.Resource.Styleable.MvxControl;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxControl_MvxTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxControl_MvxTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxExpandableListView = global::LiveHTS.Droid.Resource.Styleable.MvxExpandableListView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxImageView = global::LiveHTS.Droid.Resource.Styleable.MvxImageView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxImageView_MvxSource = global::LiveHTS.Droid.Resource.Styleable.MvxImageView_MvxSource;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxListView = global::LiveHTS.Droid.Resource.Styleable.MvxListView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxListView_MvxItemTemplate = global::LiveHTS.Droid.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxRecyclerView = global::LiveHTS.Droid.Resource.Styleable.MvxRecyclerView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxRecyclerView_MvxTemplateSelector = global::LiveHTS.Droid.Resource.Styleable.MvxRecyclerView_MvxTemplateSelector;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView = global::LiveHTS.Droid.Resource.Styleable.RecyclerView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_android_descendantFocusability = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_android_descendantFocusability;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_android_orientation = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_android_orientation;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_layoutManager = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_layoutManager;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_reverseLayout = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_reverseLayout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_spanCount = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_spanCount;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_stackFromEnd = global::LiveHTS.Droid.Resource.Styleable.RecyclerView_stackFromEnd;
 			global::com.refractored.fab.Resource.Attribute.fab_colorDisabled = global::LiveHTS.Droid.Resource.Attribute.fab_colorDisabled;
 			global::com.refractored.fab.Resource.Attribute.fab_colorNormal = global::LiveHTS.Droid.Resource.Attribute.fab_colorNormal;
 			global::com.refractored.fab.Resource.Attribute.fab_colorPressed = global::LiveHTS.Droid.Resource.Attribute.fab_colorPressed;
@@ -2935,26 +2974,29 @@ namespace LiveHTS.Droid
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f01017c
-			public const int MvxBind = 2130772348;
-			
-			// aapt resource value: 0x7f010180
-			public const int MvxDropDownItemTemplate = 2130772352;
+			// aapt resource value: 0x7f01017d
+			public const int MvxBind = 2130772349;
 			
 			// aapt resource value: 0x7f010181
-			public const int MvxGroupItemTemplate = 2130772353;
-			
-			// aapt resource value: 0x7f01017f
-			public const int MvxItemTemplate = 2130772351;
-			
-			// aapt resource value: 0x7f01017d
-			public const int MvxLang = 2130772349;
+			public const int MvxDropDownItemTemplate = 2130772353;
 			
 			// aapt resource value: 0x7f010182
-			public const int MvxSource = 2130772354;
+			public const int MvxGroupItemTemplate = 2130772354;
+			
+			// aapt resource value: 0x7f010180
+			public const int MvxItemTemplate = 2130772352;
 			
 			// aapt resource value: 0x7f01017e
-			public const int MvxTemplate = 2130772350;
+			public const int MvxLang = 2130772350;
+			
+			// aapt resource value: 0x7f010183
+			public const int MvxSource = 2130772355;
+			
+			// aapt resource value: 0x7f01017f
+			public const int MvxTemplate = 2130772351;
+			
+			// aapt resource value: 0x7f01017c
+			public const int MvxTemplateSelector = 2130772348;
 			
 			// aapt resource value: 0x7f01006f
 			public const int actionBarDivider = 2130772079;
@@ -3058,41 +3100,41 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f010092
 			public const int activityChooserViewStyle = 2130772114;
 			
-			// aapt resource value: 0x7f010186
-			public const int ahBarColor = 2130772358;
+			// aapt resource value: 0x7f010187
+			public const int ahBarColor = 2130772359;
+			
+			// aapt resource value: 0x7f01018f
+			public const int ahBarLength = 2130772367;
 			
 			// aapt resource value: 0x7f01018e
-			public const int ahBarLength = 2130772366;
-			
-			// aapt resource value: 0x7f01018d
-			public const int ahBarWidth = 2130772365;
-			
-			// aapt resource value: 0x7f01018b
-			public const int ahCircleColor = 2130772363;
-			
-			// aapt resource value: 0x7f01018a
-			public const int ahDelayMillis = 2130772362;
+			public const int ahBarWidth = 2130772366;
 			
 			// aapt resource value: 0x7f01018c
-			public const int ahRadius = 2130772364;
+			public const int ahCircleColor = 2130772364;
 			
-			// aapt resource value: 0x7f010187
-			public const int ahRimColor = 2130772359;
+			// aapt resource value: 0x7f01018b
+			public const int ahDelayMillis = 2130772363;
+			
+			// aapt resource value: 0x7f01018d
+			public const int ahRadius = 2130772365;
 			
 			// aapt resource value: 0x7f010188
-			public const int ahRimWidth = 2130772360;
+			public const int ahRimColor = 2130772360;
 			
 			// aapt resource value: 0x7f010189
-			public const int ahSpinSpeed = 2130772361;
+			public const int ahRimWidth = 2130772361;
 			
-			// aapt resource value: 0x7f010183
-			public const int ahText = 2130772355;
+			// aapt resource value: 0x7f01018a
+			public const int ahSpinSpeed = 2130772362;
 			
 			// aapt resource value: 0x7f010184
-			public const int ahTextColor = 2130772356;
+			public const int ahText = 2130772356;
 			
 			// aapt resource value: 0x7f010185
-			public const int ahTextSize = 2130772357;
+			public const int ahTextColor = 2130772357;
+			
+			// aapt resource value: 0x7f010186
+			public const int ahTextSize = 2130772358;
 			
 			// aapt resource value: 0x7f0100b7
 			public const int alertDialogButtonGroupStyle = 2130772151;
@@ -9649,8 +9691,8 @@ namespace LiveHTS.Droid
 			public const int MenuView_subMenuArrow = 8;
 			
 			public static int[] MvxBinding = new int[] {
-					2130772348,
-					2130772349};
+					2130772349,
+					2130772350};
 			
 			// aapt resource value: 0
 			public const int MvxBinding_MvxBind = 0;
@@ -9659,32 +9701,38 @@ namespace LiveHTS.Droid
 			public const int MvxBinding_MvxLang = 1;
 			
 			public static int[] MvxControl = new int[] {
-					2130772350};
+					2130772351};
 			
 			// aapt resource value: 0
 			public const int MvxControl_MvxTemplate = 0;
 			
 			public static int[] MvxExpandableListView = new int[] {
-					2130772353};
+					2130772354};
 			
 			// aapt resource value: 0
 			public const int MvxExpandableListView_MvxGroupItemTemplate = 0;
 			
 			public static int[] MvxImageView = new int[] {
-					2130772354};
+					2130772355};
 			
 			// aapt resource value: 0
 			public const int MvxImageView_MvxSource = 0;
 			
 			public static int[] MvxListView = new int[] {
-					2130772351,
-					2130772352};
+					2130772352,
+					2130772353};
 			
 			// aapt resource value: 1
 			public const int MvxListView_MvxDropDownItemTemplate = 1;
 			
 			// aapt resource value: 0
 			public const int MvxListView_MvxItemTemplate = 0;
+			
+			public static int[] MvxRecyclerView = new int[] {
+					2130772348};
+			
+			// aapt resource value: 0
+			public const int MvxRecyclerView_MvxTemplateSelector = 0;
 			
 			public static int[] NavigationView = new int[] {
 					16842964,
@@ -9819,7 +9867,6 @@ namespace LiveHTS.Droid
 			public const int PopupWindowBackgroundState_state_above_anchor = 0;
 			
 			public static int[] ProgressWheel = new int[] {
-					2130772355,
 					2130772356,
 					2130772357,
 					2130772358,
@@ -9830,7 +9877,8 @@ namespace LiveHTS.Droid
 					2130772363,
 					2130772364,
 					2130772365,
-					2130772366};
+					2130772366,
+					2130772367};
 			
 			// aapt resource value: 3
 			public const int ProgressWheel_ahBarColor = 3;
