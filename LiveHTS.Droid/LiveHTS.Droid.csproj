@@ -225,6 +225,7 @@
   <ItemGroup>
     <Compile Include="Activities\DeviceSetupActivity.cs" />
     <Compile Include="Activities\FacilitySetupActivity.cs" />
+    <Compile Include="Activities\MemberScreeningActivity.cs" />
     <Compile Include="Activities\LinkageActivity.cs" />
     <Compile Include="Activities\ClientDashboardActivity.cs" />
     <Compile Include="Activities\ClientEncounterActivity.cs" />
@@ -451,6 +452,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Item_Module.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\MemberScreeningView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

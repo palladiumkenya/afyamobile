@@ -4,6 +4,10 @@ using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
+using MvvmCross.Core.ViewModels;
+using Action = System.Action;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
@@ -17,9 +21,16 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         string ErrorSummary { get; set; }
 
-        EncounterType EncounterType { get; set; }
+        Guid EncounterTypeId { get; set; }
         Client Client { get; set; }
         Encounter Encounter { get; set; }
+        Guid EncounterId { get; set; }
+
+        ObsMemberScreening ObsMemberScreening { get; set; }
+
+        TraceDateDTO SelectedScreeningDate { get; set; }
+        IMvxCommand ShowScreeningDateDialogCommand { get; }
+        event EventHandler<ChangedDateEvent> ChangedScreeningDate;
 
         DateTime ScreeningDate { get; set; }
         // HIV status(KP/N/DK/HEI)	
@@ -29,8 +40,16 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         //  Family member eligible for Testing(Y/N)
         List<CategoryItem> Eligibility { get; set; }
         CategoryItem SelectedEligibility { get; set; }
-
+     
         //  Date contact booked for testing (DD/MM/YYYY)
         DateTime BookingDate { get; set; }
+        TraceDateDTO SelectedBookingDate { get; set; }
+        IMvxCommand ShowBookingDateDialogCommand { get; }
+        event EventHandler<ChangedDateEvent> ChangedBookingDate;
+        string Remarks { get; set; }
+
+        IMvxCommand SaveScreeningCommand { get; }
+     
+        bool Validate();
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="Repository\Config\SubCountyRepository.cs" />
     <Compile Include="Repository\DbMigrator.cs" />
     <Compile Include="Repository\Config\DeviceRepository.cs" />
+    <Compile Include="Repository\Interview\ObsMemberScreeningRepository.cs" />
     <Compile Include="Repository\Interview\ObsLinkageRepository.cs" />
     <Compile Include="Repository\Interview\ObsTraceResultRepository.cs" />
     <Compile Include="Repository\Interview\ObsTestResultRepository.cs" />

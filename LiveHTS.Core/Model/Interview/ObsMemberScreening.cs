@@ -10,7 +10,7 @@ namespace LiveHTS.Core.Model.Interview
         public DateTime ScreeningDate { get; set; }
         public Guid HivStatus { get; set; }
         public Guid Eligibility { get; set; }
-        public DateTime? BookingDate { get; set; }
+        public DateTime BookingDate { get; set; }
         public string Remarks { get; set; }
         public Guid EncounterId { get; set; }
 
@@ -19,7 +19,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsMemberScreening(Guid id,DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime? bookingDate, string remarks, Guid encounterId)
+        public ObsMemberScreening(Guid id,DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
         {
             Id = id;
             ScreeningDate = screeningDate;
@@ -30,7 +30,7 @@ namespace LiveHTS.Core.Model.Interview
             EncounterId = encounterId;
         }
 
-        public ObsMemberScreening(DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime? bookingDate, string remarks, Guid encounterId)
+        public ObsMemberScreening(DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
         {
             ScreeningDate = screeningDate;
             HivStatus = hivStatus;
@@ -40,12 +40,12 @@ namespace LiveHTS.Core.Model.Interview
             EncounterId = encounterId;
         }
 
-        public static ObsMemberScreening Create(DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime? bookingDate, string remarks, Guid encounterId)
+        public static ObsMemberScreening Create(DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
         {
             var obs = new ObsMemberScreening(screeningDate,hivStatus,eligibility,bookingDate,remarks,encounterId);
             return obs;
         }
-        public static ObsMemberScreening Create(Guid id, DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime? bookingDate, string remarks, Guid encounterId)
+        public static ObsMemberScreening Create(Guid id, DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
         {
             var obs = new ObsMemberScreening(id, screeningDate, hivStatus, eligibility, bookingDate, remarks, encounterId);
             return obs;

@@ -55,6 +55,7 @@
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsMemberScreeningRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsLinkageRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsTraceResultRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsTestResultRepository.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
     <Compile Include="Interfaces\Services\Clients\IClientReaderService.cs" />
+    <Compile Include="Interfaces\Services\Interview\IMemberScreeningService.cs" />
     <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IStaffSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IFormsSyncService.cs" />
@@ -180,6 +182,7 @@
     <Compile Include="Service\Interview\LinkageService.cs" />
     <Compile Include="Service\Interview\HIVTestingService.cs" />
     <Compile Include="Service\Interview\InterviewService.cs" />
+    <Compile Include="Service\Interview\MemberScreeningService.cs" />
     <Compile Include="Service\Sync\ActivationService.cs" />
     <Compile Include="Service\Sync\ClientSyncService.cs" />
     <Compile Include="Service\Sync\StaffSyncService.cs" />
