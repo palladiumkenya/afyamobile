@@ -7,53 +7,118 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_orange_light"
-        android:orientation="horizontal">
-      <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight=".8"
-          android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="John Doe"
-            local:MvxBind="Text Client.Person.FullName" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/holo_orange_light"
             android:orientation="horizontal">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:paddingRight="5dp"
-              android:text="M"
-              android:textSize="10dp"
-              local:MvxBind="Text Client.Person.Gender" />
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:paddingRight="5dp"
-              android:text="01 JUL 1989"
-              android:textSize="10dp"
-              local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="John Doe"
+                    local:MvxBind="Text Client.Person.FullName" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="M"
+                        android:textSize="10dp"
+                        local:MvxBind="Text Client.Person.Gender" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="01 JUL 1989"
+                        android:textSize="10dp"
+                        local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingRight="2dp"
+          android:hint="Screening Date"
+          android:clickable="true"
+          android:editable="false"
+          local:MvxBind="Text ScreeningDate, Converter=Dmy; Click ShowScreeningDateDialogCommand" />
+      </android.support.design.widget.TextInputLayout>
+
+      
+      <TextView
+        android:text="HIV Status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewHIVStatus" />
+      <MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:id="@+id/spinnerHIVStatus"
+        local:MvxBind="ItemsSource HIVStatus;SelectedItem SelectedHIVStatus" />
+      
+      <TextView
+        android:text="Eligibility"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewEligibility" />
+      <MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:id="@+id/spinnerEligibility"
+        local:MvxBind="ItemsSource Eligibility;SelectedItem SelectedEligibility" />
+      
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingRight="2dp"
+          android:hint="Booking Date"
+          android:clickable="true"
+          android:editable="false"
+          local:MvxBind="Text BookingDate, Converter=Dmy; Click ShowBookingDateDialogCommand" />
+      </android.support.design.widget.TextInputLayout>
+      
+      <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+          android:id="@+id/editText"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:hint="Remarks"
+          local:MvxBind="Text Remarks" />
+      </android.support.design.widget.TextInputLayout>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Save"
+          local:MvxBind="Click SaveScreeningCommand" />
       </LinearLayout>
+        
     </LinearLayout>
-
-
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Family Screening"
-      android:textSize="10dp"/>
-    
-  </LinearLayout>
 </LinearLayout>

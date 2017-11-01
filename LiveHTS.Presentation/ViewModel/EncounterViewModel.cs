@@ -193,15 +193,37 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
-/*
-Member Screening
-Member Tracing
-Partner Screening
-Partner Tracing
-*/
+            //Member Screening
+            if (formTemplate.Display.ToLower().Contains("Member Screening".ToLower()))
+            {
+                ShowViewModel<MemberScreeningViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
 
+            /* Member Tracing   
+             * Partner Tracing */
 
-
+            //  Partner Screening
+            if (formTemplate.Display.ToLower().Contains("Partner Screening".ToLower()))
+            {
+                ShowViewModel<PartnerScreeningViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
+            
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
@@ -242,6 +264,35 @@ Partner Tracing
                 });
                 return;
             }
+
+            //Member Screening
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Member Screening".ToLower()))
+            {
+                ShowViewModel<MemberScreeningViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
+
+            //Partner Screening
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Partner Screening".ToLower()))
+            {
+                ShowViewModel<PartnerScreeningViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
+
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = encounterTemplate.FormId.ToString(),

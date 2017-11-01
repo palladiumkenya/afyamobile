@@ -39,9 +39,9 @@ namespace LiveHTS.Presentation.ViewModel
         private DateTime _screeningDate;
         private  IMvxCommand _showScreeningDateDialogCommand;
         private TraceDateDTO _selectedScreeningDate;
-        private List<CategoryItem> _hivStatus;
+        private List<CategoryItem> _hivStatus=new List<CategoryItem>();
         private CategoryItem _selectedHivStatus;
-        private List<CategoryItem> _eligibility;
+        private List<CategoryItem> _eligibility=new List<CategoryItem>();
         private CategoryItem _selectedEligibility;
         private DateTime _bookingDate;
         private string _remarks;
@@ -52,12 +52,14 @@ namespace LiveHTS.Presentation.ViewModel
         private ILookupService _lookupService;
 
 
-        public MemberScreeningViewModel(ISettings settings, IDialogService dialogService, IMemberScreeningService memberScreeningService, IDashboardService dashboardService)
+        public MemberScreeningViewModel(ISettings settings, IDialogService dialogService, IMemberScreeningService memberScreeningService, IDashboardService dashboardService, ILookupService lookupService)
         {
             _settings = settings;
             _dialogService = dialogService;
             _memberScreeningService = memberScreeningService;
             _dashboardService = dashboardService;
+            _lookupService = lookupService;
+            BookingDate = ScreeningDate = DateTime.Today;
         }
 
         public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
@@ -82,6 +84,14 @@ namespace LiveHTS.Presentation.ViewModel
 
             EncounterTypeId = new Guid(encounterTypeId);
 
+
+            var hivstatus = _lookupService.GetCategoryItems("HIVStatus", true, "[Select Mode]").ToList();
+            HIVStatus = hivstatus;
+            _settings.AddOrUpdateValue("lookup.hivstatus", JsonConvert.SerializeObject(hivstatus));
+            var eligibility = _lookupService.GetCategoryItems("Eligibility", true, "[Select Outcome]").ToList();
+            Eligibility = eligibility;
+            _settings.AddOrUpdateValue("lookup.eligibility", JsonConvert.SerializeObject(eligibility));
+
             if (mode == "new")
             {
                 //  New Encounter
@@ -104,13 +114,8 @@ namespace LiveHTS.Presentation.ViewModel
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
 
-
-
-
-            var modes = _lookupService.GetCategoryItems("TraceMode", true, "[Select Mode]").ToList();
-            _settings.AddOrUpdateValue("lookup.Mode", JsonConvert.SerializeObject(modes));
-            var outcomes = _lookupService.GetCategoryItems("TraceOutcome", true, "[Select Outcome]").ToList();
-            _settings.AddOrUpdateValue("lookup.Outcome", JsonConvert.SerializeObject(outcomes));
+            
+            
         }
 
         public override void ViewAppeared()
@@ -119,6 +124,10 @@ namespace LiveHTS.Presentation.ViewModel
             var clientJson = _settings.GetValue("client.dto", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var encounterTypeId = _settings.GetValue("encounterTypeId", "");
+
+            var hivstatusJson = _settings.GetValue("lookup.hivstatus", "");
+            var eligibilityJson = _settings.GetValue("lookup.eligibility", "");
+        
 
             if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
             {
@@ -130,11 +139,28 @@ namespace LiveHTS.Presentation.ViewModel
                 EncounterTypeId = new Guid(encounterTypeId);
             }
 
+            if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
+            {
+                Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+
+            if (HIVStatus.Count==0 && !string.IsNullOrWhiteSpace(hivstatusJson))
+            {
+                HIVStatus = JsonConvert.DeserializeObject<List<CategoryItem>>(hivstatusJson);
+            }
+
+            if (Eligibility.Count==0 && !string.IsNullOrWhiteSpace(eligibilityJson))
+            {
+                Eligibility = JsonConvert.DeserializeObject<List<CategoryItem>>(eligibilityJson);
+            }
+
 
             if (null == Encounter && !string.IsNullOrWhiteSpace(clientEncounterJson))
             {
                 Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
             }
+
+           
         }
         public ValidationHelper Validator
         {
