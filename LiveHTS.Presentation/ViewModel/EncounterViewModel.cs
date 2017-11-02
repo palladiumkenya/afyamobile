@@ -291,6 +291,21 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
+            //Member Tracing 
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Member Tracing".ToLower()))
+            {
+                ShowViewModel<MemberTracingViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
+
+
             //Partner Screening
             if (encounterTemplate.FormDisplay.ToLower().Contains("Partner Screening".ToLower()))
             {
