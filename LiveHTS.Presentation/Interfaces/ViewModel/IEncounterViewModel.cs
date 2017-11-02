@@ -11,9 +11,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface IEncounterViewModel:IMvxViewModel
     {
         string Title { get; set; }
+        List<ModuleTemplateWrap> AllModules { get; set; }
         Module Module { get; set; }
+        List<Module> Modules { get; set; }
         Client Client { get; set; }
         List<FormTemplateWrap> Forms { get; set; }
+        List<FormTemplateWrap> FormsFamily { get; set; }
+        List<FormTemplateWrap> FormsPartner { get; set; }
         void StartEncounter(FormTemplate encounterTemplate);
         void ResumeEncounter(EncounterTemplate encounterTemplate);
         void ReviewEncounter(EncounterTemplate encounterTemplate);

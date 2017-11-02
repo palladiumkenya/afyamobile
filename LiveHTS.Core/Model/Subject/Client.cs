@@ -16,6 +16,8 @@ namespace LiveHTS.Core.Model.Subject
         public string MaritalStatus { get; set; }
         public string KeyPop { get; set; }
         public string OtherKeyPop { get; set; }
+        public bool IsFamilyMember  { get; set; }
+        public bool IsPartner { get; set; }
         [Indexed]
         public Guid PracticeId { get; set; }
         [Indexed]

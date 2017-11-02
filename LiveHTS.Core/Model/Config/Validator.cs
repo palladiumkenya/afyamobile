@@ -6,5 +6,9 @@ namespace LiveHTS.Core.Model.Config
     {
         public string Name { get; set; }
         public decimal Rank { get; set; }
+
+        public Validator()
+        {
+        }
     }
 }

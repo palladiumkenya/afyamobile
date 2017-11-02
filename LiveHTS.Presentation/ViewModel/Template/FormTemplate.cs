@@ -8,6 +8,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
 {
     public class FormTemplate : IFormTemplate
     {
+        public bool ShowFormName { get; set; } = false;
         public Guid Id { get; set; }
         public string Display { get; set; }
         public string EncounterDisplay { get; set; }

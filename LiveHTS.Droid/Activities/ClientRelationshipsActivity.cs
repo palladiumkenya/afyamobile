@@ -7,7 +7,7 @@ using MvvmCross.Droid.Views;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Registry",NoHistory = true, ParentActivity = typeof(ClientDashboardActivity))]
+    [Activity(Label = "Registry",NoHistory = true, ParentActivity = typeof(ClientDashboardActivity), ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class ClientRelationshipsActivity : MvxAppCompatActivity<ClientRelationshipsViewModel>
     {
         protected override void OnCreate(Bundle bundle)

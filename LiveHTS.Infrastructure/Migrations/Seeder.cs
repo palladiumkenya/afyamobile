@@ -63,6 +63,7 @@ namespace LiveHTS.Infrastructure.Migrations
             InsertOrUpdate(db, new PracticeTypeJson());
             InsertOnly<Practice, Guid>(db, new PracticeJson());
             InsertOrUpdate(db, new RelationshipTypeJson());
+            InsertOrUpdate(db, new IdentifierTypeJson());
             InsertOrUpdate(db, new KeyPopJson());
             InsertOrUpdate(db, new MaritalStatusJson());
             InsertOrUpdate(db, new EncounterTypeJson());
@@ -137,14 +138,14 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-            InsertOrUpdate(db, new PersonJson());
-            InsertOrUpdate(db, new PersonAddressJson());
-            InsertOrUpdate(db, new PersonContactJson());
+            InsertOrUpdate(db, new PersonUserJson());
+//            InsertOrUpdate(db, new PersonAddressJson());
+//            InsertOrUpdate(db, new PersonContactJson());
             InsertOrUpdate(db, new UserJson());
             InsertOrUpdate(db, new ProviderJson());
-            InsertOrUpdate(db, new ClientJson());
-            InsertOrUpdate(db, new ClientIdentifierJson());
-            InsertOrUpdate(db, new ClientRelationshipJson());
+//            InsertOrUpdate(db, new ClientJson());
+//            InsertOrUpdate(db, new ClientIdentifierJson());
+//            InsertOrUpdate(db, new ClientRelationshipJson());
         }
 
         private static void SeedInterview(SQLiteConnection db)
@@ -157,6 +158,10 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<ObsFinalTestResult>();
             db.CreateTable<ObsLinkage>();
             db.CreateTable<ObsTraceResult>();
+            db.CreateTable<ObsMemberScreening>();
+            db.CreateTable<ObsPartnerScreening>();
+            db.CreateTable<ObsFamilyTraceResult>();
+            db.CreateTable<ObsPartnerTraceResult>();
 
             #endregion
 

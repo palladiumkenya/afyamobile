@@ -33,18 +33,22 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 relationsList.Add(relation);
             }
 
-            var otherRelations = _db.Table<ClientRelationship>()
-                .Where(x => x.RelatedClientId == clientId)
-                .ToList();
-
-            foreach (var relation in otherRelations)
-            {
-                relation.Person = _db
-                    .Query<Person>("select * from person where id in (select personid from client where id=?)", relation.ClientId)
-                    .FirstOrDefault();
-
-                relationsList.Add(relation);
-            }
+//            var otherRelations = _db.Table<ClientRelationship>()
+//                .Where(x => x.RelatedClientId == clientId)
+//                .ToList();
+//
+//            foreach (var relation in otherRelations)
+//            {
+//                //TODO: Save reverse relations
+//
+//                relation.Person = _db
+//                    .Query<Person>("select * from person where id in (select personid from client where id=?)", relation.ClientId)
+//                    .FirstOrDefault();
+//
+//                relation.RelatedClientId = relation.ClientId;
+//                relation.ClientId = clientId;
+//                relationsList.Add(relation);
+//            }
 
             return relationsList;
         }
@@ -53,6 +57,25 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         {
             return GetAll(x => x.RelationshipTypeId == relationshipTypeId && x.ClientId == clientId &&
                                x.RelatedClientId == otherClientId).FirstOrDefault();
+        }
+
+        public override void Delete(Guid id)
+        {
+            var relation = Get(id);
+            if (null != relation)
+            {
+                base.Delete(id);
+                var ids = GetAll(
+                        x => x.RelatedClientId == relation.ClientId &&
+                             x.ClientId == relation.RelatedClientId)
+                    .Select(x => x.Id)
+                    .ToList();
+
+                foreach (var did in ids)
+                {
+                   base.Delete(did);
+                }
+            }
         }
     }
 }

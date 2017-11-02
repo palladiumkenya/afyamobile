@@ -7,6 +7,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
 {
     public interface IRegistryService
     {
+        Client Load(Guid id);
         Client Find(Guid id);
         IEnumerable<Client> GetAllClients(string search="");
         void Save(Client client);

@@ -18,6 +18,14 @@ namespace LiveHTS.Infrastructure.Seed.Subject
    ^ClientId^: ^4547b7e0-98c7-4c6f-9d2a-a7b7016df234^,
    ^Id^: ^7e51629e-6b99-11e7-907b-a6006ad4dba0^,
    ^Voided^: 0
+ },
+{
+   ^RelationshipTypeId^: ^Partner^,
+   ^RelatedClientId^: ^4547b7e0-98c7-4c6f-9d2a-a7b7016df234^,
+   ^Preferred^: 1,
+   ^ClientId^: ^4547b7e0-98c7-4c6f-9d2a-a7b7016df232^,
+   ^Id^: ^7e56666e-6b99-11e7-907b-a6006ad4dba0^,
+   ^Voided^: 0
  }
 ]
 ";

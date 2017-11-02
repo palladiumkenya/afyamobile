@@ -29,10 +29,15 @@ namespace LiveHTS.Presentation.ViewModel
         private List<RelationshipTemplateWrap> _relationships = new List<RelationshipTemplateWrap>();
         private Module _module;
         private MvxCommand _manageRegistrationCommand;
+        private List<Module> _modules=new List<Module>();
 
         public IEncounterViewModel EncounterViewModel { get; }
+        public IFamilyMemberViewModel FamilyMemberViewModel { get; }
         public IPartnerViewModel PartnerViewModel { get; }
         public ISummaryViewModel SummaryViewModel { get; }
+
+      
+
         public IMvxCommand ManageRegistrationCommand
         {
             get
@@ -52,7 +57,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
-                PartnerViewModel.Client = EncounterViewModel.Client = Client;
+                PartnerViewModel.Client = EncounterViewModel.Client =FamilyMemberViewModel.Client= Client;
             }
         }
 
@@ -62,8 +67,33 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _module = value; RaisePropertyChanged(() => Module);
-                EncounterViewModel.Module = Module;
+               // EncounterViewModel.Module = Module;
             }
+        }
+        public List<Module> Modules
+        {
+            get { return _modules; }
+            set
+            {
+                var list = value;
+                _modules = FilterList(list);
+                RaisePropertyChanged(() => Modules);
+                EncounterViewModel.Modules = Modules;
+            }
+        }
+
+        private List<Module> FilterList(List<Module> list)
+        {
+            var final=new List<Module>();
+            final.AddRange(list.Where(x=>x.Rank==1));
+
+            if(Client.IsFamilyMember)
+                final.AddRange(list.Where(x => x.Rank == 2));
+
+            if (Client.IsPartner)
+                final.AddRange(list.Where(x => x.Rank == 3));
+
+            return final;
         }
 
         public DashboardViewModel(ISettings settings, IDialogService dialogService, IDashboardService dashboardService, ILookupService lookupService)
@@ -74,6 +104,7 @@ namespace LiveHTS.Presentation.ViewModel
             _lookupService = lookupService;
 
             EncounterViewModel = new EncounterViewModel();
+            FamilyMemberViewModel=new FamilyMemberViewModel();
             PartnerViewModel =new PartnerViewModel();
             SummaryViewModel = new SummaryViewModel();
        }
@@ -83,7 +114,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
 
             Client = _dashboardService.LoadClient(new Guid(id));
-            Module = _dashboardService.LoadModule();            
+            Modules = _dashboardService.LoadModules();
 
             if (null != Client)
             {
@@ -94,10 +125,15 @@ namespace LiveHTS.Presentation.ViewModel
                 var clientDtoJson = JsonConvert.SerializeObject(clientDto);
                 _settings.AddOrUpdateValue("client.dto", clientDtoJson);
             }
-            if (null != Module)
+//            if (null != Module)
+//            {
+//                var moduleJson = JsonConvert.SerializeObject(Module);
+//                _settings.AddOrUpdateValue("module", moduleJson);
+//            }
+            if (null != Modules)
             {
-                var moduleJson = JsonConvert.SerializeObject(Module);
-                _settings.AddOrUpdateValue("module", moduleJson);
+                var modulesJson = JsonConvert.SerializeObject(Modules);
+                _settings.AddOrUpdateValue("modules", modulesJson);
             }
         }
 
@@ -106,8 +142,8 @@ namespace LiveHTS.Presentation.ViewModel
             //Reload
 
             var clientJson = _settings.GetValue("client", "");
-            var moduleJson = _settings.GetValue("module", "");
-
+            //var moduleJson = _settings.GetValue("module", "");
+            var modulesJson = _settings.GetValue("modules", "");
 
             if (null == Client)
             {
@@ -120,13 +156,34 @@ namespace LiveHTS.Presentation.ViewModel
                     _settings.AddOrUpdateValue("client.dto", clientDtoJson);
                 }
             }
-            if (null == Module)
+          
+//            if (null == Module)
+//            {
+//
+//                if (!string.IsNullOrWhiteSpace(moduleJson))
+//                {
+//                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+//                }
+//            }
+            if (null == Modules)
             {
 
-                if (!string.IsNullOrWhiteSpace(moduleJson))
+                if (!string.IsNullOrWhiteSpace(modulesJson))
                 {
-                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+                    Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
                 }
+            }
+            if (null != Client)
+            {
+                PartnerViewModel.Client = EncounterViewModel.Client = Client;
+            }
+//            if (null != Module)
+//            {
+//                EncounterViewModel.Module = Module;
+//            }
+            if (null != Modules)
+            {
+                EncounterViewModel.Modules = Modules;
             }
         }
 

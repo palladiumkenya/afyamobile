@@ -36,7 +36,7 @@ namespace LiveHTS.Droid.Services
             var adb = new AlertDialog.Builder(act);
             adb.SetTitle(title);
             adb.SetMessage(message);
-            adb.SetIcon(Resource.Drawable.Icon);
+            adb.SetIcon(Resource.Drawable.icon);
             adb.SetPositiveButton(okbtnText, (sender, args) => { /* some logic */ });
             adb.Create().Show();
         }
@@ -49,7 +49,7 @@ namespace LiveHTS.Droid.Services
             var adb = new AlertDialog.Builder(act);
             adb.SetTitle("Exit");
             adb.SetMessage("Are you sure you want to Quit ?");
-            adb.SetIcon(Resource.Drawable.Icon);
+            adb.SetIcon(Resource.Drawable.icon);
             adb.SetPositiveButton("Yes", (sender, args) => {act.FinishAffinity();});
             adb.SetNegativeButton("No", (sender, args) => { /* some logic */ });
             adb.Create().Show();

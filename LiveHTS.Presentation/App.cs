@@ -2,9 +2,11 @@
 using Acr.UserDialogs;
 using LiveHTS.Core;
 using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Interfaces.Services.Sync;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.Service.Sync;
+using LiveHTS.Infrastructure.Repository;
 using LiveHTS.Infrastructure.Repository.Survey;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -33,6 +35,8 @@ namespace LiveHTS.Presentation
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
+      
+
             CreatableTypes(assemblyInfrastructure)
                 .EndingWith("Repository")
                 .AsInterfaces()
@@ -49,11 +53,13 @@ namespace LiveHTS.Presentation
 
             Mvx.RegisterSingleton<IRestClient>(() => new RestClient());
 
+            var settings = Mvx.Resolve<ILiveSetting>();
+            Mvx.RegisterSingleton<IDbMigrator>(new DbMigrator(settings));
 
-            CreatableTypes(assemblyInfrastructure)
-                .EndingWith("Migrator")
-                .AsInterfaces()
-                .RegisterAsLazySingleton();
+            //CreatableTypes(assemblyInfrastructure)
+            //    .EndingWith("Migrator")
+            //    .AsInterfaces()
+            //    .RegisterAsLazySingleton();
 
             RegisterAppStart(new AppStart());
 

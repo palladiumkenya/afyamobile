@@ -158,6 +158,26 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                     .Where(x => x.EncounterId == encounter.Id)
                     .ToList();
                 encounter.ObsLinkages = obsLinkages;
+
+                var obsMemberScreenings = _db.Table<ObsMemberScreening>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsMemberScreenings = obsMemberScreenings;
+
+                var obsFamilyTraceResults = _db.Table<ObsFamilyTraceResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsFamilyTraceResults = obsFamilyTraceResults;
+
+                var obsPartnerScreenings = _db.Table<ObsPartnerScreening>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsPartnerScreenings = obsPartnerScreenings;
+
+                var obsPartnerTraceResults = _db.Table<ObsPartnerTraceResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsPartnerTraceResults = obsPartnerTraceResults;
             }
 
             return encounter;
@@ -188,6 +208,16 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                     .Where(x => x.EncounterId == encounter.Id)
                     .ToList();
                 encounter.ObsLinkages = obsLinkages;
+
+                var obsFamilyTraceResults = _db.Table<ObsFamilyTraceResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsFamilyTraceResults = obsFamilyTraceResults;
+
+                var obsPartnerTraceResults = _db.Table<ObsPartnerTraceResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsPartnerTraceResults = obsPartnerTraceResults;
             }
 
         

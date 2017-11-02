@@ -36,6 +36,14 @@ namespace LiveHTS.Core.Model.Interview
         public IEnumerable<ObsTraceResult> ObsTraceResults { get; set; } = new List<ObsTraceResult>();
         [Ignore]
         public IEnumerable<ObsLinkage> ObsLinkages { get; set; } = new List<ObsLinkage>();
+        [Ignore]
+        public IEnumerable<ObsMemberScreening> ObsMemberScreenings { get; set; } = new List<ObsMemberScreening>();
+        [Ignore]
+        public IEnumerable<ObsFamilyTraceResult> ObsFamilyTraceResults { get; set; } = new List<ObsFamilyTraceResult>();
+        [Ignore]
+        public IEnumerable<ObsPartnerScreening> ObsPartnerScreenings { get; set; } = new List<ObsPartnerScreening>();
+        [Ignore]
+        public IEnumerable<ObsPartnerTraceResult> ObsPartnerTraceResults { get; set; } = new List<ObsPartnerTraceResult>();
         [Indexed]
         public Guid UserId { get; set; }
         public bool IsComplete { get; set; }

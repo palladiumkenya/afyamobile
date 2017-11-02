@@ -14,6 +14,10 @@ namespace LiveHTS.Core.Model.Config
         [Indexed]
         public int? CountyId { get; set; }
 
+        public Practice()
+        {
+        }
+
         public override string ToString()
         {
             return $"{Code} - {Name}";

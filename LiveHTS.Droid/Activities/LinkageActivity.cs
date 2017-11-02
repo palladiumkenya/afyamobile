@@ -21,7 +21,7 @@ using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Client Linkage", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan)]
+    [Activity(Label = "Client Linkage", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class LinkageActivity : MvxCachingFragmentCompatActivity<LinkageViewModel>
     {
         protected override void OnCreate(Bundle bundle)

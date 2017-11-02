@@ -21,7 +21,10 @@ namespace LiveHTS.Core.Service.Clients
             _personRepository = personRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
         }
-
+        public Client Load(Guid id)
+        {
+            return _clientRepository.Load(id);
+        }
         public Client Find(Guid id)
         {
             return _clientRepository.Get(id);
@@ -97,6 +100,14 @@ namespace LiveHTS.Core.Service.Clients
             {
                 var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId);
                 _clientRelationshipRepository.Save(newRelation);
+            }
+
+            var exisitngRelationshipReverse = _clientRelationshipRepository.Find(relationshipTypeId, otherClientId, clientId);
+            if (null == exisitngRelationshipReverse)
+            {
+                //otherClientId  clientId
+                var newRelationReverse = ClientRelationship.Create(relationshipTypeId, clientId, true, otherClientId);
+                _clientRelationshipRepository.Save(newRelationReverse);
             }
         }
 

@@ -7,6 +7,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientEnrollmentViewModel : IStepViewModel
     {
+        IndexClientDTO IndexClientDTO { get; set; }
         ClientEnrollmentDTO Enrollment { get; set; }
         string ClientInfo { get; set; }
         IEnumerable<IdentifierType> IdentifierTypes { get; set; }

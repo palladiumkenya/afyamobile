@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:local="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:paddingBottom="2dp"
+             android:paddingLeft="2dp"
+             android:paddingRight="2dp"
+             android:paddingTop="2dp"
+             android:orientation="vertical">
+  <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="3dp"
+    android:paddingBottom="2dp"
+    android:paddingLeft="3dp"
+    android:text="HTS"
+    android:textSize="12dp"
+    android:textColor="#FFFFFF"
+    android:background="@color/colorPrimaryDark"
+    local:MvxBind="Text ModuleTemplate.Display" />
+
+
+  <MvvmCross.Droid.Support.V7.RecyclerView.MvxRecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    local:MvxBind="ItemsSource ModuleTemplate.AllForms"
+    local:MvxItemTemplate="@layout/item_form" />
+</LinearLayout>

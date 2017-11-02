@@ -20,6 +20,5 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         Guid Outcome { get; set; }
         string OutcomeDisplay { get; set; }
         Guid EncounterId { get; set; }
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
 using LiveHTS.SharedKernel.Model;
@@ -9,11 +10,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientDemographicViewModel:IStepViewModel
     {
+        //Client IndexClient { get; set; }
         ClientDemographicDTO Demographic { get; set; }
 
         List<CustomItem> GenderOptions { get; set; }
         List<CustomItem> AgeUnitOptions { get; set; }
-
+        IndexClientDTO IndexClientDTO { get; set; }
         string FirstName { get; set; }
         string MiddleName { get; set; }
         string LastName { get; set; }
