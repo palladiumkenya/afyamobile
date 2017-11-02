@@ -171,8 +171,8 @@ namespace LiveHTS.Presentation.ViewModel
         private void LoadTraces()
         {
 
-            var modesJson = _settings.GetValue("lookup.Mode", "");
-            var outcomeJson = _settings.GetValue("lookup.Outcome", "");
+            var modesJson = _settings.GetValue("lookup.TMode", "");
+            var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
 
             List<CategoryItem> modes = new List<CategoryItem>();
             if (!string.IsNullOrWhiteSpace(modesJson))
