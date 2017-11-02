@@ -95,9 +95,9 @@ namespace LiveHTS.Presentation.ViewModel
 
 
             var modes = _lookupService.GetCategoryItems("TraceMode", true, "[Select Mode]").ToList();
-            _settings.AddOrUpdateValue("lookup.Mode", JsonConvert.SerializeObject(modes));
-            var outcomes = _lookupService.GetCategoryItems("TraceOutcome", true, "[Select Outcome]").ToList();
-            _settings.AddOrUpdateValue("lookup.Outcome", JsonConvert.SerializeObject(outcomes));
+            _settings.AddOrUpdateValue("lookup.TMode", JsonConvert.SerializeObject(modes));
+            var outcomes = _lookupService.GetCategoryItems("TestTraceOutcome", true, "[Select Outcome]").ToList();
+            _settings.AddOrUpdateValue("lookup.TOutcome", JsonConvert.SerializeObject(outcomes));
 
 
 

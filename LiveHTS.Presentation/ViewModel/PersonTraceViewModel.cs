@@ -147,8 +147,8 @@ namespace LiveHTS.Presentation.ViewModel
             _tracingService =  Mvx.Resolve<IMemberTracingService>();
             _settings = Mvx.Resolve<ISettings>();
 
-            var modesJson = _settings.GetValue("lookup.Mode", "");
-            var outcomeJson = _settings.GetValue("lookup.Outcome", "");
+            var modesJson = _settings.GetValue("lookup.TMode", "");
+            var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
 
             if (!string.IsNullOrWhiteSpace(modesJson))
             {
@@ -189,8 +189,8 @@ namespace LiveHTS.Presentation.ViewModel
         {
             // Load Client
 
-            var kitsJson = _settings.GetValue("lookup.Mode", "");
-            var resultsJson = _settings.GetValue("lookup.Outcome", "");
+            var kitsJson = _settings.GetValue("lookup.TMode", "");
+            var resultsJson = _settings.GetValue("lookup.TOutcome", "");
 
             if (!string.IsNullOrWhiteSpace(kitsJson))
             {
