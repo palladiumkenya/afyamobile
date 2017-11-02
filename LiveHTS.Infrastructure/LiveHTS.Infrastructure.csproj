@@ -61,6 +61,7 @@
     <Compile Include="Repository\Config\DeviceRepository.cs" />
     <Compile Include="Repository\Interview\ObsMemberScreeningRepository.cs" />
     <Compile Include="Repository\Interview\ObsLinkageRepository.cs" />
+    <Compile Include="Repository\Interview\ObsFamilyTraceResultRepository.cs" />
     <Compile Include="Repository\Interview\ObsTraceResultRepository.cs" />
     <Compile Include="Repository\Interview\ObsTestResultRepository.cs" />
     <Compile Include="Repository\Interview\ObsFinalTestResultRepository.cs" />

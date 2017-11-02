@@ -60,6 +60,7 @@ namespace LiveHTS.Presentation.ViewModel
             _dashboardService = dashboardService;
             _lookupService = lookupService;
             BookingDate = ScreeningDate = DateTime.Today;
+            Validator = new ValidationHelper();
         }
 
         public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
@@ -399,7 +400,6 @@ namespace LiveHTS.Presentation.ViewModel
                 else
                 {
                     obs = ObsMemberScreening;
-
                     obs.ScreeningDate = ScreeningDate;
                     obs.HivStatus = SelectedHIVStatus.ItemId;
                     obs.Eligibility = SelectedEligibility.ItemId;
@@ -427,7 +427,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator.AddRule(
                 "HIV Status",
                 () => RuleResult.Assert(
-                    null!= SelectedHIVStatus,
+                    null!= SelectedHIVStatus&&!SelectedHIVStatus.ItemId.IsNullOrEmpty(),
                     $"HIV Status is required"
                 )
             );
@@ -435,11 +435,10 @@ namespace LiveHTS.Presentation.ViewModel
             Validator.AddRule(
                 "Eligibility",
                 () => RuleResult.Assert(
-                    null != SelectedEligibility,
+                    null != SelectedEligibility && !SelectedEligibility.ItemId.IsNullOrEmpty(),
                     $"Eligibility is required"
                 )
             );
-
             
             Validator.AddRule(
                 nameof(BookingDate),
@@ -448,8 +447,7 @@ namespace LiveHTS.Presentation.ViewModel
                     $"{nameof(BookingDate)} should be a valid date"
                 )
             );
-
-
+            
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
             if (null != Errors && Errors.Count > 0)

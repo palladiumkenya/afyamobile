@@ -5,11 +5,11 @@ using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
 {
-    public interface ITraceTemplateWrap
+    public interface IFamilyTraceTemplateWrap
     {
-        IReferralViewModel Parent { get; }
+        IMemberTracingViewModel Parent { get; }
 
-        ITraceTemplate TraceTemplate { get; }
+        IFamilyTraceTemplate TraceTemplate { get; }
         IMvxCommand EditTraceCommand { get; }
         IMvxCommand DeleteTraceCommand { get; }
     }

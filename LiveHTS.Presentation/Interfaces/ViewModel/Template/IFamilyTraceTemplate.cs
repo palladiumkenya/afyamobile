@@ -10,9 +10,9 @@ using MvvmValidation;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 {
-    public interface ITraceTemplate
+    public interface IFamilyTraceTemplate
     {
-        ObsTraceResult TraceResult { get; set; }
+        ObsFamilyTraceResult TraceResult { get; set; }
         Guid Id { get; set; }
         DateTime Date { get; set; }        
         Guid Mode { get; set; }
