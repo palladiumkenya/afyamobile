@@ -158,6 +158,10 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<ObsFinalTestResult>();
             db.CreateTable<ObsLinkage>();
             db.CreateTable<ObsTraceResult>();
+            db.CreateTable<ObsMemberScreening>();
+            db.CreateTable<ObsPartnerScreening>();
+            db.CreateTable<ObsFamilyTraceResult>();
+            db.CreateTable<ObsPartnerTraceResult>();
 
             #endregion
 

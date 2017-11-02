@@ -21,23 +21,34 @@ using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Member Screening", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    [Activity(Label = "Partner Screening", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class PartnerScreeningActivity : MvxAppCompatActivity<PartnerScreeningViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.PartnerScreeningView);
-          
+            ViewModel.ChangedScreeningDate += ViewModel_ChangedScreeningDate;
+            ViewModel.ChangedBookingDate += ViewModel_ChangedBookingDate;
         }
 
-        private void ViewModel_ChangedDate(object sender, Presentation.Events.ChangedDateEvent e)
+        private void ViewModel_ChangedScreeningDate(object sender, Presentation.Events.ChangedDateEvent e)
         {
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
             {
-                //ViewModel.SelectedDate =new TraceDateDTO(e.Id, time.Date);
-            },e.Date);
+                ViewModel.SelectedScreeningDate =new TraceDateDTO(e.Id, time.Date);
+            }, e.Date);
             frag.Show(FragmentManager, DatePickerFragment.TAG);
         }
+
+        private void ViewModel_ChangedBookingDate(object sender, Presentation.Events.ChangedDateEvent e)
+        {
+            DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+            {
+                ViewModel.SelectedBookingDate =new TraceDateDTO(e.Id, time.Date);
+            }, e.Date);
+            frag.Show(FragmentManager, DatePickerFragment.TAG);
+        }
+       
     }
 }

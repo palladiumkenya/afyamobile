@@ -75,10 +75,25 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _modules; }
             set
             {
-                _modules = value;
+                var list = value;
+                _modules = FilterList(list);
                 RaisePropertyChanged(() => Modules);
                 EncounterViewModel.Modules = Modules;
             }
+        }
+
+        private List<Module> FilterList(List<Module> list)
+        {
+            var final=new List<Module>();
+            final.AddRange(list.Where(x=>x.Rank==1));
+
+            if(Client.IsFamilyMember)
+                final.AddRange(list.Where(x => x.Rank == 2));
+
+            if (Client.IsPartner)
+                final.AddRange(list.Where(x => x.Rank == 3));
+
+            return final;
         }
 
         public DashboardViewModel(ISettings settings, IDialogService dialogService, IDashboardService dashboardService, ILookupService lookupService)
@@ -99,7 +114,6 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
 
             Client = _dashboardService.LoadClient(new Guid(id));
-            //Module = _dashboardService.LoadModule();
             Modules = _dashboardService.LoadModules();
 
             if (null != Client)

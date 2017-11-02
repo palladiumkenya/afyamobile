@@ -225,8 +225,9 @@
   <ItemGroup>
     <Compile Include="Activities\DeviceSetupActivity.cs" />
     <Compile Include="Activities\FacilitySetupActivity.cs" />
-    <Compile Include="Activities\MemberTracingActivity.cs" />
     <Compile Include="Activities\PartnerScreeningActivity.cs" />
+    <Compile Include="Activities\PartnerTracingActivity.cs" />
+    <Compile Include="Activities\MemberTracingActivity.cs" />
     <Compile Include="Activities\MemberScreeningActivity.cs" />
     <Compile Include="Activities\LinkageActivity.cs" />
     <Compile Include="Activities\ClientDashboardActivity.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Views\EncounterFragment.cs" />
     <Compile Include="Views\FamilyMemberFragment.cs" />
     <Compile Include="Views\FirstTestEpisodeFragment.cs" />
+    <Compile Include="Views\PartnerTraceFragment.cs" />
     <Compile Include="Views\PersonTraceFragment.cs" />
     <Compile Include="Views\SecondTestEpisodeFragment.cs" />
     <Compile Include="Views\TestFragment.cs" />
@@ -460,9 +462,6 @@
     <AndroidResource Include="Resources\layout\MemberScreeningView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\PartnerScreeningView.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\layout\MemberTracingView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -470,6 +469,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\PersonTraceView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PartnerScreeningView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PartnerTracingView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PartnerTraceView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

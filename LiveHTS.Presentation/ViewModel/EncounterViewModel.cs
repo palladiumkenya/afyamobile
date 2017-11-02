@@ -219,9 +219,7 @@ namespace LiveHTS.Presentation.ViewModel
                 });
                 return;
             }
-            /*   
-             * Partner Tracing */
-
+        
             //  Partner Screening
             if (formTemplate.Display.ToLower().Contains("Partner Screening".ToLower()))
             {
@@ -235,7 +233,21 @@ namespace LiveHTS.Presentation.ViewModel
                 });
                 return;
             }
-            
+
+            //Partner Tracing
+            if (formTemplate.Display.ToLower().Contains("Partner Tracing".ToLower()))
+            {
+                ShowViewModel<PartnerTracingViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
+
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
@@ -320,6 +332,19 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
+            //Partner Screening
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Partner Tracing".ToLower()))
+            {
+                ShowViewModel<PartnerTracingViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = encounterTemplate.FormId.ToString(),

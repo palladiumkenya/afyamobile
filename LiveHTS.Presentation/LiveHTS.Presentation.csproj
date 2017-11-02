@@ -67,9 +67,11 @@
     <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IFamilyMemberViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IPartnerTracingViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IPartnerScreeningViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IMemberScreeningViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IMemberTracingViewModel.cs" />
-    <Compile Include="Interfaces\ViewModel\IPartnerScreeningViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IPartnerTraceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPersonTraceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPracticeViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDeviceViewModel.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Interfaces\ViewModel\IStepViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ISummaryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFamilyMemberTemplate.cs" />
+    <Compile Include="Interfaces\ViewModel\Template\IPartnerTraceTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IModuleTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\ITestTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IFamilyTraceTemplate.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyMemberTemplateWrap.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyTraceTemplateWrap - Copy.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IModuleTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\ITestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyTraceTemplateWrap.cs" />
@@ -122,9 +126,11 @@
     <Compile Include="ViewModel\ClientEncounterViewModel.cs" />
     <Compile Include="Events\ConceptChangedEvent.cs" />
     <Compile Include="ViewModel\FamilyMemberViewModel.cs" />
-    <Compile Include="ViewModel\MemberScreeningViewModel.cs" />
-    <Compile Include="ViewModel\MemberTracingViewModel.cs" />
     <Compile Include="ViewModel\PartnerScreeningViewModel.cs" />
+    <Compile Include="ViewModel\MemberScreeningViewModel.cs" />
+    <Compile Include="ViewModel\PartnerTracingViewModel.cs" />
+    <Compile Include="ViewModel\MemberTracingViewModel.cs" />
+    <Compile Include="ViewModel\PartnerTraceViewModel.cs" />
     <Compile Include="ViewModel\PracticeViewModel.cs" />
     <Compile Include="ViewModel\PushDataViewModel.cs" />
     <Compile Include="ViewModel\PullDataViewModel.cs" />
@@ -133,6 +139,7 @@
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
     <Compile Include="ViewModel\Template\FamilyMemberTemplate.cs" />
+    <Compile Include="ViewModel\Template\PartnerTraceTemplate.cs" />
     <Compile Include="ViewModel\Template\ModuleTemplate.cs" />
     <Compile Include="ViewModel\Template\TestTemplate.cs" />
     <Compile Include="ViewModel\Template\FamilyTraceTemplate.cs" />
@@ -150,6 +157,7 @@
     <Compile Include="ViewModel\Template\PartnerTemplate.cs" />
     <Compile Include="ViewModel\Template\TraceTemplate.cs" />
     <Compile Include="ViewModel\Wrapper\FamilyMemberTemplateWrap.cs" />
+    <Compile Include="ViewModel\Wrapper\PartnerTraceTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\ModuleTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\TestTemplateWrap.cs" />
     <Compile Include="ViewModel\Wrapper\QuestionTemplateWrap.cs" />

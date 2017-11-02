@@ -5700,8 +5700,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00cc
 			public const int buttonProfilePrev = 2131493068;
 			
-			// aapt resource value: 0x7f0c0117
-			public const int buttonSave = 2131493143;
+			// aapt resource value: 0x7f0c0116
+			public const int buttonSave = 2131493142;
 			
 			// aapt resource value: 0x7f0c00ae
 			public const int buttonSaveEncounter = 2131493038;
@@ -5943,8 +5943,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00e3
 			public const int listfamilymembers = 2131493091;
 			
-			// aapt resource value: 0x7f0c0114
-			public const int listpartners = 2131493140;
+			// aapt resource value: 0x7f0c0117
+			public const int listpartners = 2131493143;
 			
 			// aapt resource value: 0x7f0c009d
 			public const int lname = 2131493021;
@@ -6288,8 +6288,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00b0
 			public const int textViewEnrollmentTitle = 2131493040;
 			
-			// aapt resource value: 0x7f0c0115
-			public const int textViewError = 2131493141;
+			// aapt resource value: 0x7f0c0114
+			public const int textViewError = 2131493140;
 			
 			// aapt resource value: 0x7f0c00af
 			public const int textViewErrors = 2131493039;
@@ -6315,8 +6315,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00c9
 			public const int textViewIndexClient = 2131493065;
 			
-			// aapt resource value: 0x7f0c0116
-			public const int textViewKit = 2131493142;
+			// aapt resource value: 0x7f0c0115
+			public const int textViewKit = 2131493141;
 			
 			// aapt resource value: 0x7f0c00a6
 			public const int textViewPersonId = 2131493030;
@@ -6798,61 +6798,67 @@ namespace LiveHTS.Droid
 			public const int PartnerScreeningView = 2130968680;
 			
 			// aapt resource value: 0x7f040069
-			public const int PartnerView = 2130968681;
+			public const int PartnerTraceView = 2130968681;
 			
 			// aapt resource value: 0x7f04006a
-			public const int PersonTraceView = 2130968682;
+			public const int PartnerTracingView = 2130968682;
 			
 			// aapt resource value: 0x7f04006b
-			public const int psts_tab = 2130968683;
+			public const int PartnerView = 2130968683;
 			
 			// aapt resource value: 0x7f04006c
-			public const int PullDataView = 2130968684;
+			public const int PersonTraceView = 2130968684;
 			
 			// aapt resource value: 0x7f04006d
-			public const int PushDataView = 2130968685;
+			public const int psts_tab = 2130968685;
 			
 			// aapt resource value: 0x7f04006e
-			public const int ReferralView = 2130968686;
+			public const int PullDataView = 2130968686;
 			
 			// aapt resource value: 0x7f04006f
-			public const int RegistryView = 2130968687;
+			public const int PushDataView = 2130968687;
 			
 			// aapt resource value: 0x7f040070
-			public const int SecondHIVTestView = 2130968688;
+			public const int ReferralView = 2130968688;
 			
 			// aapt resource value: 0x7f040071
-			public const int SecondTestEpisodeView = 2130968689;
+			public const int RegistryView = 2130968689;
 			
 			// aapt resource value: 0x7f040072
-			public const int select_dialog_item_material = 2130968690;
+			public const int SecondHIVTestView = 2130968690;
 			
 			// aapt resource value: 0x7f040073
-			public const int select_dialog_multichoice_material = 2130968691;
+			public const int SecondTestEpisodeView = 2130968691;
 			
 			// aapt resource value: 0x7f040074
-			public const int select_dialog_singlechoice_material = 2130968692;
+			public const int select_dialog_item_material = 2130968692;
 			
 			// aapt resource value: 0x7f040075
-			public const int SignInView = 2130968693;
+			public const int select_dialog_multichoice_material = 2130968693;
 			
 			// aapt resource value: 0x7f040076
-			public const int SplashScreen = 2130968694;
+			public const int select_dialog_singlechoice_material = 2130968694;
 			
 			// aapt resource value: 0x7f040077
-			public const int SummaryView = 2130968695;
+			public const int SignInView = 2130968695;
 			
 			// aapt resource value: 0x7f040078
-			public const int support_simple_spinner_dropdown_item = 2130968696;
+			public const int SplashScreen = 2130968696;
 			
 			// aapt resource value: 0x7f040079
-			public const int TestingView = 2130968697;
+			public const int SummaryView = 2130968697;
 			
 			// aapt resource value: 0x7f04007a
-			public const int TestView = 2130968698;
+			public const int support_simple_spinner_dropdown_item = 2130968698;
 			
 			// aapt resource value: 0x7f04007b
-			public const int TraceView = 2130968699;
+			public const int TestingView = 2130968699;
+			
+			// aapt resource value: 0x7f04007c
+			public const int TestView = 2130968700;
+			
+			// aapt resource value: 0x7f04007d
+			public const int TraceView = 2130968701;
 			
 			static Layout()
 			{
