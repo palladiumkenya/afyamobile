@@ -26,8 +26,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Encounter Encounter { get; set; }
         Guid EncounterId { get; set; }
 
-        ObsPartnerScreening ObsPartnerScreening { get; set; }
+        bool AllowScreening { get; set; }
+        bool AllowEligibility { get; set; }
+        bool MakeEligibile { get; set; }
 
+        ObsPartnerScreening ObsPartnerScreening { get; set; }
         TraceDateDTO SelectedScreeningDate { get; set; }
         IMvxCommand ShowScreeningDateDialogCommand { get; }
         event EventHandler<ChangedDateEvent> ChangedScreeningDate;
@@ -70,5 +73,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand SaveScreeningCommand { get; }
      
         bool Validate();
+        void UpdateEligibility();
     }
 }

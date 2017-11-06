@@ -7,61 +7,62 @@
     android:paddingLeft="4dp"
     android:paddingRight="4dp"
     android:paddingTop="4dp">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_light"
+        android:orientation="horizontal">
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight=".8"
+          android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="John Doe"
+            local:MvxBind="Text Client.Person.FullName" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_light"
             android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".8"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="John Doe"
-                    local:MvxBind="Text Client.Person.FullName" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
-                        android:text="M"
-                        android:textSize="10dp"
-                        local:MvxBind="Text Client.Person.Gender" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
-                        android:text="01 JUL 1989"
-                        android:textSize="10dp"
-                        local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy" />
-                </LinearLayout>
-            </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingRight="5dp"
+              android:text="M"
+              android:textSize="10dp"
+              local:MvxBind="Text Client.Person.Gender" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingRight="5dp"
+              android:text="01 JUL 1989"
+              android:textSize="10dp"
+              local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy" />
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:textSize="8dp"
-            android:textColor="@android:color/holo_red_dark"
-            local:MvxBind="Text ErrorSummary" />
+      </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:textSize="8dp"
+        android:textColor="@android:color/holo_red_dark"
+        local:MvxBind="Text ErrorSummary" />
 
-      <ScrollView
+    <ScrollView
         android:id="@+id/demographicform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:paddingRight="50dp"
           android:orientation="vertical">
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -97,7 +98,7 @@
             android:layout_height="wrap_content"
             android:textSize="40dp"
             android:id="@+id/spinnerPhysicalAssult"
-            local:MvxBind="ItemsSource PhysicalAssult;SelectedItem SelectedPhysicalAssult" />
+            local:MvxBind="ItemsSource PhysicalAssult;SelectedItem SelectedPhysicalAssult;Enabled AllowScreening" />
 
 
         <TextView
@@ -110,7 +111,7 @@
             android:layout_height="wrap_content"
             android:textSize="40dp"
             android:id="@+id/spinnerThreatened"
-            local:MvxBind="ItemsSource Threatened;SelectedItem SelectedThreatened" />
+            local:MvxBind="ItemsSource Threatened;SelectedItem SelectedThreatened;Enabled AllowScreening" />
 
 
         <TextView
@@ -123,7 +124,7 @@
             android:layout_height="wrap_content"
             android:textSize="40dp"
             android:id="@+id/spinnerSexuallyUncomfortable"
-            local:MvxBind="ItemsSource SexuallyUncomfortable;SelectedItem SelectedSexuallyUncomfortable" />
+            local:MvxBind="ItemsSource SexuallyUncomfortable;SelectedItem SelectedSexuallyUncomfortable;Enabled AllowScreening" />
 
         <TextView
             android:text="HIV Status"
@@ -145,9 +146,10 @@
         <MvxSpinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:textSize="40dp"
             android:id="@+id/spinnerEligibility"
-            local:MvxBind="ItemsSource Eligibility;SelectedItem SelectedEligibility" />
+            local:MvxBind="ItemsSource Eligibility;SelectedItem SelectedEligibility;Enabled AllowEligibility" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -162,16 +164,18 @@
               local:MvxBind="Text BookingDate, Converter=Dmy; Click ShowBookingDateDialogCommand" />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-          <EditText
-              android:id="@+id/editText"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="Remarks"
-              local:MvxBind="Text Remarks" />
-        </android.support.design.widget.TextInputLayout>
+
+<!--        <android.support.design.widget.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--          <EditText-->
+<!--              android:id="@+id/editText"-->
+<!--              android:layout_width="match_parent"-->
+<!--              android:layout_height="wrap_content"-->
+<!--              android:hint="Remarks"-->
+<!--              local:MvxBind="Text Remarks" />-->
+<!--        </android.support.design.widget.TextInputLayout>-->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -182,8 +186,8 @@
               android:text="Save"
               local:MvxBind="Click SaveScreeningCommand" />
         </LinearLayout>
-    </LinearLayout>
-    
-      </ScrollView>
-    </LinearLayout>
+      </LinearLayout>
+
+    </ScrollView>
+  </LinearLayout>
 </LinearLayout>

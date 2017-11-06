@@ -59,6 +59,9 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedSexuallyUncomfortable;
         private List<CategoryItem> _eligibility;
         private CategoryItem _selectedEligibility;
+        private bool _allowScreening;
+        private bool _allowEligibility;
+        private bool _makeEligibile;
 
 
         public PartnerScreeningViewModel(ISettings settings, IDialogService dialogService,
@@ -70,6 +73,8 @@ namespace LiveHTS.Presentation.ViewModel
             _partnerScreeningService = partnerScreeningService;
             _dashboardService = dashboardService;
             _lookupService = lookupService;
+            AllowScreening = AllowEligibility = true;
+            MakeEligibile = false;
             BookingDate = ScreeningDate = DateTime.Today;
             Validator = new ValidationHelper();
         }
@@ -285,6 +290,40 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool AllowScreening
+        {
+            get { return _allowScreening; }
+            set { _allowScreening = value; RaisePropertyChanged(() => AllowScreening);}
+        }
+
+        public bool AllowEligibility
+        {
+            get { return _allowEligibility; }
+            set { _allowEligibility = value; RaisePropertyChanged(() => AllowEligibility);}
+        }
+
+        public bool MakeEligibile
+        {
+            get { return _makeEligibile; }
+            set
+            {
+                _makeEligibile = value;
+                RaisePropertyChanged(() => MakeEligibile);
+
+                if (MakeEligibile)
+                {
+                    if (null != Eligibility && Eligibility.Count > 0)
+                        SelectedEligibility = Eligibility.FirstOrDefault(x => x.Item.Code.ToLower() == "Y".ToLower());
+                }
+                else
+                {
+                    if (null != Eligibility && Eligibility.Count > 0)
+                        SelectedEligibility = Eligibility.FirstOrDefault(x => x.Item.Code.ToLower() == "N".ToLower());
+                }
+
+            }
+        }
+
         public ObsPartnerScreening ObsPartnerScreening
         {
             get { return _obsPartnerScreening; }
@@ -365,9 +404,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
         }
-
-
-
+        
         public DateTime ScreeningDate
         {
             get { return _screeningDate; }
@@ -435,6 +472,13 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedipvscreening = value;
                 RaisePropertyChanged(() => SelectedIPVScreening);
+                var screening = false;
+                if (SelectedIPVScreening != null)
+                {
+                    screening = SelectedIPVScreening.Item.Code.ToLower() == "Y".ToLower();
+                }
+
+                AllowScreening = screening;
             }
         }
 
@@ -447,19 +491,32 @@ namespace LiveHTS.Presentation.ViewModel
         public CategoryItem SelectedPhysicalAssult
         {
             get { return _selectedPhysicalAssult; }
-            set { _selectedPhysicalAssult = value;RaisePropertyChanged(() => SelectedPhysicalAssult); }
+            set
+            {
+                _selectedPhysicalAssult = value;RaisePropertyChanged(() => SelectedPhysicalAssult);
+                var assulted = false;
+
+                UpdateEligibility();
+            }
         }
 
         public List<CategoryItem> Threatened
         {
             get { return _threatened; }
-            set { _threatened = value; RaisePropertyChanged(() => Threatened);}
+            set
+            {
+                _threatened = value; RaisePropertyChanged(() => Threatened);
+            }
         }
 
         public CategoryItem SelectedThreatened
         {
             get { return _selectedThreatened; }
-            set { _selectedThreatened = value; RaisePropertyChanged(() => SelectedThreatened);}
+            set
+            {
+                _selectedThreatened = value; RaisePropertyChanged(() => SelectedThreatened);
+                UpdateEligibility();
+            }
         }
         public List<CategoryItem> SexuallyUncomfortable
         {
@@ -470,7 +527,11 @@ namespace LiveHTS.Presentation.ViewModel
         public CategoryItem SelectedSexuallyUncomfortable
         {
             get { return _selectedSexuallyUncomfortable; }
-            set { _selectedSexuallyUncomfortable = value;RaisePropertyChanged(() => SelectedSexuallyUncomfortable); }
+            set
+            {
+                _selectedSexuallyUncomfortable = value;RaisePropertyChanged(() => SelectedSexuallyUncomfortable);
+                UpdateEligibility();
+            }
         }
         public List<CategoryItem> HIVStatus
         {
@@ -479,6 +540,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _hivStatus = value;
                 RaisePropertyChanged(() => HIVStatus);
+                UpdateEligibility();
             }
         }
         public CategoryItem SelectedHIVStatus
@@ -657,6 +719,41 @@ namespace LiveHTS.Presentation.ViewModel
                 ErrorSummary = Errors.First().Value;
             }
             return result.IsValid;
+        }
+
+        public void UpdateEligibility()
+        {
+            bool assulted = false;
+            bool uncomfortable = false;
+            bool threatened = false;
+            bool hivpos = false;
+
+            if (AllowScreening)
+            {
+
+                if (SelectedPhysicalAssult != null)
+                {
+                    assulted = SelectedPhysicalAssult.Item.Code.ToLower() == "Y".ToLower();
+                }
+
+                if (SelectedSexuallyUncomfortable != null)
+                {
+                    uncomfortable = SelectedSexuallyUncomfortable.Item.Code.ToLower() == "Y".ToLower();
+                }
+
+                if (SelectedThreatened != null)
+                {
+                    threatened = SelectedThreatened.Item.Code.ToLower() == "Y".ToLower();
+                }
+
+                MakeEligibile = !assulted && !uncomfortable && !threatened;
+            }
+
+            if (SelectedHIVStatus != null)
+            {
+                hivpos = SelectedHIVStatus.Item.Code.ToLower() == "P".ToLower();
+                MakeEligibile = !hivpos;
+            }
         }
 
         public Guid GetGuid(string key)
