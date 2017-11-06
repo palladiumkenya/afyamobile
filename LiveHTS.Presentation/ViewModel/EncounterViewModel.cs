@@ -367,7 +367,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (result)
                 {
                     _dashboardService.RemoveEncounter(encounterTemplate.Id);
-                    Module = _dashboardService.LoadModule();
+                    Modules = _dashboardService.LoadModules();
                 }
             }
             catch (Exception e)

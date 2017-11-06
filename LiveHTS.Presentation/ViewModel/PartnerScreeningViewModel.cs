@@ -51,13 +51,13 @@ namespace LiveHTS.Presentation.ViewModel
         private IDashboardService _dashboardService;
         private ILookupService _lookupService;
         
-        private List<CategoryItem> _physicalAssult;
+        private List<CategoryItem> _physicalAssult = new List<CategoryItem>();
         private CategoryItem _selectedPhysicalAssult;
-        private List<CategoryItem> _threatened;
+        private List<CategoryItem> _threatened = new List<CategoryItem>();
         private CategoryItem _selectedThreatened;
-        private List<CategoryItem> _sexuallyUncomfortable;
+        private List<CategoryItem> _sexuallyUncomfortable = new List<CategoryItem>();
         private CategoryItem _selectedSexuallyUncomfortable;
-        private List<CategoryItem> _eligibility;
+        private List<CategoryItem> _eligibility = new List<CategoryItem>();
         private CategoryItem _selectedEligibility;
         private bool _allowScreening;
         private bool _allowEligibility;
@@ -308,17 +308,23 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _makeEligibile = value;
-                RaisePropertyChanged(() => MakeEligibile);
+                //RaisePropertyChanged(() => MakeEligibile);
 
-                if (MakeEligibile)
+                if (_makeEligibile)
                 {
                     if (null != Eligibility && Eligibility.Count > 0)
-                        SelectedEligibility = Eligibility.FirstOrDefault(x => x.Item.Code.ToLower() == "Y".ToLower());
+                    {
+                        var e= Eligibility.FirstOrDefault(x => x.Item!=null && x.Item.Code.ToLower() == "Y".ToLower());
+                        SelectedEligibility = e;
+                    }
                 }
                 else
                 {
                     if (null != Eligibility && Eligibility.Count > 0)
-                        SelectedEligibility = Eligibility.FirstOrDefault(x => x.Item.Code.ToLower() == "N".ToLower());
+                    {
+                        var e = Eligibility.FirstOrDefault(x => x.Item != null && x.Item.Code.ToLower() == "N".ToLower());
+                        SelectedEligibility = e;
+                    }
                 }
 
             }
@@ -473,9 +479,9 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedipvscreening = value;
                 RaisePropertyChanged(() => SelectedIPVScreening);
                 var screening = false;
-                if (SelectedIPVScreening != null)
+                if (null != SelectedIPVScreening )
                 {
-                    screening = SelectedIPVScreening.Item.Code.ToLower() == "Y".ToLower();
+                    screening = null!=SelectedIPVScreening.Item&& SelectedIPVScreening.Item.Code.ToLower() == "Y".ToLower();
                 }
 
                 AllowScreening = screening;
@@ -494,8 +500,6 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _selectedPhysicalAssult = value;RaisePropertyChanged(() => SelectedPhysicalAssult);
-                var assulted = false;
-
                 UpdateEligibility();
             }
         }
@@ -540,7 +544,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _hivStatus = value;
                 RaisePropertyChanged(() => HIVStatus);
-                UpdateEligibility();
+                
             }
         }
         public CategoryItem SelectedHIVStatus
@@ -550,6 +554,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedHivStatus = value;
                 RaisePropertyChanged(() => SelectedHIVStatus);
+                UpdateEligibility();
             }
         }
         public List<CategoryItem> Eligibility
@@ -726,33 +731,36 @@ namespace LiveHTS.Presentation.ViewModel
             bool assulted = false;
             bool uncomfortable = false;
             bool threatened = false;
-            bool hivpos = false;
 
             if (AllowScreening)
             {
 
-                if (SelectedPhysicalAssult != null)
+                if (null != SelectedPhysicalAssult)
                 {
-                    assulted = SelectedPhysicalAssult.Item.Code.ToLower() == "Y".ToLower();
+                    assulted = null != SelectedPhysicalAssult.Item &&
+                               SelectedPhysicalAssult.Item.Code.ToLower() == "Y".ToLower();
                 }
 
-                if (SelectedSexuallyUncomfortable != null)
+                if (null != SelectedSexuallyUncomfortable)
                 {
-                    uncomfortable = SelectedSexuallyUncomfortable.Item.Code.ToLower() == "Y".ToLower();
+                    uncomfortable = null != SelectedSexuallyUncomfortable.Item &&
+                                    SelectedSexuallyUncomfortable.Item.Code.ToLower() == "Y".ToLower();
                 }
 
-                if (SelectedThreatened != null)
+                if (null != SelectedThreatened)
                 {
-                    threatened = SelectedThreatened.Item.Code.ToLower() == "Y".ToLower();
+                    threatened = null != SelectedThreatened.Item &&
+                                 SelectedThreatened.Item.Code.ToLower() == "Y".ToLower();
                 }
 
                 MakeEligibile = !assulted && !uncomfortable && !threatened;
             }
 
-            if (SelectedHIVStatus != null)
+            if (null != SelectedHIVStatus)
             {
-                hivpos = SelectedHIVStatus.Item.Code.ToLower() == "P".ToLower();
-                MakeEligibile = !hivpos;
+                var hivpos = null != SelectedHIVStatus.Item && SelectedHIVStatus.Item.Code.ToLower() == "P".ToLower();
+                if (hivpos)
+                    MakeEligibile = false;
             }
         }
 
