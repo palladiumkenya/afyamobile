@@ -92,6 +92,29 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounters;
         }
 
+        public IEnumerable<Encounter> LoadAllKey(Guid clientId)
+        {
+            var encounters = GetAll(x => x.ClientId == clientId)
+                .ToList();
+
+            foreach (var e in encounters)
+            {
+                if (null != e)
+                {
+                    var obses = _db.Table<Obs>()
+                        .Where(x => x.EncounterId == e.Id)
+                        .ToList();
+                    e.Obses = obses;
+
+                    var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                        .Where(x => x.EncounterId == e.Id)
+                        .ToList();
+                    e.ObsFinalTestResults = obsFinalTestResults;
+                }
+            }
+            return encounters;
+        }
+
         public IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, bool includeObs = false)
         {
             var encounters = GetAll(x => x.FormId == formId &&

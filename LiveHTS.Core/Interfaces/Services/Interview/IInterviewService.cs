@@ -7,5 +7,6 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
     public interface IInterviewService
     {
         IEnumerable<Encounter> LoadEncounters(Guid clientId, Guid formId);
+        IEnumerable<Encounter> LoadKeyEncounters(Guid clientId);
     }
 }

@@ -74,6 +74,7 @@ namespace LiveHTS.Presentation.ViewModel
                     foreach (var form in module.Forms)
                     {
                         form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                        form.KeyClientEncounters= _interviewService.LoadKeyEncounters(Client.Id).ToList();
                     }
                 }
                 AllModules = ConvertToModuleWrapperClass(_modules,this);

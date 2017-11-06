@@ -12,6 +12,7 @@ using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
@@ -64,6 +65,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _FirstTestResults;
         private CategoryItem _selectedSecondTestResult;
         private List<CategoryItem> _SecondTestResults;
+        private IDialogService _dialogService;
 
 
         public ValidationHelper Validator { get; set; }
@@ -403,7 +405,11 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
                     Encounter = _testingService.OpenEncounter(Encounter.Id);
+
+                    _dialogService.ShowToast("Tests saved successfully");
                 }
+
+
             }
         }
 
@@ -423,12 +429,13 @@ namespace LiveHTS.Presentation.ViewModel
    
 
         public TestingViewModel(ILookupService lookupService, IDashboardService dashboardService,
-            IHIVTestingService testingService, ISettings settings)
+            IHIVTestingService testingService, ISettings settings, IDialogService dialogService)
         {
             _lookupService = lookupService;
             _dashboardService = dashboardService;
             _testingService = testingService;
             _settings = settings;
+            _dialogService = dialogService;
             EnableFinalResult = false;
             FirstTestEpisodeViewModel = new FirstTestEpisodeViewModel();
             FirstTestEpisodeViewModel.Parent = this;
