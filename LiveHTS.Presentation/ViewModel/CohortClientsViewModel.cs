@@ -7,20 +7,20 @@ using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.ViewModel
 {
-    public class RegistryViewModel:MvxViewModel,IRegistryViewModel
+    public class CohortClientsViewModel:MvxViewModel,ICohortClientsViewModel
     {
         private readonly ISettings _settings;
-        private readonly IRegistryService _registryService;
+        private readonly ICohortClientsService _cohortClientsService;
         private IEnumerable<Client> _clients;
         private bool _isBusy;
         private string _search;
         private IMvxCommand _searchCommand;
         private IMvxCommand _clearSearchCommand;
-        
         private Client _selectedClient;
         private IMvxCommand<Client> _clientSelectedCommand;
-        private  IMvxCommand _registerClientCommand;
-        private  IMvxCommand _openRemoteRegisteryCommand;
+
+
+        public IRemoteRegistryViewModel Parent { get; set; }
 
         public string Search
         {
@@ -76,41 +76,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public IMvxCommand RegisterClientCommand
-        {
-            get
-            {
-                _registerClientCommand = _registerClientCommand ?? new MvxCommand(RegisterClient);
-                return _registerClientCommand;
-            }
-        }
+     
 
-        public IMvxCommand OpenRemoteRegisteryCommand
-        {
-            get
-            {
-                _openRemoteRegisteryCommand = _openRemoteRegisteryCommand ?? new MvxCommand(OpenRemoteRegistery);
-                return _openRemoteRegisteryCommand;
-            }
-        }
-
-        private void OpenRemoteRegistery()
-        {
-            ShowViewModel<RemoteRegistryViewModel>();
-        }
-
+      
 
         private void DeletePerson()
         {
             throw new System.NotImplementedException();
         }
 
-        private void RegisterClient()
-        {
-            ClearCache(_settings);
-            ShowViewModel<ClientRegistrationViewModel>(new{mode="new"});
-        }
-
+       
         private void SelectClient(Client selectedClient)
         {
             if(null==selectedClient)
@@ -129,7 +104,7 @@ namespace LiveHTS.Presentation.ViewModel
         private void SearchClients()
         {
             IsBusy = true;
-            Clients = _registryService.GetAllClients(Search);
+            Clients = _cohortClientsService.GetAllClients(Search);
             IsBusy = false;
         }
         private bool CanSearch()
@@ -147,9 +122,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public RegistryViewModel(IRegistryService registryService, ISettings settings)
+        public CohortClientsViewModel(ICohortClientsService cohortClientsService, ISettings settings)
         {
-            _registryService = registryService;
+            _cohortClientsService = cohortClientsService;
             _settings = settings;
         }
 
@@ -162,24 +137,10 @@ namespace LiveHTS.Presentation.ViewModel
         private void LoadClients()
         {
             IsBusy = true;
-            Clients = _registryService.GetAllClients();
+            Clients = _cohortClientsService.GetAllClients();
             IsBusy = false;
         }
 
-        private void ClearCache(ISettings settings)
-        {
-
-            if (settings.Contains(nameof(ClientDemographicViewModel)))
-                settings.DeleteValue(nameof(ClientDemographicViewModel));
-
-            if (settings.Contains(nameof(ClientContactViewModel)))
-                settings.DeleteValue(nameof(ClientContactViewModel));
-
-            if (settings.Contains(nameof(ClientProfileViewModel)))
-                settings.DeleteValue(nameof(ClientProfileViewModel));
-
-            if (settings.Contains(nameof(ClientEnrollmentViewModel)))
-                settings.DeleteValue(nameof(ClientEnrollmentViewModel));
-        }
+       
     }
 }

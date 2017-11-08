@@ -2,6 +2,7 @@
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Interfaces.Services.Sync;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.SyncModel;
@@ -81,6 +82,8 @@ namespace LiveHTS.Core.Service.Sync
                 Update(person.Contacts);
             }
         }
+
+    
 
         public void Update<T>(T data) where T : class
         {

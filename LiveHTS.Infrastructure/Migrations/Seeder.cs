@@ -49,7 +49,7 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<Condition>();
             db.CreateTable<Validator>();
             db.CreateTable<ValidatorType>();
-
+            db.CreateTable<Cohort>();
             db.CreateTable<County>();
             db.CreateTable<SubCounty>();
             #endregion

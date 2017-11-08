@@ -24,6 +24,7 @@ namespace LiveHTS.Core.Model.Subject
         public Guid PersonId { get; set; }
         [Ignore]
         public Person Person { get; set; }
+ 
 
         public Client()
         {

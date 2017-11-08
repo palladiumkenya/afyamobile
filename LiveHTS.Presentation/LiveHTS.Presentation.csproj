@@ -78,6 +78,10 @@
     <Compile Include="Interfaces\ViewModel\IEncounterViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPushDataViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IPullDataViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ICohortViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ICohortClientsViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IRemoteSearchViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\IRemoteRegistryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ITestEpisodeViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ITraceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ITestViewModel.cs" />
@@ -134,6 +138,10 @@
     <Compile Include="ViewModel\PracticeViewModel.cs" />
     <Compile Include="ViewModel\PushDataViewModel.cs" />
     <Compile Include="ViewModel\PullDataViewModel.cs" />
+    <Compile Include="ViewModel\CohortViewModel.cs" />
+    <Compile Include="ViewModel\CohortClientsViewModel.cs" />
+    <Compile Include="ViewModel\RemoteSearchViewModel.cs" />
+    <Compile Include="ViewModel\RemoteRegistryViewModel.cs" />
     <Compile Include="ViewModel\SecondTestEpisodeViewModel.cs" />
     <Compile Include="ViewModel\FirstTestEpisodeViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />

@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IDeviceSetupService _deviceSetupService;
         private readonly IStaffSyncService _staffSyncService;
         private readonly ISyncDataService _syncDataService;
+        private readonly ICohortSyncService _cohortSyncService;
         private string _address;
         private string _currentStatus;
         private int _currentStatusProgress;
@@ -76,7 +77,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return _pullDataCommand;
             }
         }
-        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService, IStaffSyncService staffSyncService)
+        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService, IStaffSyncService staffSyncService, ICohortSyncService cohortSyncService)
         {
             _dialogService = dialogService;
             _settings = settings;
@@ -86,6 +87,7 @@ namespace LiveHTS.Presentation.ViewModel
             _syncDataService = syncDataService;
             _formsSyncService = formsSyncService;
             _staffSyncService = staffSyncService;
+            _cohortSyncService = cohortSyncService;
         }
 
         public void Init()
@@ -149,7 +151,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private async void PullData()
         {
-            int total = 14;
+            int total = 16;
             int current = 0;
             IsBusy = true;
             CurrentStatus = $"connecting...";
@@ -219,8 +221,10 @@ namespace LiveHTS.Presentation.ViewModel
                 _syncDataService.Update(providers);
 
 
-
-
+                current++;
+                CurrentStatus = showPerc("cohort lists", current, total);
+                var cohorts = await _cohortSyncService.GetCohorts(Address);
+                _syncDataService.Update(cohorts);
 
 
 

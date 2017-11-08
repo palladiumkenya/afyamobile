@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\Repository\Config\IIdentifierTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IMaritalStatusRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IKeyPopRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\ICohortRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ISubCountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ICountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
@@ -66,11 +67,16 @@
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
     <Compile Include="Interfaces\Services\Clients\IClientReaderService.cs" />
+    <Compile Include="Interfaces\Services\Clients\ICohortClientsService.cs" />
+    <Compile Include="Interfaces\Services\Clients\IRemoteSearchService.cs" />
+    <Compile Include="Interfaces\Services\Clients\IRemoteRegistryService.cs" />
+    <Compile Include="Interfaces\Services\Config\ICohortService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerScreeningService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberScreeningService.cs" />
     <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
+    <Compile Include="Interfaces\Services\Sync\ICohortSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IStaffSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IFormsSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\ISyncDataService.cs" />
@@ -115,6 +121,7 @@
     <Compile Include="Model\Interview\ObsTraceResult.cs" />
     <Compile Include="Model\Interview\ObsTestResult.cs" />
     <Compile Include="Model\Interview\SetResponse.cs" />
+    <Compile Include="Model\Config\Cohort.cs" />
     <Compile Include="Model\Survey\Program.cs" />
     <Compile Include="Model\SyncClientEncounterDTO.cs" />
     <Compile Include="Model\SyncClientDTO.cs" />
@@ -184,7 +191,10 @@
     <Compile Include="Service\Clients\DashboardService.cs" />
     <Compile Include="Service\Clients\EncounterService.cs" />
     <Compile Include="Engine\ValidationEngine.cs" />
+    <Compile Include="Service\Clients\CohortClientsService.cs" />
+    <Compile Include="Service\Clients\RemoteSearchService.cs" />
     <Compile Include="Service\Clients\RegistryService.cs" />
+    <Compile Include="Service\Config\CohortService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
     <Compile Include="Service\Config\PracticeSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
@@ -197,6 +207,7 @@
     <Compile Include="Service\Interview\MemberScreeningService.cs" />
     <Compile Include="Service\Sync\ActivationService.cs" />
     <Compile Include="Service\Sync\ClientSyncService.cs" />
+    <Compile Include="Service\Sync\CohortSyncService.cs" />
     <Compile Include="Service\Sync\StaffSyncService.cs" />
     <Compile Include="Service\Sync\FormsSyncService.cs" />
     <Compile Include="Service\Sync\MetaSyncService.cs" />
