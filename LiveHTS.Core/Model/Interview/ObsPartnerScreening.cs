@@ -24,36 +24,48 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsPartnerScreening(DateTime screeningDate,Guid ipvScreening, Guid physicalAssult, Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
+        public ObsPartnerScreening(DateTime screeningDate, Guid ipvScreening, Guid physicalAssult, Guid threatened,
+            Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks,
+            Guid encounterId)
         {
             ScreeningDate = screeningDate;
-            
+
             IPVScreening = ipvScreening;
             PhysicalAssult = physicalAssult;
             Threatened = threatened;
             SexuallyUncomfortable = sexuallyUncomfortable;
             HivStatus = hivStatus;
-            
+
             Eligibility = eligibility;
             BookingDate = bookingDate;
             Remarks = remarks;
             EncounterId = encounterId;
         }
 
-        public ObsPartnerScreening(Guid id, DateTime screeningDate, Guid ipvScreening, Guid physicalAssult, Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId) 
-            : this(screeningDate,  ipvScreening, physicalAssult, threatened, sexuallyUncomfortable, hivStatus,  eligibility, bookingDate, remarks, encounterId)
+        public ObsPartnerScreening(Guid id, DateTime screeningDate, Guid ipvScreening, Guid physicalAssult,
+            Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate,
+            string remarks, Guid encounterId)
+            : this(screeningDate, ipvScreening, physicalAssult, threatened, sexuallyUncomfortable, hivStatus,
+                eligibility, bookingDate, remarks, encounterId)
         {
             Id = id;
         }
 
-        public static ObsPartnerScreening Create(DateTime screeningDate, Guid ipvScreening, Guid physicalAssult, Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
+        public static ObsPartnerScreening Create(DateTime screeningDate, Guid ipvScreening, Guid physicalAssult,
+            Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate,
+            string remarks, Guid encounterId)
         {
-            var obs = new ObsPartnerScreening(screeningDate, ipvScreening, physicalAssult, threatened, sexuallyUncomfortable, hivStatus, eligibility, bookingDate, remarks, encounterId);
+            var obs = new ObsPartnerScreening(LiveGuid.NewGuid(), screeningDate, ipvScreening, physicalAssult,
+                threatened, sexuallyUncomfortable, hivStatus, eligibility, bookingDate, remarks, encounterId);
             return obs;
         }
-        public static ObsPartnerScreening Create(Guid id, DateTime screeningDate, Guid ipvScreening, Guid physicalAssult, Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus,  Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
+
+        public static ObsPartnerScreening Create(Guid id, DateTime screeningDate, Guid ipvScreening,
+            Guid physicalAssult, Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility,
+            DateTime bookingDate, string remarks, Guid encounterId)
         {
-            var obs = new ObsPartnerScreening(id, screeningDate, ipvScreening, physicalAssult, threatened, sexuallyUncomfortable, hivStatus, eligibility, bookingDate, remarks, encounterId);
+            var obs = new ObsPartnerScreening(id, screeningDate, ipvScreening, physicalAssult, threatened,
+                sexuallyUncomfortable, hivStatus, eligibility, bookingDate, remarks, encounterId);
             return obs;
         }
     }

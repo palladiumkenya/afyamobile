@@ -77,6 +77,7 @@
     <Compile Include="Interfaces\Services\Interview\IMemberScreeningService.cs" />
     <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\ICohortSyncService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IChohortClientsSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IStaffSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IFormsSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\ISyncDataService.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Model\Interview\ObsTestResult.cs" />
     <Compile Include="Model\Interview\SetResponse.cs" />
     <Compile Include="Model\Config\Cohort.cs" />
+    <Compile Include="Model\RemoteClientDTO.cs" />
     <Compile Include="Model\Survey\Program.cs" />
     <Compile Include="Model\SyncClientEncounterDTO.cs" />
     <Compile Include="Model\SyncClientDTO.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Service\Sync\ActivationService.cs" />
     <Compile Include="Service\Sync\ClientSyncService.cs" />
     <Compile Include="Service\Sync\CohortSyncService.cs" />
+    <Compile Include="Service\Sync\ChohortClientsSyncService.cs" />
     <Compile Include="Service\Sync\StaffSyncService.cs" />
     <Compile Include="Service\Sync\FormsSyncService.cs" />
     <Compile Include="Service\Sync\MetaSyncService.cs" />

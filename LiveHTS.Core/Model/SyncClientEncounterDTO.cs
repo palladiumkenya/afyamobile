@@ -26,6 +26,12 @@ namespace LiveHTS.Core.Model
         public IEnumerable<ObsFinalTestResult> ObsFinalTestResults { get; set; } = new List<ObsFinalTestResult>();
         public IEnumerable<ObsTraceResult> ObsTraceResults { get; set; } = new List<ObsTraceResult>();
         public IEnumerable<ObsLinkage> ObsLinkages { get; set; } = new List<ObsLinkage>();
+
+        public IEnumerable<ObsMemberScreening> ObsMemberScreenings { get; set; } = new List<ObsMemberScreening>();
+        public IEnumerable<ObsFamilyTraceResult> ObsFamilyTraceResults { get; set; } = new List<ObsFamilyTraceResult>();
+        public IEnumerable<ObsPartnerScreening> ObsPartnerScreenings { get; set; } = new List<ObsPartnerScreening>();
+        public IEnumerable<ObsPartnerTraceResult> ObsPartnerTraceResults { get; set; } = new List<ObsPartnerTraceResult>();
+
         public Guid UserId { get; set; }
         public bool IsComplete { get; set; }
 
@@ -46,6 +52,10 @@ namespace LiveHTS.Core.Model
             ObsFinalTestResults = encounter.ObsFinalTestResults.ToList();
             ObsTraceResults = encounter.ObsTraceResults.ToList();
             ObsLinkages = encounter.ObsLinkages.ToList();
+            ObsFamilyTraceResults = encounter.ObsFamilyTraceResults.ToList();
+            ObsMemberScreenings = encounter.ObsMemberScreenings.ToList();
+            ObsPartnerScreenings = encounter.ObsPartnerScreenings.ToList();
+            ObsPartnerTraceResults = encounter.ObsPartnerTraceResults.ToList();
             UserId = encounter.UserId;
             IsComplete = encounter.IsComplete;
             KeyPop = client.KeyPop;

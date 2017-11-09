@@ -95,7 +95,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             SelectedCohort = selectedCohort;
             ///////////////////
-            ShowViewModel<DashboardViewModel>(new {id = SelectedCohort.Id});
+            ShowViewModel<CohortClientsViewModel>(new {id = SelectedCohort.Id});
         }
         private void SearchCohorts()
         {

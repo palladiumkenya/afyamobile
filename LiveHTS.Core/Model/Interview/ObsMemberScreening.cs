@@ -42,7 +42,7 @@ namespace LiveHTS.Core.Model.Interview
 
         public static ObsMemberScreening Create(DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)
         {
-            var obs = new ObsMemberScreening(screeningDate,hivStatus,eligibility,bookingDate,remarks,encounterId);
+            var obs = new ObsMemberScreening(LiveGuid.NewGuid(),screeningDate,hivStatus,eligibility,bookingDate,remarks,encounterId);
             return obs;
         }
         public static ObsMemberScreening Create(Guid id, DateTime screeningDate, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks, Guid encounterId)

@@ -5829,11 +5829,11 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c0068
 			public const int expanded_menu = 2131492968;
 			
-			// aapt resource value: 0x7f0c00d5
-			public const int fab = 2131493077;
-			
 			// aapt resource value: 0x7f0c00d4
-			public const int fab2 = 2131493076;
+			public const int fab = 2131493076;
+			
+			// aapt resource value: 0x7f0c00d5
+			public const int fab2 = 2131493077;
 			
 			// aapt resource value: 0x7f0c00e7
 			public const int fabfamilymembers = 2131493095;
