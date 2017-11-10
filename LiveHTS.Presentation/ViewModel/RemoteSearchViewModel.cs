@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
+using LiveHTS.Core.Interfaces.Services.Sync;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -13,6 +18,10 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly ISettings _settings;
         private readonly IRemoteSearchService _remoteSearchService;
+        private readonly IDeviceSetupService _deviceSetupService;
+        private readonly IDialogService _dialogService;
+        private readonly IChohortClientsSyncService _chohortClientsSyncService;
+        private readonly IClientSyncService _clientSyncService;
         private IEnumerable<Client> _clients;
         private bool _isBusy;
         private string _search;
@@ -21,7 +30,9 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _selectedClient;
         private IMvxCommand<Client> _clientSelectedCommand;
 
-
+        public Device Device { get; set; }
+        public ServerConfig Local { get; set; }
+        public string Address { get; set; }
         public string Title { get; set; } = "Remote Search";
         public IRemoteRegistryViewModel Parent { get; set; }
 
@@ -91,7 +102,10 @@ namespace LiveHTS.Presentation.ViewModel
        
         private void SelectClient(Client selectedClient)
         {
-            if(null==selectedClient)
+            _dialogService.Alert("Downloads are currently not enabled !");
+            return;
+
+            if (null==selectedClient)
                 return;
             SelectedClient = selectedClient;
             ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
@@ -104,10 +118,24 @@ namespace LiveHTS.Presentation.ViewModel
             LoadClients();
         }
 
-        private void SearchClients()
+        private async void SearchClients()
         {
             IsBusy = true;
-            Clients = _remoteSearchService.GetAllClients(Search);
+            _dialogService.ShowWait("Searching,Please wait...");
+
+            var remoteData = await _clientSyncService.SearchClients(Address, Search);
+            if (remoteData.Count > 0)
+            {
+                Clients = remoteData.Select(x => x.Client).ToList();
+            }
+            else
+            {
+                Clients=new List<Client>();
+                _dialogService.HideWait();
+                _dialogService.ShowToast("No clients found!");
+                IsBusy = false;return;
+            }
+            _dialogService.HideWait();
             IsBusy = false;
         }
         private bool CanSearch()
@@ -127,20 +155,73 @@ namespace LiveHTS.Presentation.ViewModel
 
         public RemoteSearchViewModel()
         {
+            _clientSyncService = Mvx.Resolve<IClientSyncService>();
+            _chohortClientsSyncService = Mvx.Resolve<IChohortClientsSyncService>(); ;
+            _deviceSetupService = Mvx.Resolve<IDeviceSetupService>();
+            _dialogService = Mvx.Resolve<IDialogService>();
             _remoteSearchService = Mvx.Resolve<IRemoteSearchService>();
             _settings = Mvx.Resolve<ISettings>();
         }
 
-        public override void Start()
+        public void Init()
         {
-            base.Start();
-            LoadClients();
+            LoadInit();
         }
+
+        public override void ViewAppeared()
+        {
+            LoadInit();
+        }
+
+        private void LoadInit()
+        {
+            var deviceJson = _settings.GetValue("device.id", "");
+            var hapiLocal = _settings.GetValue("hapi.local", "");
+
+            if (null == Device && !string.IsNullOrWhiteSpace(deviceJson))
+            {
+                Device = JsonConvert.DeserializeObject<Device>(deviceJson);
+            }
+            else
+            {
+                Device = _deviceSetupService.GetDefault();
+                if (null == Device)
+                {
+                    Device = new Device();
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(Device);
+                    _settings.AddOrUpdateValue("device.id", json);
+                }
+            }
+
+            if (null == Local && !string.IsNullOrWhiteSpace(hapiLocal))
+            {
+                Local = JsonConvert.DeserializeObject<ServerConfig>(hapiLocal);
+            }
+            else
+            {
+                Local = _deviceSetupService.GetLocal();
+                if (null == Local)
+                {
+                    Local = new ServerConfig();
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(Local);
+                    _settings.AddOrUpdateValue("hapi.local", json);
+                }
+            }
+            Address = Local.Address;
+        }
+
+      
 
         private void LoadClients()
         {
             IsBusy = true;
-            Clients = _remoteSearchService.GetAllClients();
+            Clients =new List<Client>();
             IsBusy = false;
         }
 

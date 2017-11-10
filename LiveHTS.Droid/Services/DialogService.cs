@@ -28,7 +28,7 @@ namespace LiveHTS.Droid.Services
             _userDialogs.HideLoading();
         }
 
-        public void Alert(string message, string title="LiveHTS", string okbtnText="Ok")
+        public void Alert(string message, string title="Afya Mobile", string okbtnText="Ok")
         {
             var top = Mvx.Resolve<IMvxAndroidCurrentTopActivity>();
             var act = top.Activity;
@@ -55,7 +55,7 @@ namespace LiveHTS.Droid.Services
             adb.Create().Show();
         }
 
-        public async  Task<bool> ConfirmAction(string message,string title = "LiveHTS", string yesbtnText = "Yes", string nobtnText = "No")
+        public async  Task<bool> ConfirmAction(string message,string title = "Afya Mobile", string yesbtnText = "Yes", string nobtnText = "No")
         {
             var destroy = await _userDialogs.ConfirmAsync(new ConfirmConfig
             {

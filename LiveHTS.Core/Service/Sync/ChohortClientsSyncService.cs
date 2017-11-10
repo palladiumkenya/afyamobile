@@ -18,13 +18,14 @@ namespace LiveHTS.Core.Service.Sync
         {
             _restClient = restClient;
         }
-         public Task<List<RemoteClientDTO>> GetClients(string url,string id)
+
+        public Task<List<RemoteClientDTO>> GetClients(string url, string id)
         {
             url = GetActivateUrl(url, $"id/{id}");
 
             return _restClient.MakeApiCall<List<RemoteClientDTO>>($"{url}", HttpMethod.Get);
         }
-   
+
         private string GetActivateUrl(string url, string endpoint)
         {
             return $"{url.HasToEndWith("/")}api/cohorts/{endpoint}".HasToEndWith("/");

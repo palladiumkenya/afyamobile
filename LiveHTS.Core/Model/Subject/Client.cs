@@ -26,6 +26,7 @@ namespace LiveHTS.Core.Model.Subject
         public Person Person { get; set; }
         [Indexed]
         public Guid? CohortId { get; set; }
+        public bool EncountersDownloaded { get; set; }
 
 
         public Client()

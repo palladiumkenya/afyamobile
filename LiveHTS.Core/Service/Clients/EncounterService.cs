@@ -69,6 +69,14 @@ namespace LiveHTS.Core.Service.Clients
             return encounter;
         }
 
+        public void Save(List<Encounter> encounters)
+        {
+            foreach (var encounter in encounters)
+            {
+                _encounterRepository.Save(encounter);
+            }
+        }
+
         public void DiscardEncounter(Guid encounterId)
         {
             _encounterRepository.Delete(encounterId);

@@ -21,6 +21,8 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IDeviceSetupService _deviceSetupService;
         private readonly IDialogService _dialogService;
         private readonly IChohortClientsSyncService _chohortClientsSyncService;
+        private readonly IClientSyncService _clientSyncService;
+        private readonly IEncounterService _encounterService;
         private IEnumerable<Client> _clients;
         private bool _isBusy;
         private string _search;
@@ -100,11 +102,78 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
        
-        private void SelectClient(Client selectedClient)
+        private async void SelectClient(Client selectedClient)
         {
+            _dialogService.Alert("Downloads are currently not enabled !");
+            return;
             if(null==selectedClient)
                 return;
             SelectedClient = selectedClient;
+
+            if (!SelectedClient.EncountersDownloaded)
+            {
+                // download encounters
+                _dialogService.ShowWait("Loading,Please wait...");
+
+                var remoteData = await _clientSyncService.DownloadClient(Address, SelectedClient.Id);
+                if (null!=remoteData)
+                {
+                    var encounters = remoteData.Encounters;
+
+                    if (encounters.Count > 0)
+                    {
+                        _encounterService.Save(encounters);
+
+                        foreach (var encounter in encounters)
+                        {
+                            if (encounter.Obses.Any())
+                            {
+                                
+                            }
+
+                            if (encounter.Obses.Any())
+                            {
+
+                            }
+
+                            if (encounter.Obses.Any())
+                            {
+
+                            }
+
+                            if (encounter.Obses.Any())
+                            {
+
+                            }
+
+                            if (encounter.Obses.Any())
+                            {
+
+                            }
+
+                            if (encounter.Obses.Any())
+                            {
+
+                            }
+
+                            if (encounter.Obses.Any())
+                            {
+
+                            }
+
+                            if (encounter.Obses.Any())
+                            {
+
+                            }
+                        }
+    
+                        SelectedClient.EncountersDownloaded = true;
+                        _registryService.SaveOrUpdate(selectedClient);
+                    }
+                }
+                _dialogService.HideWait();
+            }
+
             ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
         }
 
@@ -136,13 +205,15 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public CohortClientsViewModel( ISettings settings, IRegistryService registryService, IDialogService dialogService, IChohortClientsSyncService chohortClientsSyncService, IDeviceSetupService deviceSetupService)
+        public CohortClientsViewModel( ISettings settings, IRegistryService registryService, IDialogService dialogService, IChohortClientsSyncService chohortClientsSyncService, IDeviceSetupService deviceSetupService, IClientSyncService clientSyncService, IEncounterService encounterService)
         {
             _settings = settings;
             _registryService = registryService;
             _dialogService = dialogService;
             _chohortClientsSyncService = chohortClientsSyncService;
             _deviceSetupService = deviceSetupService;
+            _clientSyncService = clientSyncService;
+            _encounterService = encounterService;
         }
 
         public void Init(string id)
@@ -153,7 +224,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _settings.AddOrUpdateValue("cohortId", id);
                 CohortId = new Guid(id);
             }
-            LoadClients();   
+            //LoadClients();   
         }
 
         public override void ViewAppeared()
@@ -222,6 +293,19 @@ namespace LiveHTS.Presentation.ViewModel
                 if (remoteData.Count > 0)
                 {
                     Clients = remoteData.Select(x => x.Client).ToList();
+//                    foreach (var c in clients)
+//                    {
+//                        _registryService.Save(c,CohortId);
+//                    }
+//
+//                    Clients = _registryService.GetAllCohortClients(CohortId).ToList();
+                }
+                else
+                {
+                    Clients=new List<Client>();
+                    _dialogService.HideWait();
+                    _dialogService.ShowToast("No data found!");
+                    IsBusy = false; return;
                 }
                 _dialogService.HideWait();
             }

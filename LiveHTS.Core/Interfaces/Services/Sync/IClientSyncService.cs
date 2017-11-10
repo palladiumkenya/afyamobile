@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
@@ -14,5 +15,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
     {
         Task SendClients(string url,SyncClientDTO client);
         Task SendClientEncounters(string url, List<SyncClientEncounterDTO> encounters);
+        Task<List<RemoteClientDTO>> SearchClients(string url, string name);
+        Task<RemoteClientDTO> DownloadClient(string url, Guid id);
     }
 }

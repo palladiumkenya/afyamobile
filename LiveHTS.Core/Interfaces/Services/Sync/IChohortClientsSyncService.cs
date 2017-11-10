@@ -12,5 +12,6 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
     public interface IChohortClientsSyncService
     {
         Task<List<RemoteClientDTO>> GetClients(string url,string id);
+
     }
 }
