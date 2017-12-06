@@ -239,8 +239,7 @@ namespace LiveHTS.Presentation.ViewModel
                     $"{nameof(LastName)} is required"
                 )
             );
-
-
+       
 
             Validator.AddRule(
                 nameof(Age),
@@ -251,8 +250,7 @@ namespace LiveHTS.Presentation.ViewModel
             );
 
             Validator.AddRequiredRule(() => BirthDate, $"{nameof(BirthDate)} is required");
-
-
+    
             Validator.AddRule(
                 nameof(BirthDate),
                 () => RuleResult.Assert(

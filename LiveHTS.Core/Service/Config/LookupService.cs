@@ -67,14 +67,44 @@ namespace LiveHTS.Core.Service.Config
             return _practiceRepository.GetAll(x => typeIds.Contains(x.PracticeTypeId)).ToList();
         }
 
-        public IEnumerable<MaritalStatus> GetMaritalStatuses()
+        public IEnumerable<MaritalStatus> GetMaritalStatuses(bool addSelectOption = false, string selectOption = "[Select Option]")
         {
-            return _maritalStatusRepository.GetAll().ToList(); 
+            var maritalStatuses = new List<MaritalStatus>();
+
+            if (addSelectOption)
+            {
+                var initialSelected = MaritalStatus.CreateInitial(selectOption);
+                maritalStatuses.Add(initialSelected);
+            }
+
+            var list = _maritalStatusRepository.GetAll().ToList();
+
+            if (null != list && list.Count > 0)
+            {
+                maritalStatuses.AddRange(list);
+            }
+
+            return maritalStatuses;
         }
 
-        public IEnumerable<KeyPop> GetKeyPops()
+        public IEnumerable<KeyPop> GetKeyPops(bool addSelectOption = false, string selectOption = "[Select Option]")
         {
-            return _keyPopRepository.GetAll().ToList();
+            var keyPops = new List<KeyPop>();
+
+            if (addSelectOption)
+            {
+                var initialSelected = KeyPop.CreateInitial(selectOption);
+                keyPops.Add(initialSelected);
+            }
+
+            var list = _keyPopRepository.GetAll().ToList();
+
+            if (null != list && list.Count > 0)
+            {
+                keyPops.AddRange(list);
+            }
+
+            return keyPops;
         }
 
         public IEnumerable<IdentifierType> GetIdentifierTypes()

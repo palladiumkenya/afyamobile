@@ -14,5 +14,15 @@ namespace LiveHTS.Core.Model.Config
         {
             return $"{Name}";
         }
+
+        public static MaritalStatus CreateInitial(string selectOption)
+        {
+            var maritalStatus = new MaritalStatus();
+
+            maritalStatus.Id = "";
+            maritalStatus.Name = selectOption;
+
+            return maritalStatus;
+        }
     }
 }
