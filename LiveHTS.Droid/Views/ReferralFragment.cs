@@ -16,6 +16,7 @@ namespace LiveHTS.Droid.Views
 //    [Register("livehts.droid.views.FirstHIVTestFragment")]
     public class ReferralFragment : MvxFragment<ReferralViewModel>
     {
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             this.EnsureBindingContextIsSet(savedInstanceState);
