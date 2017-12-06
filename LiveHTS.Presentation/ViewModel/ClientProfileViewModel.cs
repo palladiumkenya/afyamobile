@@ -173,6 +173,8 @@ namespace LiveHTS.Presentation.ViewModel
         {
             IndexClientName = string.Empty;
             IsRelation = false;
+
+
             ClientInfo = clientinfo;
             if (!string.IsNullOrWhiteSpace(indexId))
             {
