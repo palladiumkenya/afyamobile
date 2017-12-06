@@ -35,8 +35,7 @@ namespace LiveHTS.Presentation.ViewModel
         public IFamilyMemberViewModel FamilyMemberViewModel { get; }
         public IPartnerViewModel PartnerViewModel { get; }
         public ISummaryViewModel SummaryViewModel { get; }
-
-      
+        
 
         public IMvxCommand ManageRegistrationCommand
         {

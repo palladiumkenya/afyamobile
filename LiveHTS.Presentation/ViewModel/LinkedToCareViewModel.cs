@@ -4,6 +4,7 @@ using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
@@ -31,6 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private ObservableDictionary<string, string> _errors;
         private ObsLinkage _obsLinkage;
         private TraceDateDTO _selectedEnrolDate;
+        private IDialogService _dialogService;
 
         public ValidationHelper Validator
         {
@@ -179,6 +181,8 @@ namespace LiveHTS.Presentation.ViewModel
                 }
                 _linkageService.SaveLinkage(obs);
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
+
+                _dialogService.ShowToast("Linkage info saved successfully");
             }
         }
 
@@ -201,6 +205,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public LinkedToCareViewModel()
         {
+            _dialogService = Mvx.Resolve<IDialogService>();
             DateEnrolled = DateTime.Today;
             _validator = new ValidationHelper();
             _linkageService = Mvx.Resolve<ILinkageService>();

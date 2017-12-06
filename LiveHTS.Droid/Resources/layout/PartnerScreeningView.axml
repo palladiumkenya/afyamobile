@@ -3,128 +3,191 @@
     xmlns:local="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingBottom="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="4dp">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_light"
+        android:orientation="horizontal">
+      <LinearLayout
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight=".8"
+          android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="John Doe"
+            local:MvxBind="Text Client.Person.FullName" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_orange_light"
             android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".8"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="John Doe"
-                    local:MvxBind="Text Client.Person.FullName" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
-                        android:text="M"
-                        android:textSize="10dp"
-                        local:MvxBind="Text Client.Person.Gender" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
-                        android:text="01 JUL 1989"
-                        android:textSize="10dp"
-                        local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy" />
-                </LinearLayout>
-            </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingRight="5dp"
+              android:text="M"
+              android:textSize="10dp"
+              local:MvxBind="Text Client.Person.Gender" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingRight="5dp"
+              android:text="01 JUL 1989"
+              android:textSize="10dp"
+              local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy" />
         </LinearLayout>
-      <TextView
+      </LinearLayout>
+    </LinearLayout>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:textSize="8dp"
         android:textColor="@android:color/holo_red_dark"
         local:MvxBind="Text ErrorSummary" />
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:paddingRight="2dp"
-          android:hint="Screening Date"
-          android:clickable="true"
-          android:editable="false"
-          local:MvxBind="Text ScreeningDate, Converter=Dmy; Click ShowScreeningDateDialogCommand" />
-      </android.support.design.widget.TextInputLayout>
 
-      
-      <TextView
-        android:text="HIV Status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewHIVStatus" />
-      <MvxSpinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:id="@+id/spinnerHIVStatus"
-        local:MvxBind="ItemsSource HIVStatus;SelectedItem SelectedHIVStatus" />
-      
-      <TextView
-        android:text="IPV Screening"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewEligibility" />
-      <MvxSpinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:id="@+id/spinnerEligibility"
-        local:MvxBind="ItemsSource IPVScreening;SelectedItem SelectedIPVScreening" />
-      
-      <android.support.design.widget.TextInputLayout
+    <ScrollView
+        android:id="@+id/demographicform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:paddingRight="2dp"
-          android:hint="Booking Date"
-          android:clickable="true"
-          android:editable="false"
-          local:MvxBind="Text BookingDate, Converter=Dmy; Click ShowBookingDateDialogCommand" />
-      </android.support.design.widget.TextInputLayout>
-      
-      <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-          android:id="@+id/editText"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Remarks"
-          local:MvxBind="Text Remarks" />
-      </android.support.design.widget.TextInputLayout>
-
       <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="Save"
-          local:MvxBind="Click SaveScreeningCommand" />
+          android:paddingRight="50dp"
+          android:orientation="vertical">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+          <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingRight="2dp"
+              android:hint="Screening Date"
+              android:clickable="true"
+              android:editable="false"
+              local:MvxBind="Text ScreeningDate, Converter=Dmy; Click ShowScreeningDateDialogCommand" />
+        </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:text="IPV Screening Done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewScreening" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/spinnerScreening"
+            local:MvxBind="ItemsSource IPVScreening;SelectedItem SelectedIPVScreening" />
+
+        <TextView
+            android:text="Has Partner ever physically hurt you?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPhysicalAssult" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/spinnerPhysicalAssult"
+            local:MvxBind="ItemsSource PhysicalAssult;SelectedItem SelectedPhysicalAssult;Enabled AllowScreening" />
+
+
+        <TextView
+            android:text="Has partner ever threatened to hurt you?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewThreatened" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/spinnerThreatened"
+            local:MvxBind="ItemsSource Threatened;SelectedItem SelectedThreatened;Enabled AllowScreening" />
+
+
+        <TextView
+            android:text="Has partner ever forced you to do something sexually that made you feel uncomfortable?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewSexuallyUncomfortable" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/spinnerSexuallyUncomfortable"
+            local:MvxBind="ItemsSource SexuallyUncomfortable;SelectedItem SelectedSexuallyUncomfortable;Enabled AllowScreening" />
+
+        <TextView
+            android:text="HIV Status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewHIVStatus" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40dp"
+            android:id="@+id/spinnerHIVStatus"
+            local:MvxBind="ItemsSource HIVStatus;SelectedItem SelectedHIVStatus" />
+
+        <TextView
+            android:text="Eligibile for Testing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewEligibility" />
+        <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="40dp"
+            android:id="@+id/spinnerEligibility"
+            local:MvxBind="ItemsSource Eligibility;SelectedItem SelectedEligibility;Enabled AllowEligibility" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+          <EditText
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingRight="2dp"
+              android:hint="Booking Date"
+              android:clickable="true"
+              android:editable="false"
+              local:MvxBind="Text BookingDate, Converter=Dmy; Click ShowBookingDateDialogCommand" />
+        </android.support.design.widget.TextInputLayout>
+
+
+<!--        <android.support.design.widget.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--          <EditText-->
+<!--              android:id="@+id/editText"-->
+<!--              android:layout_width="match_parent"-->
+<!--              android:layout_height="wrap_content"-->
+<!--              android:hint="Remarks"-->
+<!--              local:MvxBind="Text Remarks" />-->
+<!--        </android.support.design.widget.TextInputLayout>-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+          <Button
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Save"
+              local:MvxBind="Click SaveScreeningCommand" />
+        </LinearLayout>
       </LinearLayout>
-        
-    </LinearLayout>
+
+    </ScrollView>
+  </LinearLayout>
 </LinearLayout>

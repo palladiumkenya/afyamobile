@@ -15,5 +15,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         string EncounterTypeDisplay { get; set; }
         string EncounterTypeDescription { get; set; }
         decimal Rank { get; set; }
+        bool ConsentRequired { get; set; }
+        bool HasConsent { get; set; }
     }
 }

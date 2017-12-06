@@ -236,6 +236,8 @@
     <Compile Include="Activities\ClientRelationshipsActivity.cs" />
     <Compile Include="Activities\PushDataActivity.cs" />
     <Compile Include="Activities\PullDataActivity.cs" />
+    <Compile Include="Activities\CohortClientsActivity.cs" />
+    <Compile Include="Activities\RemoteRegistryActivity.cs" />
     <Compile Include="Activities\RegistryActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ObsActivity.cs" />
@@ -265,6 +267,8 @@
     <Compile Include="Views\PartnerTraceFragment.cs" />
     <Compile Include="Views\PersonTraceFragment.cs" />
     <Compile Include="Views\SecondTestEpisodeFragment.cs" />
+    <Compile Include="Views\CohortFragment.cs" />
+    <Compile Include="Views\RemoteSearchFragment.cs" />
     <Compile Include="Views\TestFragment.cs" />
     <Compile Include="Views\ReferralFragment.cs" />
     <Compile Include="Views\LinkedToCareFragment.cs" />
@@ -478,6 +482,21 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\PartnerTraceView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\RemoteRegistryView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\RemoteSearchView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\CohortView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\CohortClientsView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Cohort.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

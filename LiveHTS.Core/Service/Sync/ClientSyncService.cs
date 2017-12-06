@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Services.Sync;
@@ -33,6 +34,23 @@ namespace LiveHTS.Core.Service.Sync
             url = GetActivateUrl(url, "encounters");
 
             return _restClient.MakeApiCall($"{url}", HttpMethod.Post,encounters);
+        }
+
+        public Task<List<RemoteClientDTO>> SearchClients(string url, string name)
+        {
+            
+                url = GetActivateUrl(url, $"name/{name}");
+
+                return _restClient.MakeApiCall<List<RemoteClientDTO>>($"{url}", HttpMethod.Get);
+            
+        }
+
+
+        public Task<RemoteClientDTO> DownloadClient(string url, Guid id)
+        {
+            url = GetActivateUrl(url, $"download/{id}");
+
+            return _restClient.MakeApiCall<RemoteClientDTO>($"{url}", HttpMethod.Get);
         }
 
         private string GetActivateUrl(string url, string endpoint)

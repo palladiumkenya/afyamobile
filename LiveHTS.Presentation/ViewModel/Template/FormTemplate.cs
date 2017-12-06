@@ -16,6 +16,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string EncounterTypeDisplay { get; set; }
         public string EncounterTypeDescription { get; set; }
         public decimal Rank { get; set; }
+        public bool ConsentRequired { get; set; }
+        public bool HasConsent { get; set; }
         public bool HasEncounters { get; set; }
         public Guid DefaultEncounterTypeId { get; set; }
         public List<EncounterTemplateWrap> Encounters { get; set; }=new List<EncounterTemplateWrap>();
@@ -26,6 +28,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Display = r.Display;
             DefaultEncounterTypeId = r.DefaultEncounterTypeId;
             HasEncounters = r.ClientEncounters.Count > 0;
+            ConsentRequired = r.ConsentRequired;
+            HasConsent = r.HasConsent;
         }
         public FormTemplate(Form r,Program program)
         {
@@ -37,6 +41,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Rank = program.Rank;
             DefaultEncounterTypeId = r.DefaultEncounterTypeId;
             HasEncounters = r.ClientEncounters.Count > 0;
+            ConsentRequired = r.ConsentRequired;
+            HasConsent = r.HasConsent;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Encounter StartEncounter(Encounter encounter);
         Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,Guid practiceId, Guid deviceId);
         Encounter OpenEncounter(Guid encounterId);
+        void Save(List<Encounter> encounters);
         void DiscardEncounter(Guid encounterId);
     }
 }

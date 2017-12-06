@@ -18,10 +18,8 @@ namespace LiveHTS.Core.Model.Config
         public static MaritalStatus CreateInitial(string selectOption)
         {
             var maritalStatus = new MaritalStatus();
-
             maritalStatus.Id = "";
             maritalStatus.Name = selectOption;
-
             return maritalStatus;
         }
     }

@@ -33,10 +33,10 @@ namespace LiveHTS.Droid
             return new Presentation.App(dbpath);
         }
 
-        protected override IMvxTrace CreateDebugTrace()
-        {
-            return new DebugTrace();
-        }
+//        protected override IMvxTrace CreateDebugTrace()
+//        {
+//            return new DebugTrace();
+//        }
 
         protected override void InitializeFirstChance()
         {

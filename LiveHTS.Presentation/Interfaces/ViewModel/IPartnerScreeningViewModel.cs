@@ -26,21 +26,43 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Encounter Encounter { get; set; }
         Guid EncounterId { get; set; }
 
-        ObsPartnerScreening ObsPartnerScreening { get; set; }
+        bool AllowScreening { get; set; }
+        bool AllowEligibility { get; set; }
+        bool MakeEligibile { get; set; }
 
+        ObsPartnerScreening ObsPartnerScreening { get; set; }
         TraceDateDTO SelectedScreeningDate { get; set; }
         IMvxCommand ShowScreeningDateDialogCommand { get; }
         event EventHandler<ChangedDateEvent> ChangedScreeningDate;
 
         DateTime ScreeningDate { get; set; }
+
+    
+
+        //  Screened for IPV
+        List<CategoryItem> IPVScreening { get; set; }
+        CategoryItem SelectedIPVScreening { get; set; }
+
+        //  IPV Screening
+        //Has [partner’s name] ever hit, kicked, slapped, or otherwise physically hurt you?
+        List<CategoryItem> PhysicalAssult { get; set; }
+        CategoryItem SelectedPhysicalAssult { get; set; }
+        //Has [partner’s name] ever threatened to hurt you?
+        List<CategoryItem> Threatened { get; set; }
+        CategoryItem SelectedThreatened { get; set; }
+        //Has [partner’s name] ever forced you to do something sexually that made you feel uncomfortable?
+        List<CategoryItem> SexuallyUncomfortable { get; set; }
+        CategoryItem SelectedSexuallyUncomfortable { get; set; }
+
         // HIV status(KP/N/DK/HEI)	
         List<CategoryItem> HIVStatus { get; set; }
         CategoryItem SelectedHIVStatus { get; set; }
 
-        //  Partner Partner eligible for Testing(Y/N)
-        List<CategoryItem> IPVScreening { get; set; }
-        CategoryItem SelectedIPVScreening { get; set; }
-     
+
+        //  Eligible for Testing(Y/N)
+        List<CategoryItem> Eligibility { get; set; }
+        CategoryItem SelectedEligibility { get; set; }
+
         //  Date contact booked for testing (DD/MM/YYYY)
         DateTime BookingDate { get; set; }
         TraceDateDTO SelectedBookingDate { get; set; }
@@ -51,5 +73,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand SaveScreeningCommand { get; }
      
         bool Validate();
+        void UpdateEligibility();
     }
 }

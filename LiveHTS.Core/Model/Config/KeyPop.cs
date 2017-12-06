@@ -18,10 +18,8 @@ namespace LiveHTS.Core.Model.Config
         public static KeyPop CreateInitial(string selectOption)
         {
             var keyPop = new KeyPop();
-
             keyPop.Id = "";
             keyPop.Name = selectOption;
-
             return keyPop;
         }
     }

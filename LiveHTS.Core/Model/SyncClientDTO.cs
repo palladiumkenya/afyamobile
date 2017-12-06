@@ -15,6 +15,8 @@ namespace LiveHTS.Core.Model
         public Guid? PracticeId { get; set; }
         public string PracticeCode { get; set; }
         public Person Person { get; set; }
+        public bool IsFamilyMember { get; set; }
+        public bool IsPartner { get; set; }
         public List<ClientIdentifier> Identifiers { get; set; } = new List<ClientIdentifier>();
         public List<ClientRelationship> Relationships { get; set; } = new List<ClientRelationship>();
 
@@ -28,6 +30,8 @@ namespace LiveHTS.Core.Model
             Person = client.Person;
             Identifiers = client.Identifiers.ToList();
             Relationships = client.Relationships.ToList();
+            IsFamilyMember = client.IsFamilyMember;
+            IsPartner = client.IsPartner;
         }
     }
 }

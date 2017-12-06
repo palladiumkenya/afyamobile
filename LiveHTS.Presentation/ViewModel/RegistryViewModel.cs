@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _selectedClient;
         private IMvxCommand<Client> _clientSelectedCommand;
         private  IMvxCommand _registerClientCommand;
+        private  IMvxCommand _openRemoteRegisteryCommand;
 
         public string Search
         {
@@ -84,7 +85,20 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-      
+        public IMvxCommand OpenRemoteRegisteryCommand
+        {
+            get
+            {
+                _openRemoteRegisteryCommand = _openRemoteRegisteryCommand ?? new MvxCommand(OpenRemoteRegistery);
+                return _openRemoteRegisteryCommand;
+            }
+        }
+
+        private void OpenRemoteRegistery()
+        {
+            ShowViewModel<RemoteRegistryViewModel>();
+        }
+
 
         private void DeletePerson()
         {

@@ -70,6 +70,46 @@ namespace LiveHTS.Core.Service.Clients
             return clients;
         }
 
+        public IEnumerable<Client> GetAllCohortClients(Guid cohortId, string search = "")
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return _clientRepository.GetAll(x=>x.CohortId==cohortId);
+
+
+            var clientIds = new List<Guid>();
+            var personIds = new List<Guid>();
+
+            var cIds = _clientIdentifierRepository.GetAll(x => x.Identifier.ToLower().Contains(search.ToLower()))
+                .Select(x => x.ClientId)
+                .ToList();
+            var pIds = _personRepository.GetAll(
+                    x => x.FirstName.ToLower().Contains(search.ToLower()) ||
+                         x.MiddleName.ToLower().Contains(search.ToLower()) ||
+                         x.LastName.ToLower().Contains(search.ToLower())
+                )
+                .Select(x => x.Id)
+                .ToList();
+
+            clientIds.AddRange(cIds);
+            personIds.AddRange(pIds);
+
+            var clients = new List<Client>();
+
+            if (clientIds.Count > 0)
+            {
+                var cidMatch = _clientRepository.GetAll(x => x.CohortId == cohortId&&clientIds.Contains(x.Id)).ToList();
+                clients.AddRange(cidMatch);
+            }
+
+            if (personIds.Count > 0)
+            {
+                var pMatch = _clientRepository.GetAll(x => x.CohortId == cohortId && personIds.Contains(x.PersonId)).ToList();
+                clients.AddRange(pMatch);
+            }
+
+            return clients;
+        }
+
         public void Save(Client client)
         {
             //check id in use
@@ -91,6 +131,12 @@ namespace LiveHTS.Core.Service.Clients
 
             //create Client
             _clientRepository.Save(client);
+        }
+
+        public void Save(Client client, Guid cohortId)
+        {
+            client.CohortId=cohortId;
+            Save(client);
         }
 
         public void UpdateRelationShips(string relationshipTypeId, Guid clientId, Guid otherClientId)
