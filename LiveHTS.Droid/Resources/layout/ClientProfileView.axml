@@ -51,7 +51,8 @@
           android:text="Marital Status"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:id="@+id/textViewProfileMaritalStatus" />
+          android:id="@+id/textViewProfileMaritalStatus" 
+          local:MvxBind="Error Errors['MaritalStatus']"/>
       <MvxSpinner
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -62,7 +63,8 @@
           android:text="Key Population"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:id="@+id/textViewProfileKeyPop" />
+          android:id="@+id/textViewProfileKeyPop"
+        local:MvxBind="Error Errors['KeyPops']"/>
       <MvxSpinner
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

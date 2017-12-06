@@ -216,12 +216,12 @@ namespace LiveHTS.Presentation.ViewModel
         public override void Start()
         {
             base.Start();
-            MaritalStatus = _lookupService.GetMaritalStatuses().ToList();
-            KeyPops = _lookupService.GetKeyPops().ToList();
+            MaritalStatus = _lookupService.GetMaritalStatuses(true).ToList();
+            KeyPops = _lookupService.GetKeyPops(true).ToList();
             try
             {
-                SelectedMaritalStatus = MaritalStatus.FirstOrDefault();
-                SelectedKeyPop = KeyPops.FirstOrDefault();
+                SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == "");
+                SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == "");
             }
             catch 
             {
@@ -231,6 +231,21 @@ namespace LiveHTS.Presentation.ViewModel
         public override bool Validate()
         {
             Validator.RemoveAllRules();
+
+            Validator.AddRule(
+                "MaritalStatus",
+                () => RuleResult.Assert(
+                    null != SelectedMaritalStatus && !string.IsNullOrWhiteSpace(SelectedMaritalStatus.Id),
+                    $"Marital Status is required"
+                )
+            );
+            Validator.AddRule(
+                "KeyPops",
+                () => RuleResult.Assert(
+                    null != SelectedKeyPop && !string.IsNullOrWhiteSpace(SelectedKeyPop.Id),
+                    $"KeyPops is required"
+                )
+            );
 
             if (IsOtherKeyPop.ToLower() == "visible")
             {

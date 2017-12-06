@@ -14,5 +14,13 @@ namespace LiveHTS.Core.Model.Config
         {
             return $"{Name}";
         }
+
+        public static KeyPop CreateInitial(string selectOption)
+        {
+            var keyPop = new KeyPop();
+            keyPop.Id = "";
+            keyPop.Name = selectOption;
+            return keyPop;
+        }
     }
 }
