@@ -66,6 +66,7 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedSecondTestResult;
         private List<CategoryItem> _SecondTestResults;
         private IDialogService _dialogService;
+        private string _remarks;
 
 
         public ValidationHelper Validator { get; set; }
@@ -368,6 +369,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public string Remarks
+        {
+            get { return _remarks; }
+            set
+            {
+                _remarks = value;
+                RaisePropertyChanged(() => Remarks);
+            }
+        }
+
         public List<CategoryItem> Kits
         {
             get { return _kits; }
@@ -403,6 +414,7 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.ResultGiven = SelectedResultGiven.ItemId;
                     ObsFinalTestResult.CoupleDiscordant = SelectedCoupleDiscordant.ItemId;
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
+                    ObsFinalTestResult.Remarks = Remarks;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
                     Encounter = _testingService.OpenEncounter(Encounter.Id);
 
@@ -706,6 +718,9 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         SelectedSelfTest = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
+
+                    //  Remarks
+                    Remarks = finalResult.Remarks;
 
                 }
 

@@ -107,6 +107,7 @@ namespace LiveHTS.Core.Service.Interview
                 test.ResultGiven = testResult.ResultGiven;
                 test.CoupleDiscordant = testResult.ResultGiven;
                 test.SelfTestOption = testResult.SelfTestOption;
+                test.Remarks = testResult.Remarks;
                 _obsFinalTestResultRepository.SaveOrUpdate(test);
             }
         }
