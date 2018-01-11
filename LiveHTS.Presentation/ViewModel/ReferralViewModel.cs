@@ -262,6 +262,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _linkageService.SaveLinkage(obs);
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
 
+                _dialogService.ShowToast("Referrall info saved successfully");
             }
         }
 

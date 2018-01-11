@@ -48,11 +48,20 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanStartEncounter()
         {
-            return ShowStart = !_formTemplate.HasEncounters;
+            if (_formTemplate.ConsentRequired)
+            {
+                ShowStart = _formTemplate.HasConsent && !_formTemplate.HasEncounters;
+            }
+            else
+            {
+                ShowStart = !_formTemplate.HasEncounters;
+            }
+            return ShowStart;
         }
 
         private void StartEncounter()
         {
+
             if (null != _parent)
             {
                 _parent.StartEncounter(_formTemplate);

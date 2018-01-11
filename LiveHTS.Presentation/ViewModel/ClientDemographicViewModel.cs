@@ -35,6 +35,7 @@ namespace LiveHTS.Presentation.ViewModel
         private MvxCommand _showDateDialogCommand;
         private TraceDateDTO _selectedDate;
         private ClientDemographicDTO _demographic;
+        private IndexClientDTO _indexClientDTO;
 
         public ClientDemographicDTO Demographic
         {
@@ -59,6 +60,12 @@ namespace LiveHTS.Presentation.ViewModel
                 _ageUnitOptions = value;
                 RaisePropertyChanged(() => AgeUnitOptions);
             }
+        }
+
+        public IndexClientDTO IndexClientDTO
+        {
+            get { return _indexClientDTO; }
+            set { _indexClientDTO = value; }
         }
 
         public string FirstName
@@ -189,6 +196,31 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
         }
 
+        public void Init(string indexId)
+        {
+            if (!string.IsNullOrWhiteSpace(indexId))
+            {
+                var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+                if (!string.IsNullOrWhiteSpace(indexJson))
+                {
+                    IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                    if (null != IndexClientDTO)
+                        Title = $"Demographics [{IndexClientDTO.RelType}]";
+                }
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            base.ViewAppeared();
+            var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+            if (!string.IsNullOrWhiteSpace(indexJson))
+            {
+                IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                if (null != IndexClientDTO)
+                    Title = $"Demographics [{IndexClientDTO.RelType}]";
+            }
+        }
 
         public override bool Validate()
         {
@@ -207,8 +239,7 @@ namespace LiveHTS.Presentation.ViewModel
                     $"{nameof(LastName)} is required"
                 )
             );
-
-
+       
 
             Validator.AddRule(
                 nameof(Age),
@@ -219,8 +250,7 @@ namespace LiveHTS.Presentation.ViewModel
             );
 
             Validator.AddRequiredRule(() => BirthDate, $"{nameof(BirthDate)} is required");
-
-
+    
             Validator.AddRule(
                 nameof(BirthDate),
                 () => RuleResult.Assert(
@@ -238,8 +268,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
-        {
-        
+        {      
             if (null != BirthDate)
             {
                 var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
@@ -258,7 +287,8 @@ namespace LiveHTS.Presentation.ViewModel
                 _settings.AddOrUpdateValue(GetType().Name, json);
 
                 var clientinfo = Demographic.ToString();
-                ShowViewModel<ClientContactViewModel>(new { clientinfo = clientinfo });
+                var indexId = null != IndexClientDTO ? IndexClientDTO.Id.ToString() : string.Empty;
+                ShowViewModel<ClientContactViewModel>(new { clientinfo = clientinfo, indexId = indexId });
             }
         }
         public override bool CanMoveNext()

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Access;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Core.Service.Access
@@ -10,16 +12,29 @@ namespace LiveHTS.Core.Service.Access
     {
         private readonly IUserRepository _userRepository;
         private readonly IProviderRepository _providerRepository;
-
-        public AuthService(IUserRepository userRepository, IProviderRepository providerRepository)
+        private readonly IPracticeRepository _practiceRepository;
+        private readonly IDeviceRepository _deviceRepository;
+        public AuthService(IUserRepository userRepository, IProviderRepository providerRepository, IPracticeRepository practiceRepository, IDeviceRepository deviceRepository)
         {
             _userRepository = userRepository;
             _providerRepository = providerRepository;
+            _practiceRepository = practiceRepository;
+            _deviceRepository = deviceRepository;
         }
 
         public Provider GetDefaultProvider()
         {
             return _providerRepository.GetDefaultProvider();
+        }
+
+        public Practice GetDefaultPractice()
+        {
+            return _practiceRepository.GetDefault();
+        }
+
+        public Device GetDefaultDevice()
+        {
+            return _deviceRepository.GetDefault();
         }
 
         public User SignIn(string username, string password)

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Archive>
+  <Name>Afya Mobile</Name>
+  <PackageName>com.thepalladiumgroup.afyamobile</PackageName>
+  <PackageVersionCode>1</PackageVersionCode>
+  <PackageVersionName>1.0</PackageVersionName>
+  <CreationDate>636434235468274926</CreationDate>
+  <SolutionName>LiveHTS</SolutionName>
+  <SolutionPath>E:\palladium\source\cbs\LiveHTS\LiveHTS.sln</SolutionPath>
+  <Status></Status>
+  <Configuration>
+    <DebugMode>false</DebugMode>
+  </Configuration>
+  <Comment />
+  <LastUsedKeystore>C:\Users\Koske\AppData\Local\Xamarin\Mono for Android\Keystore\AfyaMobile\AfyaMobile.keystore</LastUsedKeystore>
+  <TimeStampingAuthority />
+  <LastInsightsUploadDate>0</LastInsightsUploadDate>
+</Archive>

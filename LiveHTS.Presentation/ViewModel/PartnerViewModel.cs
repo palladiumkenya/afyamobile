@@ -64,7 +64,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void AddRelationShip()
         {
-            ShowViewModel<ClientRelationshipsViewModel>(new { id = Client.Id });
+            ShowViewModel<ClientRelationshipsViewModel>(new { id = Client.Id ,reltype= "Partner" });
         }
         public async void RemoveRelationship(PartnerTemplate template)
         {
@@ -85,7 +85,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private static List<PartnerTemplateWrap> ConvertToPartnerWrapperClass(Client client, IPartnerViewModel partnerViewModel)
         {
-            var clientRelationships = client.Relationships.ToList();
+            var clientRelationships = client.Relationships.Where(x => x.RelationshipTypeId.ToLower() == "Partner".ToLower()).ToList();
 
             List<PartnerTemplateWrap> list = new List<PartnerTemplateWrap>();
             foreach (var r in clientRelationships)

@@ -33,7 +33,7 @@ namespace LiveHTS.Core.Tests.Service.Config
         {
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _deviceRepository=new DeviceRepository(_liveSetting);
-            _deviceSetupService=new DeviceSetupService(_deviceRepository);
+            //_deviceSetupService=new DeviceSetupService(_deviceRepository);
         }
 
         [Test]

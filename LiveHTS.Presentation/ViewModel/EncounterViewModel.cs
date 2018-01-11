@@ -25,7 +25,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly IDashboardService _dashboardService;
-        private readonly IInterviewService _interviewService;
+        private static  IInterviewService _interviewService;
         private readonly ILookupService _lookupService;
         protected readonly ISettings _settings;
 
@@ -33,8 +33,53 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _client;
         private List<FormTemplateWrap> _forms;
         private EncounterType _defaultEncounterType;
+        private List<Module> _modules=new List<Module>();
+
+        private Module _moduleTesting;
+        private Module _modulePartner;
+        private Module _moduleFamily;
+
+        private List<FormTemplateWrap> _formsFamily;
+        private List<FormTemplateWrap> _formsPartner;
+        private List<ModuleTemplateWrap> _allModules;
+        
 
         public string Title { get; set; }
+
+        public List<ModuleTemplateWrap> AllModules
+        {
+            get { return _allModules; }
+            set { _allModules = value; RaisePropertyChanged(() => AllModules);}
+        }
+
+        public Module ModuleTesting
+        {
+            get { return _moduleTesting; }
+            set { _moduleTesting = value; RaisePropertyChanged(() => ModuleTesting); }
+        }
+
+        public List<Module> Modules
+        {
+            get { return _modules; }
+            set
+            {
+                _modules = value;
+                RaisePropertyChanged(() => Modules);
+                if (Modules.Count == 0)
+                {
+                    _dialogService.ShowToast("No Modules Found!.Please Pull data from Server.");
+                }
+                foreach (var module in _modules)
+                {
+                    foreach (var form in module.Forms)
+                    {
+                        form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                        form.KeyClientEncounters= _interviewService.LoadKeyEncounters(Client.Id).ToList();
+                    }
+                }
+                AllModules = ConvertToModuleWrapperClass(_modules,this);
+            }
+        }
 
         public Client Client
         {
@@ -49,6 +94,10 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _module = value; RaisePropertyChanged(() => Module);
                 var forms = Module.Forms.ToList();
+                if (forms.Count == 0)
+                {
+                    _dialogService.ShowToast("No Forms Found!.Please Pull data from Server.");
+                }
                 foreach (var form in forms)
                 {
                     form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
@@ -56,12 +105,35 @@ namespace LiveHTS.Presentation.ViewModel
                 Forms = ConvertToFormWrapperClass(forms, this);
             }
         }
+
+        public Module ModuleFamily
+        {
+            get { return _moduleFamily; }
+            set { _moduleFamily = value; RaisePropertyChanged(() => ModuleFamily); }
+        }
+ public Module ModulePartner
+        {
+            get { return _modulePartner; }
+            set { _modulePartner = value; RaisePropertyChanged(() => ModulePartner); }
+        }
         public List<FormTemplateWrap> Forms
         {
             get { return _forms; }
             set { _forms = value; RaisePropertyChanged(() => Forms); }
         }
-   
+
+        public List<FormTemplateWrap> FormsFamily
+        {
+            get { return _formsFamily; }
+            set { _formsFamily = value; }
+        }
+
+        public List<FormTemplateWrap> FormsPartner
+        {
+            get { return _formsPartner; }
+            set { _formsPartner = value; }
+        }
+
         public EncounterViewModel()
         {
             Title = "ENCOUNTERS";
@@ -70,6 +142,23 @@ namespace LiveHTS.Presentation.ViewModel
             _interviewService = Mvx.Resolve<IInterviewService>();
             _lookupService = Mvx.Resolve<ILookupService>();
             _settings = Mvx.Resolve<ISettings>();
+        }
+
+        public override void ViewAppeared()
+        {
+            //Reload
+          //  var moduleJson = _settings.GetValue("module", "");
+            var modulesJson = _settings.GetValue("modules", "");
+
+//            if (!string.IsNullOrWhiteSpace(moduleJson))
+//            {
+//                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
+//
+//            }
+            if (!string.IsNullOrWhiteSpace(modulesJson))
+            {
+                Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
+            }
         }
 
         public void StartEncounter(FormTemplate formTemplate)
@@ -95,6 +184,61 @@ namespace LiveHTS.Presentation.ViewModel
             if (formTemplate.Display.ToLower().Contains("Linkage".ToLower()))
             {
                 ShowViewModel<LinkageViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
+
+            //Member Screening
+            if (formTemplate.Display.ToLower().Contains("Member Screening".ToLower()))
+            {
+                ShowViewModel<MemberScreeningViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
+            //Member Tracing 
+            if (formTemplate.Display.ToLower().Contains("Member Tracing".ToLower()))
+            {
+                ShowViewModel<MemberTracingViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
+        
+            //  Partner Screening
+            if (formTemplate.Display.ToLower().Contains("Partner Screening".ToLower()))
+            {
+                ShowViewModel<PartnerScreeningViewModel>(new
+                {
+                    formId = formTemplate.Id.ToString(),
+                    encounterTypeId = formTemplate.EncounterTypeId.ToString(),
+                    mode = "new",
+                    clientId = Client.Id.ToString(),
+                    encounterId = ""
+                });
+                return;
+            }
+
+            //Partner Tracing
+            if (formTemplate.Display.ToLower().Contains("Partner Tracing".ToLower()))
+            {
+                ShowViewModel<PartnerTracingViewModel>(new
                 {
                     formId = formTemplate.Id.ToString(),
                     encounterTypeId = formTemplate.EncounterTypeId.ToString(),
@@ -145,6 +289,63 @@ namespace LiveHTS.Presentation.ViewModel
                 });
                 return;
             }
+
+            //Member Screening
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Member Screening".ToLower()))
+            {
+                ShowViewModel<MemberScreeningViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
+
+            //Member Tracing 
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Member Tracing".ToLower()))
+            {
+                ShowViewModel<MemberTracingViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
+
+
+            //Partner Screening
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Partner Screening".ToLower()))
+            {
+                ShowViewModel<PartnerScreeningViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
+
+            //Partner Screening
+            if (encounterTemplate.FormDisplay.ToLower().Contains("Partner Tracing".ToLower()))
+            {
+                ShowViewModel<PartnerTracingViewModel>(new
+                {
+                    formId = encounterTemplate.FormId.ToString(),
+                    encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
+                    mode = "open",
+                    clientId = Client.Id.ToString(),
+                    encounterId = encounterTemplate.Id.ToString()
+                });
+                return;
+            }
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = encounterTemplate.FormId.ToString(),
@@ -167,7 +368,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (result)
                 {
                     _dashboardService.RemoveEncounter(encounterTemplate.Id);
-                    Module = _dashboardService.LoadModule();
+                    Modules = _dashboardService.LoadModules();
                 }
             }
             catch (Exception e)
@@ -176,9 +377,43 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message, "Delete this Encounter");
             }
         }
+        private static List<ModuleTemplateWrap> ConvertToModuleWrapperClass(List<Module> modules, IEncounterViewModel encounterViewModel)
+        {
+            List<ModuleTemplateWrap> moduleTemplateWraps = new List<ModuleTemplateWrap>();
+
+
+            foreach (var module in modules)
+            {
+                var moduleTemplate = new ModuleTemplate(module);
+
+                var formTemplateWraps = new List<FormTemplateWrap>();
+                foreach (var form in module.Forms)
+                {
+                   // form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+
+                    foreach (var program in form.Programs)
+                    {
+                        var formTemplate = new FormTemplate(form, program);
+                        var encounters = form.ClientEncounters.Where(x => x.EncounterTypeId == program.EncounterTypeId).ToList();
+                        formTemplate.Encounters = ConvertToEncounterWrapperClass(encounters, encounterViewModel, formTemplate.Display);
+                        var formTemplateWrap = new FormTemplateWrap(encounterViewModel, formTemplate);
+                        formTemplateWraps.Add(formTemplateWrap);
+                    }
+                }
+                moduleTemplate.AllForms = formTemplateWraps.Count > 0 ? formTemplateWraps.OrderBy(x=>x.FormTemplate.Rank).ToList() : formTemplateWraps;
+                var moduleTemplateWrap = new ModuleTemplateWrap(encounterViewModel,moduleTemplate);
+                moduleTemplateWraps.Add(moduleTemplateWrap);
+               
+            }
+            moduleTemplateWraps = moduleTemplateWraps.OrderBy(x => x.ModuleTemplate.Rank).ToList();
+            return moduleTemplateWraps;
+        }
+        
+
         private static List<FormTemplateWrap> ConvertToFormWrapperClass(List<Form> forms, IEncounterViewModel encounterViewModel)
         {
             List<FormTemplateWrap> list = new List<FormTemplateWrap>();
+           
             foreach (var r in forms)
             {
                 foreach (var program in r.Programs)

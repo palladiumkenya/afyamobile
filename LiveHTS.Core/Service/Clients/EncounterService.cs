@@ -41,10 +41,10 @@ namespace LiveHTS.Core.Service.Clients
         public Encounter StartEncounter(Encounter encounter)
         {
             return StartEncounter(encounter.FormId, encounter.EncounterTypeId, encounter.ClientId, encounter.ProviderId,
-                encounter.UserId);
+                encounter.UserId,encounter.PracticeId,encounter.DeviceId);
         }
 
-        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
+        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,Guid practiceId, Guid deviceId)
         {
             var exisitngEncounter =_encounterRepository.GetAll(x => x.FormId == formId &&
                                                  x.EncounterTypeId == encounterTypeId &&
@@ -56,7 +56,7 @@ namespace LiveHTS.Core.Service.Clients
                 return exisitngEncounter;
             }
 
-            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId);
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId,deviceId);
             encounter.Started=DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;
@@ -67,6 +67,14 @@ namespace LiveHTS.Core.Service.Clients
             var encounter = _encounterRepository.Get(encounterId);
 
             return encounter;
+        }
+
+        public void Save(List<Encounter> encounters)
+        {
+            foreach (var encounter in encounters)
+            {
+                _encounterRepository.Save(encounter);
+            }
         }
 
         public void DiscardEncounter(Guid encounterId)

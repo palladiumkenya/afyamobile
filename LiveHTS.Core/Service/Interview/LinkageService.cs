@@ -35,7 +35,7 @@ namespace LiveHTS.Core.Service.Interview
             return exisitngEncounter;
         }
 
-        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId)
+        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,Guid practiceId, Guid deviceId)
         {
             var exisitngEncounter = _encounterRepository
                 .GetAll(x => x.EncounterTypeId == encounterTypeId &&
@@ -47,7 +47,7 @@ namespace LiveHTS.Core.Service.Interview
                 return OpenEncounter(exisitngEncounter.Id);
             }
 
-            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId);
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId,deviceId);
             encounter.Started = DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;

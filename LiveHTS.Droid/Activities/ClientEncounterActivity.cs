@@ -3,13 +3,14 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using LiveHTS.Presentation.ViewModel;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Droid.Views;
 
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "Client Encounter", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan,ParentActivity = typeof(DashboardActivity))]
-    public class ClientEncounterActivity : MvxActivity<ClientEncounterViewModel>
+    [Activity(Label = "Client Encounter", LaunchMode = LaunchMode.SingleTop,WindowSoftInputMode = SoftInput.AdjustPan,ParentActivity = typeof(DashboardActivity), ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    public class ClientEncounterActivity : MvxAppCompatActivity<ClientEncounterViewModel>
     {
         protected override void OnCreate(Bundle bundle)
         {

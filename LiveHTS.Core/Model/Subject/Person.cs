@@ -4,6 +4,7 @@ using System.Linq;
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
+using Newtonsoft.Json;
 using SQLite;
 
 namespace LiveHTS.Core.Model.Subject
@@ -19,16 +20,18 @@ namespace LiveHTS.Core.Model.Subject
         public virtual string Email { get; set; }
 
         [Ignore]
+        [JsonIgnore]
         public virtual string FullName
         {
             get { return $"{FirstName} {MiddleName} {LastName}"; }
         }
         [Ignore]
-        public virtual IEnumerable<PersonAddress> Addresses { get; set; }=new List<PersonAddress>();
+        public virtual List<PersonAddress> Addresses { get; set; }=new List<PersonAddress>();
         [Ignore]
-        public virtual IEnumerable<PersonContact> Contacts { get; set; }=new List<PersonContact>();
+        public virtual List<PersonContact> Contacts { get; set; }=new List<PersonContact>();
 
         [Ignore]
+        [JsonIgnore]
         public virtual string AgeInfo
         {
             get
@@ -36,7 +39,7 @@ namespace LiveHTS.Core.Model.Subject
                 if (null != BirthDate)
                 {
                     var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                    return personAge.ToFullAgeString();
+                    return personAge.ToString();
                 }
                 return string.Empty;
             }

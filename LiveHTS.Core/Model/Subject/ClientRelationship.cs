@@ -1,6 +1,7 @@
 ﻿using System;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
+using Newtonsoft.Json;
 using SQLite;
 
 namespace LiveHTS.Core.Model.Subject
@@ -15,6 +16,7 @@ namespace LiveHTS.Core.Model.Subject
         [Indexed]
         public Guid ClientId { get; set; }
         [Ignore]
+        [JsonIgnore]
         public  Person Person { get; set; }
 
         public ClientRelationship()

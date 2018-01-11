@@ -12,6 +12,7 @@ using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
@@ -64,8 +65,30 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _FirstTestResults;
         private CategoryItem _selectedSecondTestResult;
         private List<CategoryItem> _SecondTestResults;
+        private IDialogService _dialogService;
+
 
         public ValidationHelper Validator { get; set; }
+
+        public Guid AppUserId
+        {
+            get { return GetGuid("livehts.userid"); }
+        }
+
+        public Guid AppProviderId
+        {
+            get { return GetGuid("livehts.providerid"); }
+        }
+
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
+
+        public Guid AppDeviceId
+        {
+            get { return GetGuid("livehts.deviceid"); }
+        }
 
         public string ErrorSummary
         {
@@ -382,7 +405,11 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
                     Encounter = _testingService.OpenEncounter(Encounter.Id);
+
+                    _dialogService.ShowToast("Tests saved successfully");
                 }
+
+
             }
         }
 
@@ -402,12 +429,13 @@ namespace LiveHTS.Presentation.ViewModel
    
 
         public TestingViewModel(ILookupService lookupService, IDashboardService dashboardService,
-            IHIVTestingService testingService, ISettings settings)
+            IHIVTestingService testingService, ISettings settings, IDialogService dialogService)
         {
             _lookupService = lookupService;
             _dashboardService = dashboardService;
             _testingService = testingService;
             _settings = settings;
+            _dialogService = dialogService;
             EnableFinalResult = false;
             FirstTestEpisodeViewModel = new FirstTestEpisodeViewModel();
             FirstTestEpisodeViewModel.Parent = this;
@@ -445,6 +473,8 @@ namespace LiveHTS.Presentation.ViewModel
 
             var clientJson = _settings.GetValue("client", "");
 
+            
+
             if (null == Client)
             {
                 if (!string.IsNullOrWhiteSpace(clientJson))
@@ -479,8 +509,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.test.mode", "new");
-                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterType.Id, Client.Id, Guid.Empty,
-                    Guid.Empty);
+                Encounter = _testingService.StartEncounter(new Guid(formId), EncounterType.Id, Client.Id,AppProviderId,AppUserId,AppPracticeId,AppDeviceId);
             }
             else
             {
@@ -685,7 +714,17 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void GoBack()
         {
-            ShowViewModel<DashboardViewModel>();
+            ShowViewModel<DashboardViewModel>(new { id = Client.Id });
+        }
+
+        public Guid GetGuid(string key)
+        {
+            var guid=_settings.GetValue(key, "");
+
+            if(string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+            
+            return new Guid(guid);
         }
     }
 }

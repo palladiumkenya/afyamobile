@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
@@ -8,12 +9,13 @@ using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Seed;
 using LiveHTS.Infrastructure.Seed.Config;
-using LiveHTS.Infrastructure.Seed.Interview;
 using LiveHTS.Infrastructure.Seed.Lookup;
 using LiveHTS.Infrastructure.Seed.Subject;
 using LiveHTS.Infrastructure.Seed.Survey;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
+using Action = LiveHTS.Core.Model.Config.Action;
+using Module = LiveHTS.Core.Model.Survey.Module;
 
 namespace LiveHTS.Infrastructure.Migrations
 {
@@ -34,6 +36,8 @@ namespace LiveHTS.Infrastructure.Migrations
 
             db.CreateTable<IdentifierType>();
             db.CreateTable<PracticeType>();
+            db.CreateTable<Device>();
+            db.CreateTable<ServerConfig>();
             db.CreateTable<Practice>();
             db.CreateTable<RelationshipType>();
             db.CreateTable<KeyPop>();
@@ -41,17 +45,34 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<EncounterType>();
             db.CreateTable<ProviderType>();
             db.CreateTable<ConceptType>();
+            db.CreateTable<Action>();
+            db.CreateTable<Condition>();
+            db.CreateTable<Validator>();
+            db.CreateTable<ValidatorType>();
+            db.CreateTable<Cohort>();
+            db.CreateTable<County>();
+            db.CreateTable<SubCounty>();
             #endregion
 
-            InsertOrUpdate(db, new IdentifierTypeJson());
+            InsertOrUpdate(db, new CountyJson());
+            InsertOrUpdate(db, new SubCountyJson());
+
+            InsertOnly<ServerConfig,string>(db, new ServerConfigJson());
+            
+            
             InsertOrUpdate(db, new PracticeTypeJson());
-            InsertOrUpdate(db, new PracticeJson());
+            InsertOnly<Practice, Guid>(db, new PracticeJson());
             InsertOrUpdate(db, new RelationshipTypeJson());
+            InsertOrUpdate(db, new IdentifierTypeJson());
             InsertOrUpdate(db, new KeyPopJson());
             InsertOrUpdate(db, new MaritalStatusJson());
             InsertOrUpdate(db, new EncounterTypeJson());
             InsertOrUpdate(db, new ProviderTypeJson());
             InsertOrUpdate(db, new ConceptTypeJson());
+            InsertOrUpdate(db, new ActionJson());
+            InsertOrUpdate(db, new ConditionJson());
+            InsertOrUpdate(db, new ValidatorJson());
+            InsertOrUpdate(db, new ValidatorTypeJson());
         }
 
         private static void SeedLookup(SQLiteConnection db)
@@ -64,9 +85,9 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-            InsertOrUpdate(db, new CategoryJson());
-            InsertOrUpdate(db, new ItemJson());
-            InsertOrUpdate(db, new CategoryItemJson());
+//            InsertOrUpdate(db, new CategoryJson());
+//            InsertOrUpdate(db, new ItemJson());
+//            InsertOrUpdate(db, new CategoryItemJson());
         }
 
         private static void SeedSurvey(SQLiteConnection db)
@@ -87,6 +108,7 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
+            /*
             InsertOrUpdate(db, new ModuleJson());
             InsertOrUpdate(db, new FormJson());
             InsertOrUpdate(db, new ProgramJson());
@@ -98,7 +120,7 @@ namespace LiveHTS.Infrastructure.Migrations
             //InsertOrUpdate(db, new QuestionReValidationJson());
             //InsertOrUpdate(db, new QuestionTransformationJson());
             InsertOrUpdate(db, new QuestionValidationJson());
-
+            */
         }
 
         private static void SeedSubject(SQLiteConnection db)
@@ -116,14 +138,14 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-            InsertOrUpdate(db, new PersonJson());
-            InsertOrUpdate(db, new PersonAddressJson());
-            InsertOrUpdate(db, new PersonContactJson());
+            InsertOrUpdate(db, new PersonUserJson());
+//            InsertOrUpdate(db, new PersonAddressJson());
+//            InsertOrUpdate(db, new PersonContactJson());
             InsertOrUpdate(db, new UserJson());
             InsertOrUpdate(db, new ProviderJson());
-            InsertOrUpdate(db, new ClientJson());
-            InsertOrUpdate(db, new ClientIdentifierJson());
-            InsertOrUpdate(db, new ClientRelationshipJson());
+//            InsertOrUpdate(db, new ClientJson());
+//            InsertOrUpdate(db, new ClientIdentifierJson());
+//            InsertOrUpdate(db, new ClientRelationshipJson());
         }
 
         private static void SeedInterview(SQLiteConnection db)
@@ -136,23 +158,29 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<ObsFinalTestResult>();
             db.CreateTable<ObsLinkage>();
             db.CreateTable<ObsTraceResult>();
+            db.CreateTable<ObsMemberScreening>();
+            db.CreateTable<ObsPartnerScreening>();
+            db.CreateTable<ObsFamilyTraceResult>();
+            db.CreateTable<ObsPartnerTraceResult>();
+
             #endregion
 
             //InsertOrUpdate(db, new EncounterJson());
         }
 
-        private static void InsertOrUpdate<T>(SQLiteConnection db, ISeedJson<T> json) 
+        private static void InsertOrUpdate<T>(SQLiteConnection db, ISeedJson<T> json)
         {
-//            try
-//            {
-                foreach (var entity in json.Read())
+            
+            //            try
+            //            {
+            foreach (var entity in json.Read())
+            {
+                var rowsAffected = db.Update(entity);
+                if (rowsAffected == 0)
                 {
-                    var rowsAffected = db.Update(entity);
-                    if (rowsAffected == 0)
-                    {
-                        db.Insert(entity);
-                    }
+                    db.Insert(entity);
                 }
+            }
 //            }
 //            catch (Exception e)
 //            {
@@ -160,7 +188,22 @@ namespace LiveHTS.Infrastructure.Migrations
 //                var m = e.Message;
 //                throw;
 //            }
-            
+
         }
+
+        private static void InsertOnly<T,TId>(SQLiteConnection db, ISeedJson<T> json) where T:Entity<TId>, new()
+        {
+           
+            foreach (var entity in json.Read())
+            {
+                var rowsAffected = db.Find<T>(entity.Id);
+
+                if (null==rowsAffected)
+                {
+                    db.Insert(entity);
+                }
+            }
+        }
+
     }
 }

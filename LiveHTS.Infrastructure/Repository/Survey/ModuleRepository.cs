@@ -15,7 +15,10 @@ namespace LiveHTS.Infrastructure.Repository.Survey
         }
         public Module GetDefaultModule()
         {
-            return GetAll().First();
+            var modules = GetAll().ToList();
+            if(modules.Count>0)
+                return modules.First();
+            return new Module();
         }
 
         public override IEnumerable<Module> GetAll(bool voided = false)
@@ -30,7 +33,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
                     foreach (var f in forms)
                     {
-                        f.Programs = _db.Table<Program>().Where(x => x.FormId == f.Id).ToList();
+                        f.Programs = _db.Table<Program>().Where(x => x.FormId == f.Id&&x.Voided==false).ToList();
                     }
 
                     if (forms.Count > 0)

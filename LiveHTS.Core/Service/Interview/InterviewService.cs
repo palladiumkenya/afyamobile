@@ -22,5 +22,10 @@ namespace LiveHTS.Core.Service.Interview
        {
            return _encounterRepository.LoadAll(formId, clientId);
        }
-    }
+
+       public IEnumerable<Encounter> LoadKeyEncounters(Guid clientId)
+       {
+           return _encounterRepository.LoadAllKey(clientId);
+       }
+   }
 }

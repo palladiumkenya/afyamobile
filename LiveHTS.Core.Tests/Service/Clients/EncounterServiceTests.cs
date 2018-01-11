@@ -22,7 +22,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private IFormRepository _formRepository;
         private IEncounterService _encounterService;
         private SQLiteConnection _database = TestHelpers.GetDatabase();
-        private Guid _formId, _encounterTypeId, _clientId, _providerId, _userId;
+        private Guid _formId, _encounterTypeId, _clientId, _providerId, _userId, _practiceId;
         private List<Encounter> _encounters;
 
         [TestInitialize]
@@ -43,7 +43,8 @@ namespace LiveHTS.Core.Tests.Service.Clients
         [TestMethod]
         public void should_Start_Encounter_New()
         {
-            var encounter = _encounterService.StartEncounter(_formId, _encounterTypeId, Guid.NewGuid(), _providerId, _userId);
+            //Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,Guid practiceId, Guid deviceId)
+            var encounter = _encounterService.StartEncounter(_formId, _encounterTypeId, Guid.NewGuid(), _providerId, _userId, _practiceId,Guid.NewGuid());
             Assert.IsNotNull(encounter);
             Assert.IsFalse(encounter.HasObs);
             Assert.IsFalse(encounter.IsComplete);
@@ -52,7 +53,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         [TestMethod]
         public void should_Start_Encounter_Exisitng()
         {
-            var encounter = _encounterService.StartEncounter(_formId, _encounterTypeId, _clientId, _providerId, _userId);
+            var encounter = _encounterService.StartEncounter(_formId, _encounterTypeId, _clientId, _providerId, _userId, _practiceId,Guid.NewGuid());
             Assert.IsNotNull(encounter);
             Console.WriteLine(encounter);
         }

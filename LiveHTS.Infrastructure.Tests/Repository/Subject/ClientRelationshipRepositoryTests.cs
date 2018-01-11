@@ -44,6 +44,10 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Subject
             Assert.IsNotNull(reltionship);
             Assert.IsNotNull(reltionship.Person);
             Assert.AreEqual("Julie", reltionship.Person.FirstName);
+
+            Assert.AreEqual(_clientBob, reltionship.ClientId);
+            Assert.AreEqual(_clientJulie, reltionship.RelatedClientId);
+
             foreach (var r in relations)
             {
                 Console.WriteLine(r);
@@ -59,6 +63,10 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Subject
             Assert.IsNotNull(reltionship);
             Assert.IsNotNull(reltionship.Person);
             Assert.AreEqual("Bob", reltionship.Person.FirstName);
+
+            Assert.AreEqual(_clientJulie, reltionship.ClientId);
+            Assert.AreEqual(_clientBob, reltionship.RelatedClientId);
+
             foreach (var r in relations)
             {
                 Console.WriteLine(r);

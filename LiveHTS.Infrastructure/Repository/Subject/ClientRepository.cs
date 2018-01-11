@@ -74,8 +74,6 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         {
             base.Save(entity);
 
-            _db.CreateTable<ClientIdentifier>();
-            _db.CreateTable<ClientRelationship>();
 
             //Create identifiers
             if (entity.Identifiers.Any())
@@ -95,8 +93,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         public override void InsertOrUpdate(Client entity)
         {
             base.InsertOrUpdate(entity);
-            _db.CreateTable<ClientIdentifier>();
-            _db.CreateTable<ClientRelationship>();
+       
 
             //Create identifiers
             if (entity.Identifiers.Any())
@@ -117,6 +114,23 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                     InsertOrUpdateAny(a);
                 }
             }
+        }
+
+        public Client Load(Guid id)
+        {
+            var client = base.Get(id);
+            if (null != client)
+            {
+                client.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == client.PersonId);
+                client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id).ToList(); 
+            }
+            return client;
+        }
+
+        public IEnumerable<Guid> GetAllClientIds()
+        {
+            var clients = _db.Table<Client>().ToList().Select(x => x.Id).ToList();
+            return clients;
         }
 
         public void SaveOrUpdate(Client obs)

@@ -7,6 +7,10 @@ namespace LiveHTS.Core.Model.Config
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public RelationshipType()
+        {
+        }
+
         public override string ToString()
         {
             return $"{Name}";

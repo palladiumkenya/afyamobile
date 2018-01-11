@@ -28,7 +28,54 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly ILookupService _lookupService;
         private string _isOtherKeyPop;
         private string _clientId;
-        
+        private IndexClientDTO _indexClientDTO;
+        private IEnumerable<RelationshipType> _relationshipTypes;
+        private RelationshipType _selectedRelationshipType;
+        private bool _isRelation;
+        private string _indexClientName;
+
+
+        public bool IsRelation
+        {
+            get { return _isRelation; }
+            set
+            {
+                _isRelation = value;
+                RaisePropertyChanged(() => IsRelation);
+            }
+        }
+
+        public string IndexClientName
+        {
+            get { return _indexClientName; }
+            set
+            {
+                _indexClientName = value; 
+                RaisePropertyChanged(() => IndexClientName);
+            }
+        }
+
+        public IEnumerable<RelationshipType> RelationshipTypes
+        {
+            get { return _relationshipTypes; }
+            set { _relationshipTypes = value; }
+        }
+
+        public RelationshipType SelectedRelationshipType
+        {
+            get { return _selectedRelationshipType; }
+            set
+            {
+                _selectedRelationshipType = value;
+                RaisePropertyChanged(() => SelectedRelationshipType);
+            }
+        }
+
+        public IndexClientDTO IndexClientDTO
+        {
+            get { return _indexClientDTO; }
+            set { _indexClientDTO = value; }
+        }
 
         public ClientProfileDTO Profile { get; set; }
 
@@ -114,28 +161,91 @@ namespace LiveHTS.Presentation.ViewModel
         {
             Step = 3;
             _lookupService = lookupService;
-
+            RelationshipTypes = _lookupService.GetRelationshipTypes().ToList();
             IsOtherKeyPop = "invisible";
             Title = "Profile";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
+            
         }
 
-        public void Init(string clientinfo)
+        public void Init(string clientinfo, string indexId)
         {
+            IndexClientName = string.Empty;
+            IsRelation = false;
+
+
             ClientInfo = clientinfo;
+            if (!string.IsNullOrWhiteSpace(indexId))
+            {
+                var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+                if (!string.IsNullOrWhiteSpace(indexJson))
+                {
+                    IsRelation = true;
+                    IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                    if (null != IndexClientDTO)
+                    {
+                        IndexClientName = IndexClientDTO.ToString();
+                        Title = $"Profile [{IndexClientDTO.RelType}]";
+                        RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
+                    }
+                }
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            IndexClientName = string.Empty;
+            IsRelation = false;
+
+            base.ViewAppeared();
+            var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
+            if (!string.IsNullOrWhiteSpace(indexJson))
+            {
+                IsRelation = true;
+                IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                if (null != IndexClientDTO)
+                {
+                    IndexClientName = IndexClientDTO.ToString();
+                    Title = $"Profile [{IndexClientDTO.RelType}]";
+                    RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
+                }
+            }
         }
 
         public override void Start()
         {
             base.Start();
-            MaritalStatus = _lookupService.GetMaritalStatuses().ToList();
-            KeyPops = _lookupService.GetKeyPops().ToList();
+            MaritalStatus = _lookupService.GetMaritalStatuses(true).ToList();
+            KeyPops = _lookupService.GetKeyPops(true).ToList();
+            try
+            {
+                SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == "");
+                SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == "");
+            }
+            catch 
+            {
+            }
         }
 
         public override bool Validate()
         {
             Validator.RemoveAllRules();
+
+            Validator.AddRule(
+                "MaritalStatus",
+                () => RuleResult.Assert(
+                    null != SelectedMaritalStatus && !string.IsNullOrWhiteSpace(SelectedMaritalStatus.Id),
+                    $"Marital Status is required"
+                )
+            );
+            Validator.AddRule(
+                "KeyPops",
+                () => RuleResult.Assert(
+                    null != SelectedKeyPop && !string.IsNullOrWhiteSpace(SelectedKeyPop.Id),
+                    $"KeyPops is required"
+                )
+            );
 
             if (IsOtherKeyPop.ToLower() == "visible")
             {
@@ -168,7 +278,8 @@ namespace LiveHTS.Presentation.ViewModel
                 var json = JsonConvert.SerializeObject(Profile);
                 _settings.AddOrUpdateValue(GetType().Name, json);
 
-                ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo});
+                var indexId = null != IndexClientDTO ? IndexClientDTO.Id.ToString() : string.Empty;
+                ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo, indexId = indexId });
             }
         }
         public override void MovePrevious()
@@ -193,6 +304,7 @@ namespace LiveHTS.Presentation.ViewModel
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);
                 OtherKeyPop = Profile.OtherKeyPop;
+                SelectedRelationshipType = RelationshipTypes.FirstOrDefault(x=>x.Description.ToLower()==Profile.RelTypeId.ToLower());
             }
             catch (Exception e)
             {

@@ -53,6 +53,18 @@
                 android:layout_height="match_parent"
                 local:MvxBind="ItemsSource Clients; ItemClick ClientSelectedCommand;"
                 local:MvxItemTemplate="@layout/item_client" />
+
+        <com.refractored.fab.FloatingActionButton
+          android:id="@+id/fab2"
+          local:MvxBind="Click OpenRemoteRegisteryCommand"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|left"
+          android:layout_margin="16dp"
+          android:src="@drawable/ic_cloud_download"
+          fab:fab_colorNormal="@color/accent2"
+          fab:fab_colorPressed="@color/accent_pressed2"
+          fab:fab_colorRipple="@color/ripple2" />
         <com.refractored.fab.FloatingActionButton
           android:id="@+id/fab"
           local:MvxBind="Click RegisterClientCommand" 

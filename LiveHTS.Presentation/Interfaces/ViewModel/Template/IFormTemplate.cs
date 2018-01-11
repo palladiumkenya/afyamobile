@@ -7,6 +7,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
 {
     public interface IFormTemplate
     {
+        bool ShowFormName { get; set; }
         Guid Id { get; set; }
         string Display { get; set; }
         string EncounterDisplay { get; set; }
@@ -14,5 +15,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         string EncounterTypeDisplay { get; set; }
         string EncounterTypeDescription { get; set; }
         decimal Rank { get; set; }
+        bool ConsentRequired { get; set; }
+        bool HasConsent { get; set; }
     }
 }

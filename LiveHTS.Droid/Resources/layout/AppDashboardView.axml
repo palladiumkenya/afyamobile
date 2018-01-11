@@ -21,8 +21,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome"
+                android:text="Kenyatta National Hospital"
                 android:paddingLeft="3dp"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                local:MvxBind="Text PracticeName" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome"
+                android:gravity="center_vertical|right"
+                android:paddingRight="12dp"
                 local:MvxBind="Text Profile" />
         </LinearLayout>
         <LinearLayout
@@ -55,6 +64,14 @@
                     <FrameLayout
                         android:layout_margin="2dp"
                         android:background="#FFFFFF">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:clickable="false"
+                            android:paddingBottom="2dp"
+                            android:text="Registry"
+                            android:gravity="center_vertical|center" />
                         <ImageButton
                             android:id="@+id/b00"
                             android:layout_width="90dp"
@@ -63,17 +80,9 @@
                             android:adjustViewBounds="true"
                             android:background="@null"
                             android:padding="20dp"
-                            android:scaleType="fitCenter"
+                            android:scaleType="fitXY"
                             android:src="@drawable/ic_registry"
                             local:MvxBind="Click RegistryCommand" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:clickable="false"
-                            android:paddingBottom="2dp"
-                            android:text="Registry"
-                            android:textAlignment="center" />
                     </FrameLayout>
                     <FrameLayout
                         android:layout_margin="2dp"
@@ -88,7 +97,7 @@
                             android:background="@null"
                             android:gravity="center"
                             android:padding="20dp"
-                            android:scaleType="fitCenter"
+                            android:scaleType="fitXY"
                             android:src="@drawable/ic_newclient"
                             android:textColor="#A9A9A9"
                             android:textSize="22sp"
@@ -100,7 +109,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="New Client"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
                         android:layout_margin="2dp"
@@ -118,7 +127,8 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_send"
                             android:textColor="#A9A9A9"
-                            android:textSize="22sp" />
+                            android:textSize="22sp"
+                            local:MvxBind="Click PushDataCommand" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -126,7 +136,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="Send Data"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                 </TableRow>
             <!--Row 2-->
@@ -157,7 +167,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="Statistics"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
                         android:layout_margin="2dp"
@@ -183,7 +193,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="Notifications"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
                         android:layout_margin="2dp"
@@ -201,7 +211,8 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_facility"
                             android:textColor="#A9A9A9"
-                            android:textSize="22sp" />
+                            android:textSize="22sp"
+                            local:MvxBind="Click PracticeCommand" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -209,7 +220,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="Facility"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                 </TableRow>
             <!--Row 3-->
@@ -231,7 +242,8 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_update_modules"
                             android:textColor="#A9A9A9"
-                            android:textSize="22sp" />
+                            android:textSize="22sp"
+                            local:MvxBind="Click PullDataCommand" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -239,7 +251,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="Pull Data"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
                         android:layout_margin="2dp"
@@ -257,7 +269,8 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_phone_android"
                             android:textColor="#A9A9A9"
-                            android:textSize="22sp" />
+                            android:textSize="22sp"
+                            local:MvxBind="Click DeviceCommand" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -265,7 +278,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="Device"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
                         android:layout_margin="2dp"
@@ -292,7 +305,7 @@
                             android:clickable="false"
                             android:paddingBottom="2dp"
                             android:text="Exit"
-                            android:textAlignment="center" />
+                            android:gravity="center_vertical|center" />
                     </FrameLayout>
                 </TableRow>
             </TableLayout>

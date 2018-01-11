@@ -1,65 +1,65 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:local="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:paddingBottom="2dp"
-             android:paddingLeft="2dp"
-             android:paddingRight="2dp"
-             android:paddingTop="2dp">
-
-  <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="2dp"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:paddingTop="2dp"
     android:orientation="vertical">
 
-    <LinearLayout
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:gravity="center_vertical"
       android:orientation="horizontal">
 
-      <LinearLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".2"
         android:orientation="vertical">
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textSize="16dp"
-          android:text="HTS Form"
-          android:paddingRight="4dp"
-          local:MvxBind="Text FormTemplate.Display" />
-        <TextView
+
+      <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textColor="@color/colorPrimaryDark"
+          android:paddingLeft="4dp"
           android:textSize="16dp"
           android:text="Initial"
           local:MvxBind="Text FormTemplate.EncounterTypeDisplay" />
-      </LinearLayout>
-      <LinearLayout
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight=".2"
-        android:orientation="vertical">
-        <ImageButton
+        android:orientation="vertical"
+        android:paddingEnd="4dp">
+
+      <ImageButton
           android:layout_width="32dp"
           android:layout_height="32dp"
           android:layout_gravity="right"
           android:src="@drawable/ic_create_new_folder"
           local:MvxBind="Click StartEncounterCommand;Visibility ShowStart, Converter=ShowControl" />
-      </LinearLayout>
     </LinearLayout>
+  </LinearLayout>
 
-    <FrameLayout
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="wrap_content">
 
-      <Mvx.MvxListView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        local:MvxBind="ItemsSource FormTemplate.Encounters"
-        local:MvxItemTemplate="@layout/item_encounter" />
-    </FrameLayout>
+        android:paddingLeft="14dp">
+      <Mvx.MvxListView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          local:MvxBind="ItemsSource FormTemplate.Encounters"
+          local:MvxItemTemplate="@layout/item_encounter" />
+    </LinearLayout>
+
   </LinearLayout>
-</FrameLayout>
+
+</LinearLayout>

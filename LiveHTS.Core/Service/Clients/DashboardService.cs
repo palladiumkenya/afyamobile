@@ -40,6 +40,12 @@ namespace LiveHTS.Core.Service.Clients
         {
             return _moduleRepository.GetDefaultModule();
         }
+
+        public List<Module> LoadModules()
+        {
+            return _moduleRepository.GetAll().ToList();
+        }
+
         public void RemoveRelationShip(Guid id)
         {
             _clientRelationshipRepository.Delete(id);

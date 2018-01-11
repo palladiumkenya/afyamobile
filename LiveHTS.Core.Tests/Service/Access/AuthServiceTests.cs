@@ -3,6 +3,7 @@ using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Access;
 using LiveHTS.Core.Service.Access;
+using LiveHTS.Infrastructure.Repository.Config;
 using LiveHTS.Infrastructure.Repository.Subject;
 using SQLite;
 using NUnit.Framework;
@@ -26,7 +27,7 @@ namespace LiveHTS.Core.Tests.Service.Access
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _userRepository = new UserRepository(_liveSetting);
             _providerRepository=new ProviderRepository(_liveSetting);
-            _authService=new AuthService(_userRepository,_providerRepository);
+            _authService=new AuthService(_userRepository,_providerRepository,new PracticeRepository(_liveSetting),new DeviceRepository(_liveSetting) );
         }
 
         [Test]
@@ -37,6 +38,34 @@ namespace LiveHTS.Core.Tests.Service.Access
             Console.WriteLine(user);
 
             Assert.Throws<Exception>(()=>_authService.SignIn("admin", "Maun2806"));
+        }
+      
+        [Test]
+        public void should_GetDefaultProvider()
+        {
+            var user = _authService.GetDefaultProvider();
+            Assert.IsNotNull(user);
+            Console.WriteLine(user);
+
+            Assert.Throws<Exception>(() => _authService.SignIn("admin", "Maun2806"));
+        }
+        [Test]
+        public void should_GetDefaultPractice()
+        {
+            var user = _authService.GetDefaultPractice();
+            Assert.IsNotNull(user);
+            Console.WriteLine(user);
+
+            Assert.Throws<Exception>(() => _authService.SignIn("admin", "Maun2806"));
+        }
+        [Test]
+        public void should_GetDefaultDevice()
+        {
+            var user = _authService.GetDefaultDevice();
+            Assert.IsNotNull(user);
+            Console.WriteLine(user);
+
+            Assert.Throws<Exception>(() => _authService.SignIn("admin", "Maun2806"));
         }
     }
 }

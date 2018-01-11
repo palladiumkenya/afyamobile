@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
-using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
-using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
@@ -19,6 +14,8 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IRegistryService _registryService;
         protected readonly ISettings _settings;
         private Client _client;
+        private string _indexClientId;
+
 
         public ClientRegistrationViewModel(ISettings settings, IRegistryService registryService)
         {
@@ -26,16 +23,39 @@ namespace LiveHTS.Presentation.ViewModel
             _registryService = registryService;
         }
 
-        public void Init(string id)
+        public void Init(string id, string indexId, string reltype)
         {
-            ClearCache();
+            ClearCache();          
 
+            if (!string.IsNullOrWhiteSpace(indexId) && !string.IsNullOrWhiteSpace(reltype))
+            {
+               var indexClient = _registryService.Find(new Guid(indexId));
+                var indexClientDTO=new IndexClientDTO(new Guid(indexId), reltype);
+                if (null != indexClient)
+                {
+                    indexClientDTO.Names = indexClient.Person.FullName;
+                    indexClientDTO.Gender = indexClient.Person.Gender;
+                }
+                
+                var json = JsonConvert.SerializeObject(indexClientDTO);
+                _settings.AddOrUpdateValue(nameof(IndexClientDTO), json);
+
+                ShowViewModel<ClientDemographicViewModel>(new { indexId = indexId });
+
+                return;
+            }
             if (!string.IsNullOrWhiteSpace(id))
             {
                 Client = _registryService.Find(new Guid(id));
             }
-
             ShowViewModel<ClientDemographicViewModel>();
+        }
+
+
+        public string IndexClientId
+        {
+            get { return _indexClientId; }
+            set { _indexClientId = value; }
         }
 
         public Client Client
@@ -92,6 +112,9 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (_settings.Contains(nameof(ClientEnrollmentViewModel)))
                 _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+
+            if (_settings.Contains(nameof(IndexClientDTO)))
+                _settings.DeleteValue(nameof(IndexClientDTO));
         }
     }
 }

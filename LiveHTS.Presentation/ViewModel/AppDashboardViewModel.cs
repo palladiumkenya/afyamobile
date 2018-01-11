@@ -17,6 +17,11 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _isBusy;
         private IMvxCommand _registerNewClientCommand;
         private IMvxCommand _quitCommand;
+        private IMvxCommand _deviceCommand;
+        private IMvxCommand _practiceCommand;
+        private IMvxCommand _pullCommand;
+        private  IMvxCommand _pushDataCommand;
+        private string _practiceName;
 
         public IMvxCommand RegistryCommand
         {
@@ -45,6 +50,44 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public IMvxCommand DeviceCommand
+        {
+            get
+            {
+                _deviceCommand = _deviceCommand ?? new MvxCommand(ShowDevice);
+                return _deviceCommand;
+            }
+        }
+
+        public IMvxCommand PracticeCommand
+        {
+            get
+            {
+                _practiceCommand = _practiceCommand ?? new MvxCommand(ShowPractice);
+                return _practiceCommand;
+            }
+        }
+
+        public IMvxCommand PullDataCommand
+        {
+            get
+            {
+                _pullCommand = _pullCommand ?? new MvxCommand(PullData);
+                return _pullCommand;
+            }
+        }
+
+        public IMvxCommand PushDataCommand
+        {
+            get
+            {
+                _pushDataCommand = _pushDataCommand ?? new MvxCommand(PushData);
+                return _pushDataCommand;
+            }
+        }
+
+      
+
 
         public string Profile
         {
@@ -55,6 +98,12 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => Profile);
                 RaisePropertyChanged(() => Greeting);
             }
+        }
+
+        public string PracticeName
+        {
+            get { return _practiceName; }
+            set { _practiceName = value; RaisePropertyChanged(() => PracticeName);}
         }
 
         public bool IsBusy
@@ -95,6 +144,11 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Profile = profile;
             }
+            var practicename = _settings.GetValue("livehts.practicename", "");
+            if (!string.IsNullOrWhiteSpace(practicename))
+            {
+                PracticeName = practicename;
+            }
         }
 
         private void ShowRegistry()
@@ -105,8 +159,25 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowViewModel<ClientRegistrationViewModel>();
         }
+        private void ShowDevice()
+        {
+            ShowViewModel<DeviceViewModel>();
+        }
 
-        public  void Quit()
+        private void ShowPractice()
+        {
+            ShowViewModel<PracticeViewModel>();
+        }
+        private void PullData()
+        {
+            ShowViewModel<PullDataViewModel>();
+        }
+        private void PushData()
+        {
+            ShowViewModel<PushDataViewModel>();
+        }
+
+        public void Quit()
         {
           _dialogService.ConfirmExit();
         }

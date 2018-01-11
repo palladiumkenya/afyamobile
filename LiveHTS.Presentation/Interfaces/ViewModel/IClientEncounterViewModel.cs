@@ -13,6 +13,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientEncounterViewModel
     {
+        Guid AppUserId { get; }
+        Guid AppProviderId { get; }
+        Guid AppPracticeId { get; }
+        Guid AppDeviceId { get; }
+
         bool AtTheEnd { get; set; }
         bool IsLoading { get; set; }
         Guid UserId { get; }

@@ -45,20 +45,42 @@
     <Compile Include="Interfaces\Model\IEnrollment.cs" />
     <Compile Include="Interfaces\Model\IProfile.cs" />
     <Compile Include="Interfaces\Repository\Config\IEncounterTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\IServerConfigRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IRelationshipTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IIdentifierTypeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IMaritalStatusRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IKeyPopRepository.cs" />
+    <Compile Include="Interfaces\Repository\Config\ICohortRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ISubCountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\ICountyRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsPartnerTraceResultRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsPartnerScreeningRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsMemberScreeningRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsLinkageRepository.cs" />
+    <Compile Include="Interfaces\Repository\Interview\IObsFamilyTraceResultRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsTraceResultRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
+    <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
+    <Compile Include="Interfaces\Services\Clients\IClientReaderService.cs" />
+    <Compile Include="Interfaces\Services\Clients\ICohortClientsService.cs" />
+    <Compile Include="Interfaces\Services\Clients\IRemoteSearchService.cs" />
+    <Compile Include="Interfaces\Services\Clients\IRemoteRegistryService.cs" />
+    <Compile Include="Interfaces\Services\Config\ICohortService.cs" />
+    <Compile Include="Interfaces\Services\Interview\IPartnerScreeningService.cs" />
+    <Compile Include="Interfaces\Services\Interview\IPartnerTracingService.cs" />
+    <Compile Include="Interfaces\Services\Interview\IMemberTracingService.cs" />
+    <Compile Include="Interfaces\Services\Interview\IMemberScreeningService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
+    <Compile Include="Interfaces\Services\Sync\ICohortSyncService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IChohortClientsSyncService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IStaffSyncService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IFormsSyncService.cs" />
+    <Compile Include="Interfaces\Services\Sync\ISyncDataService.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientRelationshipRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientIdentifierRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IPersonContactRepository.cs" />
@@ -69,6 +91,7 @@
     <Compile Include="Interfaces\Repository\Survey\IProgramRepository.cs" />
     <Compile Include="Interfaces\Services\Access\IAuthService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRegistryService.cs" />
+    <Compile Include="Interfaces\Services\Config\IPracticeSetupService.cs" />
     <Compile Include="Interfaces\Services\IAppDashboardService.cs" />
     <Compile Include="Interfaces\Services\Config\IDeviceSetupService.cs" />
     <Compile Include="Interfaces\Services\Config\ILookupService.cs" />
@@ -76,7 +99,10 @@
     <Compile Include="Interfaces\Services\Interview\IHIVTestingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IInterviewService.cs" />
     <Compile Include="Interfaces\Services\Survey\ISurveyService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IActivationService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IMetaSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IRestClient.cs" />
+    <Compile Include="Interfaces\Services\Sync\ISyncDeviceService.cs" />
     <Compile Include="Interfaces\Services\Sync\ISyncPerson.cs" />
     <Compile Include="Interfaces\Services\Sync\ISyncUser.cs" />
     <Compile Include="Model\AppDashboard.cs" />
@@ -86,21 +112,31 @@
     <Compile Include="Model\Class1.cs" />
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
+    <Compile Include="Model\Config\ServerConfig.cs" />
+    <Compile Include="Model\Interview\ObsPartnerScreening.cs" />
+    <Compile Include="Model\Interview\ObsPartnerTraceResult.cs" />
+    <Compile Include="Model\Interview\ObsFamilyTraceResult.cs" />
     <Compile Include="Model\Interview\ObsFinalTestResult.cs" />
+    <Compile Include="Model\Interview\ObsMemberScreening.cs" />
     <Compile Include="Model\Interview\ObsLinkage.cs" />
     <Compile Include="Model\Interview\ObsTraceResult.cs" />
     <Compile Include="Model\Interview\ObsTestResult.cs" />
     <Compile Include="Model\Interview\SetResponse.cs" />
+    <Compile Include="Model\Config\Cohort.cs" />
+    <Compile Include="Model\RemoteClientDTO.cs" />
     <Compile Include="Model\Survey\Program.cs" />
+    <Compile Include="Model\SyncClientEncounterDTO.cs" />
+    <Compile Include="Model\SyncClientDTO.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service\Access\AuthService.cs" />
     <Compile Include="Service\AppDashboardService.cs" />
+    <Compile Include="Service\Clients\ClientReaderService.cs" />
     <Compile Include="Service\Clients\ObsService.cs" />
     <Compile Include="Engine\NavigationEngine.cs" />
     <Compile Include="Interfaces\Engine\INavigationEngine.cs" />
     <Compile Include="Interfaces\ILiveSetting.cs" />
     <Compile Include="Interfaces\Repository\Lookup\ICategoryRepository.cs" />
-    <Compile Include="Interfaces\Repository\IMigrator.cs" />
+    <Compile Include="Interfaces\Repository\IDbMigrator.cs" />
     <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientRepository.cs" />
     <Compile Include="Interfaces\Repository\Survey\IConceptRepository.cs" />
@@ -157,15 +193,32 @@
     <Compile Include="Service\Clients\DashboardService.cs" />
     <Compile Include="Service\Clients\EncounterService.cs" />
     <Compile Include="Engine\ValidationEngine.cs" />
+    <Compile Include="Service\Clients\CohortClientsService.cs" />
+    <Compile Include="Service\Clients\RemoteSearchService.cs" />
     <Compile Include="Service\Clients\RegistryService.cs" />
+    <Compile Include="Service\Config\CohortService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
+    <Compile Include="Service\Config\PracticeSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
+    <Compile Include="Service\Interview\PartnerScreeningService.cs" />
+    <Compile Include="Service\Interview\PartnerTracingService.cs" />
+    <Compile Include="Service\Interview\MemberTracingService.cs" />
     <Compile Include="Service\Interview\LinkageService.cs" />
     <Compile Include="Service\Interview\HIVTestingService.cs" />
     <Compile Include="Service\Interview\InterviewService.cs" />
+    <Compile Include="Service\Interview\MemberScreeningService.cs" />
+    <Compile Include="Service\Sync\ActivationService.cs" />
+    <Compile Include="Service\Sync\ClientSyncService.cs" />
+    <Compile Include="Service\Sync\CohortSyncService.cs" />
+    <Compile Include="Service\Sync\ChohortClientsSyncService.cs" />
+    <Compile Include="Service\Sync\StaffSyncService.cs" />
+    <Compile Include="Service\Sync\FormsSyncService.cs" />
+    <Compile Include="Service\Sync\MetaSyncService.cs" />
     <Compile Include="Service\Sync\RestClient.cs" />
+    <Compile Include="Service\Sync\SyncDataService.cs" />
     <Compile Include="Service\Sync\SyncPerson.cs" />
     <Compile Include="Service\Sync\SyncUser.cs" />
+    <Compile Include="SyncModel\Meta.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -174,6 +227,9 @@
     </Reference>
     <Reference Include="MvvmCross.Platform, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmCross.Platform.5.1.1\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SQLite-net, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\sqlite-net-pcl.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>

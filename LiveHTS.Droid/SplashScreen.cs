@@ -9,7 +9,7 @@ namespace LiveHTS.Droid
     [Activity(
         
          MainLauncher = true
-        , Icon = "@drawable/livehts"
+        , Icon = "@mipmap/icon"
         , NoHistory = true
         , ScreenOrientation = ScreenOrientation.Portrait)]
     public class SplashScreen : MvxSplashScreenActivity

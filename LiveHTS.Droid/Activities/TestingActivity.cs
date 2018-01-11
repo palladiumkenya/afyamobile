@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.View;
@@ -14,11 +15,12 @@ using com.refractored;
 using LiveHTS.Droid.Views;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Droid.Support.V4;
+using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "HIV Tests", NoHistory = true, ParentActivity = typeof(DashboardViewModel))]
-    public class TestingActivity : MvxCachingFragmentActivity<TestingViewModel>
+    [Activity(Label = "HIV Tests", ParentActivity = typeof(DashboardViewModel), ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    public class TestingActivity : MvxCachingFragmentCompatActivity<TestingViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

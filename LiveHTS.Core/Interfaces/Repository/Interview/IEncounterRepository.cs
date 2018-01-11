@@ -8,6 +8,8 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
     {
         Encounter Load(Guid id, bool includeObs = false);
         Encounter Load(Guid formId, Guid encounterTypeId, Guid clientId,bool includeObs=false);
+        IEnumerable<Encounter> LoadAll(Guid clientId);
+        IEnumerable<Encounter> LoadAllKey(Guid clientId);
         IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, bool includeObs = false);
 
         Encounter LoadTest(Guid id, bool includeObs = false);

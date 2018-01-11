@@ -8,7 +8,10 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         User User { get; }
         string Username { get; set; }
         string Password { get; set; }
-        IMvxCommand SignInCommand { get; }
         bool IsBusy { get; set; }
+        bool AutoSignIn { get; set; }
+        IMvxCommand SignInCommand { get; }
+        void LoadDeviceInfo(string serial, string model, string manufacturer);
+        void UpdateSession();
     }
 }
