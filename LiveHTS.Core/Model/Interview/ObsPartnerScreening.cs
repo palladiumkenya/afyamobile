@@ -6,9 +6,11 @@ using SQLite;
 
 namespace LiveHTS.Core.Model.Interview
 {
+    //TODO: Map screening
     public class ObsPartnerScreening : Entity<Guid>
     {
         public DateTime ScreeningDate { get; set; }
+        public Guid? PnsAccepted { get; set; }
         public Guid IPVScreening { get; set; }
         public Guid PhysicalAssult { get; set; }
         public Guid Threatened { get; set; }
