@@ -1,5 +1,6 @@
 ﻿using System;
 using LiveHTS.SharedKernel.Model;
+using Sand.Security.Cryptography;
 
 namespace LiveHTS.SharedKernel.Custom
 {
@@ -103,6 +104,22 @@ namespace LiveHTS.SharedKernel.Custom
                 }
             }
             return personAge;
+        }
+
+        public static string Decrypt(string parameter)
+        {
+            return string.Empty;
+            if (string.IsNullOrWhiteSpace(parameter))
+                return string.Empty;
+
+                        Decryptor decry = new Decryptor(EncryptionAlgorithm.TripleDes)
+                        {
+                            IV = Encoding.ASCII.GetBytes("t3ilc0m3")
+                        };
+            
+                        return decry.Decrypt(parameter, "3wmotherwdrtybnio12ewq23");
+
+
         }
     }
 }

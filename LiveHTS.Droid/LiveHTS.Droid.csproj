@@ -224,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\DeviceSetupActivity.cs" />
+    <Compile Include="Activities\SetupWizardActivity.cs" />
     <Compile Include="Activities\FacilitySetupActivity.cs" />
     <Compile Include="Activities\PartnerScreeningActivity.cs" />
     <Compile Include="Activities\PartnerTracingActivity.cs" />
@@ -497,6 +498,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Item_Cohort.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SetupWizardView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

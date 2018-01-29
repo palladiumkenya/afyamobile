@@ -40,7 +40,9 @@
     <Compile Include="Converters\DateTimeConverter .cs" />
     <Compile Include="DTO\IndexClientDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\PersonDTO.cs" />
     <Compile Include="DTO\PracticeDTO.cs" />
+    <Compile Include="DTO\ProviderDTO.cs" />
     <Compile Include="DTO\SessionDTO.cs" />
     <Compile Include="DTO\TraceDateDTO.cs" />
     <Compile Include="DTO\ExpiryDateDTO.cs" />
@@ -51,6 +53,7 @@
     <Compile Include="DTO\ClientProfileDTO.cs" />
     <Compile Include="DTO\ClientContactAddressDTO.cs" />
     <Compile Include="DTO\ClientDemographicDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Events\ChangedDateEvent.cs" />
     <Compile Include="Events\DateChangedEvent.cs" />
     <Compile Include="Interfaces\ViewModel\IClientEncounterViewModel.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="Interfaces\ViewModel\ICohortClientsViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IRemoteSearchViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IRemoteRegistryViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ISetupWizardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ITestEpisodeViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ITraceViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\ITestViewModel.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="ViewModel\FirstTestEpisodeViewModel.cs" />
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
+    <Compile Include="ViewModel\SetupWizardViewModel.cs" />
     <Compile Include="ViewModel\Template\FamilyMemberTemplate.cs" />
     <Compile Include="ViewModel\Template\PartnerTraceTemplate.cs" />
     <Compile Include="ViewModel\Template\ModuleTemplate.cs" />

@@ -13,8 +13,11 @@ namespace LiveHTS.Core.Model.Subject
         public Guid? PracticeId { get; set; }
         [Indexed]
         public Guid PersonId { get; set; }
+        public int? UserId { get; set; }
         [Ignore]
         public Person Person { get; set; }
+        [Ignore]
+        public Provider Provider { get; set; }
         public User()
         {
             Id = LiveGuid.NewGuid();

@@ -1,5 +1,6 @@
 ﻿using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository;
+using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Infrastructure.Repository;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Core.ViewModels;
@@ -13,7 +14,20 @@ namespace LiveHTS.Presentation
         {
             var migrator= Mvx.Resolve<IDbMigrator>();
             migrator.Migrate();
-            ShowViewModel<SignInViewModel>();
+
+            var service = Mvx.Resolve<IDeviceSetupService>();
+            if (service.IsSetup())
+            {
+                ShowViewModel<SignInViewModel>();
+            }
+            else
+            {
+                ShowViewModel<SetupWizardViewModel>();
+            }
+                
+                
+
+                
         }
     }
 }

@@ -6900,25 +6900,28 @@ namespace LiveHTS.Droid
 			public const int select_dialog_singlechoice_material = 2130968699;
 			
 			// aapt resource value: 0x7f04007c
-			public const int SignInView = 2130968700;
+			public const int SetupWizardView = 2130968700;
 			
 			// aapt resource value: 0x7f04007d
-			public const int SplashScreen = 2130968701;
+			public const int SignInView = 2130968701;
 			
 			// aapt resource value: 0x7f04007e
-			public const int SummaryView = 2130968702;
+			public const int SplashScreen = 2130968702;
 			
 			// aapt resource value: 0x7f04007f
-			public const int support_simple_spinner_dropdown_item = 2130968703;
+			public const int SummaryView = 2130968703;
 			
 			// aapt resource value: 0x7f040080
-			public const int TestingView = 2130968704;
+			public const int support_simple_spinner_dropdown_item = 2130968704;
 			
 			// aapt resource value: 0x7f040081
-			public const int TestView = 2130968705;
+			public const int TestingView = 2130968705;
 			
 			// aapt resource value: 0x7f040082
-			public const int TraceView = 2130968706;
+			public const int TestView = 2130968706;
+			
+			// aapt resource value: 0x7f040083
+			public const int TraceView = 2130968707;
 			
 			static Layout()
 			{

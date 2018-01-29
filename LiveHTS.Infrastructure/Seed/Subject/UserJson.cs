@@ -19,6 +19,7 @@ namespace LiveHTS.Infrastructure.Seed.Subject
                ^PracticeId^: ^AB054358-98B9-11E7-ABC4-CEC278B6B50A^,
                ^PersonId^: ^b4d18679-ed7e-4e02-8cc5-a7b7016df233^,
                ^Id^: ^61a9e04c-2ed0-414a-9387-a7b7016df233^,
+               ^UserId^: ^1^,   
                ^Voided^: 0
              }
             ]

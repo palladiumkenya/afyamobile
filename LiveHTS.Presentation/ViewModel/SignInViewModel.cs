@@ -78,7 +78,7 @@ namespace LiveHTS.Presentation.ViewModel
             _settings = settings;
             _deviceSetupService = deviceSetupService;
             IsBusy = false;
-            AutoSignIn = true;
+            AutoSignIn = false;
             if (AutoSignIn)
             {
                 Username = "admin";

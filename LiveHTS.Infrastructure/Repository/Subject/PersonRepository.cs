@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
@@ -58,6 +59,11 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                     InsertOrUpdateAny(a);
                 }
             }
+        }
+
+        public void Sync(List<Person> providers)
+        {
+            throw new NotImplementedException();
         }
     }
 }

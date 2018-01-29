@@ -10,6 +10,7 @@ namespace LiveHTS.Core.Model.Config
         public string Code { get; set; }
         public string Name { get; set; }
         public Guid Instance { get; set; }
+        public bool? IsSetup { get; set; }
 
         public ServerConfig()
         {
@@ -20,21 +21,28 @@ namespace LiveHTS.Core.Model.Config
             Id = id;
         }
 
-        private ServerConfig(string id, string address, string code, string name, Guid instance) : base(id)
+        private ServerConfig(string id, string address, string code, string name, Guid instance, bool? isSetup=null) : base(id)
         {
             Address = address;
             Code = code;
             Name = name;
             Instance = instance;
+            IsSetup = isSetup;
         }
 
-        public static ServerConfig CreateCentral(Practice practice,string url)
+        public bool IsSetupComplete()
         {
-            return new ServerConfig("hapi.central", url, practice.Code, practice.Name, practice.Id);
+            return null != IsSetup && IsSetup.HasValue && IsSetup.Value;
         }
-        public static ServerConfig CreateLocal(Practice practice, string url)
+
+        public static ServerConfig CreateCentral(Practice practice,string url, bool? isSetup = null)
         {
-            return new ServerConfig("hapi.local", url, practice.Code, practice.Name, practice.Id);
+            return new ServerConfig("hapi.central", url, practice.Code, practice.Name, practice.Id,isSetup);
         }
+        public static ServerConfig CreateLocal(Practice practice, string url, bool? isSetup = null)
+        {
+            return new ServerConfig("hapi.local", url, practice.Code, practice.Name, practice.Id, isSetup);
+        }
+        
     }
 }

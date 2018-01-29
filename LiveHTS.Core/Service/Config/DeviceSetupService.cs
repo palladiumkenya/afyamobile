@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Config;
+using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Core.Service.Config
 {
@@ -11,12 +14,24 @@ namespace LiveHTS.Core.Service.Config
         private readonly IDeviceRepository _deviceRepository;
         private readonly IServerConfigRepository _serverConfigRepository;
         private readonly IPracticeRepository _practiceRepository;
+        private readonly IPersonRepository _personRepository;
+        private readonly IProviderRepository _providerRepository;
+        private readonly IUserRepository _userRepository;
 
-        public DeviceSetupService(IDeviceRepository deviceRepository, IServerConfigRepository serverConfigRepository, IPracticeRepository practiceRepository)
+        public DeviceSetupService(IDeviceRepository deviceRepository, IServerConfigRepository serverConfigRepository, IPracticeRepository practiceRepository, IPersonRepository personRepository, IProviderRepository providerRepository, IUserRepository userRepository)
         {
             _deviceRepository = deviceRepository;
             _serverConfigRepository = serverConfigRepository;
             _practiceRepository = practiceRepository;
+            _personRepository = personRepository;
+            _providerRepository = providerRepository;
+            _userRepository = userRepository;
+        }
+
+        public bool IsSetup()
+        {
+            var local = GetLocal();
+            return null != local && local.IsSetupComplete();
         }
 
         public Device GetDefault(Guid deviceId)
@@ -67,6 +82,16 @@ namespace LiveHTS.Core.Service.Config
             var ddevice = _deviceRepository.GetDefault(device.Serial);
             if(null== ddevice)
                 Register(device);
+        }
+
+        public void SaveUsers(List<User> users)
+        {
+            foreach (var user in users)
+            {
+                _personRepository.InsertOrUpdate(user.Person);
+                _userRepository.InsertOrUpdate(user);
+                _providerRepository.InsertOrUpdate(user.Provider);
+            }
         }
     }
 }

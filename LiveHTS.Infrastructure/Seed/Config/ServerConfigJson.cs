@@ -17,6 +17,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
     ^Code^: ^1^,
     ^Name^: ^^,
     ^Instance^: ^00000000-0000-0000-0000-000000000000^,
+    ^IsSetup^: 0,
     ^Voided^: 0
   },
   {
@@ -25,6 +26,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
     ^Code^: ^^,
     ^Name^: ^^,
     ^Instance^: ^00000000-0000-0000-0000-000000000000^,
+    ^IsSetup^: 0,
     ^Voided^: 0
   }
 ]
