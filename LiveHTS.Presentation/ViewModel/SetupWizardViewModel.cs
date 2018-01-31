@@ -212,8 +212,11 @@ namespace LiveHTS.Presentation.ViewModel
                 //update dev
                 _deviceSetupService.Register(Device);
 
-                //save fac
+                
                 _deviceSetupService.SaveLocal(Local);
+
+                //save fac
+                _deviceSetupService.SavePractce(practice);
 
                 Local = _deviceSetupService.GetLocal();
             }

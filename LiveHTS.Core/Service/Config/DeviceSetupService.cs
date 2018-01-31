@@ -84,6 +84,25 @@ namespace LiveHTS.Core.Service.Config
                 Register(device);
         }
 
+        public void SavePractce(Practice practice)
+        {
+            var practices = _practiceRepository.GetAll().ToList();
+
+            if (practices.Count == 0)
+            {
+                _practiceRepository.Save(practice);
+
+            }
+
+            foreach (var p in practices)
+            {
+                p.IsDefault = false;
+                _practiceRepository.Update(p);
+            }
+            practice.IsDefault = true;
+            _practiceRepository.InsertOrUpdate(practice);
+        }
+
         public void SaveUsers(List<User> users)
         {
             foreach (var user in users)

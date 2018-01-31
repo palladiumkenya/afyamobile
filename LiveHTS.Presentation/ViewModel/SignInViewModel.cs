@@ -24,9 +24,16 @@ namespace LiveHTS.Presentation.ViewModel
         private string _password;
         private IMvxCommand _signInCommand;
         private bool _isBusy;
+        private string _facility;
 
 
         public User User { get; private set; }
+
+        public string Facility
+        {
+            get { return _facility; }
+            set { _facility = value; RaisePropertyChanged(() => Facility); }
+        }
 
         public string Username
         {
@@ -83,6 +90,15 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Username = "admin";
                 Password = "maun2806";
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            var hapiFac = _settings.GetValue("livehts.practicename", "");
+            if (!string.IsNullOrWhiteSpace(hapiFac))
+            {
+                Facility = hapiFac;
             }
         }
 
