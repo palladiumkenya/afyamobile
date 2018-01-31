@@ -21,9 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kenyatta National Hospital"
                 android:paddingLeft="3dp"
-                android:textAllCaps="true"
                 android:textSize="15dp"
                 local:MvxBind="Text PracticeName" />
             <TextView
@@ -31,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="Welcome"
                 android:gravity="center_vertical|right"
-                android:paddingRight="12dp"
+                android:paddingRight="10dp"
                 local:MvxBind="Text Profile" />
         </LinearLayout>
         <LinearLayout
