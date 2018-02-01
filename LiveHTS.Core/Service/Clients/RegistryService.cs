@@ -142,6 +142,7 @@ namespace LiveHTS.Core.Service.Clients
         public void UpdateRelationShips(string relationshipTypeId, Guid clientId, Guid otherClientId)
         {
             var exisitngRelationship = _clientRelationshipRepository.Find(relationshipTypeId, clientId, otherClientId);
+
             if (null == exisitngRelationship)
             {
                 var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId);
@@ -152,12 +153,32 @@ namespace LiveHTS.Core.Service.Clients
             if (null == exisitngRelationshipReverse)
             {
                 //otherClientId  clientId
-                var newRelationReverse = ClientRelationship.Create(relationshipTypeId, clientId, true, otherClientId);
+                var newRelationReverse = ClientRelationship.Create(relationshipTypeId, clientId, true, otherClientId, true);
                 _clientRelationshipRepository.Save(newRelationReverse);
             }
         }
 
-      
+
+
+        public void UpdateIndexRelationShips(string relationshipTypeId, Guid clientId, Guid otherClientId)
+        {
+            var exisitngRelationship = _clientRelationshipRepository.Find(relationshipTypeId, clientId, otherClientId);
+
+            if (null == exisitngRelationship)
+            {
+                var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId);
+                _clientRelationshipRepository.Save(newRelation);
+            }
+
+            var exisitngRelationshipReverse = _clientRelationshipRepository.Find(relationshipTypeId, otherClientId, clientId);
+            if (null == exisitngRelationshipReverse)
+            {
+                //otherClientId  clientId
+                var newRelationReverse = ClientRelationship.Create(relationshipTypeId, clientId, true, otherClientId, true);
+                _clientRelationshipRepository.Save(newRelationReverse);
+            }
+        }
+
 
         public void SaveOrUpdate(Client client)
         {

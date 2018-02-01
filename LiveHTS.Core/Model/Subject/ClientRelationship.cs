@@ -15,6 +15,8 @@ namespace LiveHTS.Core.Model.Subject
         public bool Preferred { get; set; }
         [Indexed]
         public Guid ClientId { get; set; }
+        public bool? IsIndex { get; set; }
+        
         [Ignore]
         [JsonIgnore]
         public  Person Person { get; set; }
@@ -24,17 +26,18 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private ClientRelationship(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId):this()
+        private ClientRelationship(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId, bool? isIndex) : this()
         {
             RelationshipTypeId = relationshipTypeId;
             RelatedClientId = relatedClientId;
             Preferred = preferred;
             ClientId = clientId;
+            IsIndex = isIndex;
         }
-
-        public static ClientRelationship Create(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId)
+        
+        public static ClientRelationship Create(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId, bool? isIndex=null)
         {
-            return new ClientRelationship(relationshipTypeId, relatedClientId, preferred,clientId);
+            return new ClientRelationship(relationshipTypeId, relatedClientId, preferred, clientId,isIndex);
         }
 
         public override string ToString()
