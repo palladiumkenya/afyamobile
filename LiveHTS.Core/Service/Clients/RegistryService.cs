@@ -145,7 +145,7 @@ namespace LiveHTS.Core.Service.Clients
 
             if (null == exisitngRelationship)
             {
-                var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId);
+                var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId,false);
                 _clientRelationshipRepository.Save(newRelation);
             }
 

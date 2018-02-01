@@ -178,15 +178,20 @@ namespace LiveHTS.Core.Tests.Service.Clients
 
             var indexClient = _registryService.Find(clients[0].Id);
             Assert.IsNotNull(indexClient);
-            Assert.IsNotNull(indexClient.Relationships.ToList().Count>2);
+            Assert.IsNotNull(indexClient.MyRelationships.ToList().Count==2);
+            Assert.IsNotNull(indexClient.RelatedToMe.ToList().Count == 2);
             Console.WriteLine(indexClient);
-            foreach (var client in indexClient.Relationships)
+            foreach (var client in indexClient.MyRelationships)
             {
-                Console.WriteLine($" >> {client.RelationshipTypeId}|{client.RelatedClientId}");
+                Assert.False(client.IsIndex);
+                Console.WriteLine($" >> {client.RelationshipTypeId}|{client.RelatedClientId}|{client.IsIndex}");
             }
-            
-
-
+            Console.WriteLine("Secondary Clients");
+            foreach (var client in indexClient.RelatedToMe)
+            {
+                Assert.True(client.IsIndex);
+                Console.WriteLine($" >> {client.RelationshipTypeId}|{client.ClientId}|{client.IsIndex}");
+            }
         }
 
         [Test]
