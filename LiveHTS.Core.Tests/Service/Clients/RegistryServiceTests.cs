@@ -161,6 +161,34 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.AreEqual(guid, cientNew.PracticeId);
             Console.WriteLine(cientNew);
         }
+
+
+        [Test]
+        public void should_Create_Relations_With_Index()
+        {
+            var clients = TestDataHelpers.GetTestClients(3);
+            foreach (var client in clients)
+            {
+                _registryService.Save(client);
+            }
+
+            _registryService.UpdateRelationShips("Partner", clients[0].Id, clients[1].Id);
+            _registryService.UpdateRelationShips("Partner", clients[0].Id, clients[2].Id);
+
+
+            var indexClient = _registryService.Find(clients[0].Id);
+            Assert.IsNotNull(indexClient);
+            Assert.IsNotNull(indexClient.Relationships.ToList().Count>2);
+            Console.WriteLine(indexClient);
+            foreach (var client in indexClient.Relationships)
+            {
+                Console.WriteLine($" >> {client.RelationshipTypeId}|{client.RelatedClientId}");
+            }
+            
+
+
+        }
+
         [Test]
         public void should_Delete_Client()
         {

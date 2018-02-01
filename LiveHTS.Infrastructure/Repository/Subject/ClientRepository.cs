@@ -82,7 +82,8 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 _db.InsertAll(identifiers);
             }                
 
-            //Create Relationships
+            return;
+            //TODO: Create without Relationships index
             if (entity.Relationships.Any())
             {
                 var relationships = entity.Relationships.ToList();
@@ -105,7 +106,9 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 }
             }
 
-            //Create Relationships
+            
+            return;
+            //TODO: Create without Relationships index
             if (entity.Relationships.Any())
             {
                 var relationships = entity.Relationships.ToList();

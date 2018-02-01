@@ -16,6 +16,8 @@ namespace LiveHTS.Core.Model.Subject
         [Indexed]
         public Guid ClientId { get; set; }
         public bool? IsIndex { get; set; }
+
+        
         
         [Ignore]
         [JsonIgnore]
