@@ -37,6 +37,11 @@ namespace LiveHTS.Presentation.ViewModel
         private IMemberTracingService _tracingService;
         private Guid _mode;
         private Guid _outcome;
+        private DateTime _reminder;
+        private Guid _consent;
+        private List<CategoryItem> _consents;
+        private CategoryItem _selectedConsent;
+        private DateTime _bookingDate;
 
         public bool EditMode
         {
@@ -76,6 +81,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _date; }
             set { _date = value; RaisePropertyChanged(() => Date);}
+        }
+
+        public DateTime Reminder
+        {
+            get { return _reminder; }
+            set { _reminder = value;  RaisePropertyChanged(() => Reminder);}
         }
 
         public Guid Mode
@@ -123,6 +134,37 @@ namespace LiveHTS.Presentation.ViewModel
                     Outcome = SelectedOutcome.ItemId;
             }
         }
+
+        public Guid Consent
+        {
+            get { return _consent; }
+            set { _consent = value; RaisePropertyChanged(() => Consent);}
+        }
+
+        public List<CategoryItem> Consents
+        {
+            get { return _consents; }
+            set { _consents = value; RaisePropertyChanged(() => Consents); }
+        }
+
+        public CategoryItem SelectedConsent
+        {
+            get { return _selectedConsent; }
+            set
+            {
+                _selectedConsent = value;
+                RaisePropertyChanged(() => SelectedConsent);
+                if (null != SelectedConsent)
+                    Outcome = SelectedConsent.ItemId;
+            }
+        }
+
+        public DateTime BookingDate
+        {
+            get { return _bookingDate; }
+            set { _bookingDate = value; RaisePropertyChanged(() => BookingDate);}
+        }
+
         public Guid EncounterId
         {
             get { return _encounterId; }
@@ -142,7 +184,7 @@ namespace LiveHTS.Presentation.ViewModel
         public PersonTraceViewModel()
         {
             Validator = new ValidationHelper();
-            Date=DateTime.Today;
+            Date=Reminder=BookingDate=DateTime.Today;
             
             _tracingService =  Mvx.Resolve<IMemberTracingService>();
             _settings = Mvx.Resolve<ISettings>();
@@ -173,10 +215,10 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void Clear()
         {
-            Date = DateTime.Today;
-
+            Date = Reminder = BookingDate= DateTime.Today;
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
+            SelectedConsent=Consents.OrderBy(x => x.Rank).FirstOrDefault();
         }
 
         public void Init(string id)
@@ -191,6 +233,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var kitsJson = _settings.GetValue("lookup.TMode", "");
             var resultsJson = _settings.GetValue("lookup.TOutcome", "");
+            var resultsCJson = _settings.GetValue("lookup.TConsent", "");
 
             if (!string.IsNullOrWhiteSpace(kitsJson))
             {
@@ -199,6 +242,10 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(resultsJson))
             {
                 Outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
+            }
+            if (!string.IsNullOrWhiteSpace(resultsCJson))
+            {
+                Consents = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsCJson);
             }
 
             EncounterId = Parent.Encounter.Id;

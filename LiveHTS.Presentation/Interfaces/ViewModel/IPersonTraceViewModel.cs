@@ -21,6 +21,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid Id { get; set; }
 
         DateTime Date { get; set; }
+        DateTime Reminder { get; set; }
+     
         Guid Mode { get; set; }
         List<CategoryItem> Modes { get; set; }
         CategoryItem SelectedMode { get; set; }
@@ -28,6 +30,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid Outcome { get; set; }
         List<CategoryItem> Outcomes { get; set; }
         CategoryItem SelectedOutcome { get; set; }
+
+        Guid Consent { get; set; }
+        List<CategoryItem> Consents { get; set; }
+        CategoryItem SelectedConsent { get; set; }
+
+        DateTime BookingDate { get; set; }
+
         Guid EncounterId { get; set; }
         IMvxCommand SaveTraceCommand { get; }
     }
