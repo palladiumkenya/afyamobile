@@ -28,14 +28,21 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 var relationsList=new List<ClientRelationship>();
                 
                 //my Relationships
-                var relations = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList(); 
-                if(null!=relations&&relations.Count>0)
-                    relationsList.AddRange(relations);
-                
-                //related to
-                relations = _db.Table<ClientRelationship>().Where(x => x.ClientId != client.Id && x.RelatedClientId == client.Id).ToList(); 
+                var relations = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList();
                 if (null != relations && relations.Count > 0)
+                {
+                    client.MyRelationships = relations;
                     relationsList.AddRange(relations);
+                }
+
+                //related to
+                var relationsTo = _db.Table<ClientRelationship>().Where(x => x.ClientId != client.Id && x.RelatedClientId == client.Id).ToList();
+                if (null != relationsTo && relationsTo.Count > 0)
+                {
+                    client.RelatedToMe = relationsTo;
+                    relationsList.AddRange(relationsTo);
+                }
+                    
 
                 client.Relationships = relationsList;
 
@@ -82,7 +89,8 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 _db.InsertAll(identifiers);
             }                
 
-            //Create Relationships
+            return;
+            //TODO: Create without Relationships index
             if (entity.Relationships.Any())
             {
                 var relationships = entity.Relationships.ToList();
@@ -105,7 +113,9 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 }
             }
 
-            //Create Relationships
+            
+            return;
+            //TODO: Create without Relationships index
             if (entity.Relationships.Any())
             {
                 var relationships = entity.Relationships.ToList();

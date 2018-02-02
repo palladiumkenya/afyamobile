@@ -161,6 +161,39 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.AreEqual(guid, cientNew.PracticeId);
             Console.WriteLine(cientNew);
         }
+
+
+        [Test]
+        public void should_Create_Relations_With_Index()
+        {
+            var clients = TestDataHelpers.GetTestClients(3);
+            foreach (var client in clients)
+            {
+                _registryService.Save(client);
+            }
+
+            _registryService.UpdateRelationShips("Partner", clients[0].Id, clients[1].Id);
+            _registryService.UpdateRelationShips("Partner", clients[0].Id, clients[2].Id);
+
+
+            var indexClient = _registryService.Find(clients[0].Id);
+            Assert.IsNotNull(indexClient);
+            Assert.IsNotNull(indexClient.MyRelationships.ToList().Count==2);
+            Assert.IsNotNull(indexClient.RelatedToMe.ToList().Count == 2);
+            Console.WriteLine(indexClient);
+            foreach (var client in indexClient.MyRelationships)
+            {
+                Assert.False(client.IsIndex);
+                Console.WriteLine($" >> {client.RelationshipTypeId}|{client.RelatedClientId}|{client.IsIndex}");
+            }
+            Console.WriteLine("Secondary Clients");
+            foreach (var client in indexClient.RelatedToMe)
+            {
+                Assert.True(client.IsIndex);
+                Console.WriteLine($" >> {client.RelationshipTypeId}|{client.ClientId}|{client.IsIndex}");
+            }
+        }
+
         [Test]
         public void should_Delete_Client()
         {
