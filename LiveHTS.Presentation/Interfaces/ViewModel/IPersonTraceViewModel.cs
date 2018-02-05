@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
 using MvvmValidation;
