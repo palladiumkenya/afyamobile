@@ -35,6 +35,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<CategoryItem> Consents { get; set; }
         CategoryItem SelectedConsent { get; set; }
 
+        
         DateTime BookingDate { get; set; }
 
         Guid EncounterId { get; set; }

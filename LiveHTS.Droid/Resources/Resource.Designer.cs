@@ -5312,8 +5312,26 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
+			// aapt resource value: 0x7f02009d
+			public const int avd_hide_password_1 = 2130837661;
+			
+			// aapt resource value: 0x7f02009e
+			public const int avd_hide_password_2 = 2130837662;
+			
+			// aapt resource value: 0x7f02009f
+			public const int avd_hide_password_3 = 2130837663;
+			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
+			
+			// aapt resource value: 0x7f0200a0
+			public const int avd_show_password_1 = 2130837664;
+			
+			// aapt resource value: 0x7f0200a1
+			public const int avd_show_password_2 = 2130837665;
+			
+			// aapt resource value: 0x7f0200a2
+			public const int avd_show_password_3 = 2130837666;
 			
 			// aapt resource value: 0x7f020056
 			public const int common_full_open_on_phone = 2130837590;
@@ -5796,8 +5814,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00c8
 			public const int editTextProfileKeyOtherPop = 2131493064;
 			
-			// aapt resource value: 0x7f0c012c
-			public const int editTextRemarks = 2131493164;
+			// aapt resource value: 0x7f0c0130
+			public const int editTextRemarks = 2131493168;
 			
 			// aapt resource value: 0x7f0c0074
 			public const int edit_query = 2131492980;
@@ -5805,11 +5823,11 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00cf
 			public const int email = 2131493071;
 			
-			// aapt resource value: 0x7f0c0126
-			public const int email_login_form = 2131493158;
-			
 			// aapt resource value: 0x7f0c012a
-			public const int email_sign_in_button = 2131493162;
+			public const int email_login_form = 2131493162;
+			
+			// aapt resource value: 0x7f0c012e
+			public const int email_sign_in_button = 2131493166;
 			
 			// aapt resource value: 0x7f0c002e
 			public const int end = 2131492910;
@@ -5895,8 +5913,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00d1
 			public const int imageButton2 = 2131493073;
 			
-			// aapt resource value: 0x7f0c0127
-			public const int imageView = 2131493159;
+			// aapt resource value: 0x7f0c012b
+			public const int imageView = 2131493163;
 			
 			// aapt resource value: 0x7f0c010d
 			public const int info = 2131493133;
@@ -5961,17 +5979,17 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00f8
 			public const int loadingProgressWheel = 2131493112;
 			
+			// aapt resource value: 0x7f0c012d
+			public const int login = 2131493165;
+			
 			// aapt resource value: 0x7f0c0129
-			public const int login = 2131493161;
-			
-			// aapt resource value: 0x7f0c0125
-			public const int login_form = 2131493157;
-			
-			// aapt resource value: 0x7f0c012b
-			public const int login_progress = 2131493163;
+			public const int login_form = 2131493161;
 			
 			// aapt resource value: 0x7f0c012f
-			public const int masked = 2131493167;
+			public const int login_progress = 2131493167;
+			
+			// aapt resource value: 0x7f0c0133
+			public const int masked = 2131493171;
 			
 			// aapt resource value: 0x7f0c0106
 			public const int media_actions = 2131493126;
@@ -6018,14 +6036,14 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c005b
 			public const int parentPanel = 2131492955;
 			
-			// aapt resource value: 0x7f0c0128
-			public const int password = 2131493160;
+			// aapt resource value: 0x7f0c012c
+			public const int password = 2131493164;
 			
 			// aapt resource value: 0x7f0c0044
 			public const int pin = 2131492932;
 			
-			// aapt resource value: 0x7f0c0124
-			public const int progressBar = 2131493156;
+			// aapt resource value: 0x7f0c0128
+			public const int progressBar = 2131493160;
 			
 			// aapt resource value: 0x7f0c0006
 			public const int progress_circular = 2131492870;
@@ -6033,8 +6051,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c0007
 			public const int progress_horizontal = 2131492871;
 			
-			// aapt resource value: 0x7f0c0123
-			public const int psts_tab_title = 2131493155;
+			// aapt resource value: 0x7f0c0127
+			public const int psts_tab_title = 2131493159;
 			
 			// aapt resource value: 0x7f0c006b
 			public const int radio = 2131492971;
@@ -6144,6 +6162,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00ef
 			public const int spinner56 = 2131493103;
 			
+			// aapt resource value: 0x7f0c0126
+			public const int spinnerBookingDate = 2131493158;
+			
 			// aapt resource value: 0x7f0c00ff
 			public const int spinnerEligibility = 2131493119;
 			
@@ -6156,8 +6177,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00c6
 			public const int spinnerKeyPop = 2131493062;
 			
-			// aapt resource value: 0x7f0c012d
-			public const int spinnerKit = 2131493165;
+			// aapt resource value: 0x7f0c0131
+			public const int spinnerKit = 2131493169;
 			
 			// aapt resource value: 0x7f0c00c4
 			public const int spinnerMaritalStatus = 2131493060;
@@ -6173,6 +6194,9 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f0c00ca
 			public const int spinnerRelationshipType = 2131493066;
+			
+			// aapt resource value: 0x7f0c0125
+			public const int spinnerReminderDate = 2131493157;
 			
 			// aapt resource value: 0x7f0c0118
 			public const int spinnerScreening = 2131493144;
@@ -6273,6 +6297,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00a9
 			public const int textViewClientMiddleName = 2131493033;
 			
+			// aapt resource value: 0x7f0c0123
+			public const int textViewConsent = 2131493155;
+			
 			// aapt resource value: 0x7f0c008f
 			public const int textViewContactClientInfo = 2131493007;
 			
@@ -6363,6 +6390,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00b8
 			public const int textViewRegistrationDate = 2131493048;
 			
+			// aapt resource value: 0x7f0c0124
+			public const int textViewReminder = 2131493156;
+			
 			// aapt resource value: 0x7f0c0117
 			public const int textViewScreening = 2131493143;
 			
@@ -6441,8 +6471,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00f3
 			public const int viewpagerlink = 2131493107;
 			
-			// aapt resource value: 0x7f0c012e
-			public const int visible = 2131493166;
+			// aapt resource value: 0x7f0c0132
+			public const int visible = 2131493170;
 			
 			// aapt resource value: 0x7f0c001a
 			public const int wide = 2131492890;

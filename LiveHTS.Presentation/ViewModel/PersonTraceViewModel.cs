@@ -155,7 +155,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedConsent = value;
                 RaisePropertyChanged(() => SelectedConsent);
                 if (null != SelectedConsent)
-                    Outcome = SelectedConsent.ItemId;
+                    Consent = SelectedConsent.ItemId;
             }
         }
 
@@ -191,6 +191,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var modesJson = _settings.GetValue("lookup.TMode", "");
             var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
+            var consentJson = _settings.GetValue("lookup.TConsent", "");
 
             if (!string.IsNullOrWhiteSpace(modesJson))
             {
@@ -199,6 +200,10 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(outcomeJson))
             {
                 Outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(outcomeJson);
+            }
+            if (!string.IsNullOrWhiteSpace(consentJson))
+            {
+                Consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
             }
         }
 
@@ -210,6 +215,7 @@ namespace LiveHTS.Presentation.ViewModel
                 Date = TestResult.Date;
                 SelectedMode = Modes.FirstOrDefault(x=>x.ItemId== TestResult.Mode);
                 SelectedOutcome =Outcomes.FirstOrDefault(x => x.ItemId == TestResult.Outcome);
+                SelectedConsent = Consents.FirstOrDefault(x => x.ItemId == TestResult.Consent);
             }
         }
 
@@ -322,7 +328,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private ObsFamilyTraceResult GenerateTest()
         {
-            var obs= ObsFamilyTraceResult.Create(Date,Mode,Outcome,EncounterId);
+            var obs= ObsFamilyTraceResult.Create(Date,Mode,Outcome,Consent,Reminder,BookingDate,EncounterId);
             if (EditMode)
                 obs.Id = Id;
             return obs;
