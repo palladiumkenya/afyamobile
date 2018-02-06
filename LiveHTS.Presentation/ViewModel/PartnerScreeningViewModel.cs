@@ -62,6 +62,17 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _allowScreening;
         private bool _allowEligibility;
         private bool _makeEligibile;
+        private List<CategoryItem> _pnsAccepted;
+        private CategoryItem _selectedPnsAccepted;
+        private List<CategoryItem> _ipvOutcome;
+        private CategoryItem _selectedIpvOutcome;
+        private string _occupation;
+        private List<CategoryItem> _pnsRealtionship;
+        private CategoryItem _selectedPnsRealtionship;
+        private List<CategoryItem> _livingWithClient;
+        private CategoryItem _selectedLivingWithClient;
+        private List<CategoryItem> _pnsApproach;
+        private CategoryItem _selectedPnsApproach;
 
 
         public PartnerScreeningViewModel(ISettings settings, IDialogService dialogService,
@@ -102,9 +113,16 @@ namespace LiveHTS.Presentation.ViewModel
             EncounterTypeId = new Guid(encounterTypeId);
 
 
-            var hivstatus = _lookupService.GetCategoryItems("PartnerHIVStatus", true).ToList();
+            var hivstatus = _lookupService.GetCategoryItems("PNSKnowledgeHIVStatus", true).ToList();
             HIVStatus = hivstatus;
             _settings.AddOrUpdateValue("lookup.hivstatus", JsonConvert.SerializeObject(hivstatus));
+
+
+            var pnsAccepted = _lookupService.GetCategoryItems("IPVScreening", true).ToList();
+            PnsAccepted = pnsAccepted;
+            _settings.AddOrUpdateValue("lookup.pnsAccepted", JsonConvert.SerializeObject(pnsAccepted));
+
+
             var ipvscreening = _lookupService.GetCategoryItems("IPVScreening", true).ToList();
             IPVScreening = ipvscreening;
             _settings.AddOrUpdateValue("lookup.ipvscreening", JsonConvert.SerializeObject(ipvscreening));
@@ -120,6 +138,22 @@ namespace LiveHTS.Presentation.ViewModel
             var sexuallyUncomfortable = _lookupService.GetCategoryItems("IPVScreening", true).ToList();
             SexuallyUncomfortable = sexuallyUncomfortable;
             _settings.AddOrUpdateValue("lookup.sexuallyUncomfortable", JsonConvert.SerializeObject(sexuallyUncomfortable));
+
+            var ipvoutcome = _lookupService.GetCategoryItems("IPVOutcome", true).ToList();
+            PnsAccepted = ipvoutcome;
+            _settings.AddOrUpdateValue("lookup.ipvoutcome", JsonConvert.SerializeObject(ipvoutcome));
+
+            var pNSRealtionship = _lookupService.GetCategoryItems("PNSRealtionship", true).ToList();
+            PNSRealtionship = pNSRealtionship;
+            _settings.AddOrUpdateValue("lookup.pNSRealtionship", JsonConvert.SerializeObject(pNSRealtionship));
+
+            var livingWithClient = _lookupService.GetCategoryItems("PNSCurrentlyLivingWithClient", true).ToList();
+            LivingWithClient = livingWithClient;
+            _settings.AddOrUpdateValue("lookup.livingWithClient", JsonConvert.SerializeObject(livingWithClient));
+
+            var pNSApproach = _lookupService.GetCategoryItems("PNSApproach", true).ToList();
+            PNSApproach = pNSApproach;
+            _settings.AddOrUpdateValue("lookup.pNSApproach", JsonConvert.SerializeObject(pNSApproach));
 
             var eligibility = _lookupService.GetCategoryItems("IPVScreening", true).ToList();
             Eligibility = eligibility;
@@ -421,6 +455,26 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public List<CategoryItem> PnsAccepted
+        {
+            get { return _pnsAccepted; }
+            set
+            {
+                _pnsAccepted = value;
+                RaisePropertyChanged(() => PnsAccepted);
+            }
+        }
+
+        public CategoryItem SelectedPnsAccepted
+        {
+            get { return _selectedPnsAccepted; }
+            set
+            {
+                _selectedPnsAccepted = value;
+                RaisePropertyChanged(() => SelectedPnsAccepted);
+            }
+        }
+
         public TraceDateDTO SelectedScreeningDate
         {
             get { return _selectedScreeningDate; }
@@ -537,6 +591,50 @@ namespace LiveHTS.Presentation.ViewModel
                 UpdateEligibility();
             }
         }
+
+        public List<CategoryItem> IPVOutcome
+        {
+            get { return _ipvOutcome; }
+            set { _ipvOutcome = value; RaisePropertyChanged(() => IPVOutcome); }
+        }
+
+        public CategoryItem SelectedIPVOutcome
+        {
+            get { return _selectedIpvOutcome; }
+            set { _selectedIpvOutcome = value; RaisePropertyChanged(() => SelectedIPVOutcome); }
+        }
+
+        public string Occupation
+        {
+            get { return _occupation; }
+            set { _occupation = value; RaisePropertyChanged(() => Occupation); }
+        }
+
+        public List<CategoryItem> PNSRealtionship
+        {
+            get { return _pnsRealtionship; }
+            set { _pnsRealtionship = value; RaisePropertyChanged(() => PNSRealtionship); }
+        }
+
+        public CategoryItem SelectedPNSRealtionship
+        {
+            get { return _selectedPnsRealtionship; }
+            set { _selectedPnsRealtionship = value; RaisePropertyChanged(() => SelectedPNSRealtionship); }
+        }
+
+        public List<CategoryItem> LivingWithClient
+        {
+            get { return _livingWithClient; }
+            set { _livingWithClient = value; RaisePropertyChanged(() => LivingWithClient); }
+        }
+
+        public CategoryItem SelectedLivingWithClient
+        {
+            get { return _selectedLivingWithClient; }
+            set { _selectedLivingWithClient = value; RaisePropertyChanged(() => SelectedLivingWithClient); }
+        }
+
+
         public List<CategoryItem> HIVStatus
         {
             get { return _hivStatus; }
@@ -557,6 +655,20 @@ namespace LiveHTS.Presentation.ViewModel
                 UpdateEligibility();
             }
         }
+
+        public List<CategoryItem> PNSApproach
+        {
+            get { return _pnsApproach; }
+            set { _pnsApproach = value; RaisePropertyChanged(() => PNSApproach); }
+        }
+
+        public CategoryItem SelectedPNSApproach
+        {
+            get { return _selectedPnsApproach; }
+            set { _selectedPnsApproach = value; RaisePropertyChanged(() => SelectedPNSApproach); }
+        }
+
+
         public List<CategoryItem> Eligibility
         {
             get { return _eligibility; }
@@ -658,6 +770,12 @@ namespace LiveHTS.Presentation.ViewModel
                         SelectedEligibility.ItemId,
                         BookingDate,
                         Remarks,
+                        SelectedPnsAccepted.ItemId,
+                        SelectedIPVOutcome.ItemId,
+                        Occupation,
+                        SelectedPNSRealtionship.ItemId,
+                        SelectedLivingWithClient.ItemId,
+                        SelectedPNSApproach.ItemId,
                         EncounterId);
                 }
                 else
@@ -674,6 +792,13 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.Eligibility = SelectedEligibility.ItemId;
                     obs.BookingDate = BookingDate;
                     obs.Remarks = Remarks;
+
+                    obs.PnsAccepted = SelectedPnsAccepted.ItemId;
+                    obs.IPVOutcome = SelectedIPVOutcome.ItemId;
+                    obs.PNSRealtionship = SelectedPNSRealtionship.ItemId;
+                    obs.LivingWithClient = SelectedLivingWithClient.ItemId;
+                    obs.PNSApproach = SelectedPNSApproach.ItemId;
+
                 }
 
                 _partnerScreeningService.SavePartnerScreening(obs);

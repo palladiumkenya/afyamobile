@@ -76,6 +76,20 @@
               android:editable="false"
               local:MvxBind="Text ScreeningDate, Converter=Dmy; Click ShowScreeningDateDialogCommand" />
         </android.support.design.widget.TextInputLayout>
+
+        <TextView
+          android:text="PNS Accepted ?"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewPnsAccepted" />
+        <MvxSpinner
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="40dp"
+          android:id="@+id/spinnerPnsAccepted"
+          local:MvxBind="ItemsSource PnsAccepted;SelectedItem SelectedPnsAccepted" />
+        
+
         <TextView
             android:text="IPV Screening Done"
             android:layout_width="match_parent"
@@ -125,6 +139,56 @@
             android:textSize="40dp"
             android:id="@+id/spinnerSexuallyUncomfortable"
             local:MvxBind="ItemsSource SexuallyUncomfortable;SelectedItem SelectedSexuallyUncomfortable;Enabled AllowScreening" />
+      
+        <TextView
+          android:text="IPV Outcome?"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewIPVOutcome" />
+        <MvxSpinner
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="40dp"
+          android:id="@+id/spinnerIPVOutcome"
+          local:MvxBind="ItemsSource Threatened;IPVOutcome SelectedIPVOutcome" />
+
+        <android.support.design.widget.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Occupation"
+            local:MvxBind="Text Occupation" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <TextView
+          android:text="PNS Realtionship"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewPNSRealtionship" />
+        <MvxSpinner
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          android:textSize="40dp"
+          android:id="@+id/spinnerPNSRealtionship"
+          local:MvxBind="ItemsSource PNSRealtionship;SelectedItem SelectedPNSRealtionship" />
+
+        <TextView
+          android:text="Living With Client"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewLivingWithClient" />
+        <MvxSpinner
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          android:textSize="40dp"
+          android:id="@+id/spinnerLivingWithClient"
+          local:MvxBind="ItemsSource LivingWithClient;SelectedItem SelectedLivingWithClient" />
 
         <TextView
             android:text="HIV Status"
@@ -137,6 +201,19 @@
             android:textSize="40dp"
             android:id="@+id/spinnerHIVStatus"
             local:MvxBind="ItemsSource HIVStatus;SelectedItem SelectedHIVStatus" />
+
+        <TextView
+          android:text="PNS Approach"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewPNSApproach" />
+        <MvxSpinner
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          android:textSize="40dp"
+          android:id="@+id/spinnerPNSApproach"
+          local:MvxBind="ItemsSource PNSApproach;SelectedItem SelectedPNSApproach" />
 
         <TextView
             android:text="Eligibile for Testing"
@@ -165,16 +242,6 @@
         </android.support.design.widget.TextInputLayout>
 
 
-<!--        <android.support.design.widget.TextInputLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-<!--          <EditText-->
-<!--              android:id="@+id/editText"-->
-<!--              android:layout_width="match_parent"-->
-<!--              android:layout_height="wrap_content"-->
-<!--              android:hint="Remarks"-->
-<!--              local:MvxBind="Text Remarks" />-->
-<!--        </android.support.design.widget.TextInputLayout>-->
 
 
         <LinearLayout
