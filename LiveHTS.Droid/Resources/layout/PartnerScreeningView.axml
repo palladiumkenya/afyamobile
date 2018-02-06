@@ -150,7 +150,7 @@
           android:layout_height="wrap_content"
           android:textSize="40dp"
           android:id="@+id/spinnerIPVOutcome"
-          local:MvxBind="ItemsSource Threatened;IPVOutcome SelectedIPVOutcome" />
+          local:MvxBind="ItemsSource IPVOutcome;SelectedItem SelectedIPVOutcome" />
 
         <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"

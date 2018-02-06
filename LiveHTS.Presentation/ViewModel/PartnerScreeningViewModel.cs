@@ -140,7 +140,7 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("lookup.sexuallyUncomfortable", JsonConvert.SerializeObject(sexuallyUncomfortable));
 
             var ipvoutcome = _lookupService.GetCategoryItems("IPVOutcome", true).ToList();
-            PnsAccepted = ipvoutcome;
+            IPVOutcome = ipvoutcome;
             _settings.AddOrUpdateValue("lookup.ipvoutcome", JsonConvert.SerializeObject(ipvoutcome));
 
             var pNSRealtionship = _lookupService.GetCategoryItems("PNSRealtionship", true).ToList();
@@ -199,6 +199,13 @@ namespace LiveHTS.Presentation.ViewModel
             var sexuallyUncomfortableJson = _settings.GetValue("lookup.sexuallyUncomfortable", "");
             var eligibilityJson = _settings.GetValue("lookup.eligibility", "");
 
+ 
+            var pnsAcceptedJson = _settings.GetValue("lookup.pnsAccepted", "");
+            var ipvoutcomeJson = _settings.GetValue("lookup.ipvoutcome", "");
+            var pNSRealtionshipJson = _settings.GetValue("lookup.pNSRealtionship", "");
+            var pNSApproachJson = _settings.GetValue("lookup.pNSApproach", "");
+
+
             if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
             {
                 Client = JsonConvert.DeserializeObject<Client>(clientJson);
@@ -240,6 +247,13 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Eligibility = JsonConvert.DeserializeObject<List<CategoryItem>>(eligibilityJson);
             }
+
+
+            var pnsAcceptedJson;
+            var ipvoutcomeJson;
+            var pNSRealtionshipJson;
+            var pNSApproachJson;
+
 
             if (null == Encounter && !string.IsNullOrWhiteSpace(clientEncounterJson))
             {
