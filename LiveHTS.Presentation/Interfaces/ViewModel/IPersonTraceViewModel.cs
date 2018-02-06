@@ -38,7 +38,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedConsent { get; set; }
 
         
-        DateTime BookingDate { get; set; }
+        DateTime? BookingDate { get; set; }
 
         Guid EncounterId { get; set; }
         IMvxCommand SaveTraceCommand { get; }

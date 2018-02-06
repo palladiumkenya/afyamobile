@@ -208,7 +208,7 @@ namespace LiveHTS.Presentation.ViewModel
                 Date = TestResult.Date;
                 SelectedMode = Modes.FirstOrDefault(x=>x.ItemId== TestResult.Mode);
                 SelectedOutcome =Outcomes.FirstOrDefault(x => x.ItemId == TestResult.Outcome);
-                SelectedConsent = Consents.FirstOrDefault(x => x.ItemId == TestResult.Outcome);
+                SelectedConsent = Consents.FirstOrDefault(x => x.ItemId == TestResult.Consent);
                 BookingDate = TestResult.BookingDate;
             }
         }
@@ -219,6 +219,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
+            SelectedConsent = Consents.OrderBy(x => x.Rank).FirstOrDefault();
         }
 
         public void Init(string id)

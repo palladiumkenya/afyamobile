@@ -41,7 +41,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _consent;
         private List<CategoryItem> _consents;
         private CategoryItem _selectedConsent;
-        private DateTime _bookingDate;
+        private DateTime? _bookingDate;
 
         public bool EditMode
         {
@@ -159,7 +159,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public DateTime BookingDate
+        public DateTime? BookingDate
         {
             get { return _bookingDate; }
             set { _bookingDate = value; RaisePropertyChanged(() => BookingDate);}
@@ -184,7 +184,8 @@ namespace LiveHTS.Presentation.ViewModel
         public PersonTraceViewModel()
         {
             Validator = new ValidationHelper();
-            Date=Reminder=BookingDate=DateTime.Today;
+            BookingDate = Date =Reminder=DateTime.Today;
+           
             
             _tracingService =  Mvx.Resolve<IMemberTracingService>();
             _settings = Mvx.Resolve<ISettings>();
@@ -216,15 +217,18 @@ namespace LiveHTS.Presentation.ViewModel
                 SelectedMode = Modes.FirstOrDefault(x=>x.ItemId== TestResult.Mode);
                 SelectedOutcome =Outcomes.FirstOrDefault(x => x.ItemId == TestResult.Outcome);
                 SelectedConsent = Consents.FirstOrDefault(x => x.ItemId == TestResult.Consent);
+                BookingDate = TestResult.BookingDate;
             }
         }
 
         private void Clear()
         {
-            Date = Reminder = BookingDate= DateTime.Today;
+            BookingDate=Date = Reminder = DateTime.Today;
+          
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedConsent=Consents.OrderBy(x => x.Rank).FirstOrDefault();
+
         }
 
         public void Init(string id)
