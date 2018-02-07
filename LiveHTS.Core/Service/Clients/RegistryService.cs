@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Subject;
@@ -185,6 +186,11 @@ namespace LiveHTS.Core.Service.Clients
 
             //create Client
             _clientRepository.InsertOrUpdate(client);
+        }
+
+        public async Task Download(Client client)
+        {
+            await Task.Run(() => SaveOrUpdate(client));
         }
 
         public void Delete(Guid clientId)
