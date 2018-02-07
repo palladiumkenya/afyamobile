@@ -115,6 +115,8 @@
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
     <Compile Include="Model\Config\ServerConfig.cs" />
+    <Compile Include="Model\ClientToDeleteDTO.cs" />
+    <Compile Include="Model\EnconterToDeleteDTO.cs" />
     <Compile Include="Model\Interview\ObsPartnerScreening.cs" />
     <Compile Include="Model\Interview\ObsPartnerTraceResult.cs" />
     <Compile Include="Model\Interview\ObsFamilyTraceResult.cs" />

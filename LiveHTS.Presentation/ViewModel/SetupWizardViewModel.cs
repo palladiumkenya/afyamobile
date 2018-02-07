@@ -120,6 +120,7 @@ namespace LiveHTS.Presentation.ViewModel
             _settings = settings;
             _emrService = emrService;
             Emr = "IQCare";
+            
             SetupAction = "Setup";
         }
         public void Init()
@@ -164,6 +165,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null == Local)
                 {
                     Local = new ServerConfig();
+                    Local.Address = "http://52.178.24.227:4747";
                 }
                 else
                 {

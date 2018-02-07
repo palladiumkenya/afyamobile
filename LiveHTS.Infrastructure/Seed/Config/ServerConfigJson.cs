@@ -22,7 +22,7 @@ namespace LiveHTS.Infrastructure.Seed.Config
   },
   {
     ^Id^: ^hapi.local^,    
-    ^Address^: ^http://41.206.32.54:4747/^,
+    ^Address^: ^http://52.178.24.227:4747/^,
     ^Code^: ^^,
     ^Name^: ^^,
     ^Instance^: ^00000000-0000-0000-0000-000000000000^,

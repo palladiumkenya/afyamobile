@@ -19,7 +19,7 @@ using MvvmCross.Droid.Support.V7.AppCompat;
 
 namespace LiveHTS.Droid.Activities
 {
-    [Activity(Label = "HIV Tests", ParentActivity = typeof(DashboardViewModel), ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
+    [Activity(Label = "HIV Tests", ParentActivity = typeof(DashboardActivity), LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.KeyboardHidden)]
     public class TestingActivity : MvxCachingFragmentCompatActivity<TestingViewModel>
     {
         protected override void OnCreate(Bundle savedInstanceState)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Infrastructure.Repository.Subject
@@ -181,6 +182,45 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
 
             return clients;
+        }
+
+        public void Purge(Guid id)
+        {
+            _db.Execute($"DELETE FROM {nameof(ClientIdentifier)} WHERE ClientId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(Client)} WHERE Id=?", id.ToString());
+        }
+
+        private void DeleteClientData(Guid id)
+        {
+            var personIds = _db.Table<Client>().Where(x => x.Id == id).Select(x => x.PersonId).ToList();
+            var encounterIds = _db.Table<Encounter>().Where(x => x.ClientId == id).Select(x => x.Id).ToList();
+
+            //Encounter
+
+            foreach (var encounterId in encounterIds)
+            {
+                _db.Table<Obs>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsTestResult>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsFinalTestResult>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsLinkage>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsMemberScreening>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsFamilyTraceResult>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsPartnerScreening>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsPartnerTraceResult>().Delete(x => x.EncounterId == encounterId); 
+            }
+
+            //Client
+
+            _db.Table<ClientRelationship>().Delete(x => x.ClientId == id);
+            _db.Table<ClientIdentifier>().Delete(x => x.ClientId ==id);
+            //Person
+
+            foreach (var personId in personIds)
+            {
+                _db.Table<PersonAddress>().Delete(x => x.PersonId == personId);
+                _db.Table<PersonContact>().Delete(x => x.PersonId == personId);
+                _db.Table<Person>().Delete(x => x.Id == personId);
+            }
         }
     }
 }

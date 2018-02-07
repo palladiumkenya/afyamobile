@@ -416,6 +416,7 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
                     ObsFinalTestResult.Remarks = Remarks;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
+                    _testingService.MarkEncounterCompleted(ObsFinalTestResult.EncounterId,true);
                     Encounter = _testingService.OpenEncounter(Encounter.Id);
 
                     _dialogService.ShowToast("Tests saved successfully");
