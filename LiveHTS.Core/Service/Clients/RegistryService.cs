@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Core.Service.Clients
@@ -14,13 +16,15 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IClientIdentifierRepository _clientIdentifierRepository;
         private readonly IPersonRepository _personRepository;
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
+        private readonly IEncounterRepository _encounterRepository;
 
-        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository)
+        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository)
         {
             _clientRepository = clientRepository;
             _clientIdentifierRepository = clientIdentifierRepository;
             _personRepository = personRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
+            _encounterRepository = encounterRepository;
         }
         public Client Load(Guid id)
         {
@@ -188,12 +192,16 @@ namespace LiveHTS.Core.Service.Clients
             _clientRepository.InsertOrUpdate(client);
         }
 
-        public async Task Download(Client client)
+        public async Task Download(Client client,List<Encounter> encounters)
         {
             await Task.Run(() =>
             {
                 client.Downloaded = true;
                 SaveOrUpdate(client);
+                foreach (var encounter in encounters)
+                {
+                    _encounterRepository.Upload(encounter);
+                }
             });
         }
 

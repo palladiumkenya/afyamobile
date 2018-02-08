@@ -110,9 +110,14 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             IsBusy = true;
             _dialogService.ShowWait($"Downloading,Please wait...");
-            SelectedClient = selectedClient;
-            await _registryService.Download(SelectedClient);
-            _dialogService.HideWait();
+            var remoteData = await _clientSyncService.DownloadClient(Address,selectedClient.Id);
+            if (null != remoteData)
+            {
+                SelectedClient = remoteData.Client;
+                var encounters = remoteData.Encounters;
+                await _registryService.Download(SelectedClient,encounters);
+            }
+           _dialogService.HideWait();
             IsBusy = false;
             ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
         }

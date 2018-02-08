@@ -13,6 +13,12 @@ namespace LiveHTS.Infrastructure.Repository.Survey
         public ModuleRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
         }
+
+        public int Count()
+        {
+           return _db.Table<Module>().Count();
+        }
+
         public Module GetDefaultModule()
         {
             var modules = GetAll().ToList();

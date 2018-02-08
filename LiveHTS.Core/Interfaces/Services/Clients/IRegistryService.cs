@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Core.Interfaces.Services.Clients
@@ -16,7 +17,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         void Save(Client client,Guid cohortId);
         void UpdateRelationShips(string relationshipTypeId,Guid clientId, Guid otherClientId);
         void SaveOrUpdate(Client client);
-        Task Download(Client client);
+        Task Download(Client client,List<Encounter> encounters);
 
         void Delete(Guid clientId);
     }

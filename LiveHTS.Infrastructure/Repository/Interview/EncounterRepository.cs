@@ -329,20 +329,47 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             Update(encounter);
         }
 
-        public void Purge(Guid id, string obsName)
+        public void Upload(Encounter encounter)
+        {
+            Purge(encounter.Id);
+            InsertOrUpdate(encounter);
+
+            if(encounter.Obses.Any())
+                _db.InsertAll(encounter.Obses);
+            if (encounter.ObsLinkages.Any())
+                _db.InsertAll(encounter.ObsLinkages);
+            if (encounter.ObsTraceResults.Any())
+                _db.InsertAll(encounter.ObsTraceResults);
+            if (encounter.ObsTestResults.Any())
+                _db.InsertAll(encounter.ObsTestResults);
+            if (encounter.ObsFinalTestResults.Any())
+                _db.InsertAll(encounter.ObsFinalTestResults);
+            if (encounter.ObsMemberScreenings.Any())
+                _db.InsertAll(encounter.ObsMemberScreenings);
+            if (encounter.ObsFamilyTraceResults.Any())
+                _db.InsertAll(encounter.ObsFamilyTraceResults);
+            if (encounter.ObsPartnerScreenings.Any())
+                _db.InsertAll(encounter.ObsPartnerScreenings);
+            if (encounter.ObsPartnerTraceResults.Any())
+                _db.InsertAll(encounter.ObsPartnerTraceResults);
+        }
+
+        public void Purge(Guid id, string obsName="")
         {
 
             _db.Execute($"DELETE FROM {nameof(Obs)} WHERE EncounterId=?", id.ToString());
-            _db.Execute($"DELETE FROM {nameof(ObsPartnerTraceResult)} WHERE EncounterId=?", id.ToString());
-            _db.Execute($"DELETE FROM {nameof(ObsPartnerScreening)} WHERE EncounterId=?", id.ToString());
-            _db.Execute($"DELETE FROM {nameof(ObsTraceResult)} WHERE EncounterId=?", id.ToString());
-            _db.Execute($"DELETE FROM {nameof(ObsLinkage)} WHERE EncounterId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ObsTestResult)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsFinalTestResult)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsLinkage)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsTraceResult)} WHERE EncounterId=?", id.ToString());
+
             _db.Execute($"DELETE FROM {nameof(ObsFamilyTraceResult)} WHERE EncounterId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ObsMemberScreening)} WHERE EncounterId=?", id.ToString());
-            _db.Execute($"DELETE FROM {nameof(ObsFinalTestResult)} WHERE EncounterId=?", id.ToString());
-            _db.Execute($"DELETE FROM {nameof(ObsFinalTestResult)} WHERE EncounterId=?", id.ToString());
 
+            _db.Execute($"DELETE FROM {nameof(ObsPartnerTraceResult)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsPartnerScreening)} WHERE EncounterId=?", id.ToString());
+          
+        
         }
 
         public void PurgeAny(Guid id)

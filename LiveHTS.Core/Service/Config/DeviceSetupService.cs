@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Subject;
+using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
@@ -17,8 +18,9 @@ namespace LiveHTS.Core.Service.Config
         private readonly IPersonRepository _personRepository;
         private readonly IProviderRepository _providerRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IModuleRepository _moduleRepository;
 
-        public DeviceSetupService(IDeviceRepository deviceRepository, IServerConfigRepository serverConfigRepository, IPracticeRepository practiceRepository, IPersonRepository personRepository, IProviderRepository providerRepository, IUserRepository userRepository)
+        public DeviceSetupService(IDeviceRepository deviceRepository, IServerConfigRepository serverConfigRepository, IPracticeRepository practiceRepository, IPersonRepository personRepository, IProviderRepository providerRepository, IUserRepository userRepository, IModuleRepository moduleRepository)
         {
             _deviceRepository = deviceRepository;
             _serverConfigRepository = serverConfigRepository;
@@ -26,12 +28,19 @@ namespace LiveHTS.Core.Service.Config
             _personRepository = personRepository;
             _providerRepository = providerRepository;
             _userRepository = userRepository;
+            _moduleRepository = moduleRepository;
         }
 
         public bool IsSetup()
         {
             var local = GetLocal();
             return null != local && local.IsSetupComplete();
+        }
+
+        public bool HasPulledData()
+        {
+          
+            return _moduleRepository.Count()>0;
         }
 
         public Device GetDefault(Guid deviceId)

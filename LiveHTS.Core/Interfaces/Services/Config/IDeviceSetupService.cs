@@ -8,6 +8,7 @@ namespace LiveHTS.Core.Interfaces.Services.Config
     public interface IDeviceSetupService
     {
         bool IsSetup();
+        bool HasPulledData();
         Device GetDefault(Guid deviceId);
         Device GetDefault(string serial="");
         ServerConfig GetCentral();
