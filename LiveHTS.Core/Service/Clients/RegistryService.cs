@@ -190,7 +190,11 @@ namespace LiveHTS.Core.Service.Clients
 
         public async Task Download(Client client)
         {
-            await Task.Run(() => SaveOrUpdate(client));
+            await Task.Run(() =>
+            {
+                client.Downloaded = true;
+                SaveOrUpdate(client);
+            });
         }
 
         public void Delete(Guid clientId)
