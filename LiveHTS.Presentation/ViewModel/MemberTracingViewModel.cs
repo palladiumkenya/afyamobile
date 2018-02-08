@@ -264,6 +264,7 @@ namespace LiveHTS.Presentation.ViewModel
         public void SaveTrace(ObsFamilyTraceResult test)
         {
             _tracingService.SaveTest(test);
+            _tracingService.MarkEncounterCompleted(test.EncounterId,true);
             Encounter = _tracingService.OpenEncounter(Encounter.Id);
         }
 

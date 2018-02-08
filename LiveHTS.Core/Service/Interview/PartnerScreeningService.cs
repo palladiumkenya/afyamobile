@@ -59,5 +59,10 @@ namespace LiveHTS.Core.Service.Interview
         {
             _obsPartnerScreeningRepository.SaveOrUpdate(testResult);
         }
+
+        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        {
+            _encounterRepository.UpdateStatus(encounterId, completed);
+        }
     }
 }

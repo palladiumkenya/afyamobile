@@ -885,6 +885,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
 
                 _partnerScreeningService.SavePartnerScreening(obs);
+                _partnerScreeningService.MarkEncounterCompleted(EncounterId, true);
                 ShowViewModel<DashboardViewModel>(new {id = Client.Id});
             }
         }

@@ -408,6 +408,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
 
                 _memberScreeningService.SaveMemberScreening(obs);
+                _memberScreeningService.MarkEncounterCompleted(EncounterId,true);
                 ShowViewModel<DashboardViewModel>(new { id = Client.Id });
             }
         }
