@@ -71,5 +71,22 @@
             android:paddingRight="5dp" />
       </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:background="#FFFFFF"
+        android:layout_weight=".1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+      <ImageView
+          android:id="@+id/regimageView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_cloud_done"
+       
+          local:MvxBind="Visibility Downloaded, Converter=ShowControl"
+       
+
+                />
+
+    </LinearLayout>
   </LinearLayout>
 </LinearLayout>

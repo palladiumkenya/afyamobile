@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Presentation.DTO;
+using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
 using MvvmValidation;
@@ -21,6 +23,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid Id { get; set; }
 
         DateTime Date { get; set; }
+        DateTime Reminder { get; set; }
+     
         Guid Mode { get; set; }
         List<CategoryItem> Modes { get; set; }
         CategoryItem SelectedMode { get; set; }
@@ -28,6 +32,14 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid Outcome { get; set; }
         List<CategoryItem> Outcomes { get; set; }
         CategoryItem SelectedOutcome { get; set; }
+
+        Guid Consent { get; set; }
+        List<CategoryItem> Consents { get; set; }
+        CategoryItem SelectedConsent { get; set; }
+
+        
+        DateTime? BookingDate { get; set; }
+
         Guid EncounterId { get; set; }
         IMvxCommand SaveTraceCommand { get; }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Model.Subject;
@@ -21,6 +22,11 @@ namespace LiveHTS.Infrastructure.Repository.Subject
              User.Person= _db.Table<Person>().FirstOrDefault(x => x.Id == User.PersonId);
             }
             return User;
+        }
+
+        public void Sync(List<User> providers)
+        {
+            throw new NotImplementedException();
         }
     }
 }

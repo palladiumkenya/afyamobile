@@ -7,6 +7,7 @@ using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
+using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
@@ -19,12 +20,14 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IClientRepository _clientRepository;
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IEncounterRepository _encounterRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public ClientReaderService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository)
+        public ClientReaderService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IPersonRepository personRepository)
         {
             _clientRepository = clientRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
             _encounterRepository = encounterRepository;
+            _personRepository = personRepository;
         }
 
         public Client LoadClient(Guid clientId)
@@ -45,6 +48,44 @@ namespace LiveHTS.Core.Service.Clients
         public List<Encounter> LoadEncounters(Guid clientId)
         {
             return _encounterRepository.LoadAll(clientId).ToList();
+        }
+
+        public void Purge(ClientToDeleteDTO toDeleteDto)
+        {
+            foreach (var enconterToDeleteDto in toDeleteDto.EnconterToDeleteDtos)
+            {
+                _encounterRepository.Purge(enconterToDeleteDto.Id,enconterToDeleteDto.Name);
+                _encounterRepository.Delete(enconterToDeleteDto.Id);
+            }
+
+            _clientRepository.Purge(toDeleteDto.Id);
+
+            _personRepository.Delete(toDeleteDto.PersonId);
+
+            _clientRelationshipRepository.Purge(toDeleteDto.Id);
+
+            Purge(toDeleteDto.Id);
+
+        
+        }
+
+        public void Purge(Guid id)
+        {
+            var rel = _clientRelationshipRepository.GetAll(x => x.ClientId == id).Select(x => x.RelatedClientId)
+                .ToList();
+
+            foreach (var guid in rel)
+            {
+              _encounterRepository.PurgeAny(guid);
+
+                _clientRepository.Delete(id);
+
+                _personRepository.Purge(id);
+
+                _clientRelationshipRepository.PurgeRel(guid);
+
+                Purge(guid);
+            }
         }
     }
 }

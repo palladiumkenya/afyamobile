@@ -16,6 +16,7 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class RemoteSearchViewModel:MvxViewModel,IRemoteSearchViewModel
     {
+        private readonly IRegistryService _registryService;
         private readonly ISettings _settings;
         private readonly IRemoteSearchService _remoteSearchService;
         private readonly IDeviceSetupService _deviceSetupService;
@@ -100,14 +101,24 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
        
-        private void SelectClient(Client selectedClient)
+        private async void SelectClient(Client selectedClient)
         {
-            _dialogService.Alert("Downloads are currently not enabled !");
-            return;
+           // _dialogService.Alert("Downloads are currently not enabled !");
+
 
             if (null==selectedClient)
                 return;
-            SelectedClient = selectedClient;
+            IsBusy = true;
+            _dialogService.ShowWait($"Downloading,Please wait...");
+            var remoteData = await _clientSyncService.DownloadClient(Address,selectedClient.Id);
+            if (null != remoteData)
+            {
+                SelectedClient = remoteData.Client;
+                var encounters = remoteData.Encounters;
+                await _registryService.Download(SelectedClient,encounters);
+            }
+           _dialogService.HideWait();
+            IsBusy = false;
             ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
         }
 
@@ -155,6 +166,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public RemoteSearchViewModel()
         {
+            _registryService = Mvx.Resolve<IRegistryService>();
             _clientSyncService = Mvx.Resolve<IClientSyncService>();
             _chohortClientsSyncService = Mvx.Resolve<IChohortClientsSyncService>(); ;
             _deviceSetupService = Mvx.Resolve<IDeviceSetupService>();

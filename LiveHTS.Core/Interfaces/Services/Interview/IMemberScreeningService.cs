@@ -10,5 +10,6 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
         Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId);
         IEnumerable<Encounter> LoadEncounter(Guid clientId, Guid encounterTypeId);
         void SaveMemberScreening(ObsMemberScreening testResult);
+        void MarkEncounterCompleted(Guid encounterId, bool completed);
     }
 }

@@ -185,7 +185,7 @@ namespace LiveHTS.Presentation.ViewModel
                     IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                     if (null != IndexClientDTO)
                     {
-                        IndexClientName = IndexClientDTO.ToString();
+                        IndexClientName =$"Relation To Index [{IndexClientDTO}]" ;
                         Title = $"Profile [{IndexClientDTO.RelType}]";
                         RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
                     }
@@ -206,7 +206,7 @@ namespace LiveHTS.Presentation.ViewModel
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
                 {
-                    IndexClientName = IndexClientDTO.ToString();
+                    IndexClientName = $"Relation To Index [{IndexClientDTO}]";
                     Title = $"Profile [{IndexClientDTO.RelType}]";
                     RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
                 }

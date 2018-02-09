@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
@@ -27,8 +28,12 @@ namespace LiveHTS.Core.Model.Subject
         [Indexed]
         public Guid? CohortId { get; set; }
         public bool EncountersDownloaded { get; set; }
+        public bool Downloaded { get; set; }
 
-
+        [Ignore]
+        public IEnumerable<ClientRelationship> MyRelationships { get; set; }=new List<ClientRelationship>();
+        [Ignore]
+        public IEnumerable<ClientRelationship> RelatedToMe { get; set; } = new List<ClientRelationship>();
         public Client()
         {
             Id = LiveGuid.NewGuid();

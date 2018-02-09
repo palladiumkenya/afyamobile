@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
@@ -58,6 +59,25 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                     InsertOrUpdateAny(a);
                 }
             }
+        }
+
+        public override void Delete(Guid id)
+        {
+            _db.Execute($"DELETE FROM {nameof(PersonAddress)} WHERE PersonId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(PersonContact)} WHERE PersonId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(Person)} WHERE Id=?", id.ToString());
+        }
+
+        public void Sync(List<Person> providers)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Purge(Guid id)
+        {
+            _db.Execute($"DELETE FROM {nameof(PersonAddress)} WHERE PersonId IN (SELECT PersonId FROM {nameof(Client)} WHERE Id=?)", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(PersonContact)} WHERE PersonId IN (SELECT PersonId FROM {nameof(Client)} WHERE Id=?)", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(Person)} WHERE Id IN (SELECT PersonId FROM {nameof(Client)} WHERE Id=?)", id.ToString());
         }
     }
 }

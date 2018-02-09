@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
+using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -11,6 +14,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly ISettings _settings;
         private readonly IRegistryService _registryService;
+        private readonly IDeviceSetupService _deviceSetupService;
         private IEnumerable<Client> _clients;
         private bool _isBusy;
         private string _search;
@@ -21,6 +25,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand<Client> _clientSelectedCommand;
         private  IMvxCommand _registerClientCommand;
         private  IMvxCommand _openRemoteRegisteryCommand;
+        private readonly IDialogService _dialogService;
 
         public string Search
         {
@@ -96,7 +101,16 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void OpenRemoteRegistery()
         {
-            ShowViewModel<RemoteRegistryViewModel>();
+         
+            if (_deviceSetupService.HasPulledData())
+            {
+                ShowViewModel<RemoteRegistryViewModel>();
+            }
+            else
+            {
+                _dialogService.Alert("Please Pull Data before accessing the registry !");
+            }
+
         }
 
 
@@ -107,8 +121,15 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void RegisterClient()
         {
-            ClearCache(_settings);
-            ShowViewModel<ClientRegistrationViewModel>(new{mode="new"});
+            if (_deviceSetupService.HasPulledData())
+            {
+                ClearCache(_settings);
+                ShowViewModel<ClientRegistrationViewModel>(new { mode = "new" });
+            }
+            else
+            {
+                _dialogService.Alert("Please Pull Data before proceeding !");
+            }
         }
 
         private void SelectClient(Client selectedClient)
@@ -147,10 +168,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public RegistryViewModel(IRegistryService registryService, ISettings settings)
+        public RegistryViewModel(IRegistryService registryService, ISettings settings, IDialogService dialogService, IDeviceSetupService deviceSetupService)
         {
             _registryService = registryService;
             _settings = settings;
+            _dialogService = dialogService;
+            _deviceSetupService = deviceSetupService;
         }
 
         public override void Start()

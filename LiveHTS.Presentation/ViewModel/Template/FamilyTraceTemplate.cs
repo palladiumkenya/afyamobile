@@ -22,9 +22,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string ModeDisplay { get; set; }
         public Guid Outcome { get; set; }
         public string OutcomeDisplay { get; set; }
+        public Guid? Consent { get; set; }
+        public string ConsentDisplay { get; set; }
+        public DateTime? Reminder { get; set; }
+        public DateTime? BookingDate { get; set; }
         public Guid EncounterId { get; set; }
 
-        public FamilyTraceTemplate(ObsFamilyTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes)
+        public FamilyTraceTemplate(ObsFamilyTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents)
         {
             TraceResult = testResult;
 
@@ -47,11 +51,25 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 }
             }
 
+            if (null != consents && consents.Count > 0)
+            {
+                var result = consents.FirstOrDefault(x => x.ItemId == testResult.Consent);
+                if (null != result)
+                {
+                    ConsentDisplay = result.Display;
+
+                }
+            }
+
             Id = testResult.Id;
             Date = testResult.Date;
             Mode = testResult.Mode;
             Outcome = testResult.Outcome;
-            EncounterId = testResult.EncounterId;            
+            EncounterId = testResult.EncounterId;
+            Consent = testResult.Consent;
+            Reminder = testResult.Reminder;
+            BookingDate = testResult.BookingDate;
+
         }
 
        

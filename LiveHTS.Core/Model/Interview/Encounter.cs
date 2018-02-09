@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -15,6 +16,8 @@ namespace LiveHTS.Core.Model.Interview
         public Guid FormId { get; set; }
         [Indexed]
         public Guid EncounterTypeId { get; set; }
+        [Ignore]
+        public EncounterType EncounterType { get; set; }
         public DateTime EncounterDate { get; set; }
         [Indexed]
         public Guid ProviderId { get; set; }

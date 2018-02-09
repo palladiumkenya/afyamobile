@@ -17,21 +17,6 @@ namespace LiveHTS.Infrastructure.Seed.Config
     ^Voided^: 0
   },
   {
-    ^Id^: ^SW^,
-    ^Name^: ^Sex worker^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^MSM^,
-    ^Name^: ^Men who have sex with men^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^IDU^,
-    ^Name^: ^Intravenous drug users^,
-    ^Voided^: 0
-  },
-  {
     ^Id^: ^O^,
     ^Name^: ^Others^,
     ^Voided^: 0

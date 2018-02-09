@@ -54,6 +54,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid SelfTestOption { get; set; }
         CategoryItem SelectedSelfTest { get; set; }
         List<CategoryItem> SelfTestOptions { get; set; }
+        string Remarks { get; set; }
 
         List<CategoryItem> Kits { get; set; }
         

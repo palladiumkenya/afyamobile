@@ -16,6 +16,13 @@ namespace LiveHTS.Core.Model.Interview
         public Guid Outcome { get; set; }
         [Ignore]
         public string OutcomeDisplay { get; set; }
+
+        public Guid? Consent { get; set; }
+        [Ignore]
+        public string ConsentDisplay { get; set; }
+        public DateTime? Reminder { get; set; }
+        public DateTime? BookingDate { get; set; }
+
         public Guid EncounterId { get; set; }
 
         public ObsFamilyTraceResult()
@@ -23,27 +30,30 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsFamilyTraceResult(DateTime date, Guid mode, Guid outcome, Guid encounterId) : this()
+        public ObsFamilyTraceResult(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder , DateTime? bookingDate ,Guid encounterId) : this()
         {
             Date = date;
             Mode = mode;
             Outcome = outcome;
             EncounterId = encounterId;
+            Consent = consent;
+            Reminder = reminder;
+            BookingDate = bookingDate;
         }
 
-        public static ObsFamilyTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome, Guid encounterId)
+        public static ObsFamilyTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId)
         {
-            var obs = new ObsFamilyTraceResult(date, mode, outcome, encounterId);
+            var obs = new ObsFamilyTraceResult(date, mode, outcome,consent,reminder,bookingDate, encounterId);
             obs.Id = id;
             return obs;
         }
-        public static ObsFamilyTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid encounterId)
+        public static ObsFamilyTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId)
         {
-            return new ObsFamilyTraceResult(date, mode, outcome, encounterId);
+            return new ObsFamilyTraceResult(date, mode, outcome, consent,reminder,bookingDate,encounterId);
         }
-        public static ObsFamilyTraceResult CreateNew(DateTime date, Guid mode, Guid outcome, Guid encounterId)
+        public static ObsFamilyTraceResult CreateNew(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId)
         {
-            return new ObsFamilyTraceResult(date, mode, outcome, encounterId);
+            return new ObsFamilyTraceResult(date, mode, outcome,consent,reminder,bookingDate, encounterId);
         }
         public static ObsFamilyTraceResult CreateNew(Guid encounterId)
         {

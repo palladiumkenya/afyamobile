@@ -76,6 +76,11 @@ namespace LiveHTS.Core.Service.Interview
            
         }
 
+        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        {
+            _encounterRepository.UpdateStatus(encounterId, completed);
+        }
+
         private void LoadItems()
         {
             if (null != _categoryItems && _categoryItems.Count > 0)

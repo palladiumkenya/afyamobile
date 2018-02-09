@@ -216,6 +216,7 @@ namespace LiveHTS.Presentation.ViewModel
             Central = new ServerConfig("hapi.central");
             var practice = await _activationService.GetCentral(CentralAddress);
             _dialogService.HideWait();
+
             if (null != practice)
             {
                 //Activate Device

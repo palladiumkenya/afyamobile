@@ -192,24 +192,34 @@
           android:layout_height="wrap_content"
           local:MvxBind="ItemsSource CoupleDiscordantOptions; SelectedItem SelectedCoupleDiscordant" />
     </LinearLayout>
-    <LinearLayout
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+<!--      <TextView-->
+<!--          android:id="@+id/textView46"-->
+<!--          android:layout_width="0dp"-->
+<!--          android:layout_weight="1"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          android:paddingRight="5dp"-->
+<!--          android:text="HIV self-test in the past 12 months" />-->
+<!--      <MvxSpinner-->
+<!--          android:id="@+id/spinner56"-->
+<!--          android:layout_width="0dp"-->
+<!--          android:layout_weight="1"-->
+<!--          android:layout_height="wrap_content"-->
+<!--          local:MvxBind="ItemsSource SelfTestOptions; SelectedItem SelectedSelfTest" />-->
+<!--    </LinearLayout>-->
+    <android.support.design.widget.TextInputLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <EditText
+        android:id="@+id/editTextRemarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-      <TextView
-          android:id="@+id/textView46"
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:layout_height="wrap_content"
-          android:paddingRight="5dp"
-          android:text="HIV self-test in the past 12 months" />
-      <MvxSpinner
-          android:id="@+id/spinner56"
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:layout_height="wrap_content"
-          local:MvxBind="ItemsSource SelfTestOptions; SelectedItem SelectedSelfTest" />
-    </LinearLayout>
+        android:hint="Remarks"
+        local:MvxBind="Text Remarks" />
+    </android.support.design.widget.TextInputLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="2dp"
