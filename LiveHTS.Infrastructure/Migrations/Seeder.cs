@@ -54,25 +54,25 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<SubCounty>();
             #endregion
 
-            InsertOrUpdate(db, new CountyJson());
-            InsertOrUpdate(db, new SubCountyJson());
+            InsertOnly<County,int>(db, new CountyJson());
+            InsertOnly<SubCounty,Guid>(db, new SubCountyJson());
 
             InsertOnly<ServerConfig,string>(db, new ServerConfigJson());
-            
-            
-            InsertOrUpdate(db, new PracticeTypeJson());
+
+
+            InsertOnly<PracticeType,string>(db, new PracticeTypeJson());
             InsertOnly<Practice, Guid>(db, new PracticeJson());
-            InsertOrUpdate(db, new RelationshipTypeJson());
-            InsertOrUpdate(db, new IdentifierTypeJson());
-            InsertOrUpdate(db, new KeyPopJson());
-            InsertOrUpdate(db, new MaritalStatusJson());
-            InsertOrUpdate(db, new EncounterTypeJson());
-            InsertOrUpdate(db, new ProviderTypeJson());
-            InsertOrUpdate(db, new ConceptTypeJson());
-            InsertOrUpdate(db, new ActionJson());
-            InsertOrUpdate(db, new ConditionJson());
-            InsertOrUpdate(db, new ValidatorJson());
-            InsertOrUpdate(db, new ValidatorTypeJson());
+            InsertOnly<RelationshipType,string>(db, new RelationshipTypeJson());
+            InsertOnly<IdentifierType,string>(db, new IdentifierTypeJson());
+            InsertOnly<KeyPop,string>(db, new KeyPopJson());
+            InsertOnly<MaritalStatus,string>(db, new MaritalStatusJson());
+            InsertOnly<EncounterType,Guid>(db, new EncounterTypeJson());
+            InsertOnly<ProviderType,string>(db, new ProviderTypeJson());
+            InsertOnly<ConceptType,string>(db, new ConceptTypeJson());
+            InsertOnly<Action,string>(db, new ActionJson());
+            InsertOnly<Condition,string>(db, new ConditionJson());
+            InsertOnly<Validator,string>(db, new ValidatorJson());
+            InsertOnly<ValidatorType,string>(db, new ValidatorTypeJson());
         }
 
         private static void SeedLookup(SQLiteConnection db)
@@ -138,11 +138,11 @@ namespace LiveHTS.Infrastructure.Migrations
 
             #endregion
 
-            InsertOrUpdate(db, new PersonUserJson());
-//            InsertOrUpdate(db, new PersonAddressJson());
-//            InsertOrUpdate(db, new PersonContactJson());
-            InsertOrUpdate(db, new UserJson());
-            InsertOrUpdate(db, new ProviderJson());
+            InsertOnly<Person,Guid>(db, new PersonUserJson());
+            //            InsertOrUpdate(db, new PersonAddressJson());
+            //            InsertOrUpdate(db, new PersonContactJson());
+            InsertOnly<User,Guid>(db, new UserJson());
+            InsertOnly<Provider,Guid>(db, new ProviderJson());
 //            InsertOrUpdate(db, new ClientJson());
 //            InsertOrUpdate(db, new ClientIdentifierJson());
 //            InsertOrUpdate(db, new ClientRelationshipJson());
@@ -196,9 +196,10 @@ namespace LiveHTS.Infrastructure.Migrations
            
             foreach (var entity in json.Read())
             {
-                var rowsAffected = db.Find<T>(entity.Id);
+                //var rowsAffected = db.Find<T>(entity.Id);
+                var records = db.Table<T>().Count();
 
-                if (null==rowsAffected)
+                if (records == 0)
                 {
                     db.Insert(entity);
                 }

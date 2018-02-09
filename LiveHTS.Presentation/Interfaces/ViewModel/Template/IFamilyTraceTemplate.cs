@@ -19,6 +19,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         string ModeDisplay { get; set; }
         Guid Outcome { get; set; }
         string OutcomeDisplay { get; set; }
+
+        Guid? Consent { get; set; }
+        string ConsentDisplay { get; set; }
+        DateTime? Reminder { get; set; }
+        DateTime? BookingDate { get; set; }
         Guid EncounterId { get; set; }
     }
 }

@@ -45,8 +45,10 @@ namespace LiveHTS.Core.Tests
             people[0].FirstName = "John";
             people[0].LastName = "Doe";
 
+            int n = 0;
             foreach (var p in people)
             {
+                n++;
                 var addresses = Builder<PersonAddress>.CreateListOfSize(2)
                     .All()
                     .With(x => x.PersonId = p.Id)
@@ -77,7 +79,7 @@ namespace LiveHTS.Core.Tests
 
                 var identifiers = Builder<ClientIdentifier>.CreateListOfSize(1).All()
                     .With(x => x.IdentifierTypeId = _identifierTypeId)
-                    .With(x=>x.Identifier=$"IDS-{DateTime.Now.Ticks}")
+                    .With(x=>x.Identifier=$"IDS-{DateTime.Now.Ticks}-{n}")
                     .With(x=>x.ClientId=client.Id)
                     .Build();
                 var relationships = Builder<ClientRelationship>.CreateListOfSize(2).All()
@@ -85,7 +87,7 @@ namespace LiveHTS.Core.Tests
                     .With(x => x.ClientId = client.Id)
                     .Build();
                 client.Identifiers = identifiers;
-                client.Relationships = relationships;
+                //client.Relationships = relationships;
                 clients.Add(client);
             }
             

@@ -71,10 +71,12 @@
     <Compile Include="Interfaces\Services\Clients\IRemoteSearchService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRemoteRegistryService.cs" />
     <Compile Include="Interfaces\Services\Config\ICohortService.cs" />
+    <Compile Include="Interfaces\Services\Config\ISetupWizardService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerScreeningService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberScreeningService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IEmrService.cs" />
     <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\ICohortSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IChohortClientsSyncService.cs" />
@@ -113,6 +115,8 @@
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
     <Compile Include="Model\Config\ServerConfig.cs" />
+    <Compile Include="Model\ClientToDeleteDTO.cs" />
+    <Compile Include="Model\EnconterToDeleteDTO.cs" />
     <Compile Include="Model\Interview\ObsPartnerScreening.cs" />
     <Compile Include="Model\Interview\ObsPartnerTraceResult.cs" />
     <Compile Include="Model\Interview\ObsFamilyTraceResult.cs" />
@@ -200,6 +204,7 @@
     <Compile Include="Service\Config\DeviceSetupService.cs" />
     <Compile Include="Service\Config\PracticeSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
+    <Compile Include="Service\Config\SetupWizardService.cs" />
     <Compile Include="Service\Interview\PartnerScreeningService.cs" />
     <Compile Include="Service\Interview\PartnerTracingService.cs" />
     <Compile Include="Service\Interview\MemberTracingService.cs" />
@@ -207,6 +212,7 @@
     <Compile Include="Service\Interview\HIVTestingService.cs" />
     <Compile Include="Service\Interview\InterviewService.cs" />
     <Compile Include="Service\Interview\MemberScreeningService.cs" />
+    <Compile Include="Service\Sync\EmrService.cs" />
     <Compile Include="Service\Sync\ActivationService.cs" />
     <Compile Include="Service\Sync\ClientSyncService.cs" />
     <Compile Include="Service\Sync\CohortSyncService.cs" />

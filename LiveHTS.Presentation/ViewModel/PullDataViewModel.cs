@@ -21,6 +21,9 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IStaffSyncService _staffSyncService;
         private readonly ISyncDataService _syncDataService;
         private readonly ICohortSyncService _cohortSyncService;
+        private readonly IEmrService _emrService;
+
+
         private string _address;
         private string _currentStatus;
         private int _currentStatusProgress;
@@ -77,7 +80,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return _pullDataCommand;
             }
         }
-        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService, IStaffSyncService staffSyncService, ICohortSyncService cohortSyncService)
+        public PullDataViewModel(IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService, IActivationService activationService, IMetaSyncService metaSyncService, ISyncDataService syncDataService, IFormsSyncService formsSyncService, IStaffSyncService staffSyncService, ICohortSyncService cohortSyncService, IEmrService emrService)
         {
             _dialogService = dialogService;
             _settings = settings;
@@ -88,6 +91,7 @@ namespace LiveHTS.Presentation.ViewModel
             _formsSyncService = formsSyncService;
             _staffSyncService = staffSyncService;
             _cohortSyncService = cohortSyncService;
+            _emrService = emrService;
         }
 
         public void Init()
@@ -204,22 +208,13 @@ namespace LiveHTS.Presentation.ViewModel
                 _syncDataService.UpdateQuestions(questions);
 
                 current++;
-                CurrentStatus = showPerc("Staff", current, total);
-                var persons = await _staffSyncService.GetStaff(Address);
-                _syncDataService.UpdateStaff(persons);
-
-
+                current++;
                 current++;
                 CurrentStatus = showPerc("Users", current, total);
-                var users = await _staffSyncService.GetUsers(Address);
-                _syncDataService.Update(users);
-
-
-                current++;
-                CurrentStatus = showPerc("Providers", current, total);
-                var providers = await _staffSyncService.GetProviders(Address);
-                _syncDataService.Update(providers);
-
+                var users = await _emrService.GetUsers(Address);
+                _deviceSetupService.SaveUsers(users);
+               
+               
 
                 current++;
                 CurrentStatus = showPerc("cohort lists", current, total);

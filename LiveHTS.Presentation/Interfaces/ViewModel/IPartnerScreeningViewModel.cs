@@ -37,7 +37,10 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         DateTime ScreeningDate { get; set; }
 
-    
+        //  Pns Accepted
+        List<CategoryItem> PnsAccepted { get; set; }
+        CategoryItem SelectedPnsAccepted { get; set; }
+
 
         //  Screened for IPV
         List<CategoryItem> IPVScreening { get; set; }
@@ -54,10 +57,29 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<CategoryItem> SexuallyUncomfortable { get; set; }
         CategoryItem SelectedSexuallyUncomfortable { get; set; }
 
+        //  Screened for IPV Outcome
+        List<CategoryItem> IPVOutcome { get; set; }
+        CategoryItem SelectedIPVOutcome { get; set; }
+
+       
+
+        //Occupation
+        string Occupation { get; set; }
+
+        // PNS Relations
+        List<CategoryItem> PNSRealtionship { get; set; }
+        CategoryItem SelectedPNSRealtionship { get; set; }
+        // Living with client
+        List<CategoryItem> LivingWithClient { get; set; }
+        CategoryItem SelectedLivingWithClient { get; set; }
+
         // HIV status(KP/N/DK/HEI)	
         List<CategoryItem> HIVStatus { get; set; }
         CategoryItem SelectedHIVStatus { get; set; }
 
+        // PNSApproach
+        List<CategoryItem> PNSApproach { get; set; }
+        CategoryItem SelectedPNSApproach { get; set; }
 
         //  Eligible for Testing(Y/N)
         List<CategoryItem> Eligibility { get; set; }

@@ -37,6 +37,10 @@ namespace LiveHTS.Presentation.ViewModel
         private IPartnerTracingService _tracingService;
         private Guid _mode;
         private Guid _outcome;
+        private Guid _consent;
+        private List<CategoryItem> _consents;
+        private CategoryItem _selectedConsent;
+        private DateTime _bookingDate;
 
         public bool EditMode
         {
@@ -123,6 +127,37 @@ namespace LiveHTS.Presentation.ViewModel
                     Outcome = SelectedOutcome.ItemId;
             }
         }
+
+        public Guid Consent
+        {
+            get { return _consent; }
+            set { _consent = value; RaisePropertyChanged(() => Consent); }
+        }
+
+        public List<CategoryItem> Consents
+        {
+            get { return _consents; }
+            set { _consents = value; RaisePropertyChanged(() => Consents); }
+        }
+
+        public CategoryItem SelectedConsent
+        {
+            get { return _selectedConsent; }
+            set
+            {
+                _selectedConsent = value;
+                RaisePropertyChanged(() => SelectedConsent);
+                if (null != SelectedConsent)
+                    Consent = SelectedConsent.ItemId;
+            }
+        }
+
+        public DateTime BookingDate
+        {
+            get { return _bookingDate; }
+            set { _bookingDate = value; RaisePropertyChanged(()=>BookingDate);}
+        }
+
         public Guid EncounterId
         {
             get { return _encounterId; }
@@ -149,6 +184,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var modesJson = _settings.GetValue("lookup.TMode", "");
             var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
+            var consentJson = _settings.GetValue("lookup.TConsent", "");
 
             if (!string.IsNullOrWhiteSpace(modesJson))
             {
@@ -157,6 +193,10 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(outcomeJson))
             {
                 Outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(outcomeJson);
+            }
+            if (!string.IsNullOrWhiteSpace(consentJson))
+            {
+                Consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
             }
         }
 
@@ -168,6 +208,8 @@ namespace LiveHTS.Presentation.ViewModel
                 Date = TestResult.Date;
                 SelectedMode = Modes.FirstOrDefault(x=>x.ItemId== TestResult.Mode);
                 SelectedOutcome =Outcomes.FirstOrDefault(x => x.ItemId == TestResult.Outcome);
+                SelectedConsent = Consents.FirstOrDefault(x => x.ItemId == TestResult.Consent);
+                BookingDate = TestResult.BookingDate;
             }
         }
 
@@ -177,6 +219,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
+            SelectedConsent = Consents.OrderBy(x => x.Rank).FirstOrDefault();
         }
 
         public void Init(string id)
@@ -262,6 +305,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 TestResult= GenerateTest();
                 _tracingService.SaveTest(TestResult);
+                _tracingService.MarkEncounterCompleted(TestResult.EncounterId, true);
                 Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
             }
@@ -275,7 +319,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private ObsPartnerTraceResult GenerateTest()
         {
-            var obs= ObsPartnerTraceResult.Create(Date,Mode,Outcome,EncounterId);
+            var obs= ObsPartnerTraceResult.Create(Date,Mode,Outcome,Consent,BookingDate, EncounterId);
             if (EditMode)
                 obs.Id = Id;
             return obs;

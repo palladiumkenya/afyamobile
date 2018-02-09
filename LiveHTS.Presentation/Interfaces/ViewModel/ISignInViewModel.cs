@@ -6,6 +6,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface ISignInViewModel
     {
         User User { get; }
+        string Facility { get; set; }
         string Username { get; set; }
         string Password { get; set; }
         bool IsBusy { get; set; }

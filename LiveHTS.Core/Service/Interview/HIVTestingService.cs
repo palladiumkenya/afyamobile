@@ -105,8 +105,9 @@ namespace LiveHTS.Core.Service.Interview
             if (null != test)
             {
                 test.ResultGiven = testResult.ResultGiven;
-                test.CoupleDiscordant = testResult.ResultGiven;
+                test.CoupleDiscordant = testResult.CoupleDiscordant;
                 test.SelfTestOption = testResult.SelfTestOption;
+                test.Remarks = testResult.Remarks;
                 _obsFinalTestResultRepository.SaveOrUpdate(test);
             }
         }
@@ -153,6 +154,11 @@ namespace LiveHTS.Core.Service.Interview
                 final.ProcessEndResult(_categoryItems);
                 _obsFinalTestResultRepository.SaveOrUpdate(final);
             }
+        }
+
+        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        {
+            _encounterRepository.UpdateStatus(encounterId,completed);
         }
 
         private void LoadItems()

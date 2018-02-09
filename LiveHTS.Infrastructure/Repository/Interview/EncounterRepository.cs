@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Interview;
+using LiveHTS.Core.Model;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Infrastructure.Repository.Interview
@@ -107,6 +110,9 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                         .Where(x => x.EncounterId == e.Id)
                         .ToList();
                     e.ObsPartnerTraceResults = obsPartnerTraceResults;
+
+                    e.EncounterType = _db.Table<EncounterType>().FirstOrDefault(x => x.Id == e.EncounterTypeId);
+
                 }
 
             }
@@ -192,6 +198,8 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             }
             return encounters;
         }
+
+     
 
         public Encounter LoadTest(Guid id, bool includeObs = false)
         {
@@ -311,6 +319,7 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             _db.Execute("DELETE FROM Obs WHERE EncounterId=?", id.ToString());
         }
 
+     
         public void UpdateStatus(Guid id, bool completed)
         {
             var encounter = Get(id);
@@ -318,6 +327,68 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                 encounter.IsComplete = completed;
 
             Update(encounter);
+        }
+
+        public void Upload(Encounter encounter)
+        {
+            Purge(encounter.Id);
+            InsertOrUpdate(encounter);
+
+            if(encounter.Obses.Any())
+                _db.InsertAll(encounter.Obses);
+            if (encounter.ObsLinkages.Any())
+                _db.InsertAll(encounter.ObsLinkages);
+            if (encounter.ObsTraceResults.Any())
+                _db.InsertAll(encounter.ObsTraceResults);
+            if (encounter.ObsTestResults.Any())
+                _db.InsertAll(encounter.ObsTestResults);
+            if (encounter.ObsFinalTestResults.Any())
+                _db.InsertAll(encounter.ObsFinalTestResults);
+            if (encounter.ObsMemberScreenings.Any())
+                _db.InsertAll(encounter.ObsMemberScreenings);
+            if (encounter.ObsFamilyTraceResults.Any())
+                _db.InsertAll(encounter.ObsFamilyTraceResults);
+            if (encounter.ObsPartnerScreenings.Any())
+                _db.InsertAll(encounter.ObsPartnerScreenings);
+            if (encounter.ObsPartnerTraceResults.Any())
+                _db.InsertAll(encounter.ObsPartnerTraceResults);
+        }
+
+        public void Purge(Guid id, string obsName="")
+        {
+
+            _db.Execute($"DELETE FROM {nameof(Obs)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsTestResult)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsFinalTestResult)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsLinkage)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsTraceResult)} WHERE EncounterId=?", id.ToString());
+
+            _db.Execute($"DELETE FROM {nameof(ObsFamilyTraceResult)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsMemberScreening)} WHERE EncounterId=?", id.ToString());
+
+            _db.Execute($"DELETE FROM {nameof(ObsPartnerTraceResult)} WHERE EncounterId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(ObsPartnerScreening)} WHERE EncounterId=?", id.ToString());
+          
+        
+        }
+
+        public void PurgeAny(Guid id)
+        {
+            var ids = _db.Table<Encounter>().Where(x => x.ClientId == id).Select(x => x.Id).ToList();
+            foreach (var guid in ids)
+            {
+                _db.Execute($"DELETE FROM {nameof(Obs)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsPartnerTraceResult)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsPartnerScreening)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsTraceResult)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsLinkage)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsTestResult)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsFamilyTraceResult)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsMemberScreening)} WHERE EncounterId=?", guid.ToString());
+                _db.Execute($"DELETE FROM {nameof(ObsFinalTestResult)} WHERE EncounterId=?", guid.ToString());
+                Delete(guid);
+            }
+           
         }
     }
 }

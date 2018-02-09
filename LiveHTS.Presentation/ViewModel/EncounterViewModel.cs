@@ -167,6 +167,7 @@ namespace LiveHTS.Presentation.ViewModel
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
 
+            //Testing
             if (formTemplate.Display.ToLower().Contains("Test Form".ToLower()))
             {
                 ShowViewModel<TestingViewModel>(new
@@ -249,6 +250,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
+            //Pretest
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),

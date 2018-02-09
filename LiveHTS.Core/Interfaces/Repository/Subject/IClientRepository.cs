@@ -10,5 +10,6 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
         IEnumerable<Guid> GetAllClientIds();
         void SaveOrUpdate(Client client);
         IEnumerable<Client> QuickSearch(string search);
+        void Purge(Guid id);
     }
 }

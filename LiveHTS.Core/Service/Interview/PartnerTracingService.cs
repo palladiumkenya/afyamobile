@@ -64,6 +64,11 @@ namespace LiveHTS.Core.Service.Interview
         {
             _obsTraceResultRepository.Delete(testResult.Id);
 
-        }      
+        }
+
+        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        {
+            _encounterRepository.UpdateStatus(encounterId, completed);
+        }
     }
 }

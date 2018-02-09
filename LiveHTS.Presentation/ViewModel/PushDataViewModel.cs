@@ -159,8 +159,13 @@ namespace LiveHTS.Presentation.ViewModel
                 var ids = _clientReaderService.LoadClientIds();
                 var count= ids.Count;
                 int n = 0;
+                
+                var clientIdsDelete=new List<ClientToDeleteDTO>();
+                var encountersDelete=new List<EnconterToDeleteDTO>();
+
                 foreach (var id in ids)
                 {
+                    var clientToDeleteDto = new ClientToDeleteDTO();
                     n++;
                     
                     var client = _clientReaderService.LoadClient(id);
@@ -171,6 +176,7 @@ namespace LiveHTS.Presentation.ViewModel
                         var clientInfo = new SyncClientDTO(client);
                         CurrentStatus = showPerc("Clients", n, count);
                         await _clientSyncService.SendClients(Address, clientInfo);
+                        clientToDeleteDto = new ClientToDeleteDTO(client.Id, client.PersonId);
                     }
 
                     var encounters = _clientReaderService.LoadEncounters(id);
@@ -178,12 +184,26 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         var syncEncounters = SyncClientEncounterDTO.Create(encounters,client);
                         await _clientSyncService.SendClientEncounters(Address, syncEncounters);
+                        foreach (var encounter in encounters)
+                        {
+                            clientToDeleteDto.AddEnounter(new EnconterToDeleteDTO(encounter.Id, encounter.EncounterType));
+                        }
+                       
                     }
-
+                    clientIdsDelete.Add(clientToDeleteDto);
+                    foreach (var toDeleteDto in clientIdsDelete)
+                    {
+                        _clientReaderService.Purge(toDeleteDto);
+                    }
                 }
-                    //Send
+                
+                //  send
+                
+            
 
                 CurrentStatus = "done!";
+
+                
                 _dialogService.ShowToast("completed successfully");
             }
             else

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Infrastructure.Repository.Subject
@@ -28,14 +29,21 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 var relationsList=new List<ClientRelationship>();
                 
                 //my Relationships
-                var relations = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList(); 
-                if(null!=relations&&relations.Count>0)
-                    relationsList.AddRange(relations);
-                
-                //related to
-                relations = _db.Table<ClientRelationship>().Where(x => x.ClientId != client.Id && x.RelatedClientId == client.Id).ToList(); 
+                var relations = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList();
                 if (null != relations && relations.Count > 0)
+                {
+                    client.MyRelationships = relations;
                     relationsList.AddRange(relations);
+                }
+
+                //related to
+                var relationsTo = _db.Table<ClientRelationship>().Where(x => x.ClientId != client.Id && x.RelatedClientId == client.Id).ToList();
+                if (null != relationsTo && relationsTo.Count > 0)
+                {
+                    client.RelatedToMe = relationsTo;
+                    relationsList.AddRange(relationsTo);
+                }
+                    
 
                 client.Relationships = relationsList;
 
@@ -82,7 +90,8 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 _db.InsertAll(identifiers);
             }                
 
-            //Create Relationships
+            return;
+            //TODO: Create without Relationships index
             if (entity.Relationships.Any())
             {
                 var relationships = entity.Relationships.ToList();
@@ -105,7 +114,9 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 }
             }
 
-            //Create Relationships
+            
+            return;
+            //TODO: Create without Relationships index
             if (entity.Relationships.Any())
             {
                 var relationships = entity.Relationships.ToList();
@@ -171,6 +182,45 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
 
             return clients;
+        }
+
+        public void Purge(Guid id)
+        {
+            _db.Execute($"DELETE FROM {nameof(ClientIdentifier)} WHERE ClientId=?", id.ToString());
+            _db.Execute($"DELETE FROM {nameof(Client)} WHERE Id=?", id.ToString());
+        }
+
+        private void DeleteClientData(Guid id)
+        {
+            var personIds = _db.Table<Client>().Where(x => x.Id == id).Select(x => x.PersonId).ToList();
+            var encounterIds = _db.Table<Encounter>().Where(x => x.ClientId == id).Select(x => x.Id).ToList();
+
+            //Encounter
+
+            foreach (var encounterId in encounterIds)
+            {
+                _db.Table<Obs>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsTestResult>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsFinalTestResult>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsLinkage>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsMemberScreening>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsFamilyTraceResult>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsPartnerScreening>().Delete(x => x.EncounterId == encounterId);
+                _db.Table<ObsPartnerTraceResult>().Delete(x => x.EncounterId == encounterId); 
+            }
+
+            //Client
+
+            _db.Table<ClientRelationship>().Delete(x => x.ClientId == id);
+            _db.Table<ClientIdentifier>().Delete(x => x.ClientId ==id);
+            //Person
+
+            foreach (var personId in personIds)
+            {
+                _db.Table<PersonAddress>().Delete(x => x.PersonId == personId);
+                _db.Table<PersonContact>().Delete(x => x.PersonId == personId);
+                _db.Table<Person>().Delete(x => x.Id == personId);
+            }
         }
     }
 }

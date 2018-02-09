@@ -51,6 +51,14 @@
                     android:singleLine="true"
                     local:MvxBind="Text Password" />
             </android.support.design.widget.TextInputLayout>
+            
+   
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center"
+                local:MvxBind="Text Facility" />
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
@@ -60,6 +68,8 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
                 local:MvxBind="Click SignInCommand" />
+           
+           
         <!-- Login progress -->
             <ProgressBar
                 android:id="@+id/login_progress"

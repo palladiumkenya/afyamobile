@@ -59,6 +59,16 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                                x.RelatedClientId == otherClientId).FirstOrDefault();
         }
 
+        public void Purge(Guid clientId)
+        {
+            _db.Execute($"DELETE FROM {nameof(ClientRelationship)} WHERE ClientId=?", clientId.ToString());
+        }
+
+        public void PurgeRel(Guid guid)
+        {
+            _db.Execute($"DELETE FROM {nameof(ClientRelationship)} WHERE ClientId=?", guid.ToString());
+        }
+
         public override void Delete(Guid id)
         {
             var relation = Get(id);
