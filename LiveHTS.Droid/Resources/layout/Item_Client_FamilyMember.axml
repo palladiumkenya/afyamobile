@@ -12,7 +12,7 @@
         android:paddingLeft="3dp">
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight=".9"
+            android:layout_weight=".7"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="4dp"
@@ -23,13 +23,13 @@
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight=".8"
+                    android:layout_weight=".7"
                     android:layout_height="wrap_content"
                     local:MvxBind="Text FamilyMemberTemplate.FullName" />
                 <TextView
                     android:textStyle="bold"
                     android:layout_width="0dp"
-                    android:layout_weight=".2"
+                    android:layout_weight=".3"
                     android:layout_height="wrap_content"
                     local:MvxBind="Text FamilyMemberTemplate.RelationshipTypeId" />
             </LinearLayout>
@@ -51,11 +51,26 @@
                     android:paddingRight="5dp" />
             </LinearLayout>
         </LinearLayout>
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight=".28"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+        <Button
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:text="Screen"
+          android:textSize="10sp"
+          android:textAlignment="center"
+          local:MvxBind="Click ScreenFamilyMemberCommand;Text ScreenText;Visibility ShowScreen, Converter=Visibility" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight=".1"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <ImageButton
                 android:id="@+id/imageButton2"
                 android:layout_width="match_parent"

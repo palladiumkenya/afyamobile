@@ -8,6 +8,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IPartnerViewModel: IMvxViewModel
     {
+        IDashboardViewModel Parent { get; set; }
         string Title { get; set; }
         Client Client { get; set; }
         List<PartnerTemplateWrap> Partners { get; set; }
@@ -15,5 +16,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand AddPartnerCommand { get; }
 
         void RemoveRelationship(PartnerTemplate template);
+        void ShowDashboard(PartnerTemplate template);
     }
 }

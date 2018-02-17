@@ -68,6 +68,10 @@ namespace LiveHTS.Core.Model.Subject
             return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId);
         }
 
+        public bool DisableHts()
+        {
+            return null != PreventEnroll && PreventEnroll.Value;
+        }
         public override string ToString()
         {
             return $"{Person} ,{Person.Gender}";

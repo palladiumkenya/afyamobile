@@ -10,6 +10,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IEncounterViewModel:IMvxViewModel
     {
+        IDashboardViewModel Parent { get; set; }
         string Title { get; set; }
         List<ModuleTemplateWrap> AllModules { get; set; }
         Module Module { get; set; }

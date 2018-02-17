@@ -10,5 +10,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
         IPartnerViewModel PartnerViewModel { get; }
         PartnerTemplate PartnerTemplate { get; }
         IMvxCommand RemovePartnerCommand { get; }
+        IMvxCommand ScreenPartnerCommand { get; }
+        string ScreenText { get; set; }
+        bool ShowScreen { get; set; }
     }
 }

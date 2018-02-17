@@ -8,12 +8,14 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IFamilyMemberViewModel : IMvxViewModel
     {
+        IDashboardViewModel Parent { get; set; }
         string Title { get; set; }
         Client Client { get; set; }
         List<FamilyMemberTemplateWrap> FamilyMembers { get; set; }
 
         IMvxCommand AddFamilyMemberCommand { get; }
-
+        
         void RemoveFamilyMember(FamilyMemberTemplate template);
+        void ShowDashboard(FamilyMemberTemplate template);
     }
 }

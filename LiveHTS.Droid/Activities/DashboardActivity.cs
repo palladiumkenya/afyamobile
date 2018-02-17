@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
@@ -33,6 +34,15 @@ namespace LiveHTS.Droid.Activities
             viewPager.Adapter = new MvxCachingFragmentStatePagerAdapter(this, SupportFragmentManager, fragments);
             var pageIndicator = FindViewById<PagerSlidingTabStrip>(Resource.Id.content_frame);
             pageIndicator.SetViewPager(viewPager);
+
+//            try
+//            {
+//                viewPager.SetCurrentItem(ViewModel.GetActiveTab(), true);
+//            }
+//            catch 
+//            {
+//            }
+            
         }
 
         public override void OnBackPressed()

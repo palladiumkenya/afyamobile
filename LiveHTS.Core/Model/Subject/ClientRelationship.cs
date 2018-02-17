@@ -16,7 +16,7 @@ namespace LiveHTS.Core.Model.Subject
         [Indexed]
         public Guid ClientId { get; set; }
         public bool? IsIndex { get; set; }
-
+        
         
         
         [Ignore]
@@ -40,6 +40,20 @@ namespace LiveHTS.Core.Model.Subject
         public static ClientRelationship Create(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId, bool? isIndex=null)
         {
             return new ClientRelationship(relationshipTypeId, relatedClientId, preferred, clientId,isIndex);
+        }
+
+        public bool IsIndexRelation()
+        {
+            return null != IsIndex && IsIndex.Value;
+        }
+        public bool IsPatner()
+        {
+            return (RelationshipTypeId.ToLower().Trim() == "Partner".ToLower().Trim() || RelationshipTypeId == "Cowife".ToLower().Trim() || RelationshipTypeId == "Spouse".ToLower().Trim()) && IsIndexRelation();
+        }
+
+        public bool IsFamilyRelation()
+        {
+            return !IsPatner() && IsIndexRelation();
         }
 
         public override string ToString()

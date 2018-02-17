@@ -8,5 +8,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Wrapper
         IFamilyMemberViewModel FamilyMemberViewModel { get; }
         FamilyMemberTemplate FamilyMemberTemplate { get; }
         IMvxCommand RemoveFamilyMemberCommand { get; }
+        IMvxCommand ScreenFamilyMemberCommand { get; }
+        string ScreenText { get; set; }
+        bool ShowScreen { get; set; }
     }
 }

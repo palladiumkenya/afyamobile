@@ -35,6 +35,12 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _showEnroll;
 
 
+        public int GetActiveTab()
+        {
+            var callerId = _settings.GetValue("activetabId", 0);
+            return callerId;
+        }
+
         public IEncounterViewModel EncounterViewModel { get; }
         public IFamilyMemberViewModel FamilyMemberViewModel { get; }
         public IPartnerViewModel PartnerViewModel { get; }
@@ -82,6 +88,17 @@ namespace LiveHTS.Presentation.ViewModel
                 _client = value; RaisePropertyChanged(() => Client);
                 PartnerViewModel.Client = EncounterViewModel.Client =FamilyMemberViewModel.Client= Client;
                 ShowEnroll = null!=Client.PreventEnroll&&Client.PreventEnroll.Value;
+
+                if (Client.Relationships.Any(x => x.IsFamilyRelation()))
+                {
+
+                    _settings.AddOrUpdateValue("emod", "fam");
+                };
+                if (Client.Relationships.Any(x => x.IsPatner()))
+                {
+
+                    _settings.AddOrUpdateValue("emod", "pns");
+                };
             }
         }
 
@@ -106,21 +123,43 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        //TODO: Start form here
         private List<Module> FilterList(List<Module> list)
         {
             var final=new List<Module>();
-            final.AddRange(list.Where(x=>x.Rank==1));
+            final.AddRange(list);
 
-            if(Client.IsFamilyMember)
-                final.AddRange(list.Where(x => x.Rank == 2));
+            if (Client.DisableHts())
+                final.Remove(list.FirstOrDefault(x => x.Rank == 1));
 
-            if (Client.IsPartner)
-                final.AddRange(list.Where(x => x.Rank == 3));
+            var emode = _settings.GetValue("emod", "");
+            if (!string.IsNullOrWhiteSpace(emode))
+            {
+                if (emode == "fam")
+                {
+                    final.Remove(list.FirstOrDefault(x => x.Rank == 3));
+                }
 
-            return final;
+                if (emode == "pns")
+                {
+                    final.Remove(list.FirstOrDefault(x => x.Rank == 2));
+                }
+            }
+            else
+            {
+                
+            }
+            //            if(Client.IsFamilyMember)
+                //                
+                //
+                //            if (Client.IsPartner)
+                //                
+
+                return final;
         }
 
-        public DashboardViewModel(ISettings settings, IDialogService dialogService, IDashboardService dashboardService, ILookupService lookupService)
+        public DashboardViewModel(ISettings settings, IDialogService dialogService, IDashboardService dashboardService,
+            ILookupService lookupService)
         {
             _settings = settings;
             _dialogService = dialogService;
@@ -128,14 +167,40 @@ namespace LiveHTS.Presentation.ViewModel
             _lookupService = lookupService;
 
             EncounterViewModel = new EncounterViewModel();
-            FamilyMemberViewModel=new FamilyMemberViewModel();
-            PartnerViewModel =new PartnerViewModel();
+            EncounterViewModel.Parent = this;
+            FamilyMemberViewModel = new FamilyMemberViewModel();
+            FamilyMemberViewModel.Parent = this;
+            PartnerViewModel = new PartnerViewModel();
+            PartnerViewModel.Parent = this;
             SummaryViewModel = new SummaryViewModel();
-       }
-        public void Init(string id)
+        }
+
+        public void Init(string id,string callerId,string mode)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return;
+
+            if (!string.IsNullOrWhiteSpace(callerId))
+            {
+                _settings.AddOrUpdateValue("callerId", callerId);
+                _settings.AddOrUpdateValue("activetabId",1);
+            }
+            else
+            {
+                if (_settings.Contains("callerId"))
+                    _settings.DeleteValue("callerId");
+                if (_settings.Contains("activetabId"))
+                    _settings.DeleteValue("activetabId");
+            }
+            if (!string.IsNullOrWhiteSpace(mode))
+            {
+                _settings.AddOrUpdateValue("emod", mode);
+            }
+            else
+            {
+                if (_settings.Contains("emod"))
+                    _settings.DeleteValue("emod");
+            }
 
             Client = _dashboardService.LoadClient(new Guid(id));
             Modules = _dashboardService.LoadModules();
@@ -164,9 +229,7 @@ namespace LiveHTS.Presentation.ViewModel
         public override void ViewAppeared()
         {
             //Reload
-
             var clientJson = _settings.GetValue("client", "");
-            //var moduleJson = _settings.GetValue("module", "");
             var modulesJson = _settings.GetValue("modules", "");
 
             if (null == Client)
@@ -180,15 +243,6 @@ namespace LiveHTS.Presentation.ViewModel
                     _settings.AddOrUpdateValue("client.dto", clientDtoJson);
                 }
             }
-          
-//            if (null == Module)
-//            {
-//
-//                if (!string.IsNullOrWhiteSpace(moduleJson))
-//                {
-//                    Module = JsonConvert.DeserializeObject<Module>(moduleJson);
-//                }
-//            }
             if (null == Modules)
             {
 
@@ -200,25 +254,32 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Client)
             {
                 PartnerViewModel.Client = EncounterViewModel.Client = Client;
-            }
-//            if (null != Module)
-//            {
-//                EncounterViewModel.Module = Module;
-//            }
-            if (null != Modules)
-            {
-                EncounterViewModel.Modules = Modules;
-            }
+            } 
         }
 
         public void GoBack()
         {
+            var callerId = _settings.GetValue("callerId", "");
+            if (!string.IsNullOrWhiteSpace(callerId))
+            {
+                Close(this);
+                ShowViewModel<DashboardViewModel>(new {id = callerId});
+                return;
+            }
+
+
             var profile = _settings.GetValue("livehts.username", "");
             if (!string.IsNullOrWhiteSpace(profile))
             {
                 ShowViewModel<AppDashboardViewModel>(new { username = profile });
             }
           
+        }
+
+        public void ShowDashboard(string id, string callerId, string mode)
+        {
+            Close(this);
+            ShowViewModel<DashboardViewModel>(new {id = id, callerId = callerId,mode=mode});
         }
     }
 }
