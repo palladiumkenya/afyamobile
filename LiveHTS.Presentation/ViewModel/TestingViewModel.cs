@@ -420,6 +420,7 @@ namespace LiveHTS.Presentation.ViewModel
                     Encounter = _testingService.OpenEncounter(Encounter.Id);
 
                     _dialogService.ShowToast("Tests saved successfully");
+                    GoBack();
                 }
 
 

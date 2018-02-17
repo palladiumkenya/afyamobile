@@ -25,5 +25,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid EncounterTypeId { get; set; }
         Client Client { get; set; }
         Encounter Encounter { get; set; }
+        void GoBack();
     }
 }
