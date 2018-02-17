@@ -110,10 +110,12 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="Edit"
+      android:textSize="8sp"
       local:MvxBind="Click EditTestCommand"/>
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:textSize="8sp"
       android:text="Delete"
       local:MvxBind="Click RemoveTestCommand"/>
   </LinearLayout>

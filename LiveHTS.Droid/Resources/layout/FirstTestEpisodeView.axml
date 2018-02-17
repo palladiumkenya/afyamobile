@@ -15,9 +15,13 @@
       android:text="HIV Test 1"
       local:MvxBind="Text TestName"/>
     <Button
+      android:id="@+id/addtest1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:width="5dp"
+      android:height="5dp"
       android:text="Add Test"
+      android:textSize="8sp"
       local:MvxBind="Click AddTestCommand"/>
   </LinearLayout>
 

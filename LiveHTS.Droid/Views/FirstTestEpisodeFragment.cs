@@ -23,6 +23,11 @@ namespace LiveHTS.Droid.Views
             this.EnsureBindingContextIsSet(savedInstanceState);
             var ignored = base.OnCreateView(inflater, container, savedInstanceState);
             var view = this.BindingInflate(Resource.Layout.FirstTestEpisodeView, null);
+            var btnAddTest1 = view.FindViewById<Button>(Resource.Id.addtest1);
+            btnAddTest1.Focusable = true;
+            btnAddTest1.FocusableInTouchMode = true;
+            btnAddTest1.RequestFocus();
+
             var vm = new TestViewModel();
             vm.Parent = ViewModel;
 

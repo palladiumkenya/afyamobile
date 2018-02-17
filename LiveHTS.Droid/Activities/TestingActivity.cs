@@ -36,6 +36,8 @@ namespace LiveHTS.Droid.Activities
             viewPager.Adapter = new MvxCachingFragmentStatePagerAdapter(this, SupportFragmentManager, fragments);
             var pageIndicator = FindViewById<PagerSlidingTabStrip>(Resource.Id.content_frame);
             pageIndicator.SetViewPager(viewPager);
+
+            
         }
 
         public override void OnBackPressed()

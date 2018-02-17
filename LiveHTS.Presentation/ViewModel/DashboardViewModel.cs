@@ -126,36 +126,26 @@ namespace LiveHTS.Presentation.ViewModel
         //TODO: Start form here
         private List<Module> FilterList(List<Module> list)
         {
-            var final=new List<Module>();
-            final.AddRange(list);
+            var final = new List<Module>();
 
-            if (Client.DisableHts())
-                final.Remove(list.FirstOrDefault(x => x.Rank == 1));
+            if (!Client.DisableHts())
+                final.Add(list.FirstOrDefault(x => x.Rank == 1));
 
             var emode = _settings.GetValue("emod", "");
             if (!string.IsNullOrWhiteSpace(emode))
             {
                 if (emode == "fam")
                 {
-                    final.Remove(list.FirstOrDefault(x => x.Rank == 3));
+                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
                 }
 
                 if (emode == "pns")
                 {
-                    final.Remove(list.FirstOrDefault(x => x.Rank == 2));
+                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
                 }
             }
-            else
-            {
-                
-            }
-            //            if(Client.IsFamilyMember)
-                //                
-                //
-                //            if (Client.IsPartner)
-                //                
 
-                return final;
+            return final;
         }
 
         public DashboardViewModel(ISettings settings, IDialogService dialogService, IDashboardService dashboardService,
