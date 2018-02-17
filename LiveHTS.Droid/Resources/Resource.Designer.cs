@@ -5817,8 +5817,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00c8
 			public const int editTextProfileKeyOtherPop = 2131493064;
 			
-			// aapt resource value: 0x7f0c013b
-			public const int editTextRemarks = 2131493179;
+			// aapt resource value: 0x7f0c013c
+			public const int editTextRemarks = 2131493180;
 			
 			// aapt resource value: 0x7f0c0074
 			public const int edit_query = 2131492980;
@@ -5858,6 +5858,9 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f0c00d5
 			public const int fab2 = 2131493077;
+			
+			// aapt resource value: 0x7f0c013b
+			public const int fabSignInSetup = 2131493179;
 			
 			// aapt resource value: 0x7f0c00e7
 			public const int fabfamilymembers = 2131493095;
@@ -5991,8 +5994,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c013a
 			public const int login_progress = 2131493178;
 			
-			// aapt resource value: 0x7f0c013e
-			public const int masked = 2131493182;
+			// aapt resource value: 0x7f0c013f
+			public const int masked = 2131493183;
 			
 			// aapt resource value: 0x7f0c0107
 			public const int media_actions = 2131493127;
@@ -6186,8 +6189,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00c6
 			public const int spinnerKeyPop = 2131493062;
 			
-			// aapt resource value: 0x7f0c013c
-			public const int spinnerKit = 2131493180;
+			// aapt resource value: 0x7f0c013d
+			public const int spinnerKit = 2131493181;
 			
 			// aapt resource value: 0x7f0c0127
 			public const int spinnerLivingWithClient = 2131493159;
@@ -6507,8 +6510,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00f4
 			public const int viewpagerlink = 2131493108;
 			
-			// aapt resource value: 0x7f0c013d
-			public const int visible = 2131493181;
+			// aapt resource value: 0x7f0c013e
+			public const int visible = 2131493182;
 			
 			// aapt resource value: 0x7f0c001a
 			public const int wide = 2131492890;

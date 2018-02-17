@@ -23,8 +23,10 @@ namespace LiveHTS.Presentation.ViewModel
         private string _username;
         private string _password;
         private IMvxCommand _signInCommand;
+        private IMvxCommand _setUpCommand;
         private bool _isBusy;
         private string _facility;
+        
 
 
         public User User { get; private set; }
@@ -77,7 +79,16 @@ namespace LiveHTS.Presentation.ViewModel
                 return _signInCommand;
             }
         }
-        
+
+        public IMvxCommand SetUpCommand
+        {
+            get
+            {
+                _setUpCommand = _setUpCommand ?? new MvxCommand(SetUp, CanSetup);
+                return _setUpCommand;
+            }
+        }
+
         public SignInViewModel(IAuthService authService, IDialogService dialogService, ISettings settings, IDeviceSetupService deviceSetupService)
         {
             _authService = authService;
@@ -145,6 +156,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
             
            IsBusy = false;
+        }
+
+        private void SetUp()
+        {
+            ShowViewModel<SetupWizardViewModel>();
+        }
+
+        private bool CanSetup()
+        {
+            return true;
         }
         public void Quit()
         {
