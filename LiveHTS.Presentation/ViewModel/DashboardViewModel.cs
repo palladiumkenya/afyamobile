@@ -32,13 +32,20 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _enrollCommand;
 
         private List<Module> _modules=new List<Module>();
-        
+        private bool _showEnroll;
+
 
         public IEncounterViewModel EncounterViewModel { get; }
         public IFamilyMemberViewModel FamilyMemberViewModel { get; }
         public IPartnerViewModel PartnerViewModel { get; }
         public ISummaryViewModel SummaryViewModel { get; }
-        
+
+        public bool ShowEnroll
+        {
+            get { return _showEnroll; }
+            set { _showEnroll = value; RaisePropertyChanged(() => ShowEnroll); }
+        }
+
 
         public IMvxCommand ManageRegistrationCommand
         {
@@ -60,7 +67,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void Enroll()
         {
-            throw new NotImplementedException();
+            ShowViewModel<ClientRegistrationViewModel>(new { id = Client.Id, enroll="true" });
         }
 
         private void ManageRegistration()
@@ -74,6 +81,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _client = value; RaisePropertyChanged(() => Client);
                 PartnerViewModel.Client = EncounterViewModel.Client =FamilyMemberViewModel.Client= Client;
+                ShowEnroll = null!=Client.PreventEnroll&&Client.PreventEnroll.Value;
             }
         }
 

@@ -13,6 +13,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IFamilyMemberViewModel FamilyMemberViewModel { get; }
         IPartnerViewModel PartnerViewModel { get; }
         ISummaryViewModel SummaryViewModel { get; }
+        bool ShowEnroll { get; set; }
 
         Client Client { get; set; }
         Module Module { get; set; }
