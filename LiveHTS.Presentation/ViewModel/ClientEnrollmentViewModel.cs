@@ -220,6 +220,8 @@ namespace LiveHTS.Presentation.ViewModel
                     if (IndexClientDTO.RelType.ToLower() == "Partner".ToLower())
                         client.IsPartner = true;
                 }
+
+                client.PreventEnroll = false;
                 _registryService.SaveOrUpdate(client);
                 clientRegistrationDTO.ClearCache(_settings);
                 if (null != IndexClientDTO)

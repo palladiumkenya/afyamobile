@@ -29,7 +29,10 @@ namespace LiveHTS.Presentation.ViewModel
         private List<RelationshipTemplateWrap> _relationships = new List<RelationshipTemplateWrap>();
         private Module _module;
         private MvxCommand _manageRegistrationCommand;
+        private IMvxCommand _enrollCommand;
+
         private List<Module> _modules=new List<Module>();
+        
 
         public IEncounterViewModel EncounterViewModel { get; }
         public IFamilyMemberViewModel FamilyMemberViewModel { get; }
@@ -44,6 +47,20 @@ namespace LiveHTS.Presentation.ViewModel
                 _manageRegistrationCommand = _manageRegistrationCommand ?? new MvxCommand(ManageRegistration);
                 return _manageRegistrationCommand;
             }
+        }
+
+        public IMvxCommand EnrollCommand
+        {
+            get
+            {
+                _enrollCommand = _enrollCommand ?? new MvxCommand(Enroll);
+                return _enrollCommand;
+            }
+        }
+
+        private void Enroll()
+        {
+            throw new NotImplementedException();
         }
 
         private void ManageRegistration()

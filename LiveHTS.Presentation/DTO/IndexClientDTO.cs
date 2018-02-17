@@ -12,7 +12,7 @@ namespace LiveHTS.Presentation.DTO
         public string Names { get; set; }
         public int Age { get; set; }
         public  string RelType { get; set; }
-
+        public Guid? PracticeId { get; set; }
         public IndexClientDTO(Guid id, string relType)
         {
             Id = id;

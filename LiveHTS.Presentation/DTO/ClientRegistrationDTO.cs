@@ -5,6 +5,7 @@ using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Model;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.ViewModel;
+using LiveHTS.SharedKernel.Custom;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.DTO
@@ -22,21 +23,24 @@ namespace LiveHTS.Presentation.DTO
         public ClientRegistrationDTO()
         {
         }
-        public ClientRegistrationDTO(ISettings settings)
+        public ClientRegistrationDTO(ISettings settings,bool isClient=true)
         {
             string demographic = null;
             string contactAddress = null;
             string profile = null;
             string enrollment = null;
-
+            
             if (settings.Contains(nameof(ClientDemographicViewModel)))
                 demographic = settings.GetValue(nameof(ClientDemographicViewModel), "");
             if (settings.Contains(nameof(ClientContactViewModel)))
                 contactAddress = settings.GetValue(nameof(ClientContactViewModel), "");
             if (settings.Contains(nameof(ClientProfileViewModel)))
                 profile = settings.GetValue(nameof(ClientProfileViewModel), "");
-            if (settings.Contains(nameof(ClientEnrollmentViewModel)))
-                enrollment = settings.GetValue(nameof(ClientEnrollmentViewModel), "");
+            if (isClient)
+            {
+                if (settings.Contains(nameof(ClientEnrollmentViewModel)))
+                    enrollment = settings.GetValue(nameof(ClientEnrollmentViewModel), "");
+            }
 
             if (!string.IsNullOrWhiteSpace(demographic))
                 ClientDemographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(demographic);
@@ -44,8 +48,12 @@ namespace LiveHTS.Presentation.DTO
                 ClientContactAddress = JsonConvert.DeserializeObject<ClientContactAddressDTO>(contactAddress);
             if (!string.IsNullOrWhiteSpace(profile))
                 ClientProfile = JsonConvert.DeserializeObject<ClientProfileDTO>(profile);
-            if (!string.IsNullOrWhiteSpace(enrollment))
-                ClientEnrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(enrollment);
+
+            if (isClient)
+            {
+                if (!string.IsNullOrWhiteSpace(enrollment))
+                    ClientEnrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(enrollment);
+            }
         }
         public ClientRegistrationDTO(ClientDemographicDTO clientDemographic, ClientContactAddressDTO clientContactAddress, ClientProfileDTO clientProfile, ClientEnrollmentDTO clientEnrollment)
         {
@@ -69,35 +77,45 @@ namespace LiveHTS.Presentation.DTO
             return clientRegistrationDTO;
         }
 
-        public Client Generate()
+        public Client Generate(Guid? practiceId = null)
         {
             //Person
             var person = GeneratePerson();
 
             //Client
-            var client = GenerateClient(person);
+            var client = GenerateClient(person,practiceId);
 
             return client;
         }
-        private Client GenerateClient(Person person)
+        private Client GenerateClient(Person person, Guid? practiceId)
         {
-            var client = GenerateClient(person.Id);
+            var client = GenerateClient(person.Id,practiceId);
             client.Person = person;
             return client;
         }
 
-        private Client GenerateClient(Guid personId)
+        private Client GenerateClient(Guid personId,Guid? practiceId)
         {
+            Guid clientPracticeId = practiceId.IsNullOrEmpty() ? ClientEnrollment.PracticeId : practiceId.Value;
             //ClientIdentifier 
 
             //string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person
+            
 
-            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop, ClientProfile.OtherKeyPop, ClientEnrollment.PracticeId,personId);
+            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop, ClientProfile.OtherKeyPop, clientPracticeId, personId);
 
-            if (!string.IsNullOrWhiteSpace(ClientEnrollment.ClientId))
+            if (null!= ClientEnrollment && !string.IsNullOrWhiteSpace(ClientEnrollment.ClientId))
             {
                 client.Id = new Guid(ClientEnrollment.ClientId);
             }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(ClientProfile.ClientId))
+                {
+                    client.Id = new Guid(ClientProfile.ClientId);
+                }
+            }
+
 
             var clientIdentifier = GenerateClientIdentifier(client.Id);
             if (null != clientIdentifier)
@@ -106,11 +124,13 @@ namespace LiveHTS.Presentation.DTO
                 clientIdentifiers.Add(clientIdentifier);
                 client.Identifiers = clientIdentifiers;
             }
-
+            
             return client;
         }
         private ClientIdentifier GenerateClientIdentifier(Guid clientId)
         {
+            if (null == ClientEnrollment)
+                return null;
             //ClientIdentifier 
 
             //string identifierTypeId, string identifier, DateTime registrationDate,bool preferred, Guid clientId

@@ -19,5 +19,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<Module> Modules { get; set; }
 
         IMvxCommand ManageRegistrationCommand { get;  }
+        IMvxCommand EnrollCommand { get; }
     }
 }

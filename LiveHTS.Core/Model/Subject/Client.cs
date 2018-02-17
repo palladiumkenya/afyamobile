@@ -29,6 +29,7 @@ namespace LiveHTS.Core.Model.Subject
         public Guid? CohortId { get; set; }
         public bool EncountersDownloaded { get; set; }
         public bool Downloaded { get; set; }
+        public bool? PreventEnroll { get; set; }
 
         [Ignore]
         public IEnumerable<ClientRelationship> MyRelationships { get; set; }=new List<ClientRelationship>();

@@ -16,7 +16,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         void Save(Client client);
         void Save(Client client,Guid cohortId);
         void UpdateRelationShips(string relationshipTypeId,Guid clientId, Guid otherClientId);
-        void SaveOrUpdate(Client client);
+        void SaveOrUpdate(Client client,bool isClient=true);
         Task Download(Client client,List<Encounter> encounters);
 
         void Delete(Guid clientId);

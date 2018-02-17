@@ -35,6 +35,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     indexClientDTO.Names = indexClient.Person.FullName;
                     indexClientDTO.Gender = indexClient.Person.Gender;
+                    indexClientDTO.PracticeId = indexClient.PracticeId;
                 }
                 
                 var json = JsonConvert.SerializeObject(indexClientDTO);
@@ -48,6 +49,8 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Client = _registryService.Find(new Guid(id));
             }
+
+            
             ShowViewModel<ClientDemographicViewModel>();
         }
 
@@ -96,6 +99,8 @@ namespace LiveHTS.Presentation.ViewModel
                         _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel), json);
                     }
                 }
+                _settings.AddOrUpdateValue("PreventEnroll", Client.PreventEnroll.ToString());
+                _settings.AddOrUpdateValue("PracticeId", Client.PracticeId.ToString());
             }
         }
         public void ClearCache()
@@ -115,6 +120,11 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (_settings.Contains(nameof(IndexClientDTO)))
                 _settings.DeleteValue(nameof(IndexClientDTO));
+
+            if (_settings.Contains("PreventEnroll"))
+                _settings.DeleteValue("PreventEnroll");
+            if (_settings.Contains("PracticeId"))
+                _settings.DeleteValue("PracticeId");
         }
     }
 }

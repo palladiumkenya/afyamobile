@@ -11,11 +11,11 @@ namespace LiveHTS.Presentation.DTO
     public class ClientDTO
     {
         public Guid Id { get; set; }
-        public  string FirstName { get; set; }
-        public  string MiddleName { get; set; }
-        public  string LastName { get; set; }
-        public  string Gender { get; set; }
-        public  DateTime? BirthDate { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string Gender { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string Age { get; set; }
         public string IdentifierTypeId { get; set; }
         public string Identifier { get; set; }
@@ -26,7 +26,8 @@ namespace LiveHTS.Presentation.DTO
         {
         }
 
-        private ClientDTO(Guid id, string firstName, string middleName, string lastName, string gender, DateTime? birthDate, string age, string identifierTypeId, string identifier)
+        private ClientDTO(Guid id, string firstName, string middleName, string lastName, string gender,
+            DateTime? birthDate, string age, string identifierTypeId, string identifier)
         {
             Id = id;
             FirstName = firstName;
@@ -36,23 +37,23 @@ namespace LiveHTS.Presentation.DTO
             BirthDate = birthDate;
             Age = age;
             IdentifierTypeId = identifierTypeId;
-            Identifier = identifier;            
+            Identifier = identifier;
         }
 
         public static ClientDTO Create(Client client)
         {
             var ids = client.Identifiers.FirstOrDefault();
-            
 
-            var dto= new ClientDTO(client.Id,
+
+            var dto = new ClientDTO(client.Id,
                 client.Person.FirstName,
                 client.Person.MiddleName,
                 client.Person.LastName,
                 client.Person.Gender,
                 client.Person.BirthDate,
                 client.Person.AgeInfo,
-                ids.IdentifierTypeId,
-                ids.Identifier);
+                null == ids ? "" : ids.IdentifierTypeId,
+                null == ids ? "" : ids.Identifier);
 
             dto.HasPartners = client.Relationships.Any();
 
