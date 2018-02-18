@@ -10,6 +10,9 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string FullName { get; set; }
         public string Gender { get; set; }
         public DateTime BirthDate { get; set; }
+        public Guid RelatedClientId { get; set; }
+        public Guid ClientId { get; set; }
+        public bool IsIndex { get; set; }
 
         public PartnerTemplate(ClientRelationship relationship)
         {
@@ -17,6 +20,9 @@ namespace LiveHTS.Presentation.ViewModel.Template
             FullName = relationship.Person.FullName;
             Gender = relationship.Person.Gender;
             BirthDate = relationship.Person.BirthDate;
+            ClientId = relationship.ClientId;
+            RelatedClientId = relationship.RelatedClientId;
+            IsIndex = null != relationship.IsIndex && relationship.IsIndex.Value;
         }
     }
 }

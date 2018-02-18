@@ -2,11 +2,13 @@
 using System.Linq;
 using FizzWare.NBuilder;
 using LiveHTS.Core.Interfaces;
+using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Service.Clients;
+using LiveHTS.Infrastructure.Repository.Interview;
 using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.Infrastructure.Repository.Survey;
 using LiveHTS.SharedKernel.Custom;
@@ -30,6 +32,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private IClientIdentifierRepository _clientIdentifierRepository;
         private IPersonRepository _personRepository;
         private IClientRelationshipRepository _clientRelationshipRepository;
+        private IEncounterRepository _encounterRepository;
         
 
         [SetUp]
@@ -44,8 +47,10 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _clientIdentifierRepository=new ClientIdentifierRepository(_liveSetting);
             _personRepository=new PersonRepository(_liveSetting);
             _clientRelationshipRepository=new ClientRelationshipRepository(_liveSetting);
+            _encounterRepository=new EncounterRepository(_liveSetting);
 
-            _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository, _clientRelationshipRepository);
+
+            _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository, _clientRelationshipRepository, _encounterRepository);
         }
         
         [Test]

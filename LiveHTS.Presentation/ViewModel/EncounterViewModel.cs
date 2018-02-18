@@ -42,8 +42,9 @@ namespace LiveHTS.Presentation.ViewModel
         private List<FormTemplateWrap> _formsFamily;
         private List<FormTemplateWrap> _formsPartner;
         private List<ModuleTemplateWrap> _allModules;
-        
 
+
+        public IDashboardViewModel Parent { get; set; }
         public string Title { get; set; }
 
         public List<ModuleTemplateWrap> AllModules
@@ -370,7 +371,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (result)
                 {
                     _dashboardService.RemoveEncounter(encounterTemplate.Id);
-                    Modules = _dashboardService.LoadModules();
+                    Parent.Modules=_dashboardService.LoadModules();
                 }
             }
             catch (Exception e)

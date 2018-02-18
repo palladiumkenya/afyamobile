@@ -13,7 +13,8 @@ namespace LiveHTS.Presentation.DTO
         public string KeyPop { get; set; }
         public string OtherKeyPop { get; set; }
         public string RelTypeId { get; set; }
-
+        public bool? PreventEnroll { get; set; }
+        
         public bool HasAnyData
         {
             get
@@ -23,6 +24,7 @@ namespace LiveHTS.Presentation.DTO
             }
         }
 
+     
         public ClientProfileDTO()
         {
         }
@@ -55,6 +57,7 @@ namespace LiveHTS.Presentation.DTO
                 profileDTO.KeyPop = client.KeyPop;
                 profileDTO.OtherKeyPop = client.OtherKeyPop;
                 profileDTO.ClientId = client.Id.ToString();
+                profileDTO.PreventEnroll = client.PreventEnroll;
             }
 
             return profileDTO;

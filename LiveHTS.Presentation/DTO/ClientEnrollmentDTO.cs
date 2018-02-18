@@ -41,6 +41,7 @@ namespace LiveHTS.Presentation.DTO
 
         public static ClientEnrollmentDTO CreateFromView(ClientEnrollmentViewModel clientEnrollmentViewModel)
         {
+            
             var enrollmentDTO= new ClientEnrollmentDTO(clientEnrollmentViewModel.SelectedPractice.Id,
                 clientEnrollmentViewModel.SelectedIdentifierType.Id, clientEnrollmentViewModel.Identifier,
                 clientEnrollmentViewModel.RegistrationDate);
@@ -57,6 +58,7 @@ namespace LiveHTS.Presentation.DTO
             if (null != client)
             {
                 enrollmentDTO.PracticeId = client.PracticeId;
+                
 
                 //Client Identifiers
 
@@ -68,6 +70,11 @@ namespace LiveHTS.Presentation.DTO
                     enrollmentDTO.RegistrationDate = clientIdentifier.RegistrationDate;
                     enrollmentDTO.ClientId = clientIdentifier.ClientId.ToString();
                     enrollmentDTO.Id = clientIdentifier.Id.ToString();
+                }
+                else
+                {
+                    enrollmentDTO.ClientId = client.Id.ToString();
+                    enrollmentDTO.RegistrationDate =DateTime.Today;
                 }
             }
             return enrollmentDTO;

@@ -23,7 +23,7 @@ namespace LiveHTS.Presentation.ViewModel
             _registryService = registryService;
         }
 
-        public void Init(string id, string indexId, string reltype)
+        public void Init(string id, string indexId, string reltype,string enroll)
         {
             ClearCache();          
 
@@ -35,6 +35,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     indexClientDTO.Names = indexClient.Person.FullName;
                     indexClientDTO.Gender = indexClient.Person.Gender;
+                    indexClientDTO.PracticeId = indexClient.PracticeId;
                 }
                 
                 var json = JsonConvert.SerializeObject(indexClientDTO);
@@ -47,7 +48,14 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(id))
             {
                 Client = _registryService.Find(new Guid(id));
+                if (!string.IsNullOrWhiteSpace(enroll))
+                {
+                    Client.PreventEnroll = false;
+                    _settings.AddOrUpdateValue("PreventEnroll", "false");
+                }
             }
+
+            
             ShowViewModel<ClientDemographicViewModel>();
         }
 
@@ -96,6 +104,8 @@ namespace LiveHTS.Presentation.ViewModel
                         _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel), json);
                     }
                 }
+                _settings.AddOrUpdateValue("PreventEnroll", Client.PreventEnroll.ToString().ToLower());
+                _settings.AddOrUpdateValue("PracticeId", Client.PracticeId.ToString());
             }
         }
         public void ClearCache()
@@ -115,6 +125,11 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (_settings.Contains(nameof(IndexClientDTO)))
                 _settings.DeleteValue(nameof(IndexClientDTO));
+
+            if (_settings.Contains("PreventEnroll"))
+                _settings.DeleteValue("PreventEnroll");
+            if (_settings.Contains("PracticeId"))
+                _settings.DeleteValue("PracticeId");
         }
     }
 }

@@ -937,32 +937,33 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void UpdateEligibility()
         {
+            
             bool assulted = false;
             bool uncomfortable = false;
             bool threatened = false;
 
             if (AllowScreening)
             {
-
-                if (null != SelectedPhysicalAssult)
-                {
-                    assulted = null != SelectedPhysicalAssult.Item &&
-                               SelectedPhysicalAssult.Item.Code.ToLower() == "Y".ToLower();
-                }
-
-                if (null != SelectedSexuallyUncomfortable)
-                {
-                    uncomfortable = null != SelectedSexuallyUncomfortable.Item &&
-                                    SelectedSexuallyUncomfortable.Item.Code.ToLower() == "Y".ToLower();
-                }
-
-                if (null != SelectedThreatened)
-                {
-                    threatened = null != SelectedThreatened.Item &&
-                                 SelectedThreatened.Item.Code.ToLower() == "Y".ToLower();
-                }
-
-                MakeEligibile = !assulted && !uncomfortable && !threatened;
+                MakeEligibile = true;
+//                if (null != SelectedPhysicalAssult)
+//                {
+//                    assulted = null != SelectedPhysicalAssult.Item &&
+//                               SelectedPhysicalAssult.Item.Code.ToLower() == "Y".ToLower();
+//                }
+//
+//                if (null != SelectedSexuallyUncomfortable)
+//                {
+//                    uncomfortable = null != SelectedSexuallyUncomfortable.Item &&
+//                                    SelectedSexuallyUncomfortable.Item.Code.ToLower() == "Y".ToLower();
+//                }
+//
+//                if (null != SelectedThreatened)
+//                {
+//                    threatened = null != SelectedThreatened.Item &&
+//                                 SelectedThreatened.Item.Code.ToLower() == "Y".ToLower();
+//                }
+//
+//                MakeEligibile = !assulted && !uncomfortable && !threatened;
             }
 
             if (null != SelectedHIVStatus)

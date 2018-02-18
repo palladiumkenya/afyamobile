@@ -183,6 +183,7 @@ namespace LiveHTS.Presentation.ViewModel
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
 
                 _dialogService.ShowToast("Linkage info saved successfully");
+                ParentViewModel.GoBack();
             }
         }
 

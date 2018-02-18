@@ -12,6 +12,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         bool IsBusy { get; set; }
         bool AutoSignIn { get; set; }
         IMvxCommand SignInCommand { get; }
+        IMvxCommand SetUpCommand { get; }
         void LoadDeviceInfo(string serial, string model, string manufacturer);
         void UpdateSession();
     }

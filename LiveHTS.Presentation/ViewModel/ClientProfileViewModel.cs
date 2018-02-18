@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Presentation.DTO;
@@ -33,6 +34,7 @@ namespace LiveHTS.Presentation.ViewModel
         private RelationshipType _selectedRelationshipType;
         private bool _isRelation;
         private string _indexClientName;
+        private readonly IRegistryService _registryService;
 
 
         public bool IsRelation
@@ -157,10 +159,11 @@ namespace LiveHTS.Presentation.ViewModel
             set { _clientId = value;RaisePropertyChanged(() => ClientId); }
         }
 
-        public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService,ISettings settings) : base(dialogService, settings)
+        public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService,ISettings settings, IRegistryService registryService) : base(dialogService, settings)
         {
             Step = 3;
             _lookupService = lookupService;
+            _registryService = registryService;
             RelationshipTypes = _lookupService.GetRelationshipTypes().ToList();
             IsOtherKeyPop = "invisible";
             Title = "Profile";
@@ -206,10 +209,18 @@ namespace LiveHTS.Presentation.ViewModel
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
                 {
+                    MoveNextLabel = "SAVE";
                     IndexClientName = $"Relation To Index [{IndexClientDTO}]";
                     Title = $"Profile [{IndexClientDTO.RelType}]";
-                    RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
+                    RelationshipTypes = RelationshipTypes
+                        .Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
                 }
+            }
+
+            var preventEnroll = _settings.GetValue("PreventEnroll", "");
+            if (!string.IsNullOrWhiteSpace(preventEnroll))
+            {
+                MoveNextLabel = Convert.ToBoolean(preventEnroll) ? "SAVE" : "NEXT";
             }
         }
 
@@ -279,9 +290,74 @@ namespace LiveHTS.Presentation.ViewModel
                 _settings.AddOrUpdateValue(GetType().Name, json);
 
                 var indexId = null != IndexClientDTO ? IndexClientDTO.Id.ToString() : string.Empty;
-                ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo, indexId = indexId });
+
+                if (MoveNextLabel == "SAVE" || null != Profile.PreventEnroll && Profile.PreventEnroll.Value)
+                {
+                    Save();
+                }
+                else
+                {
+                    ShowViewModel<ClientEnrollmentViewModel>(new { clientinfo = ClientInfo, indexId = indexId });
+                }
             }
         }
+
+        public override void Save()
+        {
+            try
+            {
+                Guid? pid = null;
+                var clientRegistrationDTO = new ClientRegistrationDTO(_settings,false);
+                if (null == IndexClientDTO)
+                {
+                    var practiceId = _settings.GetValue("PracticeId", "");
+                    if (!string.IsNullOrWhiteSpace(practiceId))
+                    {
+                        pid=new Guid(practiceId);
+                    }
+                }
+                else
+                {
+                    pid = IndexClientDTO.PracticeId;
+                }
+                var client = clientRegistrationDTO.Generate(pid);
+
+                if (null != IndexClientDTO)
+                {
+                    if (IndexClientDTO.RelType.ToLower() == "Family".ToLower())
+                        client.IsFamilyMember = true;
+
+                    if (IndexClientDTO.RelType.ToLower() == "Partner".ToLower())
+                        client.IsPartner = true;
+                }
+
+                client.PreventEnroll = true;
+                _registryService.SaveOrUpdate(client,false);
+
+                if (null != IndexClientDTO)
+                {
+                    _registryService.UpdateRelationShips(clientRegistrationDTO.ClientProfile.RelTypeId,
+                        IndexClientDTO.Id,
+                        client.Id);
+                    clientRegistrationDTO.ClearCache(_settings);
+                    ShowViewModel<DashboardViewModel>(new { id = IndexClientDTO.Id.ToString() });
+                }
+                else
+                {
+                    clientRegistrationDTO.ClearCache(_settings);
+                    ShowViewModel<DashboardViewModel>(new { id = client.Id.ToString() });
+                }
+
+                
+                
+            }
+            catch (Exception e)
+            {
+                Mvx.Error(e.Message);
+                _dialogService.Alert($"Could NOT Save ! {e.Message}", "Registration", "Ok");
+            }
+        }
+
         public override void MovePrevious()
         {
             ShowViewModel<ClientContactViewModel>(new { clientinfo = ClientInfo });

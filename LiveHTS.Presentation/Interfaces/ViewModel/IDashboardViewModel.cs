@@ -9,15 +9,20 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IDashboardViewModel
     {
+        int GetActiveTab();
         IEncounterViewModel EncounterViewModel { get; }
         IFamilyMemberViewModel FamilyMemberViewModel { get; }
         IPartnerViewModel PartnerViewModel { get; }
         ISummaryViewModel SummaryViewModel { get; }
+        bool ShowEnroll { get; set; }
 
         Client Client { get; set; }
         Module Module { get; set; }
         List<Module> Modules { get; set; }
 
         IMvxCommand ManageRegistrationCommand { get;  }
+        IMvxCommand EnrollCommand { get; }
+        void GoBack();
+        void ShowDashboard(string id, string callerId,string mode);
     }
 }

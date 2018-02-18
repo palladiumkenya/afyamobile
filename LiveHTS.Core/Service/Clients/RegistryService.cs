@@ -166,30 +166,39 @@ namespace LiveHTS.Core.Service.Clients
 
 
      
-        public void SaveOrUpdate(Client client)
+        public void SaveOrUpdate(Client client,bool isClient= true)
         {
             //check id in use
 
-            if (!client.Identifiers.Any())
-                throw new ArgumentException($"Client should have an Identifier !");
+            if (isClient)
+            {
 
-            var clientIdentifier = client.Identifiers.First();
+                if (!client.Identifiers.Any())
+                    throw new ArgumentException($"Client should have an Identifier !");
 
-            var clientIdentifiers = _clientIdentifierRepository.GetAll(
-                x => x.Identifier.ToLower() == clientIdentifier.Identifier.ToLower() &&
-                     x.IdentifierTypeId == clientIdentifier.IdentifierTypeId&&
-                     x.ClientId!=client.Id
-                     
-            );
+                var clientIdentifier = client.Identifiers.First();
 
-            if (clientIdentifiers.Any())
-                throw new ArgumentException($"Identifier {clientIdentifier.Identifier} is already in Use !");
+                var clientIdentifiers = _clientIdentifierRepository.GetAll(
+                    x => x.Identifier.ToLower() == clientIdentifier.Identifier.ToLower() &&
+                         x.IdentifierTypeId == clientIdentifier.IdentifierTypeId &&
+                         x.ClientId != client.Id
+
+                );
+
+                if (clientIdentifiers.Any())
+                    throw new ArgumentException($"Identifier {clientIdentifier.Identifier} is already in Use !");
+            }
 
             //create Person
             _personRepository.InsertOrUpdate(client.Person);
 
             //create Client
             _clientRepository.InsertOrUpdate(client);
+        }
+
+        public void SaveOrUpdateContact(Client client)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task Download(Client client,List<Encounter> encounters)

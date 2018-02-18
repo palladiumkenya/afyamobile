@@ -23,6 +23,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         private Client _client;
         private IMvxCommand _addFamilyMemberCommand;
+     
+
+        public IDashboardViewModel Parent { get; set; }
         public string Title { get; set; }
 
         public Client Client
@@ -49,6 +52,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+      
         public FamilyMemberViewModel()
         {
             Title = "FAMILY";
@@ -59,6 +63,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowViewModel<ClientRelationshipsViewModel>(new { id = Client.Id, reltype = "Family" });
         }
+
         public async void RemoveFamilyMember(FamilyMemberTemplate template)
         {
             try
@@ -76,6 +81,13 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message, "Remove Family Member");
             }
         }
+        public void ShowDashboard(FamilyMemberTemplate template)
+        {
+            Close(this);
+            Parent.ShowDashboard(template.RelatedClientId.ToString(),template.ClientId.ToString(),"fam");
+        }
+
+
         private static List<FamilyMemberTemplateWrap> ConvertToFamilyMemberWrapperClass(Client client, IFamilyMemberViewModel familyMemberViewModel)
         {
             var clientRelationships = client.Relationships.Where(x => x.RelationshipTypeId.ToLower() != "Partner".ToLower()).ToList();

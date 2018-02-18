@@ -12,7 +12,8 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private PartnerTemplate _partnerTemplate;
         private  IMvxCommand _removePartnerCommand;
-     
+        private IMvxCommand _screenPartnerCommand;
+
 
         public IPartnerViewModel PartnerViewModel
         {
@@ -32,6 +33,23 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
             }
         }
 
+        public IMvxCommand ScreenPartnerCommand
+        {
+            get
+            {
+                _screenPartnerCommand = _screenPartnerCommand ?? new MvxCommand(ScreenPartner);
+                return _screenPartnerCommand;
+            }
+        }
+
+        private void ScreenPartner()
+        {
+            PartnerViewModel.ShowDashboard(PartnerTemplate);
+        }
+
+        public string ScreenText { get; set; }
+        public bool ShowScreen { get; set; }
+
         private bool CanRemoveRelationship()
         {
             return
@@ -43,6 +61,10 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             _partnerTemplate = partnerTemplate;
             _partnerViewModel = partnerViewModel;
+            ScreenText = "Screen";
+            ShowScreen = !_partnerTemplate.IsIndex;
+            if (_partnerTemplate.IsIndex)
+                _partnerTemplate.FullName = $"{partnerTemplate.FullName} [index]";
         }
 
 

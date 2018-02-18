@@ -26,6 +26,7 @@ namespace LiveHTS.Presentation.ViewModel
         
         private Client _client;
         private IMvxCommand _addPartnerCommand;
+        public IDashboardViewModel Parent { get; set; }
         public string Title { get; set; }
 
         public Client Client
@@ -83,6 +84,13 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message, "Remove Relationship");
             }
         }
+
+        public void ShowDashboard(PartnerTemplate template)
+        {
+            Close(this);
+            Parent.ShowDashboard(template.RelatedClientId.ToString(), template.ClientId.ToString(), "pns");
+        }
+
         private static List<PartnerTemplateWrap> ConvertToPartnerWrapperClass(Client client, IPartnerViewModel partnerViewModel)
         {
             var clientRelationships = client.Relationships.Where(x => x.RelationshipTypeId.ToLower() == "Partner".ToLower()).ToList();

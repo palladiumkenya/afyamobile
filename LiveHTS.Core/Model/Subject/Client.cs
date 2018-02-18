@@ -29,6 +29,7 @@ namespace LiveHTS.Core.Model.Subject
         public Guid? CohortId { get; set; }
         public bool EncountersDownloaded { get; set; }
         public bool Downloaded { get; set; }
+        public bool? PreventEnroll { get; set; }
 
         [Ignore]
         public IEnumerable<ClientRelationship> MyRelationships { get; set; }=new List<ClientRelationship>();
@@ -67,6 +68,10 @@ namespace LiveHTS.Core.Model.Subject
             return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId);
         }
 
+        public bool DisableHts()
+        {
+            return null != PreventEnroll && PreventEnroll.Value;
+        }
         public override string ToString()
         {
             return $"{Person} ,{Person.Gender}";

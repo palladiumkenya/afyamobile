@@ -166,6 +166,18 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null != IndexClientDTO)
                     Title = $"Enrollment [{IndexClientDTO.RelType}]";
             }
+
+            IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
+            Practices = _lookupService.GetDefaultPractices().ToList();
+            SelectedPractice = _lookupService.GetDefault();
+            try
+            {
+                SelectedIdentifierType = IdentifierTypes.FirstOrDefault();
+            }
+            catch
+            {
+
+            }
         }
 
         public override void Start()
@@ -220,6 +232,8 @@ namespace LiveHTS.Presentation.ViewModel
                     if (IndexClientDTO.RelType.ToLower() == "Partner".ToLower())
                         client.IsPartner = true;
                 }
+
+                client.PreventEnroll = false;
                 _registryService.SaveOrUpdate(client);
                 clientRegistrationDTO.ClearCache(_settings);
                 if (null != IndexClientDTO)

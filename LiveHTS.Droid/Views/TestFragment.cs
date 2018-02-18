@@ -3,6 +3,7 @@ using Android.App;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using Android.Widget;
 using LiveHTS.Droid.Custom;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
@@ -21,6 +22,13 @@ namespace LiveHTS.Droid.Views
         {
             EnsureBindingContextSet(savedInstanceState);
             var view = this.BindingInflate(Resource.Layout.TestView, null);
+
+            var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerKit);
+            spinner.Focusable = true;
+            spinner.FocusableInTouchMode = true;
+            spinner.RequestFocus();
+
+
             var dialog = new AlertDialog.Builder(Activity);
             dialog.SetView(view);
             return dialog.Create();

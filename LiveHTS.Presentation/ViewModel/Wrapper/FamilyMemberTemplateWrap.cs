@@ -12,6 +12,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private FamilyMemberTemplate _FamilyMemberTemplate;
         private IMvxCommand _removeFamilyMemberCommand;
+        private IMvxCommand _screenFamilyMemberCommand;
 
 
         public IFamilyMemberViewModel FamilyMemberViewModel
@@ -32,6 +33,19 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
             }
         }
 
+        public IMvxCommand ScreenFamilyMemberCommand
+        {
+            get
+            {
+                _screenFamilyMemberCommand = _screenFamilyMemberCommand ?? new MvxCommand(ScreenFamilyMember);
+                return _screenFamilyMemberCommand;
+            }
+        }
+
+        public string ScreenText { get; set; }
+        public bool ShowScreen { get; set; }
+
+
         private bool CanRemoveRelationship()
         {
             return
@@ -43,12 +57,20 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             _FamilyMemberTemplate = FamilyMemberTemplate;
             _FamilyMemberViewModel = FamilyMemberViewModel;
+            ScreenText = "Screen";
+            ShowScreen = !_FamilyMemberTemplate.IsIndex;
+            if (_FamilyMemberTemplate.IsIndex)
+                _FamilyMemberTemplate.FullName = $"{_FamilyMemberTemplate.FullName} [index]";
         }
 
 
         private void RemoveRelationship()
         {
             FamilyMemberViewModel.RemoveFamilyMember(FamilyMemberTemplate);
+        }
+        private void ScreenFamilyMember()
+        {
+           FamilyMemberViewModel.ShowDashboard(FamilyMemberTemplate);
         }
     }
 }
