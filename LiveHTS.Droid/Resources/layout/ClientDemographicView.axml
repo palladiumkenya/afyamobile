@@ -148,18 +148,25 @@
                 android:orientation="horizontal"
                 android:id="@+id/linearLayoutNav"
                 android:layout_weight="1"
-                android:minHeight="80dp">
+                android:minHeight="80dp"
+                android:background="#FFFFFF">
                 <Button
                     android:id="@+id/buttonDemographicPrev"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                  android:textColor="#FFFFFF"
+                  android:background="#FFFFFF"
+                  android:layout_marginRight="2dp"
                     local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
                 <Button
                     android:id="@+id/buttonDemographicNext"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                  android:textColor="#FFFFFF"
+                  android:background="#3F51B5"
+                  android:layout_marginLeft="2dp"
                     local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
             </LinearLayout>
         </LinearLayout>
