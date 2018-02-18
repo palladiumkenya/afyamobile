@@ -89,6 +89,13 @@ namespace LiveHTS.Presentation.ViewModel
                 PartnerViewModel.Client = EncounterViewModel.Client =FamilyMemberViewModel.Client= Client;
                 ShowEnroll = null!=Client.PreventEnroll&&Client.PreventEnroll.Value;
 
+                var emode = _settings.GetValue("emod", "");
+
+                if (!string.IsNullOrWhiteSpace(emode))
+                {
+                    return;
+                }
+
                 if (Client.Relationships.Any(x => x.IsFamilyRelation()))
                 {
 
@@ -136,12 +143,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 if (emode == "fam")
                 {
-                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
+                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
                 }
 
                 if (emode == "pns")
                 {
-                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
+                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
                 }
             }
 

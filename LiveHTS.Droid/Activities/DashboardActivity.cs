@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.V4.View;
+using Android.Views;
 using com.refractored;
 using LiveHTS.Droid.Views;
 using LiveHTS.Presentation.ViewModel;
