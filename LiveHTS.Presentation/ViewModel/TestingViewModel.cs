@@ -417,9 +417,10 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.Remarks = Remarks;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
                     _testingService.MarkEncounterCompleted(ObsFinalTestResult.EncounterId,true);
+                    _testingService.UpdateEncounterDate(ObsFinalTestResult.EncounterId, Client.Id);
                     Encounter = _testingService.OpenEncounter(Encounter.Id);
 
-                    _dialogService.ShowToast("Tests saved successfully");
+                   // _dialogService.ShowToast("Tests saved successfully");
                     GoBack();
                 }
 

@@ -313,6 +313,18 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounters;
         }
 
+        public DateTime GetPretestEncounterDate(Guid clientId)
+        {
+            var encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0");
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            if (null != encounter)
+                return encounter.EncounterDate;
+
+            return new DateTime(1900,1,1);        
+        }
+
 
         public void ClearObs(Guid id)
         {

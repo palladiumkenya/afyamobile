@@ -161,6 +161,14 @@ namespace LiveHTS.Core.Service.Interview
             _encounterRepository.UpdateStatus(encounterId,completed);
         }
 
+        public void UpdateEncounterDate(Guid encounterId, Guid clientId)
+        {
+            var encounterDate = _encounterRepository.GetPretestEncounterDate(clientId);
+            if (encounterDate > new DateTime(1901, 1, 1))
+                _encounterRepository.UpdateEncounterDate(encounterId, encounterDate);
+        }
+
+
         private void LoadItems()
         {
             if (null != _categoryItems && _categoryItems.Count > 0)
