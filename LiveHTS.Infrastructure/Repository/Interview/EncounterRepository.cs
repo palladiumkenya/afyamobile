@@ -329,6 +329,15 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             Update(encounter);
         }
 
+        public void UpdateEncounterDate(Guid id, DateTime encounterDate)
+        {
+            var encounter = Get(id);
+            if (null != encounter)
+                encounter.EncounterDate = encounterDate;
+
+            Update(encounter);
+        }
+
         public void Upload(Encounter encounter)
         {
             Purge(encounter.Id);

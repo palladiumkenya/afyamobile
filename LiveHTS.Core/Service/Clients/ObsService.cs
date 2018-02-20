@@ -10,7 +10,7 @@ using LiveHTS.Core.Model.Survey;
 
 namespace LiveHTS.Core.Service.Clients
 {
-    public class ObsService:IObsService
+    public class ObsService : IObsService
     {
         private Manifest _manifest;
         private readonly Response _response;
@@ -21,19 +21,21 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IFormRepository _formRepository;
         private readonly IEncounterRepository _encounterRepository;
         private readonly IObsRepository _obsRepository;
-        
+
 
         public Manifest Manifest
         {
             get { return _manifest; }
         }
+
         public Response Response
         {
             get { return _response; }
         }
 
-        public ObsService(IFormRepository formRepository, IEncounterRepository encounterRepository, IObsRepository obsRepository
-            , INavigationEngine navigationEngine,IValidationEngine validationEngine)
+        public ObsService(IFormRepository formRepository, IEncounterRepository encounterRepository,
+            IObsRepository obsRepository
+            , INavigationEngine navigationEngine, IValidationEngine validationEngine)
         {
             _formRepository = formRepository;
             _encounterRepository = encounterRepository;
@@ -45,7 +47,7 @@ namespace LiveHTS.Core.Service.Clients
         public void Initialize(Encounter encounter)
         {
             var currentEncounter = _encounter = encounter;
-            
+
             var form = _formRepository.GetWithQuestions(currentEncounter.FormId, true);
             _manifest = Manifest.Create(form, currentEncounter);
         }
@@ -81,12 +83,12 @@ namespace LiveHTS.Core.Service.Clients
         public List<Question> GetLiveQuestions(Manifest manifest, Guid currentQuestionId)
         {
             _manifest = manifest ?? _manifest;
-            var list=new List<Question>();
+            var list = new List<Question>();
             bool notRequired = true;
 
             while (notRequired)
             {
-                var nextQ= GetLiveQuestion(manifest, currentQuestionId);
+                var nextQ = GetLiveQuestion(manifest, currentQuestionId);
                 if (null == nextQ)
                 {
                     notRequired = false;
@@ -105,12 +107,12 @@ namespace LiveHTS.Core.Service.Clients
         public Question GetNextQuestion(Guid currentQuestionId, Manifest manifest = null)
         {
             _manifest = manifest ?? _manifest;
-            return _navigationEngine.GetNextQuestion(currentQuestionId,_manifest);
+            return _navigationEngine.GetNextQuestion(currentQuestionId, _manifest);
         }
 
         public Question GetPreviousQuestion(Guid currentQuestionId)
         {
-            return _navigationEngine.GetPreviousQuestion(currentQuestionId,_manifest);
+            return _navigationEngine.GetPreviousQuestion(currentQuestionId, _manifest);
         }
 
         public Question GetQuestion(Guid questionId, Manifest currentManifest)
@@ -137,7 +139,7 @@ namespace LiveHTS.Core.Service.Clients
 
         public void SaveResponse(Guid encounterId, Guid questionId, object response, bool validated = false)
         {
-            var liveResponse=new Response(encounterId);
+            var liveResponse = new Response(encounterId);
 
             var question = _manifest.GetQuestion(questionId);
             liveResponse.SetQuestion(question);
@@ -170,7 +172,12 @@ namespace LiveHTS.Core.Service.Clients
 
         public void MarkEncounterCompleted(Guid encounterId, bool completed)
         {
-         _encounterRepository.UpdateStatus(encounterId,completed);   
+            _encounterRepository.UpdateStatus(encounterId, completed);
+        }
+
+        public void UpdateEncounterDate(Guid encounterId, DateTime encounterDate)
+        {
+            _encounterRepository.UpdateEncounterDate(encounterId, encounterDate);
         }
 
         private void UpdateManifest(Guid encounterId)

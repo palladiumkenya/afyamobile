@@ -41,6 +41,9 @@ namespace LiveHTS.Presentation.ViewModel
         private Manifest _manifest;
         private bool _isLoading;
         private string _formStatus;
+        private DateTime _birthDate;
+        private IMvxCommand _showDateDialogCommand;
+        private TraceDateDTO _selectedDate;
 
         public Guid AppUserId
         {
@@ -175,6 +178,49 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public IMvxCommand ShowDateDialogCommand
+        {
+            get
+            {
+                _showDateDialogCommand = _showDateDialogCommand ?? new MvxCommand(ShowDateDialog);
+                return _showDateDialogCommand;
+            }
+        }
+
+        public event EventHandler<ChangedDateEvent> ChangedDate;
+        public TraceDateDTO SelectedDate
+        {
+            get { return _selectedDate; }
+            set
+            {
+                _selectedDate = value;
+                RaisePropertyChanged(() => SelectedDate);
+                UpdatePromiseDate(SelectedDate);
+            }
+        }
+        private void ShowDateDialog()
+        {
+
+            ShowDatePicker(Guid.Empty, BirthDate);
+        }
+        private void UpdatePromiseDate(TraceDateDTO selectedDate)
+        {
+            BirthDate = selectedDate.EventDate;
+        }
+        public void ShowDatePicker(Guid refId, DateTime refDate)
+        {
+            OnChangedDate(new ChangedDateEvent(refId, refDate));
+        }
+        protected virtual void OnChangedDate(ChangedDateEvent e)
+        {
+            ChangedDate?.Invoke(this, e);
+        }
+        public DateTime BirthDate
+        {
+            get { return _birthDate; }
+            set { _birthDate = value;RaisePropertyChanged(() => BirthDate); }
+        }
+
         public ClientEncounterViewModel(ISettings settings, IDialogService dialogService,
             IEncounterService encounterService, IObsService obsService)
         {
@@ -182,6 +228,7 @@ namespace LiveHTS.Presentation.ViewModel
             _dialogService = dialogService;
             _encounterService = encounterService;
             _obsService = obsService;
+            BirthDate = DateTime.Today;
         }
 
         public void Init(string formId, string encounterTypeId, string mode, string encounterId)
@@ -326,6 +373,8 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (null != Manifest)
             {
+                BirthDate = Manifest.Encounter.EncounterDate;
+
                 if (Manifest.HasResponses())
                 {
 
@@ -762,7 +811,9 @@ namespace LiveHTS.Presentation.ViewModel
                 //Manifest = _obsService.Manifest;
             }
             _obsService.MarkEncounterCompleted(Encounter.Id,true);
+            _obsService.UpdateEncounterDate(Encounter.Id, BirthDate);
             Manifest = _obsService.Manifest;
+            Manifest.Encounter.EncounterDate = BirthDate;
             Encounter = Manifest.Encounter;
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);

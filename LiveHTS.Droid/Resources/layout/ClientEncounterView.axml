@@ -153,6 +153,20 @@
         local:MvxBind="Text FormError" />
   </LinearLayout>
   <!-- FIELDS -->
+  <android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <AutoCompleteTextView
+      android:id="@+id/txtTestDate"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Encounter Date"
+      android:maxLines="1"
+      android:singleLine="true"
+      android:clickable="true"
+      android:editable="false"
+      local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']" />
+  </android.support.design.widget.TextInputLayout>
   <FrameLayout
       android:layout_width="fill_parent"
       android:layout_height="fill_parent">

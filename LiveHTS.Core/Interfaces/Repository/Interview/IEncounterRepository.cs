@@ -18,6 +18,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
 
         void ClearObs(Guid id);
         void UpdateStatus(Guid id,bool completed);
+        void UpdateEncounterDate(Guid id,DateTime encounterDate);
         void Upload(Encounter encounter);
 
         void Purge(Guid id, string obsName);

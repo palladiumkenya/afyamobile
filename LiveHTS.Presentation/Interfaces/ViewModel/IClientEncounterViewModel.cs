@@ -38,6 +38,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         
         IMvxCommand SaveChangesCommand { get; }
 
+        IMvxCommand ShowDateDialogCommand { get; }
+        event EventHandler<ChangedDateEvent> ChangedDate;
+        TraceDateDTO SelectedDate { get; set; }
+        void ShowDatePicker(Guid refId, DateTime refDate);
+
+        DateTime BirthDate { get; set; }
+
         void LoadView();
         bool ValidateResponse(QuestionTemplate questionTemplate);
         void AllowNextQuestion(QuestionTemplate questionTemplate);
