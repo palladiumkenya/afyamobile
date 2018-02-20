@@ -38,6 +38,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         DateTime ScreeningDate { get; set; }
 
         //  Pns Accepted
+        bool EnablePnsAccepted { get; set; }
         List<CategoryItem> PnsAccepted { get; set; }
         CategoryItem SelectedPnsAccepted { get; set; }
 

@@ -5802,8 +5802,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00c9
 			public const int editTextProfileKeyOtherPop = 2131493065;
 			
-			// aapt resource value: 0x7f0c013e
-			public const int editTextRemarks = 2131493182;
+			// aapt resource value: 0x7f0c0142
+			public const int editTextRemarks = 2131493186;
 			
 			// aapt resource value: 0x7f0c0074
 			public const int edit_query = 2131492980;
@@ -5979,8 +5979,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c013c
 			public const int login_progress = 2131493180;
 			
-			// aapt resource value: 0x7f0c0141
-			public const int masked = 2131493185;
+			// aapt resource value: 0x7f0c0145
+			public const int masked = 2131493189;
 			
 			// aapt resource value: 0x7f0c0107
 			public const int media_actions = 2131493127;
@@ -6156,6 +6156,12 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00f1
 			public const int spinner56 = 2131493105;
 			
+			// aapt resource value: 0x7f0c013f
+			public const int spinner576 = 2131493183;
+			
+			// aapt resource value: 0x7f0c0141
+			public const int spinner756 = 2131493185;
+			
 			// aapt resource value: 0x7f0c0130
 			public const int spinnerBookingDate = 2131493168;
 			
@@ -6174,8 +6180,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00c7
 			public const int spinnerKeyPop = 2131493063;
 			
-			// aapt resource value: 0x7f0c013f
-			public const int spinnerKit = 2131493183;
+			// aapt resource value: 0x7f0c0143
+			public const int spinnerKit = 2131493187;
 			
 			// aapt resource value: 0x7f0c0129
 			public const int spinnerLivingWithClient = 2131493161;
@@ -6287,6 +6293,12 @@ namespace LiveHTS.Droid
 			
 			// aapt resource value: 0x7f0c00f0
 			public const int textView46 = 2131493104;
+			
+			// aapt resource value: 0x7f0c0140
+			public const int textView486 = 2131493184;
+			
+			// aapt resource value: 0x7f0c013e
+			public const int textView496 = 2131493182;
 			
 			// aapt resource value: 0x7f0c0094
 			public const int textViewAddressId = 2131493012;
@@ -6498,8 +6510,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00f4
 			public const int viewpagerlink = 2131493108;
 			
-			// aapt resource value: 0x7f0c0140
-			public const int visible = 2131493184;
+			// aapt resource value: 0x7f0c0144
+			public const int visible = 2131493188;
 			
 			// aapt resource value: 0x7f0c001a
 			public const int wide = 2131492890;

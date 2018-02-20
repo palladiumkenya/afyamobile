@@ -69,6 +69,9 @@ namespace LiveHTS.Presentation.ViewModel
         private IDialogService _dialogService;
         private string _remarks;
         private bool _enableCoupleDiscordant;
+        private List<CategoryItem> _pnsDeclineds;
+        private CategoryItem _selectedPnsDeclined;
+        private Guid _pnsDeclined;
 
 
         public ValidationHelper Validator { get; set; }
@@ -334,7 +337,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 
             }
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public Guid CoupleDiscordant
@@ -397,6 +400,24 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public Guid PnsDeclined
+        {
+            get { return _pnsDeclined; }
+            set { _pnsDeclined = value; RaisePropertyChanged(() => PnsDeclined); }
+        }
+
+        public List<CategoryItem> PnsDeclineds
+        {
+            get { return _pnsDeclineds; }
+            set { _pnsDeclineds = value; RaisePropertyChanged(() => PnsDeclined); }
+        }
+
+        public CategoryItem SelectedPnsDeclined
+        {
+            get { return _selectedPnsDeclined; }
+            set { _selectedPnsDeclined = value; RaisePropertyChanged(() => SelectedPnsDeclined); }
+        }
+
         public string Remarks
         {
             get { return _remarks; }
@@ -442,6 +463,7 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.ResultGiven = SelectedResultGiven.ItemId;
                     ObsFinalTestResult.CoupleDiscordant = SelectedCoupleDiscordant.ItemId;
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
+                    ObsFinalTestResult.PnsDeclined = SelectedPnsDeclined.ItemId;
                     ObsFinalTestResult.Remarks = Remarks;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
                     _testingService.MarkEncounterCompleted(ObsFinalTestResult.EncounterId,true);
@@ -497,7 +519,7 @@ namespace LiveHTS.Presentation.ViewModel
             ResultGivenOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
             CoupleDiscordantOptions = _lookupService.GetCategoryItems("YesNoNa", true).ToList();
             SelfTestOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
-
+            PnsDeclineds = _lookupService.GetCategoryItems("PNSDecline", true).ToList();
             Kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
 
             EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
@@ -505,9 +527,9 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("lookup.TestResult", JsonConvert.SerializeObject(results));
             _settings.AddOrUpdateValue("lookup.FinalResult", JsonConvert.SerializeObject(FinalTestResults));
             _settings.AddOrUpdateValue("lookup.ResultGivenOptions", JsonConvert.SerializeObject(ResultGivenOptions));
-            _settings.AddOrUpdateValue("lookup.CoupleDiscordantOptions",
-                JsonConvert.SerializeObject(CoupleDiscordantOptions));
+            _settings.AddOrUpdateValue("lookup.CoupleDiscordantOptions",JsonConvert.SerializeObject(CoupleDiscordantOptions));
             _settings.AddOrUpdateValue("lookup.SelfTestOptions", JsonConvert.SerializeObject(SelfTestOptions));
+            _settings.AddOrUpdateValue("lookup.PNSDecline", JsonConvert.SerializeObject(PnsDeclined));
             _settings.AddOrUpdateValue("lookup.KitName", JsonConvert.SerializeObject(Kits));
             _settings.AddOrUpdateValue("lookup.EncounterType", JsonConvert.SerializeObject(EncounterType));
 
@@ -749,6 +771,18 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         SelectedSelfTest = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
+
+                    //  PnsDeclined
+                    var resultpst = PnsDeclineds.FirstOrDefault(x => x.ItemId == finalResult.PnsDeclined);
+                    if (null != resultst)
+                    {
+                        SelectedPnsDeclined = resultpst;
+                    }
+                    else
+                    {
+                        SelectedPnsDeclined = PnsDeclineds.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+
 
                     //  Remarks
                     Remarks = finalResult.Remarks;
