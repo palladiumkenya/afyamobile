@@ -168,6 +168,11 @@ namespace LiveHTS.Core.Service.Interview
                 _encounterRepository.UpdateEncounterDate(encounterId, encounterDate);
         }
 
+        public bool IsIndividual(Guid clientId)
+        {
+            return _encounterRepository.GetIndividual(clientId);
+        }
+
 
         private void LoadItems()
         {

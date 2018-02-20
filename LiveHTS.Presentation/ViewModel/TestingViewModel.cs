@@ -18,6 +18,7 @@ using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using LiveHTS.SharedKernel.Custom;
+using MvvmCross.Binding.Attributes;
 using MvvmCross.Core.ViewModels;
 using MvvmValidation;
 using Newtonsoft.Json;
@@ -67,6 +68,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _SecondTestResults;
         private IDialogService _dialogService;
         private string _remarks;
+        private bool _enableCoupleDiscordant;
 
 
         public ValidationHelper Validator { get; set; }
@@ -307,6 +309,32 @@ namespace LiveHTS.Presentation.ViewModel
                 _resultGivenOptions = value;
                 RaisePropertyChanged(() => ResultGivenOptions);
             }
+        }
+        
+        public bool EnableCoupleDiscordant
+        {
+            get { return _enableCoupleDiscordant; }
+            set
+            {
+                _enableCoupleDiscordant = value;
+                RaisePropertyChanged(() => EnableCoupleDiscordant);
+                if (!_enableCoupleDiscordant)
+                    SetNA();
+            }
+        }
+
+        private void SetNA()
+        {
+            try
+            {
+                var id = new Guid("B25ED1C0-852F-11E7-BB31-BE2E44B06B34");
+                SelectedCoupleDiscordant = CoupleDiscordantOptions.FirstOrDefault(x => x.ItemId == id);
+            }
+            catch 
+            {
+                
+            }
+            throw new NotImplementedException();
         }
 
         public Guid CoupleDiscordant
@@ -727,6 +755,18 @@ namespace LiveHTS.Presentation.ViewModel
 
                 }
 
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            try
+            {
+                EnableCoupleDiscordant = !_testingService.IsIndividual(Client.Id);
+            }
+            catch 
+            {
+               
             }
         }
 

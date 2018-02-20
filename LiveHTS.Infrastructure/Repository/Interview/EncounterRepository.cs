@@ -325,6 +325,31 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return new DateTime(1900,1,1);        
         }
 
+        public bool GetIndividual(Guid clientId)
+        {
+            var encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0");
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            if (null != encounter)
+            {
+                var obses = _db.Table<Obs>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.Obses = obses;
+                if (encounter.HasObs)
+                {
+                    var testedAsObs= encounter.Obses.FirstOrDefault(x => x.QuestionId == new Guid("b260401e-852f-11e7-bb31-be2e44b06b34"));
+                    if (null != testedAsObs)
+                    {
+                        return null != testedAsObs.ValueCoded && testedAsObs.ValueCoded.Value == new Guid("B25EDE36-852F-11E7-BB31-BE2E44B06B34");
+                    }
+                }
+            }
+
+            return false;
+        }
+
 
         public void ClearObs(Guid id)
         {

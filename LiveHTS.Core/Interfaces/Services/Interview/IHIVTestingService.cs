@@ -17,6 +17,7 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
         void UpdateFinalResult(Guid encounterId);
         void MarkEncounterCompleted(Guid encounterId, bool completed);
         void UpdateEncounterDate(Guid encounterId, Guid clientId);
+        bool IsIndividual(Guid clientId);
 
     }
 }

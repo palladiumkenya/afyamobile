@@ -47,6 +47,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedResultGiven { get; set; }
         List<CategoryItem> ResultGivenOptions { get; set; }
 
+        bool EnableCoupleDiscordant { get; set; }
         Guid CoupleDiscordant { get; set; }
         CategoryItem SelectedCoupleDiscordant { get; set; }
         List<CategoryItem> CoupleDiscordantOptions { get; set; }

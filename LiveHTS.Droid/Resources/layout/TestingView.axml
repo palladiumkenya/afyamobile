@@ -190,7 +190,7 @@
           android:layout_width="0dp"
           android:layout_weight="1"
           android:layout_height="wrap_content"
-          local:MvxBind="ItemsSource CoupleDiscordantOptions; SelectedItem SelectedCoupleDiscordant" />
+          local:MvxBind="ItemsSource CoupleDiscordantOptions; SelectedItem SelectedCoupleDiscordant;Enabled EnableCoupleDiscordant" />
     </LinearLayout>
 <!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->

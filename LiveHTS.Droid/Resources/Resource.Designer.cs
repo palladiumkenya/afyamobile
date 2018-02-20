@@ -5685,8 +5685,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c0096
 			public const int buttonContactPrev = 2131493014;
 			
-			// aapt resource value: 0x7f0c00a5
-			public const int buttonDemographicNext = 2131493029;
+			// aapt resource value: 0x7f0c00a4
+			public const int buttonDemographicNext = 2131493028;
 			
 			// aapt resource value: 0x7f0c00a7
 			public const int buttonDemographicPrev = 2131493031;
@@ -5931,8 +5931,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c0115
 			public const int line3 = 2131493141;
 			
-			// aapt resource value: 0x7f0c00a2
-			public const int linearLayoutAge = 2131493026;
+			// aapt resource value: 0x7f0c00a3
+			public const int linearLayoutAge = 2131493027;
 			
 			// aapt resource value: 0x7f0c008d
 			public const int linearLayoutContent = 2131493005;
@@ -6468,8 +6468,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00b0
 			public const int txtTestDate = 2131493040;
 			
-			// aapt resource value: 0x7f0c00a1
-			public const int txtage = 2131493025;
+			// aapt resource value: 0x7f0c00a2
+			public const int txtage = 2131493026;
 			
 			// aapt resource value: 0x7f0c0091
 			public const int txtageLandmark = 2131493009;
@@ -6477,11 +6477,11 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c0090
 			public const int txtageTelephone = 2131493008;
 			
-			// aapt resource value: 0x7f0c00a3
-			public const int txtageUnit = 2131493027;
+			// aapt resource value: 0x7f0c00a5
+			public const int txtageUnit = 2131493029;
 			
-			// aapt resource value: 0x7f0c00a4
-			public const int txtbirthdate = 2131493028;
+			// aapt resource value: 0x7f0c00a1
+			public const int txtbirthdate = 2131493025;
 			
 			// aapt resource value: 0x7f0c0009
 			public const int up = 2131492873;
