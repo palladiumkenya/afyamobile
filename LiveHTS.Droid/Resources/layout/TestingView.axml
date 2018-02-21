@@ -226,7 +226,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        local:MvxBind="ItemsSource PnsDeclineds; SelectedItem SelectedPnsDeclined" />
+        local:MvxBind="ItemsSource PnsDeclineds; SelectedItem SelectedPnsDeclined;Enabled EnablePnsDeclined" />
     </LinearLayout>
     <android.support.design.widget.TextInputLayout
       android:layout_width="match_parent"

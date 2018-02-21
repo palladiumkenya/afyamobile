@@ -56,7 +56,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedSelfTest { get; set; }
         List<CategoryItem> SelfTestOptions { get; set; }
 
-
+        bool EnablePnsDeclined { get; set; }
         Guid PnsDeclined { get; set; }
         CategoryItem SelectedPnsDeclined { get; set; }
         List<CategoryItem> PnsDeclineds { get; set; }

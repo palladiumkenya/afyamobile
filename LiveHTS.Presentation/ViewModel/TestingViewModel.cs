@@ -72,6 +72,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _pnsDeclineds;
         private CategoryItem _selectedPnsDeclined;
         private Guid _pnsDeclined;
+        private bool _enablePnsDeclined;
 
 
         public ValidationHelper Validator { get; set; }
@@ -387,7 +388,22 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedSelfTest = value;
                 RaisePropertyChanged(() => SelectedSelfTest);
+                //SetDeclincedState();
             }
+        }
+
+        private void SetDeclincedState()
+        {
+            if (null != SelectedSelfTest && !SelectedSelfTest.ItemId.IsNullOrEmpty() &&
+                SelectedSelfTest.ItemId == new Guid("B25ED04E-852F-11E7-BB31-BE2E44B06B34"))
+            {
+                EnablePnsDeclined = false;
+            }
+            else
+            {
+                EnablePnsDeclined = true;
+            }
+
         }
 
         public List<CategoryItem> SelfTestOptions
@@ -397,6 +413,17 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selfTestOptions = value;
                 RaisePropertyChanged(() => SelfTestOptions);
+            }
+        }
+
+        public bool EnablePnsDeclined
+        {
+            get { return _enablePnsDeclined; }
+            set
+            {
+                _enablePnsDeclined = value;
+                RaisePropertyChanged(() => EnablePnsDeclined);
+                SetDeclincedState();
             }
         }
 
@@ -449,9 +476,14 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveTesting()
         {
-            var final = SelectedResultGiven.ItemId;
-            var given = SelectedFinalTestResult.ItemId;
-            return !final.IsNullOrEmpty() && !given.IsNullOrEmpty();
+            if (null != SelectedResultGiven && null != SelectedFinalTestResult)
+            {
+                var final = SelectedResultGiven.ItemId;
+                var given = SelectedFinalTestResult.ItemId;
+                return !final.IsNullOrEmpty() && !given.IsNullOrEmpty();
+            }
+
+            return false;
         }
 
         private void SaveTesting()
