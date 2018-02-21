@@ -461,7 +461,12 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null != ObsFinalTestResult)
                 {
                     ObsFinalTestResult.ResultGiven = SelectedResultGiven.ItemId;
+
+                    var isIndividial = _settings.GetValue("client.disco", false);
+
+                    EnableCoupleDiscordant = !isIndividial;
                     ObsFinalTestResult.CoupleDiscordant = SelectedCoupleDiscordant.ItemId;
+
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
                     ObsFinalTestResult.PnsDeclined = SelectedPnsDeclined.ItemId;
                     ObsFinalTestResult.Remarks = Remarks;
@@ -590,6 +595,11 @@ namespace LiveHTS.Presentation.ViewModel
 
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
+
+
+            var isIndividial = _testingService.IsIndividual(Client.Id);
+            _settings.AddOrUpdateValue("client.disco", isIndividial);
+            EnableCoupleDiscordant = !isIndividial;
 
             //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
         }
@@ -760,6 +770,8 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         SelectedCoupleDiscordant = CoupleDiscordantOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
+                    var isIndividial = _settings.GetValue("client.disco", false);
+                    EnableCoupleDiscordant = !isIndividial;
 
                     //  Self test
                     var resultst = SelfTestOptions.FirstOrDefault(x => x.ItemId == finalResult.SelfTestOption);
@@ -774,7 +786,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                     //  PnsDeclined
                     var resultpst = PnsDeclineds.FirstOrDefault(x => x.ItemId == finalResult.PnsDeclined);
-                    if (null != resultst)
+                    if (null != resultpst)
                     {
                         SelectedPnsDeclined = resultpst;
                     }
@@ -796,11 +808,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             try
             {
-                EnableCoupleDiscordant = !_testingService.IsIndividual(Client.Id);
+                var isIndividial = _settings.GetValue("client.disco", false);
+                EnableCoupleDiscordant = !isIndividial;
             }
-            catch 
+            catch
             {
-               
+
             }
         }
 

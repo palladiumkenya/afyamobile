@@ -5312,8 +5312,26 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
+			// aapt resource value: 0x7f02009e
+			public const int avd_hide_password_1 = 2130837662;
+			
+			// aapt resource value: 0x7f02009f
+			public const int avd_hide_password_2 = 2130837663;
+			
+			// aapt resource value: 0x7f0200a0
+			public const int avd_hide_password_3 = 2130837664;
+			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
+			
+			// aapt resource value: 0x7f0200a1
+			public const int avd_show_password_1 = 2130837665;
+			
+			// aapt resource value: 0x7f0200a2
+			public const int avd_show_password_2 = 2130837666;
+			
+			// aapt resource value: 0x7f0200a3
+			public const int avd_show_password_3 = 2130837667;
 			
 			// aapt resource value: 0x7f020056
 			public const int common_full_open_on_phone = 2130837590;
