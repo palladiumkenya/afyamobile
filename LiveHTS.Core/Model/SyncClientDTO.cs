@@ -18,6 +18,7 @@ namespace LiveHTS.Core.Model
         public bool IsFamilyMember { get; set; }
         public bool IsPartner { get; set; }
         public bool? PreventEnroll { get; set; }
+        public bool? AlreadyTestedPos { get; set; }
         public List<ClientIdentifier> Identifiers { get; set; } = new List<ClientIdentifier>();
         public List<ClientRelationship> Relationships { get; set; } = new List<ClientRelationship>();
 
@@ -34,6 +35,7 @@ namespace LiveHTS.Core.Model
             IsFamilyMember = client.IsFamilyMember;
             IsPartner = client.IsPartner;
             PreventEnroll = client.PreventEnroll;
-        }
+            AlreadyTestedPos = client.AlreadyTestedPos;
+    }
     }
 }

@@ -36,8 +36,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         private IMvxCommand _manageRegistrationCommand;
         private IMvxCommand _addRelationShipCommand;
-        
 
+       
         private bool _isBusy;
         private EncounterType _defaultEncounterType;
 
@@ -151,6 +151,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 DefaultEncounterType = JsonConvert.DeserializeObject<EncounterType>(encounterTypeJson);
             }
+            
         }
 
         private void ManageRegistration()
@@ -191,7 +192,9 @@ namespace LiveHTS.Presentation.ViewModel
                 var encounterTypeJson = JsonConvert.SerializeObject(DefaultEncounterType);
                 _settings.AddOrUpdateValue("encountertype", encounterTypeJson);
             }
-
+            
+            
+            
         }
 
       
@@ -236,7 +239,7 @@ namespace LiveHTS.Presentation.ViewModel
             List<FormTemplateWrap> list = new List<FormTemplateWrap>();
             foreach (var r in forms)
             {
-                var f = new FormTemplate(r);
+                 var f = new FormTemplate(r);
                 f.Encounters = ConvertToEncounterWrapperClass(r.ClientEncounters, clientDashboardViewModel,f.Display);
                 var fw = new FormTemplateWrap(clientDashboardViewModel, f);                
                 list.Add(fw);

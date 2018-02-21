@@ -42,6 +42,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<FormTemplateWrap> _formsFamily;
         private List<FormTemplateWrap> _formsPartner;
         private List<ModuleTemplateWrap> _allModules;
+       
 
 
         public IDashboardViewModel Parent { get; set; }
@@ -76,6 +77,7 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
                         form.KeyClientEncounters= _interviewService.LoadKeyEncounters(Client.Id).ToList();
+                        form.Block =  null != Client && null != Client.AlreadyTestedPos && Client.AlreadyTestedPos.Value;
                     }
                 }
                 AllModules = ConvertToModuleWrapperClass(_modules,this);
@@ -160,6 +162,8 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
             }
+
+           
         }
 
         public void StartEncounter(FormTemplate formTemplate)
@@ -397,6 +401,7 @@ namespace LiveHTS.Presentation.ViewModel
                     foreach (var program in form.Programs)
                     {
                         var formTemplate = new FormTemplate(form, program);
+                        //formTemplate.Block = isBlocked;
                         var encounters = form.ClientEncounters.Where(x => x.EncounterTypeId == program.EncounterTypeId).ToList();
                         formTemplate.Encounters = ConvertToEncounterWrapperClass(encounters, encounterViewModel, formTemplate.Display);
                         var formTemplateWrap = new FormTemplateWrap(encounterViewModel, formTemplate);
