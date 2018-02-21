@@ -241,6 +241,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (Local.IsSetupComplete())
             {
                 _dialogService.ShowToast("Device setup successfully");
+                //Close(this);
                 ShowViewModel<SignInViewModel>();
             }
             else

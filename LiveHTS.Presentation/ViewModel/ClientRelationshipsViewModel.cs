@@ -240,7 +240,7 @@ namespace LiveHTS.Presentation.ViewModel
         private void AddRelationship()
         {
             _registryService.UpdateRelationShips(SelectedRelationshipType.Id, new Guid(ClientId), SelectedClient.Id);
-            //Close(this);
+            Close(this);
             ShowViewModel<DashboardViewModel>(new {id = ClientId});
 
         }

@@ -87,6 +87,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void ShowDashboard(PartnerTemplate template)
         {
+            Close(this);
             Parent.ShowDashboard(template.RelatedClientId.ToString(), template.ClientId.ToString(), "pns");
         }
 
