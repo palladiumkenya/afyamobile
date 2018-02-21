@@ -243,6 +243,7 @@
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ObsActivity.cs" />
     <Compile Include="Activities\AppDashboardActivity.cs" />
+    <Compile Include="Activities\StandByActivity.cs" />
     <Compile Include="Activities\SignInActivity.cs" />
     <Compile Include="Activities\TestingActivity.cs" />
     <Compile Include="Adapters\MvxViewPagerFragmentAdapter.cs" />
@@ -503,6 +504,7 @@
     <AndroidResource Include="Resources\layout\SetupWizardView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\StandByView.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

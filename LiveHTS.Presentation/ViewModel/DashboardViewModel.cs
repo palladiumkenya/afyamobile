@@ -96,12 +96,12 @@ namespace LiveHTS.Presentation.ViewModel
                     return;
                 }
 
-                if (Client.Relationships.Any(x => x.IsFamilyRelation()))
+                if (Client.Relationships.Any(x => x.IsFamilyRelation())|| (Client.Downloaded&&Client.IsFamilyMember))
                 {
 
                     _settings.AddOrUpdateValue("emod", "fam");
                 };
-                if (Client.Relationships.Any(x => x.IsPatner()))
+                if (Client.Relationships.Any(x => x.IsPatner()) || (Client.Downloaded && Client.IsPartner))
                 {
 
                     _settings.AddOrUpdateValue("emod", "pns");
