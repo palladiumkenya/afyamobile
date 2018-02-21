@@ -17,6 +17,7 @@ namespace LiveHTS.Core.Model
         public Person Person { get; set; }
         public bool IsFamilyMember { get; set; }
         public bool IsPartner { get; set; }
+        public bool? PreventEnroll { get; set; }
         public List<ClientIdentifier> Identifiers { get; set; } = new List<ClientIdentifier>();
         public List<ClientRelationship> Relationships { get; set; } = new List<ClientRelationship>();
 
@@ -32,6 +33,7 @@ namespace LiveHTS.Core.Model
             Relationships = client.Relationships.ToList();
             IsFamilyMember = client.IsFamilyMember;
             IsPartner = client.IsPartner;
+            PreventEnroll = client.PreventEnroll;
         }
     }
 }
