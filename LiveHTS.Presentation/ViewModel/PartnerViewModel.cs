@@ -87,8 +87,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void ShowDashboard(PartnerTemplate template)
         {
-            Close(this);
-            Parent.ShowDashboard(template.RelatedClientId.ToString(), template.ClientId.ToString(), "pns");
+//            Close(this);
+//            Parent.ShowDashboard(template.RelatedClientId.ToString(), template.ClientId.ToString(), "pns");
+            ShowViewModel<StandByViewModel>(new { id = template.RelatedClientId.ToString(), callerId = template.ClientId.ToString(), mode = "pns" });
         }
 
         private static List<PartnerTemplateWrap> ConvertToPartnerWrapperClass(Client client, IPartnerViewModel partnerViewModel)

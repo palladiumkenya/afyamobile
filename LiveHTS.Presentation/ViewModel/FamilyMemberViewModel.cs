@@ -87,7 +87,7 @@ namespace LiveHTS.Presentation.ViewModel
             Close(this);
             Parent.ShowDashboard(template.RelatedClientId.ToString(),template.ClientId.ToString(),"fam");
             */
-            ShowViewModel<StandByViewModel>(new {id = template.RelatedClientId.ToString(), callerId = template.ClientId, mode = "fam" });
+            ShowViewModel<StandByViewModel>(new {id = template.RelatedClientId.ToString(), callerId = template.ClientId.ToString(), mode = "fam" });
         }
 
 
