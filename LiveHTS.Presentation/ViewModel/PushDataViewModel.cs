@@ -193,8 +193,8 @@ namespace LiveHTS.Presentation.ViewModel
                     clientIdsDelete.Add(clientToDeleteDto);
                     foreach (var toDeleteDto in clientIdsDelete)
                     {
-                        //TODO: ALLOW DELETE
-                       // _clientReaderService.Purge(toDeleteDto);
+                        //TODO: ALLOW DELETE [DONE]
+                        _clientReaderService.Purge(toDeleteDto);
                     }
                 }
                 
