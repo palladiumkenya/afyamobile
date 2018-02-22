@@ -87,7 +87,7 @@
           android:layout_height="wrap_content"
           android:textSize="40dp"
           android:id="@+id/spinnerPnsAccepted"
-          local:MvxBind="ItemsSource PnsAccepted;SelectedItem SelectedPnsAccepted" />
+          local:MvxBind="ItemsSource PnsAccepted;SelectedItem SelectedPnsAccepted;Enabled EnablePnsAccepted" />
         
 
         <TextView

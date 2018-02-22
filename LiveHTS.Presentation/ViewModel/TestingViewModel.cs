@@ -18,6 +18,7 @@ using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using LiveHTS.SharedKernel.Custom;
+using MvvmCross.Binding.Attributes;
 using MvvmCross.Core.ViewModels;
 using MvvmValidation;
 using Newtonsoft.Json;
@@ -67,6 +68,11 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _SecondTestResults;
         private IDialogService _dialogService;
         private string _remarks;
+        private bool _enableCoupleDiscordant;
+        private List<CategoryItem> _pnsDeclineds;
+        private CategoryItem _selectedPnsDeclined;
+        private Guid _pnsDeclined;
+        private bool _enablePnsDeclined;
 
 
         public ValidationHelper Validator { get; set; }
@@ -308,6 +314,32 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => ResultGivenOptions);
             }
         }
+        
+        public bool EnableCoupleDiscordant
+        {
+            get { return _enableCoupleDiscordant; }
+            set
+            {
+                _enableCoupleDiscordant = value;
+                RaisePropertyChanged(() => EnableCoupleDiscordant);
+                if (!_enableCoupleDiscordant)
+                    SetNA();
+            }
+        }
+
+        private void SetNA()
+        {
+            try
+            {
+                var id = new Guid("B25ED1C0-852F-11E7-BB31-BE2E44B06B34");
+                SelectedCoupleDiscordant = CoupleDiscordantOptions.FirstOrDefault(x => x.ItemId == id);
+            }
+            catch 
+            {
+                
+            }
+            //throw new NotImplementedException();
+        }
 
         public Guid CoupleDiscordant
         {
@@ -346,6 +378,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selfTestOption = value;
                 RaisePropertyChanged(() => SelfTestOption);
+                
             }
         }
 
@@ -356,7 +389,24 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedSelfTest = value;
                 RaisePropertyChanged(() => SelectedSelfTest);
+                SetDeclincedState();
+                SaveTestingCommand.RaiseCanExecuteChanged();
             }
+        }
+
+        private void SetDeclincedState()
+        {
+            if (null != SelectedSelfTest && !SelectedSelfTest.ItemId.IsNullOrEmpty() &&
+                SelectedSelfTest.ItemId == new Guid("B25ED04E-852F-11E7-BB31-BE2E44B06B34"))
+            {
+                EnablePnsDeclined = true;
+            }
+            else
+            {
+                SelectedPnsDeclined = PnsDeclineds.OrderBy(x => x.Rank).FirstOrDefault();
+                EnablePnsDeclined = false;
+            }
+
         }
 
         public List<CategoryItem> SelfTestOptions
@@ -367,6 +417,35 @@ namespace LiveHTS.Presentation.ViewModel
                 _selfTestOptions = value;
                 RaisePropertyChanged(() => SelfTestOptions);
             }
+        }
+
+        public bool EnablePnsDeclined
+        {
+            get { return _enablePnsDeclined; }
+            set
+            {
+                _enablePnsDeclined = value;
+                RaisePropertyChanged(() => EnablePnsDeclined);
+                //SetDeclincedState();
+            }
+        }
+
+        public Guid PnsDeclined
+        {
+            get { return _pnsDeclined; }
+            set { _pnsDeclined = value; RaisePropertyChanged(() => PnsDeclined); }
+        }
+
+        public List<CategoryItem> PnsDeclineds
+        {
+            get { return _pnsDeclineds; }
+            set { _pnsDeclineds = value; RaisePropertyChanged(() => PnsDeclined); }
+        }
+
+        public CategoryItem SelectedPnsDeclined
+        {
+            get { return _selectedPnsDeclined; }
+            set { _selectedPnsDeclined = value; RaisePropertyChanged(() => SelectedPnsDeclined); SaveTestingCommand.RaiseCanExecuteChanged(); }
         }
 
         public string Remarks
@@ -400,9 +479,26 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveTesting()
         {
-            var final = SelectedResultGiven.ItemId;
-            var given = SelectedFinalTestResult.ItemId;
-            return !final.IsNullOrEmpty() && !given.IsNullOrEmpty();
+            //return Validate();
+            if (null != SelectedResultGiven && null != SelectedFinalTestResult && null != SelectedSelfTest)
+            {
+                var final = SelectedResultGiven.ItemId;
+                var given = SelectedFinalTestResult.ItemId;
+                var pnsAccepted = SelectedSelfTest.ItemId;
+                var required= !final.IsNullOrEmpty() && !given.IsNullOrEmpty() && !pnsAccepted.IsNullOrEmpty();
+
+                if (EnablePnsDeclined && null != SelectedPnsDeclined)
+                {
+                    var pnsDeclined = SelectedPnsDeclined.ItemId;
+                    return required && !pnsDeclined.IsNullOrEmpty();
+                }
+                else
+                {
+                    return required;
+                }
+            }
+
+            return false;
         }
 
         private void SaveTesting()
@@ -412,14 +508,20 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null != ObsFinalTestResult)
                 {
                     ObsFinalTestResult.ResultGiven = SelectedResultGiven.ItemId;
+
+                    var isIndividial = _settings.GetValue("client.disco", false);
+                    EnableCoupleDiscordant = !isIndividial;
                     ObsFinalTestResult.CoupleDiscordant = SelectedCoupleDiscordant.ItemId;
+
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
+                    ObsFinalTestResult.PnsDeclined = SelectedPnsDeclined.ItemId;
                     ObsFinalTestResult.Remarks = Remarks;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
                     _testingService.MarkEncounterCompleted(ObsFinalTestResult.EncounterId,true);
+                    _testingService.UpdateEncounterDate(ObsFinalTestResult.EncounterId, Client.Id);
                     Encounter = _testingService.OpenEncounter(Encounter.Id);
 
-                    _dialogService.ShowToast("Tests saved successfully");
+                   // _dialogService.ShowToast("Tests saved successfully");
                     GoBack();
                 }
 
@@ -468,7 +570,7 @@ namespace LiveHTS.Presentation.ViewModel
             ResultGivenOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
             CoupleDiscordantOptions = _lookupService.GetCategoryItems("YesNoNa", true).ToList();
             SelfTestOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
-
+            PnsDeclineds = _lookupService.GetCategoryItems("PNSDecline", true).ToList();
             Kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
 
             EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
@@ -476,9 +578,9 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("lookup.TestResult", JsonConvert.SerializeObject(results));
             _settings.AddOrUpdateValue("lookup.FinalResult", JsonConvert.SerializeObject(FinalTestResults));
             _settings.AddOrUpdateValue("lookup.ResultGivenOptions", JsonConvert.SerializeObject(ResultGivenOptions));
-            _settings.AddOrUpdateValue("lookup.CoupleDiscordantOptions",
-                JsonConvert.SerializeObject(CoupleDiscordantOptions));
+            _settings.AddOrUpdateValue("lookup.CoupleDiscordantOptions",JsonConvert.SerializeObject(CoupleDiscordantOptions));
             _settings.AddOrUpdateValue("lookup.SelfTestOptions", JsonConvert.SerializeObject(SelfTestOptions));
+            _settings.AddOrUpdateValue("lookup.PNSDecline", JsonConvert.SerializeObject(PnsDeclined));
             _settings.AddOrUpdateValue("lookup.KitName", JsonConvert.SerializeObject(Kits));
             _settings.AddOrUpdateValue("lookup.EncounterType", JsonConvert.SerializeObject(EncounterType));
 
@@ -540,6 +642,11 @@ namespace LiveHTS.Presentation.ViewModel
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
 
+
+            var isIndividial = _testingService.IsIndividual(Client.Id);
+            _settings.AddOrUpdateValue("client.disco", isIndividial);
+            EnableCoupleDiscordant = !isIndividial;
+
             //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
         }
 
@@ -575,7 +682,7 @@ namespace LiveHTS.Presentation.ViewModel
             ErrorSummary = string.Empty;
 
             //FInal Result Given
-            var final = SelectedResultGiven.ItemId;
+            var final = SelectedFinalTestResult.ItemId;
 
             Validator.AddRule(
                 "Final Result",
@@ -596,7 +703,31 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
+            //Pns Accepted
+            var pnsaccepted = SelectedSelfTest.ItemId;
 
+            Validator.AddRule(
+                "Partner Listing",
+                () => RuleResult.Assert(
+                    !pnsaccepted.IsNullOrEmpty(),
+                    $"Partner Listing is required"
+                )
+            );
+
+            if (EnablePnsDeclined)
+            {
+                //Decline
+                var declined = SelectedPnsDeclined.ItemId;
+
+                Validator.AddRule(
+                    "Decline Reason",
+                    () => RuleResult.Assert(
+                        !declined.IsNullOrEmpty(),
+                        $"Decline Reason is required"
+                    )
+                );
+
+            }
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
@@ -709,6 +840,8 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         SelectedCoupleDiscordant = CoupleDiscordantOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
+                    var isIndividial = _settings.GetValue("client.disco", false);
+                    EnableCoupleDiscordant = !isIndividial;
 
                     //  Self test
                     var resultst = SelfTestOptions.FirstOrDefault(x => x.ItemId == finalResult.SelfTestOption);
@@ -721,10 +854,35 @@ namespace LiveHTS.Presentation.ViewModel
                         SelectedSelfTest = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
                     }
 
+                    //  PnsDeclined
+                    var resultpst = PnsDeclineds.FirstOrDefault(x => x.ItemId == finalResult.PnsDeclined);
+                    if (null != resultpst)
+                    {
+                        SelectedPnsDeclined = resultpst;
+                    }
+                    else
+                    {
+                        SelectedPnsDeclined = PnsDeclineds.OrderBy(x => x.Rank).FirstOrDefault();
+                    }
+
+
                     //  Remarks
                     Remarks = finalResult.Remarks;
 
                 }
+
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            try
+            {
+                var isIndividial = _settings.GetValue("client.disco", false);
+                EnableCoupleDiscordant = !isIndividial;
+            }
+            catch
+            {
 
             }
         }

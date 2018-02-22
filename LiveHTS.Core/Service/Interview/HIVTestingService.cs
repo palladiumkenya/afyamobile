@@ -107,6 +107,7 @@ namespace LiveHTS.Core.Service.Interview
                 test.ResultGiven = testResult.ResultGiven;
                 test.CoupleDiscordant = testResult.CoupleDiscordant;
                 test.SelfTestOption = testResult.SelfTestOption;
+                test.PnsDeclined = testResult.PnsDeclined;
                 test.Remarks = testResult.Remarks;
                 _obsFinalTestResultRepository.SaveOrUpdate(test);
             }
@@ -160,6 +161,19 @@ namespace LiveHTS.Core.Service.Interview
         {
             _encounterRepository.UpdateStatus(encounterId,completed);
         }
+
+        public void UpdateEncounterDate(Guid encounterId, Guid clientId)
+        {
+            var encounterDate = _encounterRepository.GetPretestEncounterDate(clientId);
+            if (encounterDate > new DateTime(1901, 1, 1))
+                _encounterRepository.UpdateEncounterDate(encounterId, encounterDate);
+        }
+
+        public bool IsIndividual(Guid clientId)
+        {
+            return _encounterRepository.GetIndividual(clientId);
+        }
+
 
         private void LoadItems()
         {

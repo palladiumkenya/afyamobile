@@ -41,7 +41,8 @@ namespace LiveHTS.Core.Model.Survey
         {
             get {return  CheckConsent(); }
         }
-
+        [Ignore]
+        public bool Block { get; set; }
 
         private bool CheckConsentRequired()
         {

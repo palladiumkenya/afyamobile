@@ -285,6 +285,14 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
+            Validator.AddRule(
+                nameof(Result),
+                () => RuleResult.Assert(
+                    !Result.IsNullOrEmpty(),
+                    $"{nameof(Result)} is required"
+                )
+            );
+
             if (ShowKitOther)
             {
                 Validator.AddRule(

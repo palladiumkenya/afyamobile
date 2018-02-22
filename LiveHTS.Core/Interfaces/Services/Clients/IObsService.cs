@@ -29,6 +29,6 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
 
         void ClearEncounter(Guid encounterId);
         void MarkEncounterCompleted(Guid encounterId,bool completed);
-
+        void UpdateEncounterDate(Guid id, DateTime encounterDate);
     }
 }

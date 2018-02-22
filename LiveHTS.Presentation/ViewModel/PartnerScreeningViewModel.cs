@@ -73,6 +73,7 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedLivingWithClient;
         private List<CategoryItem> _pnsApproach;
         private CategoryItem _selectedPnsApproach;
+        private bool _enablePnsAccepted;
 
 
         public PartnerScreeningViewModel(ISettings settings, IDialogService dialogService,
@@ -237,6 +238,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 PhysicalAssult = JsonConvert.DeserializeObject<List<CategoryItem>>(physicalAssultJson);
             }
+
             if (Threatened.Count == 0 && !string.IsNullOrWhiteSpace(threatenedJson))
             {
                 Threatened = JsonConvert.DeserializeObject<List<CategoryItem>>(threatenedJson);
@@ -273,14 +275,20 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Eligibility = JsonConvert.DeserializeObject<List<CategoryItem>>(eligibilityJson);
             }
-
-
-
-
+            
             if (null == Encounter && !string.IsNullOrWhiteSpace(clientEncounterJson))
             {
                 Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
             }
+
+            try
+            {
+                SelectedPnsAccepted =
+                    PnsAccepted.FirstOrDefault(x => x.ItemId == new Guid("B25ECCD4-852F-11E7-BB31-BE2E44B06B34"));
+            }
+            catch { }
+
+            EnablePnsAccepted = false;
 
 
         }
@@ -532,6 +540,12 @@ namespace LiveHTS.Presentation.ViewModel
                 _screeningDate = value;
                 RaisePropertyChanged(() => ScreeningDate);
             }
+        }
+
+        public bool EnablePnsAccepted
+        {
+            get { return _enablePnsAccepted; }
+            set { _enablePnsAccepted = value; RaisePropertyChanged(() => EnablePnsAccepted); }
         }
 
         public List<CategoryItem> PnsAccepted

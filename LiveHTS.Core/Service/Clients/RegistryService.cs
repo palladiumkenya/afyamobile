@@ -206,7 +206,8 @@ namespace LiveHTS.Core.Service.Clients
             await Task.Run(() =>
             {
                 client.Downloaded = true;
-                SaveOrUpdate(client);
+                var isClient = !client.DisableHts();
+                SaveOrUpdate(client,isClient);
                 foreach (var encounter in encounters)
                 {
                     _encounterRepository.Upload(encounter);

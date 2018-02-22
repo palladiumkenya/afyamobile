@@ -30,6 +30,8 @@ namespace LiveHTS.Core.Model.Subject
         public bool EncountersDownloaded { get; set; }
         public bool Downloaded { get; set; }
         public bool? PreventEnroll { get; set; }
+        public bool? AlreadyTestedPos { get; set; }
+ 
 
         [Ignore]
         public IEnumerable<ClientRelationship> MyRelationships { get; set; }=new List<ClientRelationship>();

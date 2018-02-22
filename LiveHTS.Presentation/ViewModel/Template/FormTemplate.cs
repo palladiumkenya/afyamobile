@@ -21,6 +21,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public bool HasEncounters { get; set; }
         public Guid DefaultEncounterTypeId { get; set; }
         public List<EncounterTemplateWrap> Encounters { get; set; }=new List<EncounterTemplateWrap>();
+        public bool Block { get; set; }
 
         public FormTemplate(Form r)
         {
@@ -30,6 +31,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             HasEncounters = r.ClientEncounters.Count > 0;
             ConsentRequired = r.ConsentRequired;
             HasConsent = r.HasConsent;
+            Block = r.Block;
         }
         public FormTemplate(Form r,Program program)
         {
@@ -43,6 +45,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             HasEncounters = r.ClientEncounters.Count > 0;
             ConsentRequired = r.ConsentRequired;
             HasConsent = r.HasConsent;
+            Block = r.Block;
         }
     }
 }
