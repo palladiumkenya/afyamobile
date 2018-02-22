@@ -378,6 +378,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selfTestOption = value;
                 RaisePropertyChanged(() => SelfTestOption);
+                
             }
         }
 
@@ -388,7 +389,8 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedSelfTest = value;
                 RaisePropertyChanged(() => SelectedSelfTest);
-                //SetDeclincedState();
+                SetDeclincedState();
+                SaveTestingCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -397,11 +399,12 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != SelectedSelfTest && !SelectedSelfTest.ItemId.IsNullOrEmpty() &&
                 SelectedSelfTest.ItemId == new Guid("B25ED04E-852F-11E7-BB31-BE2E44B06B34"))
             {
-                EnablePnsDeclined = false;
+                EnablePnsDeclined = true;
             }
             else
             {
-                EnablePnsDeclined = true;
+                SelectedPnsDeclined = PnsDeclineds.OrderBy(x => x.Rank).FirstOrDefault();
+                EnablePnsDeclined = false;
             }
 
         }
@@ -423,7 +426,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _enablePnsDeclined = value;
                 RaisePropertyChanged(() => EnablePnsDeclined);
-                SetDeclincedState();
+                //SetDeclincedState();
             }
         }
 
@@ -442,7 +445,7 @@ namespace LiveHTS.Presentation.ViewModel
         public CategoryItem SelectedPnsDeclined
         {
             get { return _selectedPnsDeclined; }
-            set { _selectedPnsDeclined = value; RaisePropertyChanged(() => SelectedPnsDeclined); }
+            set { _selectedPnsDeclined = value; RaisePropertyChanged(() => SelectedPnsDeclined); SaveTestingCommand.RaiseCanExecuteChanged(); }
         }
 
         public string Remarks
@@ -476,11 +479,23 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveTesting()
         {
-            if (null != SelectedResultGiven && null != SelectedFinalTestResult)
+            //return Validate();
+            if (null != SelectedResultGiven && null != SelectedFinalTestResult && null != SelectedSelfTest)
             {
                 var final = SelectedResultGiven.ItemId;
                 var given = SelectedFinalTestResult.ItemId;
-                return !final.IsNullOrEmpty() && !given.IsNullOrEmpty();
+                var pnsAccepted = SelectedSelfTest.ItemId;
+                var required= !final.IsNullOrEmpty() && !given.IsNullOrEmpty() && !pnsAccepted.IsNullOrEmpty();
+
+                if (EnablePnsDeclined && null != SelectedPnsDeclined)
+                {
+                    var pnsDeclined = SelectedPnsDeclined.ItemId;
+                    return required && !pnsDeclined.IsNullOrEmpty();
+                }
+                else
+                {
+                    return required;
+                }
             }
 
             return false;
@@ -495,7 +510,6 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.ResultGiven = SelectedResultGiven.ItemId;
 
                     var isIndividial = _settings.GetValue("client.disco", false);
-
                     EnableCoupleDiscordant = !isIndividial;
                     ObsFinalTestResult.CoupleDiscordant = SelectedCoupleDiscordant.ItemId;
 
@@ -668,7 +682,7 @@ namespace LiveHTS.Presentation.ViewModel
             ErrorSummary = string.Empty;
 
             //FInal Result Given
-            var final = SelectedResultGiven.ItemId;
+            var final = SelectedFinalTestResult.ItemId;
 
             Validator.AddRule(
                 "Final Result",
@@ -689,7 +703,31 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
+            //Pns Accepted
+            var pnsaccepted = SelectedSelfTest.ItemId;
 
+            Validator.AddRule(
+                "Partner Listing",
+                () => RuleResult.Assert(
+                    !pnsaccepted.IsNullOrEmpty(),
+                    $"Partner Listing is required"
+                )
+            );
+
+            if (EnablePnsDeclined)
+            {
+                //Decline
+                var declined = SelectedPnsDeclined.ItemId;
+
+                Validator.AddRule(
+                    "Decline Reason",
+                    () => RuleResult.Assert(
+                        !declined.IsNullOrEmpty(),
+                        $"Decline Reason is required"
+                    )
+                );
+
+            }
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
