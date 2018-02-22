@@ -21,6 +21,11 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidSigningKeyStore>E:\Workspace\palladium\hts\LiveHTS\Template\AfyaMobile.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>c0nstella</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>afyamobile</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>c0nstella</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
