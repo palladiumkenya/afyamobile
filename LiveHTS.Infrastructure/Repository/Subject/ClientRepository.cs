@@ -21,6 +21,8 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var client = base.Get(id);
             if (null != client)
             {
+                client.ClientStates= _db.Table<ClientState>().Where(x => x.ClientId == id).ToList();
+
                 client.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == client.PersonId);
                 var contacts = _db.Table<PersonContact>().ToList();
                 client.Person.Contacts = _db.Table<PersonContact>().Where(x => x.PersonId == client.PersonId).ToList();
@@ -58,6 +60,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
             foreach (var c in clients)
             {
+                c.ClientStates = _db.Table<ClientState>().Where(x => x.ClientId == c.Id).ToList();
                 c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
                 c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
                 c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
@@ -71,6 +74,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var clients = base.GetAll(predicate, voided).ToList();
             foreach (var c in clients)
             {
+                c.ClientStates = _db.Table<ClientState>().Where(x => x.ClientId == c.Id).ToList();
                 c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
                 c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
                 c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
@@ -186,6 +190,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
         public void Purge(Guid id)
         {
+            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE ClientId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ClientIdentifier)} WHERE ClientId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(Client)} WHERE Id=?", id.ToString());
         }
@@ -213,6 +218,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
             _db.Table<ClientRelationship>().Delete(x => x.ClientId == id);
             _db.Table<ClientIdentifier>().Delete(x => x.ClientId ==id);
+            _db.Table<ClientState>().Delete(x => x.ClientId == id);
             //Person
 
             foreach (var personId in personIds)

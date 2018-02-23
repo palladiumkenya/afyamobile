@@ -7,6 +7,7 @@ using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Clients
 {
@@ -17,14 +18,16 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IPersonRepository _personRepository;
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IEncounterRepository _encounterRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
-        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository)
+        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IClientStateRepository clientStateRepository)
         {
             _clientRepository = clientRepository;
             _clientIdentifierRepository = clientIdentifierRepository;
             _personRepository = personRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
             _encounterRepository = encounterRepository;
+            _clientStateRepository = clientStateRepository;
         }
         public Client Load(Guid id)
         {
@@ -194,6 +197,9 @@ namespace LiveHTS.Core.Service.Clients
 
             //create Client
             _clientRepository.InsertOrUpdate(client);
+
+            if(isClient)
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id,LiveState.HtsEnrolled));
         }
 
         public void SaveOrUpdateContact(Client client)

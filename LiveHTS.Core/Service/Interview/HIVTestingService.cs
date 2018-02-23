@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
+using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service.Interview
@@ -16,17 +18,19 @@ namespace LiveHTS.Core.Service.Interview
         private readonly IObsTestResultRepository _obsTestResultRepository;
         private readonly IObsFinalTestResultRepository _obsFinalTestResultRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
         private List<CategoryItem> _categoryItems;
         
         public HIVTestingService(IEncounterRepository encounterRepository,
             IObsTestResultRepository obsTestResultRepository,
-            IObsFinalTestResultRepository obsFinalTestResultRepository, ICategoryRepository categoryRepository)
+            IObsFinalTestResultRepository obsFinalTestResultRepository, ICategoryRepository categoryRepository, IClientStateRepository clientStateRepository)
         {
             _encounterRepository = encounterRepository;
             _obsTestResultRepository = obsTestResultRepository;
             _obsFinalTestResultRepository = obsFinalTestResultRepository;
             _categoryRepository = categoryRepository;
+            _clientStateRepository = clientStateRepository;
             LoadItems();
         }
 
@@ -79,7 +83,7 @@ namespace LiveHTS.Core.Service.Interview
                 {
                     if (testResult.IsValid)
                     {
-                        final = ObsFinalTestResult.CreateFirst(testResult.Result, testResult.EncounterId);
+                        final = ObsFinalTestResult.CreateFirst(testResult.Result, testResult.EncounterId,testResult.ClientId);
                         _obsFinalTestResultRepository.Save(final);
                     }
                 }
@@ -110,6 +114,10 @@ namespace LiveHTS.Core.Service.Interview
                 test.PnsDeclined = testResult.PnsDeclined;
                 test.Remarks = testResult.Remarks;
                 _obsFinalTestResultRepository.SaveOrUpdate(test);
+
+                //TODO: Start from here
+                _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId,test.EncounterId,ClientState.GetState(test.FinalResult.Value)));
+
             }
         }
 

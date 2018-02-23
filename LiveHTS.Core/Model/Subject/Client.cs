@@ -37,6 +37,9 @@ namespace LiveHTS.Core.Model.Subject
         public IEnumerable<ClientRelationship> MyRelationships { get; set; }=new List<ClientRelationship>();
         [Ignore]
         public IEnumerable<ClientRelationship> RelatedToMe { get; set; } = new List<ClientRelationship>();
+        [Ignore]
+        public ICollection<ClientState> ClientStates { get; set; } = new List<ClientState>();
+
         public Client()
         {
             Id = LiveGuid.NewGuid();
@@ -77,8 +80,6 @@ namespace LiveHTS.Core.Model.Subject
         public override string ToString()
         {
             return $"{Person} ,{Person.Gender}";
-        }
-
-     
+        }    
     }
 }

@@ -70,6 +70,7 @@
     <Compile Include="Repository\Interview\ObsFinalTestResultRepository.cs" />
     <Compile Include="Repository\Subject\ClientIdentifierRepository.cs" />
     <Compile Include="Repository\Subject\ClientRelationshipRepository.cs" />
+    <Compile Include="Repository\Subject\ClientStateRepository.cs" />
     <Compile Include="Repository\Subject\PersonContactRepository.cs" />
     <Compile Include="Repository\Subject\PersonAddressRepository.cs" />
     <Compile Include="Repository\Subject\PersonRepository.cs" />
