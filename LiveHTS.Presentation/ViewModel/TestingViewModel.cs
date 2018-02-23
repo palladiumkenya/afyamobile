@@ -655,7 +655,7 @@ namespace LiveHTS.Presentation.ViewModel
         public void SaveTest(ObsTestResult test)
         {
 
-            _testingService.SaveTest(test);
+            _testingService.SaveTest(test,Encounter.ClientId);
             Encounter = _testingService.OpenEncounter(Encounter.Id);
         }
 

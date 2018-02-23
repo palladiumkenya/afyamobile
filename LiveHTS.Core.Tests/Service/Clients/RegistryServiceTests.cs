@@ -33,7 +33,8 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private IPersonRepository _personRepository;
         private IClientRelationshipRepository _clientRelationshipRepository;
         private IEncounterRepository _encounterRepository;
-        
+        private ClientStateRepository _clientStateRepository;
+
 
         [SetUp]
         public void SetUp()
@@ -48,9 +49,9 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _personRepository=new PersonRepository(_liveSetting);
             _clientRelationshipRepository=new ClientRelationshipRepository(_liveSetting);
             _encounterRepository=new EncounterRepository(_liveSetting);
+            _clientStateRepository=new ClientStateRepository(_liveSetting);
 
-
-            _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository, _clientRelationshipRepository, _encounterRepository);
+            _registryService=new RegistryService(_clientRepository,_clientIdentifierRepository,_personRepository, _clientRelationshipRepository, _encounterRepository,_clientStateRepository);
         }
         
         [Test]

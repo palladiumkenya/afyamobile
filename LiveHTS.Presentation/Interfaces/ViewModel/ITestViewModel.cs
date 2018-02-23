@@ -34,6 +34,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedResult { get; set; }
         Guid Result { get; set; }
         Guid EncounterId { get; set; }
+        Guid ClientId { get; set; }
         string ResultCode { get; set; }
         IMvxCommand SaveTestCommand { get; }
     }

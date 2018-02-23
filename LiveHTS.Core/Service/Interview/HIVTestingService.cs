@@ -64,7 +64,7 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.LoadTestAll(encounterTypeId, clientId, true).ToList();
         }
 
-        public void SaveTest(ObsTestResult testResult)
+        public void SaveTest(ObsTestResult testResult,Guid clientId)
         {
             _obsTestResultRepository.SaveOrUpdate(testResult);            
 
@@ -83,7 +83,7 @@ namespace LiveHTS.Core.Service.Interview
                 {
                     if (testResult.IsValid)
                     {
-                        final = ObsFinalTestResult.CreateFirst(testResult.Result, testResult.EncounterId,testResult.ClientId);
+                        final = ObsFinalTestResult.CreateFirst(testResult.Result, testResult.EncounterId,clientId);
                         _obsFinalTestResultRepository.Save(final);
                     }
                 }
