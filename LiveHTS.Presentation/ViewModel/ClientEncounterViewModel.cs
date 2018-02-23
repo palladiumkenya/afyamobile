@@ -438,7 +438,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             try
             {
-                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
+                _obsService.ValidateResponse(Encounter.Id, Encounter.ClientId,questionTemplate.Id, questionTemplate.GetResponse());
                 validate = true;
                 questionTemplate.ErrorSummary = string.Empty;
             }
@@ -476,9 +476,9 @@ namespace LiveHTS.Presentation.ViewModel
                 // create Response
 
                 var question = Manifest.GetQuestion(questionTemplate.Id);
-                var liveResponse = new Response(Encounter.Id);
+                var liveResponse = new Response(Encounter.Id,Encounter.ClientId);
                 liveResponse.SetQuestion(question);
-                liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
+                liveResponse.SetObs(Encounter.Id,Encounter.ClientId, questionTemplate.Id, question.Concept.ConceptTypeId,
                     questionTemplate.GetResponse());
 
                 //update encounter with Response

@@ -5,6 +5,7 @@ using LiveHTS.Core.Engine;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Infrastructure.Repository.Subject
@@ -14,20 +15,22 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         public ClientStateRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
         }
-
-        public IEnumerable<ClientState> GetByClientId(Guid clientId)
+        public IEnumerable<ClientState> GetByClientId(Guid clientId, Guid? encounterId = null, LiveState? state = null)
         {
-            return GetAll(x => x.ClientId == clientId).ToList();
-        }
+            var states=GetAll(x => x.ClientId == clientId).ToList();
 
-        public IEnumerable<ClientState> GetByClientId(Guid clientId, LiveState state)
-        {
-            return GetAll(x => x.ClientId == clientId && x.Status == state).ToList();
+            if (null != encounterId && !encounterId.IsNullOrEmpty())
+                states = states.Where(x => x.EncounterId == encounterId.Value).ToList();
+
+            if (null != state)
+                states = states.Where(x => x.Status == state.Value).ToList();
+
+            return states;
         }
 
         public void SaveOrUpdate(ClientState clientState)
         {
-            var states = GetByClientId(clientState.ClientId, clientState.Status).ToList();
+            var states = GetByClientId(clientState.ClientId,clientState.EncounterId, clientState.Status).ToList();
 
             if (states.Count == 0)
             {
@@ -35,10 +38,8 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 return;
             }
 
-            if(clientState.Status.CanBeMutliple())
+            if (clientState.Status.CanBeMutliple())
                 SaveOrUpdate(clientState);
-
-
         }
 
         public void SaveOrUpdate(List<ClientState> clientStates)
@@ -49,14 +50,14 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
         }
 
-        public void DeleteState(Guid clientId, LiveState state)
+        public void DeleteState(Guid clientId, Guid? encounterId = null, LiveState? state = null)
         {
-            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE ClientId=? AND Status=?",clientId.ToString(), state);
+            var states = GetByClientId(clientId, encounterId, state).ToList();
+            foreach (var clientState in states)
+            {
+                Delete(clientState.Id);
+            }
         }
 
-        public void DeleteState(Guid clientId, Guid encounterId, LiveState state)
-        {
-            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE EncounterId=? AND ClientId=? AND Status=?", encounterId.ToString(),clientId.ToString(),state);
-        }
     }
 }

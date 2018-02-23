@@ -131,24 +131,24 @@ namespace LiveHTS.Core.Service.Clients
             return _obsRepository.Find(clientId, questionId);
         }
 
-        public bool ValidateResponse(Guid encounterId, Guid questionId, object response)
+        public bool ValidateResponse(Guid encounterId, Guid clientId, Guid questionId, object response)
         {
-            var liveResponse = new Response(encounterId);
+            var liveResponse = new Response(encounterId,clientId);
 
             var question = _manifest.GetQuestion(questionId);
             liveResponse.SetQuestion(question);
-            liveResponse.SetObs(encounterId, questionId, question.Concept.ConceptTypeId, response);
+            liveResponse.SetObs(encounterId,clientId, questionId, question.Concept.ConceptTypeId, response);
 
             return _validationEngine.Validate(liveResponse);
         }
 
         public void SaveResponse(Guid encounterId, Guid clientId, Guid questionId, object response, bool validated = false)
         {
-            var liveResponse = new Response(encounterId);
+            var liveResponse = new Response(encounterId,clientId);
 
             var question = _manifest.GetQuestion(questionId);
             liveResponse.SetQuestion(question);
-            liveResponse.SetObs(encounterId, questionId, question.Concept.ConceptTypeId, response);
+            liveResponse.SetObs(encounterId, clientId,questionId, question.Concept.ConceptTypeId, response);
 
             if (validated)
             {

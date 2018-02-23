@@ -6,6 +6,7 @@ namespace LiveHTS.Core.Model.Interview
     public class Response
     {
         public Guid EncounterId { get; set; }
+        public Guid ClientId { get; set; }
         public Guid QuestionId { get; set; }
         public Question Question { get; set; }
         public Guid ObsId { get; set; }
@@ -15,14 +16,16 @@ namespace LiveHTS.Core.Model.Interview
         {
         }
 
-        public Response(Guid encounterId)
+        public Response(Guid encounterId,Guid clientId)
         {
             EncounterId = encounterId;
+            ClientId = clientId;
         }
 
-        public Response(Guid encounterId, Question question, Obs obs)
+        public Response(Guid encounterId, Guid clientId, Question question, Obs obs)
         {
             EncounterId = encounterId;
+            ClientId = clientId;
             SetQuestion(question);
             SetObs(obs);
         }
@@ -61,9 +64,9 @@ namespace LiveHTS.Core.Model.Interview
             }
         }
 
-        public void SetObs(Guid encounterId, Guid questionId, string type, object response)
+        public void SetObs(Guid encounterId,Guid clientId, Guid questionId, string type, object response)
         {
-            SetObs(Obs.Create(questionId,encounterId,type,response));
+            SetObs(Obs.Create(questionId,encounterId,clientId,type,response));
         }
     }
 }

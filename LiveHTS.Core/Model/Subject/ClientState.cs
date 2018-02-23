@@ -9,7 +9,8 @@ namespace LiveHTS.Core.Model.Subject
     {
         public LiveState Status { get; set; }
         public DateTime StatusDate { get; set; }
-        [Indexed] public Guid ClientId { get; set; }
+        [Indexed]
+        public Guid ClientId { get; set; }
         public Guid? EncounterId { get; set; }
 
         public ClientState()

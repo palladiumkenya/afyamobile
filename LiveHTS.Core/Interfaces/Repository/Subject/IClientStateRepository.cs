@@ -5,13 +5,13 @@ using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Interfaces.Repository.Subject
 {
-    public interface IClientStateRepository : IRepository<ClientState,Guid>
+    public interface IClientStateRepository : IRepository<ClientState, Guid>
     {
-        IEnumerable<ClientState> GetByClientId(Guid clientId);
-        IEnumerable<ClientState> GetByClientId(Guid clientId,LiveState state);
+        IEnumerable<ClientState> GetByClientId(Guid clientId, Guid? encounterId = null, LiveState? state = null);
+
         void SaveOrUpdate(ClientState clientState);
         void SaveOrUpdate(List<ClientState> clientStates);
-        void DeleteState(Guid clientId, LiveState state);
-        void DeleteState(Guid clientId,Guid encounterId,LiveState state);
+
+        void DeleteState(Guid clientId, Guid? encounterId = null, LiveState? state = null);
     }
 }

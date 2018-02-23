@@ -16,6 +16,8 @@ namespace LiveHTS.Core.Model.Interview
         public DateTime? ValueDateTime { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }
+        [Indexed]
+        public Guid ClientId { get; set; }
         [Ignore]
         public bool IsNull { get; set; }
 
@@ -25,13 +27,14 @@ namespace LiveHTS.Core.Model.Interview
             ObsDate=DateTime.Now;
         }
 
-        private Obs(Guid questionId, Guid encounterId):this()
+        private Obs(Guid questionId, Guid encounterId, Guid clientId) :this()
         {
             QuestionId = questionId;
             EncounterId = encounterId;
+            ClientId = clientId;
         }
 
-        private Obs(Guid questionId, Guid encounterId, string value,bool multiCoded=false) : this(questionId, encounterId)
+        private Obs(Guid questionId, Guid encounterId, Guid clientId, string value,bool multiCoded=false) : this(questionId, encounterId, clientId)
         {
             if (multiCoded)
             {
@@ -44,49 +47,49 @@ namespace LiveHTS.Core.Model.Interview
             
         }
 
-        private Obs(Guid questionId, Guid encounterId, Guid? valueCoded):this(questionId,encounterId)
+        private Obs(Guid questionId, Guid encounterId, Guid clientId,Guid? valueCoded):this(questionId,encounterId,clientId)
         {
             ValueCoded = valueCoded;
         }
-        private Obs(Guid questionId, Guid encounterId, decimal? valueNumeric) : this(questionId, encounterId)
+        private Obs(Guid questionId, Guid encounterId, Guid clientId, decimal? valueNumeric) : this(questionId, encounterId, clientId)
         {
             ValueNumeric = valueNumeric;
         }
        
-        private Obs(Guid questionId, Guid encounterId, DateTime? valueDateTime) : this(questionId, encounterId)
+        private Obs(Guid questionId, Guid encounterId, Guid clientId, DateTime? valueDateTime) : this(questionId, encounterId, clientId)
         {
             ValueDateTime = valueDateTime;
         }
 
 
-        public static Obs Create(Guid questionId, Guid encounterId, string type, object obsValue)
+        public static Obs Create(Guid questionId, Guid encounterId, Guid clientId, string type, object obsValue)
         {
             //  Single | Numeric | Multi | DateTime | Text
 
             var value = null == obsValue ? string.Empty : obsValue.ToString();
 
-            var obs= new Obs(questionId, encounterId, value);
+            var obs= new Obs(questionId, encounterId, clientId, value);
             obs.IsNull = true;
 
             if (type == "Single")
             {
                 var val = string.IsNullOrWhiteSpace(value)?Guid.Empty:new Guid(value);
-                obs= new Obs(questionId, encounterId, val); obs.IsNull = true;
+                obs= new Obs(questionId, encounterId, clientId, val); obs.IsNull = true;
 
             }
             if (type == "Numeric")
             {
                 var val = string.IsNullOrWhiteSpace(value) ? -0.01m : Convert.ToDecimal(value);
-                obs = new Obs(questionId, encounterId, val); obs.IsNull = true;
+                obs = new Obs(questionId, encounterId, clientId, val); obs.IsNull = true;
             }           
             if (type == "DateTime")
             {
                 var val = string.IsNullOrWhiteSpace(value) ? new DateTime(1899,1,1) : Convert.ToDateTime(value);
-                obs = new Obs(questionId, encounterId,val); obs.IsNull = true;
+                obs = new Obs(questionId, encounterId, clientId, val); obs.IsNull = true;
             }
             if (type == "Multi")
             {
-                obs = new Obs(questionId, encounterId, value, true); obs.IsNull = true;
+                obs = new Obs(questionId, encounterId, clientId, value, true); obs.IsNull = true;
             }
 
             if (obs.HasValue(type))
