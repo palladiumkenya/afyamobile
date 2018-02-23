@@ -5,6 +5,7 @@
         Unkown,
 
         HtsEnrolled,
+        HtsConsented,
         HtsTestedPos,
         HtsTestedNeg,
         HtsTestedInc,

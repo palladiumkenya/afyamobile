@@ -24,7 +24,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         List<Obs> GetObs(Guid clientId, Guid questionId);
         
         bool ValidateResponse(Guid encounterId, Guid questionId, object response);
-        void SaveResponse(Guid encounterId, Guid questionId, object response,bool validated=false);
+        void SaveResponse(Guid encounterId, Guid clientId, Guid questionId, object response,bool validated=false);
         void SaveClientResponse(Guid cientId, Guid questionId, object response);
 
         void ClearEncounter(Guid encounterId);

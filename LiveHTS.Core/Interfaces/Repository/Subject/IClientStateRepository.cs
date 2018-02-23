@@ -11,6 +11,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
         IEnumerable<ClientState> GetByClientId(Guid clientId,LiveState state);
         void SaveOrUpdate(ClientState clientState);
         void SaveOrUpdate(List<ClientState> clientStates);
-        void DeleteByEncounterId(Guid encounterId);
+        void DeleteState(Guid clientId, LiveState state);
+        void DeleteState(Guid clientId,Guid encounterId,LiveState state);
     }
 }

@@ -807,7 +807,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             foreach (var q in allowedQuestions)
             {
-                _obsService.SaveResponse(Encounter.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
+                _obsService.SaveResponse(Encounter.Id,ClientDTO.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
                 //Manifest = _obsService.Manifest;
             }
             _obsService.MarkEncounterCompleted(Encounter.Id,true);

@@ -516,6 +516,7 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
                     ObsFinalTestResult.PnsDeclined = SelectedPnsDeclined.ItemId;
                     ObsFinalTestResult.Remarks = Remarks;
+                    ObsFinalTestResult.ClientId = Client.Id;
                     _testingService.SaveFinalTest(ObsFinalTestResult);
                     _testingService.MarkEncounterCompleted(ObsFinalTestResult.EncounterId,true);
                     _testingService.UpdateEncounterDate(ObsFinalTestResult.EncounterId, Client.Id);

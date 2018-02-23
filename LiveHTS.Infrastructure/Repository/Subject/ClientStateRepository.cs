@@ -49,9 +49,14 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
         }
 
-        public void DeleteByEncounterId(Guid encounterId)
+        public void DeleteState(Guid clientId, LiveState state)
         {
-            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE EncounterId=?", encounterId.ToString());
+            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE ClientId=? AND Status=?",clientId.ToString(), state);
+        }
+
+        public void DeleteState(Guid clientId, Guid encounterId, LiveState state)
+        {
+            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE EncounterId=? AND ClientId=? AND Status=?", encounterId.ToString(),clientId.ToString(),state);
         }
     }
 }
