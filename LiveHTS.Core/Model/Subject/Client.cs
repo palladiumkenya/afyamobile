@@ -31,7 +31,10 @@ namespace LiveHTS.Core.Model.Subject
         public bool Downloaded { get; set; }
         public bool? PreventEnroll { get; set; }
         public bool? AlreadyTestedPos { get; set; }
- 
+
+        [Indexed]
+        public Guid UserId { get; set; }
+
 
         [Ignore]
         public IEnumerable<ClientRelationship> MyRelationships { get; set; }=new List<ClientRelationship>();
@@ -45,32 +48,33 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId):this()
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,Guid userId):this()
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
             OtherKeyPop = otherKeyPop;
             PracticeId = practiceId;
+            UserId = userId;
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId)
-            :this(maritalStatus, keyPop, otherKeyPop,practiceId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId,Guid userId)
+            :this(maritalStatus, keyPop, otherKeyPop,practiceId, userId)
         {
             PersonId = personId;
         }
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person)
-            : this(maritalStatus, keyPop, otherKeyPop, practiceId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId)
+            : this(maritalStatus, keyPop, otherKeyPop, practiceId, userId)
         {
             Person = person;
         }
 
-        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person)
+        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person);
+            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person,userId);
         }
-        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId)
+        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId, Guid userId)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId);
+            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId);
         }
 
         public bool DisableHts()

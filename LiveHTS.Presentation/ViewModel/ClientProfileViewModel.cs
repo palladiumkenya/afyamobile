@@ -320,7 +320,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     pid = IndexClientDTO.PracticeId;
                 }
-                var client = clientRegistrationDTO.Generate(pid);
+                var client = clientRegistrationDTO.Generate(UserId,pid);
 
                 if (null != IndexClientDTO)
                 {

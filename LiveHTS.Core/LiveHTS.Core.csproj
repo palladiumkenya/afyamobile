@@ -113,7 +113,7 @@
     <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
-    <Compile Include="Model\Class1.cs" />
+    <Compile Include="Model\PagedResult.cs" />
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
     <Compile Include="Model\Config\ServerConfig.cs" />

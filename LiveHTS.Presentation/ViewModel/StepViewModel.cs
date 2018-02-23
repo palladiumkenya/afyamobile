@@ -1,4 +1,5 @@
-﻿using Cheesebaron.MvxPlugins.Settings.Interfaces;
+﻿using System;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
@@ -33,6 +34,14 @@ namespace LiveHTS.Presentation.ViewModel
             set { _modelStore = value;RaisePropertyChanged(() => ModelStore); }
         }
 
+        public Guid UserId
+        {
+            get
+            {
+                var userId = _settings.GetValue("livehts.userid", "");
+                return new Guid(userId);
+            }
+        }
         public virtual int Step { get; set; }
         public virtual string Title
         {
