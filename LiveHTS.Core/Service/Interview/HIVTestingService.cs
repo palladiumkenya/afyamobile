@@ -9,6 +9,7 @@ using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Interview
 {
@@ -115,8 +116,16 @@ namespace LiveHTS.Core.Service.Interview
                 test.Remarks = testResult.Remarks;
                 _obsFinalTestResultRepository.SaveOrUpdate(test);
 
-                //TODO: Start from here
-                _clientStateRepository.DeleteState(test.ClientId,test.EncounterId);
+                _clientStateRepository.DeleteState(test.ClientId, test.EncounterId);
+
+                if (null != test.SelfTestOption && test.SelfTestOption.Value == new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
+                {
+                    _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId, test.EncounterId, LiveState.HtsPnsAcceptedYes));
+                }
+                else
+                {
+                    _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId, test.EncounterId, LiveState.HtsPnsAcceptedYes));
+                }
                 _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId,test.EncounterId,ClientState.GetState(test.FinalResult.Value)));
 
             }

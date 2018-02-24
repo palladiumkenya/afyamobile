@@ -514,6 +514,7 @@ namespace LiveHTS.Presentation.ViewModel
                     ObsFinalTestResult.CoupleDiscordant = SelectedCoupleDiscordant.ItemId;
 
                     ObsFinalTestResult.SelfTestOption = SelectedSelfTest.ItemId;
+
                     ObsFinalTestResult.PnsDeclined = SelectedPnsDeclined.ItemId;
                     ObsFinalTestResult.Remarks = Remarks;
                     ObsFinalTestResult.ClientId = Client.Id;
