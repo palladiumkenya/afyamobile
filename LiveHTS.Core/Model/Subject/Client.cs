@@ -81,6 +81,15 @@ namespace LiveHTS.Core.Model.Subject
         {
             return null != PreventEnroll && PreventEnroll.Value;
         }
+
+        public bool IsInState(params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any() && states.Length > 0)
+            {
+                return ClientStates.Any(x => states.Contains(x.Status));
+            }
+            return false;
+        }
         public override string ToString()
         {
             return $"{Person} ,{Person.Gender}";

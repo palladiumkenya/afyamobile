@@ -7,6 +7,7 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -23,7 +24,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         private Client _client;
         private IMvxCommand _addFamilyMemberCommand;
-     
+        private bool _enableAddFamily;
+
 
         public IDashboardViewModel Parent { get; set; }
         public string Title { get; set; }
@@ -34,9 +36,21 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
+                EnableAddFamily = Client.IsInState(LiveState.HtsFamAcceptedYes);
                 FamilyMembers = ConvertToFamilyMemberWrapperClass(Client, this);
             }
         }
+
+        public bool EnableAddFamily
+        {
+            get { return _enableAddFamily; }
+            set
+            {
+                _enableAddFamily = value;
+                RaisePropertyChanged(() => EnableAddFamily);
+            }
+        }
+
         public List<FamilyMemberTemplateWrap> FamilyMembers
         {
             get { return _familyMembers; }
