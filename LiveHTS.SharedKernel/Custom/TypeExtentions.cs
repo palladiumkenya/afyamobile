@@ -28,5 +28,10 @@ namespace LiveHTS.SharedKernel.Custom
         {
             return guid == Guid.Empty;
         }
+
+        public static bool IsSameAs(this object s, object other)
+        {
+            return s.ToString().ToLower().Trim() == other.ToString().ToLower().Trim();
+        }
     }
 }

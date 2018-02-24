@@ -177,9 +177,9 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.EnrollmentId = EnrollmentId;
                     obs.Remarks = Remarks;
 
-                    _linkageService.SaveLinkage(obs);
+                    _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id,false);
                 }
-                _linkageService.SaveLinkage(obs);
+                _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id,false);
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
 
                 _dialogService.ShowToast("Linkage info saved successfully");

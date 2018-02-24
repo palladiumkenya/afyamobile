@@ -37,7 +37,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             _liveSetting = new LiveSetting(_connection.DatabasePath);
             Seeder.Seed(_connection);
 
-            _dashboardService=new DashboardService(new ClientRepository(_liveSetting),new ClientRelationshipRepository(_liveSetting),new ModuleRepository(_liveSetting) ,new EncounterRepository(_liveSetting) );
+            _dashboardService=new DashboardService(new ClientRepository(_liveSetting),new ClientRelationshipRepository(_liveSetting),new ModuleRepository(_liveSetting) ,new EncounterRepository(_liveSetting),new ClientStateRepository(_liveSetting) );
         }
 
         [Test]

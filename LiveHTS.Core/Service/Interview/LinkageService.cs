@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
+using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Interview
 {
@@ -16,16 +19,18 @@ namespace LiveHTS.Core.Service.Interview
         private readonly IObsTraceResultRepository _obsTraceResultRepository;
         private readonly IObsLinkageRepository _obsLinkageRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
         private List<CategoryItem> _categoryItems;
         
         public LinkageService(IEncounterRepository encounterRepository,
-            IObsTraceResultRepository obsTraceResultRepository,IObsLinkageRepository obsLinkageRepository, ICategoryRepository categoryRepository)
+            IObsTraceResultRepository obsTraceResultRepository,IObsLinkageRepository obsLinkageRepository, ICategoryRepository categoryRepository, IClientStateRepository clientStateRepository)
         {
             _encounterRepository = encounterRepository;
             _obsTraceResultRepository = obsTraceResultRepository;
             _obsLinkageRepository = obsLinkageRepository;
             _categoryRepository = categoryRepository;
+            _clientStateRepository = clientStateRepository;
             LoadItems();
         }
 
@@ -59,21 +64,35 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.LoadTestAll(encounterTypeId, clientId, true).ToList();
         }
 
-        public void SaveLinkage(ObsLinkage testResult)
+        public void SaveLinkage(ObsLinkage testResult, Guid clientId, bool referral = true)
         {
             _obsLinkageRepository.SaveOrUpdate(testResult);
+            if (referral)
+            {
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.HtsReferred));
+            }
+            else
+            {
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.HtsLinkedCare));
+                if (!string.IsNullOrWhiteSpace(testResult.EnrollmentId))
+                {
+                    _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.HtsLinkedEnrolled));
+                }
+            }
+
         }
 
-        public void SaveTest(ObsTraceResult testResult)
+        public void SaveTest(ObsTraceResult testResult, Guid clientId)
         {
-            _obsTraceResultRepository.SaveOrUpdate(testResult);            
+            _obsTraceResultRepository.SaveOrUpdate(testResult);
+
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, ClientState.GetState(testResult.Outcome)));
         }
 
-        public void DeleteTest(ObsTraceResult testResult)
+        public void DeleteTest(ObsTraceResult testResult, Guid clientId)
         {
             _obsTraceResultRepository.Delete(testResult.Id);
-
-           
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId,ClientState.GetState(testResult.Outcome));
         }
 
         public void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed)

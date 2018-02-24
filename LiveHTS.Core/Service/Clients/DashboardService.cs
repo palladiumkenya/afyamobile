@@ -6,6 +6,7 @@ using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.SharedKernel.Custom;
@@ -18,13 +19,15 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IModuleRepository _moduleRepository;
         private readonly IEncounterRepository _encounterRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
-        public DashboardService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IModuleRepository moduleRepository, IEncounterRepository encounterRepository)
+        public DashboardService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IModuleRepository moduleRepository, IEncounterRepository encounterRepository, IClientStateRepository clientStateRepository)
         {
             _clientRepository = clientRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
             _moduleRepository = moduleRepository;
             _encounterRepository = encounterRepository;
+            _clientStateRepository = clientStateRepository;
         }
 
         public Client LoadClient(Guid clientId)

@@ -39,31 +39,18 @@ namespace LiveHTS.Core.Model.Subject
                 return LiveState.HtsTestedNeg;
             if (id == new Guid("b25f017c-852f-11e7-bb31-be2e44b06b34"))
                 return LiveState.HtsTestedInc;
+
             /*
-             ^Id^: ^^,
-    ^Code^: ^N^,
-    ^Display^: ^Negative^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^^,
-    ^Code^: ^P^,
-    ^Display^: ^Positive^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^b25f001e-852f-11e7-bb31-be2e44b06b34^,
-    ^Code^: ^I^,
-    ^Display^: ^Invalid^,
-    ^Voided^: 0
-  },
-  {
-    ^Id^: ^^,
-    ^Code^: ^Ic^,
-    ^Display^: ^Inconclusive^,
-    ^Voided^: 0
-  },
+             b25f0a50-852f-11e7-bb31-be2e44b06b34|C|Contacted|0
+            b25f0a51-852f-11e7-bb31-be2e44b06b34|C|Contacted and Linked|0
+            b25f102c-852f-11e7-bb31-be2e44b06b34|NC|Not Contacted|0
              */
+            if (id == new Guid("b25f0a50-852f-11e7-bb31-be2e44b06b34"))
+                return LiveState.HtsTracedContacted;
+            if (id == new Guid(" b25f0a51-852f-11e7-bb31-be2e44b06b34"))
+                return LiveState.HtsTracedContactedLinked;
+            if (id == new Guid("b25f102c-852f-11e7-bb31-be2e44b06b34"))
+                return LiveState.HtsTracedNotContacted;
 
             return LiveState.Unkown;
         }

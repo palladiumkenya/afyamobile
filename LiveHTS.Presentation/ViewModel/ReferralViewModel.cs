@@ -257,9 +257,10 @@ namespace LiveHTS.Presentation.ViewModel
                     obs = ObsLinkage;
                     obs.ReferredTo = ReferredTo;
                     obs.DatePromised = DatePromised;
-                    _linkageService.SaveLinkage(obs);
+                    _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id);
                 }
-                _linkageService.SaveLinkage(obs);
+                _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id);
+
                 _linkageService.MarkEncounterCompleted(ParentViewModel.Encounter.Id,ParentViewModel.AppUserId,true);
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
 
@@ -324,7 +325,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void SaveTrace(ObsTraceResult test)
         {
-            _linkageService.SaveTest(test);
+            _linkageService.SaveTest(test,ParentViewModel.Client.Id);
             ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
         }
 
@@ -336,7 +337,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (result)
                 {
 
-                    _linkageService.DeleteTest(testResult);
+                    _linkageService.DeleteTest(testResult, ParentViewModel.Client.Id);
                     Referesh(testResult.EncounterId);
                 }
             }

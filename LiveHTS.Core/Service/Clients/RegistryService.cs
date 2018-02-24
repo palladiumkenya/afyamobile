@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Model;
@@ -149,6 +150,7 @@ namespace LiveHTS.Core.Service.Clients
 
         public void UpdateRelationShips(string relationshipTypeId, Guid clientId, Guid otherClientId)
         {
+            
             var exisitngRelationship = _clientRelationshipRepository.Find(relationshipTypeId, clientId, otherClientId);
 
             if (null == exisitngRelationship)
