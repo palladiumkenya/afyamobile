@@ -122,7 +122,7 @@ namespace LiveHTS.Core.Service.Interview
             }
         }
 
-        public void DeleteTest(ObsTestResult testResult)
+        public void DeleteTest(ObsTestResult testResult,Guid clientId)
         {
             _obsTestResultRepository.Delete(testResult.Id);
 
@@ -148,7 +148,7 @@ namespace LiveHTS.Core.Service.Interview
                 }
             }
 
-            UpdateFinalResult(testResult.EncounterId,testResult);
+            UpdateFinalResult(testResult.EncounterId,clientId);
         }
 
         public void UpdateFinalResult(Guid encounterId,Guid clientId)
@@ -163,7 +163,15 @@ namespace LiveHTS.Core.Service.Interview
             {
                 final.ProcessEndResult(_categoryItems);
                 _obsFinalTestResultRepository.SaveOrUpdate(final);
-                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, encounterId, ClientState.GetState(final.FinalResult.Value)));
+                if (null != final.FinalResult && !final.FinalResult.IsNullOrEmpty())
+                {
+                    _clientStateRepository.SaveOrUpdate(new ClientState(clientId, encounterId,
+                        ClientState.GetState(final.FinalResult.Value)));
+                }
+                else
+                {
+                    _encounterRepository.UpdateStatus(final.EncounterId,false);
+                }
             }
 
         }
@@ -171,6 +179,11 @@ namespace LiveHTS.Core.Service.Interview
         public void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed)
         {
             _encounterRepository.UpdateStatus(encounterId,userId,completed);
+        }
+
+        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        {
+            _encounterRepository.UpdateStatus(encounterId,  completed);
         }
 
         public void UpdateEncounterDate(Guid encounterId, Guid clientId)

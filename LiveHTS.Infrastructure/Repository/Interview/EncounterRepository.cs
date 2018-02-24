@@ -356,7 +356,17 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             _db.Execute("DELETE FROM Obs WHERE EncounterId=?", id.ToString());
         }
 
-     
+        public void UpdateStatus(Guid id, bool completed)
+        {
+            var encounter = Get(id);
+            if (null != encounter)
+            {
+                encounter.IsComplete = completed;
+            }
+
+            Update(encounter);
+        }
+
         public void UpdateStatus(Guid id, Guid userId, bool completed)
         {
             var encounter = Get(id);

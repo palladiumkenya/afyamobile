@@ -661,7 +661,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void DeleteTest(ObsTestResult test)
         {
-            _testingService.DeleteTest(test);
+            _testingService.DeleteTest(test,Encounter.ClientId);
             Encounter = _testingService.OpenEncounter(Encounter.Id);
         }
 
