@@ -13,6 +13,7 @@ using LiveHTS.Core.Service.Clients;
 using LiveHTS.Infrastructure.Repository.Interview;
 using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.Infrastructure.Repository.Survey;
+using LiveHTS.SharedKernel.Model;
 using NUnit.Framework;
 using SQLite;
 
@@ -192,6 +193,39 @@ namespace LiveHTS.Core.Tests.Service.Clients
             var obs= manifest.ResponseStore.First(x => x.QuestionId == currentQuestionId);
             Assert.IsNotNull(obs);
             Assert.AreEqual(TestDataHelpers._consentYes, obs.Obs.ValueCoded);
+
+            var states =
+                _clientStateRepository.GetByClientId(_encounterNew.ClientId, _encounterNew.Id, LiveState.HtsConsented)
+                    .ToList();
+
+            Assert.True(states.Count > 0);
+
+            Assert.NotNull(states.FirstOrDefault(x => x.Status == LiveState.HtsConsented));
+            foreach (var clientState in states)
+            {
+                Console.WriteLine($"  {clientState}");
+            }
+        }
+        [Test]
+        public void should_SaveResponse_Clear_State()
+        {
+            // 1.Consent
+            _encounterNew = new EncounterService(_encounterRepository, _formRepository).StartEncounter(_encounterNew);
+            var currentQuestionId = _form.Questions.First(x => x.Rank == 1).Id;
+            _obsService.Initialize(_encounterNew);
+            _obsService.SaveResponse(_encounterNew.Id, _encounterNew.ClientId, currentQuestionId, TestDataHelpers._consentNo);
+
+            var manifest = _obsService.Manifest;
+            var obs = manifest.ResponseStore.First(x => x.QuestionId == currentQuestionId);
+            Assert.IsNotNull(obs);
+            Assert.AreEqual(TestDataHelpers._consentNo, obs.Obs.ValueCoded);
+
+            var states =
+                _clientStateRepository.GetByClientId(_encounterNew.ClientId, _encounterNew.Id, LiveState.HtsConsented)
+                    .ToList();
+
+            Assert.True(states.Count == 0);
+
         }
     }
 }

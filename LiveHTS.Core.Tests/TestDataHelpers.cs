@@ -21,13 +21,13 @@ namespace LiveHTS.Core.Tests
         public static readonly Guid _formId = new Guid("62040dcc-6260-11e7-907b-a6006ad3dba0"); //       |HTS Lab Form|HTS Lab Form|HTS Lab Form|1|62040ce6-6260-11e7-907b-a6006ad3dba0|0
         public static readonly List<Guid> _questionIds = new List<Guid>()
         {
-            new Guid("6206a9a6-6260-11e7-907b-a6006ad3dba0"), //Consent
+            new Guid("b2603dc6-852f-11e7-bb31-be2e44b06b34"), //Consent
             new Guid("6206aa78-6260-11e7-907b-a6006ad3dba0"),
             new Guid("6206ab4a-6260-11e7-907b-a6006ad3dba0"),
             new Guid("6206ac1c-6260-11e7-907b-a6006ad3dba0")
         };
         
-        public static readonly Guid _consentYes= new Guid("00c2a902-6246-11e7-907b-a6006ad3dba0"); //   Yes,00c2a902-6246-11e7-907b-a6006ad3dba0
+        public static readonly Guid _consentYes= new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"); //   Yes,00c2a902-6246-11e7-907b-a6006ad3dba0
         public static readonly Guid _consentNo= new Guid("00c2aae2-6246-11e7-907b-a6006ad3dba0"); //     No,00c2aae2-6246-11e7-907b-a6006ad3dba0
 
         public static List<Client> _clients;

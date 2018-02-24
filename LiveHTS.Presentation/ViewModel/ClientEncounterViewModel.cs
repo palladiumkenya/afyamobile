@@ -810,7 +810,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _obsService.SaveResponse(Encounter.Id,ClientDTO.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
                 //Manifest = _obsService.Manifest;
             }
-            _obsService.MarkEncounterCompleted(Encounter.Id,true);
+            _obsService.MarkEncounterCompleted(Encounter.Id,UserId,true);
             _obsService.UpdateEncounterDate(Encounter.Id, BirthDate);
             Manifest = _obsService.Manifest;
             Manifest.Encounter.EncounterDate = BirthDate;

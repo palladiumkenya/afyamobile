@@ -25,6 +25,7 @@ namespace LiveHTS.Core.Model.Interview
         public bool IsValid { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }
+
       
         public ObsTestResult()
         {

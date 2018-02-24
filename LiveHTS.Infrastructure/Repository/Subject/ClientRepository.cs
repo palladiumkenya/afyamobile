@@ -21,6 +21,9 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var client = base.Get(id);
             if (null != client)
             {
+
+                var sts = _db.Table<ClientState>().ToList();
+
                 client.ClientStates= _db.Table<ClientState>().Where(x => x.ClientId == id).ToList();
 
                 client.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == client.PersonId);

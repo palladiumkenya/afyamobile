@@ -15,7 +15,7 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
         void SaveFinalTest(ObsFinalTestResult testResult);
         void DeleteTest(ObsTestResult testResult);
         void UpdateFinalResult(Guid encounterId);
-        void MarkEncounterCompleted(Guid encounterId, bool completed);
+        void MarkEncounterCompleted(Guid encounterId,Guid userId, bool completed);
         void UpdateEncounterDate(Guid encounterId, Guid clientId);
         bool IsIndividual(Guid clientId);
 

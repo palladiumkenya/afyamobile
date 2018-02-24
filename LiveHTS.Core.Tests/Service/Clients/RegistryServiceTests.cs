@@ -12,7 +12,7 @@ using LiveHTS.Infrastructure.Repository.Interview;
 using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.Infrastructure.Repository.Survey;
 using LiveHTS.SharedKernel.Custom;
-
+using LiveHTS.SharedKernel.Model;
 using NUnit.Framework;
 using SQLite;
 
@@ -130,14 +130,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
             var cientNew = _registryService.Find(client.Id);
             Assert.IsNotNull(cientNew);
 
-            var states = _clientStateRepository.GetByClientId(client.Id).ToList();
-            Assert.True(states.Count>0);
-            Console.WriteLine(cientNew);
-            foreach (var clientState in states)
-            {
-                Console.WriteLine(clientState);
-            }
-            
+     
 
         }
 
@@ -167,12 +160,22 @@ namespace LiveHTS.Core.Tests.Service.Clients
         [Test]
         public void should_SaveOrUpdate_New()
         {
-            var client = Builder<Client>.CreateNew().Build();
+            var client = TestDataHelpers.GetTestClients(1).First();
             _registryService.SaveOrUpdate(client);
 
-            var cientNew = _registryService.Find(_client.Id);
+            var cientNew = _registryService.Find(client.Id);
             Assert.IsNotNull(cientNew);
+            var states = cientNew.ClientStates.ToList();
+            Assert.True(states.Count > 0);
+
+            Assert.NotNull(states.FirstOrDefault(x => x.Status == LiveState.HtsEnrolled));
+            Assert.NotNull(states.FirstOrDefault(x => x.Status == LiveState.HtsFamAcceptedYes));
             Console.WriteLine(cientNew);
+            foreach (var clientState in states)
+            {
+                Console.WriteLine($"  {clientState}");
+            }
+
         }
 
         [Test]

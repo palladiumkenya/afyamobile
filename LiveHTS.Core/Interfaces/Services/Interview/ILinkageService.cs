@@ -12,6 +12,6 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
         void SaveLinkage(ObsLinkage testResult);
         void SaveTest(ObsTraceResult testResult);
         void DeleteTest(ObsTraceResult testResult);
-        void MarkEncounterCompleted(Guid encounterId, bool completed);
+        void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed);
     }
 }

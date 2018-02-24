@@ -305,7 +305,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 TestResult= GenerateTest();
                 _tracingService.SaveTest(TestResult);
-                _tracingService.MarkEncounterCompleted(TestResult.EncounterId, true);
+                _tracingService.MarkEncounterCompleted(TestResult.EncounterId, Parent.AppUserId,true);
                 Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
             }

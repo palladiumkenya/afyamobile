@@ -357,11 +357,14 @@ namespace LiveHTS.Infrastructure.Repository.Interview
         }
 
      
-        public void UpdateStatus(Guid id, bool completed)
+        public void UpdateStatus(Guid id, Guid userId, bool completed)
         {
             var encounter = Get(id);
             if (null != encounter)
+            {
+                encounter.UserId = userId;
                 encounter.IsComplete = completed;
+            }
 
             Update(encounter);
         }

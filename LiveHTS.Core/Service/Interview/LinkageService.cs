@@ -76,9 +76,9 @@ namespace LiveHTS.Core.Service.Interview
            
         }
 
-        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        public void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed)
         {
-            _encounterRepository.UpdateStatus(encounterId, completed);
+            _encounterRepository.UpdateStatus(encounterId,userId, completed);
         }
 
         private void LoadItems()

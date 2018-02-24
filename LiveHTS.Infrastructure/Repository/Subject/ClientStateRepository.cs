@@ -35,7 +35,6 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             if (states.Count == 0)
             {
                 Save(clientState);
-                return;
             }
 
             if (clientState.Status.CanBeMutliple())

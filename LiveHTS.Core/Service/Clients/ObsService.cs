@@ -193,9 +193,9 @@ namespace LiveHTS.Core.Service.Clients
             _encounterRepository.ClearObs(encounterId);
         }
 
-        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        public void MarkEncounterCompleted(Guid encounterId,Guid userId, bool completed)
         {
-            _encounterRepository.UpdateStatus(encounterId, completed);
+            _encounterRepository.UpdateStatus(encounterId, userId,completed);
         }
 
         public void UpdateEncounterDate(Guid encounterId, DateTime encounterDate)
