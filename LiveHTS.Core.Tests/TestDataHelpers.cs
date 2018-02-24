@@ -9,6 +9,7 @@ namespace LiveHTS.Core.Tests
 {
     public class TestDataHelpers
     {
+        public static readonly Guid _userId=new Guid("61A9E04C-2ED0-414A-9387-A7B7016DF233");
         public static readonly string _providerTypeId = "HW"; //HW|Health Worker|0
         public static readonly Guid _encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0"); // |HTS Initial|0
         public static readonly string _identifierTypeId = "Serial"; // |Serial|0
@@ -72,6 +73,7 @@ namespace LiveHTS.Core.Tests
 
                 var client = Builder<Client>.CreateNew()
                     .With(x => x.PracticeId = _practiceId)
+                    .With(x => x.UserId = _userId)
                     .With(x => x.Voided = false)
                     .Build();
                 client.PersonId = p.Id;

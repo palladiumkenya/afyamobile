@@ -116,6 +116,29 @@ namespace LiveHTS.Core.Tests.Service.Clients
             Assert.IsNotNull(cientNew.Identifiers.FirstOrDefault());
             Assert.IsNotNull(cientNew.Relationships.FirstOrDefault());
             Console.WriteLine(cientNew);
+
+        }
+
+        [Test]
+        public void should_Save_New_With_State()
+        {
+
+            var client = TestDataHelpers.GetTestClients(1).First();
+
+            _registryService.Save(client);
+
+            var cientNew = _registryService.Find(client.Id);
+            Assert.IsNotNull(cientNew);
+
+            var states = _clientStateRepository.GetByClientId(client.Id).ToList();
+            Assert.True(states.Count>0);
+            Console.WriteLine(cientNew);
+            foreach (var clientState in states)
+            {
+                Console.WriteLine(clientState);
+            }
+            
+
         }
 
         [Test]

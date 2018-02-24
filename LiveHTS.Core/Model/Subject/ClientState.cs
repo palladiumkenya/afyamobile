@@ -67,5 +67,10 @@ namespace LiveHTS.Core.Model.Subject
 
             return LiveState.Unkown;
         }
+
+        public override string ToString()
+        {
+            return $"{ClientId}|{Status}|{StatusDate:F}";
+        }
     }
 }
