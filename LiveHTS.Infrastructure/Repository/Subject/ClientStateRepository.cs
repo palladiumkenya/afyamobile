@@ -30,11 +30,12 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
         public void SaveOrUpdate(ClientState clientState)
         {
-            var states = GetByClientId(clientState.ClientId,clientState.EncounterId, clientState.Status).ToList();
+            var states = GetByClientId(clientState.ClientId, clientState.EncounterId, clientState.Status).ToList();
 
             if (states.Count == 0)
             {
                 Save(clientState);
+                return;
             }
 
             if (clientState.Status.CanBeMutliple())
