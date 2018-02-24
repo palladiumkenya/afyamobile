@@ -198,8 +198,11 @@ namespace LiveHTS.Core.Service.Clients
             //create Client
             _clientRepository.InsertOrUpdate(client);
 
-            if(isClient)
-                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id,LiveState.HtsEnrolled));
+            if (isClient)
+            {
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsEnrolled));
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsFamAcceptedYes));
+            }
         }
 
         public void SaveOrUpdateContact(Client client)
