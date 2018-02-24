@@ -96,11 +96,12 @@ namespace LiveHTS.Presentation.ViewModel
             _settings = settings;
             _deviceSetupService = deviceSetupService;
             IsBusy = false;
-            AutoSignIn = false;
+            //TODO : Disable auto sign in
+            AutoSignIn = true;
             if (AutoSignIn)
             {
                 Username = "admin";
-                Password = "maun2806";
+                Password = "c0nste11a";
             }
         }
 
