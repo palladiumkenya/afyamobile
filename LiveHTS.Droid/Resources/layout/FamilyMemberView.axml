@@ -23,5 +23,5 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_person_add"
-        local:MvxBind="Click AddFamilyMemberCommand;Visibility EnableAddFamily, Converter=Visibility" />
+        local:MvxBind="Click AddFamilyMemberCommand;Visibility ShowAddFamily, Converter=Visibility" />
 </FrameLayout>

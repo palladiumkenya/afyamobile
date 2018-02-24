@@ -86,7 +86,8 @@ namespace LiveHTS.Core.Model.Subject
         {
             if (null != ClientStates && ClientStates.Any() && states.Length > 0)
             {
-                return ClientStates.Any(x => states.Contains(x.Status));
+                var found = ClientStates.Where(x => states.Contains(x.Status)).ToList();
+                return found.Count == states.Length;
             }
             return false;
         }

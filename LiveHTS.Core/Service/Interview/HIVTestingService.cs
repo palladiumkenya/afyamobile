@@ -124,7 +124,7 @@ namespace LiveHTS.Core.Service.Interview
                 }
                 else
                 {
-                    _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId, test.EncounterId, LiveState.HtsPnsAcceptedYes));
+                    _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId, test.EncounterId, LiveState.HtsPnsAcceptedNo));
                 }
                 _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId,test.EncounterId,ClientState.GetState(test.FinalResult.Value)));
 

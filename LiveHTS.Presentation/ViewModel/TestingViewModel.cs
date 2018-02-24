@@ -73,6 +73,7 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedPnsDeclined;
         private Guid _pnsDeclined;
         private bool _enablePnsDeclined;
+        private bool _enableSelfTestOption;
 
 
         public ValidationHelper Validator { get; set; }
@@ -269,6 +270,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedFinalTestResult = value;
                 RaisePropertyChanged(() => SelectedFinalTestResult);
+                SetPnsAcceptedState();
                 SaveTestingCommand.RaiseCanExecuteChanged();
                 SecondTestEpisodeViewModel.AddTestCommand.RaiseCanExecuteChanged();
             }
@@ -371,6 +373,17 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool EnableSelfTestOption
+        {
+            get { return _enableSelfTestOption; }
+            set
+            {
+                _enableSelfTestOption = value;
+                RaisePropertyChanged(() => EnableSelfTestOption);
+                //SetDeclincedState();
+            }
+        }
+
         public Guid SelfTestOption
         {
             get { return _selfTestOption; }
@@ -405,6 +418,21 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 SelectedPnsDeclined = PnsDeclineds.OrderBy(x => x.Rank).FirstOrDefault();
                 EnablePnsDeclined = false;
+            }
+
+        }
+
+        private void SetPnsAcceptedState()
+        {
+            if (null != SelectedFinalTestResult && !SelectedFinalTestResult.ItemId.IsNullOrEmpty() &&
+                SelectedFinalTestResult.ItemId == new Guid("b25efd8a-852f-11e7-bb31-be2e44b06b34"))  //pos
+            {
+                EnableSelfTestOption = true;
+            }
+            else
+            {
+                SelectedSelfTest = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
+                EnableSelfTestOption = false;
             }
 
         }
@@ -479,23 +507,29 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveTesting()
         {
-            //return Validate();
-            if (null != SelectedResultGiven && null != SelectedFinalTestResult && null != SelectedSelfTest)
+            if (null != SelectedResultGiven && null != SelectedFinalTestResult)
             {
-                var final = SelectedResultGiven.ItemId;
-                var given = SelectedFinalTestResult.ItemId;
-                var pnsAccepted = SelectedSelfTest.ItemId;
-                var required= !final.IsNullOrEmpty() && !given.IsNullOrEmpty() && !pnsAccepted.IsNullOrEmpty();
+                var requiredGiven = null != SelectedResultGiven&& !SelectedResultGiven.ItemId.IsNullOrEmpty();
+                var requiredFinalResult = null != SelectedFinalTestResult&&!SelectedFinalTestResult.ItemId.IsNullOrEmpty();
 
-                if (EnablePnsDeclined && null != SelectedPnsDeclined)
+                var required = requiredFinalResult && requiredGiven;
+
+                if (EnableSelfTestOption)
                 {
-                    var pnsDeclined = SelectedPnsDeclined.ItemId;
-                    return required && !pnsDeclined.IsNullOrEmpty();
+                    var requiredPnsAccepted = null != SelectedSelfTest && !SelectedSelfTest.ItemId.IsNullOrEmpty();
+
+                    if (EnablePnsDeclined)
+                    {
+                        var requiredPnsDeclined =
+                            null != SelectedPnsDeclined && !SelectedPnsDeclined.ItemId.IsNullOrEmpty();
+                        return required && requiredPnsDeclined;
+                    }
+
+                    return required && requiredPnsAccepted;
+
                 }
-                else
-                {
-                    return required;
-                }
+
+                return required;
             }
 
             return false;
@@ -681,6 +715,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public bool Validate()
         {
+            return true;
             ErrorSummary = string.Empty;
 
             //FInal Result Given

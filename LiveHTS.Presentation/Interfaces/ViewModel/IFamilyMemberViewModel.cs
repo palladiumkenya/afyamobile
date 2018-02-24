@@ -11,7 +11,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IDashboardViewModel Parent { get; set; }
         string Title { get; set; }
         Client Client { get; set; }
-        bool EnableAddFamily { get; set; }
+        bool ShowAddFamily { get; set; }
         List<FamilyMemberTemplateWrap> FamilyMembers { get; set; }
 
         IMvxCommand AddFamilyMemberCommand { get; }

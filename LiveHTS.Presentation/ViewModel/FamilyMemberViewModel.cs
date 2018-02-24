@@ -24,7 +24,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private Client _client;
         private IMvxCommand _addFamilyMemberCommand;
-        private bool _enableAddFamily;
+        private bool _showAddFamily;
 
 
         public IDashboardViewModel Parent { get; set; }
@@ -36,18 +36,18 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
-                EnableAddFamily = Client.IsInState(LiveState.HtsFamAcceptedYes, LiveState.HtsEnrolled);
+                ShowAddFamily = Client.IsInState(LiveState.HtsFamAcceptedYes, LiveState.HtsEnrolled);
                 FamilyMembers = ConvertToFamilyMemberWrapperClass(Client, this);
             }
         }
 
-        public bool EnableAddFamily
+        public bool ShowAddFamily
         {
-            get { return _enableAddFamily; }
+            get { return _showAddFamily; }
             set
             {
-                _enableAddFamily = value;
-                RaisePropertyChanged(() => EnableAddFamily);
+                _showAddFamily = value;
+                RaisePropertyChanged(() => ShowAddFamily);
             }
         }
 
