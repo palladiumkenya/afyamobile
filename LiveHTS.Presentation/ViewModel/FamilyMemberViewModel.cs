@@ -36,7 +36,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
-                EnableAddFamily = Client.IsInState(LiveState.HtsFamAcceptedYes);
+                EnableAddFamily = Client.IsInState(LiveState.HtsFamAcceptedYes, LiveState.HtsEnrolled);
                 FamilyMembers = ConvertToFamilyMemberWrapperClass(Client, this);
             }
         }

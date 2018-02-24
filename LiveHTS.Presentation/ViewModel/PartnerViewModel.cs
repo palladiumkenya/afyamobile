@@ -10,6 +10,7 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -26,6 +27,7 @@ namespace LiveHTS.Presentation.ViewModel
         
         private Client _client;
         private IMvxCommand _addPartnerCommand;
+        private bool _enableAddPartner;
         public IDashboardViewModel Parent { get; set; }
         public string Title { get; set; }
 
@@ -35,6 +37,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
+                EnableAddPartner = Client.IsInState(LiveState.HtsPnsAcceptedYes,LiveState.HtsEnrolled,LiveState.HtsTestedPos);
                 Partners = ConvertToPartnerWrapperClass(Client, this);
             }
         }
@@ -42,6 +45,16 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _partners; }
             set { _partners = value; RaisePropertyChanged(() => Partners); }
+        }
+
+        public bool EnableAddPartner
+        {
+            get { return _enableAddPartner; }
+            set
+            {
+                _enableAddPartner = value;
+                RaisePropertyChanged(() => EnableAddPartner);
+            }
         }
 
         public IMvxCommand AddPartnerCommand

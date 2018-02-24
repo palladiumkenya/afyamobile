@@ -25,5 +25,5 @@
     android:layout_gravity="bottom|right"
     android:layout_margin="16dp"
     android:src="@drawable/ic_person_add"
-    local:MvxBind="Click AddPartnerCommand" />
+    local:MvxBind="Click AddPartnerCommand;Visibility EnableAddPartner, Converter=Visibility" />
 </FrameLayout>
