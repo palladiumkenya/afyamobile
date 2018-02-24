@@ -50,6 +50,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _encounterId;
         private IDashboardService _dashboardService;
         private ILookupService _lookupService;
+        private bool _enableEligibility;
 
 
         public MemberScreeningViewModel(ISettings settings, IDialogService dialogService, IMemberScreeningService memberScreeningService, IDashboardService dashboardService, ILookupService lookupService)
@@ -311,7 +312,37 @@ namespace LiveHTS.Presentation.ViewModel
         public CategoryItem SelectedHIVStatus
         {
             get { return _selectedHivStatus; }
-            set { _selectedHivStatus = value;RaisePropertyChanged(() => SelectedHIVStatus); }
+            set { _selectedHivStatus = value;RaisePropertyChanged(() => SelectedHIVStatus);
+                SetEligibilityState();
+            }
+        }
+        private void SetEligibilityState()
+        {
+            if (null != SelectedHIVStatus && !SelectedHIVStatus.ItemId.IsNullOrEmpty() &&
+                SelectedHIVStatus.ItemId == new Guid("B25EFD8A-852F-11E7-BB31-BE2E44B06B34"))  //pos
+            {
+                EnableEligibility = false;
+                try
+                {
+                    SelectedEligibility = Eligibility.FirstOrDefault(x => x.ItemId == new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"));
+                }
+                catch 
+                {
+                    SelectedEligibility = Eligibility.OrderBy(x => x.Rank).FirstOrDefault();
+                }
+                
+            }
+            else
+            {
+                EnableEligibility = true;
+            }
+
+        }
+
+        public bool EnableEligibility
+        {
+            get { return _enableEligibility; }
+            set { _enableEligibility = value; RaisePropertyChanged(() => EnableEligibility); }
         }
 
         public List<CategoryItem> Eligibility
@@ -407,7 +438,7 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.Remarks = Remarks;
                 }
 
-                _memberScreeningService.SaveMemberScreening(obs);
+                _memberScreeningService.SaveMemberScreening(obs,Client.Id);
                 _memberScreeningService.MarkEncounterCompleted(EncounterId,AppUserId, true);
                 ShowViewModel<DashboardViewModel>(new { id = Client.Id });
             }

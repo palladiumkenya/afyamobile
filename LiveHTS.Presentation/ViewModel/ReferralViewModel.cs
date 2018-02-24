@@ -285,13 +285,11 @@ namespace LiveHTS.Presentation.ViewModel
             if (Traces.Count == 0)
                 return true;
 
-            // STILL NOT CONTACTED AND LINKED
+            // NOT CONTACTED AND LINKED
             return !Traces.Any(x => !x.TraceTemplate.Outcome.IsNullOrEmpty() &&
                                    x.TraceTemplate.Outcome == new Guid("b25f0a51-852f-11e7-bb31-be2e44b06b34"));
 
         }
-
-
 
         public event EventHandler<ChangedDateEvent> ChangedDate;
 

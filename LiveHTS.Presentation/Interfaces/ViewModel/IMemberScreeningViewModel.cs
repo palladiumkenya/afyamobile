@@ -37,6 +37,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<CategoryItem> HIVStatus { get; set; }
         CategoryItem SelectedHIVStatus { get; set; }
 
+        bool EnableEligibility { get; set; }
         //  Family member eligible for Testing(Y/N)
         List<CategoryItem> Eligibility { get; set; }
         CategoryItem SelectedEligibility { get; set; }
