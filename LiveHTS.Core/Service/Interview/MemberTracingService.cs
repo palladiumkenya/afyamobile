@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
+using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service.Interview
@@ -16,11 +18,13 @@ namespace LiveHTS.Core.Service.Interview
         private readonly IObsFamilyTraceResultRepository _obsTraceResultRepository;
 
         private List<CategoryItem> _categoryItems;
-        
-        public MemberTracingService(IEncounterRepository encounterRepository, IObsFamilyTraceResultRepository obsTraceResultRepository)
+        private readonly IClientStateRepository _clientStateRepository;
+
+        public MemberTracingService(IEncounterRepository encounterRepository, IObsFamilyTraceResultRepository obsTraceResultRepository, IClientStateRepository clientStateRepository)
         {
             _encounterRepository = encounterRepository;
             _obsTraceResultRepository = obsTraceResultRepository;
+            _clientStateRepository = clientStateRepository;
         }
 
         public Encounter OpenEncounter(Guid encounterId)
@@ -55,14 +59,16 @@ namespace LiveHTS.Core.Service.Interview
 
        
 
-        public void SaveTest(ObsFamilyTraceResult testResult)
+        public void SaveTest(ObsFamilyTraceResult testResult, Guid clientId)
         {
-            _obsTraceResultRepository.SaveOrUpdate(testResult);            
+            _obsTraceResultRepository.SaveOrUpdate(testResult);
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, ClientState.GetState(testResult.Outcome,"fam")));
         }
 
-        public void DeleteTest(ObsFamilyTraceResult testResult)
+        public void DeleteTest(ObsFamilyTraceResult testResult, Guid clientId)
         {
             _obsTraceResultRepository.Delete(testResult.Id);
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, ClientState.GetState(testResult.Outcome,"fam"));
 
         }
 

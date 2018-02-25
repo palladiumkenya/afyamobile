@@ -65,8 +65,8 @@ namespace LiveHTS.Core.Service.Interview
             _obsMemberScreeningRepository.SaveOrUpdate(testResult);
             _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.FamilyScreened));
 
-            _clientStateRepository.DeleteState(clientId, testResult.EncounterId);
-
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.FamilyEligibileYes);
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.FamilyEligibileNo);
             if (testResult.Eligibility== new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
             {
                 _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.FamilyEligibileYes));

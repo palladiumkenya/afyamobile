@@ -42,6 +42,8 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _consents;
         private CategoryItem _selectedConsent;
         private DateTime? _bookingDate;
+        private bool _enableConsent;
+        private bool _enableBooking;
 
         public bool EditMode
         {
@@ -132,7 +134,29 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedOutcome = value; RaisePropertyChanged(() => SelectedOutcome);
                 if (null != SelectedOutcome)
                     Outcome = SelectedOutcome.ItemId;
+                SetOutcome();
             }
+        }
+
+        private void SetOutcome()
+        {
+            //
+            if (null != SelectedOutcome && !SelectedOutcome.ItemId.IsNullOrEmpty() &&
+                SelectedOutcome.ItemId == new Guid("b25f0a50-852f-11e7-bb31-be2e44b06b34"))  //Contacted
+            {
+                EnableBooking = EnableConsent= true;
+            }
+            else
+            {
+                EnableBooking = EnableConsent = false;
+                SelectedConsent = Consents.OrderBy(x => x.Rank).FirstOrDefault();
+            }
+        }
+
+        public bool EnableConsent
+        {
+            get { return _enableConsent; }
+            set { _enableConsent = value; RaisePropertyChanged(() => EnableConsent); }
         }
 
         public Guid Consent
@@ -156,7 +180,13 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => SelectedConsent);
                 if (null != SelectedConsent)
                     Consent = SelectedConsent.ItemId;
+
             }
+        }
+        public bool EnableBooking
+        {
+            get { return _enableBooking; }
+            set { _enableBooking = value; RaisePropertyChanged(() => EnableBooking); }
         }
 
         public DateTime? BookingDate
@@ -295,6 +325,15 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
+            Validator.AddRule(
+                nameof(Reminder),
+                () => RuleResult.Assert(
+                    Reminder <= DateTime.Today,
+                    $"{nameof(Reminder)} should be a valid date"
+                )
+            );
+
+
 
             Validator.AddRule(
                 nameof(Date),
@@ -303,7 +342,25 @@ namespace LiveHTS.Presentation.ViewModel
                     $"{nameof(Date)} should be a valid date"
                 )
             );
-            
+
+            if (EnableConsent)
+            {
+                Validator.AddRule(
+                    nameof(Consent),
+                    () => RuleResult.Assert(
+                        !Consent.IsNullOrEmpty(),
+                        $"{nameof(Consent)} is required"
+                    )
+                );
+                Validator.AddRule(
+                    nameof(BookingDate),
+                    () => RuleResult.Assert(
+                        BookingDate >= DateTime.Today,
+                        $"{nameof(BookingDate)} should be a valid date"
+                    )
+                );
+            }
+
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
             if (null != Errors && Errors.Count > 0)
@@ -318,7 +375,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (Validate())
             {
                 TestResult= GenerateTest();
-                _tracingService.SaveTest(TestResult);
+                _tracingService.SaveTest(TestResult, Parent.Client.Id);
                 Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
             }

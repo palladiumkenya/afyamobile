@@ -9,7 +9,7 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
         Encounter OpenEncounter(Guid encounterId);
         Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId);
         IEnumerable<Encounter> LoadEncounter(Guid clientId, Guid encounterTypeId);
-        void SavePartnerScreening(ObsPartnerScreening testResult);
+        void SavePartnerScreening(ObsPartnerScreening testResult,Guid clientId);
         void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed);
     }
 }

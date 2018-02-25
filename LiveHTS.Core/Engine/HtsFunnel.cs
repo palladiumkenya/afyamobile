@@ -9,6 +9,7 @@ namespace LiveHTS.Core.Engine
 
         public static bool CanBeMutliple(this LiveState current)
         {
+            return false;
             return current == LiveState.FamilyTracedContacted;
         }
 

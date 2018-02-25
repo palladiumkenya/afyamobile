@@ -31,7 +31,7 @@ namespace LiveHTS.Core.Model.Subject
             EncounterId = encounterId;
         }
 
-        public static LiveState GetState(Guid id)
+        public static LiveState GetState(Guid id,string mode="")
         {
             if (id == new Guid("b25efd8a-852f-11e7-bb31-be2e44b06b34"))
                 return LiveState.HtsTestedPos;
@@ -45,12 +45,31 @@ namespace LiveHTS.Core.Model.Subject
             b25f0a51-852f-11e7-bb31-be2e44b06b34|C|Contacted and Linked|0
             b25f102c-852f-11e7-bb31-be2e44b06b34|NC|Not Contacted|0
              */
-            if (id == new Guid("b25f0a50-852f-11e7-bb31-be2e44b06b34"))
-                return LiveState.HtsTracedContacted;
-            if (id == new Guid(" b25f0a51-852f-11e7-bb31-be2e44b06b34"))
-                return LiveState.HtsTracedContactedLinked;
-            if (id == new Guid("b25f102c-852f-11e7-bb31-be2e44b06b34"))
-                return LiveState.HtsTracedNotContacted;
+            if (mode == "fam")
+            {
+                if (id == new Guid("b25f0a50-852f-11e7-bb31-be2e44b06b34"))
+                    return LiveState.FamilyTracedContacted;
+                if (id == new Guid("b25f102c-852f-11e7-bb31-be2e44b06b34"))
+                    return LiveState.FamilyTracedNotcontacted;
+            }
+
+            if (mode == "pat")
+            {
+                if (id == new Guid("b25f0a50-852f-11e7-bb31-be2e44b06b34"))
+                    return LiveState.PartnerTracedContacted;
+                if (id == new Guid("b25f102c-852f-11e7-bb31-be2e44b06b34"))
+                    return LiveState.PartnerTracedNotcontacted;
+            }
+
+            if (string.IsNullOrWhiteSpace(mode))
+            {
+                if (id == new Guid("b25f0a50-852f-11e7-bb31-be2e44b06b34"))
+                    return LiveState.HtsTracedContacted;
+                if (id == new Guid(" b25f0a51-852f-11e7-bb31-be2e44b06b34"))
+                    return LiveState.HtsTracedContactedLinked;
+                if (id == new Guid("b25f102c-852f-11e7-bb31-be2e44b06b34"))
+                    return LiveState.HtsTracedNotContacted;
+            }
 
             return LiveState.Unkown;
         }
