@@ -97,6 +97,7 @@
     <Compile Include="Service\Clients\EncounterServiceTests.cs" />
     <Compile Include="Service\Config\DeviceSetupServiceTests.cs" />
     <Compile Include="Service\Config\LookupServiceTests.cs" />
+    <Compile Include="Service\Family\FamiliyTestingTests.cs" />
     <Compile Include="Service\Sync\ActivationSeriviceTests.cs" />
     <Compile Include="Service\Sync\ClientSyncServiceTests.cs" />
     <Compile Include="Service\Sync\ChohortClientsSyncServiceTests.cs" />

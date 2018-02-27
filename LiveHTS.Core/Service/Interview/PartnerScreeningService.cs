@@ -40,7 +40,8 @@ namespace LiveHTS.Core.Service.Interview
         {
             var exisitngEncounter = _encounterRepository
                 .GetAll(x => x.EncounterTypeId == encounterTypeId &&
-                             x.ClientId == clientId)
+                             x.ClientId == clientId &&
+                             x.IndexClientId == indexClientId)
                 .FirstOrDefault();
 
             if (null != exisitngEncounter)

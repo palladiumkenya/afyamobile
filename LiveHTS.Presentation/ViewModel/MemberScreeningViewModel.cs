@@ -53,6 +53,7 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _enableEligibility;
         private IndexClientDTO _indexClient;
 
+       
 
         public MemberScreeningViewModel(ISettings settings, IDialogService dialogService, IMemberScreeningService memberScreeningService, IDashboardService dashboardService, ILookupService lookupService)
         {
