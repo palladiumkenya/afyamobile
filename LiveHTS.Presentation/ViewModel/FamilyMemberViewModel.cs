@@ -95,11 +95,11 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert(e.Message, "Remove Family Member");
             }
         }
-        public void ShowDashboard(FamilyMemberTemplate template)
+        public void ScreenFamilyMember(FamilyMemberTemplate template)
         {
             /*
             Close(this);
-            Parent.ShowDashboard(template.RelatedClientId.ToString(),template.ClientId.ToString(),"fam");
+            Parent.ScreenFamilyMember(template.RelatedClientId.ToString(),template.ClientId.ToString(),"fam");
             */
             ShowViewModel<StandByViewModel>(new {id = template.RelatedClientId.ToString(), callerId = template.ClientId.ToString(), mode = "fam" });
         }
@@ -107,7 +107,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private static List<FamilyMemberTemplateWrap> ConvertToFamilyMemberWrapperClass(Client client, IFamilyMemberViewModel familyMemberViewModel)
         {
-            var clientRelationships = client.Relationships.Where(x => x.RelationshipTypeId.ToLower() != "Partner".ToLower()).ToList();
+            var clientRelationships = client.Relationships.Where(x => x.IsFamily()).ToList();
 
             List<FamilyMemberTemplateWrap> list = new List<FamilyMemberTemplateWrap>();
             foreach (var r in clientRelationships)

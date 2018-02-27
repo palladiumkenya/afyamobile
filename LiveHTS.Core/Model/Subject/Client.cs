@@ -48,6 +48,10 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
+        public Client(Guid id) : base(id)
+        {
+        }
+
         private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,Guid userId):this()
         {
             MaritalStatus = maritalStatus;
@@ -77,6 +81,10 @@ namespace LiveHTS.Core.Model.Subject
             return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId);
         }
 
+        public bool IsHtstEnrolled()
+        {
+            return IsInState(LiveState.HtsEnrolled);
+        }
         public bool DisableHts()
         {
             return null != PreventEnroll && PreventEnroll.Value;
@@ -91,9 +99,32 @@ namespace LiveHTS.Core.Model.Subject
             }
             return false;
         }
+
+        public bool IsInState(Guid indexId, params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any(x => null != x.IndexClientId && x.IndexClientId == indexId) &&
+                states.Length > 0)
+            {
+                var found = ClientStates.Where(x => states.Contains(x.Status)).ToList();
+                return found.Count == states.Length;
+            }
+
+            return false;
+        }
+
         public override string ToString()
         {
             return $"{Person} ,{Person.Gender}";
-        }    
+        }
+
+        public bool IsInFamilyTesting(Guid indexId)
+        {
+            return IsInState(indexId,LiveState.FamilyListed);
+        }
+
+        public bool IsInPns(Guid indexId)
+        {
+            return IsInState(indexId,LiveState.PartnerListed);
+        }
     }
 }

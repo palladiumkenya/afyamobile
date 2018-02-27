@@ -13,11 +13,16 @@ namespace LiveHTS.Presentation.DTO
         public int Age { get; set; }
         public  string RelType { get; set; }
         public Guid? PracticeId { get; set; }
+
+        public IndexClientDTO(Guid id)
+        {
+            Id = id;
+        }
+
         public IndexClientDTO(Guid id, string relType)
         {
             Id = id;
             RelType = relType;
-            
         }
 
         public override string ToString()

@@ -53,7 +53,7 @@ namespace LiveHTS.Core.Service.Interview
                 return OpenEncounter(exisitngEncounter.Id);
             }
 
-            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId,practiceId,deviceId);
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId,practiceId,deviceId,null);
             encounter.Started = DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;

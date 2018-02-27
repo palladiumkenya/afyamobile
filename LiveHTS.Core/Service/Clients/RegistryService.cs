@@ -157,6 +157,10 @@ namespace LiveHTS.Core.Service.Clients
             {
                 var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId,false);
                 _clientRelationshipRepository.Save(newRelation);
+                var state = RelationshipType.IsPartner(relationshipTypeId)
+                    ? LiveState.HtsPatlisted
+                    : LiveState.HtsFamlisted;
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId,state));
             }
 
             var exisitngRelationshipReverse = _clientRelationshipRepository.Find(relationshipTypeId, otherClientId, clientId);
@@ -165,6 +169,10 @@ namespace LiveHTS.Core.Service.Clients
                 //otherClientId  clientId
                 var newRelationReverse = ClientRelationship.Create(relationshipTypeId, clientId, true, otherClientId, true);
                 _clientRelationshipRepository.Save(newRelationReverse);
+                var state = RelationshipType.IsPartner(relationshipTypeId)
+                    ? LiveState.PartnerListed
+                    : LiveState.FamilyListed;
+                _clientStateRepository.SaveOrUpdate(new ClientState(otherClientId, state, clientId));
             }
         }
 

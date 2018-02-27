@@ -70,7 +70,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         }
         private void ScreenFamilyMember()
         {
-           FamilyMemberViewModel.ShowDashboard(FamilyMemberTemplate);
+           FamilyMemberViewModel.ScreenFamilyMember(FamilyMemberTemplate);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace LiveHTS.Core.Model.Subject
         [Indexed]
         public Guid ClientId { get; set; }
         public Guid? EncounterId { get; set; }
-
+        public Guid? IndexClientId { get; set; }
         public ClientState()
         {
             Id = LiveGuid.NewGuid();
@@ -25,8 +25,21 @@ namespace LiveHTS.Core.Model.Subject
             StatusDate = DateTime.Now;
             Status = state;
         }
+        public ClientState(Guid clientId, LiveState state,Guid indexClientId)
+        {
+            Id = LiveGuid.NewGuid();
+            ClientId = clientId;
+            IndexClientId = indexClientId;
+            StatusDate = DateTime.Now;
+            Status = state;
+        }
 
         public ClientState(Guid clientId, Guid encounterId, LiveState state) : this(clientId, state)
+        {
+            EncounterId = encounterId;
+        }
+
+        public ClientState(Guid clientId, Guid encounterId, LiveState state, Guid indexClientId) : this(clientId, state, indexClientId)
         {
             EncounterId = encounterId;
         }
@@ -73,7 +86,6 @@ namespace LiveHTS.Core.Model.Subject
 
             return LiveState.Unkown;
         }
-
         public override string ToString()
         {
             return $"{ClientId}|{Status}|{StatusDate:F}";

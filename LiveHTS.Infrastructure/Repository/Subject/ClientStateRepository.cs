@@ -15,7 +15,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         public ClientStateRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
         }
-        public IEnumerable<ClientState> GetByClientId(Guid clientId, Guid? encounterId = null, LiveState? state = null)
+        public IEnumerable<ClientState> GetByClientId(Guid clientId, Guid? encounterId = null, LiveState? state = null, Guid? indexClientId = null)
         {
             var states=GetAll(x => x.ClientId == clientId).ToList();
 
@@ -25,12 +25,15 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             if (null != state)
                 states = states.Where(x => x.Status == state.Value).ToList();
 
+            if (null != indexClientId && !indexClientId.IsNullOrEmpty())
+                states = states.Where(x => x.IndexClientId == indexClientId.Value).ToList();
+
             return states;
         }
 
         public void SaveOrUpdate(ClientState clientState)
         {
-            var states = GetByClientId(clientState.ClientId, clientState.EncounterId, clientState.Status).ToList();
+            var states = GetByClientId(clientState.ClientId, clientState.EncounterId, clientState.Status, clientState.IndexClientId).ToList();
 
             if (states.Count == 0)
             {
@@ -50,7 +53,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
         }
 
-        public void DeleteState(Guid clientId, Guid? encounterId = null, LiveState? state = null)
+        public void DeleteState(Guid clientId, Guid? encounterId = null, LiveState? state = null, Guid? indexClientId = null)
         {
             var states = GetByClientId(clientId, encounterId, state).ToList();
             foreach (var clientState in states)

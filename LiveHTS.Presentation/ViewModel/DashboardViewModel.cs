@@ -13,6 +13,8 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
 
@@ -33,6 +35,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private List<Module> _modules=new List<Module>();
         private bool _showEnroll;
+        private IndexClientDTO _indexClient;
 
 
         public int GetActiveTab()
@@ -50,6 +53,16 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _showEnroll; }
             set { _showEnroll = value; RaisePropertyChanged(() => ShowEnroll); }
+        }
+
+        public IndexClientDTO IndexClient
+        {
+            get { return _indexClient; }
+            set
+            {
+                _indexClient = value; RaisePropertyChanged(() => IndexClient);
+                EncounterViewModel.IndexClient =IndexClient;
+            }
         }
 
 
@@ -87,7 +100,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _client = value; RaisePropertyChanged(() => Client);
                 PartnerViewModel.Client = EncounterViewModel.Client =FamilyMemberViewModel.Client= Client;
-                ShowEnroll = null!=Client.PreventEnroll&&Client.PreventEnroll.Value;
+                ShowEnroll = null!=Client && !Client.IsInState(LiveState.HtsEnrolled);
 
                 var emode = _settings.GetValue("emod", "");
 
@@ -133,24 +146,39 @@ namespace LiveHTS.Presentation.ViewModel
         //TODO: Start form here
         private List<Module> FilterList(List<Module> list)
         {
+            Guid? indexClientId = null;
             var final = new List<Module>();
-
-            if (!Client.DisableHts())
+            
+            if(Client.IsHtstEnrolled())
                 final.Add(list.FirstOrDefault(x => x.Rank == 1));
 
-            var emode = _settings.GetValue("emod", "");
-            if (!string.IsNullOrWhiteSpace(emode))
+            var callerId = _settings.GetValue("callerId", "");
+            if (!string.IsNullOrWhiteSpace(callerId))
             {
-                if (emode == "fam")
-                {
-                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
-                }
-
-                if (emode == "pns")
-                {
-                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
-                }
+                indexClientId=new Guid(callerId);
+               IndexClient = new IndexClientDTO(indexClientId.Value);
             }
+
+            if (null != indexClientId && !indexClientId.Value.IsNullOrEmpty())
+            {
+                if (Client.IsInFamilyTesting(indexClientId.Value))
+                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
+                if (Client.IsInPns(indexClientId.Value))
+                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
+            }
+//            var emode = _settings.GetValue("emod", "");
+//            if (!string.IsNullOrWhiteSpace(emode))
+//            {
+//                if (emode == "fam")
+//                {
+//                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
+//                }
+//
+//                if (emode == "pns")
+//                {
+//                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
+//                }
+//            }
 
             return final;
         }
@@ -181,6 +209,8 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _settings.AddOrUpdateValue("callerId", callerId);
                 _settings.AddOrUpdateValue("activetabId",1);
+                IndexClient=new IndexClientDTO(new Guid(callerId));
+                _settings.AddOrUpdateValue("myIndexId", JsonConvert.SerializeObject(IndexClient));
             }
             else
             {
@@ -211,11 +241,20 @@ namespace LiveHTS.Presentation.ViewModel
                 var clientDtoJson = JsonConvert.SerializeObject(clientDto);
                 _settings.AddOrUpdateValue("client.dto", clientDtoJson);
             }
-//            if (null != Module)
-//            {
-//                var moduleJson = JsonConvert.SerializeObject(Module);
-//                _settings.AddOrUpdateValue("module", moduleJson);
-//            }
+            if (null != IndexClient)
+            {
+                var indexJson = _settings.GetValue("myIndexId", "");
+
+                if (!string.IsNullOrWhiteSpace(indexJson))
+                {
+                    IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                }
+            }
+            //            if (null != Module)
+            //            {
+            //                var moduleJson = JsonConvert.SerializeObject(Module);
+            //                _settings.AddOrUpdateValue("module", moduleJson);
+            //            }
             if (null != Modules)
             {
                 var modulesJson = JsonConvert.SerializeObject(Modules);
@@ -228,6 +267,7 @@ namespace LiveHTS.Presentation.ViewModel
             //Reload
             var clientJson = _settings.GetValue("client", "");
             var modulesJson = _settings.GetValue("modules", "");
+            var indexJson = _settings.GetValue("myIndexId", "");
 
             if (null == Client)
             {
@@ -251,7 +291,15 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Client)
             {
                 PartnerViewModel.Client = EncounterViewModel.Client = Client;
-            } 
+            }
+
+            if (null != IndexClient)
+            {
+                if (!string.IsNullOrWhiteSpace(indexJson))
+                {
+                    IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
+                }
+            }
         }
 
         public void GoBack()

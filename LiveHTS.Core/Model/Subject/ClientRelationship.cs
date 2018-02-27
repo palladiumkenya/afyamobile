@@ -48,12 +48,20 @@ namespace LiveHTS.Core.Model.Subject
         }
         public bool IsPatner()
         {
-            return (RelationshipTypeId.ToLower().Trim() == "Partner".ToLower().Trim() || RelationshipTypeId == "Cowife".ToLower().Trim() || RelationshipTypeId == "Spouse".ToLower().Trim()) && IsIndexRelation();
+            return (RelationshipTypeId.ToLower().Trim() == "Partner".ToLower().Trim() ||
+                    RelationshipTypeId == "Cowife".ToLower().Trim() || RelationshipTypeId == "Spouse".ToLower().Trim());
         }
-
+        public bool IsFamily()
+        {
+            return !IsPatner();
+        }
         public bool IsFamilyRelation()
         {
             return !IsPatner() && IsIndexRelation();
+        }
+        public bool IsPartnerRelation()
+        {
+            return IsPatner() && IsIndexRelation();
         }
 
         public override string ToString()

@@ -22,7 +22,9 @@ namespace LiveHTS.Core.Service.Interview
 
         private List<CategoryItem> _categoryItems;
 
-        public MemberScreeningService(IEncounterRepository encounterRepository, IObsMemberScreeningRepository obsMemberScreeningRepository, ICategoryRepository categoryRepository, IClientStateRepository clientStateRepository)
+        public MemberScreeningService(IEncounterRepository encounterRepository,
+            IObsMemberScreeningRepository obsMemberScreeningRepository, ICategoryRepository categoryRepository,
+            IClientStateRepository clientStateRepository)
         {
             _encounterRepository = encounterRepository;
             _obsMemberScreeningRepository = obsMemberScreeningRepository;
@@ -36,7 +38,8 @@ namespace LiveHTS.Core.Service.Interview
             return exisitngEncounter;
         }
 
-        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId)
+        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,
+            Guid practiceId, Guid deviceId, Guid indexClientId)
         {
             var exisitngEncounter = _encounterRepository
                 .GetAll(x => x.EncounterTypeId == encounterTypeId &&
@@ -48,7 +51,8 @@ namespace LiveHTS.Core.Service.Interview
                 return OpenEncounter(exisitngEncounter.Id);
             }
 
-            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId, deviceId);
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId,
+                deviceId,indexClientId);
             encounter.Started = DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;
@@ -60,20 +64,21 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.LoadTestAll(encounterTypeId, clientId, true).ToList();
         }
 
-        public void SaveMemberScreening(ObsMemberScreening testResult, Guid clientId)
+        public void SaveMemberScreening(ObsMemberScreening testResult, Guid clientId, Guid indexClientId)
         {
             _obsMemberScreeningRepository.SaveOrUpdate(testResult);
-            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.FamilyScreened));
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId,
+                LiveState.FamilyScreened, indexClientId));
 
-            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.FamilyEligibileYes);
-            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.FamilyEligibileNo);
-            if (testResult.Eligibility== new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.FamilyEligibileYes,indexClientId);
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.FamilyEligibileNo,indexClientId);
+            if (testResult.Eligibility == new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
             {
-                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.FamilyEligibileYes));
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId,LiveState.FamilyEligibileYes, indexClientId));
             }
             else
             {
-                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.FamilyEligibileNo));
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId,LiveState.FamilyEligibileNo, indexClientId));
             }
         }
 

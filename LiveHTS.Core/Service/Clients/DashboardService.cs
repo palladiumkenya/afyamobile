@@ -10,6 +10,7 @@ using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Clients
 {
@@ -52,6 +53,33 @@ namespace LiveHTS.Core.Service.Clients
         public void RemoveRelationShip(Guid id)
         {
             _clientRelationshipRepository.Delete(id);
+        }
+
+        public void RemoveRelationShipInState(Guid clientId, Guid otherClientId, bool isFamily = true)
+        {
+            var remainingReleations = _clientRelationshipRepository.GetRelationships(clientId).ToList();
+            if (isFamily)
+            {
+                var famRelations = remainingReleations.Where(x => x.IsFamilyRelation()).ToList();
+
+                if (famRelations.Count == 0)
+                {
+                    _clientStateRepository.DeleteState(clientId, null, LiveState.HtsFamlisted);
+                }
+
+                _clientStateRepository.DeleteState(otherClientId, null, LiveState.FamilyListed, clientId);
+            }
+            else
+            {
+                var patRelations = remainingReleations.Where(x => x.IsPartnerRelation()).ToList();
+
+                if (patRelations.Count == 0)
+                {
+                    _clientStateRepository.DeleteState(clientId, null, LiveState.HtsPatlisted);
+                }
+
+                _clientStateRepository.DeleteState(otherClientId, null, LiveState.PartnerListed, clientId);
+            }
         }
 
         public void RemoveEncounter(Guid id)

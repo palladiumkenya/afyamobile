@@ -11,6 +11,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Module LoadModule();
         List<Module> LoadModules();
         void RemoveRelationShip(Guid id);
+        void RemoveRelationShipInState(Guid clientId,Guid otherClientId,bool isFamily=true);
         void RemoveEncounter(Guid id);
     }
 }

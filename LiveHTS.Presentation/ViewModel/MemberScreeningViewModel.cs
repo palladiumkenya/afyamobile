@@ -51,6 +51,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IDashboardService _dashboardService;
         private ILookupService _lookupService;
         private bool _enableEligibility;
+        private IndexClientDTO _indexClient;
 
 
         public MemberScreeningViewModel(ISettings settings, IDialogService dialogService, IMemberScreeningService memberScreeningService, IDashboardService dashboardService, ILookupService lookupService)
@@ -64,7 +65,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator = new ValidationHelper();
         }
 
-        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId, string indexclient)
         {
 
             // Load Client
@@ -75,6 +76,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var clientJson = JsonConvert.SerializeObject(Client);
                 _settings.AddOrUpdateValue("client", clientJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(indexclient))
+            {
+                IndexClient=new IndexClientDTO(new Guid(indexclient));
+                _settings.AddOrUpdateValue("clientIndex", JsonConvert.SerializeObject(IndexClient));
             }
 
             // Load or Create Encounter
@@ -98,7 +105,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.ms.mode", "new");
-                Encounter = _memberScreeningService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId);
+                Encounter = _memberScreeningService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId,IndexClient.Id);
             }
             else
             {
@@ -124,6 +131,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
 
             var clientJson = _settings.GetValue("client.dto", "");
+            var indexClientJson = _settings.GetValue("clientIndex", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var encounterTypeId = _settings.GetValue("encounterTypeId", "");
 
@@ -134,6 +142,11 @@ namespace LiveHTS.Presentation.ViewModel
             if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
             {
                 Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+
+            if (null == IndexClient && !string.IsNullOrWhiteSpace(indexClientJson))
+            {
+                IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexClientJson);
             }
 
             if (EncounterTypeId.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(encounterTypeId))
@@ -200,6 +213,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _encounterTypeId; }
             set { _encounterTypeId = value; }
+        }
+
+        public IndexClientDTO IndexClient
+        {
+            get { return _indexClient; }
+            set { _indexClient = value;RaisePropertyChanged(() => IndexClient); }
         }
 
         public Client Client
@@ -426,7 +445,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null == ObsMemberScreening)
                 {
-                    obs = ObsMemberScreening.Create(ScreeningDate,SelectedHIVStatus.ItemId,SelectedEligibility.ItemId,BookingDate,Remarks,EncounterId);
+                    obs = ObsMemberScreening.Create(ScreeningDate,SelectedHIVStatus.ItemId,SelectedEligibility.ItemId,BookingDate,Remarks,EncounterId,IndexClient.Id);
                 }
                 else
                 {
@@ -438,7 +457,7 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.Remarks = Remarks;
                 }
 
-                _memberScreeningService.SaveMemberScreening(obs,Client.Id);
+                _memberScreeningService.SaveMemberScreening(obs,Client.Id,IndexClient.Id);
                 _memberScreeningService.MarkEncounterCompleted(EncounterId,AppUserId, true);
                 ShowViewModel<DashboardViewModel>(new { id = Client.Id });
             }

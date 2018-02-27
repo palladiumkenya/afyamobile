@@ -23,6 +23,11 @@ namespace LiveHTS.Core.Service.Interview
            return _encounterRepository.LoadAll(formId, clientId);
        }
 
+       public IEnumerable<Encounter> LoadEncounters(Guid clientId, Guid formId, Guid indexClient)
+       {
+           throw new NotImplementedException();
+       }
+
        public IEnumerable<Encounter> LoadKeyEncounters(Guid clientId)
        {
            return _encounterRepository.LoadAllKey(clientId);

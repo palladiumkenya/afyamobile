@@ -17,6 +17,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand AddFamilyMemberCommand { get; }
         
         void RemoveFamilyMember(FamilyMemberTemplate template);
-        void ShowDashboard(FamilyMemberTemplate template);
+        void ScreenFamilyMember(FamilyMemberTemplate template);
     }
 }
