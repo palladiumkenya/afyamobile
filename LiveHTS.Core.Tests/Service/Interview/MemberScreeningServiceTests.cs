@@ -52,7 +52,7 @@ namespace LiveHTS.Core.Tests.Service.Interview
         [OneTimeSetUp]
         public void Init()
         {
-            _clients = TestDataHelpers.GetTestClients(3);
+            _clients = TestDataHelpers.GetTestClients(4);
             _client = _clients.First();
             var dbpath = $@"{TestContext.CurrentContext.TestDirectory}\livehts.db";
             _database = new SQLiteConnection(dbpath);
@@ -80,7 +80,7 @@ namespace LiveHTS.Core.Tests.Service.Interview
         [Test]
         public void should_Save_Screening()
         {
-            var son = _clients.Last();
+            var son = _clients[0];
             _registryService.SaveOrUpdate(son, false);
             _registryService.UpdateRelationShips("Son", _indexId, son.Id);
 
@@ -108,8 +108,8 @@ namespace LiveHTS.Core.Tests.Service.Interview
         [Test]
         public void should_Save_Screening_Multiple()
         {
-            var son = _clients[0];
-            var sister = _clients[1];
+            var son = _clients[1];
+            var sister = _clients[2];
 
             _registryService.SaveOrUpdate(son, false);
             _registryService.SaveOrUpdate(sister, false);
@@ -165,7 +165,7 @@ namespace LiveHTS.Core.Tests.Service.Interview
         [Test]
         public void should_Save_Screening_States()
         {
-            var son = _clients.Last();
+            var son = _clients[3];
             _registryService.SaveOrUpdate(son, false);
             _registryService.UpdateRelationShips("Son", _indexId, son.Id);
             var encounter = _memberScreeningService.StartEncounter(_memberscreening.FormId,

@@ -375,7 +375,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (Validate())
             {
                 TestResult= GenerateTest();
-                _tracingService.SaveTest(TestResult, Parent.Client.Id);
+                _tracingService.SaveTest(TestResult, Parent.Client.Id,Parent.IndexClient.Id);
                 Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
             }
@@ -389,7 +389,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private ObsFamilyTraceResult GenerateTest()
         {
-            var obs= ObsFamilyTraceResult.Create(Date,Mode,Outcome,Consent,Reminder,BookingDate,EncounterId);
+            var obs= ObsFamilyTraceResult.Create(Date,Mode,Outcome,Consent,Reminder,BookingDate,EncounterId,Parent.IndexClient.Id);
             if (EditMode)
                 obs.Id = Id;
             return obs;

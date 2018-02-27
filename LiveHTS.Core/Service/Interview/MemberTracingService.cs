@@ -37,7 +37,8 @@ namespace LiveHTS.Core.Service.Interview
         {
             var exisitngEncounter = _encounterRepository
                 .GetAll(x => x.EncounterTypeId == encounterTypeId &&
-                             x.ClientId == clientId)
+                             x.ClientId == clientId &&
+                             x.IndexClientId == indexClientId)
                 .FirstOrDefault();
 
             if (null != exisitngEncounter)
@@ -59,16 +60,16 @@ namespace LiveHTS.Core.Service.Interview
 
        
 
-        public void SaveTest(ObsFamilyTraceResult testResult, Guid clientId)
+        public void SaveTest(ObsFamilyTraceResult testResult, Guid clientId, Guid indexClientId)
         {
             _obsTraceResultRepository.SaveOrUpdate(testResult);
-            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, ClientState.GetState(testResult.Outcome,"fam")));
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, ClientState.GetState(testResult.Outcome,"fam"),  indexClientId));
         }
 
-        public void DeleteTest(ObsFamilyTraceResult testResult, Guid clientId)
+        public void DeleteTest(ObsFamilyTraceResult testResult, Guid clientId, Guid indexClientId)
         {
             _obsTraceResultRepository.Delete(testResult.Id);
-            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, ClientState.GetState(testResult.Outcome,"fam"));
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, ClientState.GetState(testResult.Outcome,"fam"),indexClientId);
 
         }
 
