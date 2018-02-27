@@ -61,21 +61,21 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.LoadTestAll(encounterTypeId, clientId, true).ToList();
         }
 
-        public void SavePartnerScreening(ObsPartnerScreening testResult, Guid clientId)
+        public void SavePartnerScreening(ObsPartnerScreening testResult, Guid clientId, Guid indexClientId)
         {
             _obsPartnerScreeningRepository.SaveOrUpdate(testResult);
 
-            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerScreened));
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerScreened,indexClientId));
 
-            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.PartnerEligibileNo);
-            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.PartnerEligibileYes);
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.PartnerEligibileNo,indexClientId);
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.PartnerEligibileYes,indexClientId);
             if (testResult.Eligibility == new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
             {
-                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerEligibileYes));
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerEligibileYes,indexClientId));
             }
             else
             {
-                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerEligibileNo));
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerEligibileNo,indexClientId));
             }
         }
 

@@ -97,7 +97,8 @@
     <Compile Include="Service\Clients\EncounterServiceTests.cs" />
     <Compile Include="Service\Config\DeviceSetupServiceTests.cs" />
     <Compile Include="Service\Config\LookupServiceTests.cs" />
-    <Compile Include="Service\Family\FamiliyTestingTests.cs" />
+    <Compile Include="Service\Interview\PartnerScreeningServiceTests.cs" />
+    <Compile Include="Service\Interview\MemberScreeningServiceTests.cs" />
     <Compile Include="Service\Sync\ActivationSeriviceTests.cs" />
     <Compile Include="Service\Sync\ClientSyncServiceTests.cs" />
     <Compile Include="Service\Sync\ChohortClientsSyncServiceTests.cs" />
@@ -218,6 +219,9 @@
       <Project>{11312afd-1e57-48c8-a628-d6be2e55d8b6}</Project>
       <Name>LiveHTS.SharedKernel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\PNS\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

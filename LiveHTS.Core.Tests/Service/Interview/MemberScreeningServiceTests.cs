@@ -15,15 +15,14 @@ using LiveHTS.Core.Service.Clients;
 using LiveHTS.Core.Service.Interview;
 using LiveHTS.Infrastructure.Repository.Interview;
 using LiveHTS.Infrastructure.Repository.Subject;
-using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using NUnit.Framework;
 using SQLite;
 
-namespace LiveHTS.Core.Tests.Service.Family
+namespace LiveHTS.Core.Tests.Service.Interview
 {
     [TestFixture]
-    public class FamiliyTestingTests
+    public class MemberScreeningServiceTests
     {
         private ILiveSetting _liveSetting;
         private SQLiteConnection _database;
@@ -131,35 +130,35 @@ namespace LiveHTS.Core.Tests.Service.Family
                 .With(x => x.Eligibility = new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
                 .With(x => x.IndexClientId = _indexId).Build();
 
-            var screening2 = Builder<ObsMemberScreening>.CreateNew()
-                .With(x => x.EncounterId = encounter.Id)
-                .With(x => x.Eligibility = new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
+            var screeningSister = Builder<ObsMemberScreening>.CreateNew()
+                .With(x => x.EncounterId = encounterSister.Id)
+                .With(x => x.Eligibility = new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"))
                 .With(x => x.IndexClientId = _indexId).Build();
 
             _memberScreeningService.SaveMemberScreening(screening, son.Id, _indexId);
-            _memberScreeningService.SaveMemberScreening(screening2, sister.Id, _indexId);
+            _memberScreeningService.SaveMemberScreening(screeningSister, sister.Id, _indexId);
             
             var saved = _memberScreeningService.OpenEncounter(encounter.Id);
             Assert.NotNull(saved);
             Assert.AreEqual(son.Id, saved.ClientId);
             Assert.AreEqual(_indexId, saved.IndexClientId);
+
+            var savedSister = _memberScreeningService.OpenEncounter(encounterSister.Id);
+            Assert.NotNull(savedSister);
+            Assert.AreEqual(sister.Id, savedSister.ClientId);
+            Assert.AreEqual(_indexId, savedSister.IndexClientId);
+        
             var memberscreening = saved.ObsMemberScreenings.FirstOrDefault();
             Assert.NotNull(memberscreening);
             Assert.AreEqual(encounter.Id, memberscreening.EncounterId);
             Assert.AreEqual(new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"), memberscreening.Eligibility);
             Console.WriteLine(saved);
 
-            var saved2 = _memberScreeningService.OpenEncounter(encounterSister.Id);
-            Assert.NotNull(saved2);
-            Assert.AreEqual(sister.Id, saved2.ClientId);
-            Assert.AreEqual(_indexId, saved2.IndexClientId);
-
-            var memberscreening2 = saved2.ObsMemberScreenings.FirstOrDefault();
-            Assert.NotNull(memberscreening2);
-            Assert.AreEqual(encounterSister.Id, memberscreening2.EncounterId);
-            Assert.AreEqual(new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"), memberscreening2.Eligibility);
-            Console.WriteLine(saved2);
-
+            var memberscreeningSister = savedSister.ObsMemberScreenings.FirstOrDefault();
+            Assert.NotNull(memberscreeningSister);
+            Assert.AreEqual(encounterSister.Id, memberscreeningSister.EncounterId);
+            Assert.AreEqual(new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"), memberscreeningSister.Eligibility);
+            Console.WriteLine(savedSister);
         }
 
 

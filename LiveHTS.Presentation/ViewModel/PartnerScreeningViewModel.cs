@@ -76,6 +76,7 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _enablePnsAccepted;
         private bool _enablePnsApproach;
         private bool _enableBookingDate;
+        private IndexClientDTO _indexClient;
 
 
         public PartnerScreeningViewModel(ISettings settings, IDialogService dialogService,
@@ -93,7 +94,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator = new ValidationHelper();
         }
 
-        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId, string indexclient)
         {
 
             // Load Client
@@ -104,6 +105,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var clientJson = JsonConvert.SerializeObject(Client);
                 _settings.AddOrUpdateValue("client", clientJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(indexclient))
+            {
+                IndexClient = new IndexClientDTO(new Guid(indexclient));
+                _settings.AddOrUpdateValue("pclientIndex", JsonConvert.SerializeObject(IndexClient));
             }
 
             // Load or Create Encounter
@@ -168,7 +175,7 @@ namespace LiveHTS.Presentation.ViewModel
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.ms.mode", "new");
                 Encounter = _partnerScreeningService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id,
-                    AppProviderId, AppUserId, AppPracticeId, AppDeviceId,Guid.NewGuid());
+                    AppProviderId, AppUserId, AppPracticeId, AppDeviceId,IndexClient.Id);
             }
             else
             {
@@ -191,6 +198,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
 
             var clientJson = _settings.GetValue("client.dto", "");
+            var indexClientJson = _settings.GetValue("pclientIndex", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var encounterTypeId = _settings.GetValue("encounterTypeId", "");
 
@@ -224,8 +232,11 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Client = JsonConvert.DeserializeObject<Client>(clientJson);
             }
+            if (null == IndexClient && !string.IsNullOrWhiteSpace(indexClientJson))
+            {
+                IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexClientJson);
+            }
 
-           
             if (PnsAccepted.Count == 0 && !string.IsNullOrWhiteSpace(pnsAcceptedJson))
             {
                 PnsAccepted = JsonConvert.DeserializeObject<List<CategoryItem>>(pnsAcceptedJson);
@@ -337,6 +348,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _encounterTypeId; }
             set { _encounterTypeId = value; }
+        }
+
+        public IndexClientDTO IndexClient
+        {
+            get { return _indexClient; }
+            set { _indexClient = value; RaisePropertyChanged(() => IndexClient); }
         }
 
         public Client Client
@@ -887,7 +904,8 @@ namespace LiveHTS.Presentation.ViewModel
                         SelectedPNSRealtionship.ItemId,
                         SelectedLivingWithClient.ItemId,
                         SelectedPNSApproach.ItemId,
-                        EncounterId);
+                        EncounterId,
+                        IndexClient.Id);
                 }
                 else
                 {
@@ -916,7 +934,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 }
 
-                _partnerScreeningService.SavePartnerScreening(obs,Client.Id);
+                _partnerScreeningService.SavePartnerScreening(obs,Client.Id,IndexClient.Id);
                 _partnerScreeningService.MarkEncounterCompleted(EncounterId,AppUserId, true);
                 ShowViewModel<DashboardViewModel>(new {id = Client.Id});
             }

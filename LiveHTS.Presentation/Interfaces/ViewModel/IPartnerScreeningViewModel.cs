@@ -22,6 +22,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string ErrorSummary { get; set; }
 
         Guid EncounterTypeId { get; set; }
+        IndexClientDTO IndexClient { get; set; }
         Client Client { get; set; }
         Encounter Encounter { get; set; }
         Guid EncounterId { get; set; }
