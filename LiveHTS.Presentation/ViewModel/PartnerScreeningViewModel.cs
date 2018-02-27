@@ -376,7 +376,6 @@ namespace LiveHTS.Presentation.ViewModel
             set { _allowScreening = value; RaisePropertyChanged(() => AllowScreening);}
         }
 
-        TODO HAP
         public bool AllowEligibility
         {
             get { return _allowEligibility; }
@@ -1001,7 +1000,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
             else
             {
-                SelectedEligibility = SelfTestOptions.OrderBy(x => x.Rank).FirstOrDefault();
+                SelectedEligibility = Eligibility.OrderBy(x => x.Rank).FirstOrDefault();
                 EnableBookingDate = EnablePNSApproach = AllowEligibility = false;
             }
 
