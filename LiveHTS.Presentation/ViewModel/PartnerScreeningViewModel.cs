@@ -168,7 +168,7 @@ namespace LiveHTS.Presentation.ViewModel
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.ms.mode", "new");
                 Encounter = _partnerScreeningService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id,
-                    AppProviderId, AppUserId, AppPracticeId, AppDeviceId);
+                    AppProviderId, AppUserId, AppPracticeId, AppDeviceId,Guid.NewGuid());
             }
             else
             {

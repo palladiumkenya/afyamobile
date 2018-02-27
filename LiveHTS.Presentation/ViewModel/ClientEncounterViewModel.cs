@@ -287,7 +287,7 @@ namespace LiveHTS.Presentation.ViewModel
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "new");
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId);
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null);
             }
             else
             {

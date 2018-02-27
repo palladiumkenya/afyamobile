@@ -75,7 +75,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     foreach (var form in module.Forms)
                     {
-                        form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                        form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id,IndexClient?.Id).ToList();
                         form.KeyClientEncounters= _interviewService.LoadKeyEncounters(Client.Id).ToList();
                         form.Block =  null != Client && null != Client.AlreadyTestedPos && Client.AlreadyTestedPos.Value;
                     }
@@ -217,7 +217,7 @@ namespace LiveHTS.Presentation.ViewModel
                     mode = "new",
                     clientId = Client.Id.ToString(),
                     encounterId = "",
-                    indexclient=null!=IndexClient? IndexClient.Id.ToString():""
+                    indexclient=IndexClient.Id.ToString()
                 });
                 return;
             }
