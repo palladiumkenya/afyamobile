@@ -24,13 +24,9 @@ namespace LiveHTS.Core.Service.Interview
            return _encounterRepository.LoadAll(formId, clientId);
        }
 
-       public IEnumerable<Encounter> LoadEncounters(Guid clientId, Guid formId, Guid? indexClient)
+       public IEnumerable<Encounter> LoadEncounters(Guid clientId, Guid formId, Guid indexClient)
        {
-           if (null != indexClient)
-               return _encounterRepository.LoadAll(formId, clientId, indexClient.Value);
-
-           return _encounterRepository.LoadAll(clientId, formId);
-
+           return _encounterRepository.LoadAll(formId, clientId, indexClient);
        }
 
        public IEnumerable<Encounter> LoadKeyEncounters(Guid clientId)

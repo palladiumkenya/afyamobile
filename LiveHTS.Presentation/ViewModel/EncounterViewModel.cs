@@ -75,7 +75,15 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     foreach (var form in module.Forms)
                     {
-                        form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id,IndexClient?.Id).ToList();
+                        if (null != IndexClient)
+                        {
+                            form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id, IndexClient.Id).ToList();
+                        }
+                        else
+                        {
+                            form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                        }
+                      
                         form.KeyClientEncounters= _interviewService.LoadKeyEncounters(Client.Id).ToList();
                         form.ClientStates = Client.ClientStates.ToList();
                         form.IndexClientId = IndexClient?.Id;
