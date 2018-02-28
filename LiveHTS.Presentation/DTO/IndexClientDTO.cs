@@ -14,6 +14,10 @@ namespace LiveHTS.Presentation.DTO
         public  string RelType { get; set; }
         public Guid? PracticeId { get; set; }
 
+        public IndexClientDTO()
+        {
+        }
+
         public IndexClientDTO(Guid id)
         {
             Id = id;

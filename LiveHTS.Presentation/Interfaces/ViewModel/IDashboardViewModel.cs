@@ -24,6 +24,5 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand ManageRegistrationCommand { get;  }
         IMvxCommand EnrollCommand { get; }
         void GoBack();
-        void ShowDashboard(string id, string callerId,string mode);
     }
 }

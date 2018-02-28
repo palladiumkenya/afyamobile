@@ -146,40 +146,26 @@ namespace LiveHTS.Presentation.ViewModel
         //TODO: Start form here
         private List<Module> FilterList(List<Module> list)
         {
-            Guid? indexClientId = null;
             var final = new List<Module>();
-            
-            if(Client.IsHtstEnrolled())
+
+            if (Client.IsHtstEnrolled())
+            {
                 final.Add(list.FirstOrDefault(x => x.Rank == 1));
-
-            var callerId = _settings.GetValue("callerId", "");
-            if (!string.IsNullOrWhiteSpace(callerId))
-            {
-                indexClientId=new Guid(callerId);
-               IndexClient = new IndexClientDTO(indexClientId.Value);
+                return final;
             }
 
-            if (null != indexClientId && !indexClientId.Value.IsNullOrEmpty())
-            {
-                if (Client.IsInFamilyTesting(indexClientId.Value))
-                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
-                if (Client.IsInPns(indexClientId.Value))
-                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
-            }
-//            var emode = _settings.GetValue("emod", "");
-//            if (!string.IsNullOrWhiteSpace(emode))
-//            {
-//                if (emode == "fam")
-//                {
-//                    final.Add(list.FirstOrDefault(x => x.Rank == 2));
-//                }
-//
-//                if (emode == "pns")
-//                {
-//                    final.Add(list.FirstOrDefault(x => x.Rank == 3));
-//                }
-//            }
+            if (null == IndexClient)
+                return final;
 
+            if (Client.IsInState(IndexClient.Id, LiveState.FamilyListed))
+            {
+                final.Add(list.FirstOrDefault(x => x.Rank == 2));
+            }
+
+            if (Client.IsInState(IndexClient.Id, LiveState.PartnerListed))
+            {
+                final.Add(list.FirstOrDefault(x => x.Rank == 3));
+            }
             return final;
         }
 
@@ -241,20 +227,7 @@ namespace LiveHTS.Presentation.ViewModel
                 var clientDtoJson = JsonConvert.SerializeObject(clientDto);
                 _settings.AddOrUpdateValue("client.dto", clientDtoJson);
             }
-            if (null != IndexClient)
-            {
-                var indexJson = _settings.GetValue("myIndexId", "");
-
-                if (!string.IsNullOrWhiteSpace(indexJson))
-                {
-                    IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
-                }
-            }
-            //            if (null != Module)
-            //            {
-            //                var moduleJson = JsonConvert.SerializeObject(Module);
-            //                _settings.AddOrUpdateValue("module", moduleJson);
-            //            }
+           
             if (null != Modules)
             {
                 var modulesJson = JsonConvert.SerializeObject(Modules);
@@ -304,11 +277,10 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void GoBack()
         {
-            var callerId = _settings.GetValue("callerId", "");
-            if (!string.IsNullOrWhiteSpace(callerId))
+            if (null != IndexClient)
             {
                 Close(this);
-                ShowViewModel<DashboardViewModel>(new {id = callerId});
+                ShowViewModel<DashboardViewModel>(new {id = IndexClient.Id});
                 return;
             }
 
@@ -319,12 +291,6 @@ namespace LiveHTS.Presentation.ViewModel
                 ShowViewModel<AppDashboardViewModel>(new { username = profile });
             }
           
-        }
-
-        public void ShowDashboard(string id, string callerId, string mode)
-        {
-            Close(this);
-            ShowViewModel<DashboardViewModel>(new {id = id, callerId = callerId,mode=mode});
         }
     }
 }

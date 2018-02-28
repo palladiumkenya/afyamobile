@@ -214,7 +214,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             base.ViewAppeared();
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
-            if (!string.IsNullOrWhiteSpace(indexJson))
+            if (IndexClientDTO==null &&!string.IsNullOrWhiteSpace(indexJson))
             {
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
