@@ -11,6 +11,7 @@ using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmValidation;
@@ -257,10 +258,11 @@ namespace LiveHTS.Presentation.ViewModel
                     obs = ObsLinkage;
                     obs.ReferredTo = ReferredTo;
                     obs.DatePromised = DatePromised;
-                    _linkageService.SaveLinkage(obs);
+                    _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id);
                 }
-                _linkageService.SaveLinkage(obs);
-                _linkageService.MarkEncounterCompleted(ParentViewModel.Encounter.Id,true);
+                _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id);
+
+                _linkageService.MarkEncounterCompleted(ParentViewModel.Encounter.Id,ParentViewModel.AppUserId,true);
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
 
                 _dialogService.ShowToast("Referrall info saved successfully");
@@ -275,33 +277,19 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanAddTrace()
         {
-//            //No Tests
-//            if (null == Traces)
-//                return true;
-//
-//            if (null != Traces)
-//            {
-//                //No Tests
-//                if (Traces.Count == 0)
-//                    return true;
-//
-//                //Is initial add
-//                if (Traces.Count > 0 && Traces.Any(x => x.TraceTemplate.Outcome == Guid.Empty))
-//                    return false;
-//
-//                //Has invalid
-//                if (
-//                    Traces.Count > 0 &&
-//                    Traces.Any(x => x.TraceTemplate.OutcomeDisplay.ToLower() == "C" )
-//                )
-//                    return false;
-//            }
+            // NO TRACES
+            if (null == Traces)
+                return true;
 
+            // NO TRACES
+            if (Traces.Count == 0)
+                return true;
 
-            return true;
+            // NOT CONTACTED AND LINKED
+            return !Traces.Any(x => !x.TraceTemplate.Outcome.IsNullOrEmpty() &&
+                                   x.TraceTemplate.Outcome == new Guid("b25f0a51-852f-11e7-bb31-be2e44b06b34"));
+
         }
-
-      
 
         public event EventHandler<ChangedDateEvent> ChangedDate;
 
@@ -324,7 +312,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void SaveTrace(ObsTraceResult test)
         {
-            _linkageService.SaveTest(test);
+            _linkageService.SaveTest(test,ParentViewModel.Client.Id);
             ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
         }
 
@@ -336,7 +324,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (result)
                 {
 
-                    _linkageService.DeleteTest(testResult);
+                    _linkageService.DeleteTest(testResult, ParentViewModel.Client.Id);
                     Referesh(testResult.EncounterId);
                 }
             }

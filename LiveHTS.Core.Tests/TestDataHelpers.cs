@@ -9,6 +9,7 @@ namespace LiveHTS.Core.Tests
 {
     public class TestDataHelpers
     {
+        public static readonly Guid _userId=new Guid("61A9E04C-2ED0-414A-9387-A7B7016DF233");
         public static readonly string _providerTypeId = "HW"; //HW|Health Worker|0
         public static readonly Guid _encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0"); // |HTS Initial|0
         public static readonly string _identifierTypeId = "Serial"; // |Serial|0
@@ -20,13 +21,13 @@ namespace LiveHTS.Core.Tests
         public static readonly Guid _formId = new Guid("62040dcc-6260-11e7-907b-a6006ad3dba0"); //       |HTS Lab Form|HTS Lab Form|HTS Lab Form|1|62040ce6-6260-11e7-907b-a6006ad3dba0|0
         public static readonly List<Guid> _questionIds = new List<Guid>()
         {
-            new Guid("6206a9a6-6260-11e7-907b-a6006ad3dba0"), //Consent
+            new Guid("b2603dc6-852f-11e7-bb31-be2e44b06b34"), //Consent
             new Guid("6206aa78-6260-11e7-907b-a6006ad3dba0"),
             new Guid("6206ab4a-6260-11e7-907b-a6006ad3dba0"),
             new Guid("6206ac1c-6260-11e7-907b-a6006ad3dba0")
         };
         
-        public static readonly Guid _consentYes= new Guid("00c2a902-6246-11e7-907b-a6006ad3dba0"); //   Yes,00c2a902-6246-11e7-907b-a6006ad3dba0
+        public static readonly Guid _consentYes= new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"); //   Yes,00c2a902-6246-11e7-907b-a6006ad3dba0
         public static readonly Guid _consentNo= new Guid("00c2aae2-6246-11e7-907b-a6006ad3dba0"); //     No,00c2aae2-6246-11e7-907b-a6006ad3dba0
 
         public static List<Client> _clients;
@@ -72,6 +73,7 @@ namespace LiveHTS.Core.Tests
 
                 var client = Builder<Client>.CreateNew()
                     .With(x => x.PracticeId = _practiceId)
+                    .With(x => x.UserId = _userId)
                     .With(x => x.Voided = false)
                     .Build();
                 client.PersonId = p.Id;

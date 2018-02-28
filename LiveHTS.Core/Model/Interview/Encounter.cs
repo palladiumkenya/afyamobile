@@ -12,6 +12,9 @@ namespace LiveHTS.Core.Model.Interview
     {
         [Indexed]
         public Guid ClientId { get; set; }
+
+        [Indexed]
+        public Guid? IndexClientId { get; set; }
         [Indexed]
         public Guid FormId { get; set; }
         [Indexed]
@@ -77,7 +80,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
             EncounterDate = DateTime.Now;
         }
-        private Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId,Guid practiceId,Guid deviceId):this()
+        private Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId,Guid practiceId,Guid deviceId,Guid? indexClientId):this()
         {
             FormId = formId;
             EncounterTypeId = encounterTypeId;
@@ -86,10 +89,11 @@ namespace LiveHTS.Core.Model.Interview
             UserId = userId;
             PracticeId = practiceId;
             DeviceId = deviceId;
+            IndexClientId = indexClientId;
         }
-        public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId)
+        public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId, Guid? indexClientId)
         {
-            var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId,practiceId,deviceId);
+            var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId,practiceId,deviceId,indexClientId);
             return encounter;
         }
 

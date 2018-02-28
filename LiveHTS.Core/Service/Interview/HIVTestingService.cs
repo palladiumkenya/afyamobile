@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
+using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Interview
 {
@@ -16,17 +19,19 @@ namespace LiveHTS.Core.Service.Interview
         private readonly IObsTestResultRepository _obsTestResultRepository;
         private readonly IObsFinalTestResultRepository _obsFinalTestResultRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
         private List<CategoryItem> _categoryItems;
         
         public HIVTestingService(IEncounterRepository encounterRepository,
             IObsTestResultRepository obsTestResultRepository,
-            IObsFinalTestResultRepository obsFinalTestResultRepository, ICategoryRepository categoryRepository)
+            IObsFinalTestResultRepository obsFinalTestResultRepository, ICategoryRepository categoryRepository, IClientStateRepository clientStateRepository)
         {
             _encounterRepository = encounterRepository;
             _obsTestResultRepository = obsTestResultRepository;
             _obsFinalTestResultRepository = obsFinalTestResultRepository;
             _categoryRepository = categoryRepository;
+            _clientStateRepository = clientStateRepository;
             LoadItems();
         }
 
@@ -48,7 +53,7 @@ namespace LiveHTS.Core.Service.Interview
                 return OpenEncounter(exisitngEncounter.Id);
             }
 
-            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId,practiceId,deviceId);
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId,practiceId,deviceId,null);
             encounter.Started = DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;
@@ -60,7 +65,7 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.LoadTestAll(encounterTypeId, clientId, true).ToList();
         }
 
-        public void SaveTest(ObsTestResult testResult)
+        public void SaveTest(ObsTestResult testResult,Guid clientId)
         {
             _obsTestResultRepository.SaveOrUpdate(testResult);            
 
@@ -79,7 +84,7 @@ namespace LiveHTS.Core.Service.Interview
                 {
                     if (testResult.IsValid)
                     {
-                        final = ObsFinalTestResult.CreateFirst(testResult.Result, testResult.EncounterId);
+                        final = ObsFinalTestResult.CreateFirst(testResult.Result, testResult.EncounterId,clientId);
                         _obsFinalTestResultRepository.Save(final);
                     }
                 }
@@ -96,7 +101,7 @@ namespace LiveHTS.Core.Service.Interview
 
             }
 
-            UpdateFinalResult(testResult.EncounterId);
+            UpdateFinalResult(testResult.EncounterId,clientId);
         }
 
         public void SaveFinalTest(ObsFinalTestResult testResult)
@@ -110,10 +115,23 @@ namespace LiveHTS.Core.Service.Interview
                 test.PnsDeclined = testResult.PnsDeclined;
                 test.Remarks = testResult.Remarks;
                 _obsFinalTestResultRepository.SaveOrUpdate(test);
+
+                _clientStateRepository.DeleteState(test.ClientId, test.EncounterId);
+
+                if (null != test.SelfTestOption && test.SelfTestOption.Value == new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
+                {
+                    _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId, test.EncounterId, LiveState.HtsPnsAcceptedYes));
+                }
+                else
+                {
+                    _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId, test.EncounterId, LiveState.HtsPnsAcceptedNo));
+                }
+                _clientStateRepository.SaveOrUpdate(new ClientState(test.ClientId,test.EncounterId,ClientState.GetState(test.FinalResult.Value)));
+
             }
         }
 
-        public void DeleteTest(ObsTestResult testResult)
+        public void DeleteTest(ObsTestResult testResult,Guid clientId)
         {
             _obsTestResultRepository.Delete(testResult.Id);
 
@@ -139,12 +157,12 @@ namespace LiveHTS.Core.Service.Interview
                 }
             }
 
-            UpdateFinalResult(testResult.EncounterId);
+            UpdateFinalResult(testResult.EncounterId,clientId);
         }
 
-        public void UpdateFinalResult(Guid encounterId)
+        public void UpdateFinalResult(Guid encounterId,Guid clientId)
         {
-
+            _clientStateRepository.DeleteState(clientId,encounterId);
             LoadItems();
 
             var final = _obsFinalTestResultRepository.GetAll(x => x.EncounterId == encounterId)
@@ -154,12 +172,27 @@ namespace LiveHTS.Core.Service.Interview
             {
                 final.ProcessEndResult(_categoryItems);
                 _obsFinalTestResultRepository.SaveOrUpdate(final);
+                if (null != final.FinalResult && !final.FinalResult.IsNullOrEmpty())
+                {
+                    _clientStateRepository.SaveOrUpdate(new ClientState(clientId, encounterId,
+                        ClientState.GetState(final.FinalResult.Value)));
+                }
+                else
+                {
+                    _encounterRepository.UpdateStatus(final.EncounterId,false);
+                }
             }
+
+        }
+
+        public void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed)
+        {
+            _encounterRepository.UpdateStatus(encounterId,userId,completed);
         }
 
         public void MarkEncounterCompleted(Guid encounterId, bool completed)
         {
-            _encounterRepository.UpdateStatus(encounterId,completed);
+            _encounterRepository.UpdateStatus(encounterId,  completed);
         }
 
         public void UpdateEncounterDate(Guid encounterId, Guid clientId)

@@ -11,11 +11,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IDashboardViewModel Parent { get; set; }
         string Title { get; set; }
         Client Client { get; set; }
+        bool ShowAddFamily { get; set; }
         List<FamilyMemberTemplateWrap> FamilyMembers { get; set; }
 
         IMvxCommand AddFamilyMemberCommand { get; }
         
         void RemoveFamilyMember(FamilyMemberTemplate template);
-        void ShowDashboard(FamilyMemberTemplate template);
+        void ScreenFamilyMember(FamilyMemberTemplate template);
     }
 }

@@ -48,6 +48,7 @@ namespace LiveHTS.Presentation.ViewModel
         
         private ITestEpisodeViewModel _parent;
         private bool _editMode;
+        private Guid _clientId;
 
         public bool EditMode
         {
@@ -64,6 +65,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 TestName = Parent.TestName;
                 EncounterId = Parent.Parent.Encounter.Id;
+                ClientId = Parent.Parent.Encounter.ClientId;
             }
         }
 
@@ -139,6 +141,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _encounterId; }
             set { _encounterId = value; RaisePropertyChanged(() => EncounterId); }
+        }
+
+        public Guid ClientId
+        {
+            get { return _clientId; }
+            set { _clientId = value; RaisePropertyChanged(() => ClientId); }
         }
 
         public string ResultCode
@@ -334,7 +342,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (Validate())
             {
                 TestResult= GenerateTest();
-                _testingService.SaveTest(TestResult);
+                _testingService.SaveTest(TestResult,ClientId);
                 Parent.Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
             }

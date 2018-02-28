@@ -45,6 +45,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 return;
             }
+
             if (!string.IsNullOrWhiteSpace(id))
             {
                 Client = _registryService.Find(new Guid(id));

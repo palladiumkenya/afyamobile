@@ -40,6 +40,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\HtsFunnel.cs" />
     <Compile Include="Event\OptionSelectedEventArgs.cs" />
     <Compile Include="Interfaces\Engine\IValidationEngine.cs" />
     <Compile Include="Interfaces\Model\IEnrollment.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IClientStateRepository.cs" />
     <Compile Include="Interfaces\Services\Clients\IClientReaderService.cs" />
     <Compile Include="Interfaces\Services\Clients\ICohortClientsService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRemoteSearchService.cs" />
@@ -111,7 +113,7 @@
     <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
-    <Compile Include="Model\Class1.cs" />
+    <Compile Include="Model\PagedResult.cs" />
     <Compile Include="Model\Config\KeyPop.cs" />
     <Compile Include="Model\Config\MaritalStatus.cs" />
     <Compile Include="Model\Config\ServerConfig.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Model\Interview\SetResponse.cs" />
     <Compile Include="Model\Config\Cohort.cs" />
     <Compile Include="Model\RemoteClientDTO.cs" />
+    <Compile Include="Model\Subject\ClientState.cs" />
     <Compile Include="Model\Survey\Program.cs" />
     <Compile Include="Model\SyncClientEncounterDTO.cs" />
     <Compile Include="Model\SyncClientDTO.cs" />

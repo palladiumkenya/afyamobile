@@ -52,6 +52,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedCoupleDiscordant { get; set; }
         List<CategoryItem> CoupleDiscordantOptions { get; set; }
 
+        bool EnableSelfTestOption { get; set; }
         Guid SelfTestOption { get; set; }
         CategoryItem SelectedSelfTest { get; set; }
         List<CategoryItem> SelfTestOptions { get; set; }

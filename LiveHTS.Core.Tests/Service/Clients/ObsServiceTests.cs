@@ -11,7 +11,9 @@ using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.Service.Clients;
 using LiveHTS.Infrastructure.Repository.Interview;
+using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.Infrastructure.Repository.Survey;
+using LiveHTS.SharedKernel.Model;
 using NUnit.Framework;
 using SQLite;
 
@@ -37,6 +39,7 @@ namespace LiveHTS.Core.Tests.Service.Clients
         private Form _form;
         private Encounter _encounterNew;
         private Encounter _encounter;
+        private ClientStateRepository _clientStateRepository;
 
         [SetUp]
         public void SetUp()
@@ -47,13 +50,14 @@ namespace LiveHTS.Core.Tests.Service.Clients
                     new ConceptRepository(_liveSetting, new CategoryRepository(_liveSetting))));
             _encounterRepository=new EncounterRepository(_liveSetting);
             _obsRepository=new ObsRepository(_liveSetting);
+            _clientStateRepository = new ClientStateRepository(_liveSetting);
             _formId = TestDataHelpers._formId;
             _form = _formRepository.GetWithQuestions(_formId, true);
             _encounterNew = TestHelpers.CreateTestEncounters(_form);            
             _encounter = TestHelpers.CreateTestEncountersWithObs(_form);
             _navigationEngine = new NavigationEngine();
             _validationEngine=new ValidationEngine();
-            _obsService=new ObsService(_formRepository,_encounterRepository,_obsRepository,_navigationEngine,_validationEngine);
+            _obsService=new ObsService(_formRepository,_encounterRepository,_obsRepository,_navigationEngine,_validationEngine,_clientStateRepository);
 
         }
 
@@ -183,12 +187,45 @@ namespace LiveHTS.Core.Tests.Service.Clients
            _encounterNew = new EncounterService(_encounterRepository,_formRepository).StartEncounter(_encounterNew);
             var currentQuestionId = _form.Questions.First(x => x.Rank == 1).Id;
             _obsService.Initialize(_encounterNew);
-            _obsService.SaveResponse(_encounterNew.Id,currentQuestionId,TestDataHelpers._consentYes);
+            _obsService.SaveResponse(_encounterNew.Id,_encounterNew.ClientId, currentQuestionId,TestDataHelpers._consentYes);
 
             var manifest = _obsService.Manifest;
             var obs= manifest.ResponseStore.First(x => x.QuestionId == currentQuestionId);
             Assert.IsNotNull(obs);
             Assert.AreEqual(TestDataHelpers._consentYes, obs.Obs.ValueCoded);
+
+            var states =
+                _clientStateRepository.GetByClientId(_encounterNew.ClientId, _encounterNew.Id, LiveState.HtsConsented)
+                    .ToList();
+
+            Assert.True(states.Count > 0);
+
+            Assert.NotNull(states.FirstOrDefault(x => x.Status == LiveState.HtsConsented));
+            foreach (var clientState in states)
+            {
+                Console.WriteLine($"  {clientState}");
+            }
+        }
+        [Test]
+        public void should_SaveResponse_Clear_State()
+        {
+            // 1.Consent
+            _encounterNew = new EncounterService(_encounterRepository, _formRepository).StartEncounter(_encounterNew);
+            var currentQuestionId = _form.Questions.First(x => x.Rank == 1).Id;
+            _obsService.Initialize(_encounterNew);
+            _obsService.SaveResponse(_encounterNew.Id, _encounterNew.ClientId, currentQuestionId, TestDataHelpers._consentNo);
+
+            var manifest = _obsService.Manifest;
+            var obs = manifest.ResponseStore.First(x => x.QuestionId == currentQuestionId);
+            Assert.IsNotNull(obs);
+            Assert.AreEqual(TestDataHelpers._consentNo, obs.Obs.ValueCoded);
+
+            var states =
+                _clientStateRepository.GetByClientId(_encounterNew.ClientId, _encounterNew.Id, LiveState.HtsConsented)
+                    .ToList();
+
+            Assert.True(states.Count == 0);
+
         }
     }
 }

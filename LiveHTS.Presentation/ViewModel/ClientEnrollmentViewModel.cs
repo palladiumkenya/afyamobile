@@ -222,7 +222,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 var clientRegistrationDTO = new ClientRegistrationDTO(_settings);
-                var client = clientRegistrationDTO.Generate();
+                var client = clientRegistrationDTO.Generate(UserId);
 
                 if (null != IndexClientDTO)
                 {

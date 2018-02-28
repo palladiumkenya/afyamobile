@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
+using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Clients
 {
@@ -17,14 +19,16 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IPersonRepository _personRepository;
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IEncounterRepository _encounterRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
-        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository)
+        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IClientStateRepository clientStateRepository)
         {
             _clientRepository = clientRepository;
             _clientIdentifierRepository = clientIdentifierRepository;
             _personRepository = personRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
             _encounterRepository = encounterRepository;
+            _clientStateRepository = clientStateRepository;
         }
         public Client Load(Guid id)
         {
@@ -146,12 +150,17 @@ namespace LiveHTS.Core.Service.Clients
 
         public void UpdateRelationShips(string relationshipTypeId, Guid clientId, Guid otherClientId)
         {
+            
             var exisitngRelationship = _clientRelationshipRepository.Find(relationshipTypeId, clientId, otherClientId);
 
             if (null == exisitngRelationship)
             {
                 var newRelation = ClientRelationship.Create(relationshipTypeId, otherClientId, true, clientId,false);
                 _clientRelationshipRepository.Save(newRelation);
+                var state = RelationshipType.IsPartner(relationshipTypeId)
+                    ? LiveState.HtsPatlisted
+                    : LiveState.HtsFamlisted;
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId,state));
             }
 
             var exisitngRelationshipReverse = _clientRelationshipRepository.Find(relationshipTypeId, otherClientId, clientId);
@@ -160,6 +169,10 @@ namespace LiveHTS.Core.Service.Clients
                 //otherClientId  clientId
                 var newRelationReverse = ClientRelationship.Create(relationshipTypeId, clientId, true, otherClientId, true);
                 _clientRelationshipRepository.Save(newRelationReverse);
+                var state = RelationshipType.IsPartner(relationshipTypeId)
+                    ? LiveState.PartnerListed
+                    : LiveState.FamilyListed;
+                _clientStateRepository.SaveOrUpdate(new ClientState(otherClientId, state, clientId));
             }
         }
 
@@ -194,6 +207,12 @@ namespace LiveHTS.Core.Service.Clients
 
             //create Client
             _clientRepository.InsertOrUpdate(client);
+
+            if (isClient)
+            {
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsEnrolled));
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsFamAcceptedYes));
+            }
         }
 
         public void SaveOrUpdateContact(Client client)

@@ -208,7 +208,7 @@
           android:layout_width="0dp"
           android:layout_weight="1"
           android:layout_height="wrap_content"
-          local:MvxBind="ItemsSource SelfTestOptions; SelectedItem SelectedSelfTest" />
+          local:MvxBind="ItemsSource SelfTestOptions; SelectedItem SelectedSelfTest;Enabled EnableSelfTestOption" />
     </LinearLayout>
     <LinearLayout
       android:layout_width="match_parent"

@@ -22,6 +22,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string ErrorSummary { get; set; }
 
         Guid EncounterTypeId { get; set; }
+        IndexClientDTO IndexClient { get; set; }
         Client Client { get; set; }
         Encounter Encounter { get; set; }
         Guid EncounterId { get; set; }
@@ -37,6 +38,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<CategoryItem> HIVStatus { get; set; }
         CategoryItem SelectedHIVStatus { get; set; }
 
+        bool EnableEligibility { get; set; }
         //  Family member eligible for Testing(Y/N)
         List<CategoryItem> Eligibility { get; set; }
         CategoryItem SelectedEligibility { get; set; }

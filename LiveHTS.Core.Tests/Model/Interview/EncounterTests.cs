@@ -89,7 +89,7 @@ namespace LiveHTS.Core.Tests.Model.Interview
                 .With(x => x.QuestionId = question.Id)
                 .Build();
 
-            obs = Obs.Create(obs.QuestionId, obs.EncounterId, "Text", "");
+            obs = Obs.Create(obs.QuestionId, obs.EncounterId,_clientId, "Text", "");
             encounter.AddOrUpdate(obs,false);
 
             var newObs = encounter.Obses.FirstOrDefault(x => x.Id == obs.Id);
@@ -122,7 +122,7 @@ namespace LiveHTS.Core.Tests.Model.Interview
             var obs = encounter.Obses.Last();
             
 
-            var newObs = Obs.Create(obs.QuestionId, obs.EncounterId, "Single", null);
+            var newObs = Obs.Create(obs.QuestionId, obs.EncounterId,_clientId, "Single", null);
             newObs.Id = obs.Id;
             
 

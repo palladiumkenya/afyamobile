@@ -77,24 +77,24 @@ namespace LiveHTS.Presentation.DTO
             return clientRegistrationDTO;
         }
 
-        public Client Generate(Guid? practiceId = null)
+        public Client Generate(Guid userId,Guid? practiceId = null)
         {
             //Person
             var person = GeneratePerson();
 
             //Client
-            var client = GenerateClient(person,practiceId);
+            var client = GenerateClient(person,practiceId,userId);
 
             return client;
         }
-        private Client GenerateClient(Person person, Guid? practiceId)
+        private Client GenerateClient(Person person, Guid? practiceId, Guid userId)
         {
-            var client = GenerateClient(person.Id,practiceId);
+            var client = GenerateClient(person.Id,practiceId,userId);
             client.Person = person;
             return client;
         }
 
-        private Client GenerateClient(Guid personId,Guid? practiceId)
+        private Client GenerateClient(Guid personId,Guid? practiceId,Guid userId)
         {
             Guid clientPracticeId = practiceId.IsNullOrEmpty() ? ClientEnrollment.PracticeId : practiceId.Value;
             //ClientIdentifier 
@@ -102,7 +102,7 @@ namespace LiveHTS.Presentation.DTO
             //string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person
             
 
-            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop, ClientProfile.OtherKeyPop, clientPracticeId, personId);
+            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop, ClientProfile.OtherKeyPop, clientPracticeId, personId,userId);
 
             if (null!= ClientEnrollment && !string.IsNullOrWhiteSpace(ClientEnrollment.ClientId))
             {

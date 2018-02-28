@@ -199,7 +199,52 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounters;
         }
 
-     
+        public IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, Guid indexClientId, bool includeObs = false)
+        {
+            var encounters = GetAll(x => x.FormId == formId &&
+                                         x.ClientId == clientId&&
+                                         x.IndexClientId==indexClientId)
+                .ToList();
+
+            if (includeObs)
+            {
+                foreach (var e in encounters)
+                {
+                    if (null != e)
+                    {
+                        var obses = _db.Table<Obs>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.Obses = obses;
+
+                        var obsTestResults = _db.Table<ObsTestResult>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsTestResults = obsTestResults;
+
+                        var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsFinalTestResults = obsFinalTestResults;
+
+                        var obsTraceResults = _db.Table<ObsTraceResult>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsTraceResults = obsTraceResults;
+
+                        var obsLinkages = _db.Table<ObsLinkage>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsLinkages = obsLinkages;
+
+
+
+                    }
+                }
+            }
+            return encounters;
+        }
+
 
         public Encounter LoadTest(Guid id, bool includeObs = false)
         {
@@ -356,12 +401,25 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             _db.Execute("DELETE FROM Obs WHERE EncounterId=?", id.ToString());
         }
 
-     
         public void UpdateStatus(Guid id, bool completed)
         {
             var encounter = Get(id);
             if (null != encounter)
+            {
                 encounter.IsComplete = completed;
+            }
+
+            Update(encounter);
+        }
+
+        public void UpdateStatus(Guid id, Guid userId, bool completed)
+        {
+            var encounter = Get(id);
+            if (null != encounter)
+            {
+                encounter.UserId = userId;
+                encounter.IsComplete = completed;
+            }
 
             Update(encounter);
         }

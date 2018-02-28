@@ -16,13 +16,13 @@
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>E:\Workspace\palladium\hts\LiveHTS\Template\AfyaMobile.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>..\Template\AfyaMobile.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>c0nstella</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>afyamobile</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>c0nstella</AndroidSigningKeyPass>

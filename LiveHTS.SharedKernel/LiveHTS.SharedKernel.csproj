@@ -39,6 +39,7 @@
     <Compile Include="Model\Context.cs" />
     <Compile Include="Model\CustomItem.cs" />
     <Compile Include="Model\CustomLists.cs" />
+    <Compile Include="Model\LiveState.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

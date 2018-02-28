@@ -12,6 +12,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
         IEnumerable<Encounter> LoadAll(Guid clientId);
         IEnumerable<Encounter> LoadAllKey(Guid clientId);
         IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, bool includeObs = false);
+        IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, Guid indexClientId, bool includeObs = false);
         Encounter LoadTest(Guid id, bool includeObs = false);
         Encounter LoadTest(Guid encounterTypeId, Guid clientId, bool includeObs = false);
         List<Encounter> LoadTestAll(Guid encounterTypeId, Guid clientId, bool includeObs = false);
@@ -19,7 +20,8 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
         bool GetIndividual(Guid clientId);
 
         void ClearObs(Guid id);
-        void UpdateStatus(Guid id,bool completed);
+        void UpdateStatus(Guid id, bool completed);
+        void UpdateStatus(Guid id,Guid userId,bool completed);
         void UpdateEncounterDate(Guid id,DateTime encounterDate);
         void Upload(Encounter encounter);
 

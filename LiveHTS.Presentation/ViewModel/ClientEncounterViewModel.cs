@@ -287,7 +287,7 @@ namespace LiveHTS.Presentation.ViewModel
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "new");
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId);
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null);
             }
             else
             {
@@ -438,7 +438,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             try
             {
-                _obsService.ValidateResponse(Encounter.Id, questionTemplate.Id, questionTemplate.GetResponse());
+                _obsService.ValidateResponse(Encounter.Id, Encounter.ClientId,questionTemplate.Id, questionTemplate.GetResponse());
                 validate = true;
                 questionTemplate.ErrorSummary = string.Empty;
             }
@@ -476,9 +476,9 @@ namespace LiveHTS.Presentation.ViewModel
                 // create Response
 
                 var question = Manifest.GetQuestion(questionTemplate.Id);
-                var liveResponse = new Response(Encounter.Id);
+                var liveResponse = new Response(Encounter.Id,Encounter.ClientId);
                 liveResponse.SetQuestion(question);
-                liveResponse.SetObs(Encounter.Id, questionTemplate.Id, question.Concept.ConceptTypeId,
+                liveResponse.SetObs(Encounter.Id,Encounter.ClientId, questionTemplate.Id, question.Concept.ConceptTypeId,
                     questionTemplate.GetResponse());
 
                 //update encounter with Response
@@ -807,10 +807,10 @@ namespace LiveHTS.Presentation.ViewModel
 
             foreach (var q in allowedQuestions)
             {
-                _obsService.SaveResponse(Encounter.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
+                _obsService.SaveResponse(Encounter.Id,ClientDTO.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
                 //Manifest = _obsService.Manifest;
             }
-            _obsService.MarkEncounterCompleted(Encounter.Id,true);
+            _obsService.MarkEncounterCompleted(Encounter.Id,UserId,true);
             _obsService.UpdateEncounterDate(Encounter.Id, BirthDate);
             Manifest = _obsService.Manifest;
             Manifest.Encounter.EncounterDate = BirthDate;

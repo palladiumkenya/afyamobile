@@ -25,11 +25,7 @@ namespace LiveHTS.Core.Model.Interview
         public Guid Eligibility { get; set; }
         public DateTime BookingDate { get; set; }
         public string Remarks { get; set; }
-   
-    
-
-     
-
+        public Guid IndexClientId { get; set; }
         public Guid EncounterId { get; set; }
 
         public ObsPartnerScreening()
@@ -40,7 +36,7 @@ namespace LiveHTS.Core.Model.Interview
         public ObsPartnerScreening(DateTime screeningDate, Guid ipvScreening, Guid physicalAssult, Guid threatened,
             Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate, string remarks,
             Guid? pnsAccepted, Guid? iPVOutcome, string occupation, Guid? pNSRealtionship, Guid? livingWithClient, Guid? pNSApproach,
-            Guid encounterId)
+            Guid encounterId, Guid indexClientId)
         {
             ScreeningDate = screeningDate;
 
@@ -62,17 +58,18 @@ namespace LiveHTS.Core.Model.Interview
             BookingDate = bookingDate;
             Remarks = remarks;
             EncounterId = encounterId;
+            IndexClientId = indexClientId;
         }
 
         public ObsPartnerScreening(Guid id, DateTime screeningDate, Guid ipvScreening, Guid physicalAssult,
             Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate,
             string remarks,
             Guid? pnsAccepted, Guid? iPVOutcome, string occupation, Guid? pNSRealtionship, Guid? livingWithClient, Guid? pNSApproach,
-            Guid encounterId)
+            Guid encounterId, Guid indexClientId)
             : this(screeningDate, ipvScreening, physicalAssult, threatened, sexuallyUncomfortable, hivStatus,
                 eligibility, bookingDate, remarks,
                 pnsAccepted,iPVOutcome,occupation,pNSRealtionship,livingWithClient,pNSApproach,
-                encounterId)
+                encounterId,indexClientId)
         {
             Id = id;
         }
@@ -81,12 +78,12 @@ namespace LiveHTS.Core.Model.Interview
             Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility, DateTime bookingDate,
             string remarks,
             Guid? pnsAccepted, Guid? iPVOutcome, string occupation, Guid? pNSRealtionship, Guid? livingWithClient, Guid? pNSApproach,
-            Guid encounterId)
+            Guid encounterId, Guid indexClientId)
         {
             var obs = new ObsPartnerScreening(LiveGuid.NewGuid(), screeningDate, ipvScreening, physicalAssult,
                 threatened, sexuallyUncomfortable, hivStatus, eligibility, bookingDate, remarks,
                 pnsAccepted, iPVOutcome, occupation, pNSRealtionship, livingWithClient, pNSApproach,
-                encounterId);
+                encounterId,indexClientId);
             return obs;
         }
 
@@ -94,12 +91,12 @@ namespace LiveHTS.Core.Model.Interview
             Guid physicalAssult, Guid threatened, Guid sexuallyUncomfortable, Guid hivStatus, Guid eligibility,
             DateTime bookingDate, string remarks,
             Guid? pnsAccepted, Guid? iPVOutcome, string occupation, Guid? pNSRealtionship, Guid? livingWithClient, Guid? pNSApproach,
-            Guid encounterId)
+            Guid encounterId, Guid indexClientId)
         {
             var obs = new ObsPartnerScreening(id, screeningDate, ipvScreening, physicalAssult, threatened,
                 sexuallyUncomfortable, hivStatus, eligibility, bookingDate, remarks,
                 pnsAccepted, iPVOutcome, occupation, pNSRealtionship, livingWithClient, pNSApproach,
-                encounterId);
+                encounterId,indexClientId);
             return obs;
         }
     }

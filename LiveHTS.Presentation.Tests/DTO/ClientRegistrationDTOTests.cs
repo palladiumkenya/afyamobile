@@ -53,7 +53,7 @@ namespace LiveHTS.Presentation.Tests.DTO
         [Test]
         public void should_Generate_Client_From_DTO()
         {
-            var client = _clientRegistrationDTO.Generate();
+            var client = _clientRegistrationDTO.Generate(Guid.Empty);
             Assert.IsNotNull(client);
             Assert.IsNotNull(client.Person);
             Assert.IsNotNull(client.Person.Addresses.FirstOrDefault());

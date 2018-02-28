@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
@@ -9,6 +10,7 @@ using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
+using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
 {
@@ -26,7 +28,7 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _clearSearchCommand;
         private IEnumerable<RelationshipType> _relationshipTypes;
         private RelationshipType _selectedRelationshipType;
-        private string _clientId;
+        private string _indexClientId;
         private bool _showId;
         private string _partnerName;
         private IMvxCommand _addPersonCommand;
@@ -41,9 +43,7 @@ namespace LiveHTS.Presentation.ViewModel
             _dialogService = dialogService;
             _lookupService = lookupService;
 
-            RelationshipTypes = _lookupService.GetRelationshipTypes().ToList();
-            if (RelationshipTypes.ToList().Count > 0)
-                SelectedRelationshipType = RelationshipTypes.FirstOrDefault();
+            
             //TODO: Remove ShowId
             ShowId = true;
         }
@@ -70,13 +70,13 @@ namespace LiveHTS.Presentation.ViewModel
 
         public string RelType { get; private set; }
 
-        public string ClientId
+        public string IndexClientId
         {
-            get { return _clientId; }
+            get { return _indexClientId; }
             set
             {
-                _clientId = value;
-                RaisePropertyChanged(() => ClientId);
+                _indexClientId = value;
+                RaisePropertyChanged(() => IndexClientId);
                 AddRelationshipCommand.RaiseCanExecuteChanged();
             }
         }
@@ -206,14 +206,51 @@ namespace LiveHTS.Presentation.ViewModel
         public void Init(string id, string reltype)
         {
             RelType = reltype;
-            ClientId = id;
+            IndexClientId = id;
             AddPersonLabel = $"Register New {RelType}";
+            RelationshipTypes = _lookupService.GetRelationshipTypes().ToList().Where(x => x.Description.ToLower() == RelType.ToLower()).ToList(); 
+
+            if (!string.IsNullOrEmpty(RelType))
+            {
+                _settings.AddOrUpdateValue("RelType", RelType);
+            }
+            if (!string.IsNullOrEmpty(RelType))
+            {
+                _settings.AddOrUpdateValue("rIndexClientId", IndexClientId);
+            }
+            if (!string.IsNullOrEmpty(RelType))
+            {
+                _settings.AddOrUpdateValue("AddPersonLabel", AddPersonLabel);
+            }
+            if (RelationshipTypes.ToList().Count>0)
+            {
+                _settings.AddOrUpdateValue("RelationshipTypes", JsonConvert.SerializeObject(RelationshipTypes.ToList()));
+            }
         }
 
         public override void ViewAppeared()
         {
-            RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == RelType.ToLower()).ToList();
-            AddPersonLabel = $"Register New {RelType}";
+            var relType = _settings.GetValue("RelType", "");
+            var indexClientId = _settings.GetValue("rIndexClientId", "");
+            var addPersonLabel = _settings.GetValue("AddPersonLabel", "");
+            var relationshipTypesJson = _settings.GetValue("RelationshipTypes", "");
+
+            if (!string.IsNullOrEmpty(RelType)&& !string.IsNullOrEmpty(relType))
+            {
+                RelType = relType;
+            }
+            if (!string.IsNullOrEmpty(IndexClientId) && !string.IsNullOrEmpty(indexClientId))
+            {
+                IndexClientId = indexClientId;
+            }
+            if (!string.IsNullOrEmpty(AddPersonLabel) && !string.IsNullOrEmpty(addPersonLabel))
+            {
+                AddPersonLabel = addPersonLabel;
+            }
+            if (!RelationshipTypes.Any()&& !string.IsNullOrEmpty(relationshipTypesJson))
+            {
+                RelationshipTypes = JsonConvert.DeserializeObject<List<RelationshipType>>(relationshipTypesJson);
+            }
         }
 
         private bool CanSearch()
@@ -239,21 +276,20 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void AddRelationship()
         {
-            _registryService.UpdateRelationShips(SelectedRelationshipType.Id, new Guid(ClientId), SelectedClient.Id);
-            Close(this);
-            ShowViewModel<DashboardViewModel>(new {id = ClientId});
-
+            _registryService.UpdateRelationShips(SelectedRelationshipType.Id, new Guid(IndexClientId), SelectedClient.Id);
+            //Close(this);
+            ShowViewModel<DashboardViewModel>(new {id = IndexClientId });
         }
 
         private bool CanAddRelationship()
         {
-            return null != SelectedClient && !string.IsNullOrEmpty(ClientId);
+            return null != SelectedClient && !string.IsNullOrEmpty(IndexClientId);
         }
 
         private void AddPerson()
         {
             ClearCache(_settings);
-            ShowViewModel<ClientRegistrationViewModel>(new {reltype = RelType, indexId = ClientId});
+            ShowViewModel<ClientRegistrationViewModel>(new {reltype = RelType, indexId = IndexClientId});
         }
 
         private bool CanAddPerson()
