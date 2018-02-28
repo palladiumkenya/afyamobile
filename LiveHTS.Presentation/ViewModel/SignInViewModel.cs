@@ -97,7 +97,7 @@ namespace LiveHTS.Presentation.ViewModel
             _deviceSetupService = deviceSetupService;
             IsBusy = false;
             //TODO : Disable auto sign in
-            AutoSignIn = true;
+            AutoSignIn = false;
             if (AutoSignIn)
             {
                 Username = "admin";
