@@ -64,8 +64,7 @@ namespace LiveHTS.Presentation.ViewModel
                 EncounterViewModel.IndexClient =IndexClient;
             }
         }
-
-
+        
         public IMvxCommand ManageRegistrationCommand
         {
             get
@@ -237,7 +236,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
-            //Reload
+            //  Reload
+
             var clientJson = _settings.GetValue("client", "");
             var modulesJson = _settings.GetValue("modules", "");
             var indexJson = _settings.GetValue("myIndexId", "");
@@ -253,14 +253,15 @@ namespace LiveHTS.Presentation.ViewModel
                     _settings.AddOrUpdateValue("client.dto", clientDtoJson);
                 }
             }
+
             if (null == Modules)
             {
-
                 if (!string.IsNullOrWhiteSpace(modulesJson))
                 {
                     Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
                 }
             }
+
             if (null != Client)
             {
                 PartnerViewModel.Client = EncounterViewModel.Client = Client;
@@ -283,14 +284,12 @@ namespace LiveHTS.Presentation.ViewModel
                 ShowViewModel<DashboardViewModel>(new {id = IndexClient.Id});
                 return;
             }
-
-
+            
             var profile = _settings.GetValue("livehts.username", "");
             if (!string.IsNullOrWhiteSpace(profile))
             {
                 ShowViewModel<AppDashboardViewModel>(new { username = profile });
             }
-          
         }
     }
 }

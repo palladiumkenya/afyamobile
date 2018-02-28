@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -30,6 +31,9 @@ namespace LiveHTS.Core.Model.Survey
         [Ignore]
         public List<Encounter> KeyClientEncounters { get; set; } = new List<Encounter>();
 
+        [Ignore] public List<ClientState> ClientStates { get; set; } = new List<ClientState>();
+        [Ignore] public Guid? IndexClientId { get; set; }
+
         [Ignore]
         public bool ConsentRequired
         {
@@ -39,7 +43,7 @@ namespace LiveHTS.Core.Model.Survey
         [Ignore]
         public bool HasConsent
         {
-            get {return  CheckConsent(); }
+            get {return CheckClientState(); }
         }
         [Ignore]
         public bool Block { get; set; }
@@ -150,6 +154,36 @@ B25EC112-852F-11E7-BB31-BE2E46B06B38	Partner Tracing	Partner Tracing	B260C688-85
             return false;
         }
 
+        private bool CheckClientState()
+        {
+
+            //HIV Test Form 
+            if (Id == new Guid("b25ec568-852f-11e7-bb31-be2e44b06b34"))
+            {
+               return ClientState.IsInState(ClientStates, LiveState.HtsConsented);
+            }
+
+            //HTS Linkage Form 
+            if (Id == new Guid("b25ec112-852f-11e7-bb31-be2e44b06b34"))
+            {
+                return ClientState.IsInAnyState(ClientStates, LiveState.HtsTestedPos,LiveState.HtsTestedInc);
+            }
+
+            //Member Tracing
+            if (Id == new Guid("b25ec112-852f-11e7-bb31-be2e45b06b36") && 
+                null != IndexClientId &&!IndexClientId.Value.IsNullOrEmpty())
+            {
+                return ClientState.IsInState(ClientStates,IndexClientId.Value, LiveState.FamilyEligibileYes);
+            }
+
+            //Partner Tracing
+            if (Id == new Guid("b25ec112-852f-11e7-bb31-be2e46b06b38") &&
+            null != IndexClientId && !IndexClientId.Value.IsNullOrEmpty())
+            {
+                return ClientState.IsInState(ClientStates, IndexClientId.Value,LiveState.PartnerEligibileYes);
+            }
+            return false;
+        }
         public Form()
         {
             Id = LiveGuid.NewGuid();

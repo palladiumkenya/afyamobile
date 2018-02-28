@@ -100,6 +100,17 @@ namespace LiveHTS.Core.Model.Subject
             return false;
         }
 
+        public bool IsInAnyState(params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any() && states.Length > 0)
+            {
+                var found = ClientStates.Where(x => states.Contains(x.Status)).ToList();
+                return found.Count > 0;
+            }
+
+            return false;
+        }
+
         public bool IsInState(Guid indexId, params LiveState[] states)
         {
             if (null != ClientStates && ClientStates.Any(x => null != x.IndexClientId && x.IndexClientId == indexId) &&
@@ -107,6 +118,17 @@ namespace LiveHTS.Core.Model.Subject
             {
                 var found = ClientStates.Where(x => states.Contains(x.Status) && x.IndexClientId == indexId).ToList();
                 return found.Count == states.Length;
+            }
+
+            return false;
+        }
+        public bool IsInAnyState(Guid indexId, params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any(x => null != x.IndexClientId && x.IndexClientId == indexId) &&
+                states.Length > 0)
+            {
+                var found = ClientStates.Where(x => states.Contains(x.Status) && x.IndexClientId == indexId).ToList();
+                return found.Count > 0;
             }
 
             return false;

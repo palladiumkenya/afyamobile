@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -85,6 +87,50 @@ namespace LiveHTS.Core.Model.Subject
             }
 
             return LiveState.Unkown;
+        }
+
+        public static bool IsInState(List<ClientState> clientStates, params LiveState[] states)
+        {
+            if (null != clientStates && clientStates.Any() && states.Length > 0)
+            {
+                var found = clientStates.Where(x => states.Contains(x.Status)).ToList();
+                return found.Count == states.Length;
+            }
+            return false;
+        }
+
+        public static bool IsInState(List<ClientState> clientStates, Guid indexId, params LiveState[] states)
+        {
+            if (null != clientStates && clientStates.Any(x => null != x.IndexClientId && x.IndexClientId == indexId) &&
+                states.Length > 0)
+            {
+                var found = clientStates.Where(x => states.Contains(x.Status) && x.IndexClientId == indexId).ToList();
+                return found.Count == states.Length;
+            }
+
+            return false;
+        }
+
+        public static bool IsInAnyState(List<ClientState> clientStates, params LiveState[] states)
+        {
+            if (null != clientStates && clientStates.Any() && states.Length > 0)
+            {
+                var found = clientStates.Where(x => states.Contains(x.Status)).ToList();
+                return found.Count > 0;
+            }
+            return false;
+        }
+
+        public static bool IsInAnyState(List<ClientState> clientStates, Guid indexId, params LiveState[] states)
+        {
+            if (null != clientStates && clientStates.Any(x => null != x.IndexClientId && x.IndexClientId == indexId) &&
+                states.Length > 0)
+            {
+                var found = clientStates.Where(x => states.Contains(x.Status) && x.IndexClientId == indexId).ToList();
+                return found.Count > 0;
+            }
+
+            return false;
         }
         public override string ToString()
         {
