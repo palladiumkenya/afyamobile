@@ -215,6 +215,15 @@ namespace LiveHTS.Core.Service.Clients
             }
         }
 
+        public void SaveDownloaded(Client client)
+        {
+            //create Person
+            _personRepository.InsertOrUpdate(client.Person);
+
+            //create Client
+            _clientRepository.SaveDownloaded(client);
+        }
+
         public void SaveOrUpdateContact(Client client)
         {
             throw new NotImplementedException();

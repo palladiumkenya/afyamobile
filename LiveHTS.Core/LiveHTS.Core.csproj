@@ -68,6 +68,8 @@
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientStateRepository.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IUserSummaryRepository.cs" />
+    <Compile Include="Interfaces\Repository\Subject\IClientSummaryRepository.cs" />
     <Compile Include="Interfaces\Services\Clients\IClientReaderService.cs" />
     <Compile Include="Interfaces\Services\Clients\ICohortClientsService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRemoteSearchService.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Interfaces\Services\Interview\IPartnerTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberScreeningService.cs" />
+    <Compile Include="Interfaces\Services\Sync\IUserSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IEmrService.cs" />
     <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\ICohortSyncService.cs" />
@@ -131,6 +134,8 @@
     <Compile Include="Model\Config\Cohort.cs" />
     <Compile Include="Model\RemoteClientDTO.cs" />
     <Compile Include="Model\Subject\ClientState.cs" />
+    <Compile Include="Model\Subject\ClientSummary.cs" />
+    <Compile Include="Model\Subject\UserSummary.cs" />
     <Compile Include="Model\Survey\Program.cs" />
     <Compile Include="Model\SyncClientEncounterDTO.cs" />
     <Compile Include="Model\SyncClientDTO.cs" />
@@ -215,6 +220,7 @@
     <Compile Include="Service\Interview\HIVTestingService.cs" />
     <Compile Include="Service\Interview\InterviewService.cs" />
     <Compile Include="Service\Interview\MemberScreeningService.cs" />
+    <Compile Include="Service\Sync\UserSyncService.cs" />
     <Compile Include="Service\Sync\EmrService.cs" />
     <Compile Include="Service\Sync\ActivationService.cs" />
     <Compile Include="Service\Sync\ClientSyncService.cs" />

@@ -27,7 +27,7 @@ namespace LiveHTS.Core.Tests.Service.Access
             _liveSetting = new LiveSetting(_database.DatabasePath);
             _userRepository = new UserRepository(_liveSetting);
             _providerRepository=new ProviderRepository(_liveSetting);
-            _authService=new AuthService(_userRepository,_providerRepository,new PracticeRepository(_liveSetting),new DeviceRepository(_liveSetting) );
+            _authService=new AuthService(_userRepository,_providerRepository,new PracticeRepository(_liveSetting),new DeviceRepository(_liveSetting),new UserSummaryRepository(_liveSetting) );
         }
 
         [Test]
