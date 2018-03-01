@@ -21,6 +21,7 @@ namespace LiveHTS.Core.Model
         public bool? AlreadyTestedPos { get; set; }
         public List<ClientIdentifier> Identifiers { get; set; } = new List<ClientIdentifier>();
         public List<ClientRelationship> Relationships { get; set; } = new List<ClientRelationship>();
+        public List<ClientState> ClientStates { get; set; }=new List<ClientState>();
 
         public SyncClientDTO(Client client)
         {
@@ -32,6 +33,7 @@ namespace LiveHTS.Core.Model
             Person = client.Person;
             Identifiers = client.Identifiers.ToList();
             Relationships = client.Relationships.ToList();
+            ClientStates = client.ClientStates.ToList();
             IsFamilyMember = client.IsFamilyMember;
             IsPartner = client.IsPartner;
             PreventEnroll = client.PreventEnroll;

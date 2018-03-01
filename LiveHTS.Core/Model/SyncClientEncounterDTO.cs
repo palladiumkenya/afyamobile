@@ -11,6 +11,7 @@ namespace LiveHTS.Core.Model
         public Guid Id { get; set; }
         public Guid ClientId { get; set; }
         public Guid FormId { get; set; }
+        public Guid? IndexClientId { get; set; }
         public Guid EncounterTypeId { get; set; }
         public DateTime EncounterDate { get; set; }
         public Guid ProviderId { get; set; }
@@ -39,6 +40,7 @@ namespace LiveHTS.Core.Model
         {
             Id = encounter.Id;
             ClientId = encounter.ClientId;
+            IndexClientId = encounter.IndexClientId;
             FormId = encounter.FormId;
             EncounterTypeId = encounter.EncounterTypeId;
             EncounterDate = encounter.EncounterDate;

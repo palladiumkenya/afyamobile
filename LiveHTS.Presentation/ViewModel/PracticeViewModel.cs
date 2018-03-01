@@ -1,4 +1,5 @@
-﻿using Cheesebaron.MvxPlugins.Settings.Interfaces;
+﻿using System;
+using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Interfaces.Services.Sync;
 using LiveHTS.Core.Model.Config;
@@ -23,6 +24,7 @@ namespace LiveHTS.Presentation.ViewModel
         private int? _countyId;
         private IMvxCommand _searchPracticeCommand;
         private IMvxCommand _savePracticeCommand;
+        private Guid _practiceId;
 
         public Practice Practice { get; set; }
         public ServerConfig Central { get; set; }
@@ -38,6 +40,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _name; }
             set { _name = value; RaisePropertyChanged(() => Name); SavePracticeCommand.RaiseCanExecuteChanged(); SearchPracticeCommand.RaiseCanExecuteChanged(); }
+        }
+
+        public Guid PracticeId
+        {
+            get {return _practiceId; }
+            set { _practiceId = value;RaisePropertyChanged(() => PracticeId); }
         }
 
         public string PracticeTypeId
@@ -114,6 +122,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             Code = Practice.Code;
             Name = Practice.Name;
+            PracticeId = Practice.Id;
 
             if (null == Central && !string.IsNullOrWhiteSpace(hapiCentral))
             {

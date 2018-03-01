@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -18,6 +19,8 @@ namespace LiveHTS.Core.Model.Subject
         public Person Person { get; set; }
         [Ignore]
         public Provider Provider { get; set; }
+        [Ignore]
+        public ICollection<UserSummary> UserSummaries { get; set; }=new List<UserSummary>();
         public User()
         {
             Id = LiveGuid.NewGuid();

@@ -165,6 +165,27 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
         }
 
+        public void SaveDownloaded(Client client)
+        {
+            InsertOrUpdate(client);
+            foreach (var clientState in client.ClientStates)
+            {
+                var rowsAffected = _db.Update(clientState);
+                if (rowsAffected == 0)
+                {
+                    _db.Insert(clientState);
+                }
+            }
+            foreach (var clientSummary in client.ClientSummaries)
+            {
+                var rowsAffected = _db.Update(clientSummary);
+                if (rowsAffected == 0)
+                {
+                    _db.Insert(clientSummary);
+                }
+            }
+        }
+
         public IEnumerable<Client> QuickSearch(string search)
         {
             var cIds = _db.Table<ClientIdentifier>().Where(x => x.Identifier.ToLower().Contains(search.ToLower()))

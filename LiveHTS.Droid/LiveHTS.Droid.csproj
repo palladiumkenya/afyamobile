@@ -228,6 +228,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\UserSummaryActivity.cs" />
     <Compile Include="Activities\DeviceSetupActivity.cs" />
     <Compile Include="Activities\SetupWizardActivity.cs" />
     <Compile Include="Activities\FacilitySetupActivity.cs" />
@@ -510,6 +511,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\StandByView.axml" />
+    <AndroidResource Include="Resources\layout\UserSummaryView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Summary.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

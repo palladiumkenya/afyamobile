@@ -42,6 +42,9 @@ namespace LiveHTS.Core.Model.Subject
         public IEnumerable<ClientRelationship> RelatedToMe { get; set; } = new List<ClientRelationship>();
         [Ignore]
         public ICollection<ClientState> ClientStates { get; set; } = new List<ClientState>();
+        [Ignore]
+        public ICollection<ClientSummary> ClientSummaries { get; set; } = new List<ClientSummary>();
+
 
         public Client()
         {
