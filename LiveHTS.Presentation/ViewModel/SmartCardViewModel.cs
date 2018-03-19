@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.SmartCard;
+using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
 
@@ -14,11 +19,13 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private readonly IDialogService _dialogService;
         private readonly ISettings _settings;
+        private readonly IRegistryService _registryService;
+
         private IMvxCommand _readCardCommand;
         private IMvxCommand _writeCardCommand;
         private IMvxCommand _testingCommand;
         private SmartClientDTO _smartClient;
-        private List<HIVTestHistoryDTO> _hivTestHistories;
+        private List<HIVTestHistoryDTO> _hivTestHistories=new List<HIVTestHistoryDTO>();
         private List<string> _shrErrors;
         private Exception _shrException;
         private string _shrMessage;
@@ -108,10 +115,11 @@ namespace LiveHTS.Presentation.ViewModel
 
         
 
-        public SmartCardViewModel(IDialogService dialogService, ISettings settings)
+        public SmartCardViewModel(IDialogService dialogService, ISettings settings, IRegistryService registryService)
         {
             _dialogService = dialogService;
             _settings = settings;
+            _registryService = registryService;
         }
 
         private bool CanReadCard()
@@ -125,6 +133,12 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private bool CanTesting()
         {
+            if (HivTestHistories.Count == 0)
+                return true;
+
+            if (HivTestHistories.Count > 0)
+                return !HivTestHistories.Any(x => x.Result.IsSameAs("POSITIVE"));
+
             return false;
         }
 
@@ -132,22 +146,35 @@ namespace LiveHTS.Presentation.ViewModel
         private void ReadCard()
         {
             ReadCardAction?.Invoke();
-           
-
-
-
         }
         private void WriteCard()
         {
             throw new System.NotImplementedException();
         }
-        private void Testing()
+
+        private async void Testing()
         {
-            throw new System.NotImplementedException();
+            if (null == Shr)
+            {
+                var shrJson = _settings.GetValue("shr", "");
+
+                if (!string.IsNullOrWhiteSpace(shrJson))
+                {
+                    var shr = JsonConvert.DeserializeObject<SHR>(shrJson);
+                    if (null != shr)
+                    {
+                        var id = await _registryService.SaveShr(shr);
+                        if (!id.IsNullOrEmpty())
+                            ShowViewModel<DashboardViewModel>(new {id = id.ToString()});
+                    }
+                }
+            }
         }
 
         public void ReadCardDone()
         {
+            _settings.AddOrUpdateValue("shr", "");
+
             if (!string.IsNullOrWhiteSpace(ShrMessage))
             {
                 try
@@ -157,6 +184,9 @@ namespace LiveHTS.Presentation.ViewModel
                         throw new Exception("invalid SHR");
 
                     SmartClient=SmartClientDTO.Create(Shr);
+                    HivTestHistories = HIVTestHistoryDTO.Create(Shr);
+
+                    _settings.AddOrUpdateValue("shr", JsonConvert.SerializeObject(Shr));
 
                     _dialogService.ShowToast("Read successfully");
                 }

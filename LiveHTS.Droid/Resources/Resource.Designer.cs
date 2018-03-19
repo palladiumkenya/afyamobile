@@ -7020,16 +7020,19 @@ namespace LiveHTS.Droid
 			public const int support_simple_spinner_dropdown_item = 2130968707;
 			
 			// aapt resource value: 0x7f040084
-			public const int TestingView = 2130968708;
+			public const int Test_History = 2130968708;
 			
 			// aapt resource value: 0x7f040085
-			public const int TestView = 2130968709;
+			public const int TestingView = 2130968709;
 			
 			// aapt resource value: 0x7f040086
-			public const int TraceView = 2130968710;
+			public const int TestView = 2130968710;
 			
 			// aapt resource value: 0x7f040087
-			public const int UserSummaryView = 2130968711;
+			public const int TraceView = 2130968711;
+			
+			// aapt resource value: 0x7f040088
+			public const int UserSummaryView = 2130968712;
 			
 			static Layout()
 			{

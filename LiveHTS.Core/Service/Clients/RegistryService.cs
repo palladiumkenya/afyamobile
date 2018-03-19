@@ -7,6 +7,7 @@ using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Model;
 
@@ -241,6 +242,11 @@ namespace LiveHTS.Core.Service.Clients
                     _encounterRepository.Upload(encounter);
                 }
             });
+        }
+
+        public Task<Guid> SaveShr(SHR shr)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(Guid clientId)

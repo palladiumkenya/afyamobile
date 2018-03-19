@@ -7,118 +7,139 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/relativeLayout1">
-                <Button
-                    android:id="@+id/buttonread"
-                    android:layout_width="wrap_content"
-                    android:background="@color/accent2"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_file_download"
-                    android:layout_alignParentLeft="true"
-                    local:MvxBind="Click ReadCardCommand"
-                    android:text="Read Card" />
-                <Button
-                    android:id="@+id/buttowrite"
-                    android:layout_width="wrap_content"
-                    android:background="@color/accent2"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_file_upload"
-                    local:MvxBind="Click WriteCardCommand"
-                    android:text="Write Card"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/holo_orange_light"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight=".8"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        local:MvxBind="Text SmartClient.FullName" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="5dp"
-                            android:textSize="10dp"
-                            local:MvxBind="Text SmartClient.Sex" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="5dp"
-                            android:textSize="10dp"
-                            local:MvxBind="Text SmartClient.BirthDate, Converter=Dmy" />
-                    </LinearLayout>
-                  <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/holo_orange_light"
-                    android:orientation="horizontal">
-                    <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:Text="HTS Number:" />
-                    <TextView
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      local:MvxBind="Text SmartClient.Facility" />
-                  </LinearLayout>
-                  <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/holo_orange_light"
-                    android:orientation="horizontal">
-                    <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:Text="Facility:" />
-                    <TextView
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      local:MvxBind="Text SmartClient.Facility" />
-                  </LinearLayout>
-                    
-                  
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Mvx.MvxListView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                local:MvxBind="ItemsSource Summaries;"
-                local:MvxItemTemplate="@layout/item_summary" />
-        </FrameLayout>
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/relativeLayout1">
         <Button
-            android:id="@+id/buttontest"
+            android:id="@+id/buttonread"
             android:layout_width="wrap_content"
             android:background="@color/accent2"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_add"
-            local:MvxBind="Click TestingCommand"
-            android:text="Testing" />
+            android:drawableRight="@drawable/ic_file_download"
+            android:layout_alignParentLeft="true"
+            local:MvxBind="Click ReadCardCommand"
+            android:text="Read Card" />
+        <Button
+            android:id="@+id/buttowrite"
+            android:layout_width="wrap_content"
+            android:background="@color/accent2"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_file_upload"
+            local:MvxBind="Click WriteCardCommand"
+            android:text="Write Card"
+            android:layout_alignParentRight="true" />
+      </RelativeLayout>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Client"
+          android:textColor="@android:color/holo_blue_dark" />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/holo_orange_light"
+          android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".8"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              local:MvxBind="Text SmartClient.FullName" />
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:text="Sex:" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:paddingRight="5dp"
+                android:textSize="12dp"
+                local:MvxBind="Text SmartClient.Sex" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:text="DOB:" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:paddingRight="5dp"
+                android:textSize="12dp"
+                local:MvxBind="Text SmartClient.BirthDate, Converter=Dmy" />
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HTS Number:" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                local:MvxBind="Text SmartClient.HtsNumber" />
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Facility:" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                local:MvxBind="Text SmartClient.Facility" />
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HIV Testing"
+        android:textColor="@android:color/holo_blue_dark" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <Mvx.MvxListView
+          android:id="@+id/list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          local:MvxBind="ItemsSource HivTestHistories;"
+          local:MvxItemTemplate="@layout/test_history" />
+    </FrameLayout>
+    <Button
+        android:id="@+id/buttontest"
+        android:layout_width="wrap_content"
+        android:background="@color/accent2"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:drawableRight="@drawable/ic_add"
+        local:MvxBind="Click TestingCommand"
+        android:text="Testing" />
+  </LinearLayout>
 </LinearLayout>

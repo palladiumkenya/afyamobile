@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Model;
+using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -83,6 +84,8 @@ namespace LiveHTS.Core.Model.Subject
         {
             return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId);
         }
+
+       
 
         public bool IsHtstEnrolled()
         {
