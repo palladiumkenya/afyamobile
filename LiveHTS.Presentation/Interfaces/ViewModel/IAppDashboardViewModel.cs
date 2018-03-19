@@ -13,7 +13,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand PullDataCommand { get; }
         IMvxCommand PushDataCommand { get; }
         IMvxCommand SummaryCommand { get; }
-
+        IMvxCommand SmartCardCommand { get; }
         string Profile { get; set; }
         string PracticeName { get; set; }
         bool IsBusy { get; set; }
