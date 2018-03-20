@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
+using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Interfaces.Services.SmartCard;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Interview;
@@ -26,6 +27,7 @@ namespace LiveHTS.Presentation.ViewModel
         private readonly IRegistryService _registryService;
         private readonly IEncounterService _encounterService;
         private readonly IDashboardService _dashboardService;
+        private readonly IHIVTestingService _testingService;
 
         private IMvxCommand _readCardCommand;
         private IMvxCommand _writeCardCommand;
@@ -176,7 +178,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public SmartCardViewModel(IDialogService dialogService, ISettings settings, IRegistryService registryService, IEncounterService encounterService, IDashboardService dashboardService, IClientShrRecordService clientShrRecordService)
+        public SmartCardViewModel(IDialogService dialogService, ISettings settings, IRegistryService registryService, IEncounterService encounterService, IDashboardService dashboardService, IClientShrRecordService clientShrRecordService, IHIVTestingService testingService)
         {
             _dialogService = dialogService;
             _settings = settings;
@@ -184,6 +186,7 @@ namespace LiveHTS.Presentation.ViewModel
             _encounterService = encounterService;
             _dashboardService = dashboardService;
             _clientShrRecordService = clientShrRecordService;
+            _testingService = testingService;
         }
 
         public void Init(string id)
@@ -205,6 +208,15 @@ namespace LiveHTS.Presentation.ViewModel
                     if (null != cstate&&cstate.EncounterId.HasValue)
                     {
                         EncounterShr = _encounterService.LoadTesting(cstate.EncounterId.Value);
+                        var result = _testingService.GetFinalTest(new Guid(id));
+                        if (null != result)
+                        {
+                            var list = new List<ObsFinalTestResult>();
+                            list.Add(result);
+                            EncounterShr.ObsFinalTestResults = list;
+                        }
+
+                        
                     }
 
                     if(null!=EncounterShr)
