@@ -16,5 +16,10 @@ namespace LiveHTS.Core.Model.SmartCard
         public string PHONE_NUMBER { get; set; }
         public string MARITAL_STATUS { get; set; }
         public MOTHERDETAILS MOTHER_DETAILS { get; set; }
+
+//        public static PATIENTIDENTIFICATION Create()
+//        {
+//
+//        }
     }
 }
