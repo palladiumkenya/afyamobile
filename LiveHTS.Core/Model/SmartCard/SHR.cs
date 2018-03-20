@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Model.SmartCard
 {
-
     public class SHR
     {
         public string VERSION { get; set; }
         public PATIENTIDENTIFICATION PATIENT_IDENTIFICATION { get; set; }
-        public List<NEXTOFKIN> NEXT_OF_KIN { get; set; }=new List<NEXTOFKIN>();
+        public CARDDETAILS CARD_DETAILS { get; set; }
         public List<HIVTEST> HIV_TEST { get; set; } = new List<HIVTEST>();
         public List<IMMUNIZATION> IMMUNIZATION { get; set; } = new List<IMMUNIZATION>();
-        public CARDDETAILS CARD_DETAILS { get; set; }
+        public List<NEXTOFKIN> NEXT_OF_KIN { get; set; } = new List<NEXTOFKIN>();
+
+        public SHR()
+        {
+            VERSION = "1.0.0";
+        }
 
         public Client GetClient(Guid practiceId, Guid userId)
         {
@@ -37,65 +42,80 @@ namespace LiveHTS.Core.Model.SmartCard
             return client;
         }
 
-        public void Write(Client client)
+        public void UpdateFrom(Client client,string code)
         {
+            //  PATIENTIDENTIFICATION
             var person = client.Person;
-            if (null != PATIENT_IDENTIFICATION)
-            {
-                if (null != PATIENT_IDENTIFICATION.PATIENT_NAME)
-                {
-                    PATIENT_IDENTIFICATION.PATIENT_NAME.FIRST_NAME = person.FirstName.ToUpper();
-                    PATIENT_IDENTIFICATION.PATIENT_NAME.MIDDLE_NAME = person.MiddleName.ToUpper();
-                    PATIENT_IDENTIFICATION.PATIENT_NAME.LAST_NAME = person.LastName.ToUpper();
-                    PATIENT_IDENTIFICATION.SEX = person.Gender.ToUpper();
-                    PATIENT_IDENTIFICATION.DATE_OF_BIRTH = person.BirthDate.ToString("yyyyMMdd");
-                    PATIENT_IDENTIFICATION.DATE_OF_BIRTH_PRECISION = GetPrecision(person.BirthDateEstimated);
 
-                    /*
-                       GetHtsNumber(shr.PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID),
-                GetFacility(shr.PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID),
-                GetMaritalStatus(shr.PATIENT_IDENTIFICATION.MARITAL_STATUS),
-                GetCardSerial(shr.PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID), GetLandmark(shr.PATIENT_IDENTIFICATION),
-                GetPhone(shr.PATIENT_IDENTIFICATION));
-                     */
-                }
+            PATIENT_IDENTIFICATION.DATE_OF_BIRTH = person.BirthDate.ToString("yyyyMMdd");
+            PATIENT_IDENTIFICATION.DATE_OF_BIRTH_PRECISION = GetPrecision(person.BirthDateEstimated);
+            PATIENT_IDENTIFICATION.SEX = person.Gender.ToUpper();
+            PATIENT_IDENTIFICATION.PHONE_NUMBER = GetPhone(person);
+            PATIENT_IDENTIFICATION.MARITAL_STATUS = GetMaritalStatus(client.MaritalStatus);
 
-               
-            }
+            PATIENT_IDENTIFICATION.PATIENT_NAME.UpdateTo(person);
+            PATIENT_IDENTIFICATION.PATIENT_ADDRESS.UpdateTo(person);
+
+            //  CARD_DETAILS
+            CARD_DETAILS.LAST_UPDATED = DateTime.Now.ToString("yyyyMMdd");
+            CARD_DETAILS.LAST_UPDATED_FACILITY = code;
+        }
+        public void CreateFrom(Client client, string code)
+        {
+            //  PATIENTIDENTIFICATION
+            var person = client.Person;
+
+            PATIENT_IDENTIFICATION.DATE_OF_BIRTH = person.BirthDate.ToString("yyyyMMdd");
+            PATIENT_IDENTIFICATION.DATE_OF_BIRTH_PRECISION = GetPrecision(person.BirthDateEstimated);
+            PATIENT_IDENTIFICATION.SEX = person.Gender.ToUpper();
+            PATIENT_IDENTIFICATION.PHONE_NUMBER = GetPhone(person);
+            PATIENT_IDENTIFICATION.MARITAL_STATUS = GetMaritalStatus(client.MaritalStatus);
+
+            PATIENT_IDENTIFICATION.PATIENT_NAME.UpdateTo(person);
+            PATIENT_IDENTIFICATION.PATIENT_ADDRESS.UpdateTo(person);
+
+            //  CARD_DETAILS
+            CARD_DETAILS.LAST_UPDATED = DateTime.Now.ToString("yyyyMMdd");
+            CARD_DETAILS.LAST_UPDATED_FACILITY = code;
+        }
+        public void UpdateTesting(DateTime testDate, ObsFinalTestResult finalTestResult,string code)
+        {
+            //  HIV_TEST
+           AppendTest(HIVTEST.Create(testDate, finalTestResult,code));
         }
 
-        private void WritePatientInfo(Client client)
+        private string GetPhone(Person person)
         {
-            var person = client.Person;
-            if (null != PATIENT_IDENTIFICATION)
+            if (person.Contacts.Any())
             {
-                if (null != PATIENT_IDENTIFICATION.PATIENT_NAME)
-                {
-                    PATIENT_IDENTIFICATION.PATIENT_NAME.FIRST_NAME = person.FirstName.ToUpper();
-                    PATIENT_IDENTIFICATION.PATIENT_NAME.MIDDLE_NAME = person.MiddleName.ToUpper();
-                    PATIENT_IDENTIFICATION.PATIENT_NAME.LAST_NAME = person.LastName.ToUpper();
-                    PATIENT_IDENTIFICATION.SEX = person.Gender.ToUpper();
-                    PATIENT_IDENTIFICATION.DATE_OF_BIRTH = person.BirthDate.ToString("yyyyMMdd");
-                    PATIENT_IDENTIFICATION.DATE_OF_BIRTH_PRECISION = GetPrecision(person.BirthDateEstimated);
-
-                    /*
-                       GetHtsNumber(shr.PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID),
-                GetFacility(shr.PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID),
-                GetMaritalStatus(shr.PATIENT_IDENTIFICATION.MARITAL_STATUS),
-                GetCardSerial(shr.PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID), GetLandmark(shr.PATIENT_IDENTIFICATION),
-                GetPhone(shr.PATIENT_IDENTIFICATION));
-                     */
-                }
-
-
-
+                var phone = person.Contacts.First().Phone;
+                if (phone.HasValue)
+                    return phone.Value.ToString();
             }
-            else
-            {
-                VERSION = "1.0.0";
 
-            }
+            return string.Empty;
         }
+
+        private string GetMaritalStatus(string clientMaritalStatus)
+        {
+            if (clientMaritalStatus.IsSameAs("NA"))
+                return string.Empty;
+
+            return string.Empty;
+        }
+
+        private void AppendTest(HIVTEST hivtest)
+        {
+            HIV_TEST.Add(hivtest);
+        }
+
+        public static SHR Create()
+        {
+            var shr = new SHR();
+
+            return shr;
+        }
+
 
         private string GetPrecision(bool? estimated)
         {

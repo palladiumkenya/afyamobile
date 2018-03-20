@@ -102,7 +102,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void SmartCard()
         {
-            throw new NotImplementedException();
+            ShowViewModel<SmartCardViewModel>(new { id = Client.Id.ToString() });
         }
 
         private void Enroll()

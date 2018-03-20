@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
+using LiveHTS.Core.Interfaces.Services.SmartCard;
 using LiveHTS.Core.Model;
+using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
@@ -18,8 +20,11 @@ namespace LiveHTS.Presentation.ViewModel
     public class SmartCardViewModel : MvxViewModel, ISmartCardViewModel
     {
         private readonly IDialogService _dialogService;
+        private readonly IClientShrRecordService _clientShrRecordService;
         private readonly ISettings _settings;
         private readonly IRegistryService _registryService;
+        private readonly IEncounterService _encounterService;
+        private readonly IDashboardService _dashboardService;
 
         private IMvxCommand _readCardCommand;
         private IMvxCommand _writeCardCommand;
@@ -29,26 +34,41 @@ namespace LiveHTS.Presentation.ViewModel
         private List<string> _shrErrors;
         private Exception _shrException;
         private string _shrMessage;
+        private Client _clientShr;
+        private Encounter _encounterShr;
+        private ClientShrRecord _clientShrRecord;
 
         public Guid AppUserId
         {
             get { return GetGuid("livehts.userid"); }
         }
-
-        public Guid AppProviderId
-        {
-            get { return GetGuid("livehts.providerid"); }
-        }
-
         public Guid AppPracticeId
         {
             get { return GetGuid("livehts.practiceid"); }
         }
-
-        public Guid AppDeviceId
+        public string PracticeCode
         {
-            get { return GetGuid("livehts.deviceid"); }
+            get { return _settings.GetValue("livehts.practicecode", ""); }
         }
+
+        public ClientShrRecord ClientShrRecord
+        {
+            get => _clientShrRecord;
+            set => _clientShrRecord = value;
+        }
+
+        public Client ClientShr
+        {
+            get => _clientShr;
+            set => _clientShr = value;
+        }
+
+        public Encounter EncounterShr
+        {
+            get => _encounterShr;
+            set => _encounterShr = value;
+        }
+
         public string ShrMessage
         {
             get => _shrMessage;
@@ -132,15 +152,96 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        
-
-        public SmartCardViewModel(IDialogService dialogService, ISettings settings, IRegistryService registryService)
+        public SmartCardViewModel(IDialogService dialogService, ISettings settings, IRegistryService registryService, IEncounterService encounterService, IDashboardService dashboardService, IClientShrRecordService clientShrRecordService)
         {
             _dialogService = dialogService;
             _settings = settings;
             _registryService = registryService;
+            _encounterService = encounterService;
+            _dashboardService = dashboardService;
+            _clientShrRecordService = clientShrRecordService;
         }
 
+        public void Init(string id)
+        {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                //prepare SHR
+                _settings.AddOrUpdateValue("shrmode", "write");
+                ClientShr = _dashboardService.LoadClient(new Guid(id));
+                ClientShrRecord = _clientShrRecordService.GetByClientId(new Guid(id));
+
+                if (null != ClientShr)
+                {
+                    _settings.AddOrUpdateValue("ClientShr", JsonConvert.SerializeObject(ClientShr));
+                    EncounterShr = _encounterService.LoadTesting(ClientShr.Id);
+                    if(null!=EncounterShr)
+                        _settings.AddOrUpdateValue("EncounterShr", JsonConvert.SerializeObject(EncounterShr));
+                }
+
+                if (null != ClientShrRecord)
+                {
+                    _settings.AddOrUpdateValue("ClientShrRecord", JsonConvert.SerializeObject(ClientShrRecord));
+                }
+
+            }
+            else
+            {
+                _settings.AddOrUpdateValue("shrmode", "read");
+            }
+        }
+
+        public override void ViewAppeared()
+        {
+            var shrMode = _settings.GetValue("shrmode", "");
+
+            if (!string.IsNullOrWhiteSpace(shrMode))
+            {
+                if (shrMode == "write")
+                {
+                    var clientShrJson = _settings.GetValue("ClientShr", "");
+                    var encounterShrJson = _settings.GetValue("EncounterShr", "");
+                    var clientShrRecordJson = _settings.GetValue("ClientShrRecord", "");
+
+                    if (null == ClientShr&&!string.IsNullOrWhiteSpace(clientShrJson))
+                    {
+                        ClientShr = JsonConvert.DeserializeObject<Client>(clientShrJson);
+                    }
+
+                    if (null == EncounterShr && !string.IsNullOrWhiteSpace(encounterShrJson))
+                    {
+                        EncounterShr = JsonConvert.DeserializeObject<Encounter>(encounterShrJson);
+                    }
+
+                    if (null == ClientShrRecord && !string.IsNullOrWhiteSpace(clientShrRecordJson))
+                    {
+                        ClientShrRecord = JsonConvert.DeserializeObject<ClientShrRecord>(clientShrRecordJson);
+                    }
+
+                    PrepareShr();
+                }
+
+
+            }
+        }
+
+        private void PrepareShr()
+        {
+            if (null != ClientShrRecord)
+            {
+                try
+                {
+                    Shr = JsonConvert.DeserializeObject<SHR>(ClientShrRecord.Shr);
+                    Shr.UpdateFrom(ClientShr, PracticeCode);
+                    SmartClient = SmartClientDTO.Create(Shr);
+                    HivTestHistories = HIVTestHistoryDTO.Create(Shr);
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+        }
         private bool CanReadCard()
         {
             return true;
@@ -169,7 +270,9 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void WriteCard()
         {
-            throw new System.NotImplementedException();
+            //B262F4EE-852F-11E7-BB31-BE2E44B06B34 e
+            //B25EC568-852F-11E7-BB31-BE2E44B06B34 f
+            //var testingEncounter =
         }
 
         private async void Testing()
@@ -189,7 +292,11 @@ namespace LiveHTS.Presentation.ViewModel
             var client = Shr.GetClient(AppPracticeId, AppUserId);
             try
             {
+
                 var id = await _registryService.SaveShr(client);
+                var shrJson = _settings.GetValue("shr", "");
+                _clientShrRecordService.SaveOrUpdate(new ClientShrRecord(id, shrJson));
+
                 if (!id.IsNullOrEmpty())
                     ShowViewModel<DashboardViewModel>(new { id = id.ToString() });
             }

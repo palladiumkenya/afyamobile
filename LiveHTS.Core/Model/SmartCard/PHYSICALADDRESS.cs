@@ -7,5 +7,10 @@
         public string SUB_COUNTY { get; set; }
         public string COUNTY { get; set; }
         public string NEAREST_LANDMARK { get; set; }
+
+        public void UpdateTo(string landmark)
+        {
+            NEAREST_LANDMARK = landmark;
+        }
     }
 }

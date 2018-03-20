@@ -67,6 +67,7 @@
     <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
+    <Compile Include="Interfaces\Repository\SmartCard\IClientShrRecordRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientStateRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IUserSummaryRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientSummaryRepository.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Interfaces\Services\Interview\IPartnerTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberTracingService.cs" />
     <Compile Include="Interfaces\Services\Interview\IMemberScreeningService.cs" />
+    <Compile Include="Interfaces\Services\SmartCard\IClientShrRecordService.cs" />
     <Compile Include="Interfaces\Services\Sync\IUserSyncService.cs" />
     <Compile Include="Interfaces\Services\Sync\IEmrService.cs" />
     <Compile Include="Interfaces\Services\Sync\IClientSyncService.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
     <Compile Include="Model\SmartCard\CARDDETAILS.cs" />
+    <Compile Include="Model\SmartCard\ClientShrRecord.cs" />
     <Compile Include="Model\SmartCard\EXTERNALPATIENTID.cs" />
     <Compile Include="Model\SmartCard\HIVTEST.cs" />
     <Compile Include="Model\SmartCard\IMMUNIZATION.cs" />
@@ -238,6 +241,7 @@
     <Compile Include="Service\Interview\HIVTestingService.cs" />
     <Compile Include="Service\Interview\InterviewService.cs" />
     <Compile Include="Service\Interview\MemberScreeningService.cs" />
+    <Compile Include="Service\SmartCard\ClientShrRecordService.cs" />
     <Compile Include="Service\Sync\UserSyncService.cs" />
     <Compile Include="Service\Sync\EmrService.cs" />
     <Compile Include="Service\Sync\ActivationService.cs" />

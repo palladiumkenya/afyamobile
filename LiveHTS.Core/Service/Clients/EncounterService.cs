@@ -69,6 +69,11 @@ namespace LiveHTS.Core.Service.Clients
             return encounter;
         }
 
+        public Encounter LoadTesting(Guid clientId)
+        {
+            return _encounterRepository.LoadTest(new Guid("B262F4EE-852F-11E7-BB31-BE2E44B06B34"), clientId);
+        }
+
         public void Save(List<Encounter> encounters)
         {
             foreach (var encounter in encounters)

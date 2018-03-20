@@ -68,6 +68,7 @@
     <Compile Include="Repository\Interview\ObsTraceResultRepository.cs" />
     <Compile Include="Repository\Interview\ObsTestResultRepository.cs" />
     <Compile Include="Repository\Interview\ObsFinalTestResultRepository.cs" />
+    <Compile Include="Repository\SmartCard\ClientShrRecordRepository.cs" />
     <Compile Include="Repository\Subject\ClientIdentifierRepository.cs" />
     <Compile Include="Repository\Subject\ClientRelationshipRepository.cs" />
     <Compile Include="Repository\Subject\UserSummaryRepository.cs" />
