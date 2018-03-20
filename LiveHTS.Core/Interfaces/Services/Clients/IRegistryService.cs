@@ -20,7 +20,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         void SaveOrUpdate(Client client,bool isClient=true);
         void SaveDownloaded(Client client);
         Task Download(Client client,List<Encounter> encounters);
-        Task<Guid> SaveShr(SHR shr);
+        Task<Guid> SaveShr(Client shrClient);
         void Delete(Guid clientId);
     }
 }

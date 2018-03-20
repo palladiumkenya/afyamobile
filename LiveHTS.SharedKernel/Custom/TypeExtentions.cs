@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace LiveHTS.SharedKernel.Custom
 {
@@ -32,6 +33,13 @@ namespace LiveHTS.SharedKernel.Custom
         public static bool IsSameAs(this object s, object other)
         {
             return s.ToString().ToLower().Trim() == other.ToString().ToLower().Trim();
+        }
+
+        public static string FirstCharToUpper(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return string.Empty;
+            return input.First().ToString().ToUpper() + input.Substring(1);
         }
     }
 }

@@ -30,6 +30,25 @@ namespace LiveHTS.Presentation.ViewModel
         private Exception _shrException;
         private string _shrMessage;
 
+        public Guid AppUserId
+        {
+            get { return GetGuid("livehts.userid"); }
+        }
+
+        public Guid AppProviderId
+        {
+            get { return GetGuid("livehts.providerid"); }
+        }
+
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
+
+        public Guid AppDeviceId
+        {
+            get { return GetGuid("livehts.deviceid"); }
+        }
         public string ShrMessage
         {
             get => _shrMessage;
@@ -133,6 +152,9 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private bool CanTesting()
         {
+            if (null == SmartClient)
+                return false;
+
             if (HivTestHistories.Count == 0)
                 return true;
 
@@ -141,8 +163,6 @@ namespace LiveHTS.Presentation.ViewModel
 
             return false;
         }
-
-
         private void ReadCard()
         {
             ReadCardAction?.Invoke();
@@ -157,18 +177,28 @@ namespace LiveHTS.Presentation.ViewModel
             if (null == Shr)
             {
                 var shrJson = _settings.GetValue("shr", "");
-
                 if (!string.IsNullOrWhiteSpace(shrJson))
                 {
-                    var shr = JsonConvert.DeserializeObject<SHR>(shrJson);
-                    if (null != shr)
-                    {
-                        var id = await _registryService.SaveShr(shr);
-                        if (!id.IsNullOrEmpty())
-                            ShowViewModel<DashboardViewModel>(new {id = id.ToString()});
-                    }
+                    Shr = JsonConvert.DeserializeObject<SHR>(shrJson);
                 }
             }
+
+            if (null == Shr)
+                _dialogService.Alert($"{ShrException.Message}", "colud not find any SHR data", "OK");
+
+            var client = Shr.GetClient(AppPracticeId, AppUserId);
+            try
+            {
+                var id = await _registryService.SaveShr(client);
+                if (!id.IsNullOrEmpty())
+                    ShowViewModel<DashboardViewModel>(new { id = id.ToString() });
+            }
+            catch (Exception e)
+            {
+                _dialogService.Alert($"{e.Message}", "Error saving SHR to phone", "OK");
+            }
+            
+           
         }
 
         public void ReadCardDone()
@@ -199,6 +229,18 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _dialogService.Alert($"{ShrException.Message}", "Read Card Failed", "OK");
             }
+
+            TestingCommand.RaiseCanExecuteChanged();
+        }
+
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
         }
     }
 }

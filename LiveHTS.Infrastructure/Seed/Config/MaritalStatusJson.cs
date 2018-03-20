@@ -35,6 +35,11 @@ namespace LiveHTS.Infrastructure.Seed.Config
     ^Id^: ^W^,
     ^Name^: ^Widowed^,
     ^Voided^: 0
+  },
+  {
+    ^Id^: ^NA^,
+    ^Name^: ^Not applicable^,
+    ^Voided^: 0
   }
 ]
 ";

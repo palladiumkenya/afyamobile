@@ -113,6 +113,19 @@
                 android:layout_height="wrap_content"
                 local:MvxBind="Text SmartClient.Facility" />
           </LinearLayout>
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Card Serial:" />
+            <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              local:MvxBind="Text SmartClient.SmartCardSerial" />
+          </LinearLayout>
         </LinearLayout>
       </LinearLayout>
     </LinearLayout>

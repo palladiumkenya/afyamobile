@@ -65,6 +65,21 @@ namespace LiveHTS.Core.Model.Subject
         {
             return new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
         }
+
+        public static Person Create(string firstName, string middleName, string lastName, string gender,
+            DateTime birthDate, bool? birthDateEstimated, string email, string landmark, int? phone)
+        {
+            var person = new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
+
+            if (!string.IsNullOrWhiteSpace(landmark))
+                person.AddAddress(landmark, null, true, null, null);
+            
+            if (phone.HasValue)
+                person.AddContact(phone, true);
+
+            return person;
+        }
+
         public static Person Create(string firstName, string middleName, string lastName, string gender, DateTime birthDate, bool? birthDateEstimated, string email,Guid personId)
         {
             var person=Create(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);

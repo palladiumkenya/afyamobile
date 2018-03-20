@@ -35,11 +35,11 @@ namespace LiveHTS.Droid.Activities
             if (intent.ResolveActivity(PackageManager) != null)
             {
                 StartActivityForResult(intent, 99);
-                //Toast.MakeText(ApplicationContext, "Started Read smartcard intent",ToastLength.Long).Show();
             }
             else
             {
-                //Toast.MakeText(ApplicationContext, "Cannot resolve intent", ToastLength.Long).Show();
+                ViewModel.ShrException = new Exception("PSmart App not Installed");
+                ViewModel.ReadCardDone();
             }
         }
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)

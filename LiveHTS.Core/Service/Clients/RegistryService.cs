@@ -244,9 +244,14 @@ namespace LiveHTS.Core.Service.Clients
             });
         }
 
-        public Task<Guid> SaveShr(SHR shr)
+        public async Task<Guid> SaveShr(Client shrClient)
         {
-            throw new NotImplementedException();
+            await Task.Run(() =>
+            {
+                SaveOrUpdate(shrClient);
+            });
+
+            return shrClient.Id;
         }
 
         public void Delete(Guid clientId)
