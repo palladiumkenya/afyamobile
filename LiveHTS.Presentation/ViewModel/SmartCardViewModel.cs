@@ -12,6 +12,7 @@ using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using Newtonsoft.Json;
 
@@ -37,6 +38,8 @@ namespace LiveHTS.Presentation.ViewModel
         private Client _clientShr;
         private Encounter _encounterShr;
         private ClientShrRecord _clientShrRecord;
+        private bool _showTesting;
+        private bool _showReadCard;
 
         public Guid AppUserId
         {
@@ -120,6 +123,27 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => HivTestHistories);
             }
         }
+
+        public bool ShowTesting
+        {
+            get { return _showTesting; }
+            set
+            {
+                _showTesting = value;
+                RaisePropertyChanged(() => ShowTesting);
+            }
+        }
+
+        public bool ShowReadCard
+        {
+            get { return _showReadCard; }
+            set
+            {
+                _showReadCard = value;
+                RaisePropertyChanged(() => ShowReadCard);
+            }
+        }
+
         public IMvxCommand ReadCardCommand
         {
             get
@@ -166,6 +190,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (!string.IsNullOrWhiteSpace(id))
             {
+                ShowTesting = ShowReadCard = false;
                 //prepare SHR
                 _settings.AddOrUpdateValue("shrmode", "write");
                 ClientShr = _dashboardService.LoadClient(new Guid(id));
@@ -174,7 +199,14 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null != ClientShr)
                 {
                     _settings.AddOrUpdateValue("ClientShr", JsonConvert.SerializeObject(ClientShr));
-                    EncounterShr = _encounterService.LoadTesting(ClientShr.Id);
+                    var cstate= ClientShr.ClientStates.FirstOrDefault(x =>
+                        x.Status == LiveState.HtsTestedPos || x.Status == LiveState.HtsTestedNeg ||
+                        x.Status == LiveState.HtsTestedInc);
+                    if (null != cstate&&cstate.EncounterId.HasValue)
+                    {
+                        EncounterShr = _encounterService.LoadTesting(cstate.EncounterId.Value);
+                    }
+
                     if(null!=EncounterShr)
                         _settings.AddOrUpdateValue("EncounterShr", JsonConvert.SerializeObject(EncounterShr));
                 }
@@ -188,6 +220,7 @@ namespace LiveHTS.Presentation.ViewModel
             else
             {
                 _settings.AddOrUpdateValue("shrmode", "read");
+                ShowTesting = ShowReadCard = true;
             }
         }
 
@@ -199,6 +232,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 if (shrMode == "write")
                 {
+                    ShowTesting = ShowReadCard = false;
                     var clientShrJson = _settings.GetValue("ClientShr", "");
                     var encounterShrJson = _settings.GetValue("EncounterShr", "");
                     var clientShrRecordJson = _settings.GetValue("ClientShrRecord", "");
@@ -220,6 +254,10 @@ namespace LiveHTS.Presentation.ViewModel
 
                     PrepareShr();
                 }
+                else
+                {
+                    ShowTesting = ShowReadCard = true;
+                }
 
 
             }
@@ -233,6 +271,17 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     Shr = JsonConvert.DeserializeObject<SHR>(ClientShrRecord.Shr);
                     Shr.UpdateFrom(ClientShr, PracticeCode);
+                    if (null != EncounterShr)
+                    {
+                        var test = EncounterShr.ObsFinalTestResults.FirstOrDefault();
+                        if (null != test)
+                        {
+                            if (test.FinalResult.HasValue)
+                            {
+                                Shr.UpdateTesting(EncounterShr.EncounterDate,test,PracticeCode);
+                            }
+                        }
+                    }
                     SmartClient = SmartClientDTO.Create(Shr);
                     HivTestHistories = HIVTestHistoryDTO.Create(Shr);
                 }
@@ -249,7 +298,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanWriteCard()
         {
-            return false;
+            return !ShowReadCard;
         }
         private bool CanTesting()
         {

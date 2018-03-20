@@ -19,7 +19,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         SHR Shr { get; set; }
         SmartClientDTO SmartClient { get; set; }
         List<HIVTestHistoryDTO> HivTestHistories { get; set; }
-
+        bool ShowTesting { get; set; }
+        bool ShowReadCard { get; set; }
         IMvxCommand ReadCardCommand { get; }
         Action ReadCardAction { get; set; }
         IMvxCommand WriteCardCommand { get; }

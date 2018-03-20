@@ -14,6 +14,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
         IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, bool includeObs = false);
         IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, Guid indexClientId, bool includeObs = false);
         Encounter LoadTest(Guid id, bool includeObs = false);
+        Encounter LoadFinalTest(Guid id, bool includeObs = false);
         Encounter LoadTest(Guid encounterTypeId, Guid clientId, bool includeObs = false);
         List<Encounter> LoadTestAll(Guid encounterTypeId, Guid clientId, bool includeObs = false);
         DateTime GetPretestEncounterDate(Guid clientId);

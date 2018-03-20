@@ -106,7 +106,15 @@ namespace LiveHTS.Core.Model.SmartCard
 
         private void AppendTest(HIVTEST hivtest)
         {
-            HIV_TEST.Add(hivtest);
+            if (!HIV_TEST.Any())
+            {
+                HIV_TEST.Add(hivtest);
+                return;
+            }
+
+            var existing = HIV_TEST.FirstOrDefault(x => x.Equals(hivtest));
+            if(null==existing)
+                HIV_TEST.Add(hivtest);
         }
 
         public static SHR Create()
