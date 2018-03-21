@@ -42,6 +42,7 @@ namespace LiveHTS.Presentation.ViewModel
         private ClientShrRecord _clientShrRecord;
         private bool _showTesting;
         private bool _showReadCard;
+        private string _shrWriteResponse;
 
         public Guid AppUserId
         {
@@ -54,6 +55,11 @@ namespace LiveHTS.Presentation.ViewModel
         public string PracticeCode
         {
             get { return _settings.GetValue("livehts.practicecode", ""); }
+        }
+
+        public string ShrMode
+        {
+            get { return _settings.GetValue("shrmode", ""); }
         }
 
         public ClientShrRecord ClientShrRecord
@@ -72,6 +78,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get => _encounterShr;
             set => _encounterShr = value;
+        }
+
+        public string ShrWriteResponse
+        {
+            get { return _shrWriteResponse; }
+            set { _shrWriteResponse = value; RaisePropertyChanged(() => ShrWriteResponse);}
         }
 
         public string ShrMessage
@@ -156,6 +168,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
         public Action ReadCardAction { get; set; }
+        public Action WriteCardAction { get; set; }
 
 
         public IMvxCommand WriteCardCommand
@@ -277,6 +290,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void PrepareShr()
         {
+            ShrMessage = string.Empty;
             if (null != ClientShrRecord)
             {
                 try
@@ -296,12 +310,16 @@ namespace LiveHTS.Presentation.ViewModel
                     }
                     SmartClient = SmartClientDTO.Create(Shr);
                     HivTestHistories = HIVTestHistoryDTO.Create(Shr);
+                    ShrMessage = JsonConvert.SerializeObject(Shr);
+                    //WriteCardCommand.RaiseCanExecuteChanged();
                 }
                 catch (Exception e)
                 {
                     
                 }
             }
+
+            WriteCardCommand.RaiseCanExecuteChanged();
         }
         private bool CanReadCard()
         {
@@ -310,8 +328,10 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanWriteCard()
         {
-            return !ShowReadCard;
+            return !ShowReadCard && !string.IsNullOrWhiteSpace(ShrMessage) &&
+                   string.IsNullOrWhiteSpace(ShrWriteResponse);
         }
+
         private bool CanTesting()
         {
             if (null == SmartClient)
@@ -331,9 +351,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void WriteCard()
         {
-            //B262F4EE-852F-11E7-BB31-BE2E44B06B34 e
-            //B25EC568-852F-11E7-BB31-BE2E44B06B34 f
-            //var testingEncounter =
+            WriteCardAction?.Invoke();
         }
 
         private async void Testing()
@@ -354,8 +372,9 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
 
+                var shrJson = JsonConvert.SerializeObject(Shr);
                 var id = await _registryService.SaveShr(client);
-                var shrJson = _settings.GetValue("shr", "");
+                 
                 _clientShrRecordService.SaveOrUpdate(new ClientShrRecord(id, shrJson));
 
                 if (!id.IsNullOrEmpty())
@@ -371,10 +390,12 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void ReadCardDone()
         {
-            _settings.AddOrUpdateValue("shr", "");
+            if (_settings.Contains("shr"))
+                _settings.DeleteValue("shr");
 
             if (!string.IsNullOrWhiteSpace(ShrMessage))
             {
+                _settings.AddOrUpdateValue("shr", ShrMessage);
                 try
                 {
                     Shr = JsonConvert.DeserializeObject<SHR>(ShrMessage);
@@ -383,8 +404,6 @@ namespace LiveHTS.Presentation.ViewModel
 
                     SmartClient=SmartClientDTO.Create(Shr);
                     HivTestHistories = HIVTestHistoryDTO.Create(Shr);
-
-                    _settings.AddOrUpdateValue("shr", JsonConvert.SerializeObject(Shr));
 
                     _dialogService.ShowToast("Read successfully");
                 }
@@ -399,6 +418,20 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             TestingCommand.RaiseCanExecuteChanged();
+        }
+
+        public void WriteCardDone()
+        {
+            if (!string.IsNullOrWhiteSpace(ShrWriteResponse))
+            {
+                _dialogService.ShowToast("Write successfully");
+            }
+
+            if (null != ShrException)
+            {
+                _dialogService.Alert($"{ShrException.Message}", "Write Card Failed", "OK");
+            }
+            WriteCardCommand.RaiseCanExecuteChanged();
         }
 
         public Guid GetGuid(string key)

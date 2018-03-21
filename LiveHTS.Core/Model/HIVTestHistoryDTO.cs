@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using LiveHTS.Core.Model.SmartCard;
 
 namespace LiveHTS.Core.Model
@@ -31,7 +32,8 @@ namespace LiveHTS.Core.Model
                 list.Add(new HIVTestHistoryDTO(GetTestDate(hivtest.DATE), hivtest.RESULT, hivtest.TYPE));
             }
 
-            return list;
+            var sortedList = list.OrderByDescending(x => x.Date).ToList();
+            return sortedList;
         }
 
         private static DateTime GetTestDate(string testDate)

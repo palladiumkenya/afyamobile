@@ -1,4 +1,5 @@
 ﻿using System;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.SmartCard
@@ -10,9 +11,10 @@ namespace LiveHTS.Core.Model.SmartCard
 
         public ClientShrRecord()
         {
+            Id = LiveGuid.NewGuid();
         }
 
-        public ClientShrRecord(Guid clientId, string shr)
+        public ClientShrRecord(Guid clientId, string shr):this()
         {
             ClientId = clientId;
             Shr = shr;

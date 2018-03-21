@@ -216,6 +216,46 @@ namespace LiveHTS.Core.Service.Clients
             }
         }
 
+        public Guid SaveOrGet(Client client, bool isClient = true)
+        {
+            //check id in use
+
+            if (isClient)
+            {
+
+                if (!client.Identifiers.Any())
+                    throw new ArgumentException($"Client should have an Identifier !");
+
+                var clientIdentifier = client.Identifiers.First();
+
+                var clientIdentifiers = _clientIdentifierRepository.GetAll(
+                    x => x.Identifier.ToLower() == clientIdentifier.Identifier.ToLower() &&
+                         x.IdentifierTypeId == clientIdentifier.IdentifierTypeId &&
+                         x.ClientId != client.Id
+
+                );
+
+                if (clientIdentifiers.Any())
+                {
+                    return clientIdentifiers.First().ClientId;
+                }
+            }
+
+            //create Person
+            _personRepository.InsertOrUpdate(client.Person);
+
+            //create Client
+            _clientRepository.InsertOrUpdate(client);
+
+            if (isClient)
+            {
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsEnrolled));
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsFamAcceptedYes));
+            }
+
+            return client.Id;
+        }
+
         public void SaveDownloaded(Client client)
         {
             //create Person
@@ -246,12 +286,14 @@ namespace LiveHTS.Core.Service.Clients
 
         public async Task<Guid> SaveShr(Client shrClient)
         {
+            Guid clientId;
+
             await Task.Run(() =>
             {
-                SaveOrUpdate(shrClient);
+              clientId=SaveOrGet(shrClient);
             });
 
-            return shrClient.Id;
+            return clientId;
         }
 
         public void Delete(Guid clientId)
