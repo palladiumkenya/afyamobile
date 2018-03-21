@@ -340,8 +340,8 @@ namespace LiveHTS.Presentation.ViewModel
             if (HivTestHistories.Count == 0)
                 return true;
 
-            if (HivTestHistories.Count > 0)
-                return !HivTestHistories.Any(x => x.Result.IsSameAs("POSITIVE"));
+//            if (HivTestHistories.Count > 0)
+//                return !HivTestHistories.Any(x => x.Result.IsSameAs("POSITIVE"));
 
             return false;
         }
