@@ -22,6 +22,33 @@ namespace LiveHTS.Core.Model.SmartCard
             VERSION = "1.0.0";
         }
 
+        public bool HasHtsIds()
+        {
+            return null != PATIENT_IDENTIFICATION &&
+                   null != PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID &&
+                   PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID.Any(x => x.IDENTIFIER_TYPE.IsSameAs("HTS_NUMBER"));
+
+        }
+
+        public bool HasHtsNumber()
+        {
+            if (HasHtsIds())
+            {
+                var htsNumber = PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID.FirstOrDefault(x =>
+                    x.IDENTIFIER_TYPE.IsSameAs("HTS_NUMBER") && !string.IsNullOrWhiteSpace(x.ID));
+                return null != htsNumber;
+            }
+
+            return false;
+        }
+
+        public List<INTERNALPATIENTID> GetHtsInternalpatientids()
+        {
+            if(HasHtsNumber())
+                return PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID.Where(x => x.IDENTIFIER_TYPE.IsSameAs("HTS_NUMBER")).ToList();
+
+            return new List<INTERNALPATIENTID>();
+        }
         public Client GetClient(Guid practiceId, Guid userId)
         {
 
@@ -35,7 +62,7 @@ namespace LiveHTS.Core.Model.SmartCard
             client.PersonId = smartPerson.Id;
 
             var clientIdentifier =
-                ClientIdentifier.Create("Serial", smartClient.HtsNumber, DateTime.Now, true, client.Id);
+                ClientIdentifier.Create("Serial", smartClient.HtsNumber, DateTime.Today, true, client.Id);
             client.AddIdentifier(clientIdentifier);
             client.SmartCardSerial = smartClient.SmartCardSerial;
 
@@ -57,7 +84,7 @@ namespace LiveHTS.Core.Model.SmartCard
             PATIENT_IDENTIFICATION.PATIENT_ADDRESS.UpdateTo(person);
 
             //  CARD_DETAILS
-            CARD_DETAILS.LAST_UPDATED = DateTime.Now.ToString("yyyyMMdd");
+            CARD_DETAILS.LAST_UPDATED = DateTime.Today.ToString("yyyyMMdd");
             CARD_DETAILS.LAST_UPDATED_FACILITY = code;
         }
         public void CreateFrom(Client client, string code)
@@ -75,7 +102,7 @@ namespace LiveHTS.Core.Model.SmartCard
             PATIENT_IDENTIFICATION.PATIENT_ADDRESS.UpdateTo(person);
 
             //  CARD_DETAILS
-            CARD_DETAILS.LAST_UPDATED = DateTime.Now.ToString("yyyyMMdd");
+            CARD_DETAILS.LAST_UPDATED = DateTime.Today.ToString("yyyyMMdd");
             CARD_DETAILS.LAST_UPDATED_FACILITY = code;
         }
         public void UpdateTesting(DateTime testDate, ObsFinalTestResult finalTestResult,string code)
@@ -128,6 +155,17 @@ namespace LiveHTS.Core.Model.SmartCard
         private string GetPrecision(bool? estimated)
         {
             return null!=estimated && estimated.Value ? "ESTIMATED" : "EXACT";
+        }
+
+
+        public void AssignHtsNumber(string practiceCode)
+        {
+            if (!HasHtsNumber())
+            {
+                // assign HTS
+                var hts = INTERNALPATIENTID.Create(DateTime.Now.Ticks.ToString(), practiceCode);
+                PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID.Add(hts);
+            }
         }
     }
 }

@@ -23,5 +23,10 @@
         {
             return new INTERNALPATIENTID(id,assigningFacility);
         }
+
+        public override string ToString()
+        {
+            return $"{IDENTIFIER_TYPE}:{ID} {ASSIGNING_FACILITY}{ASSIGNING_AUTHORITY}";
+        }
     }
 }

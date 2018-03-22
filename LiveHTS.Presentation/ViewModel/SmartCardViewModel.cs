@@ -206,6 +206,13 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (!string.IsNullOrWhiteSpace(id))
             {
+                if (_settings.Contains("ClientShr"))
+                    _settings.DeleteValue("ClientShr");
+                if (_settings.Contains("EncounterShr"))
+                    _settings.DeleteValue("EncounterShr");
+                if (_settings.Contains("ClientShrRecord"))
+                    _settings.DeleteValue("ClientShrRecord");
+
                 ShowTesting = ShowReadCard = false;
                 //prepare SHR
                 _settings.AddOrUpdateValue("shrmode", "write");
@@ -334,16 +341,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanTesting()
         {
-            if (null == SmartClient)
-                return false;
-
-            if (HivTestHistories.Count == 0)
-                return true;
-
-//            if (HivTestHistories.Count > 0)
-//                return !HivTestHistories.Any(x => x.Result.IsSameAs("POSITIVE"));
-
-            return false;
+            return null != SmartClient;
         }
         private void ReadCard()
         {
@@ -366,7 +364,10 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             if (null == Shr)
-                _dialogService.Alert($"{ShrException.Message}", "colud not find any SHR data", "OK");
+            {
+                _dialogService.Alert($"{ShrException.Message}", "colud not find any SHR data, Read card again", "OK");
+                return;
+            }
 
             var client = Shr.GetClient(AppPracticeId, AppUserId);
             try
@@ -401,6 +402,13 @@ namespace LiveHTS.Presentation.ViewModel
                     Shr = JsonConvert.DeserializeObject<SHR>(ShrMessage);
                     if (null==Shr)
                         throw new Exception("invalid SHR");
+
+                    if (!Shr.HasHtsNumber())
+                    {
+                        Shr.AssignHtsNumber(PracticeCode);
+                        ShrMessage= JsonConvert.SerializeObject(Shr);
+                        _settings.AddOrUpdateValue("shr", ShrMessage);
+                    }
 
                     SmartClient=SmartClientDTO.Create(Shr);
                     HivTestHistories = HIVTestHistoryDTO.Create(Shr);
