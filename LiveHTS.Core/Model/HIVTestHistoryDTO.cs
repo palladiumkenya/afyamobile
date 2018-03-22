@@ -32,6 +32,9 @@ namespace LiveHTS.Core.Model
                 list.Add(new HIVTestHistoryDTO(GetTestDate(hivtest.DATE), hivtest.RESULT, hivtest.TYPE));
             }
 
+            if (list.Count == 0)
+                return list;
+
             var sortedList = list.OrderByDescending(x => x.Date).ToList();
             return sortedList;
         }

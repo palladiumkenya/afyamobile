@@ -5,6 +5,10 @@
         public string NAME { get; set; }
         public string ID { get; set; }
 
+        public PROVIDERDETAILS()
+        {
+        }
+
         public PROVIDERDETAILS(string name, string id)
         {
             NAME = name;

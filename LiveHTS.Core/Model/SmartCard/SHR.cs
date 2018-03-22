@@ -22,6 +22,24 @@ namespace LiveHTS.Core.Model.SmartCard
             VERSION = "1.0.0";
         }
 
+        public static SHR CreateBlank()
+        {
+            var shr=new SHR();
+            shr.PATIENT_IDENTIFICATION=PATIENTIDENTIFICATION.Create();
+            shr.CARD_DETAILS=new CARDDETAILS();
+            //shr.HIV_TEST = HIVTEST.Create();
+            //shr.IMMUNIZATION = SmartCard.IMMUNIZATION.Create();
+            //shr.NEXT_OF_KIN = NEXTOFKIN.Create();
+            return shr;
+        }
+
+        public static SHR CreateBlank(Client client, string code)
+        {
+            var shr = CreateBlank();
+            shr.CreateFrom(client, code);
+            return shr;
+        }
+
         public bool HasHtsIds()
         {
             return null != PATIENT_IDENTIFICATION &&
@@ -87,24 +105,23 @@ namespace LiveHTS.Core.Model.SmartCard
             CARD_DETAILS.LAST_UPDATED = DateTime.Today.ToString("yyyyMMdd");
             CARD_DETAILS.LAST_UPDATED_FACILITY = code;
         }
+
         public void CreateFrom(Client client, string code)
         {
-            //  PATIENTIDENTIFICATION
-            var person = client.Person;
-
-            PATIENT_IDENTIFICATION.DATE_OF_BIRTH = person.BirthDate.ToString("yyyyMMdd");
-            PATIENT_IDENTIFICATION.DATE_OF_BIRTH_PRECISION = GetPrecision(person.BirthDateEstimated);
-            PATIENT_IDENTIFICATION.SEX = person.Gender.ToUpper();
-            PATIENT_IDENTIFICATION.PHONE_NUMBER = GetPhone(person);
-            PATIENT_IDENTIFICATION.MARITAL_STATUS = GetMaritalStatus(client.MaritalStatus);
-
-            PATIENT_IDENTIFICATION.PATIENT_NAME.UpdateTo(person);
-            PATIENT_IDENTIFICATION.PATIENT_ADDRESS.UpdateTo(person);
-
-            //  CARD_DETAILS
-            CARD_DETAILS.LAST_UPDATED = DateTime.Today.ToString("yyyyMMdd");
-            CARD_DETAILS.LAST_UPDATED_FACILITY = code;
+            UpdateFrom(client,code);
+            
+            //PIDs
+            if (client.Identifiers.Any())
+            {
+                var htsId = client.Identifiers.First();
+                AssignHtsNumber(code, htsId.Identifier);
+            }
+            else
+            {
+                AssignHtsNumber(code);
+            }
         }
+
         public void UpdateTesting(DateTime testDate, ObsFinalTestResult finalTestResult,string code)
         {
             //  HIV_TEST
@@ -160,10 +177,14 @@ namespace LiveHTS.Core.Model.SmartCard
 
         public void AssignHtsNumber(string practiceCode)
         {
+           AssignHtsNumber(practiceCode, DateTime.Now.Ticks.ToString());
+        }
+        public void AssignHtsNumber(string practiceCode,string number)
+        {
             if (!HasHtsNumber())
             {
                 // assign HTS
-                var hts = INTERNALPATIENTID.Create(DateTime.Now.Ticks.ToString(), practiceCode);
+                var hts = INTERNALPATIENTID.Create(number, practiceCode);
                 PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID.Add(hts);
             }
         }

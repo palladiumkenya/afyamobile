@@ -20,7 +20,15 @@ namespace LiveHTS.Core.Tests.Model.SmartCard
             _shrMessageWitHtsId = File.ReadAllText($@"{folder}\Json\shrHts.json");
             _shrMessageWitNoHtsId = File.ReadAllText($@"{folder}\Json\shrNoHts.json");
         }
+        [Test]
+        public void should_Create_Blank()
+        {
+            var shr = SHR.CreateBlank();
+            Assert.NotNull(shr);
+            var json = JsonConvert.SerializeObject(shr);
+            Console.WriteLine(json);
 
+        }
         [Test]
         public void should_AssignHTS()
         {

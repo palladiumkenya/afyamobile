@@ -9,6 +9,15 @@ namespace LiveHTS.Core.Model.SmartCard
         public string MIDDLE_NAME { get; set; }
         public string LAST_NAME { get; set; }
 
+        public PATIENTNAME()
+        {
+        }
+
+        public static PATIENTNAME Create()
+        {
+            return new PATIENTNAME();
+        }
+
         public void UpdateTo(Person person)
         {
             FIRST_NAME = person.FirstName;

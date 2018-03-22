@@ -1,4 +1,6 @@
-﻿namespace LiveHTS.Core.Model.SmartCard
+﻿using System.Collections.Generic;
+
+namespace LiveHTS.Core.Model.SmartCard
 {
     public class INTERNALPATIENTID
     {
@@ -11,6 +13,11 @@
         {
         }
 
+        public static List<INTERNALPATIENTID> Create()
+        {
+            return new List<INTERNALPATIENTID> {new INTERNALPATIENTID()};
+        }
+
         private INTERNALPATIENTID(string id, string assigningFacility)
         {
             ID = id;
@@ -19,6 +26,7 @@
             ASSIGNING_FACILITY = assigningFacility;
         }
 
+        
         public static INTERNALPATIENTID Create(string id, string assigningFacility)
         {
             return new INTERNALPATIENTID(id,assigningFacility);

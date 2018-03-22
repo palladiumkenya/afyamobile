@@ -325,6 +325,24 @@ namespace LiveHTS.Presentation.ViewModel
                     
                 }
             }
+            else
+            {
+                Shr =SHR.CreateBlank(ClientShr,PracticeCode);
+                if (null != EncounterShr)
+                {
+                    var test = EncounterShr.ObsFinalTestResults.FirstOrDefault();
+                    if (null != test)
+                    {
+                        if (test.FinalResult.HasValue)
+                        {
+                            Shr.UpdateTesting(EncounterShr.EncounterDate, test, PracticeCode);
+                        }
+                    }
+                }
+                SmartClient = SmartClientDTO.Create(Shr);
+                HivTestHistories = HIVTestHistoryDTO.Create(Shr);
+                ShrMessage = JsonConvert.SerializeObject(Shr);
+            }
 
             WriteCardCommand.RaiseCanExecuteChanged();
         }

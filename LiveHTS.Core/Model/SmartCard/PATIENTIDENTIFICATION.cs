@@ -25,6 +25,19 @@ namespace LiveHTS.Core.Model.SmartCard
         {
         }
 
+        public static PATIENTIDENTIFICATION Create()
+        {
+            var p=new PATIENTIDENTIFICATION();
+
+            p.PATIENT_NAME=PATIENTNAME.Create();
+            p.PATIENT_ADDRESS=PATIENTADDRESS.Create();
+            //p.INTERNAL_PATIENT_ID = INTERNALPATIENTID.Create();
+            p.MOTHER_DETAILS=MOTHERDETAILS.Create();
+            p.EXTERNAL_PATIENT_ID = EXTERNALPATIENTID.Create();
+
+            return p;
+        }
+
         private PATIENTIDENTIFICATION(PATIENTNAME patientName, string dateOfBirth, string dateOfBirthPrecision, string sex, PATIENTADDRESS patientAddress, string phoneNumber, string maritalStatus, INTERNALPATIENTID internalpatientid)
         {
             PATIENT_NAME = patientName;

@@ -8,6 +8,10 @@
         public string COUNTY { get; set; }
         public string NEAREST_LANDMARK { get; set; }
 
+        public PHYSICALADDRESS()
+        {
+        }
+
         public void UpdateTo(string landmark)
         {
             NEAREST_LANDMARK = landmark;

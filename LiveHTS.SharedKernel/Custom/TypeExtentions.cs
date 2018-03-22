@@ -32,6 +32,12 @@ namespace LiveHTS.SharedKernel.Custom
 
         public static bool IsSameAs(this object s, object other)
         {
+            if (null == s)
+                s = string.Empty;
+
+            if (null == other)
+                other=string.Empty;
+
             return s.ToString().ToLower().Trim() == other.ToString().ToLower().Trim();
         }
 

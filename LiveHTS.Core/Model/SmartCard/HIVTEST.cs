@@ -16,8 +16,13 @@ namespace LiveHTS.Core.Model.SmartCard
 
         public HIVTEST()
         {
+            PROVIDER_DETAILS=new PROVIDERDETAILS();
         }
 
+        public static List<HIVTEST> Create()
+        {
+            return new List<HIVTEST>{new HIVTEST()};
+        }
         private HIVTEST(string date, string result, string type, string facility)
         {
             DATE = date;
