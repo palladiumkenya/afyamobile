@@ -421,6 +421,9 @@ namespace LiveHTS.Presentation.ViewModel
                     if (null==Shr)
                         throw new Exception("invalid SHR");
 
+                    if(Shr.IsBlank())
+                        throw new Exception("card appears to be blank");
+
                     if (!Shr.HasHtsNumber())
                     {
                         Shr.AssignHtsNumber(PracticeCode);

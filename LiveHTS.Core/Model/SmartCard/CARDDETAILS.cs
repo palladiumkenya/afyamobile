@@ -9,6 +9,8 @@
 
         public CARDDETAILS()
         {
+            STATUS = "ACTIVE";
+            REASON = "";
         }
 
         private CARDDETAILS(string status, string reason, string lastUpdated, string lastUpdatedFacility):this(lastUpdated,lastUpdatedFacility)
@@ -31,6 +33,13 @@
             return new CARDDETAILS(lastUpdated,lastUpdatedFacility);
         }
 
+        public bool IsNew()
+        {
+            return string.IsNullOrWhiteSpace(STATUS) &&
+                   string.IsNullOrWhiteSpace(REASON) &&
+                   string.IsNullOrWhiteSpace(LAST_UPDATED) &&
+                   string.IsNullOrWhiteSpace(LAST_UPDATED_FACILITY);
+        }
 
         public void UpdateTo(CARDDETAILS carddetails)
         {

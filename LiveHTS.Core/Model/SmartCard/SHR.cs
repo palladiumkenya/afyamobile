@@ -48,6 +48,10 @@ namespace LiveHTS.Core.Model.SmartCard
 
         }
 
+        public bool IsBlank()
+        {
+            return CARD_DETAILS.IsNew();
+        }
         public bool HasHtsNumber()
         {
             if (HasHtsIds())
