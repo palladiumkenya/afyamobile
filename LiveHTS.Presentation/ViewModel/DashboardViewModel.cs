@@ -36,6 +36,8 @@ namespace LiveHTS.Presentation.ViewModel
         private List<Module> _modules=new List<Module>();
         private bool _showEnroll;
         private IndexClientDTO _indexClient;
+        private bool _showWriteToCard;
+        private IMvxCommand _smartCardCommand;
 
 
         public int GetActiveTab()
@@ -53,6 +55,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _showEnroll; }
             set { _showEnroll = value; RaisePropertyChanged(() => ShowEnroll); }
+        }
+
+        public bool ShowWriteToCard
+        {
+            get { return _showWriteToCard; }
+            set { _showWriteToCard = value; RaisePropertyChanged(() => ShowWriteToCard);}
         }
 
         public IndexClientDTO IndexClient
@@ -83,6 +91,20 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public IMvxCommand SmartCardCommand
+        {
+            get
+            {
+                _smartCardCommand = _smartCardCommand ?? new MvxCommand(SmartCard);
+                return _smartCardCommand;
+            }
+        }
+
+        private void SmartCard()
+        {
+            ShowViewModel<SmartCardViewModel>(new { id = Client.Id.ToString() });
+        }
+
         private void Enroll()
         {
             ShowViewModel<ClientRegistrationViewModel>(new { id = Client.Id, enroll="true" });
@@ -100,6 +122,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _client = value; RaisePropertyChanged(() => Client);
                 PartnerViewModel.Client = EncounterViewModel.Client =FamilyMemberViewModel.Client= Client;
                 ShowEnroll = null!=Client && !Client.IsInState(LiveState.HtsEnrolled);
+                ShowWriteToCard = !ShowEnroll;
 
                 var emode = _settings.GetValue("emod", "");
 

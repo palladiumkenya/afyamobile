@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Model.Interview;
@@ -23,6 +24,11 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             {
                 Save(obs);
             }
+        }
+        public List<ObsFinalTestResult> Find(Guid clientId)
+        {
+            return GetAll(x => x.ClientId == clientId).ToList();
+
         }
 
         public List<ObsFinalTestResult> Find(Guid clientId, Guid encounterId)

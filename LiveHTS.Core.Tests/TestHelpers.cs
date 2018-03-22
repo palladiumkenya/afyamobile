@@ -7,6 +7,7 @@ using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using NUnit.Framework;
@@ -229,6 +230,8 @@ namespace LiveHTS.Core.Tests
             }
             return records;
         }
+
+       
 
         public static Form CreateTestFormWithQuestions(int questionCount)
         {

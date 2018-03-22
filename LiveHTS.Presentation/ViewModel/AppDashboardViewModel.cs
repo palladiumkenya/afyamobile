@@ -25,6 +25,7 @@ namespace LiveHTS.Presentation.ViewModel
         private  IMvxCommand _pushDataCommand;
         private string _practiceName;
         private IMvxCommand _summaryCommand;
+        private IMvxCommand _smartCardCommand;
 
         public IMvxCommand RegistryCommand
         {
@@ -98,7 +99,15 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-   
+        public IMvxCommand SmartCardCommand
+        {
+            get
+            {
+                _smartCardCommand = _smartCardCommand ?? new MvxCommand(SmartCard);
+                return _smartCardCommand;
+            }
+        }
+
         public string Profile
         {
             get { return $"Signed in as {_profile}"; }
@@ -201,6 +210,10 @@ namespace LiveHTS.Presentation.ViewModel
         private void Summary()
         {
             ShowViewModel<UserSummaryViewModel>();
+        }
+        private void SmartCard()
+        {
+            ShowViewModel<SmartCardViewModel>();
         }
 
         public void Quit()

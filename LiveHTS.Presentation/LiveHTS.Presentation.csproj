@@ -68,6 +68,7 @@
     <Compile Include="Interfaces\ViewModel\IClientContactViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientDemographicViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IClientRelationshipsViewModel.cs" />
+    <Compile Include="Interfaces\ViewModel\ISmartCardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IUserSummaryViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IDashboardViewModel.cs" />
     <Compile Include="Interfaces\ViewModel\IFamilyMemberViewModel.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="ViewModel\SecondHIVTestViewModel.cs" />
     <Compile Include="ViewModel\FirstHIVTestViewModel.cs" />
     <Compile Include="ViewModel\SetupWizardViewModel.cs" />
+    <Compile Include="ViewModel\SmartCardViewModel.cs" />
     <Compile Include="ViewModel\StandByViewModel.cs" />
     <Compile Include="ViewModel\Template\FamilyMemberTemplate.cs" />
     <Compile Include="ViewModel\Template\PartnerTraceTemplate.cs" />

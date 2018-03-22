@@ -96,7 +96,9 @@ namespace LiveHTS.Presentation.ViewModel
             _settings = settings;
             _deviceSetupService = deviceSetupService;
             IsBusy = false;
+
             //TODO : Disable auto sign in
+
             AutoSignIn = false;
             if (AutoSignIn)
             {
@@ -119,6 +121,7 @@ namespace LiveHTS.Presentation.ViewModel
             var practice = _authService.GetDefaultPractice();
             _settings.AddOrUpdateValue("livehts.practiceid", practice.Id.ToString());
             _settings.AddOrUpdateValue("livehts.practicename", practice.Name);
+            _settings.AddOrUpdateValue("livehts.practicecode", practice.Code);
 
             _deviceSetupService.CheckRegister(new Device(serial, serial, name,practice.Id));
             var device = _authService.GetDefaultDevice();

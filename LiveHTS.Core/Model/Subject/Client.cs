@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Model;
+using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -31,6 +32,7 @@ namespace LiveHTS.Core.Model.Subject
         public bool Downloaded { get; set; }
         public bool? PreventEnroll { get; set; }
         public bool? AlreadyTestedPos { get; set; }
+        public string SmartCardSerial { get; set; }
 
         [Indexed]
         public Guid UserId { get; set; }
@@ -83,6 +85,8 @@ namespace LiveHTS.Core.Model.Subject
         {
             return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId);
         }
+
+       
 
         public bool IsHtstEnrolled()
         {
@@ -150,6 +154,15 @@ namespace LiveHTS.Core.Model.Subject
         public bool IsInPns(Guid indexId)
         {
             return IsInState(indexId,LiveState.PartnerListed);
+        }
+
+        public void AddIdentifier(ClientIdentifier clientIdentifier)
+        {
+            var ids = Identifiers.ToList();
+            clientIdentifier.ClientId = Id;
+
+            ids.Add(clientIdentifier);
+            Identifiers = ids.ToList();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IPartnerViewModel PartnerViewModel { get; }
         ISummaryViewModel SummaryViewModel { get; }
         bool ShowEnroll { get; set; }
+        bool ShowWriteToCard { get; set; }
         IndexClientDTO IndexClient { get; set; }
         Client Client { get; set; }
         Module Module { get; set; }
@@ -23,6 +24,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         IMvxCommand ManageRegistrationCommand { get;  }
         IMvxCommand EnrollCommand { get; }
+        IMvxCommand SmartCardCommand { get; }
         void GoBack();
     }
 }

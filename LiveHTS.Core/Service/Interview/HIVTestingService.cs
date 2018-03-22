@@ -207,6 +207,11 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.GetIndividual(clientId);
         }
 
+        public ObsFinalTestResult GetFinalTest(Guid clientId)
+        {
+            return _obsFinalTestResultRepository.Find(clientId).FirstOrDefault();
+        }
+
 
         private void LoadItems()
         {

@@ -295,6 +295,21 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounter;
         }
 
+        public Encounter LoadFinalTest(Guid id, bool includeObs = false)
+        {
+            var encounter = Get(id);
+
+            if (null != encounter && includeObs)
+            {
+                var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsFinalTestResults = obsFinalTestResults;
+            }
+
+            return encounter;
+        }
+
         public Encounter LoadTest(Guid encounterTypeId, Guid clientId, bool includeObs = false)
         {
             var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)

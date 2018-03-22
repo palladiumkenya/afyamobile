@@ -228,15 +228,12 @@ namespace LiveHTS.Presentation.ViewModel
             Address = Local.Address;
         }
 
-      
-
         private void LoadClients()
         {
             IsBusy = true;
             Clients =new List<Client>();
             IsBusy = false;
         }
-
        
     }
 }
