@@ -251,6 +251,7 @@ namespace LiveHTS.Core.Service.Clients
             {
                 _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsEnrolled));
                 _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsFamAcceptedYes));
+                _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsSmartCardEnrolled));
             }
 
             return client.Id;
