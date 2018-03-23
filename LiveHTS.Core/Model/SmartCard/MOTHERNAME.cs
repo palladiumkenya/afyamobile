@@ -8,6 +8,7 @@
 
         public MOTHERNAME()
         {
+            FIRST_NAME = MIDDLE_NAME = LAST_NAME = string.Empty;
         }
 
         public static MOTHERNAME Create()

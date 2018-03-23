@@ -11,6 +11,7 @@ namespace LiveHTS.Core.Model.SmartCard
         public PATIENTADDRESS()
         {
             PHYSICAL_ADDRESS=new PHYSICALADDRESS();
+            POSTAL_ADDRESS = string.Empty;
         }
 
         public static PATIENTADDRESS Create()

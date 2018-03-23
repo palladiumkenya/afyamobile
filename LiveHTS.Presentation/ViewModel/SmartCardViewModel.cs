@@ -229,6 +229,10 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         EncounterShr = _encounterService.LoadTesting(cstate.EncounterId.Value);
                         var result = _testingService.GetFinalTest(new Guid(id));
+
+                        if (null == EncounterShr)
+                            EncounterShr = _encounterService.LoadTesting(result.EncounterId);
+
                         if (null != result)
                         {
                             var list = new List<ObsFinalTestResult>();

@@ -10,6 +10,7 @@
 
         public PHYSICALADDRESS()
         {
+            VILLAGE = WARD = SUB_COUNTY = COUNTY = NEAREST_LANDMARK = string.Empty;
         }
 
         public void UpdateTo(string landmark)

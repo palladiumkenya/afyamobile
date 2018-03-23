@@ -7,6 +7,7 @@
 
         public PROVIDERDETAILS()
         {
+            NAME = ID = string.Empty;
         }
 
         public PROVIDERDETAILS(string name, string id)
