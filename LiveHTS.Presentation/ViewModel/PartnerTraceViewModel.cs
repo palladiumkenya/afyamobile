@@ -219,7 +219,8 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
-            SelectedConsent = Consents.OrderBy(x => x.Rank).FirstOrDefault();
+            if (null != Consents)
+                SelectedConsent = Consents.OrderBy(x => x.Rank).FirstOrDefault();
         }
 
         public void Init(string id)
@@ -234,6 +235,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var kitsJson = _settings.GetValue("lookup.TMode", "");
             var resultsJson = _settings.GetValue("lookup.TOutcome", "");
+            var consentJson = _settings.GetValue("lookup.TConsent", "");
 
             if (!string.IsNullOrWhiteSpace(kitsJson))
             {
@@ -242,6 +244,10 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(resultsJson))
             {
                 Outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
+            }
+            if (!string.IsNullOrWhiteSpace(consentJson))
+            {
+                Consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
             }
 
             EncounterId = Parent.Encounter.Id;

@@ -407,8 +407,6 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _dialogService.Alert($"{e.Message}", "Error saving SHR to phone", "OK");
             }
-            
-           
         }
 
         public void ReadCardDone()

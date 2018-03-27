@@ -75,6 +75,14 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     foreach (var form in module.Forms)
                     {
+                        if (form.Display == "Partner Tracing")
+                        {
+                            var clientId= Client.Id.ToString();
+                            var formId = form.Id.ToString();
+                            var indexClientId = IndexClient.Id.ToString();
+                            var st = "eeee";
+                        }
+
                         if (null != IndexClient)
                         {
                             form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id, IndexClient.Id).ToList();
