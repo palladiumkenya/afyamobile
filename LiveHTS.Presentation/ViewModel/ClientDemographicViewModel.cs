@@ -191,10 +191,15 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
+
             BirthDate = DateTime.Today.AddDays(-1);
             Title = "Demographics";
             MovePreviousLabel = "";
             MoveNextLabel = "NEXT";
+            Age = 0;
+            SelectedAgeUnit = AgeUnitOptions.First();
+
+
         }
 
         public void Init(string indexId)

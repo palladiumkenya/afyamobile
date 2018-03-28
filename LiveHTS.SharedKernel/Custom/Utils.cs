@@ -28,6 +28,8 @@ namespace LiveHTS.SharedKernel.Custom
                         break;
                 }
             }
+
+            //birthDate = new DateTime(birthDate.Year, 6, 15);
             return birthDate;
         }
 
