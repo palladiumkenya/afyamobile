@@ -9,7 +9,7 @@
 
         public EXTERNALPATIENTID()
         {
-            //ID = IDENTIFIER_TYPE = ASSIGNING_AUTHORITY = ASSIGNING_FACILITY = string.Empty;
+            ID = IDENTIFIER_TYPE = ASSIGNING_AUTHORITY = ASSIGNING_FACILITY = string.Empty;
         }
 
         public static EXTERNALPATIENTID Create()

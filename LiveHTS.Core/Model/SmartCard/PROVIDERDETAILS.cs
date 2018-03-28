@@ -15,5 +15,10 @@
             NAME = name;
             ID = id;
         }
+
+        public override string ToString()
+        {
+            return $"{NAME} ({ID})";
+        }
     }
 }
