@@ -17,24 +17,28 @@
             android:background="#FFFFFF">
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight=".2"
+                android:layout_weight=".25"
                 android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:text="Stat"
+                android:textSize="12dp"
                 local:MvxBind="Text Date, Converter=Dmy" />
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight=".6"
+                android:layout_weight=".3"
                 android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:text="0"
+                android:textSize="12dp"
                 local:MvxBind="Text Result" />
           <TextView
             android:layout_width="0dp"
-            android:layout_weight=".2"
+            android:layout_weight=".15"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:text="0"
+            android:textSize="12dp"
+            local:MvxBind="Text Facility" />
+
+          <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
             local:MvxBind="Text Type" />
         </LinearLayout>
     </LinearLayout>
