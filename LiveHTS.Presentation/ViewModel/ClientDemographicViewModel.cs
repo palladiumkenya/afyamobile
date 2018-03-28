@@ -131,7 +131,8 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _birthDate = value;
-                RaisePropertyChanged(() => BirthDate);             
+                RaisePropertyChanged(() => BirthDate);
+                CalculateAge();
             }
         }
 
@@ -263,18 +264,36 @@ namespace LiveHTS.Presentation.ViewModel
         public void CalculateBirthDate()
         {
             var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
-            BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
+            var dob = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
+
+            if (BirthDate.Year!=dob.Year)
+            {
+                BirthDate = dob;
+            }
         }
 
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
-        {      
-            if (null != BirthDate)
+        {
+            if (Age == 0)
+            {
+                if (null != BirthDate)
+                {
+                    var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
+                    Age = personAge.Age;
+                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+                    SelectedAgeUnit = ageUnit;
+                }
+            }
+            else
             {
                 var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                Age = personAge.Age;
-                var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
-                SelectedAgeUnit = ageUnit;
+                if (Age!= personAge.Age)
+                {
+                    Age = personAge.Age;
+                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+                    SelectedAgeUnit = ageUnit;
+                }
             }
         }
 
