@@ -80,7 +80,7 @@ namespace LiveHTS.Droid.Activities
 
                 switch (resultCode)
                 {
-                    case Result.Ok:
+                    case Result.Ok: 
                         var shr = data.GetStringExtra("message");
                         if (!string.IsNullOrWhiteSpace(shr))
                         {

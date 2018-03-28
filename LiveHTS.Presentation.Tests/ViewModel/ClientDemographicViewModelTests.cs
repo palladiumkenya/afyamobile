@@ -64,6 +64,18 @@ namespace LiveHTS.Presentation.Tests.ViewModel
         }
 
         [Test]
+        public void should_set_Java_Date()
+        {
+            Assert.DoesNotThrow(() =>
+            {
+                var date = new DateTime(1900, 0, 1);
+                Console.WriteLine($"{date:F}");
+            });
+          
+
+        }
+
+        [Test]
         public void should_Validate_Required()
         {
 
