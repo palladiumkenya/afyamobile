@@ -396,7 +396,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
 
                 var shrJson = JsonConvert.SerializeObject(Shr);
-                var id = await _registryService.SaveShr(client);
+                var id = await _registryService.SaveShr(client,Shr.HasTesting());
                  
                 _clientShrRecordService.SaveOrUpdate(new ClientShrRecord(id, shrJson));
 
@@ -445,7 +445,15 @@ namespace LiveHTS.Presentation.ViewModel
             }
             if (null != ShrException)
             {
-                _dialogService.Alert($"{ShrException.Message}", "Read Card Failed", "OK");
+                if (ShrException.Message.Contains("card appears to be blank"))
+                {
+                    _dialogService.Alert($"{ShrException.Message}", "Read Card", "OK");
+                }
+                else
+                {
+                    _dialogService.Alert($"{ShrException.Message}", "Read Card Failed", "OK");
+                }
+               
             }
 
             TestingCommand.RaiseCanExecuteChanged();
@@ -456,6 +464,18 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(ShrWriteResponse))
             {
                 _dialogService.ShowToast("Write successfully");
+
+                try
+                {
+                    if (null != ClientShr)
+                        _registryService.UpdateSmartCardEnrolled(ClientShr.Id);
+                }
+                catch
+                {
+
+                }
+
+                //update smartcard enrolled status
             }
 
             if (null != ShrException)

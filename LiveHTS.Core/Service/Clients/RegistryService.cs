@@ -216,7 +216,7 @@ namespace LiveHTS.Core.Service.Clients
             }
         }
 
-        public Guid SaveOrGet(Client client, bool isClient = true)
+        public Guid SaveOrGet(Client client, bool isClient = true, bool isTested = true)
         {
             //check id in use
 
@@ -252,6 +252,8 @@ namespace LiveHTS.Core.Service.Clients
                 _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsEnrolled));
                 _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsFamAcceptedYes));
                 _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsSmartCardEnrolled));
+                if(isTested)
+                    _clientStateRepository.SaveOrUpdate(new ClientState(client.Id, LiveState.HtsTested));
             }
 
             return client.Id;
@@ -276,8 +278,7 @@ namespace LiveHTS.Core.Service.Clients
             await Task.Run(() =>
             {
                 client.Downloaded = true;
-                var isClient = !client.DisableHts();
-                SaveOrUpdate(client,isClient);
+                SaveDownloaded(client);
                 foreach (var encounter in encounters)
                 {
                     _encounterRepository.Upload(encounter);
@@ -285,7 +286,7 @@ namespace LiveHTS.Core.Service.Clients
             });
         }
 
-        public async Task<Guid> SaveShr(Client shrClient)
+        public async Task<Guid> SaveShr(Client shrClient, bool isTested = true)
         {
             Guid clientId;
 
@@ -295,6 +296,11 @@ namespace LiveHTS.Core.Service.Clients
             });
 
             return clientId;
+        }
+
+        public void UpdateSmartCardEnrolled(Guid clientId)
+        {
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, LiveState.HtsSmartCardEnrolled));
         }
 
         public void Delete(Guid clientId)

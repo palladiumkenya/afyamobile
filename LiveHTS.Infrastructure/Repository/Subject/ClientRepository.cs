@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Infrastructure.Repository.Subject
 {
@@ -168,14 +170,33 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         public void SaveDownloaded(Client client)
         {
             InsertOrUpdate(client);
-            foreach (var clientState in client.ClientStates)
+
+
+            if (!ClientState.IsInState(client.ClientStates.ToList(), LiveState.HtsTested))
             {
+                if (ClientState.IsInAnyState(client.ClientStates.ToList(), LiveState.HtsTestedNeg, LiveState.HtsTestedPos,
+                    LiveState.HtsTestedInc))
+                {
+                    client.ClientStates.Add(new ClientState(client.Id, LiveState.HtsTested));
+                }
+            }
+
+            
+
+            foreach (var clientState in client.ClientStates.Where(x => x.Status == LiveState.HtsEnrolled ||
+                                                                       x.Status == LiveState.HtsSmartCardEnrolled ||
+                                                                       x.Status == LiveState.HtsFamAcceptedYes ||
+                                                                       x.Status == LiveState.HtsTested))
+            {
+
                 var rowsAffected = _db.Update(clientState);
                 if (rowsAffected == 0)
                 {
                     _db.Insert(clientState);
                 }
             }
+
+
             foreach (var clientSummary in client.ClientSummaries)
             {
                 var rowsAffected = _db.Update(clientSummary);

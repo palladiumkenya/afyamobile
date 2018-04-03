@@ -38,6 +38,7 @@
         PartnerTracedContacted,
         PartnerTracedNotcontacted,
 
-        HtsSmartCardEnrolled
+        HtsSmartCardEnrolled,
+        HtsTested
     }
 }

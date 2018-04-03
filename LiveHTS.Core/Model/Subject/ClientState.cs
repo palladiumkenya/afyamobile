@@ -132,6 +132,7 @@ namespace LiveHTS.Core.Model.Subject
 
             return false;
         }
+      
         public override string ToString()
         {
             return $"{ClientId}|{Status}|{StatusDate:F}|{(null!=IndexClientId&&!IndexClientId.Value.IsNullOrEmpty()?IndexClientId.Value.ToString():"")}";

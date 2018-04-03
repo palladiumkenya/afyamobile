@@ -47,6 +47,10 @@ namespace LiveHTS.Core.Model.SmartCard
                    PATIENT_IDENTIFICATION.INTERNAL_PATIENT_ID.Any(x => x.IDENTIFIER_TYPE.IsSameAs("HTS_NUMBER"));
 
         }
+        public bool HasTesting()
+        {
+            return HIV_TEST.Any();
+        }
 
         public bool IsBlank()
         {
