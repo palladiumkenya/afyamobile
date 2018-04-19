@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Repository.Interview;
+using LiveHTS.Core.Interfaces.Repository.SmartCard;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Config;
@@ -21,8 +22,9 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IEncounterRepository _encounterRepository;
         private readonly IClientStateRepository _clientStateRepository;
+        private readonly IPSmartStoreRepository _pSmartStoreRepository;
 
-        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IClientStateRepository clientStateRepository)
+        public RegistryService(IClientRepository clientRepository, IClientIdentifierRepository clientIdentifierRepository, IPersonRepository personRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IClientStateRepository clientStateRepository, IPSmartStoreRepository pSmartStoreRepository)
         {
             _clientRepository = clientRepository;
             _clientIdentifierRepository = clientIdentifierRepository;
@@ -30,6 +32,7 @@ namespace LiveHTS.Core.Service.Clients
             _clientRelationshipRepository = clientRelationshipRepository;
             _encounterRepository = encounterRepository;
             _clientStateRepository = clientStateRepository;
+            _pSmartStoreRepository = pSmartStoreRepository;
         }
         public Client Load(Guid id)
         {
@@ -301,6 +304,12 @@ namespace LiveHTS.Core.Service.Clients
         public void UpdateSmartCardEnrolled(Guid clientId)
         {
             _clientStateRepository.SaveOrUpdate(new ClientState(clientId, LiveState.HtsSmartCardEnrolled));
+        }
+
+        public void UpdateSmartCardShr(Guid clientId, string shr)
+        {
+            var storeSummary = PSmartStore.Create(shr, clientId);
+            _pSmartStoreRepository.SaveOrUpdate(storeSummary);
         }
 
         public void Delete(Guid clientId)

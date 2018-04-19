@@ -464,11 +464,26 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(ShrWriteResponse))
             {
                 _dialogService.ShowToast("Write successfully");
+                try
+                {
+                    if (null != ClientShr)
+                    {
+                        _registryService.UpdateSmartCardShr(ClientShr.Id, ShrWriteResponse);
+                  
+                    }
+                }
+                catch
+                {
+
+                }
 
                 try
                 {
                     if (null != ClientShr)
+                    {
+                   
                         _registryService.UpdateSmartCardEnrolled(ClientShr.Id);
+                    }
                 }
                 catch
                 {

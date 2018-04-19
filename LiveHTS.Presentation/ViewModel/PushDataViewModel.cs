@@ -190,6 +190,12 @@ namespace LiveHTS.Presentation.ViewModel
                         }
                        
                     }
+
+                    var shrs = _clientReaderService.LoadPSmartStores(id);
+                    if (null != shrs && shrs.Count > 0)
+                    {
+                       await _clientSyncService.SendClientShrs(Address, shrs);
+                     }
                     clientIdsDelete.Add(clientToDeleteDto);
                     foreach (var toDeleteDto in clientIdsDelete)
                     {

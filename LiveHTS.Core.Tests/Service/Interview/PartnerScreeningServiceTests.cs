@@ -14,6 +14,7 @@ using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.Service.Clients;
 using LiveHTS.Core.Service.Interview;
 using LiveHTS.Infrastructure.Repository.Interview;
+using LiveHTS.Infrastructure.Repository.SmartCard;
 using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.SharedKernel.Model;
 using NUnit.Framework;
@@ -46,7 +47,8 @@ namespace LiveHTS.Core.Tests.Service.Interview
         private Program _partnerscreening = new Program(new Guid("b25ec112-852f-11e7-bb31-be2e46b06b37"),
             new Guid("b262fda4-877f-11e7-bb31-be2e44b68b34"));
 
-     
+        private PSmartStoreRepository _pSmartStoreRepository;
+
 
         [OneTimeSetUp]
         public void Init()
@@ -69,8 +71,9 @@ namespace LiveHTS.Core.Tests.Service.Interview
             _encounterRepository = new EncounterRepository(_liveSetting);
             _clientStateRepository = new ClientStateRepository(_liveSetting);
             _partnerScreeningRepository = new ObsPartnerScreeningRepository(_liveSetting);
+            _pSmartStoreRepository = new PSmartStoreRepository(_liveSetting);
             _registryService = new RegistryService(_clientRepository, _clientIdentifierRepository, _personRepository,
-                _clientRelationshipRepository, _encounterRepository, _clientStateRepository);
+                _clientRelationshipRepository, _encounterRepository, _clientStateRepository, _pSmartStoreRepository);
 
             _partnerScreeningService = new PartnerScreeningService(_encounterRepository, _partnerScreeningRepository,
                 _categoryRepository, _clientStateRepository);

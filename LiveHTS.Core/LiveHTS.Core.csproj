@@ -67,6 +67,7 @@
     <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
+    <Compile Include="Interfaces\Repository\SmartCard\IPSmartStoreRepository.cs" />
     <Compile Include="Interfaces\Repository\SmartCard\IClientShrRecordRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientStateRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IUserSummaryRepository.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Model\SmartCard\PATIENTNAME.cs" />
     <Compile Include="Model\SmartCard\PHYSICALADDRESS.cs" />
     <Compile Include="Model\SmartCard\PROVIDERDETAILS.cs" />
+    <Compile Include="Model\SmartCard\PSmartStore.cs" />
     <Compile Include="Model\SmartCard\SHR.cs" />
     <Compile Include="Model\SmartClientDTO.cs" />
     <Compile Include="Model\HIVTestHistoryDTO.cs" />
