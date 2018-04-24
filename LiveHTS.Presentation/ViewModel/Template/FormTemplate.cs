@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Presentation.ViewModel.Template
 {
@@ -38,7 +39,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Id = r.Id;
             Display = r.Display;
             EncounterTypeId = program.EncounterTypeId;
-            EncounterTypeDisplay = program.Display;
+            EncounterTypeDisplay = SetDisplay(r, program);
             EncounterTypeDescription = program.Description;
             Rank = program.Rank;
             DefaultEncounterTypeId = r.DefaultEncounterTypeId;
@@ -46,6 +47,25 @@ namespace LiveHTS.Presentation.ViewModel.Template
             ConsentRequired = r.ConsentRequired;
             HasConsent = r.HasConsent;
             Block = r.Block;
+        }
+
+        private string SetDisplay(Form form, Program program)
+        {
+            if (form.IsRepeat)
+            {
+                if (program.Display.IsSameAs("Pre Test"))
+                {
+                    return "Pre Test - (REPEAT)";
+                }
+
+                if (program.Display.IsSameAs("Testing"))
+                {
+                    return "Testing  - (REPEAT)";
+                }
+            }
+            
+
+            return program.Display;
         }
     }
 }

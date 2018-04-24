@@ -18,10 +18,11 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         void Save(Client client,Guid cohortId);
         void UpdateRelationShips(string relationshipTypeId,Guid clientId, Guid otherClientId);
         void SaveOrUpdate(Client client,bool isClient=true);
-        Guid SaveOrGet(Client client, bool isClient = true);
+        Guid SaveOrGet(Client client, bool isClient = true, bool isTested = true);
         void SaveDownloaded(Client client);
         Task Download(Client client,List<Encounter> encounters);
-        Task<Guid> SaveShr(Client shrClient);
+        Task<Guid> SaveShr(Client shrClient,bool isTested=true);
+        void UpdateSmartCardEnrolled(Guid clientId);
         void Delete(Guid clientId);
     }
 }

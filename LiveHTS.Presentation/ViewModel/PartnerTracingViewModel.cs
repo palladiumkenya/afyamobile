@@ -80,7 +80,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.link.mode", "new");
-                Encounter = _tracingService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId,Guid.NewGuid());
+                Encounter = _tracingService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId, IndexClient.Id);
             }
             else
             {
@@ -105,9 +105,8 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("lookup.TMode", JsonConvert.SerializeObject(modes));
             var outcomes = _lookupService.GetCategoryItems("PNSOutcome", true, "[Select Outcome]").ToList();
             _settings.AddOrUpdateValue("lookup.TOutcome", JsonConvert.SerializeObject(outcomes));
-
-
-
+            var consents = _lookupService.GetCategoryItems("YesNo", true, "[Select Consent]").ToList();
+            _settings.AddOrUpdateValue("lookup.TConsent", JsonConvert.SerializeObject(consents));
 
         }
 
@@ -192,6 +191,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var modesJson = _settings.GetValue("lookup.TMode", "");
             var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
+            var consentJson = _settings.GetValue("lookup.TConsent", "");
 
             List<CategoryItem> modes = new List<CategoryItem>();
             if (!string.IsNullOrWhiteSpace(modesJson))
@@ -204,16 +204,22 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(outcomeJson);
             }
+            
+            List<CategoryItem> consents = new List<CategoryItem>();
+            if (!string.IsNullOrWhiteSpace(consentJson))
+            {
+                consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
+            }
 
 
 
             if (null != Encounter)
             {
-                Traces = ConvertToTraceWrapperClass(this, Encounter, modes, outcomes);
+                Traces = ConvertToTraceWrapperClass(this, Encounter, modes, outcomes, consents);
             }
         }
 
-        private static List<PartnerTraceTemplateWrap> ConvertToTraceWrapperClass(IPartnerTracingViewModel clientDashboardViewModel, Encounter encounter, List<CategoryItem> modes, List<CategoryItem> outcomes)
+        private static List<PartnerTraceTemplateWrap> ConvertToTraceWrapperClass(IPartnerTracingViewModel clientDashboardViewModel, Encounter encounter, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents)
         {
             List<PartnerTraceTemplateWrap> list = new List<PartnerTraceTemplateWrap>();
 
@@ -221,7 +227,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             foreach (var r in testResults)
             {
-                list.Add(new PartnerTraceTemplateWrap(clientDashboardViewModel, new PartnerTraceTemplate(r, modes, outcomes)));
+                list.Add(new PartnerTraceTemplateWrap(clientDashboardViewModel, new PartnerTraceTemplate(r, modes, outcomes,consents)));
             }
 
             return list;

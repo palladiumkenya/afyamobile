@@ -48,6 +48,32 @@ namespace LiveHTS.Core.Model.Survey
         [Ignore]
         public bool Block { get; set; }
 
+        [Ignore]
+        public bool ClientDownloaded { get; set; }
+
+        [Ignore]
+        public bool IsRepeat
+        {
+            get
+            {
+                if (ClientStates.Count > 0)
+                {
+                    //downloaded
+
+                    if (ClientDownloaded)
+                    {
+                        return ClientState.IsInState(ClientStates, LiveState.HtsTested);
+                    }
+                    if (ClientState.IsInState(ClientStates, LiveState.HtsSmartCardEnrolled))
+                    {
+                        return ClientState.IsInState(ClientStates, LiveState.HtsTested);
+                    }
+                }
+
+                return false;
+                
+            }
+        }
         private bool CheckConsentRequired()
         {
             //HIV Test Form
@@ -156,7 +182,6 @@ B25EC112-852F-11E7-BB31-BE2E46B06B38	Partner Tracing	Partner Tracing	B260C688-85
 
         private bool CheckClientState()
         {
-
             //HIV Test Form 
             if (Id == new Guid("b25ec568-852f-11e7-bb31-be2e44b06b34"))
             {

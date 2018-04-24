@@ -100,6 +100,7 @@ namespace LiveHTS.Presentation.ViewModel
             //TODO : Disable auto sign in
 
             AutoSignIn = false;
+
             if (AutoSignIn)
             {
                 Username = "admin";

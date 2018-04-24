@@ -6,7 +6,7 @@ namespace LiveHTS.Presentation.Events
     public class ChangedDateEvent:EventArgs
     {
         public Guid Id { get; set; }
-        public DateTime Date { get; set; }
+        public  DateTime Date { get; set; }
 
         public ChangedDateEvent(Guid id, DateTime date)
         {

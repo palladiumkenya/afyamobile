@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Runtime.CompilerServices;
 using Android.App;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -33,7 +34,8 @@ namespace LiveHTS.Droid.Custom
             CurrentDate = currentDate;
             DatePickerFragmentV4 frag = new DatePickerFragmentV4();
             frag._dateSelectedHandler = onDateSelected;
-            return frag;
+           return frag;
+            
         }
 
         public override Dialog OnCreateDialog(Bundle savedInstanceState)
@@ -53,7 +55,7 @@ namespace LiveHTS.Droid.Custom
                 dialog = new DatePickerDialog(Activity,
                     this,
                     currently.Year,
-                    currently.Month,
+                    currently.Month-1,
                     currently.Day);
             }
             
@@ -74,5 +76,5 @@ namespace LiveHTS.Droid.Custom
             Log.Debug(TAG, selectedDate.ToLongDateString());
             _dateSelectedHandler(selectedDate);
         }
-    }
+  }
 }

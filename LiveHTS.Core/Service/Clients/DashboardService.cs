@@ -85,6 +85,7 @@ namespace LiveHTS.Core.Service.Clients
         public void RemoveEncounter(Guid id)
         {
             _encounterRepository.Delete(id);
+            _encounterRepository.Purge(id,string.Empty);
         }
     }
 }

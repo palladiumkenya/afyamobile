@@ -1,4 +1,6 @@
-﻿namespace LiveHTS.Core.Model.SmartCard
+﻿using LiveHTS.SharedKernel.Custom;
+
+namespace LiveHTS.Core.Model.SmartCard
 {
     public class CARDDETAILS
     {
@@ -10,7 +12,7 @@
         public CARDDETAILS()
         {
             STATUS = "ACTIVE";
-            REASON = "";
+            REASON = LAST_UPDATED = LAST_UPDATED_FACILITY = string.Empty;
         }
 
         private CARDDETAILS(string status, string reason, string lastUpdated, string lastUpdatedFacility):this(lastUpdated,lastUpdatedFacility)
@@ -35,7 +37,7 @@
 
         public bool IsNew()
         {
-            return string.IsNullOrWhiteSpace(STATUS) &&
+            return !string.IsNullOrWhiteSpace(STATUS) && STATUS.IsSameAs("ACTIVE") &&
                    string.IsNullOrWhiteSpace(REASON) &&
                    string.IsNullOrWhiteSpace(LAST_UPDATED) &&
                    string.IsNullOrWhiteSpace(LAST_UPDATED_FACILITY);

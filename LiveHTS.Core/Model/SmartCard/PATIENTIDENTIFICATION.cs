@@ -23,6 +23,8 @@ namespace LiveHTS.Core.Model.SmartCard
 
         public PATIENTIDENTIFICATION()
         {
+            DATE_OF_BIRTH = DATE_OF_BIRTH_PRECISION =
+                SEX = DEATH_DATE = DEATH_INDICATOR = PHONE_NUMBER = MARITAL_STATUS = string.Empty;
         }
 
         public static PATIENTIDENTIFICATION Create()

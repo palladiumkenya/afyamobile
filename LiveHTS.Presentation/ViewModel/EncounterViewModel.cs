@@ -83,7 +83,8 @@ namespace LiveHTS.Presentation.ViewModel
                         {
                             form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
                         }
-                      
+
+                        form.ClientDownloaded = Client.Downloaded;
                         form.KeyClientEncounters= _interviewService.LoadKeyEncounters(Client.Id).ToList();
                         form.ClientStates = Client.ClientStates.ToList();
                         form.IndexClientId = IndexClient?.Id;

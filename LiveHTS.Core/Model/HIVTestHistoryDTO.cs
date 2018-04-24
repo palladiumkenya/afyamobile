@@ -11,16 +11,18 @@ namespace LiveHTS.Core.Model
         public DateTime Date { get; set; }
         public string Result { get; set; }
         public string Type { get; set; }
+        public string Facility { get; set; }
 
         public HIVTestHistoryDTO()
         {
         }
 
-        private HIVTestHistoryDTO(DateTime date, string result, string type)
+        private HIVTestHistoryDTO(DateTime date, string result, string type,string facility)
         {
             Date = date;
             Result = result;
             Type = type;
+            Facility = facility;
         }
 
         public static List<HIVTestHistoryDTO> Create(SHR shr)
@@ -29,7 +31,7 @@ namespace LiveHTS.Core.Model
 
             foreach (var hivtest in shr.HIV_TEST)
             {
-                list.Add(new HIVTestHistoryDTO(GetTestDate(hivtest.DATE), hivtest.RESULT, hivtest.TYPE));
+                list.Add(new HIVTestHistoryDTO(GetTestDate(hivtest.DATE), hivtest.RESULT, hivtest.TYPE,hivtest.FACILITY));
             }
 
             if (list.Count == 0)

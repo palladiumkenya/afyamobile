@@ -213,7 +213,14 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void SmartCard()
         {
-            ShowViewModel<SmartCardViewModel>();
+            if (_deviceSetupService.HasPulledData())
+            {
+                ShowViewModel<SmartCardViewModel>();
+            }
+            else
+            {
+                _dialogService.Alert("Please Pull Data before proceeding !");
+            }
         }
 
         public void Quit()

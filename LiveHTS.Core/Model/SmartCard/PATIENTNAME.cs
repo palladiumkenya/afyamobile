@@ -11,6 +11,7 @@ namespace LiveHTS.Core.Model.SmartCard
 
         public PATIENTNAME()
         {
+            FIRST_NAME = MIDDLE_NAME = LAST_NAME = string.Empty;
         }
 
         public static PATIENTNAME Create()

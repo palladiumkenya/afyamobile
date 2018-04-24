@@ -115,7 +115,7 @@
     <Compile Include="Interfaces\ViewModel\Template\IEncounterTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Template\IPartnerTemplate.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyMemberTemplateWrap.cs" />
-    <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyTraceTemplateWrap - Copy.cs" />
+    <Compile Include="Interfaces\ViewModel\Wrapper\IPartnerTraceTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IModuleTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\ITestTemplateWrap.cs" />
     <Compile Include="Interfaces\ViewModel\Wrapper\IFamilyTraceTemplateWrap.cs" />

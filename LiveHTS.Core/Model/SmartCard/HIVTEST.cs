@@ -5,7 +5,7 @@ using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Model.SmartCard
 {
-    public class HIVTEST:IEqualityComparer<HIVTEST>
+    public class HIVTEST
     {
         public string DATE { get; set; }
         public string RESULT { get; set; }
@@ -53,28 +53,31 @@ namespace LiveHTS.Core.Model.SmartCard
             return "";
         }
 
-        public bool Equals(HIVTEST b1, HIVTEST b2)
+        public override string ToString()
         {
-            if (b2 == null && b1 == null)
-                return true;
-            if (b1 == null | b2 == null)
-                return false;
-            if (
-                b1.DATE.IsSameAs(b2.DATE) &&
-                b1.RESULT.IsSameAs(b2.RESULT) &&
-                b1.FACILITY.IsSameAs(b2.FACILITY)
-                )
-                return true;
-            else
-                return false;
+            return $"{DATE}|{RESULT}|{TYPE}|{FACILITY} - {PROVIDER_DETAILS}";
         }
 
-        public int GetHashCode(HIVTEST obj)
+        public override bool Equals(object obj)
         {
-            int hCode = obj.DATE.GetHashCode() + obj.RESULT.GetHashCode() + obj.TYPE.GetHashCode() +
-                        obj.FACILITY.GetHashCode();
+            var hIVTEST = obj as HIVTEST;
+            return hIVTEST != null &&
+                   DATE.IsSameAs(hIVTEST.DATE) &&
+                   RESULT.IsSameAs(hIVTEST.RESULT) &&
+                   TYPE.IsSameAs(hIVTEST.TYPE) &&
+                   FACILITY.IsSameAs(hIVTEST.FACILITY) &&
+                   STRATEGY.IsSameAs(hIVTEST.STRATEGY);
+        }
 
-            return hCode.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hashCode = -1794862602;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(DATE);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(RESULT);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(TYPE);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FACILITY);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(STRATEGY);
+            return hashCode;
         }
     }
 }
