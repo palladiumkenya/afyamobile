@@ -23,6 +23,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Task Download(Client client,List<Encounter> encounters);
         Task<Guid> SaveShr(Client shrClient,bool isTested=true);
         void UpdateSmartCardEnrolled(Guid clientId);
+        void UpdateSmartCardShr(Guid clientId, string shr);
         void Delete(Guid clientId);
     }
 }

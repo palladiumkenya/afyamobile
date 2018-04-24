@@ -5,6 +5,7 @@ using FizzWare.NBuilder;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
+using LiveHTS.Core.Interfaces.Repository.SmartCard;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Interview;
@@ -14,6 +15,7 @@ using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.Service.Clients;
 using LiveHTS.Core.Service.Interview;
 using LiveHTS.Infrastructure.Repository.Interview;
+using LiveHTS.Infrastructure.Repository.SmartCard;
 using LiveHTS.Infrastructure.Repository.Subject;
 using LiveHTS.SharedKernel.Model;
 using NUnit.Framework;
@@ -42,7 +44,7 @@ namespace LiveHTS.Core.Tests.Service.Interview
 
         private IObsMemberScreeningRepository _memberScreeningRepository;
         private ICategoryRepository _categoryRepository;
-
+        private IPSmartStoreRepository _pSmartStoreRepository;
         private Program _memberscreening = new Program(new Guid("b25ec112-852f-11e7-bb31-be2e45b06b35"),
             new Guid("b262fda4-877f-11e7-bb31-be2e44b66b34"));
 
@@ -70,8 +72,9 @@ namespace LiveHTS.Core.Tests.Service.Interview
             _encounterRepository = new EncounterRepository(_liveSetting);
             _clientStateRepository = new ClientStateRepository(_liveSetting);
             _memberScreeningRepository = new ObsMemberScreeningRepository(_liveSetting);
+            _pSmartStoreRepository=new PSmartStoreRepository(_liveSetting);
             _registryService = new RegistryService(_clientRepository, _clientIdentifierRepository, _personRepository,
-                _clientRelationshipRepository, _encounterRepository, _clientStateRepository);
+                _clientRelationshipRepository, _encounterRepository, _clientStateRepository,_pSmartStoreRepository);
 
             _memberScreeningService = new MemberScreeningService(_encounterRepository, _memberScreeningRepository,
                 _categoryRepository, _clientStateRepository);
