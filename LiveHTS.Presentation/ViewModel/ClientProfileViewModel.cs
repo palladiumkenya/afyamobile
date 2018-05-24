@@ -331,6 +331,7 @@ namespace LiveHTS.Presentation.ViewModel
                         client.IsPartner = true;
                 }
 
+             
                 client.PreventEnroll = true;
                 _registryService.SaveOrUpdate(client,false);
 
@@ -388,5 +389,6 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+    
     }
 }

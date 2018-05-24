@@ -19,10 +19,11 @@ namespace LiveHTS.Core.Model
         public bool IsPartner { get; set; }
         public bool? PreventEnroll { get; set; }
         public bool? AlreadyTestedPos { get; set; }
+        public Guid UserId { get; set; }
         public List<ClientIdentifier> Identifiers { get; set; } = new List<ClientIdentifier>();
         public List<ClientRelationship> Relationships { get; set; } = new List<ClientRelationship>();
         public List<ClientState> ClientStates { get; set; }=new List<ClientState>();
-
+      
         public SyncClientDTO(Client client)
         {
             Id = client.Id;
@@ -38,6 +39,7 @@ namespace LiveHTS.Core.Model
             IsPartner = client.IsPartner;
             PreventEnroll = client.PreventEnroll;
             AlreadyTestedPos = client.AlreadyTestedPos;
-    }
+            UserId = client.UserId;
+        }
     }
 }
