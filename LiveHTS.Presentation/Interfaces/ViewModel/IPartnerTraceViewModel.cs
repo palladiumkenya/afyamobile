@@ -29,10 +29,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<CategoryItem> Outcomes { get; set; }
         CategoryItem SelectedOutcome { get; set; }
 
+        bool EnableConsent { get; set; }
         Guid Consent { get; set; }
         List<CategoryItem> Consents { get; set; }
         CategoryItem SelectedConsent { get; set; }
-        DateTime BookingDate { get; set; }
+
+        bool EnableBooking { get; set; }
+        DateTime? BookingDate { get; set; }
 
         Guid EncounterId { get; set; }
         IMvxCommand SaveTraceCommand { get; }

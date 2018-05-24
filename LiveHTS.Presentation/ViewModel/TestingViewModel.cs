@@ -383,6 +383,9 @@ namespace LiveHTS.Presentation.ViewModel
                 //SetDeclincedState();
             }
         }
+        /// <summary>
+        /// Accepted to partnerlisting
+        /// </summary>
 
         public Guid SelfTestOption
         {
@@ -425,7 +428,7 @@ namespace LiveHTS.Presentation.ViewModel
         private void SetPnsAcceptedState()
         {
             if (null != SelectedFinalTestResult && !SelectedFinalTestResult.ItemId.IsNullOrEmpty() &&
-                SelectedFinalTestResult.ItemId == new Guid("b25efd8a-852f-11e7-bb31-be2e44b06b34"))  //pos
+                SelectedFinalTestResult.ItemId == new Guid("b25efd8a-852f-11e7-bb31-be2e44b06b34") && !ClientIsPead())  //pos
             {
                 EnableSelfTestOption = true;
             }
@@ -435,6 +438,11 @@ namespace LiveHTS.Presentation.ViewModel
                 EnableSelfTestOption = false;
             }
 
+        }
+
+        private bool ClientIsPead()
+        {
+            return null != Client && Client.IsPead;
         }
 
         public List<CategoryItem> SelfTestOptions

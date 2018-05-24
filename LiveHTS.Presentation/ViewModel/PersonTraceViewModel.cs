@@ -257,7 +257,8 @@ namespace LiveHTS.Presentation.ViewModel
           
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
-            SelectedConsent=Consents.OrderBy(x => x.Rank).FirstOrDefault();
+            if (null != Consents)
+                SelectedConsent =Consents.OrderBy(x => x.Rank).FirstOrDefault();
 
         }
 

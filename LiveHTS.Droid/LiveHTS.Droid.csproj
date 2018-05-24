@@ -22,7 +22,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>..\Template\AfyaMobile.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>E:\Workspace\Palladium\hts\LiveHTS\Template\AfyaMobile.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>c0nstella</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>afyamobile</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>c0nstella</AndroidSigningKeyPass>
@@ -35,9 +35,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

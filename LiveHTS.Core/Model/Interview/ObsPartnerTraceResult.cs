@@ -17,7 +17,7 @@ namespace LiveHTS.Core.Model.Interview
         [Ignore]
         public string OutcomeDisplay { get; set; }
         public Guid? Consent { get; set; }
-        public DateTime BookingDate { get; set; }
+        public DateTime? BookingDate { get; set; }
         public Guid IndexClientId { get; set; }
         public Guid EncounterId { get; set; }
 
@@ -26,7 +26,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsPartnerTraceResult(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime bookingDate ,Guid encounterId,Guid indexClientId) : this()
+        public ObsPartnerTraceResult(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime? bookingDate ,Guid encounterId,Guid indexClientId) : this()
         {
             Date = date;
             Mode = mode;
@@ -37,17 +37,17 @@ namespace LiveHTS.Core.Model.Interview
             IndexClientId = indexClientId;
         }
 
-        public static ObsPartnerTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime bookingDate, Guid encounterId, Guid indexClientId)
+        public static ObsPartnerTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
         {
             var obs = new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate,encounterId,indexClientId);
             obs.Id = id;
             return obs;
         }
-        public static ObsPartnerTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime bookingDate, Guid encounterId, Guid indexClientId)
+        public static ObsPartnerTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
         {
             return new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate, encounterId, indexClientId);
         }
-        public static ObsPartnerTraceResult CreateNew(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime bookingDate, Guid encounterId, Guid indexClientId)
+        public static ObsPartnerTraceResult CreateNew(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
         {
             return new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate, encounterId, indexClientId);
         }

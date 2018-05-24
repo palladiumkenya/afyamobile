@@ -45,6 +45,25 @@ namespace LiveHTS.Core.Model.Subject
             }
         }
 
+        [Ignore]
+        [JsonIgnore]
+        public bool IsPead
+        {
+            get
+            {
+                try
+                {
+                    var age = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
+                    return age.Age < 15;
+                }
+                catch
+                {
+                }
+
+                return false;
+            }
+        }
+
         public Person()
         {
             Id = LiveGuid.NewGuid();

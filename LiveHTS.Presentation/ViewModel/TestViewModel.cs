@@ -323,7 +323,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator.AddRule(
                 nameof(Expiry),
                 () => RuleResult.Assert(
-                    Expiry > DateTime.Today,
+                    Expiry >= DateTime.Today,
                     $"{nameof(Expiry)} should be a valid date"
                 )
             );
