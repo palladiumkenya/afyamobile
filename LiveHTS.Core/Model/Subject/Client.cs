@@ -47,6 +47,8 @@ namespace LiveHTS.Core.Model.Subject
         [Ignore]
         public ICollection<ClientSummary> ClientSummaries { get; set; } = new List<ClientSummary>();
 
+        [Ignore]
+        public bool IsPead => null != Person && Person.IsPead;
 
         public Client()
         {

@@ -23,6 +23,9 @@ namespace LiveHTS.Core.Model.Interview
         public Guid? ResultGiven { get; set; }
         [Indexed]
         public Guid? CoupleDiscordant { get; set; }
+        /// <summary>
+        /// Accepted to partnerlisting
+        /// </summary>
         [Indexed]
         public Guid? SelfTestOption { get; set; }
         [Indexed]
