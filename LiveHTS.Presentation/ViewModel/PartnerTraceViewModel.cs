@@ -40,7 +40,9 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _consent;
         private List<CategoryItem> _consents;
         private CategoryItem _selectedConsent;
-        private DateTime _bookingDate;
+        private DateTime? _bookingDate;
+        private bool _enableConsent;
+        private bool _enableBooking;
 
         public bool EditMode
         {
@@ -125,9 +127,28 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedOutcome = value; RaisePropertyChanged(() => SelectedOutcome);
                 if (null != SelectedOutcome)
                     Outcome = SelectedOutcome.ItemId;
+                SetOutcome();
             }
         }
-
+        private void SetOutcome()
+        {
+            //
+            if (null != SelectedOutcome && !SelectedOutcome.ItemId.IsNullOrEmpty() &&
+                SelectedOutcome.ItemId == new Guid("b25f0a50-852f-11e7-bb31-be2e44b06b34"))  //Contacted
+            {
+                EnableBooking = EnableConsent = true;
+            }
+            else
+            {
+                EnableBooking = EnableConsent = false;
+                SelectedConsent = Consents.OrderBy(x => x.Rank).FirstOrDefault();
+            }
+        }
+        public bool EnableConsent
+        {
+            get { return _enableConsent; }
+            set { _enableConsent = value; RaisePropertyChanged(() => EnableConsent); }
+        }
         public Guid Consent
         {
             get { return _consent; }
@@ -152,7 +173,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public DateTime BookingDate
+        public bool EnableBooking
+        {
+            get { return _enableBooking; }
+            set { _enableBooking = value; RaisePropertyChanged(() => EnableBooking); }
+        }
+        public DateTime? BookingDate
         {
             get { return _bookingDate; }
             set { _bookingDate = value; RaisePropertyChanged(()=>BookingDate);}
@@ -177,7 +203,7 @@ namespace LiveHTS.Presentation.ViewModel
         public PartnerTraceViewModel()
         {
             Validator = new ValidationHelper();
-            Date=DateTime.Today;
+            BookingDate = Date = DateTime.Today;
             
             _tracingService =  Mvx.Resolve<IPartnerTracingService>();
             _settings = Mvx.Resolve<ISettings>();
@@ -215,7 +241,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void Clear()
         {
-            Date = DateTime.Today;
+            BookingDate= Date = DateTime.Today;
 
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
@@ -295,7 +321,25 @@ namespace LiveHTS.Presentation.ViewModel
                     $"{nameof(Date)} should be a valid date"
                 )
             );
-            
+
+            if (EnableConsent)
+            {
+                Validator.AddRule(
+                    nameof(Consent),
+                    () => RuleResult.Assert(
+                        !Consent.IsNullOrEmpty(),
+                        $"{nameof(Consent)} is required"
+                    )
+                );
+                Validator.AddRule(
+                    nameof(BookingDate),
+                    () => RuleResult.Assert(
+                        BookingDate >= DateTime.Today,
+                        $"{nameof(BookingDate)} should be a valid date"
+                    )
+                );
+            }
+
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
             if (null != Errors && Errors.Count > 0)

@@ -57,7 +57,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             _FamilyMemberTemplate = FamilyMemberTemplate;
             _FamilyMemberViewModel = FamilyMemberViewModel;
-            ScreenText = "Screen";
+            ScreenText = "Screen/Trace";
             ShowScreen = !_FamilyMemberTemplate.IsIndex;
             if (_FamilyMemberTemplate.IsIndex)
                 _FamilyMemberTemplate.FullName = $"{_FamilyMemberTemplate.FullName} [index]";

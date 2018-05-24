@@ -61,7 +61,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         {
             _partnerTemplate = partnerTemplate;
             _partnerViewModel = partnerViewModel;
-            ScreenText = "Screen";
+            ScreenText = "Screen/Trace";
             ShowScreen = !_partnerTemplate.IsIndex;
             if (_partnerTemplate.IsIndex)
                 _partnerTemplate.FullName = $"{partnerTemplate.FullName} [index]";
