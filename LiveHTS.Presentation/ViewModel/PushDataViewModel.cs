@@ -176,40 +176,51 @@ namespace LiveHTS.Presentation.ViewModel
                     {
                         var clientInfo = new SyncClientDTO(client);
                         CurrentStatus = showPerc("Clients", n, count);
-                        await _clientSyncService.SendClients(Address, clientInfo);
-                        clientToDeleteDto = new ClientToDeleteDTO(client.Id, client.PersonId);
-                    }
-
-                    var encounters = _clientReaderService.LoadEncounters(id);
-                    if (null != encounters && encounters.Count > 0)
-                    {
-                        var syncEncounters = SyncClientEncounterDTO.Create(encounters,client);
-                        await _clientSyncService.SendClientEncounters(Address, syncEncounters);
-                        foreach (var encounter in encounters)
+                        var status= await _clientSyncService.AttempSendClients(Address, clientInfo);
+                        if (status)
                         {
-                            clientToDeleteDto.AddEnounter(new EnconterToDeleteDTO(encounter.Id, encounter.EncounterType));
+                            clientToDeleteDto = new ClientToDeleteDTO(client.Id, client.PersonId);
                         }
-                       
                     }
 
-                    var shrs = _clientReaderService.LoadPSmartStores(id);
-                    if (null != shrs && shrs.Count > 0)
+                    if (!clientToDeleteDto.NotSent)
                     {
-                       await _clientSyncService.SendClientShrs(Address, shrs);
-                     }
-                    clientIdsDelete.Add(clientToDeleteDto);
-                    foreach (var toDeleteDto in clientIdsDelete)
-                    {
-                        //TODO: ALLOW DELETE [DONE]
-                        _clientReaderService.Purge(toDeleteDto);
+                        var encounters = _clientReaderService.LoadEncounters(id);
+                        if (null != encounters && encounters.Count > 0)
+                        {
+                            var syncEncounters = SyncClientEncounterDTO.Create(encounters, client);
+                            var status=await _clientSyncService.AttempSendClientEncounters(Address, syncEncounters);
+                            if (status)
+                            {
+                                foreach (var encounter in encounters)
+                                {
+                                    clientToDeleteDto.AddEnounter(new EnconterToDeleteDTO(encounter.Id,
+                                        encounter.EncounterType));
+                                }
+                            }
+
+                        }
+
+                        var shrs = _clientReaderService.LoadPSmartStores(id);
+                        if (null != shrs && shrs.Count > 0)
+                        {
+                            await _clientSyncService.SendClientShrs(Address, shrs);
+                        }
+
+                        clientIdsDelete.Add(clientToDeleteDto);
+                        foreach (var toDeleteDto in clientIdsDelete)
+                        {
+                            //TODO: ALLOW DELETE [DONE]
+                            _clientReaderService.Purge(toDeleteDto);
+                        }
                     }
                 }
                 
                 //  send
                 
             
-
-                CurrentStatus = "done!";
+                
+                CurrentStatus = $"done! sent {clientIdsDelete.Count} of {count} ";
 
                 
                 _dialogService.ShowToast("completed successfully");

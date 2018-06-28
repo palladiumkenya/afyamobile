@@ -104,6 +104,44 @@ namespace LiveHTS.Core.Service.Sync
             }
         }
 
+        public async Task<bool> AttemptMakeApiCall(string url, HttpMethod method, object data = null)
+        {
+            using (var httpClient = new HttpClient(new NativeMessageHandler { UseCookies = false }))
+            {
+                using (var request = new HttpRequestMessage { RequestUri = new Uri(url), Method = method })
+                {
+
+                    // add content
+
+
+                    JsonSerializerSettings microsoftDateFormatSettings = new JsonSerializerSettings
+                    {
+                        DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+                    };
+
+                    if (method != HttpMethod.Get)
+                    {
+                        var json = JsonConvert.SerializeObject(data, microsoftDateFormatSettings);
+                        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                    }
+
+
+                    try
+                    {
+                        await httpClient.SendAsync(request).ConfigureAwait(false);
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _error = ex;
+                        
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public Exception Error
         {
             get { return _error; }
