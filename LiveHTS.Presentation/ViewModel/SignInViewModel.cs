@@ -26,10 +26,19 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _setUpCommand;
         private bool _isBusy;
         private string _facility;
-        
-
+        private string _version;
 
         public User User { get; private set; }
+
+        public string Version
+        {
+            get { return $"v {_version}"; }
+            set
+            {
+                _version = value;
+                RaisePropertyChanged(() => Version);
+            }
+        }
 
         public string Facility
         {
@@ -131,6 +140,11 @@ namespace LiveHTS.Presentation.ViewModel
             var provider = _authService.GetDefaultProvider();
             _settings.AddOrUpdateValue("livehts.providerid", provider.Id.ToString());
             _settings.AddOrUpdateValue("livehts.providername", provider.Person.FullName);
+        }
+
+        public void LoadVersion(string version)
+        {
+            Version = version;
         }
 
         public void UpdateSession()
