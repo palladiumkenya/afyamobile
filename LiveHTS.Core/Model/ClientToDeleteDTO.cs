@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Model
 {
@@ -32,6 +33,11 @@ namespace LiveHTS.Core.Model
         public void AddRelations(Guid id)
         {
             Relations.Add(id);
+        }
+
+        public bool NotSent
+        {
+            get { return Id.IsNullOrEmpty() && PersonId.IsNullOrEmpty(); }
         }
     }
 }

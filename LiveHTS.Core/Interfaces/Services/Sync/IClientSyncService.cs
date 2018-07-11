@@ -17,6 +17,11 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
         Task SendClients(string url,SyncClientDTO client);
         Task SendClientEncounters(string url, List<SyncClientEncounterDTO> encounters);
         Task SendClientShrs(string url, List<PSmartStore> pSmartStores);
+
+        Task<bool> AttempSendClients(string url, SyncClientDTO client);
+        Task<bool> AttempSendClientEncounters(string url, List<SyncClientEncounterDTO> encounters);
+        Task<bool> AttempSendClientShrs(string url, List<PSmartStore> pSmartStores);
+
         Task<List<RemoteClientDTO>> SearchClients(string url, string name);
         Task<RemoteClientDTO> DownloadClient(string url, Guid id);
     }

@@ -44,6 +44,28 @@ namespace LiveHTS.Core.Service.Sync
             return _restClient.MakeApiCall($"{url}", HttpMethod.Post, pSmartStores);
         }
 
+        public async Task<bool> AttempSendClients(string url, SyncClientDTO client)
+        {
+            url = GetActivateUrl(url, "demographics");
+
+            return await _restClient.AttemptMakeApiCall($"{url}", HttpMethod.Post, client);
+        }
+
+        public async Task<bool> AttempSendClientEncounters(string url, List<SyncClientEncounterDTO> encounters)
+        {
+
+            url = GetActivateUrl(url, "encounters");
+
+            return await _restClient.AttemptMakeApiCall($"{url}", HttpMethod.Post, encounters);
+        }
+
+        public async Task<bool> AttempSendClientShrs(string url, List<PSmartStore> pSmartStores)
+        {
+            url = GetActivateUrl(url, "shrs");
+
+            return await _restClient.AttemptMakeApiCall($"{url}", HttpMethod.Post, pSmartStores);
+        }
+
         public Task<List<RemoteClientDTO>> SearchClients(string url, string name)
         {
             

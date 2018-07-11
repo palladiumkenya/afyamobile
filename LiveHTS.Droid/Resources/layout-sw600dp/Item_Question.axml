@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:padding="5dp">
+    <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        local:cardElevation="4dp"
+        local:cardCornerRadius="3dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp">
+        <!-- Question Display -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                local:MvxBind="Text QuestionTemplate.Display" />
+        <!-- Question Error -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="8sp"
+                android:textColor="@android:color/holo_red_dark"
+                local:MvxBind="Text QuestionTemplate.ErrorSummary" />
+        <!-- Obs Text -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                local:MvxBind="Text QuestionTemplate.ResponseText; Visibility QuestionTemplate.ShowTextObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+        <!-- Obs Numeric -->
+            <EditText
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                local:MvxBind="Text QuestionTemplate.ResponseNumeric; Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility; Enabled QuestionTemplate.Allow"
+                android:paddingRight="10dp"
+                android:maxLength="3"
+                android:inputType="number" />
+        <!-- Obs Date Spinner -->
+            <MvxDatePicker
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                local:MvxBind="Value QuestionTemplate.ResponseDate;Visibility QuestionTemplate.ShowDateObs, Converter=Visibility; Enabled QuestionTemplate.Allow"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+        <!-- Obs Single Dropdown -->
+            <MvxSpinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                local:MvxBind="ItemsSource QuestionTemplate.SingleOptions; SelectedItem QuestionTemplate.SelectedSingleOption; Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+        <!-- Obs Single Other Text -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                local:MvxBind="Text QuestionTemplate.OtherSingleResponseText; Visibility QuestionTemplate.ShowOtherSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+        <!-- Obs Muliselect Dropdown -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                local:MvxBind="Visibility QuestionTemplate.ShowMultiObs, Converter=Visibility;">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    local:MvxBind="Text QuestionTemplate.Selection" />
+                <MvxSpinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    local:MvxItemTemplate="@layout/obs_item_multi_s"
+                    local:MvxDropDownItemTemplate="@layout/obs_item_multi_d"
+                    local:MvxBind="ItemsSource QuestionTemplate.MultiOptions; Enabled QuestionTemplate.Allow" />
+            <!-- Obs Muliselect Other Text -->
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    local:MvxBind="Text QuestionTemplate.OtherMultiResponseText; Visibility QuestionTemplate.ShowOtherMultiObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
