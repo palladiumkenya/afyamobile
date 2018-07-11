@@ -128,8 +128,9 @@ namespace LiveHTS.Core.Service.Sync
 
                     try
                     {
-                        await httpClient.SendAsync(request).ConfigureAwait(false);
-                        return true;
+                        var response=await httpClient.SendAsync(request).ConfigureAwait(false);
+                        if (null != response)
+                            return response.IsSuccessStatusCode;
                     }
                     catch (Exception ex)
                     {
@@ -140,6 +141,47 @@ namespace LiveHTS.Core.Service.Sync
             }
 
             return false;
+        }
+
+        public async Task<string> AttemptMakeApiCallResult(string url, HttpMethod method, object data = null)
+        {
+            string responsestring = string.Empty;
+
+            using (var httpClient = new HttpClient(new NativeMessageHandler { UseCookies = false }))
+            {
+                using (var request = new HttpRequestMessage { RequestUri = new Uri(url), Method = method })
+                {
+
+                    // add content
+
+
+                    JsonSerializerSettings microsoftDateFormatSettings = new JsonSerializerSettings
+                    {
+                        DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+                    };
+
+                    if (method != HttpMethod.Get)
+                    {
+                        var json = JsonConvert.SerializeObject(data, microsoftDateFormatSettings);
+                        request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                    }
+
+
+                    try
+                    {
+                        var response = await httpClient.SendAsync(request).ConfigureAwait(false);
+                        if (null != response)
+                            responsestring = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        _error = ex;
+
+                    }
+                }
+            }
+
+            return responsestring;
         }
 
         public Exception Error

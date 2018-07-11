@@ -165,7 +165,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null == Local)
                 {
                     Local = new ServerConfig();
-                    Local.Address = "http://52.178.24.227:4747";
+                    Local.Address = "http://41.204.187.159:4747";
                 }
                 else
                 {
