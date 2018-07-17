@@ -340,12 +340,12 @@ namespace LiveHTS.Presentation.ViewModel
                     _registryService.UpdateRelationShips(clientRegistrationDTO.ClientProfile.RelTypeId,
                         IndexClientDTO.Id,
                         client.Id);
-                    clientRegistrationDTO.ClearCache(_settings);
+                    ClearCache();
                     ShowViewModel<DashboardViewModel>(new { id = IndexClientDTO.Id.ToString() });
                 }
                 else
                 {
-                    clientRegistrationDTO.ClearCache(_settings);
+                    ClearCache();
                     ShowViewModel<DashboardViewModel>(new { id = client.Id.ToString() });
                 }
 
@@ -389,6 +389,30 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-    
+
+
+
+        private void ClearCache()
+        {
+
+            _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel),"");
+            _settings.AddOrUpdateValue(nameof(ClientContactViewModel),"");
+            _settings.AddOrUpdateValue(nameof(ClientProfileViewModel),"");
+            _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel),"");
+
+            if (_settings.Contains(nameof(ClientDemographicViewModel)))
+                _settings.DeleteValue(nameof(ClientDemographicViewModel));
+
+            if (_settings.Contains(nameof(ClientContactViewModel)))
+                _settings.DeleteValue(nameof(ClientContactViewModel));
+
+            if (_settings.Contains(nameof(ClientProfileViewModel)))
+                _settings.DeleteValue(nameof(ClientProfileViewModel));
+
+            if (_settings.Contains(nameof(ClientEnrollmentViewModel)))
+                _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+
+        }
+
     }
 }
