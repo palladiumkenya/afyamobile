@@ -302,11 +302,6 @@ namespace LiveHTS.Presentation.ViewModel
             
         }
 
-        private async void CheckHapi()
-        {
-          
-        }
-
         private string GetCode(Guid? clientInfoPracticeId, List<Practice> practicses)
         {
             string code = string.Empty;
