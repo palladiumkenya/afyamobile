@@ -22,7 +22,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>E:\Workspace\Palladium\hts\LiveHTS\Template\AfyaMobile.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>E:\Workspace\livedev\apps\LiveHTS\Template\AfyaMobile.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>c0nstella</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>afyamobile</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>c0nstella</AndroidSigningKeyPass>
@@ -259,6 +259,7 @@
     <Compile Include="Bootstrap\SettingsPluginBootstrap.cs" />
     <Compile Include="Bootstrap\VisibilityPluginBootstrap.cs" />
     <Compile Include="Activities\DashboardActivity.cs" />
+    <Compile Include="Custom\RecycleListViewListener.cs" />
     <Compile Include="Custom\DatePickerFragmentV4.cs" />
     <Compile Include="Custom\DatePickerFragment.cs" />
     <Compile Include="Custom\ViewScalingCustomBinding.cs" />
