@@ -27,6 +27,12 @@ namespace LiveHTS.Core.Service.Sync
 
             return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
         }
+        public Task<List<Practice>> GetAllDefault(string url)
+        {
+            url = GetActivateUrl(url, $"facall");
+
+            return _restClient.MakeApiCall<List<Practice>>($"{url}", HttpMethod.Get);
+        }
 
         public Task<List<User>> GetUsers(string url)
         {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Config;
@@ -25,11 +27,13 @@ namespace LiveHTS.Presentation.ViewModel
         private string _status;
         private bool _loading;
         private IMvxCommand _setupDeviceCommand;
+        private IMvxCommand _loginCommand;
         private string _serial;
         private string _name;
         private ServerConfig _local;
         private string _setupAction;
-
+        private IEnumerable<Practice> _practices;
+        private Practice _selectedPractice;
 
         public Device Device { get; set; }
 
@@ -102,12 +106,42 @@ namespace LiveHTS.Presentation.ViewModel
             set { _setupAction = value; RaisePropertyChanged(() => SetupAction); }
         }
 
+        public IEnumerable<Practice> Practices
+        {
+            get { return _practices; }
+            set
+            {
+                _practices = value;
+                RaisePropertyChanged(() => Practices);
+            }
+        }
+
+        public Practice SelectedPractice
+        {
+            get { return _selectedPractice; }
+            set
+            {
+                _selectedPractice = value;
+                RaisePropertyChanged(() => SelectedPractice);
+                LoginCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public IMvxCommand SetupDeviceCommand
         {
             get
             {
                 _setupDeviceCommand = _setupDeviceCommand ?? new  MvxCommand(SetupDevice, CanSetupDevice);
                 return _setupDeviceCommand;
+            }
+        }
+
+        public IMvxCommand LoginCommand
+        {
+            get
+            {
+                _loginCommand = _loginCommand ?? new MvxCommand(Login, CanLogin);
+                return _loginCommand;
             }
         }
 
@@ -205,22 +239,17 @@ namespace LiveHTS.Presentation.ViewModel
                 _settings.AddOrUpdateValue("device.id", JsonConvert.SerializeObject(Device));
 
             //get fac
-            var practice = await _emrService.GetDefault(Url);
-            if (null != practice)
+            var practices = await _emrService.GetAllDefault(Url);
+            Practices = practices;
+
+            if (null != practices && practices.Any())
             {
-                Device.PracticeId = practice.Id;
-                Local = ServerConfig.CreateLocal(practice, Url, true);
-
-                //update dev
-                _deviceSetupService.Register(Device);
-
-                
-                _deviceSetupService.SaveLocal(Local);
-
-                //save fac
-                _deviceSetupService.SavePractce(practice);
-
-                Local = _deviceSetupService.GetLocal();
+                foreach (var practice in practices)
+                {
+                    //save fac
+                    _deviceSetupService.SavePractce(practice);
+                }
+              
             }
             else
             {
@@ -240,17 +269,44 @@ namespace LiveHTS.Presentation.ViewModel
             
             if (Local.IsSetupComplete())
             {
-                _dialogService.ShowToast("Device setup successfully");
-                //Close(this);
-                ShowViewModel<SignInViewModel>();
+                _dialogService.ShowToast("Device setup successfully,Select Facility");
             }
             else
             {
                 _dialogService.Alert("Please setup device before proceeding");
             }
-                
-
         }
+
+
+        private bool CanLogin()
+        {
+            return null != SelectedPractice;
+        }
+
+        private void Login()
+        {
+            if(null==SelectedPractice)
+                return;
+            
+            //SET DEFAULT PRACTICE                
+
+
+            Device.PracticeId = SelectedPractice.Id;
+            Local = ServerConfig.CreateLocal(SelectedPractice, Url, true);
+
+            //update dev
+            _deviceSetupService.Register(Device);
+
+
+            _deviceSetupService.SaveLocal(Local);
+
+            Local = _deviceSetupService.GetLocal();
+            
+
+
+            ShowViewModel<SignInViewModel>();
+        }
+
 
         public SetupWizardViewModel(IEmrService emrService)
         {
