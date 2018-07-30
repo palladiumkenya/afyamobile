@@ -21,6 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             _settings = settings;
             _registryService = registryService;
+            ClearCache();
         }
 
         public void Init(string id, string indexId, string reltype,string enroll)

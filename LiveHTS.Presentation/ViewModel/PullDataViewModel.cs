@@ -34,6 +34,7 @@ namespace LiveHTS.Presentation.ViewModel
         
 
         public Device Device { get; set; }
+        public Device RegisteredDevice { get; set; }
         public ServerConfig Local { get; set; }
 
         public bool IsBusy
@@ -109,6 +110,21 @@ namespace LiveHTS.Presentation.ViewModel
         {
             var deviceJson = _settings.GetValue("device.id", "");
             var hapiLocal = _settings.GetValue("hapi.local", "");
+            var theDeviceJson = _settings.GetValue("device.reg", "");
+
+            if (null == RegisteredDevice && !string.IsNullOrWhiteSpace(theDeviceJson))
+            {
+                RegisteredDevice = JsonConvert.DeserializeObject<Device>(theDeviceJson);
+            }
+            else
+            {
+                RegisteredDevice = _deviceSetupService.GetDefault();
+                if (null!= RegisteredDevice)
+                {
+                    var json = JsonConvert.SerializeObject(RegisteredDevice);
+                    _settings.AddOrUpdateValue("device.reg", json);
+                }
+            }
 
             if (null == Device && !string.IsNullOrWhiteSpace(deviceJson))
             {
@@ -159,9 +175,23 @@ namespace LiveHTS.Presentation.ViewModel
             int current = 0;
             IsBusy = true;
             CurrentStatus = $"connecting...";
+
             var practice = await _activationService.GetLocal(Address);
             if (null != practice)
             {
+
+                try
+                {
+                    var devicePrefix = await _activationService.AttemptEnrollDevice(Address, RegisteredDevice);
+                    if (!string.IsNullOrEmpty(devicePrefix))
+                        _deviceSetupService.UpdateCode(devicePrefix);
+                }
+                catch (Exception e)
+                {
+                }
+                
+
+
                 current++;
                 CurrentStatus = showPerc("Metas",current, total);
                 var meta = await _metaSyncService.GetMetaData(Address); 
