@@ -62,6 +62,11 @@ namespace LiveHTS.Core.Service.Config
             return _practiceRepository.GetAll(x =>x.IsDefault).ToList();
         }
 
+        public IEnumerable<Practice> GetPractices()
+        {
+            return GetPractices(new[] { "Facility" });
+        }
+
         public IEnumerable<Practice> GetPractices(string[] typeIds)
         {
             return _practiceRepository.GetAll(x => typeIds.Contains(x.PracticeTypeId)).ToList();

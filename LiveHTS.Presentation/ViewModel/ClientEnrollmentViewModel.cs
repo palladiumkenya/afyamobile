@@ -8,6 +8,7 @@ using LiveHTS.Core.Model.Config;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -30,6 +31,7 @@ namespace LiveHTS.Presentation.ViewModel
         private string _clientId;
         private string _id;
         private IndexClientDTO _indexClientDTO;
+        private Guid practiceId;
 
         public IndexClientDTO IndexClientDTO
         {
@@ -129,6 +131,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        
+
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService,
             IRegistryService registryService) : base(dialogService, settings)
         {
@@ -174,8 +178,24 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
-            Practices = _lookupService.GetDefaultPractices().ToList();
-            SelectedPractice = _lookupService.GetDefault();
+            Practices = _lookupService.GetPractices().ToList();
+
+            if (!practiceId.IsNullOrEmpty())
+            {
+                if (Practices.Any(x => x.Id== practiceId))
+                {
+                    SelectedPractice = Practices.First(x => x.Id == practiceId);
+                }
+                else
+                {
+                    SelectedPractice = _lookupService.GetDefault();
+                }
+            }
+            else
+            {
+                SelectedPractice = _lookupService.GetDefault();
+            }
+
             try
             {
                 SelectedIdentifierType = IdentifierTypes.FirstOrDefault();
@@ -189,7 +209,7 @@ namespace LiveHTS.Presentation.ViewModel
         public override void Start()
         {
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
-            Practices = _lookupService.GetDefaultPractices().ToList();
+            Practices = _lookupService.GetPractices().ToList();
             SelectedPractice = _lookupService.GetDefault();
             try
             {
@@ -293,6 +313,7 @@ namespace LiveHTS.Presentation.ViewModel
                 Identifier = Enrollment.Identifier;
                 RegistrationDate = Enrollment.RegistrationDate;
                 Id = Enrollment.Id;
+                practiceId = Enrollment.PracticeId;
             }
             catch (Exception e)
             {

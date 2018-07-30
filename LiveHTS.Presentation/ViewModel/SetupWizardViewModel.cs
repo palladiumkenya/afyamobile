@@ -290,6 +290,7 @@ namespace LiveHTS.Presentation.ViewModel
             
             //SET DEFAULT PRACTICE                
 
+            _deviceSetupService.MakePractceDefault(SelectedPractice.Id);
 
             Device.PracticeId = SelectedPractice.Id;
             Local = ServerConfig.CreateLocal(SelectedPractice, Url, true);

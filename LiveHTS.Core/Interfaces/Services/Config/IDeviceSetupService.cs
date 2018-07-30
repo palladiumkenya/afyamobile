@@ -19,6 +19,7 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         void CheckRegister(Device device);
         void UpdateCode(string prefix);
         void SavePractce(Practice practice);
+        void MakePractceDefault(Guid practiceId);
         void SaveUsers(List<User> users);
     }
 }

@@ -123,6 +123,11 @@ namespace LiveHTS.Core.Service.Config
             _practiceRepository.InsertOrUpdate(practice);
         }
 
+        public void MakePractceDefault(Guid practiceId)
+        {
+            _practiceRepository.MakeDefault(practiceId);
+        }
+
         public void SaveUsers(List<User> users)
         {
             foreach (var user in users)
