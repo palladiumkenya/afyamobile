@@ -21,5 +21,7 @@ namespace LiveHTS.Droid.Activities
         {
             ViewModel.ShowRegistry();
         }
+
+   
     }
 }

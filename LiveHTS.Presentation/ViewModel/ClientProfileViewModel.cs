@@ -341,12 +341,16 @@ namespace LiveHTS.Presentation.ViewModel
                         IndexClientDTO.Id,
                         client.Id);
                     ClearCache();
+                    
                     ShowViewModel<DashboardViewModel>(new { id = IndexClientDTO.Id.ToString() });
+                    Close(this);
                 }
                 else
                 {
                     ClearCache();
+                   
                     ShowViewModel<DashboardViewModel>(new { id = client.Id.ToString() });
+                    Close(this);
                 }
 
                 

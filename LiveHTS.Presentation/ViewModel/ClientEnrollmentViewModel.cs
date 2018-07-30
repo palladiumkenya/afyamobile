@@ -139,6 +139,9 @@ namespace LiveHTS.Presentation.ViewModel
             MovePreviousLabel = "PREV";
             MoveNextLabel = "SAVE";
             RegistrationDate = DateTime.Today;
+            ClientInfo=String.Empty;
+            Identifier=String.Empty;
+           
         }
 
         public void Init(string clientinfo, string indexId)
@@ -240,6 +243,8 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     _registryService.UpdateRelationShips(clientRegistrationDTO.ClientProfile.RelTypeId,IndexClientDTO.Id, client.Id);
                 }
+                ClearCache();
+                Close(this);
                 ShowViewModel<DashboardViewModel>(new {id = client.Id.ToString()});
             }
             catch (Exception e)
@@ -290,6 +295,28 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Mvx.Error(e.Message);
             }
+        }
+
+        private void ClearCache()
+        {
+
+            _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientContactViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientProfileViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel), "");
+
+            if (_settings.Contains(nameof(ClientDemographicViewModel)))
+                _settings.DeleteValue(nameof(ClientDemographicViewModel));
+
+            if (_settings.Contains(nameof(ClientContactViewModel)))
+                _settings.DeleteValue(nameof(ClientContactViewModel));
+
+            if (_settings.Contains(nameof(ClientProfileViewModel)))
+                _settings.DeleteValue(nameof(ClientProfileViewModel));
+
+            if (_settings.Contains(nameof(ClientEnrollmentViewModel)))
+                _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+
         }
     }
 }

@@ -19,7 +19,6 @@ namespace LiveHTS.Droid.Views
             this.EnsureBindingContextIsSet(savedInstanceState);
             var ignored=base.OnCreateView(inflater, container, savedInstanceState);
             return this.BindingInflate(Resource.Layout.ClientEnrollmentView, null);
-            var id = this.Id;
         }
-    }
+      }
 }
