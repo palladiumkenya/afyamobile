@@ -162,6 +162,9 @@ namespace LiveHTS.Presentation.ViewModel
         public override void ViewAppeared()
         {
             base.ViewAppeared();
+
+            AutoGenId();
+
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
             if (!string.IsNullOrWhiteSpace(indexJson))
             {
@@ -294,6 +297,15 @@ namespace LiveHTS.Presentation.ViewModel
             catch (Exception e)
             {
                 Mvx.Error(e.Message);
+            }
+        }
+
+        private void AutoGenId()
+        {
+            var prefix = _settings.GetValue("livehts.devicecode", "");
+            if (!string.IsNullOrWhiteSpace(prefix) && string.IsNullOrWhiteSpace(Identifier))
+            {
+                Identifier = $"{prefix}{DateTime.Now:yyMMddHHmmfff}";
             }
         }
 
