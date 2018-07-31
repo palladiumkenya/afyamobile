@@ -136,7 +136,7 @@ namespace LiveHTS.Presentation.ViewModel
             _deviceSetupService.CheckRegister(new Device(serial, serial, name,practice.Id));
             var device = _authService.GetDefaultDevice();
             _settings.AddOrUpdateValue("livehts.deviceid", device.Id.ToString());
-            _settings.AddOrUpdateValue("livehts.devicecode", device.Code);
+            _settings.AddOrUpdateValue("livehts.devicecode", device.Code ?? "");
 
             var provider = _authService.GetDefaultProvider();
             _settings.AddOrUpdateValue("livehts.providerid", provider.Id.ToString());

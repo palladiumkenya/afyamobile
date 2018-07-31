@@ -5044,6 +5044,24 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0b0067
 			public const int notification_top_pad_large_text = 2131427431;
 			
+			// aapt resource value: 0x7f0b0098
+			public const int textL = 2131427480;
+			
+			// aapt resource value: 0x7f0b0097
+			public const int textM = 2131427479;
+			
+			// aapt resource value: 0x7f0b0096
+			public const int textS = 2131427478;
+			
+			// aapt resource value: 0x7f0b0095
+			public const int textT = 2131427477;
+			
+			// aapt resource value: 0x7f0b0099
+			public const int textXL = 2131427481;
+			
+			// aapt resource value: 0x7f0b009a
+			public const int textXXL = 2131427482;
+			
 			static Dimension()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

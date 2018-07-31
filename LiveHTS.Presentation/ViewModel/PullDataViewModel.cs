@@ -184,7 +184,11 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     var devicePrefix = await _activationService.AttemptEnrollDevice(Address, RegisteredDevice);
                     if (!string.IsNullOrEmpty(devicePrefix))
+                    {
                         _deviceSetupService.UpdateCode(devicePrefix);
+                        _settings.AddOrUpdateValue("livehts.devicecode", devicePrefix);
+                    }
+                        
                 }
                 catch (Exception e)
                 {

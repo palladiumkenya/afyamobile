@@ -273,7 +273,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
             else
             {
-                _dialogService.Alert("Please setup device before proceeding");
+                _dialogService.Alert("Please select Facility before proceeding");
             }
         }
 
