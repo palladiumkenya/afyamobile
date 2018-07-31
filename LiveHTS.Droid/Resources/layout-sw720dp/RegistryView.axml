@@ -58,8 +58,8 @@
         <com.refractored.fab.FloatingActionButton
           android:id="@+id/fab2"
           local:MvxBind="Click OpenRemoteRegisteryCommand"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="56dp"
+          android:layout_height="56dp"
           android:layout_gravity="bottom|left"
           android:layout_margin="16dp"
           android:src="@drawable/ic_cloud_download"
@@ -69,8 +69,8 @@
         <com.refractored.fab.FloatingActionButton
           android:id="@+id/fab"
           local:MvxBind="Click RegisterClientCommand" 
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="56dp"
+          android:layout_height="56dp"
           android:layout_gravity="bottom|right"
           android:layout_margin="16dp"
           android:src="@drawable/ic_person_add"
