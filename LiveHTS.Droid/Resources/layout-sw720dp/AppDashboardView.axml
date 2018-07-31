@@ -62,7 +62,7 @@
                 <TableRow
                     android:gravity="center_horizontal">
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <TextView
                             android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                             local:MvxBind="Click RegistryCommand" />
                     </FrameLayout>
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b01"
@@ -112,7 +112,7 @@
                             android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b02"
@@ -143,7 +143,7 @@
                 <TableRow
                     android:gravity="center_horizontal">
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b11"
@@ -170,7 +170,7 @@
                             android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b10"
@@ -198,7 +198,7 @@
                             android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b12"
@@ -229,7 +229,7 @@
                 <TableRow
                     android:gravity="center_horizontal">
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b20"
@@ -256,7 +256,7 @@
                             android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b21"
@@ -283,7 +283,7 @@
                             android:gravity="center_vertical|center" />
                     </FrameLayout>
                     <FrameLayout
-                        android:layout_margin="2dp"
+                        android:layout_margin="10dp"
                         android:background="#FFFFFF">
                         <ImageButton
                             android:id="@+id/b22"
