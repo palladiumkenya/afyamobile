@@ -29,15 +29,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingRight="10dp"
+                        android:textSize="@dimen/textT"
                         android:text="26-OCT-2017"
-                        android:textSize="11dp"
+                        android:paddingRight="6dp"
                         local:MvxBind="Text Format('{0:dd-MMM-yyyy}', EncounterTemplate.EncounterDate)" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Complete"
-                        android:textSize="11dp"
+                        android:textSize="@dimen/textT"
                         local:MvxBind="Text EncounterTemplate.Status" />
                 </LinearLayout>
                 <LinearLayout
