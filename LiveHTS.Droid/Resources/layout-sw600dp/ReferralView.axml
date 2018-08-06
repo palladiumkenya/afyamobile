@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Reffered To"
+             android:textSize="@dimen/textM"
             local:MvxBind="Text ReferredTo" />
       </android.support.design.widget.TextInputLayout>
 
@@ -48,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Date To be Enrolled"
+             android:textSize="@dimen/textM"
             android:clickable="true"
             android:editable="false"
             local:MvxBind="Text DatePromised, Converter=Dmy; Click ShowDateDialogCommand" />
