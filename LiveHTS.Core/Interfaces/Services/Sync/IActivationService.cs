@@ -14,6 +14,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
         Task<Practice> GetCentral(string url);
         Task<Practice> GetLocal(string url);
         Task<Practice> Register(string device, string url);
-        Task<bool> AttempEnrollDevice(string url, List<Practice> practices);
+        Task<bool> AttemptEnrollPractice(string url, List<Practice> practices);
+        Task<string> AttemptEnrollDevice(string url,Device device);
     }
 }

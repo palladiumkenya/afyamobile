@@ -61,11 +61,18 @@ namespace LiveHTS.Core.Service.Sync
             throw new NotImplementedException();
         }
 
-        public Task<bool> AttempEnrollDevice(string url, List<Practice> practices)
+        public Task<bool> AttemptEnrollPractice(string url, List<Practice> practices)
         {
             url = GetActivateUrl(url, "enroll");
 
             return _restClient.AttemptMakeApiCall($"{url}", HttpMethod.Post, practices);
+        }
+
+        public Task<string> AttemptEnrollDevice(string url, Device device)
+        {
+            url = GetActivateUrl(url, "device");
+
+            return _restClient.AttemptMakeApiCallResult($"{url}", HttpMethod.Post, device);
         }
 
         private string GetActivateUrl(string url, string endpoint)

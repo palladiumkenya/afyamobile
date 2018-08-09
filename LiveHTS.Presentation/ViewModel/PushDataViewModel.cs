@@ -189,7 +189,7 @@ namespace LiveHTS.Presentation.ViewModel
                     }
 
                     var pracs = _practiceSetupService.GetAll();
-                    await _activationService.AttempEnrollDevice(Address, pracs);
+                    await _activationService.AttemptEnrollPractice(Address, pracs);
                 }
                 catch (Exception e)
                 {
@@ -300,11 +300,6 @@ namespace LiveHTS.Presentation.ViewModel
 
             IsBusy = false;
             
-        }
-
-        private async void CheckHapi()
-        {
-          
         }
 
         private string GetCode(Guid? clientInfoPracticeId, List<Practice> practicses)

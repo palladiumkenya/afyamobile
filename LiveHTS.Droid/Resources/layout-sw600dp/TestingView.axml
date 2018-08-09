@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:background="@android:color/holo_orange_light"
+    android:orientation="vertical">
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        local:MvxBind="Text Client.Person.FullName"
+        android:paddingRight="2dp" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        local:MvxBind="Text Client.Person.Gender"
+        android:paddingRight="2dp" />
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        local:MvxBind="Text Client.Person.BirthDate, Converter=Dmy"
+        android:paddingRight="2dp" />
+    </LinearLayout>
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:background="@android:color/holo_blue_light"
+    android:orientation="vertical">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Summary" />
+  </LinearLayout>
+  
+  <!--  CLIENT   -->
+  
+  <LinearLayout
+      android:orientation="vertical"
+      android:minWidth="25px"
+      android:minHeight="25px"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="8"
+      android:id="@+id/linearLayoutContent">
+    <com.refractored.PagerSlidingTabStrip
+        android:id="@+id/content_frame"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+  </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="2dp"
+      android:background="@color/colorPrimary">
+  </LinearLayout>
+  <!--  FINAL   -->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingTop="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <TextView
+          android:id="@+id/textView11"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:textSize="@dimen/textM"
+          android:text="HIV Test 1 Result"
+                />
+      <MvxSpinner
+          android:id="@+id/spinner11"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:textSize="@dimen/textM"
+          android:layout_height="wrap_content"
+          local:MvxBind="ItemsSource FirstTestResults; SelectedItem SelectedFirstTestResult;Enabled EnableFirstResult" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <TextView
+          android:id="@+id/textView11"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:textSize="@dimen/textM"
+          android:text="HIV Test 2 Result"
+                />
+      <MvxSpinner
+          android:id="@+id/spinner11"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:textSize="@dimen/textM"
+          android:layout_height="wrap_content"
+          local:MvxBind="ItemsSource SecondTestResults; SelectedItem SelectedSecondTestResult;Enabled EnableSecondResult" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <TextView
+          android:id="@+id/textView11"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:textSize="@dimen/textM"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:text="Final Result"
+                />
+      <MvxSpinner
+          android:id="@+id/spinner11"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:textSize="@dimen/textM"
+          android:layout_height="wrap_content"
+          local:MvxBind="ItemsSource FinalTestResults; SelectedItem SelectedFinalTestResult;Enabled EnableFinalResult" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <TextView
+          android:id="@+id/textView22"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:textSize="@dimen/textM"
+          android:text="Final Result Given?"
+                />
+      <MvxSpinner
+          android:id="@+id/spinner33"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/textM"
+          local:MvxBind="ItemsSource ResultGivenOptions; SelectedItem SelectedResultGiven" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+            >
+      <TextView
+          android:id="@+id/textView444"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:textSize="@dimen/textM"
+          android:text="Couple Discordant" />
+      <MvxSpinner
+          android:id="@+id/spinner44"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/textM"
+          local:MvxBind="ItemsSource CoupleDiscordantOptions; SelectedItem SelectedCoupleDiscordant;Enabled EnableCoupleDiscordant" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <TextView
+          android:id="@+id/textView496"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:paddingRight="5dp"
+          android:textSize="@dimen/textM"
+          android:text="Accepted to partner listing" />
+      <MvxSpinner
+          android:id="@+id/spinner576"
+          android:layout_width="0dp"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:textSize="@dimen/textM"
+          local:MvxBind="ItemsSource SelfTestOptions; SelectedItem SelectedSelfTest;Enabled EnableSelfTestOption" />
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+        android:id="@+id/textView486"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:textSize="@dimen/textM"
+        android:text="Reasons for decline" />
+      <MvxSpinner
+        android:id="@+id/spinner756"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="@dimen/textM"
+        android:layout_height="wrap_content"
+        local:MvxBind="ItemsSource PnsDeclineds; SelectedItem SelectedPnsDeclined;Enabled EnablePnsDeclined" />
+    </LinearLayout>
+    <android.support.design.widget.TextInputLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <EditText
+        android:id="@+id/editTextRemarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        android:hint="Remarks"
+        local:MvxBind="Text Remarks" />
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".17">
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Save"
+          android:drawableLeft="@drawable/ic_save"
+          local:MvxBind="Click SaveTestingCommand"/>
+    </LinearLayout>
+  </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:textSize="@dimen/textM"
+        android:text="Tracing Detail" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary" />
+    <TextView
+        android:id="@+id/textViewError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Error"
+         android:textSize="@dimen/textS"
+        android:textColor="@android:color/holo_red_dark"
+        local:MvxBind="Text ErrorSummary" />
+    <TextView
+        android:id="@+id/textViewKit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        android:text="Date" />
+    <MvxDatePicker
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:scaleX="0.80"
+        android:scaleY="0.80"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginRight="-50dp"
+        android:layout_marginBottom="-30dp"
+        local:MvxBind="Value Date"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:id="@+id/spinnerRegistrationDate" />
+    <TextView
+        android:id="@+id/textViewReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        android:text="Reminder" />
+    <MvxDatePicker
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:scaleX="0.80"
+        android:scaleY="0.80"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginRight="-50dp"
+        android:layout_marginBottom="-30dp"
+        local:MvxBind="Value Reminder"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:id="@+id/spinnerReminderDate" />
+    <TextView
+        android:id="@+id/textViewKit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        android:text="Mode" />
+    <MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textXL"
+        local:MvxBind="ItemsSource Modes;SelectedItem SelectedMode" />
+    <TextView
+        android:id="@+id/textViewKit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        android:text="Outcome" />
+    <MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textXL"
+        local:MvxBind="ItemsSource Outcomes;SelectedItem SelectedOutcome" />
+    <TextView
+        android:id="@+id/textViewConsent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        android:text="Consent" />
+    <MvxSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textXL"
+        local:MvxBind="ItemsSource Consents;SelectedItem SelectedConsent;Enabled EnableConsent" />
+    <TextView
+        android:id="@+id/textViewReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textM"
+        android:text="BookingDate" />
+    <MvxDatePicker
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:scaleX="0.80"
+        android:scaleY="0.80"
+        android:layout_marginLeft="-50dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginRight="-50dp"
+        android:layout_marginBottom="-30dp"
+        local:MvxBind="Value BookingDate;Enabled EnableBooking"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:id="@+id/spinnerBookingDate" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary" />
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            local:MvxBind="Click SaveTraceCommand" />
+    </LinearLayout>
+</LinearLayout>

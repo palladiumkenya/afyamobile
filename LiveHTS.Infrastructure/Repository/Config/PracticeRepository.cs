@@ -21,5 +21,16 @@ namespace LiveHTS.Infrastructure.Repository.Config
 
             return practice;
         }
+
+        public void MakeDefault(Guid practiceId)
+        {
+
+            var practice = GetAll(x => x.Id==practiceId).FirstOrDefault();
+            if (null != practice)
+            {
+                _db.Execute($"UPDATE {nameof(Practice)} SET IsDefault=0 WHERE IsDefault=1");
+                _db.Execute($"UPDATE {nameof(Practice)} SET IsDefault=1 WHERE Id=?", practiceId.ToString());
+            }
+        }
     }
 }

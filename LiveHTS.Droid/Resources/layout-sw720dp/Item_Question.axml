@@ -24,24 +24,26 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                 android:textSize="@dimen/textM"
                 local:MvxBind="Text QuestionTemplate.Display" />
         <!-- Question Error -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="8sp"
+                android:textSize="@dimen/textT"
                 android:textColor="@android:color/holo_red_dark"
                 local:MvxBind="Text QuestionTemplate.ErrorSummary" />
         <!-- Obs Text -->
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textM"
                 local:MvxBind="Text QuestionTemplate.ResponseText; Visibility QuestionTemplate.ShowTextObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
         <!-- Obs Numeric -->
             <EditText
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textM"
                 local:MvxBind="Text QuestionTemplate.ResponseNumeric; Visibility QuestionTemplate.ShowNumericObs, Converter=Visibility; Enabled QuestionTemplate.Allow"
                 android:paddingRight="10dp"
                 android:maxLength="3"
@@ -50,7 +52,7 @@
             <MvxDatePicker
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                 android:textSize="@dimen/textM"
                 local:MvxBind="Value QuestionTemplate.ResponseDate;Visibility QuestionTemplate.ShowDateObs, Converter=Visibility; Enabled QuestionTemplate.Allow"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner" />
@@ -58,12 +60,13 @@
             <MvxSpinner
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                  android:textSize="@dimen/textXL"
                 local:MvxBind="ItemsSource QuestionTemplate.SingleOptions; SelectedItem QuestionTemplate.SelectedSingleOption; Visibility QuestionTemplate.ShowSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
         <!-- Obs Single Other Text -->
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/textM"
                 local:MvxBind="Text QuestionTemplate.OtherSingleResponseText; Visibility QuestionTemplate.ShowOtherSingleObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
         <!-- Obs Muliselect Dropdown -->
             <LinearLayout
@@ -74,12 +77,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/textS"
                     local:MvxBind="Text QuestionTemplate.Selection" />
                 <MvxSpinner
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/textM"
                     local:MvxItemTemplate="@layout/obs_item_multi_s"
                     local:MvxDropDownItemTemplate="@layout/obs_item_multi_d"
                     local:MvxBind="ItemsSource QuestionTemplate.MultiOptions; Enabled QuestionTemplate.Allow" />
@@ -87,6 +90,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/textM"
                     local:MvxBind="Text QuestionTemplate.OtherMultiResponseText; Visibility QuestionTemplate.ShowOtherMultiObs, Converter=Visibility; Enabled QuestionTemplate.Allow" />
             </LinearLayout>
         </LinearLayout>

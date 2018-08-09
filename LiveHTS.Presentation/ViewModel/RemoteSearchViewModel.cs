@@ -135,17 +135,26 @@ namespace LiveHTS.Presentation.ViewModel
             _dialogService.ShowWait("Searching,Please wait...");
 
             var remoteData = await _clientSyncService.SearchClients(Address, Search);
-            if (remoteData.Count > 0)
+
+            if (null == remoteData)
             {
-                Clients = remoteData.Select(x => x.Client).ToList();
+                _dialogService.Alert("Could not connect to remote registry!");
             }
             else
             {
-                Clients=new List<Client>();
-                _dialogService.HideWait();
-                _dialogService.ShowToast("No clients found!");
-                IsBusy = false;return;
+                if (remoteData.Count > 0)
+                {
+                    Clients = remoteData.Select(x => x.Client).ToList();
+                }
+                else
+                {
+                    Clients = new List<Client>();
+                    _dialogService.HideWait();
+                    _dialogService.ShowToast("No clients found!");
+                    IsBusy = false; return;
+                }
             }
+        
             _dialogService.HideWait();
             IsBusy = false;
         }

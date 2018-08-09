@@ -16,13 +16,29 @@
             android:layout_height="wrap_content"
             android:id="@+id/linearLayoutContent"
             android:layout_weight="2">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewDemographicTitle"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                local:MvxBind="Text Title" />
+                android:background="@android:color/holo_orange_light"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDemographicTitle"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    local:MvxBind="Text Title" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/holo_blue_light"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Summary" />
+            </LinearLayout>
         <!--Names-->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

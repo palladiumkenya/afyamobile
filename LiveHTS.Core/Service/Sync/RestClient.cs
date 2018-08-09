@@ -15,8 +15,6 @@ namespace LiveHTS.Core.Service.Sync
 
         public async Task<TResult> MakeApiCall<TResult>(string url, HttpMethod method, object data = null) where TResult : class
         {
-            
-
             using (var httpClient = new HttpClient(new NativeMessageHandler { UseCookies = false }))
             {
                 using (var request = new HttpRequestMessage {RequestUri = new Uri(url), Method = method})

@@ -227,6 +227,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (_settings.Contains("activetabId"))
                     _settings.DeleteValue("activetabId");
             }
+
             if (!string.IsNullOrWhiteSpace(mode))
             {
                 _settings.AddOrUpdateValue("emod", mode);
