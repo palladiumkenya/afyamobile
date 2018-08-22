@@ -180,7 +180,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                     int.TryParse(response, out var version);
 
-                    if (version != 101)
+                    if (version != 102)
                     {
                         _dialogService.Alert($"you are using an old version of LiveHAPI");
                         IsBusy = false;
