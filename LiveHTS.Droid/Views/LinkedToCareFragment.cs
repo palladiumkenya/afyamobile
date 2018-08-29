@@ -22,6 +22,7 @@ namespace LiveHTS.Droid.Views
             var ignored = base.OnCreateView(inflater, container, savedInstanceState);
 
             ViewModel.ChangedEnrollDate += ViewModel_ChangedEnrollDate;
+            ViewModel.ChangedArtDate += ViewModel_ChangedArtDate;
 
             return this.BindingInflate(Resource.Layout.LinkedToCareView, null);
         }
@@ -31,6 +32,16 @@ namespace LiveHTS.Droid.Views
             DatePickerFragmentV4 frag = DatePickerFragmentV4.NewInstance(delegate (DateTime time)
             {
                 ViewModel.SelectedEnrolDate = new TraceDateDTO(e.Id, time.Date);
+            }, e.Date);
+
+            frag.Show(FragmentManager, DatePickerFragmentV4.TAG);
+        }
+
+        private void ViewModel_ChangedArtDate(object sender, Presentation.Events.ChangedDateEvent e)
+        {
+            DatePickerFragmentV4 frag = DatePickerFragmentV4.NewInstance(delegate (DateTime time)
+            {
+                ViewModel.SelectedArtDate = new TraceDateDTO(e.Id, time.Date);
             }, e.Date);
 
             frag.Show(FragmentManager, DatePickerFragmentV4.TAG);
