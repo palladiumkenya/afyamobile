@@ -13,6 +13,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         Client Load(Guid id);
         Client Find(Guid id);
         IEnumerable<Client> GetAllClients(string search="");
+        IEnumerable<Client> GetAllSiteClients(Guid siteId, string search = "");
         IEnumerable<Client> GetAllCohortClients(Guid cohortId,string search = "");
         void Save(Client client);
         void Save(Client client,Guid cohortId);

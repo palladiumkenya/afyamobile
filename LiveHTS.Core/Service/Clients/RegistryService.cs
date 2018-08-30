@@ -83,6 +83,11 @@ namespace LiveHTS.Core.Service.Clients
             return clients;
         }
 
+        public IEnumerable<Client> GetAllSiteClients(Guid siteId, string search = "")
+        {
+            return GetAllClients(search).Where(x => x.PracticeId == siteId);
+        }
+
         public IEnumerable<Client> GetAllCohortClients(Guid cohortId, string search = "")
         {
             if (string.IsNullOrWhiteSpace(search))

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
@@ -26,6 +27,11 @@ namespace LiveHTS.Presentation.ViewModel
         private  IMvxCommand _registerClientCommand;
         private  IMvxCommand _openRemoteRegisteryCommand;
         private readonly IDialogService _dialogService;
+
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
 
         public string Search
         {
@@ -150,7 +156,7 @@ namespace LiveHTS.Presentation.ViewModel
         private void SearchClients()
         {
             IsBusy = true;
-            Clients = _registryService.GetAllClients(Search);
+            Clients = _registryService.GetAllSiteClients(AppPracticeId,Search);
             IsBusy = false;
         }
         private bool CanSearch()
@@ -185,7 +191,7 @@ namespace LiveHTS.Presentation.ViewModel
         private void LoadClients()
         {
             IsBusy = true;
-            Clients = _registryService.GetAllClients();
+            Clients = _registryService.GetAllSiteClients(AppPracticeId);
             IsBusy = false;
         }
 
@@ -203,6 +209,16 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (settings.Contains(nameof(ClientEnrollmentViewModel)))
                 settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+        }
+
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
         }
     }
 }

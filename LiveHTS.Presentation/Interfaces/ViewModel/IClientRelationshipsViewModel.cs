@@ -8,6 +8,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface IClientRelationshipsViewModel
     {
+        Guid AppPracticeId { get; }
         string IndexClientId { get; set; }
         bool ShowId { get; set; }
         string RelType { get;  }
