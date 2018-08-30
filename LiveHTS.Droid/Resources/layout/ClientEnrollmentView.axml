@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="40dp"
                 android:id="@+id/spinnerPractice"
-                local:MvxBind="ItemsSource Practices;SelectedItem SelectedPractice" />
+                local:MvxBind="ItemsSource Practices;SelectedItem SelectedPractice;Enabled CanSelect" />
             <TextView
                 android:text="Identifier Type"
                 android:layout_width="match_parent"

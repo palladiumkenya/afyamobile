@@ -12,6 +12,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string ClientInfo { get; set; }
         IEnumerable<IdentifierType> IdentifierTypes { get; set; }
         IEnumerable<Practice> Practices { get; set; }
+        bool CanSelect { get; set; }
         Practice SelectedPractice { get; set; }
         IdentifierType SelectedIdentifierType { get; set; }
         string Identifier { get; set; }
