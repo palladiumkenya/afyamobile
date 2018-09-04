@@ -22,7 +22,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
         Task<bool> AttempSendClientEncounters(string url, List<SyncClientEncounterDTO> encounters);
         Task<bool> AttempSendClientShrs(string url, List<PSmartStore> pSmartStores);
 
-        Task<List<RemoteClientDTO>> SearchClients(string url, string name);
+        Task<List<RemoteClientDTO>> SearchClients(string url, string name, Guid? practiceId = null);
         Task<RemoteClientDTO> DownloadClient(string url, Guid id);
     }
 }

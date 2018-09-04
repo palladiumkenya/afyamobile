@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Services.Sync;
@@ -19,9 +20,17 @@ namespace LiveHTS.Core.Service.Sync
             _restClient = restClient;
         }
 
-        public Task<List<RemoteClientDTO>> GetClients(string url, string id)
+        public Task<List<RemoteClientDTO>> GetClients(string url, string id, Guid? practiceId = null)
         {
-            url = GetActivateUrl(url, $"id/{id}");
+
+            if (practiceId.IsNullOrEmpty())
+            {
+                url = GetActivateUrl(url, $"id/{id}");
+            }
+            else
+            {
+                url = GetActivateUrl(url, $"id/{practiceId.Value}/{id}");
+            }
 
             return _restClient.MakeApiCall<List<RemoteClientDTO>>($"{url}", HttpMethod.Get);
         }

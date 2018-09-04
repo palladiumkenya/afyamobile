@@ -66,12 +66,18 @@ namespace LiveHTS.Core.Service.Sync
             return await _restClient.AttemptMakeApiCall($"{url}", HttpMethod.Post, pSmartStores);
         }
 
-        public Task<List<RemoteClientDTO>> SearchClients(string url, string name)
+        public Task<List<RemoteClientDTO>> SearchClients(string url, string name, Guid? practiceId=null)
         {
-            
+            if (practiceId.IsNullOrEmpty())
+            {
                 url = GetActivateUrl(url, $"name/{name}");
+            }
+            else
+            {
+                url = GetActivateUrl(url, $"name/{practiceId.Value}/{name}");
+            }
 
-                return _restClient.MakeApiCall<List<RemoteClientDTO>>($"{url}", HttpMethod.Get);
+            return _restClient.MakeApiCall<List<RemoteClientDTO>>($"{url}", HttpMethod.Get);
             
         }
 

@@ -32,6 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private string _id;
         private IndexClientDTO _indexClientDTO;
         private Guid practiceId;
+        private bool _practiceEnabled;
 
         public IndexClientDTO IndexClientDTO
         {
@@ -68,6 +69,16 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _practices = value;
                 RaisePropertyChanged(() => Practices);
+            }
+        }
+
+        public bool CanSelect
+        {
+            get { return _practiceEnabled; }
+            set
+            {
+                _practiceEnabled = value;
+                RaisePropertyChanged(() => CanSelect);
             }
         }
 
@@ -136,6 +147,7 @@ namespace LiveHTS.Presentation.ViewModel
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService,
             IRegistryService registryService) : base(dialogService, settings)
         {
+            CanSelect = false;
             Step = 4;
             _lookupService = lookupService;
             _registryService = registryService;

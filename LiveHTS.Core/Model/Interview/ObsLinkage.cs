@@ -13,6 +13,7 @@ namespace LiveHTS.Core.Model.Interview
         public string HandedTo { get; set; }
         public string WorkerCarde { get; set; }
         public DateTime? DateEnrolled { get; set; }
+        public DateTime? ARTStartDate { get; set; }
         public string EnrollmentId { get; set; }
         public string Remarks { get; set; }
         public Guid EncounterId { get; set; }
@@ -22,7 +23,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsLinkage(string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId):this()
+        public ObsLinkage(string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate):this()
         {
             FacilityHandedTo = facilityHandedTo;
             ReferredTo = referredTo;
@@ -33,17 +34,18 @@ namespace LiveHTS.Core.Model.Interview
             EnrollmentId = enrollmentId;
             Remarks = remarks;
             EncounterId = encounterId;
+            ARTStartDate = artStartDate;
         }
 
-        public static ObsLinkage Create(string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId)
+        public static ObsLinkage Create(string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate)
         {
             var obs = new ObsLinkage(referredTo, datePromised, handedTo, facilityHandedTo, workerCarde, dateEnrolled,
-                enrollmentId, remarks, encounterId);
+                enrollmentId, remarks, encounterId, artStartDate);
             return obs;
         }
-        public static ObsLinkage Create(Guid id, string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId)
+        public static ObsLinkage Create(Guid id, string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate)
         {
-            var obs = new ObsLinkage(referredTo, datePromised, handedTo, facilityHandedTo, workerCarde, dateEnrolled, enrollmentId, remarks, encounterId);
+            var obs = new ObsLinkage(referredTo, datePromised, handedTo, facilityHandedTo, workerCarde, dateEnrolled, enrollmentId, remarks, encounterId, artStartDate);
             obs.Id = id;
             return obs;
         }
@@ -56,13 +58,14 @@ namespace LiveHTS.Core.Model.Interview
             return obs;
         }
 
-        public static ObsLinkage CreateNew(string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId)
+        public static ObsLinkage CreateNew(string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate)
         {
             var obs = new ObsLinkage();
             obs.FacilityHandedTo = facilityHandedTo;
             obs.HandedTo = handedTo;
             obs.WorkerCarde = workerCarde;
             obs.DateEnrolled = dateEnrolled;
+            obs.ARTStartDate = artStartDate;
             obs.EnrollmentId = enrollmentId;
             obs.Remarks = remarks;
             return obs;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
@@ -37,6 +38,10 @@ namespace LiveHTS.Presentation.ViewModel
         public string Title { get; set; } = "Remote Search";
         public IRemoteRegistryViewModel Parent { get; set; }
 
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
         public string Search
         {
             get { return _search; }
@@ -134,7 +139,7 @@ namespace LiveHTS.Presentation.ViewModel
             IsBusy = true;
             _dialogService.ShowWait("Searching,Please wait...");
 
-            var remoteData = await _clientSyncService.SearchClients(Address, Search);
+            var remoteData = await _clientSyncService.SearchClients(Address, Search, AppPracticeId);
 
             if (null == remoteData)
             {
@@ -243,6 +248,15 @@ namespace LiveHTS.Presentation.ViewModel
             Clients =new List<Client>();
             IsBusy = false;
         }
-       
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 
 using LiveHTS.Core.Interfaces.Services.Config;
@@ -27,7 +28,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public string Title { get; set; } = "COHORT";
         public IRemoteRegistryViewModel Parent { get; set; }
-
+      
         public string Search
         {
             get { return _search; }
@@ -136,13 +137,10 @@ namespace LiveHTS.Presentation.ViewModel
             _cohortService = Mvx.Resolve<ICohortService>();
             _settings = Mvx.Resolve<ISettings>();
         }
-
         public override void ViewAppeared()
         {
             LoadCohorts();
         }
-
-
         private void LoadCohorts()
         {
             IsBusy = true;
@@ -150,5 +148,6 @@ namespace LiveHTS.Presentation.ViewModel
             IsBusy = false;
         }
 
+       
     }
 }

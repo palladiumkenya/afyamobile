@@ -38,6 +38,11 @@ namespace LiveHTS.Presentation.ViewModel
         public Guid CohortId { get; set; }
         public IRemoteRegistryViewModel Parent { get; set; }
 
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
+
         public string Search
         {
             get { return _search; }
@@ -232,7 +237,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _dialogService.ShowWait("Downloading,Please wait...");
                 
-                var remoteData = await _chohortClientsSyncService.GetClients(Address, CohortId.ToString());
+                var remoteData = await _chohortClientsSyncService.GetClients(Address, CohortId.ToString(),AppPracticeId);
                 if (remoteData.Count > 0)
                 {
                     Clients = remoteData.Select(x => x.Client).ToList();
@@ -258,6 +263,14 @@ namespace LiveHTS.Presentation.ViewModel
             }
             IsBusy = false;
         }
-       
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
@@ -11,7 +12,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
 {
     public interface IChohortClientsSyncService
     {
-        Task<List<RemoteClientDTO>> GetClients(string url,string id);
+        Task<List<RemoteClientDTO>> GetClients(string url,string id,Guid? practiceId=null);
 
     }
 }

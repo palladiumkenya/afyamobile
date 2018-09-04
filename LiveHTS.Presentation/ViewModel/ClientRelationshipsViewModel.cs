@@ -48,6 +48,10 @@ namespace LiveHTS.Presentation.ViewModel
             ShowId = true;
         }
 
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
         public IEnumerable<RelationshipType> RelationshipTypes
         {
             get { return _relationshipTypes; }
@@ -195,12 +199,10 @@ namespace LiveHTS.Presentation.ViewModel
                 return _addPersonCommand;
             }
         }
-
-
-
+        
         private void SearchClient()
         {
-            Clients = _registryService.GetAllClients(Search);
+            Clients = _registryService.GetAllSiteClients(AppPracticeId, Search);
         }
 
         public void Init(string id, string reltype)
@@ -310,6 +312,15 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (settings.Contains(nameof(ClientEnrollmentViewModel)))
                 settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+        }
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
         }
     }
 }

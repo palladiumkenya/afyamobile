@@ -33,6 +33,9 @@ namespace LiveHTS.Presentation.ViewModel
         private ObsLinkage _obsLinkage;
         private TraceDateDTO _selectedEnrolDate;
         private IDialogService _dialogService;
+        private DateTime _artStartDate;
+        private TraceDateDTO _selectedArtDate;
+        private IMvxCommand _showArtDateDialogCommand;
 
         public ValidationHelper Validator
         {
@@ -75,10 +78,12 @@ namespace LiveHTS.Presentation.ViewModel
                     FacilityHandedTo = ObsLinkage.FacilityHandedTo;
                     HandedTo = ObsLinkage.HandedTo;
                     WorkerCarde = ObsLinkage.WorkerCarde;
+
                     if (ObsLinkage.DateEnrolled.HasValue)
-                    {
                         DateEnrolled = ObsLinkage.DateEnrolled.Value;
-                    }
+                    if (ObsLinkage.ARTStartDate.HasValue)
+                        ARTStartDate = ObsLinkage.ARTStartDate.Value;
+
                     EnrollmentId = ObsLinkage.EnrollmentId;
                     Remarks = ObsLinkage.Remarks;
                 }
@@ -114,6 +119,12 @@ namespace LiveHTS.Presentation.ViewModel
             set { _dateEnrolled = value; RaisePropertyChanged(() => DateEnrolled); }
         }
 
+        public DateTime ARTStartDate
+        {
+            get { return _artStartDate; }
+            set { _artStartDate = value; RaisePropertyChanged(() => ARTStartDate); }
+        }
+
         public string EnrollmentId
         {
             get { return _enrollmentId; }
@@ -137,9 +148,25 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public TraceDateDTO SelectedArtDate
+        {
+            get { return _selectedArtDate; }
+            set
+            {
+                _selectedArtDate = value;
+                RaisePropertyChanged(() => SelectedArtDate);
+                UpdateArtDate(SelectedArtDate);
+            }
+        }
+
         private void UpdateEnrollDate(TraceDateDTO selectedEnrolDate)
         {
             DateEnrolled = selectedEnrolDate.EventDate;
+        }
+
+        private void UpdateArtDate(TraceDateDTO selectedArtDate)
+        {
+            ARTStartDate = selectedArtDate.EventDate;
         }
 
         public IMvxCommand SaveLinkingCommand
@@ -164,7 +191,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null == ObsLinkage)
                 {
-                    obs = ObsLinkage.CreateNew(FacilityHandedTo,HandedTo,WorkerCarde,DateEnrolled,EnrollmentId,Remarks, ParentViewModel.Encounter.Id);
+                    obs = ObsLinkage.CreateNew(FacilityHandedTo,HandedTo,WorkerCarde,DateEnrolled,EnrollmentId,Remarks, ParentViewModel.Encounter.Id,ARTStartDate);
                 }
                 else
                 {
@@ -174,6 +201,7 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.HandedTo = HandedTo;
                     obs.WorkerCarde = WorkerCarde;
                     obs.DateEnrolled = DateEnrolled;
+                    obs.ARTStartDate = ARTStartDate;
                     obs.EnrollmentId = EnrollmentId;
                     obs.Remarks = Remarks;
 
@@ -203,11 +231,27 @@ namespace LiveHTS.Presentation.ViewModel
 
         public event EventHandler<ChangedDateEvent> ChangedEnrollDate;
 
+        public IMvxCommand ShowArtDateDialogCommand
+        {
+            get
+            {
+                _showArtDateDialogCommand = _showArtDateDialogCommand ?? new MvxCommand(ShowArtDateDialog);
+                return _showArtDateDialogCommand;
+            }
+        }
+
+        private void ShowArtDateDialog()
+        {
+            ShowArtDatePicker(LinkageId, ARTStartDate);
+        }
+
+        public event EventHandler<ChangedDateEvent> ChangedArtDate;
+
 
         public LinkedToCareViewModel()
         {
             _dialogService = Mvx.Resolve<IDialogService>();
-            DateEnrolled = DateTime.Today;
+            DateEnrolled = ARTStartDate = DateTime.Today;
             _validator = new ValidationHelper();
             _linkageService = Mvx.Resolve<ILinkageService>();
         }
@@ -216,10 +260,19 @@ namespace LiveHTS.Presentation.ViewModel
         {
             OnChangedEnrollDate(new ChangedDateEvent(refId, refDate));
         }
+        public void ShowArtDatePicker(Guid refId, DateTime refDate)
+        {
+            OnChangedArtDate(new ChangedDateEvent(refId, refDate));
+        }
 
         protected virtual void OnChangedEnrollDate(ChangedDateEvent e)
         {
             ChangedEnrollDate?.Invoke(this, e);
+        }
+
+        protected virtual void OnChangedArtDate(ChangedDateEvent e)
+        {
+            ChangedArtDate?.Invoke(this, e);
         }
 
         public bool Validate()
@@ -257,6 +310,14 @@ namespace LiveHTS.Presentation.ViewModel
                 () => RuleResult.Assert(
                     DateEnrolled >= DateTime.Today,
                     $"{nameof(DateEnrolled)} should be a valid date"
+                )
+            );
+
+            Validator.AddRule(
+                nameof(ARTStartDate),
+                () => RuleResult.Assert(
+                    ARTStartDate >= DateTime.Today,
+                    $"{nameof(ARTStartDate)} should be a valid date"
                 )
             );
 
