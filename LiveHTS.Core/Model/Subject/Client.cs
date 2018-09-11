@@ -18,6 +18,8 @@ namespace LiveHTS.Core.Model.Subject
         public string MaritalStatus { get; set; }
         public string KeyPop { get; set; }
         public string OtherKeyPop { get; set; }
+        public Guid? Education { get; set; }
+        public Guid? Completion { get; set; }
         public bool IsFamilyMember  { get; set; }
         public bool IsPartner { get; set; }
         [Indexed]
@@ -59,33 +61,35 @@ namespace LiveHTS.Core.Model.Subject
         {
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,Guid userId):this()
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,Guid userId,Guid education,Guid completion) :this()
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
             OtherKeyPop = otherKeyPop;
             PracticeId = practiceId;
             UserId = userId;
+            Education = education;
+            Completion = completion;
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId,Guid userId)
-            :this(maritalStatus, keyPop, otherKeyPop,practiceId, userId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId,Guid userId, Guid education, Guid completion)
+            :this(maritalStatus, keyPop, otherKeyPop,practiceId, userId, education, completion)
         {
             PersonId = personId;
         }
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId)
-            : this(maritalStatus, keyPop, otherKeyPop, practiceId, userId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId, Guid education, Guid completion)
+            : this(maritalStatus, keyPop, otherKeyPop, practiceId, userId, education, completion)
         {
             Person = person;
         }
 
-        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId)
+        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId, Guid education, Guid completion)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person,userId);
+            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person,userId, education, completion);
         }
-        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId, Guid userId)
+        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId, Guid userId, Guid education, Guid completion)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId);
+            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId, education, completion);
         }
 
        
