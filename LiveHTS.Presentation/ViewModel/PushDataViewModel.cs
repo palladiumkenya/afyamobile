@@ -20,6 +20,9 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class PushDataViewModel:MvxViewModel, IPushDataViewModel
     {
+        //TODO: Update version
+        private readonly int _hapiVersion = 104;
+
         private readonly IDialogService _dialogService;
         private readonly ISettings _settings;
         private readonly IActivationService _activationService;
@@ -180,11 +183,11 @@ namespace LiveHTS.Presentation.ViewModel
 
                     int.TryParse(response, out var version);
 
-                    if (version != 103)
+                    if (version != _hapiVersion)
                     {
                         _dialogService.Alert($"you are using an old version of LiveHAPI");
                         IsBusy = false;
-                        CurrentStatus = $"send failed! updated LiveHAPI ";
+                        CurrentStatus = $"send failed! update LiveHAPI to v{_hapiVersion}";
                         return;
                     }
 

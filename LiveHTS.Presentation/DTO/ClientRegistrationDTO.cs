@@ -156,7 +156,7 @@ namespace LiveHTS.Presentation.DTO
 
             var person = Person.Create(ClientDemographic.FirstName, ClientDemographic.MiddleName,
                 ClientDemographic.LastName, ClientDemographic.Gender, ClientDemographic.BirthDate,
-                ClientDemographic.BirthDateEstimated, string.Empty);
+                ClientDemographic.BirthDateEstimated, string.Empty, ClientDemographic.NickName);
 
             if (!string.IsNullOrWhiteSpace(ClientDemographic.PersonId))
             {

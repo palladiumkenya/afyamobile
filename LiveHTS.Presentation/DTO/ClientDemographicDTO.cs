@@ -13,6 +13,7 @@ namespace LiveHTS.Presentation.DTO
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string NickName { get; set; }
         public string Gender { get; set; }
         public decimal Age { get; set; }
         public string AgeUnit { get; set; }
@@ -37,17 +38,18 @@ namespace LiveHTS.Presentation.DTO
         {
             BirthDateEstimated = false;
         }
-        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime birthDate) : this()
+        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime birthDate, string nickName) : this()
         {
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
+            NickName = nickName;
             Gender = gender;
          
             BirthDate = birthDate;
         }
 
-        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime birthDate, decimal age, string ageUnit ) :this(firstName, middleName,  lastName, gender,  birthDate)
+        private ClientDemographicDTO(string firstName, string middleName, string lastName, string gender, DateTime birthDate, decimal age, string ageUnit, string nickName) :this(firstName, middleName,  lastName, gender, birthDate, nickName)
         {
             Age = age;
             AgeUnit = ageUnit;
@@ -63,7 +65,8 @@ namespace LiveHTS.Presentation.DTO
                 model.SelectedGender.Value,
                 model.BirthDate,
                 model.Age,
-                model.SelectedAgeUnit.Value
+                model.SelectedAgeUnit.Value,
+                model.NickName
             );
 
             demographicDTO.PersonId = model.PersonId;
@@ -86,7 +89,8 @@ namespace LiveHTS.Presentation.DTO
                         model.MiddleName,
                         model.LastName,
                         model.Gender,
-                        model.BirthDate);
+                        model.BirthDate,
+                        model.NickName);
 
                     demographicDTO.PersonId = model.Id.ToString();
                     

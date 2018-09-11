@@ -36,6 +36,7 @@ namespace LiveHTS.Presentation.ViewModel
         private TraceDateDTO _selectedDate;
         private ClientDemographicDTO _demographic;
         private IndexClientDTO _indexClientDTO;
+        private string _nickName;
 
         public ClientDemographicDTO Demographic
         {
@@ -95,6 +96,17 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => LastName);
             }
         }
+
+        public string NickName
+        {
+            get { return _nickName; }
+            set
+            {
+                _nickName = value;
+                RaisePropertyChanged(() => NickName);
+            }
+        }
+
         public CustomItem SelectedGender
         {
             get { return _selectedGender; }
@@ -329,6 +341,7 @@ namespace LiveHTS.Presentation.ViewModel
                 FirstName = Demographic.FirstName;
                 MiddleName = Demographic.MiddleName;
                 LastName = Demographic.LastName;
+                NickName = Demographic.NickName;
                 SelectedGender = GenderOptions.FirstOrDefault(x=>x.Value==Demographic.Gender);
                 Age = Demographic.Age;
                 if (!string.IsNullOrWhiteSpace(Demographic.AgeUnit))

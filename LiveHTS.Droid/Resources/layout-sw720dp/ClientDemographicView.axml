@@ -79,8 +79,23 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textSize="@dimen/textM"
-                    android:nextFocusForward="@+id/gender"
+                    android:nextFocusForward="@+id/nickname"
                     local:MvxBind="Text LastName; Error Errors['LastName']" />
+            </android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nick Name"
+                    android:maxLines="1"
+                    android:singleLine="true"
+					android:textSize="@dimen/textM"
+                    android:nextFocusForward="@+id/gender"
+                    local:MvxBind="Text NickName" />
             </android.support.design.widget.TextInputLayout>
         <!--Gender-->
             <LinearLayout
