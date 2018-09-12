@@ -100,9 +100,11 @@ namespace LiveHTS.Presentation.DTO
             //ClientIdentifier 
 
             //string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person
-            
 
-            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop, ClientProfile.OtherKeyPop, clientPracticeId, personId,userId);
+
+            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop,
+                ClientProfile.OtherKeyPop, clientPracticeId, personId, userId, ClientProfile.Education,
+                ClientProfile.Completion);
 
             if (null!= ClientEnrollment && !string.IsNullOrWhiteSpace(ClientEnrollment.ClientId))
             {

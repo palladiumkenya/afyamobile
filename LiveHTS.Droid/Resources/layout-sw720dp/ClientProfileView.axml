@@ -86,6 +86,37 @@
                  android:textSize="@dimen/textM"
                 android:id="@+id/editTextProfileKeyOtherPop"
                 local:MvxBind="Text OtherKeyPop; Visibility IsOtherKeyPop; Error Errors['OtherKeyPop']" />
+
+			
+			 <TextView
+                android:text="Eductaion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileEductaion"
+				  android:textSize="@dimen/textM"
+                local:MvxBind="Error Errors['Education']" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            
+                android:id="@+id/spinnerEducation"
+				    android:textSize="@dimen/textXL"
+                local:MvxBind="ItemsSource Educations;SelectedItem SelectedEducation" />
+            <TextView
+                android:text="Eductaion Completed?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileCompletion"
+				  android:textSize="@dimen/textM"
+                local:MvxBind="Error Errors['Completion'];Visibility AllowCompletion, Converter=Visibility" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               
+                android:id="@+id/spinnerCompletion"
+				    android:textSize="@dimen/textXL"
+                local:MvxBind="ItemsSource Completions;SelectedItem SelectedCompletion;Visibility AllowCompletion, Converter=Visibility" />
+
             <TextView
                 android:text="Relation To Index Client"
                 android:layout_width="match_parent"

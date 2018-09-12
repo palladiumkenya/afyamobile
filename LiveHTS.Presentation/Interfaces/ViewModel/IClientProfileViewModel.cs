@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Presentation.DTO;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
@@ -19,6 +20,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         KeyPop SelectedKeyPop { get; set; }
         string IsOtherKeyPop { get; set; }
         string OtherKeyPop { get; set; }
+
+        List<CategoryItem> Educations { get; set; }
+        CategoryItem SelectedEducation { get; set; }
+        bool AllowCompletion { get; set; }
+        List<CategoryItem> Completions { get; set; }
+        CategoryItem SelectedCompletion { get; set; }
+
         string ClientId { get; set; }
     }
 }
