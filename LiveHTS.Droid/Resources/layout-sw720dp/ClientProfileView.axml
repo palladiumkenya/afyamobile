@@ -117,6 +117,19 @@
 				    android:textSize="@dimen/textXL"
                 local:MvxBind="ItemsSource Completions;SelectedItem SelectedCompletion;Visibility AllowCompletion, Converter=Visibility" />
 
+			<TextView
+                android:text="Occupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:textSize="@dimen/textM"
+                android:id="@+id/textViewProfileOccupation"/>
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textXL"
+                android:id="@+id/spinnerOccupation"
+                local:MvxBind="ItemsSource Occupations;SelectedItem SelectedOccupation" />
+
             <TextView
                 android:text="Relation To Index Client"
                 android:layout_width="match_parent"

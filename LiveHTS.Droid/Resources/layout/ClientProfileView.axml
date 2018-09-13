@@ -108,6 +108,17 @@
                 android:id="@+id/spinnerCompletion"
                 local:MvxBind="ItemsSource Completions;SelectedItem SelectedCompletion;Visibility AllowCompletion, Converter=Visibility" />
 
+			<TextView
+                android:text="Occupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileOccupation"/>
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:id="@+id/spinnerOccupation"
+                local:MvxBind="ItemsSource Occupations;SelectedItem SelectedOccupation" />
 
             <TextView
                 android:text="Relation To Index Client"

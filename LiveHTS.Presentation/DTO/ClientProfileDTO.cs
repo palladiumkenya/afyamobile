@@ -15,6 +15,7 @@ namespace LiveHTS.Presentation.DTO
         public string OtherKeyPop { get; set; }
         public Guid? Education { get; set; }
         public Guid? Completion { get; set; }
+        public Guid? Occupation { get; set; }
         public string RelTypeId { get; set; }
         public bool? PreventEnroll { get; set; }
         
@@ -31,7 +32,7 @@ namespace LiveHTS.Presentation.DTO
         public ClientProfileDTO()
         {
         }
-        private ClientProfileDTO(string maritalStatus, string keyPop, string otherKeyPop,string relTypeId, Guid? education, Guid? completion)
+        private ClientProfileDTO(string maritalStatus, string keyPop, string otherKeyPop,string relTypeId, Guid? education, Guid? completion, Guid? occupation)
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
@@ -39,6 +40,7 @@ namespace LiveHTS.Presentation.DTO
             RelTypeId = relTypeId;
             Education = education;
             Completion = completion;
+            Occupation = occupation;
         }
 
         public static ClientProfileDTO CreateFromView(ClientProfileViewModel clientProfileViewModel)
@@ -48,7 +50,7 @@ namespace LiveHTS.Presentation.DTO
                 : "";
 
             var profileDTO= new ClientProfileDTO(clientProfileViewModel.SelectedMaritalStatus.Id, clientProfileViewModel.SelectedKeyPop.Id, clientProfileViewModel.OtherKeyPop, relTypeId, 
-                clientProfileViewModel.SelectedEducation.ItemId, clientProfileViewModel.SelectedCompletion.ItemId);
+                clientProfileViewModel.SelectedEducation.ItemId, clientProfileViewModel.SelectedCompletion.ItemId,clientProfileViewModel.SelectedOccupation.ItemId);
             profileDTO.ClientId = clientProfileViewModel.ClientId;
             return profileDTO;
         }
@@ -66,6 +68,7 @@ namespace LiveHTS.Presentation.DTO
                 profileDTO.PreventEnroll = client.PreventEnroll;
                 profileDTO.Education = client.Education;
                 profileDTO.Completion = client.Completion;
+                profileDTO.Occupation = client.Occupation;
             }
 
             return profileDTO;

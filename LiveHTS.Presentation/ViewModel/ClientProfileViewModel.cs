@@ -42,6 +42,8 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedEducation;
         private CategoryItem _selectedCompletion;
         private bool _allowCompletion;
+        private List<CategoryItem> _occupations=new List<CategoryItem>();
+        private CategoryItem _selectedOccupation;
 
 
         public bool IsRelation
@@ -215,6 +217,26 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public List<CategoryItem> Occupations
+        {
+            get { return _occupations; }
+            set
+            {
+                _occupations = value;
+                RaisePropertyChanged(() => Occupations);
+            }
+        }
+
+        public CategoryItem SelectedOccupation
+        {
+            get { return _selectedOccupation; }
+            set
+            {
+                _selectedOccupation = value;
+                RaisePropertyChanged(() => SelectedOccupation);
+            }
+        }
+
         public string ClientId
         {
             get { return _clientId; }
@@ -246,6 +268,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var educationsJson = _settings.GetValue("lookup.Education", "");
             var completionsJson = _settings.GetValue("lookup.Completion", "");
+            var occupationsJson = _settings.GetValue("lookup.Occupation", "");
 
             if (string.IsNullOrWhiteSpace(educationsJson))
             {
@@ -259,6 +282,13 @@ namespace LiveHTS.Presentation.ViewModel
                 var completions = _lookupService.GetCategoryItems("Completion", true, "[Select Completion]").ToList();
                 Completions = completions;
                 _settings.AddOrUpdateValue("lookup.Completion", JsonConvert.SerializeObject(completions));
+            }
+
+            if (string.IsNullOrWhiteSpace(occupationsJson))
+            {
+                var occupations = _lookupService.GetCategoryItems("Occupation", true, "[Select Occupation]").ToList();
+                Occupations = occupations;
+                _settings.AddOrUpdateValue("lookup.Occupation", JsonConvert.SerializeObject(occupations));
             }
 
             ClientInfo = clientinfo;
@@ -310,6 +340,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var educationsJson = _settings.GetValue("lookup.Education", "");
             var completionsJson = _settings.GetValue("lookup.Completion", "");
+            var occupationsJson = _settings.GetValue("lookup.Occupation", "");
 
             if (!string.IsNullOrWhiteSpace(educationsJson) && !Educations.Any())
             {
@@ -320,6 +351,11 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Completions = JsonConvert.DeserializeObject<List<CategoryItem>>(completionsJson);
             }
+
+            if (!string.IsNullOrWhiteSpace(occupationsJson) && !Occupations.Any())
+            {
+                Occupations = JsonConvert.DeserializeObject<List<CategoryItem>>(occupationsJson);
+            }
         }
 
         public override void Start()
@@ -327,6 +363,10 @@ namespace LiveHTS.Presentation.ViewModel
             base.Start();
             MaritalStatus = _lookupService.GetMaritalStatuses(true).ToList();
             KeyPops = _lookupService.GetKeyPops(true).ToList();
+            Educations = _lookupService.GetCategoryItems("Education", true, "[Select Education]").ToList();
+            Completions = _lookupService.GetCategoryItems("Completion", true, "[Select Completion]").ToList();
+            Occupations = _lookupService.GetCategoryItems("Occupation", true, "[Select Occupation]").ToList();
+
             try
             {
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == "");
@@ -510,19 +550,20 @@ namespace LiveHTS.Presentation.ViewModel
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);
                 OtherKeyPop = Profile.OtherKeyPop;
-                SelectedRelationshipType =
-                    RelationshipTypes.FirstOrDefault(x => x.Description.ToLower() == Profile.RelTypeId.ToLower());
                 SelectedEducation = Educations.FirstOrDefault(x => x.ItemId == Profile.Education);
                 SelectedCompletion = Completions.FirstOrDefault(x => x.ItemId == Profile.Completion);
+                SelectedOccupation = Occupations.FirstOrDefault(x => x.ItemId == Profile.Occupation);
+
+                if (null != Profile.RelTypeId && !string.IsNullOrWhiteSpace(Profile.RelTypeId))
+                    SelectedRelationshipType =
+                        RelationshipTypes.FirstOrDefault(x => x.Description.ToLower() == Profile.RelTypeId.ToLower());
+
             }
             catch (Exception e)
             {
                 Mvx.Error(e.Message);
             }
         }
-
-
-
 
         private void ClearCache()
         {
@@ -543,8 +584,6 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (_settings.Contains(nameof(ClientEnrollmentViewModel)))
                 _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
-
         }
-
     }
 }

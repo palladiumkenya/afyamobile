@@ -104,7 +104,7 @@ namespace LiveHTS.Presentation.DTO
 
             var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop,
                 ClientProfile.OtherKeyPop, clientPracticeId, personId, userId, ClientProfile.Education,
-                ClientProfile.Completion);
+                ClientProfile.Completion, ClientProfile.Occupation);
 
             if (null!= ClientEnrollment && !string.IsNullOrWhiteSpace(ClientEnrollment.ClientId))
             {

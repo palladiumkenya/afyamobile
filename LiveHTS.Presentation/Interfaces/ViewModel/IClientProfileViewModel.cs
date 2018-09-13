@@ -27,6 +27,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<CategoryItem> Completions { get; set; }
         CategoryItem SelectedCompletion { get; set; }
 
+        List<CategoryItem> Occupations { get; set; }
+        CategoryItem SelectedOccupation { get; set; }
+
         string ClientId { get; set; }
     }
 }

@@ -84,7 +84,7 @@ namespace LiveHTS.Core.Model.SmartCard
                 smartClient.Landmark, smartClient.Phone, string.Empty);
 
             var client = Client.Create(smartClient.MaritalStatus, smartClient.KeyPop, smartClient.OtherKeyPop,
-                practiceId, smartPerson, userId,Guid.Empty, Guid.Empty);
+                practiceId, smartPerson, userId,Guid.Empty, Guid.Empty, Guid.Empty);
             client.PersonId = smartPerson.Id;
 
             var clientIdentifier =

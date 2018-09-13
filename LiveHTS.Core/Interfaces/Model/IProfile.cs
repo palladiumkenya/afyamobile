@@ -10,5 +10,6 @@ namespace LiveHTS.Core.Interfaces.Model
         string OtherKeyPop { get; set; }
         Guid? Education { get; set; }
         Guid? Completion { get; set; }
+        Guid? Occupation { get; set; }
     }
 }
