@@ -83,6 +83,7 @@
     <Compile Include="Migrations\SeederTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseRepositoryTests.cs" />
+    <Compile Include="Repository\Meta\RegionRepositoryTests.cs" />
     <Compile Include="Repository\Subject\ClientRelationshipRepositoryTests.cs" />
     <Compile Include="Repository\Survey\ObsRepositoryTests.cs" />
     <Compile Include="Repository\Survey\EncounterRepositoryTests.cs" />
@@ -110,6 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="livehtsmeta.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Seed\EncounterType.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

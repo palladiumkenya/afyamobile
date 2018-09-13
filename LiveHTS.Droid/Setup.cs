@@ -30,6 +30,7 @@ namespace LiveHTS.Droid
         protected override IMvxApplication CreateApp()
         {            
             var dbpath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "livehts.db"); //Create New Database
+           
             return new Presentation.App(dbpath);
         }
 

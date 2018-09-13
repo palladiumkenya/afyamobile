@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\IMetaRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsPartnerTraceResultRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsPartnerScreeningRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsMemberScreeningRepository.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
+    <Compile Include="Interfaces\Repository\Meta\IRegionRepository.cs" />
     <Compile Include="Interfaces\Repository\SmartCard\IPSmartStoreRepository.cs" />
     <Compile Include="Interfaces\Repository\SmartCard\IClientShrRecordRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientStateRepository.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
+    <Compile Include="Model\Meta\Region.cs" />
     <Compile Include="Model\SmartCard\CARDDETAILS.cs" />
     <Compile Include="Model\SmartCard\ClientShrRecord.cs" />
     <Compile Include="Model\SmartCard\EXTERNALPATIENTID.cs" />

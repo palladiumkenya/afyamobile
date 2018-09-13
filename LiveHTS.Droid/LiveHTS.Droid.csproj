@@ -309,6 +309,7 @@
     <AndroidResource Include="Resources\layout\AppDashboardView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidAsset Include="Assets\livehtsmeta.db" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
