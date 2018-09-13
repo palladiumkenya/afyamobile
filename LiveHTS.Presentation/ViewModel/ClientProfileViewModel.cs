@@ -515,9 +515,6 @@ namespace LiveHTS.Presentation.ViewModel
                     ShowViewModel<DashboardViewModel>(new {id = client.Id.ToString()});
                     Close(this);
                 }
-
-
-
             }
             catch (Exception e)
             {
@@ -567,7 +564,6 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void ClearCache()
         {
-
             _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel), "");
             _settings.AddOrUpdateValue(nameof(ClientContactViewModel), "");
             _settings.AddOrUpdateValue(nameof(ClientProfileViewModel), "");

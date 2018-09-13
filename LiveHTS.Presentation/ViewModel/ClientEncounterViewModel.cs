@@ -234,9 +234,7 @@ namespace LiveHTS.Presentation.ViewModel
         public void Init(string formId, string encounterTypeId, string mode, string encounterId)
         {
             //Load Form + Question Metadata
-
-
-
+            
             if (null == Form)
             {
                 Form = _encounterService.LoadForm(new Guid(formId));

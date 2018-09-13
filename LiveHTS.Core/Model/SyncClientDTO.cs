@@ -21,6 +21,7 @@ namespace LiveHTS.Core.Model
         public bool? AlreadyTestedPos { get; set; }
         public Guid? Education { get; set; }
         public Guid? Completion { get; set; }
+        public Guid? Occupation { get; set; }
         public Guid UserId { get; set; }
         public List<ClientIdentifier> Identifiers { get; set; } = new List<ClientIdentifier>();
         public List<ClientRelationship> Relationships { get; set; } = new List<ClientRelationship>();
@@ -43,6 +44,7 @@ namespace LiveHTS.Core.Model
             AlreadyTestedPos = client.AlreadyTestedPos;
             Education = client.Education;
             Completion = client.Completion;
+            Occupation = client.Occupation;
             UserId = client.UserId;
         }
     }

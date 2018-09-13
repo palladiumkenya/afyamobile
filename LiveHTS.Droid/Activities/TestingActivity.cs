@@ -30,8 +30,8 @@ namespace LiveHTS.Droid.Activities
             var viewPager = FindViewById<ViewPager>(Resource.Id.viewpager);
 
             var fragments = new List<MvxCachingFragmentStatePagerAdapter.FragmentInfo>();
-            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo("FIRST TEST", typeof(FirstTestEpisodeFragment), ViewModel.FirstTestEpisodeViewModel));
-            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo("SECOND TEST", typeof(SecondTestEpisodeFragment), ViewModel.SecondTestEpisodeViewModel));
+            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo("SCREENING TEST", typeof(FirstTestEpisodeFragment), ViewModel.FirstTestEpisodeViewModel));
+            fragments.Add(new MvxCachingFragmentStatePagerAdapter.FragmentInfo("CONFIRMATORY TEST", typeof(SecondTestEpisodeFragment), ViewModel.SecondTestEpisodeViewModel));
 
             viewPager.Adapter = new MvxCachingFragmentStatePagerAdapter(this, SupportFragmentManager, fragments);
             var pageIndicator = FindViewById<PagerSlidingTabStrip>(Resource.Id.content_frame);

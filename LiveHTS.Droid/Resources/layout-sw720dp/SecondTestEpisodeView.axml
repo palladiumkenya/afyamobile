@@ -12,10 +12,9 @@
     <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="HIV Test 2"
+      android:text="Confirmatory Test"
       android:textSize="@dimen/textM"
-      android:paddingRight="5dp"
-      local:MvxBind="Text TestName"/>
+      android:paddingRight="5dp"/>
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

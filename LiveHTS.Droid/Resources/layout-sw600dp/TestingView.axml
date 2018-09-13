@@ -90,7 +90,7 @@
           android:layout_height="wrap_content"
           android:paddingRight="5dp"
           android:textSize="@dimen/textM"
-          android:text="HIV Test 1 Result"
+          android:text="Screening"
                 />
       <MvxSpinner
           android:id="@+id/spinner11"
@@ -117,7 +117,7 @@
           android:layout_height="wrap_content"
           android:paddingRight="5dp"
           android:textSize="@dimen/textM"
-          android:text="HIV Test 2 Result"
+          android:text="Confirmatory"
                 />
       <MvxSpinner
           android:id="@+id/spinner11"
