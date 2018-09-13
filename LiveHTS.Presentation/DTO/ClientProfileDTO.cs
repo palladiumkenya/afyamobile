@@ -50,7 +50,7 @@ namespace LiveHTS.Presentation.DTO
                 : "";
 
             var profileDTO= new ClientProfileDTO(clientProfileViewModel.SelectedMaritalStatus.Id, clientProfileViewModel.SelectedKeyPop.Id, clientProfileViewModel.OtherKeyPop, relTypeId, 
-                clientProfileViewModel.SelectedEducation.ItemId, clientProfileViewModel.SelectedCompletion.ItemId,clientProfileViewModel.SelectedOccupation.ItemId);
+                clientProfileViewModel.SelectedEducation?.ItemId, clientProfileViewModel.SelectedCompletion?.ItemId,clientProfileViewModel.SelectedOccupation?.ItemId);
             profileDTO.ClientId = clientProfileViewModel.ClientId;
             return profileDTO;
         }

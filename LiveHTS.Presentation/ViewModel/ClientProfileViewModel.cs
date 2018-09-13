@@ -371,12 +371,11 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == "");
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == "");
-//                SelectedEducation= Educations.FirstOrDefault(x => x.Id == Guid.Empty);
-//                SelectedCompletion = Completions.FirstOrDefault(x => x.Id == Guid.Empty);
+                SelectedEducation= Educations.FirstOrDefault(x => x.Id == Guid.Empty);
+                SelectedCompletion = Completions.FirstOrDefault(x => x.Id == Guid.Empty);
+                SelectedOccupation = Occupations.FirstOrDefault(x => x.Id == Guid.Empty);
             }
-            catch
-            {
-            }
+            catch{}
         }
 
         public override bool Validate()
