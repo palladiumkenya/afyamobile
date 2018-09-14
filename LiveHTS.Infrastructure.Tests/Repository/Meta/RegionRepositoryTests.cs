@@ -31,7 +31,10 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
         {
             var regions = _regionRepository.GetCounties().ToList();
             Assert.IsTrue(regions.Any());
-            writeall(regions);
+            foreach (var region in regions)
+            {
+                Console.WriteLine(region.County());
+            }
         }
 
         [TestMethod]
@@ -39,7 +42,10 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
         {
             var regions = _regionRepository.GetSubCounties(47).ToList();
             Assert.IsTrue(regions.Any());
-            writeall(regions);
+            foreach (var region in regions)
+            {
+                Console.WriteLine(region.SubCounty());
+            }
         }
 
         [TestMethod]
@@ -47,15 +53,34 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
         {
             var regions = _regionRepository.GetWards(12).ToList();
             Assert.IsTrue(regions.Any());
-            writeall(regions);
-        }
-
-        private void writeall(List<Region> regions)
-        {
             foreach (var region in regions)
             {
-                Console.WriteLine(region);
+                Console.WriteLine(region.Ward());
             }
+        }
+        
+        [TestMethod]
+        public void should_Get_County()
+        {
+            var region = _regionRepository.GetCounty(1);
+            Assert.IsNotNull(region);
+            Console.WriteLine(region.County());
+        }
+
+        [TestMethod]
+        public void should_Get_Sub_County()
+        {
+            var region = _regionRepository.GetSubCounty(1);
+            Assert.IsNotNull(region);
+            Console.WriteLine(region.SubCounty());
+        }
+
+        [TestMethod]
+        public void should_Get_Ward()
+        {
+            var region = _regionRepository.GetWard(1);
+            Assert.IsNotNull(region);
+            Console.WriteLine(region.Ward());
         }
     }
 }
