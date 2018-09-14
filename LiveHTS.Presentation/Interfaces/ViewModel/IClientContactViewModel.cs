@@ -1,4 +1,7 @@
-﻿using LiveHTS.Presentation.DTO;
+﻿using System.Collections.Generic;
+using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Meta;
+using LiveHTS.Presentation.DTO;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
@@ -14,5 +17,14 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string AddressId { get; set; }
         double? Lat { get; set; }
         double? Lng { get; set; }
+
+        List<Region> Counties { get; set; }
+        Region SelectedCounty { get; set; }
+
+        List<Region> SubCounties { get; set; }
+        Region SelectedSubCounty { get; set; }
+
+        List<Region> Wards { get; set; }
+        Region SelectedWard { get; set; }
     }
 }

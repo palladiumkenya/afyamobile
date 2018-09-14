@@ -96,6 +96,7 @@
     <Compile Include="Service\Clients\RegistryServiceTests.cs" />
     <Compile Include="Service\Clients\ObsServiceTests.cs" />
     <Compile Include="Service\Clients\EncounterServiceTests.cs" />
+    <Compile Include="Service\Meta\MetaServiceTests.cs" />
     <Compile Include="Service\Config\DeviceSetupServiceTests.cs" />
     <Compile Include="Service\Config\LookupServiceTests.cs" />
     <Compile Include="Service\Interview\PartnerTracingServiceTests.cs" />
@@ -118,6 +119,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="livehts.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="livehtsmeta.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

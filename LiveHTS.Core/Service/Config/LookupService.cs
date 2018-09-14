@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
 using LiveHTS.Core.Interfaces.Services;

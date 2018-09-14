@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
-using LiveHTS.Core.Interfaces.Repository.Survey;
-using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository.Survey;
 using LiveHTS.SharedKernel.Custom;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SQLite;
 using Assert = NUnit.Framework.Assert;

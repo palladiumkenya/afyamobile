@@ -8,7 +8,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
 {
     public interface IMetaSyncService
     {
-        Task<Meta> GetMetaData(string url);
+        Task<SyncModel.Meta> GetMetaData(string url);
         Task<List<County>> GetCounties(string url);
         Task<List<Category>> GetCategories(string url);
         Task<List<Item>> GetItems(string url);

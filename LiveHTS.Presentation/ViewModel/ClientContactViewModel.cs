@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
@@ -21,6 +23,12 @@ namespace LiveHTS.Presentation.ViewModel
         private IndexClientDTO _indexClientDTO;
         private double? _lat;
         private double? _lng;
+        private List<Region> _counties=new List<Region>();
+        private Region _selectedCounty;
+        private List<Region> _subCounties=new List<Region>();
+        private Region _selectedSubCounty;
+        private List<Region> _wards=new List<Region>();
+        private Region _selectedWard;
 
         public IndexClientDTO IndexClientDTO
         {
@@ -79,6 +87,66 @@ namespace LiveHTS.Presentation.ViewModel
             set { _lng = value; RaisePropertyChanged(() => Lng); }
         }
 
+        public List<Region> Counties
+        {
+            get { return _counties; }
+            set
+            {
+                _counties = value;
+                RaisePropertyChanged(() =>Counties);
+            }
+        }
+
+        public Region SelectedCounty
+        {
+            get { return _selectedCounty; }
+            set
+            {
+                _selectedCounty = value;
+                RaisePropertyChanged(() => SelectedCounty);
+            }
+        }
+
+        public List<Region> SubCounties
+        {
+            get { return _subCounties; }
+            set
+            {
+                _subCounties = value;
+                RaisePropertyChanged(() => SubCounties);
+            }
+        }
+
+        public Region SelectedSubCounty
+        {
+            get { return _selectedSubCounty; }
+            set
+            {
+                _selectedSubCounty = value;
+                RaisePropertyChanged(() => SelectedSubCounty);
+            }
+        }
+
+        public List<Region> Wards
+        {
+            get { return _wards; }
+            set
+            {
+                _wards = value;
+                RaisePropertyChanged(() => Wards);
+            }
+        }
+
+        public Region SelectedWard
+        {
+            get { return _selectedWard; }
+            set
+            {
+                _selectedWard = value;
+                RaisePropertyChanged(() => SelectedWard);
+            }
+        }
+
         public ClientContactViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
         {
             Step = 2;
@@ -100,6 +168,7 @@ namespace LiveHTS.Presentation.ViewModel
                         Title = $"Contacts [{IndexClientDTO.RelType}]";
                 }
             }
+
         }
 
         public override void ViewAppeared()

@@ -6,7 +6,6 @@ using LiveHTS.Core.Interfaces.Engine;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository.Survey;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SQLite;
 

@@ -79,6 +79,7 @@
     <Compile Include="Interfaces\Services\Clients\IRemoteSearchService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRemoteRegistryService.cs" />
     <Compile Include="Interfaces\Services\Config\ICohortService.cs" />
+    <Compile Include="Interfaces\Services\Meta\IMetaService.cs" />
     <Compile Include="Interfaces\Services\Config\ISetupWizardService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerScreeningService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerTracingService.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Service\Clients\RegistryService.cs" />
     <Compile Include="Service\Config\CohortService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
+    <Compile Include="Service\Meta\MetaService.cs" />
     <Compile Include="Service\Config\PracticeSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
     <Compile Include="Service\Config\SetupWizardService.cs" />
