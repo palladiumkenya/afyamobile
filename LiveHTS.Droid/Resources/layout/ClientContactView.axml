@@ -60,6 +60,46 @@
             android:inputType="number"
             local:MvxBind="Text Telephone; Error Errors['Telephone']" />
       </android.support.design.widget.TextInputLayout>
+
+	<TextView
+                android:text="County"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewConties" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:id="@+id/spinnerCounties"
+                local:MvxBind="ItemsSource Counties;SelectedItem SelectedCounty" />
+
+			
+				<TextView
+                android:text="Sub County"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+		
+                android:id="@+id/textViewSubConties" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:textSize="40dp"
+                android:id="@+id/spinnerSubCounties"
+                local:MvxBind="ItemsSource SubCounties;SelectedItem SelectedSubCounty" />
+
+				<TextView
+                android:text="Ward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+			
+                android:id="@+id/textViewWards" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:textSize="40dp"
+                android:id="@+id/spinnerWards"
+                local:MvxBind="ItemsSource Wards;SelectedItem SelectedWard" />
+
       <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content">

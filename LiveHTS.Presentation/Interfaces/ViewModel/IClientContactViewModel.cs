@@ -26,5 +26,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         List<Region> Wards { get; set; }
         Region SelectedWard { get; set; }
+
+        void LoadSubCounties(int postion = 0);
+        void LoadSubWards(int postion = 0);
     }
 }

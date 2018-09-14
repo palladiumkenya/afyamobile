@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Core.Interfaces.Services.Meta;
 using LiveHTS.Core.Model.Meta;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
@@ -29,6 +31,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Region _selectedSubCounty;
         private List<Region> _wards=new List<Region>();
         private Region _selectedWard;
+        private IMetaService _metaService;
 
         public IndexClientDTO IndexClientDTO
         {
@@ -124,6 +127,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedSubCounty = value;
                 RaisePropertyChanged(() => SelectedSubCounty);
+              
             }
         }
 
@@ -147,8 +151,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public ClientContactViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
+        public ClientContactViewModel(IDialogService dialogService, ISettings settings, IMetaService metaService) : base(dialogService, settings)
         {
+            _metaService = metaService;
             Step = 2;
             Title = "Contacts";
             MovePreviousLabel = "PREV";
@@ -169,6 +174,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
 
+            Counties = _metaService.GetCounties().ToList();
         }
 
         public override void ViewAppeared()
@@ -180,6 +186,13 @@ namespace LiveHTS.Presentation.ViewModel
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
                     Title = $"Contacts [{IndexClientDTO.RelType}]";
+            }
+
+            var countyJson = _settings.GetValue("meta.county", "");
+            if (!string.IsNullOrWhiteSpace(countyJson))
+            {
+                Counties = _metaService.GetCounties().ToList();
+                _settings.AddOrUpdateValue("meta.county", JsonConvert.SerializeObject(Counties));
             }
         }
 
@@ -205,6 +218,31 @@ namespace LiveHTS.Presentation.ViewModel
         public override bool CanMovePrevious()
         {
             return true;
+        }
+
+        public void LoadSubCounties(int postion = 0)
+        {
+            SubCounties = new List<Region>();
+            Wards = new List<Region>();
+            try
+            {
+                SelectedCounty = Counties[postion];
+                if (null != SelectedCounty)
+                    SubCounties = _metaService.GetSubCounties(SelectedCounty.CountyId).ToList();
+            }
+            catch { }
+        }
+
+        public void LoadSubWards(int postion = 0)
+        {
+            Wards = new List<Region>();
+            try
+            {
+                SelectedSubCounty = SubCounties[postion];
+                if (null != SelectedSubCounty)
+                    Wards = _metaService.GetWards(SelectedSubCounty.SubCountyId).ToList();
+            }
+            catch {}
         }
 
         public override void LoadFromStore(VMStore modelStore)

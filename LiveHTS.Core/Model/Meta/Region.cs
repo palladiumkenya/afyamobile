@@ -34,7 +34,14 @@ namespace LiveHTS.Core.Model.Meta
 
         public override string ToString()
         {
-            return $"{WardName},{SubCountyName},{CountyName}";
+            if (!string.IsNullOrWhiteSpace(CountyName))
+                return CountyName;
+            if (!string.IsNullOrWhiteSpace(SubCountyName))
+                return SubCountyName;
+            if (!string.IsNullOrWhiteSpace(WardName))
+                return WardName;
+
+            return $"{CountyName} {SubCountyName} {WardName}";
         }
 
         public static Region CreateCountyInitial(string display="Select County")

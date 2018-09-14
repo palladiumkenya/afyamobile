@@ -74,17 +74,6 @@ namespace LiveHTS.Droid
             base.FillTargetFactories(registry);
         }
 
-//        protected override void FillTargetFactories(IMvxTargetBindingFactoryRegistry registry)
-//        {
-//            base
-//            base.FillTargetFactories(registry);
-//            registry.RegisterCustomBindingFactory<View>(
-//                "ScaleMe",
-//                v => new ViewScalingCustomBinding(v));
-//            MvxAppCompatSetupHelper.FillTargetFactories;
-//            base.FillTargetFactories(registry);
-//        }
-
         protected override IMvxAndroidViewPresenter CreateViewPresenter()
         {
             var mvxFragmentsPresenter = new MvxFragmentsPresenter(AndroidViewAssemblies);
