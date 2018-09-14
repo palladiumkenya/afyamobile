@@ -25,12 +25,12 @@ namespace LiveHTS.Presentation.ViewModel
         private IndexClientDTO _indexClientDTO;
         private double? _lat;
         private double? _lng;
-        private List<Region> _counties=new List<Region>();
-        private Region _selectedCounty;
-        private List<Region> _subCounties=new List<Region>();
-        private Region _selectedSubCounty;
-        private List<Region> _wards=new List<Region>();
-        private Region _selectedWard;
+        private List<RegionItem> _counties=new List<RegionItem>();
+        private RegionItem _selectedCounty;
+        private List<RegionItem> _subCounties=new List<RegionItem>();
+        private RegionItem _selectedSubCounty;
+        private List<RegionItem> _wards=new List<RegionItem>();
+        private RegionItem _selectedWard;
         private IMetaService _metaService;
 
         public IndexClientDTO IndexClientDTO
@@ -90,17 +90,17 @@ namespace LiveHTS.Presentation.ViewModel
             set { _lng = value; RaisePropertyChanged(() => Lng); }
         }
 
-        public List<Region> Counties
+        public List<RegionItem> Counties
         {
             get { return _counties; }
             set
             {
                 _counties = value;
-                RaisePropertyChanged(() =>Counties);
+                RaisePropertyChanged(() => Counties);
             }
         }
 
-        public Region SelectedCounty
+        public RegionItem SelectedCounty
         {
             get { return _selectedCounty; }
             set
@@ -111,7 +111,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public List<Region> SubCounties
+        public List<RegionItem> SubCounties
         {
             get { return _subCounties; }
             set
@@ -121,7 +121,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public Region SelectedSubCounty
+        public RegionItem SelectedSubCounty
         {
             get { return _selectedSubCounty; }
             set
@@ -132,7 +132,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public List<Region> Wards
+        public List<RegionItem> Wards
         {
             get { return _wards; }
             set
@@ -142,7 +142,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public Region SelectedWard
+        public RegionItem SelectedWard
         {
             get { return _selectedWard; }
             set
@@ -159,6 +159,9 @@ namespace LiveHTS.Presentation.ViewModel
             Title = "Contacts";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
+            Counties = RegionItem.Init("County");
+            SubCounties = RegionItem.Init("SubCounty");
+            Wards = RegionItem.Init("Ward");
         }
 
         public void Init(string clientinfo, string indexId)
@@ -174,7 +177,6 @@ namespace LiveHTS.Presentation.ViewModel
                         Title = $"Contacts [{IndexClientDTO.RelType}]";
                 }
             }
-
             Counties = _metaService.GetCounties().ToList();
         }
 
@@ -192,7 +194,7 @@ namespace LiveHTS.Presentation.ViewModel
             var countyJson = _settings.GetValue("meta.county", "");
             if (!string.IsNullOrWhiteSpace(countyJson))
             {
-                Counties = JsonConvert.DeserializeObject<List<Region>>(countyJson);
+                Counties = JsonConvert.DeserializeObject<List<RegionItem>>(countyJson);
             }
         }
 
@@ -220,44 +222,25 @@ namespace LiveHTS.Presentation.ViewModel
             return true;
         }
 
-        public void LoadSubCounties(int postion = 0)
-        {
-            SubCounties = new List<Region>();
-            Wards = new List<Region>();
-            try
-            {
-                SelectedCounty = Counties[postion];
-               
-            }
-            catch { }
-        }
-
-        public void LoadSubWards(int postion = 0)
-        {
-            Wards = new List<Region>();
-            try
-            {
-                SelectedSubCounty = SubCounties[postion];
-            }
-            catch {}
-        }
-
         private void GetSubCounties()
         {
+            SubCounties = RegionItem.Init("SubCounty");
+            Wards = RegionItem.Init("Ward");
             try
             {
                 if (null != SelectedCounty)
-                    SubCounties = _metaService.GetSubCounties(SelectedCounty.CountyId).ToList();
+                    SubCounties = _metaService.GetSubCounties(SelectedCounty.Id).ToList();
             }
             catch { }
         }
 
         private void GetWards()
         {
+            Wards = RegionItem.Init("Ward");
             try
             {
                 if (null != SelectedSubCounty)
-                    Wards = _metaService.GetWards(SelectedSubCounty.SubCountyId).ToList();
+                    Wards = _metaService.GetWards(SelectedSubCounty.Id).ToList();
             }
             catch { }
         }
@@ -265,15 +248,11 @@ namespace LiveHTS.Presentation.ViewModel
         public override void Start()
         {
             base.Start();
-            Counties = _metaService.GetCounties().ToList();
-            SubCounties = _metaService.GetSubCounties(0).ToList();
-            Wards = _metaService.GetWards(0).ToList();
-
-            try
+           try
             {
-                SelectedCounty = Counties.FirstOrDefault(x => x.CountyId == 0);
-                SelectedSubCounty = SubCounties.FirstOrDefault(x => x.SubCountyId == 0);
-                SelectedWard = Wards.FirstOrDefault(x => x.WardId == 0);
+                SelectedCounty = Counties.FirstOrDefault(x => x.Id == 0);
+                SelectedSubCounty = SubCounties.FirstOrDefault(x => x.Id == 0);
+                SelectedWard = Wards.FirstOrDefault(x => x.Id == 0);
             }
             catch { }
         }
@@ -288,11 +267,27 @@ namespace LiveHTS.Presentation.ViewModel
                 Landmark = ContactAddress.Landmark;
                 ContactId = ContactAddress.ContactId;
                 AddressId = ContactAddress.AddressId;
-                SelectedCounty = Counties.FirstOrDefault(x => x.CountyId == ContactAddress.CountyId);
-                GetSubCounties();
-                SelectedSubCounty = SubCounties.FirstOrDefault(x => x.SubCountyId == ContactAddress.SubCountyId);
-                GetWards();
-                SelectedWard = Wards.FirstOrDefault(x => x.WardId == ContactAddress.WardId);
+
+                SelectedCounty = Counties.FirstOrDefault(x => x.Id ==0);
+                SelectedSubCounty = SubCounties.FirstOrDefault(x => x.Id ==0);
+                SelectedWard = Wards.FirstOrDefault(x => x.Id == 0);
+
+                if ( ContactAddress.CountyId.HasValue &&  ContactAddress.CountyId.Value >0)
+                {
+                    SelectedCounty = Counties.FirstOrDefault(x => x.Id == ContactAddress.CountyId);
+                    GetSubCounties();
+                }
+
+                if (ContactAddress.SubCountyId.HasValue && ContactAddress.SubCountyId.Value > 0)
+                {
+                    SelectedSubCounty = SubCounties.FirstOrDefault(x => x.Id == ContactAddress.SubCountyId);
+                    GetWards();
+                }
+
+                if (ContactAddress.WardId.HasValue && ContactAddress.WardId.Value > 0)
+                {
+                    SelectedWard = Wards.FirstOrDefault(x => x.Id == ContactAddress.WardId);
+                }
 
             }
             catch (Exception e)

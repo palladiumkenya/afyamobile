@@ -5,12 +5,12 @@ namespace LiveHTS.Core.Interfaces.Repository.Meta
 {
     public interface IRegionRepository : IMetaRepository<Region,int>
     {
-        IEnumerable<Region> GetCounties();
-        IEnumerable<Region> GetSubCounties(int countyId);
-        IEnumerable<Region> GetWards(int subCountyId);
+        IEnumerable<RegionItem> GetCounties();
+        IEnumerable<RegionItem> GetSubCounties(int countyId);
+        IEnumerable<RegionItem> GetWards(int subCountyId);
 
-        Region GetCounty(int countyId);
-        Region GetSubCounty(int subCountyId);
-        Region GetWard(int wardId);
+        RegionItem GetCounty(int countyId);
+        RegionItem GetSubCounty(int subCountyId);
+        RegionItem GetWard(int wardId);
     }
 }

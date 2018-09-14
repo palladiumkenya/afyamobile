@@ -16,13 +16,13 @@ namespace LiveHTS.Core.Service.Meta
             _regionRepository = regionRepository;
         }
 
-        public IEnumerable<Region> GetCounties(bool addSelectOption=true)
+        public IEnumerable<RegionItem> GetCounties(bool addSelectOption=true)
         {
-            var regions = new List<Region>();
+            var regions = new List<RegionItem>();
 
             if (addSelectOption)
             {
-                var initialSelected = Region.CreateCountyInitial();
+                var initialSelected = RegionItem.CreateCountyInitial();
                 regions.Add(initialSelected);
             }
 
@@ -34,13 +34,13 @@ namespace LiveHTS.Core.Service.Meta
             return regions;
         }
 
-        public IEnumerable<Region> GetSubCounties(int countyId, bool addSelectOption = true)
+        public IEnumerable<RegionItem> GetSubCounties(int countyId, bool addSelectOption = true)
         {
-            var regions = new List<Region>();
+            var regions = new List<RegionItem>();
 
             if (addSelectOption)
             {
-                var initialSelected = Region.CreateSubCountyInitial();
+                var initialSelected = RegionItem.CreateSubCountyInitial();
                 regions.Add(initialSelected);
             }
 
@@ -52,13 +52,13 @@ namespace LiveHTS.Core.Service.Meta
             return regions;
         }
 
-        public IEnumerable<Region> GetWards(int subCountyId, bool addSelectOption = true)
+        public IEnumerable<RegionItem> GetWards(int subCountyId, bool addSelectOption = true)
         {
-            var regions = new List<Region>();
+            var regions = new List<RegionItem>();
 
             if (addSelectOption)
             {
-                var initialSelected = Region.CreateWardInitial();
+                var initialSelected = RegionItem.CreateWardInitial();
                 regions.Add(initialSelected);
             }
 

@@ -46,9 +46,9 @@ namespace LiveHTS.Presentation.DTO
             addressDTO.PersonId = clientContactViewModel.PersonId;
             addressDTO.ContactId = clientContactViewModel.ContactId;
             addressDTO.AddressId = clientContactViewModel.AddressId;
-            addressDTO.CountyId = clientContactViewModel.SelectedCounty?.CountyId;
-            addressDTO.SubCountyId = clientContactViewModel.SelectedSubCounty?.SubCountyId;
-            addressDTO.WardId = clientContactViewModel.SelectedWard?.WardId;
+            addressDTO.CountyId = clientContactViewModel.SelectedCounty?.Id;
+            addressDTO.SubCountyId = clientContactViewModel.SelectedSubCounty?.Id;
+            addressDTO.WardId = clientContactViewModel.SelectedWard?.Id;
             return addressDTO;
         }
 

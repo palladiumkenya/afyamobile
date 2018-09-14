@@ -1,4 +1,9 @@
-﻿using LiveHTS.SharedKernel.Model;
+﻿using System;
+using LiveHTS.Core.Event;
+using LiveHTS.Core.Model.Lookup;
+using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
+using SQLite;
 
 namespace LiveHTS.Core.Model.Meta
 {
@@ -41,33 +46,9 @@ namespace LiveHTS.Core.Model.Meta
             if (!string.IsNullOrWhiteSpace(WardName))
                 return WardName;
 
-            return $"{CountyName} {SubCountyName} {WardName}";
+            return string.Empty;
         }
 
-        public static Region CreateCountyInitial(string display="Select County")
-        {
-            return new Region
-            {
-                CountyId = 0,
-                CountyName = display
-            };
-        }
-        public static Region CreateSubCountyInitial(string display = "Select SubCounty")
-        {
-            return new Region
-            {
-                SubCountyId = 0,
-                SubCountyName = display
-            };
-        }
-
-        public static Region CreateWardInitial(string display = "Select Ward")
-        {
-            return new Region
-            {
-                WardId = 0,
-                WardName = display
-            };
-        }
+       
     }
 }

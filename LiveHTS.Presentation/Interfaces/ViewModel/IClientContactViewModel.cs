@@ -18,16 +18,13 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         double? Lat { get; set; }
         double? Lng { get; set; }
 
-        List<Region> Counties { get; set; }
-        Region SelectedCounty { get; set; }
+        List<RegionItem> Counties { get; set; }
+        RegionItem SelectedCounty { get; set; }
 
-        List<Region> SubCounties { get; set; }
-        Region SelectedSubCounty { get; set; }
+        List<RegionItem> SubCounties { get; set; }
+        RegionItem SelectedSubCounty { get; set; }
 
-        List<Region> Wards { get; set; }
-        Region SelectedWard { get; set; }
-
-        void LoadSubCounties(int postion = 0);
-        void LoadSubWards(int postion = 0);
+        List<RegionItem> Wards { get; set; }
+        RegionItem SelectedWard { get; set; }
     }
 }

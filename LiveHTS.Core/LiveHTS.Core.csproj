@@ -123,6 +123,7 @@
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
     <Compile Include="Model\Meta\Region.cs" />
+    <Compile Include="Model\Meta\RegionItem.cs" />
     <Compile Include="Model\SmartCard\CARDDETAILS.cs" />
     <Compile Include="Model\SmartCard\ClientShrRecord.cs" />
     <Compile Include="Model\SmartCard\EXTERNALPATIENTID.cs" />

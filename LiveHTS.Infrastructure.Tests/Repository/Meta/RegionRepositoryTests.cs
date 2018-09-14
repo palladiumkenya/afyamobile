@@ -33,7 +33,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
             Assert.IsTrue(regions.Any());
             foreach (var region in regions)
             {
-                Console.WriteLine(region.County());
+                Console.WriteLine(region);
             }
         }
 
@@ -44,7 +44,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
             Assert.IsTrue(regions.Any());
             foreach (var region in regions)
             {
-                Console.WriteLine(region.SubCounty());
+                Console.WriteLine(region);
             }
         }
 
@@ -55,7 +55,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
             Assert.IsTrue(regions.Any());
             foreach (var region in regions)
             {
-                Console.WriteLine(region.Ward());
+                Console.WriteLine(region);
             }
         }
         
@@ -64,7 +64,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
         {
             var region = _regionRepository.GetCounty(1);
             Assert.IsNotNull(region);
-            Console.WriteLine(region.County());
+            Console.WriteLine(region);
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
         {
             var region = _regionRepository.GetSubCounty(1);
             Assert.IsNotNull(region);
-            Console.WriteLine(region.SubCounty());
+            Console.WriteLine(region);
         }
 
         [TestMethod]
@@ -80,7 +80,7 @@ namespace LiveHTS.Infrastructure.Tests.Repository.Meta
         {
             var region = _regionRepository.GetWard(1);
             Assert.IsNotNull(region);
-            Console.WriteLine(region.Ward());
+            Console.WriteLine(region);
         }
     }
 }

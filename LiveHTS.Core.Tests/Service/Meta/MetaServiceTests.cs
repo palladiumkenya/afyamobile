@@ -31,30 +31,30 @@ namespace LiveHTS.Core.Tests.Service.Meta
         public void should_Load_Counties()
         {
             var regions = _metaService.GetCounties().ToList();
-            Assert.IsTrue(regions.Any(x=>x.CountyId>0));
-            Assert.IsTrue(regions.Any(x=>x.CountyName== "Select County"));
+            Assert.IsTrue(regions.Any(x=>x.Id>0));
+            Assert.IsTrue(regions.Any(x=>x.Display== "Select County"));
             foreach (var region in regions)
-                Console.WriteLine(region.County());
+                Console.WriteLine(region);
         }
 
         [TestMethod]
         public void should_Load_SubCounties()
         {
             var regions = _metaService.GetSubCounties(47).ToList();
-            Assert.IsTrue(regions.Any(x => x.SubCountyId > 0));
-            Assert.IsTrue(regions.Any(x => x.SubCountyName == "Select SubCounty"));
+            Assert.IsTrue(regions.Any(x => x.Id > 0));
+            Assert.IsTrue(regions.Any(x => x.Display == "Select SubCounty"));
             foreach (var region in regions)
-                Console.WriteLine(region.SubCounty());
+                Console.WriteLine(region);
         }
 
         [TestMethod]
         public void should_Load_Wards()
         {
             var regions = _metaService.GetWards(11).ToList();
-            Assert.IsTrue(regions.Any(x => x.WardId > 0));
-            Assert.IsTrue(regions.Any(x => x.WardName == "Select Ward"));
+            Assert.IsTrue(regions.Any(x => x.Id > 0));
+            Assert.IsTrue(regions.Any(x => x.Display == "Select Ward"));
             foreach (var region in regions)
-                Console.WriteLine(region.Ward());
+                Console.WriteLine(region);
         }
     }
 }
