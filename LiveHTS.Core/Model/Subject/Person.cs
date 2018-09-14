@@ -88,12 +88,12 @@ namespace LiveHTS.Core.Model.Subject
         }
 
         public static Person Create(string firstName, string middleName, string lastName, string gender,
-            DateTime birthDate, bool? birthDateEstimated, string email, string landmark, int? phone, string nickName)
+            DateTime birthDate, bool? birthDateEstimated, string email, string landmark, int? phone, string nickName, int? countyId, int? subCountyId, int? wardId)
         {
             var person = new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email,nickName);
 
             if (!string.IsNullOrWhiteSpace(landmark))
-                person.AddAddress(landmark, null, true, null, null);
+                person.AddAddress(landmark, countyId, true, null, null,subCountyId,wardId);
             
             if (phone.HasValue)
                 person.AddContact(phone, true);
@@ -108,10 +108,10 @@ namespace LiveHTS.Core.Model.Subject
             return person;
         }
 
-        public void AddAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng)
+        public void AddAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng, int? subCountyId, int? wardId)
         {
             var addressList = Addresses.ToList();
-            var address = PersonAddress.Create(landmark, countyId, preferred, lat, lng, Id);
+            var address = PersonAddress.Create(landmark, countyId, preferred, lat, lng, Id, subCountyId, wardId);
             addressList.Add(address);
 
             Addresses = addressList;

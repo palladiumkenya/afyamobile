@@ -211,7 +211,7 @@ namespace LiveHTS.Presentation.DTO
 
             //string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId
 
-            var personAddress = PersonAddress.Create(ClientContactAddress.Landmark, ClientContactAddress.CountyId, ClientContactAddress.Preferred, ClientContactAddress.Lat, ClientContactAddress.Lng, personId);
+            var personAddress = PersonAddress.Create(ClientContactAddress.Landmark, ClientContactAddress.CountyId, ClientContactAddress.Preferred, ClientContactAddress.Lat, ClientContactAddress.Lng, personId,ClientContactAddress.SubCountyId,ClientContactAddress.WardId);
 
             if (!string.IsNullOrWhiteSpace(ClientContactAddress.AddressId))
             {
