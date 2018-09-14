@@ -14,4 +14,15 @@ namespace LiveHTS.Presentation.Events
             Date = date;
         }
     }
+
+    public class PositionChangedEvent : EventArgs
+    {
+        public int Position { get; set; }
+
+
+        public PositionChangedEvent(int position)
+        {
+            Position = position;
+        }
+    }
 }
