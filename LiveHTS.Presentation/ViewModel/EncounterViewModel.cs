@@ -192,7 +192,7 @@ namespace LiveHTS.Presentation.ViewModel
                     formId = formTemplate.Id.ToString(),
                     encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                     mode = "new",
-                    clientId =Client.Id.ToString(),
+                    clientId = Client.Id.ToString(),
                     encounterId = ""
                 });
                 return;
@@ -222,10 +222,11 @@ namespace LiveHTS.Presentation.ViewModel
                     mode = "new",
                     clientId = Client.Id.ToString(),
                     encounterId = "",
-                    indexclient=IndexClient.Id.ToString()
+                    indexclient = IndexClient.Id.ToString()
                 });
                 return;
             }
+
             //Member Tracing 
             if (formTemplate.Display.ToLower().Contains("Member Tracing".ToLower()))
             {
@@ -240,7 +241,7 @@ namespace LiveHTS.Presentation.ViewModel
                 });
                 return;
             }
-        
+
             //  Partner Screening
             if (formTemplate.Display.ToLower().Contains("Partner Screening".ToLower()))
             {
@@ -256,7 +257,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
-            //Partner Tracing
+            //  Partner Tracing
             if (formTemplate.Display.ToLower().Contains("Partner Tracing".ToLower()))
             {
                 ShowViewModel<PartnerTracingViewModel>(new
@@ -271,13 +272,14 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
-            //Pretest
+            //  Pretest
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
                 encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                 mode = "new",
-                encounterId = ""
+                encounterId = "",
+                repmode = formTemplate.RepMode
             });
         }
 

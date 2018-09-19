@@ -19,8 +19,8 @@ namespace LiveHTS.SharedKernel.Model
 
         private static readonly List<CustomItem> _visitTypeList = new List<CustomItem>
         {
-            new CustomItem("1", "Initial"),
-            new CustomItem("2", "Repeat")
+            new CustomItem("1", "Initial Test"),
+            new CustomItem("2", "Repeat Test")
         };
 
         public static List<CustomItem> GenderList

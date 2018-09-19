@@ -80,7 +80,7 @@ namespace LiveHTS.Core.Model.Interview
             //Status = "Created";
             Id = LiveGuid.NewGuid();
             EncounterDate = DateTime.Now;
-            VisitType = VisitType.Initial;
+            VisitType =SharedKernel.Model.VisitType.None;
         }
         private Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId,Guid practiceId,Guid deviceId,Guid? indexClientId):this()
         {

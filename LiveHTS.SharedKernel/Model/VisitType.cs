@@ -2,6 +2,8 @@
 {
     public enum VisitType
     {
-        Initial=1,Repeat=2
+        None = 0,
+        Initial = 1,
+        Repeat = 2
     }
 }

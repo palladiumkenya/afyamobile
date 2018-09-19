@@ -123,7 +123,6 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _clientDTO = value;
-                ;
                 RaisePropertyChanged(() => ClientDTO);
             }
         }
@@ -247,16 +246,22 @@ namespace LiveHTS.Presentation.ViewModel
         public ClientEncounterViewModel(ISettings settings, IDialogService dialogService,
             IEncounterService encounterService, IObsService obsService)
         {
+            VisitTypes = CustomLists.VisitTypeList;
+
+
+
+
+
             _settings = settings;
             _dialogService = dialogService;
             _encounterService = encounterService;
             _obsService = obsService;
             BirthDate = DateTime.Today;
-            VisitTypes = CustomLists.VisitTypeList;
+            
             SelectedVisitType = VisitTypes.First();
         }
 
-        public void Init(string formId, string encounterTypeId, string mode, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string encounterId, string repmode)
         {
             //Load Form + Question Metadata
             
@@ -309,15 +314,17 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "new");
+                var visitType = repmode == "1" ? VisitType.Repeat : VisitType.Initial;
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null);
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null, visitType);
+
+                
             }
             else
             {
                 //  Load Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "open");
-                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, true);
+                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, true);
             }
 
             if (null == Encounter)
@@ -389,10 +396,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void LoadView()
         {
-
-
             //set defaults
-            
 
             if (null != Manifest)
             {
