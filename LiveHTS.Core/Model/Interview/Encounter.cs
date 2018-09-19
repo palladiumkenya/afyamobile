@@ -21,6 +21,7 @@ namespace LiveHTS.Core.Model.Interview
         public Guid EncounterTypeId { get; set; }
         [Ignore]
         public EncounterType EncounterType { get; set; }
+        public VisitType VisitType { get; set; }
         public DateTime EncounterDate { get; set; }
         [Indexed]
         public Guid ProviderId { get; set; }
@@ -79,6 +80,7 @@ namespace LiveHTS.Core.Model.Interview
             //Status = "Created";
             Id = LiveGuid.NewGuid();
             EncounterDate = DateTime.Now;
+            VisitType = VisitType.Initial;
         }
         private Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId,Guid practiceId,Guid deviceId,Guid? indexClientId):this()
         {

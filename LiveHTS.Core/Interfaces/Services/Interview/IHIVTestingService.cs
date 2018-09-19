@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Interfaces.Services.Interview
 {

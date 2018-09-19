@@ -16,6 +16,12 @@ namespace LiveHTS.SharedKernel.Model
             Value = value;
         }
 
+        public int GetIntValue(int defaultVal = 1)
+        {
+            int.TryParse(Value, out var val);
+            return val == 0 ? defaultVal : val;
+        }
+
         public override string ToString()
         {
             return Display;

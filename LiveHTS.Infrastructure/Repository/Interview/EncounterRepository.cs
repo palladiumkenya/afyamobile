@@ -8,6 +8,7 @@ using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Infrastructure.Repository.Interview
 {
@@ -439,12 +440,24 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             Update(encounter);
         }
 
+        public void UpdateEncounterDate(Guid id, DateTime encounterDate, VisitType visitType)
+        {
+            var encounter = Get(id);
+            if (null != encounter)
+            {
+                encounter.EncounterDate = encounterDate;
+                encounter.VisitType = visitType;
+            }
+            Update(encounter);
+        }
+
         public void UpdateEncounterDate(Guid id, DateTime encounterDate)
         {
             var encounter = Get(id);
             if (null != encounter)
+            {
                 encounter.EncounterDate = encounterDate;
-
+            }
             Update(encounter);
         }
 

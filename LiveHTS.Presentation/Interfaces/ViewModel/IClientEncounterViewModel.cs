@@ -7,6 +7,7 @@ using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
@@ -45,6 +46,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         DateTime BirthDate { get; set; }
 
+        List<CustomItem> VisitTypes { get; set; }
+        CustomItem SelectedVisitType { get; set; }
         void LoadView();
         bool ValidateResponse(QuestionTemplate questionTemplate);
         void AllowNextQuestion(QuestionTemplate questionTemplate);
