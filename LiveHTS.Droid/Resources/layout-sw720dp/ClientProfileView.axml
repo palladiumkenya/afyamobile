@@ -61,7 +61,7 @@
                 android:id="@+id/spinnerMaritalStatus"
                 local:MvxBind="ItemsSource MaritalStatus;SelectedItem SelectedMaritalStatus" />
             <TextView
-                android:text="Key Population"
+                android:text="Population Type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                  android:textSize="@dimen/textM"
@@ -72,6 +72,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewProfileKeyPopCat"
 				android:textSize="@dimen/textM"
+				android:textStyle="bold"
+				android:paddingLeft="20dp"
                 local:MvxBind="Text KeyPopCategory" />
             <MvxSpinner
                 android:layout_width="match_parent"
