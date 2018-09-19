@@ -67,12 +67,18 @@
                  android:textSize="@dimen/textM"
                 android:id="@+id/textViewProfileKeyPop"
                 local:MvxBind="Error Errors['KeyPops']" />
+			<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileKeyPopCat"
+				android:textSize="@dimen/textM"
+                local:MvxBind="Text KeyPopCategory" />
             <MvxSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                  android:textSize="@dimen/textXL"
                 android:id="@+id/spinnerKeyPop"
-                local:MvxBind="ItemsSource KeyPops;SelectedItem SelectedKeyPop" />
+                local:MvxBind="ItemsSource KeyPops;SelectedItem SelectedKeyPop" />		
             <TextView
                 android:text="Other Key Population"
                 android:layout_width="match_parent"

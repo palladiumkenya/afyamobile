@@ -5,6 +5,7 @@ namespace LiveHTS.Core.Model.Config
     public class KeyPop:Entity<string>
     {
         public string Name { get; set; }
+        public string Category { get; set; }
 
         public KeyPop()
         {

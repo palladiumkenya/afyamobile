@@ -64,6 +64,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewProfileKeyPop"
                 local:MvxBind="Error Errors['KeyPops']" />
+			<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileKeyPopCat"
+                local:MvxBind="Text KeyPopCategory" />
             <MvxSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

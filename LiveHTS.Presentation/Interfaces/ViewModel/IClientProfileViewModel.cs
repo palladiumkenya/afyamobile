@@ -18,6 +18,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IEnumerable<KeyPop> KeyPops { get; set; }
         MaritalStatus SelectedMaritalStatus { get; set; }
         KeyPop SelectedKeyPop { get; set; }
+        string KeyPopCategory { get; set; }
         string IsOtherKeyPop { get; set; }
         string OtherKeyPop { get; set; }
 

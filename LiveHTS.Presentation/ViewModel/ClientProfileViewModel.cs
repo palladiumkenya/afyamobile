@@ -44,6 +44,7 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _allowCompletion;
         private List<CategoryItem> _occupations=new List<CategoryItem>();
         private CategoryItem _selectedOccupation;
+        private string _keyPopCategory;
 
 
         public bool IsRelation
@@ -139,6 +140,19 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => SelectedKeyPop);
                 IsOtherKeyPop = _selectedKeyPop.Id.ToLower() == "O".ToLower() ? "visible" : "invisible";
                 RaisePropertyChanged(() => IsOtherKeyPop);
+                if (null != _selectedKeyPop)
+                    KeyPopCategory = _selectedKeyPop.Category;
+
+            }
+        }
+
+        public string KeyPopCategory
+        {
+            get { return _keyPopCategory; }
+            set
+            {
+                _keyPopCategory = value;
+                RaisePropertyChanged(() => KeyPopCategory);
             }
         }
 
