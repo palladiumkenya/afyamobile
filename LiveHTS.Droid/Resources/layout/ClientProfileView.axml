@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewProfileKeyPopCat"
 				android:textStyle="bold"
-				android:paddingLeft="20dp"
+				android:paddingLeft="9dp"
                 local:MvxBind="Text KeyPopCategory" />
             <MvxSpinner
                 android:layout_width="match_parent"
