@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Infrastructure.Repository.Subject
 {
@@ -21,6 +23,11 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var client = base.Get(id);
             if (null != client)
             {
+
+                var sts = _db.Table<ClientState>().ToList();
+
+                client.ClientStates= _db.Table<ClientState>().Where(x => x.ClientId == id).ToList();
+
                 client.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == client.PersonId);
                 var contacts = _db.Table<PersonContact>().ToList();
                 client.Person.Contacts = _db.Table<PersonContact>().Where(x => x.PersonId == client.PersonId).ToList();
@@ -58,6 +65,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
             foreach (var c in clients)
             {
+                c.ClientStates = _db.Table<ClientState>().Where(x => x.ClientId == c.Id).ToList();
                 c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
                 c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
                 c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
@@ -71,6 +79,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var clients = base.GetAll(predicate, voided).ToList();
             foreach (var c in clients)
             {
+                c.ClientStates = _db.Table<ClientState>().Where(x => x.ClientId == c.Id).ToList();
                 c.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == c.PersonId);
                 c.Relationships = _db.Table<ClientRelationship>().Where(x => x.ClientId == c.Id).ToList();
                 c.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == c.Id).ToList();
@@ -158,6 +167,46 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             }
         }
 
+        public void SaveDownloaded(Client client)
+        {
+            InsertOrUpdate(client);
+
+
+            if (!ClientState.IsInState(client.ClientStates.ToList(), LiveState.HtsTested))
+            {
+                if (ClientState.IsInAnyState(client.ClientStates.ToList(), LiveState.HtsTestedNeg, LiveState.HtsTestedPos,
+                    LiveState.HtsTestedInc))
+                {
+                    client.ClientStates.Add(new ClientState(client.Id, LiveState.HtsTested));
+                }
+            }
+
+            
+
+            foreach (var clientState in client.ClientStates.Where(x => x.Status == LiveState.HtsEnrolled ||
+                                                                       x.Status == LiveState.HtsSmartCardEnrolled ||
+                                                                       x.Status == LiveState.HtsFamAcceptedYes ||
+                                                                       x.Status == LiveState.HtsTested))
+            {
+
+                var rowsAffected = _db.Update(clientState);
+                if (rowsAffected == 0)
+                {
+                    _db.Insert(clientState);
+                }
+            }
+
+
+            foreach (var clientSummary in client.ClientSummaries)
+            {
+                var rowsAffected = _db.Update(clientSummary);
+                if (rowsAffected == 0)
+                {
+                    _db.Insert(clientSummary);
+                }
+            }
+        }
+
         public IEnumerable<Client> QuickSearch(string search)
         {
             var cIds = _db.Table<ClientIdentifier>().Where(x => x.Identifier.ToLower().Contains(search.ToLower()))
@@ -186,6 +235,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
         public void Purge(Guid id)
         {
+            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE ClientId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ClientIdentifier)} WHERE ClientId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(Client)} WHERE Id=?", id.ToString());
         }
@@ -213,6 +263,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
             _db.Table<ClientRelationship>().Delete(x => x.ClientId == id);
             _db.Table<ClientIdentifier>().Delete(x => x.ClientId ==id);
+            _db.Table<ClientState>().Delete(x => x.ClientId == id);
             //Person
 
             foreach (var personId in personIds)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.Interfaces.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Presentation.ViewModel.Template
 {
@@ -21,7 +22,11 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public bool HasEncounters { get; set; }
         public Guid DefaultEncounterTypeId { get; set; }
         public List<EncounterTemplateWrap> Encounters { get; set; }=new List<EncounterTemplateWrap>();
-
+        public bool Block { get; set; }
+        public string RepMode
+        {
+            get { return EncounterTypeDisplay.Contains("REPEAT") ? "1" : "0"; }
+        }
         public FormTemplate(Form r)
         {
             Id = r.Id;
@@ -30,19 +35,40 @@ namespace LiveHTS.Presentation.ViewModel.Template
             HasEncounters = r.ClientEncounters.Count > 0;
             ConsentRequired = r.ConsentRequired;
             HasConsent = r.HasConsent;
+            Block = r.Block;
         }
         public FormTemplate(Form r,Program program)
         {
             Id = r.Id;
             Display = r.Display;
             EncounterTypeId = program.EncounterTypeId;
-            EncounterTypeDisplay = program.Display;
+            EncounterTypeDisplay = SetDisplay(r, program);
             EncounterTypeDescription = program.Description;
             Rank = program.Rank;
             DefaultEncounterTypeId = r.DefaultEncounterTypeId;
             HasEncounters = r.ClientEncounters.Count > 0;
             ConsentRequired = r.ConsentRequired;
             HasConsent = r.HasConsent;
+            Block = r.Block;
+        }
+
+        private string SetDisplay(Form form, Program program)
+        {
+            if (form.IsRepeat)
+            {
+                if (program.Display.IsSameAs("Pre Test"))
+                {
+                    return "Pre Test - (REPEAT)";
+                }
+
+                if (program.Display.IsSameAs("Testing"))
+                {
+                    return "Testing  - (REPEAT)";
+                }
+            }
+            
+
+            return program.Display;
         }
     }
 }

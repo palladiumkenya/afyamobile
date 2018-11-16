@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <ScrollView
+    android:id="@+id/contactform"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayoutContent"
+        android:layout_weight="2">
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewContactTitle"
+          android:text="Client Contact"
+          android:textStyle="bold"
+          android:textAllCaps="true"
+          local:MvxBind="Text Title" />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/holo_orange_light"
+          android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maun Maun"
+            android:id="@+id/textViewContactClientInfo"
+            android:textSize="@dimen/textM"
+            local:MvxBind="Text ClientInfo" />
+      </LinearLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:background="@android:color/holo_blue_light"
+          android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Summary" />
+      </LinearLayout>
+      <android.support.design.widget.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <AutoCompleteTextView
+            android:id="@+id/txtageTelephone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Telephone"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:numeric="integer"
+            android:inputType="number"
+            android:textSize="@dimen/textM"
+            local:MvxBind="Text Telephone; Error Errors['Telephone']" />
+      </android.support.design.widget.TextInputLayout>
+
+				<TextView
+                android:text="County"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				  android:textSize="@dimen/textM"
+                android:id="@+id/textViewConties" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:textSize="@dimen/textXL"
+                android:id="@+id/spinnerCounties"
+                local:MvxBind="ItemsSource Counties;SelectedItem SelectedCounty" />
+
+				<TextView
+                android:text="Sub County"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				  android:textSize="@dimen/textM"
+                android:id="@+id/textViewSubConties" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:textSize="@dimen/textXL"
+                android:id="@+id/spinnerSubCounties"
+                local:MvxBind="ItemsSource SubCounties;SelectedItem SelectedSubCounty" />
+
+				<TextView
+                android:text="Ward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				  android:textSize="@dimen/textM"
+                android:id="@+id/textViewWards" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:textSize="@dimen/textXL"
+                android:id="@+id/spinnerSubWards"
+                local:MvxBind="ItemsSource Wards;SelectedItem SelectedWard" />
+
+      <android.support.design.widget.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <AutoCompleteTextView
+            android:id="@+id/txtageLandmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Landmark"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/textM"
+            local:MvxBind="Text Landmark; Error Errors['Landmark']" />
+      </android.support.design.widget.TextInputLayout>
+      <TextView
+          android:text=""
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewContactPersonId"
+          local:MvxBind="Text PersonId;Visibility ShowId, Converter=Visibility"
+          android:background="#0000FF"
+          android:textColor="#FFFFFF" />
+      <TextView
+          android:text=""
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewContactId"
+          local:MvxBind="Text ContactId;Visibility ShowId, Converter=Visibility"
+          android:background="#1000FF"
+          android:textColor="#FFFFFF" />
+      <TextView
+          android:text=""
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/textViewAddressId"
+          local:MvxBind="Text AddressId;Visibility ShowId, Converter=Visibility"
+          android:background="#1000FF"
+          android:textColor="#FFFFFF" />
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayoutNav"
+        android:layout_weight="1"
+        android:minHeight="80dp"
+        android:background="#FFFFFF">
+        <Button
+          android:id="@+id/buttonContactPrev"
+          android:layout_width="0dp"
+          android:layout_weight=".8"
+          android:layout_height="match_parent"
+          android:textColor="#FFFFFF"
+          android:background="#3F51B5"
+          android:layout_marginRight="2dp"
+          local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
+        <Button
+          android:id="@+id/buttonContactNext"
+          android:layout_width="0dp"
+          android:layout_weight=".8"
+          android:layout_height="match_parent"
+          android:textColor="#FFFFFF"
+          android:background="#3F51B5"
+          android:layout_marginLeft="2dp"
+          local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

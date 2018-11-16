@@ -10,6 +10,7 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -26,6 +27,7 @@ namespace LiveHTS.Presentation.ViewModel
         
         private Client _client;
         private IMvxCommand _addPartnerCommand;
+        private bool _showAddPartner;
         public IDashboardViewModel Parent { get; set; }
         public string Title { get; set; }
 
@@ -35,6 +37,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
+                ShowAddPartner = Client.IsInState(LiveState.HtsPnsAcceptedYes,LiveState.HtsEnrolled,LiveState.HtsTestedPos);
                 Partners = ConvertToPartnerWrapperClass(Client, this);
             }
         }
@@ -42,6 +45,16 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _partners; }
             set { _partners = value; RaisePropertyChanged(() => Partners); }
+        }
+
+        public bool ShowAddPartner
+        {
+            get { return _showAddPartner; }
+            set
+            {
+                _showAddPartner = value;
+                RaisePropertyChanged(() => ShowAddPartner);
+            }
         }
 
         public IMvxCommand AddPartnerCommand
@@ -87,8 +100,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void ShowDashboard(PartnerTemplate template)
         {
-            Close(this);
-            Parent.ShowDashboard(template.RelatedClientId.ToString(), template.ClientId.ToString(), "pns");
+//            Close(this);
+//            Parent.ShowDashboard(template.RelatedClientId.ToString(), template.ClientId.ToString(), "pns");
+            ShowViewModel<StandByViewModel>(new { id = template.RelatedClientId.ToString(), callerId = template.ClientId.ToString(), mode = "pns" });
         }
 
         private static List<PartnerTemplateWrap> ConvertToPartnerWrapperClass(Client client, IPartnerViewModel partnerViewModel)

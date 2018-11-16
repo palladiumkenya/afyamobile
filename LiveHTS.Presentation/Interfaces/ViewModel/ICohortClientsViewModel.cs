@@ -8,6 +8,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface ICohortClientsViewModel
     {
+        Guid AppPracticeId { get; }
         Device Device { get; set; }
         ServerConfig Local { get; set; }
         string Address { get; set; }

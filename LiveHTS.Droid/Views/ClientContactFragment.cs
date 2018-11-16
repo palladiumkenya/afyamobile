@@ -1,6 +1,8 @@
-﻿using Android.OS;
+﻿using System;
+using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using Android.Widget;
 using LiveHTS.Presentation.ViewModel;
 using MvvmCross.Binding.Droid.BindingContext;
 
@@ -17,8 +19,19 @@ namespace LiveHTS.Droid.Views
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             this.EnsureBindingContextIsSet(savedInstanceState);
-            var ignored=base.OnCreateView(inflater, container, savedInstanceState);
-            return this.BindingInflate(Resource.Layout.ClientContactView, null);
+            var ignored = base.OnCreateView(inflater, container, savedInstanceState);
+            var view = this.BindingInflate(Resource.Layout.ClientContactView, null);
+            /*
+                var spinnerCounty = view.FindViewById<Spinner>(Resource.Id.spinnerCounties);
+                spinnerCounty.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(County_Selected);
+             */
+            return view;
         }
+        /*
+            private void County_Selected(object sender, AdapterView.ItemSelectedEventArgs e)
+            {
+                ViewModel.LoadSubCounties(e.Position);
+            }
+        */
     }
 }

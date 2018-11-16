@@ -14,5 +14,15 @@ namespace LiveHTS.Core.Model.Survey
         public string Display { get; set; }
         public string Description { get; set; }
         public Decimal Rank { get; set; }
+
+        public Program()
+        {
+        }
+
+        public Program(Guid formId, Guid encounterTypeId)
+        {
+            FormId = formId;
+            EncounterTypeId = encounterTypeId;
+        }
     }
 }

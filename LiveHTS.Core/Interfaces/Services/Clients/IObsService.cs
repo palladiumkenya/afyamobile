@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Interfaces.Services.Clients
 {
@@ -23,12 +24,12 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
 
         List<Obs> GetObs(Guid clientId, Guid questionId);
         
-        bool ValidateResponse(Guid encounterId, Guid questionId, object response);
-        void SaveResponse(Guid encounterId, Guid questionId, object response,bool validated=false);
+        bool ValidateResponse(Guid encounterId, Guid clientId, Guid questionId, object response);
+        void SaveResponse(Guid encounterId, Guid clientId, Guid questionId, object response,bool validated=false);
         void SaveClientResponse(Guid cientId, Guid questionId, object response);
 
         void ClearEncounter(Guid encounterId);
-        void MarkEncounterCompleted(Guid encounterId,bool completed);
-
+        void MarkEncounterCompleted(Guid encounterId,Guid userId,bool completed);
+        void UpdateEncounterDate(Guid id, DateTime encounterDate,VisitType visitType);
     }
 }

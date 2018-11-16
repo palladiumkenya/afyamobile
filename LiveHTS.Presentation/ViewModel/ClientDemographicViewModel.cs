@@ -36,6 +36,7 @@ namespace LiveHTS.Presentation.ViewModel
         private TraceDateDTO _selectedDate;
         private ClientDemographicDTO _demographic;
         private IndexClientDTO _indexClientDTO;
+        private string _nickName;
 
         public ClientDemographicDTO Demographic
         {
@@ -95,6 +96,17 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => LastName);
             }
         }
+
+        public string NickName
+        {
+            get { return _nickName; }
+            set
+            {
+                _nickName = value;
+                RaisePropertyChanged(() => NickName);
+            }
+        }
+
         public CustomItem SelectedGender
         {
             get { return _selectedGender; }
@@ -131,7 +143,8 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _birthDate = value;
-                RaisePropertyChanged(() => BirthDate);             
+                RaisePropertyChanged(() => BirthDate);
+                CalculateAge();
             }
         }
 
@@ -190,10 +203,15 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
+
             BirthDate = DateTime.Today.AddDays(-1);
             Title = "Demographics";
             MovePreviousLabel = "";
             MoveNextLabel = "NEXT";
+            Age = 0;
+            SelectedAgeUnit = AgeUnitOptions.First();
+
+
         }
 
         public void Init(string indexId)
@@ -214,7 +232,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             base.ViewAppeared();
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
-            if (!string.IsNullOrWhiteSpace(indexJson))
+            if (IndexClientDTO==null &&!string.IsNullOrWhiteSpace(indexJson))
             {
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
@@ -263,18 +281,36 @@ namespace LiveHTS.Presentation.ViewModel
         public void CalculateBirthDate()
         {
             var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
-            BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
+            var dob = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
+
+            if (BirthDate.Year!=dob.Year)
+            {
+                BirthDate = dob;
+            }
         }
 
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
-        {      
-            if (null != BirthDate)
+        {
+            if (Age == 0)
+            {
+                if (null != BirthDate)
+                {
+                    var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
+                    Age = personAge.Age;
+                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+                    SelectedAgeUnit = ageUnit;
+                }
+            }
+            else
             {
                 var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                Age = personAge.Age;
-                var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
-                SelectedAgeUnit = ageUnit;
+                if (Age!= personAge.Age)
+                {
+                    Age = personAge.Age;
+                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+                    SelectedAgeUnit = ageUnit;
+                }
             }
         }
 
@@ -305,6 +341,7 @@ namespace LiveHTS.Presentation.ViewModel
                 FirstName = Demographic.FirstName;
                 MiddleName = Demographic.MiddleName;
                 LastName = Demographic.LastName;
+                NickName = Demographic.NickName;
                 SelectedGender = GenderOptions.FirstOrDefault(x=>x.Value==Demographic.Gender);
                 Age = Demographic.Age;
                 if (!string.IsNullOrWhiteSpace(Demographic.AgeUnit))

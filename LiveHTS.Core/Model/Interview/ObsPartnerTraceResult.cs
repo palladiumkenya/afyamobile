@@ -17,7 +17,8 @@ namespace LiveHTS.Core.Model.Interview
         [Ignore]
         public string OutcomeDisplay { get; set; }
         public Guid? Consent { get; set; }
-        public DateTime BookingDate { get; set; }
+        public DateTime? BookingDate { get; set; }
+        public Guid IndexClientId { get; set; }
         public Guid EncounterId { get; set; }
 
         public ObsPartnerTraceResult()
@@ -25,7 +26,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsPartnerTraceResult(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime bookingDate ,Guid encounterId) : this()
+        public ObsPartnerTraceResult(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime? bookingDate ,Guid encounterId,Guid indexClientId) : this()
         {
             Date = date;
             Mode = mode;
@@ -33,27 +34,29 @@ namespace LiveHTS.Core.Model.Interview
             Consent = consent;
             BookingDate = bookingDate;
             EncounterId = encounterId;
+            IndexClientId = indexClientId;
         }
 
-        public static ObsPartnerTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime bookingDate, Guid encounterId)
+        public static ObsPartnerTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
         {
-            var obs = new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate,encounterId);
+            var obs = new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate,encounterId,indexClientId);
             obs.Id = id;
             return obs;
         }
-        public static ObsPartnerTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime bookingDate, Guid encounterId)
+        public static ObsPartnerTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
         {
-            return new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate, encounterId);
+            return new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate, encounterId, indexClientId);
         }
-        public static ObsPartnerTraceResult CreateNew(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime bookingDate, Guid encounterId)
+        public static ObsPartnerTraceResult CreateNew(DateTime date, Guid mode, Guid outcome,Guid? consent, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
         {
-            return new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate, encounterId);
+            return new ObsPartnerTraceResult(date, mode, outcome, consent, bookingDate, encounterId, indexClientId);
         }
-        public static ObsPartnerTraceResult CreateNew(Guid encounterId)
+        public static ObsPartnerTraceResult CreateNew(Guid encounterId,Guid indexClientId)
         {
             var obs = new ObsPartnerTraceResult();
             obs.Date = DateTime.Today;
             obs.EncounterId = encounterId;
+            obs.IndexClientId = indexClientId;
             return obs;
         }
 

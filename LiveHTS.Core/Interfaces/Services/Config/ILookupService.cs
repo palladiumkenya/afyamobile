@@ -12,6 +12,7 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<PracticeType> GetPracticeTypes();
         Practice GetDefault();
         IEnumerable<Practice> GetDefaultPractices();
+        IEnumerable<Practice> GetPractices();
         IEnumerable<Practice> GetPractices(string[] typeIds);
         IEnumerable<MaritalStatus> GetMaritalStatuses(bool addSelectOption = false, string selectOption = "[Select Option]");
         IEnumerable<KeyPop> GetKeyPops(bool addSelectOption = false, string selectOption = "[Select Option]");

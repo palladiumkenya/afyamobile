@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:local="http://schemas.android.com/apk/res-auto"
-
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,52 +8,51 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
-
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingLeft="20dp"
-      android:text="Facility Setup"/>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="0dp"
-        android:layout_weight=".7"
-        android:layout_height="wrap_content">
-      <EditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Facility Code"
-          local:MvxBind="Text Code" />
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight=".3"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        local:MvxBind="Click SearchPracticeCommand"/>
-  </LinearLayout>
-
-
-  <android.support.design.widget.TextInputLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Facility Name"
-        local:MvxBind="Text Name" />
-  </android.support.design.widget.TextInputLayout>
-
-  <Button
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Save"
-      local:MvxBind="Click SavePracticeCommand"/>
-
+        android:paddingLeft="20dp"
+        android:text="Facility Setup" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight=".7"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Facility Code"
+                local:MvxBind="Text Code" />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            local:MvxBind="Click SearchPracticeCommand" />
+    </LinearLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Facility Name"
+            local:MvxBind="Text Name" />
+    </android.support.design.widget.TextInputLayout>
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewPracticeId"
+        local:MvxBind="Text PracticeId" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        local:MvxBind="Click SavePracticeCommand"
+        android:id="@+id/button1" />
 </LinearLayout>

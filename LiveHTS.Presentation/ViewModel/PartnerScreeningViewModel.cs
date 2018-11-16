@@ -73,6 +73,10 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedLivingWithClient;
         private List<CategoryItem> _pnsApproach;
         private CategoryItem _selectedPnsApproach;
+        private bool _enablePnsAccepted;
+        private bool _enablePnsApproach;
+        private bool _enableBookingDate;
+        private IndexClientDTO _indexClient;
 
 
         public PartnerScreeningViewModel(ISettings settings, IDialogService dialogService,
@@ -90,7 +94,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator = new ValidationHelper();
         }
 
-        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId, string indexclient)
         {
 
             // Load Client
@@ -101,6 +105,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var clientJson = JsonConvert.SerializeObject(Client);
                 _settings.AddOrUpdateValue("client", clientJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(indexclient))
+            {
+                IndexClient = new IndexClientDTO(new Guid(indexclient));
+                _settings.AddOrUpdateValue("pclientIndex", JsonConvert.SerializeObject(IndexClient));
             }
 
             // Load or Create Encounter
@@ -165,7 +175,7 @@ namespace LiveHTS.Presentation.ViewModel
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.ms.mode", "new");
                 Encounter = _partnerScreeningService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id,
-                    AppProviderId, AppUserId, AppPracticeId, AppDeviceId);
+                    AppProviderId, AppUserId, AppPracticeId, AppDeviceId,IndexClient.Id);
             }
             else
             {
@@ -188,6 +198,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
 
             var clientJson = _settings.GetValue("client.dto", "");
+            var indexClientJson = _settings.GetValue("pclientIndex", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var encounterTypeId = _settings.GetValue("encounterTypeId", "");
 
@@ -221,8 +232,11 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Client = JsonConvert.DeserializeObject<Client>(clientJson);
             }
+            if (null == IndexClient && !string.IsNullOrWhiteSpace(indexClientJson))
+            {
+                IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexClientJson);
+            }
 
-           
             if (PnsAccepted.Count == 0 && !string.IsNullOrWhiteSpace(pnsAcceptedJson))
             {
                 PnsAccepted = JsonConvert.DeserializeObject<List<CategoryItem>>(pnsAcceptedJson);
@@ -237,6 +251,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 PhysicalAssult = JsonConvert.DeserializeObject<List<CategoryItem>>(physicalAssultJson);
             }
+
             if (Threatened.Count == 0 && !string.IsNullOrWhiteSpace(threatenedJson))
             {
                 Threatened = JsonConvert.DeserializeObject<List<CategoryItem>>(threatenedJson);
@@ -273,14 +288,20 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Eligibility = JsonConvert.DeserializeObject<List<CategoryItem>>(eligibilityJson);
             }
-
-
-
-
+            
             if (null == Encounter && !string.IsNullOrWhiteSpace(clientEncounterJson))
             {
                 Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
             }
+
+            try
+            {
+                SelectedPnsAccepted =
+                    PnsAccepted.FirstOrDefault(x => x.ItemId == new Guid("B25ECCD4-852F-11E7-BB31-BE2E44B06B34"));
+            }
+            catch { }
+
+            EnablePnsAccepted = false;
 
 
         }
@@ -327,6 +348,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _encounterTypeId; }
             set { _encounterTypeId = value; }
+        }
+
+        public IndexClientDTO IndexClient
+        {
+            get { return _indexClient; }
+            set { _indexClient = value; RaisePropertyChanged(() => IndexClient); }
         }
 
         public Client Client
@@ -534,6 +561,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool EnablePnsAccepted
+        {
+            get { return _enablePnsAccepted; }
+            set { _enablePnsAccepted = value; RaisePropertyChanged(() => EnablePnsAccepted); }
+        }
+
         public List<CategoryItem> PnsAccepted
         {
             get { return _pnsAccepted; }
@@ -731,8 +764,14 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selectedHivStatus = value;
                 RaisePropertyChanged(() => SelectedHIVStatus);
-                UpdateEligibility();
+                SetEligibilityState();
             }
+        }
+
+        public bool EnablePNSApproach
+        {
+            get { return _enablePnsApproach; }
+            set { _enablePnsApproach = value; RaisePropertyChanged(() => EnablePNSApproach); }
         }
 
         public List<CategoryItem> PNSApproach
@@ -758,6 +797,16 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _selectedEligibility; }
             set { _selectedEligibility = value; RaisePropertyChanged(() => SelectedEligibility);}
+        }
+
+        public bool EnableBookingDate
+        {
+            get { return _enableBookingDate; }
+            set
+            {
+                _enableBookingDate = value;
+                RaisePropertyChanged(() => EnableBookingDate);
+            }
         }
 
         public DateTime BookingDate
@@ -855,7 +904,8 @@ namespace LiveHTS.Presentation.ViewModel
                         SelectedPNSRealtionship.ItemId,
                         SelectedLivingWithClient.ItemId,
                         SelectedPNSApproach.ItemId,
-                        EncounterId);
+                        EncounterId,
+                        IndexClient.Id);
                 }
                 else
                 {
@@ -884,12 +934,13 @@ namespace LiveHTS.Presentation.ViewModel
 
                 }
 
-                _partnerScreeningService.SavePartnerScreening(obs);
-                _partnerScreeningService.MarkEncounterCompleted(EncounterId, true);
+                _partnerScreeningService.SavePartnerScreening(obs,Client.Id,IndexClient.Id);
+                _partnerScreeningService.MarkEncounterCompleted(EncounterId,AppUserId, true);
                 ShowViewModel<DashboardViewModel>(new {id = Client.Id});
             }
         }
 
+        //TODO: HEHEHE
         public bool Validate()
         {
             ErrorSummary = string.Empty;
@@ -935,12 +986,42 @@ namespace LiveHTS.Presentation.ViewModel
             return result.IsValid;
         }
 
+        private void SetEligibilityState()
+        {
+            if (null != SelectedHIVStatus && !SelectedHIVStatus.ItemId.IsNullOrEmpty() &&
+                SelectedHIVStatus.ItemId == new Guid("B25EFD8A-852F-11E7-BB31-BE2E44B06B34"))  //pos
+            {
+                AllowEligibility = EnableBookingDate = EnablePNSApproach = false;
+                try
+                {
+                    SelectedEligibility = Eligibility.FirstOrDefault(x => x.ItemId == new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"));
+                }
+                catch
+                {
+                    SelectedEligibility = Eligibility.OrderBy(x => x.Rank).FirstOrDefault();
+                }
+
+            }
+            else
+            {
+                AllowEligibility = EnableBookingDate = EnablePNSApproach =true;
+            }
+
+        }
         public void UpdateEligibility()
         {
-            
-            bool assulted = false;
-            bool uncomfortable = false;
-            bool threatened = false;
+            if (null != SelectedHIVStatus && !SelectedHIVStatus.ItemId.IsNullOrEmpty() &&
+                SelectedHIVStatus.ItemId == new Guid("b25efd8a-852f-11e7-bb31-be2e44b06b34"))  //pos
+            {
+                EnableBookingDate = EnablePNSApproach = AllowEligibility=true;
+                
+            }
+            else
+            {
+                SelectedEligibility = Eligibility.OrderBy(x => x.Rank).FirstOrDefault();
+                EnableBookingDate = EnablePNSApproach = AllowEligibility = false;
+            }
+
 
             if (AllowScreening)
             {

@@ -16,13 +16,29 @@
             android:layout_height="wrap_content"
             android:id="@+id/linearLayoutContent"
             android:layout_weight="2">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewDemographicTitle"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                local:MvxBind="Text Title" />
+                android:background="@android:color/holo_orange_light"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDemographicTitle"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    local:MvxBind="Text Title" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/holo_blue_light"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Summary" />
+            </LinearLayout>
         <!--Names-->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -60,10 +76,25 @@
                     android:hint="Last Name"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:nextFocusForward="@+id/gender"
+                    android:nextFocusForward="@+id/nickname"
                     local:MvxBind="Text LastName; Error Errors['LastName']" />
             </android.support.design.widget.TextInputLayout>
-        <!--Gender-->
+			
+			<android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nick Name"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:nextFocusForward="@+id/gender"
+                    local:MvxBind="Text NickName" />
+            </android.support.design.widget.TextInputLayout>
+        
+			<!--Gender-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -84,9 +115,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:nextFocusForward="@+id/txtage"
+                    android:nextFocusForward="@+id/txtbirthdate"
                     android:id="@+id/gender" />
             </LinearLayout>
+        <!--BirthDate-->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtbirthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="BirthDate"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:clickable="true"
+                    android:editable="false"
+                    android:nextFocusForward="@+id/txtage"
+                    local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']" />
+            </android.support.design.widget.TextInputLayout>
         <!--Age-->
             <LinearLayout
                 android:orientation="horizontal"
@@ -105,7 +152,7 @@
                         android:singleLine="true"
                         android:numeric="integer"
                         android:inputType="number"
-                        android:nextFocusForward="@+id/txtageUnit"
+                        android:nextFocusForward="@+id/buttonDemographicNext"
                         local:MvxBind="Text Age; Error Errors['Age']" />
                 </android.support.design.widget.TextInputLayout>
                 <MvxSpinner
@@ -114,25 +161,9 @@
                     android:layout_height="match_parent"
                     android:textSize="40dp"
                     android:gravity="center_vertical"
-                    android:nextFocusForward="@+id/txtbirthdate"
+                    android:nextFocusForward="@+id/buttonDemographicNext"
                     local:MvxBind="ItemsSource AgeUnitOptions;SelectedItem SelectedAgeUnit" />
             </LinearLayout>
-        <!--BirthDate-->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <AutoCompleteTextView
-                    android:id="@+id/txtbirthdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="BirthDate"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:clickable="true"
-                    android:editable="false"
-                    android:nextFocusForward="@+id/buttonDemographicNext"
-                    local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']" />
-            </android.support.design.widget.TextInputLayout>
             <TextView
                 android:text=""
                 android:layout_width="match_parent"
@@ -155,18 +186,18 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                  android:textColor="#FFFFFF"
-                  android:background="#FFFFFF"
-                  android:layout_marginRight="2dp"
+                    android:textColor="#FFFFFF"
+                    android:background="#FFFFFF"
+                    android:layout_marginRight="2dp"
                     local:MvxBind="Click MovePreviousCommand;Text MovePreviousLabel" />
                 <Button
                     android:id="@+id/buttonDemographicNext"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                  android:textColor="#FFFFFF"
-                  android:background="#3F51B5"
-                  android:layout_marginLeft="2dp"
+                    android:textColor="#FFFFFF"
+                    android:background="#3F51B5"
+                    android:layout_marginLeft="2dp"
                     local:MvxBind="Click MoveNextCommand;Text MoveNextLabel" />
             </LinearLayout>
         </LinearLayout>

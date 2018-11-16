@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Repository.Interview;
+using LiveHTS.Core.Interfaces.Repository.SmartCard;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.SharedKernel.Custom;
@@ -21,13 +23,15 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IClientRelationshipRepository _clientRelationshipRepository;
         private readonly IEncounterRepository _encounterRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly IPSmartStoreRepository _pSmartStoreRepository;
 
-        public ClientReaderService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IPersonRepository personRepository)
+        public ClientReaderService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IPersonRepository personRepository, IPSmartStoreRepository pSmartStoreRepository)
         {
             _clientRepository = clientRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
             _encounterRepository = encounterRepository;
             _personRepository = personRepository;
+            _pSmartStoreRepository = pSmartStoreRepository;
         }
 
         public Client LoadClient(Guid clientId)
@@ -48,6 +52,11 @@ namespace LiveHTS.Core.Service.Clients
         public List<Encounter> LoadEncounters(Guid clientId)
         {
             return _encounterRepository.LoadAll(clientId).ToList();
+        }
+
+        public List<PSmartStore> LoadPSmartStores(Guid clientId)
+        {
+            return _pSmartStoreRepository.LoadAll(clientId).ToList();
         }
 
         public void Purge(ClientToDeleteDTO toDeleteDto)

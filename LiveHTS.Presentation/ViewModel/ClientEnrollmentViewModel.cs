@@ -8,6 +8,7 @@ using LiveHTS.Core.Model.Config;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -30,6 +31,8 @@ namespace LiveHTS.Presentation.ViewModel
         private string _clientId;
         private string _id;
         private IndexClientDTO _indexClientDTO;
+        private Guid practiceId;
+        private bool _practiceEnabled;
 
         public IndexClientDTO IndexClientDTO
         {
@@ -66,6 +69,16 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _practices = value;
                 RaisePropertyChanged(() => Practices);
+            }
+        }
+
+        public bool CanSelect
+        {
+            get { return _practiceEnabled; }
+            set
+            {
+                _practiceEnabled = value;
+                RaisePropertyChanged(() => CanSelect);
             }
         }
 
@@ -129,9 +142,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        
+
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService,
             IRegistryService registryService) : base(dialogService, settings)
         {
+            CanSelect = false;
             Step = 4;
             _lookupService = lookupService;
             _registryService = registryService;
@@ -139,6 +155,9 @@ namespace LiveHTS.Presentation.ViewModel
             MovePreviousLabel = "PREV";
             MoveNextLabel = "SAVE";
             RegistrationDate = DateTime.Today;
+            ClientInfo=String.Empty;
+            Identifier=String.Empty;
+           
         }
 
         public void Init(string clientinfo, string indexId)
@@ -159,6 +178,9 @@ namespace LiveHTS.Presentation.ViewModel
         public override void ViewAppeared()
         {
             base.ViewAppeared();
+
+            AutoGenId();
+
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
             if (!string.IsNullOrWhiteSpace(indexJson))
             {
@@ -168,8 +190,24 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
-            Practices = _lookupService.GetDefaultPractices().ToList();
-            SelectedPractice = _lookupService.GetDefault();
+            Practices = _lookupService.GetPractices().ToList();
+
+            if (!practiceId.IsNullOrEmpty())
+            {
+                if (Practices.Any(x => x.Id== practiceId))
+                {
+                    SelectedPractice = Practices.First(x => x.Id == practiceId);
+                }
+                else
+                {
+                    SelectedPractice = _lookupService.GetDefault();
+                }
+            }
+            else
+            {
+                SelectedPractice = _lookupService.GetDefault();
+            }
+
             try
             {
                 SelectedIdentifierType = IdentifierTypes.FirstOrDefault();
@@ -183,7 +221,7 @@ namespace LiveHTS.Presentation.ViewModel
         public override void Start()
         {
             IdentifierTypes = _lookupService.GetIdentifierTypes().ToList();
-            Practices = _lookupService.GetDefaultPractices().ToList();
+            Practices = _lookupService.GetPractices().ToList();
             SelectedPractice = _lookupService.GetDefault();
             try
             {
@@ -222,7 +260,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 var clientRegistrationDTO = new ClientRegistrationDTO(_settings);
-                var client = clientRegistrationDTO.Generate();
+                var client = clientRegistrationDTO.Generate(UserId);
 
                 if (null != IndexClientDTO)
                 {
@@ -240,6 +278,8 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     _registryService.UpdateRelationShips(clientRegistrationDTO.ClientProfile.RelTypeId,IndexClientDTO.Id, client.Id);
                 }
+                ClearCache();
+                Close(this);
                 ShowViewModel<DashboardViewModel>(new {id = client.Id.ToString()});
             }
             catch (Exception e)
@@ -285,11 +325,43 @@ namespace LiveHTS.Presentation.ViewModel
                 Identifier = Enrollment.Identifier;
                 RegistrationDate = Enrollment.RegistrationDate;
                 Id = Enrollment.Id;
+                practiceId = Enrollment.PracticeId;
             }
             catch (Exception e)
             {
                 Mvx.Error(e.Message);
             }
+        }
+
+        private void AutoGenId()
+        {
+            var prefix = _settings.GetValue("livehts.devicecode", "");
+            if (!string.IsNullOrWhiteSpace(prefix) && string.IsNullOrWhiteSpace(Identifier))
+            {
+                Identifier = $"{prefix}{DateTime.Now:yyMMddHHmmfff}";
+            }
+        }
+
+        private void ClearCache()
+        {
+
+            _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientContactViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientProfileViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel), "");
+
+            if (_settings.Contains(nameof(ClientDemographicViewModel)))
+                _settings.DeleteValue(nameof(ClientDemographicViewModel));
+
+            if (_settings.Contains(nameof(ClientContactViewModel)))
+                _settings.DeleteValue(nameof(ClientContactViewModel));
+
+            if (_settings.Contains(nameof(ClientProfileViewModel)))
+                _settings.DeleteValue(nameof(ClientProfileViewModel));
+
+            if (_settings.Contains(nameof(ClientEnrollmentViewModel)))
+                _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+
         }
     }
 }

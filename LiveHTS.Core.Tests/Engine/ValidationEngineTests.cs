@@ -6,7 +6,6 @@ using LiveHTS.Core.Interfaces.Engine;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository.Survey;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SQLite;
 
@@ -50,7 +49,7 @@ namespace LiveHTS.Core.Tests.Engine
             var obs = _encounter.Obses.First(x => x.QuestionId == q1.Id);
 
             obs.ValueCoded = Guid.NewGuid();
-            _responseRequired = new Response(obs.EncounterId, q1, obs);
+            _responseRequired = new Response(obs.EncounterId,_encounter.ClientId, q1, obs);
 
             var isvalid = _validationEngine.Validate(_responseRequired);
             NUnit.Framework.Assert.IsTrue(isvalid);
@@ -69,7 +68,7 @@ namespace LiveHTS.Core.Tests.Engine
             var obs = _encounter.Obses.First(x => x.QuestionId == q3.Id);
 
             obs.ValueNumeric = 2;
-            _responseRequired = new Response(obs.EncounterId, q3, obs);
+            _responseRequired = new Response(obs.EncounterId,_encounter.ClientId, q3, obs);
 
             var isvalid = _validationEngine.Validate(_responseRequired);
             NUnit.Framework.Assert.IsTrue(isvalid);

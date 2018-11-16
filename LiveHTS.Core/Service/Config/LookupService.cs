@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LiveHTS.Core.Interfaces.Repository;
 using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
 using LiveHTS.Core.Interfaces.Services;
@@ -60,6 +61,11 @@ namespace LiveHTS.Core.Service.Config
         public IEnumerable<Practice> GetDefaultPractices()
         {
             return _practiceRepository.GetAll(x =>x.IsDefault).ToList();
+        }
+
+        public IEnumerable<Practice> GetPractices()
+        {
+            return GetPractices(new[] { "Facility" });
         }
 
         public IEnumerable<Practice> GetPractices(string[] typeIds)

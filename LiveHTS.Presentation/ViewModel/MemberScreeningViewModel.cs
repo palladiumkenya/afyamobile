@@ -50,7 +50,10 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _encounterId;
         private IDashboardService _dashboardService;
         private ILookupService _lookupService;
+        private bool _enableEligibility;
+        private IndexClientDTO _indexClient;
 
+       
 
         public MemberScreeningViewModel(ISettings settings, IDialogService dialogService, IMemberScreeningService memberScreeningService, IDashboardService dashboardService, ILookupService lookupService)
         {
@@ -63,7 +66,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator = new ValidationHelper();
         }
 
-        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId, string indexclient)
         {
 
             // Load Client
@@ -74,6 +77,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var clientJson = JsonConvert.SerializeObject(Client);
                 _settings.AddOrUpdateValue("client", clientJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(indexclient))
+            {
+                IndexClient=new IndexClientDTO(new Guid(indexclient));
+                _settings.AddOrUpdateValue("clientIndex", JsonConvert.SerializeObject(IndexClient));
             }
 
             // Load or Create Encounter
@@ -97,7 +106,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.ms.mode", "new");
-                Encounter = _memberScreeningService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId);
+                Encounter = _memberScreeningService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId,IndexClient.Id);
             }
             else
             {
@@ -123,6 +132,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
 
             var clientJson = _settings.GetValue("client.dto", "");
+            var indexClientJson = _settings.GetValue("clientIndex", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var encounterTypeId = _settings.GetValue("encounterTypeId", "");
 
@@ -133,6 +143,11 @@ namespace LiveHTS.Presentation.ViewModel
             if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
             {
                 Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+
+            if (null == IndexClient && !string.IsNullOrWhiteSpace(indexClientJson))
+            {
+                IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexClientJson);
             }
 
             if (EncounterTypeId.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(encounterTypeId))
@@ -199,6 +214,12 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return _encounterTypeId; }
             set { _encounterTypeId = value; }
+        }
+
+        public IndexClientDTO IndexClient
+        {
+            get { return _indexClient; }
+            set { _indexClient = value;RaisePropertyChanged(() => IndexClient); }
         }
 
         public Client Client
@@ -311,7 +332,37 @@ namespace LiveHTS.Presentation.ViewModel
         public CategoryItem SelectedHIVStatus
         {
             get { return _selectedHivStatus; }
-            set { _selectedHivStatus = value;RaisePropertyChanged(() => SelectedHIVStatus); }
+            set { _selectedHivStatus = value;RaisePropertyChanged(() => SelectedHIVStatus);
+                SetEligibilityState();
+            }
+        }
+        private void SetEligibilityState()
+        {
+            if (null != SelectedHIVStatus && !SelectedHIVStatus.ItemId.IsNullOrEmpty() &&
+                SelectedHIVStatus.ItemId == new Guid("B25EFD8A-852F-11E7-BB31-BE2E44B06B34"))  //pos
+            {
+                EnableEligibility = false;
+                try
+                {
+                    SelectedEligibility = Eligibility.FirstOrDefault(x => x.ItemId == new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"));
+                }
+                catch 
+                {
+                    SelectedEligibility = Eligibility.OrderBy(x => x.Rank).FirstOrDefault();
+                }
+                
+            }
+            else
+            {
+                EnableEligibility = true;
+            }
+
+        }
+
+        public bool EnableEligibility
+        {
+            get { return _enableEligibility; }
+            set { _enableEligibility = value; RaisePropertyChanged(() => EnableEligibility); }
         }
 
         public List<CategoryItem> Eligibility
@@ -395,7 +446,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null == ObsMemberScreening)
                 {
-                    obs = ObsMemberScreening.Create(ScreeningDate,SelectedHIVStatus.ItemId,SelectedEligibility.ItemId,BookingDate,Remarks,EncounterId);
+                    obs = ObsMemberScreening.Create(ScreeningDate,SelectedHIVStatus.ItemId,SelectedEligibility.ItemId,BookingDate,Remarks,EncounterId,IndexClient.Id);
                 }
                 else
                 {
@@ -407,8 +458,8 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.Remarks = Remarks;
                 }
 
-                _memberScreeningService.SaveMemberScreening(obs);
-                _memberScreeningService.MarkEncounterCompleted(EncounterId,true);
+                _memberScreeningService.SaveMemberScreening(obs,Client.Id,IndexClient.Id);
+                _memberScreeningService.MarkEncounterCompleted(EncounterId,AppUserId, true);
                 ShowViewModel<DashboardViewModel>(new { id = Client.Id });
             }
         }

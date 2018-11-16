@@ -17,5 +17,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         decimal Rank { get; set; }
         bool ConsentRequired { get; set; }
         bool HasConsent { get; set; }
+        bool Block { get; set; }
     }
 }

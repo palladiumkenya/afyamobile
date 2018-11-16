@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
@@ -37,6 +38,10 @@ namespace LiveHTS.Presentation.ViewModel
         public string Title { get; set; } = "Remote Search";
         public IRemoteRegistryViewModel Parent { get; set; }
 
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
         public string Search
         {
             get { return _search; }
@@ -134,18 +139,27 @@ namespace LiveHTS.Presentation.ViewModel
             IsBusy = true;
             _dialogService.ShowWait("Searching,Please wait...");
 
-            var remoteData = await _clientSyncService.SearchClients(Address, Search);
-            if (remoteData.Count > 0)
+            var remoteData = await _clientSyncService.SearchClients(Address, Search, AppPracticeId);
+
+            if (null == remoteData)
             {
-                Clients = remoteData.Select(x => x.Client).ToList();
+                _dialogService.Alert("Could not connect to remote registry!");
             }
             else
             {
-                Clients=new List<Client>();
-                _dialogService.HideWait();
-                _dialogService.ShowToast("No clients found!");
-                IsBusy = false;return;
+                if (remoteData.Count > 0)
+                {
+                    Clients = remoteData.Select(x => x.Client).ToList();
+                }
+                else
+                {
+                    Clients = new List<Client>();
+                    _dialogService.HideWait();
+                    _dialogService.ShowToast("No clients found!");
+                    IsBusy = false; return;
+                }
             }
+        
             _dialogService.HideWait();
             IsBusy = false;
         }
@@ -228,15 +242,21 @@ namespace LiveHTS.Presentation.ViewModel
             Address = Local.Address;
         }
 
-      
-
         private void LoadClients()
         {
             IsBusy = true;
             Clients =new List<Client>();
             IsBusy = false;
         }
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
 
-       
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
+        }
+
     }
 }

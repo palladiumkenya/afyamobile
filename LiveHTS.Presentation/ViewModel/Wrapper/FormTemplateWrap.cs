@@ -48,6 +48,11 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
 
         private bool CanStartEncounter()
         {
+           // return !_formTemplate.HasEncounters&&_formTemplate.HasConsent;
+
+//            if (_formTemplate.Display.Contains("Lab") && _formTemplate.Block)
+//                return false;
+
             if (_formTemplate.ConsentRequired)
             {
                 ShowStart = _formTemplate.HasConsent && !_formTemplate.HasEncounters;
@@ -58,6 +63,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
             }
             return ShowStart;
         }
+        
 
         private void StartEncounter()
         {

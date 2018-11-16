@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using MvvmCross.Core.ViewModels;
 
@@ -15,6 +16,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         Guid AppPracticeId { get; }
         Guid AppDeviceId { get; }
         Guid EncounterTypeId { get; set; }
+        IndexClientDTO IndexClient { get; set; }
         Client Client { get; set; }
         Encounter Encounter { get; set; }
 

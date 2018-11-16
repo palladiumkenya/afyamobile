@@ -23,12 +23,18 @@ namespace LiveHTS.Core.Model.Interview
         public Guid? ResultGiven { get; set; }
         [Indexed]
         public Guid? CoupleDiscordant { get; set; }
+        /// <summary>
+        /// Accepted to partner listing
+        /// </summary>
         [Indexed]
         public Guid? SelfTestOption { get; set; }
+        [Indexed]
+        public Guid? PnsDeclined { get; set; }
         public string Remarks { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }
-
+        [Indexed]
+        public Guid ClientId { get; set; }
 
         public ObsFinalTestResult()
         {
@@ -36,7 +42,7 @@ namespace LiveHTS.Core.Model.Interview
         }
 
         private ObsFinalTestResult(Guid id, Guid? firstTestResult, Guid? secondTestResult, Guid? endResult, Guid? resultGiven, Guid? coupleDiscordant, string remarks,
-            Guid encounterId)
+            Guid encounterId, Guid clientId)
         {
             Id = id;
             FirstTestResult = firstTestResult;
@@ -46,29 +52,31 @@ namespace LiveHTS.Core.Model.Interview
             CoupleDiscordant = coupleDiscordant;
             Remarks = remarks;
             EncounterId = encounterId;
+            ClientId = clientId;
         }
 
-        private ObsFinalTestResult(Guid? firstTestResult, Guid? secondTestResult, Guid? endResult, Guid? resultGiven, Guid? coupleDiscordant, string remarks, Guid encounterId) :
-            this(LiveGuid.NewGuid(), firstTestResult, secondTestResult, endResult, resultGiven, coupleDiscordant, remarks,encounterId)
+        private ObsFinalTestResult(Guid? firstTestResult, Guid? secondTestResult, Guid? endResult, Guid? resultGiven, Guid? coupleDiscordant, string remarks, Guid encounterId, Guid clientId) :
+            this(LiveGuid.NewGuid(), firstTestResult, secondTestResult, endResult, resultGiven, coupleDiscordant, remarks,encounterId,clientId)
         {
 
         }
 
         public static ObsFinalTestResult Create(Guid id, Guid? firstTestResult, Guid? secondTestResult, Guid? endResult,Guid? resultGiven, Guid? coupleDiscordant, string remarks,
-            Guid encounterId)
+            Guid encounterId, Guid clientId)
         {
-            return new ObsFinalTestResult(id, firstTestResult, secondTestResult, endResult, resultGiven, coupleDiscordant, remarks,encounterId);
+            return new ObsFinalTestResult(id, firstTestResult, secondTestResult, endResult, resultGiven,
+                coupleDiscordant, remarks, encounterId, clientId);
         }
 
         public static ObsFinalTestResult Create(Guid? firstTestResult, Guid? secondTestResult, Guid? endResult, Guid? resultGiven, Guid? coupleDiscordant, string remarks,
-            Guid encounterId)
+            Guid encounterId, Guid clientId)
         {
-            return new ObsFinalTestResult(firstTestResult, secondTestResult, endResult, resultGiven, coupleDiscordant, remarks, encounterId);
+            return new ObsFinalTestResult(firstTestResult, secondTestResult, endResult, resultGiven, coupleDiscordant, remarks, encounterId,clientId);
         }
 
-        public static ObsFinalTestResult CreateFirst(Guid? firstTestResult, Guid encounterId)
+        public static ObsFinalTestResult CreateFirst(Guid? firstTestResult, Guid encounterId, Guid clientId)
         {
-            return new ObsFinalTestResult(firstTestResult, null, null, null, null, String.Empty,  encounterId);
+            return new ObsFinalTestResult(firstTestResult, null, null, null, null, String.Empty, encounterId, clientId);
         }
 
         public void UpdateSetFirstResult(Guid? result)

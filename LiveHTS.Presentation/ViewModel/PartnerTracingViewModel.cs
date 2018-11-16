@@ -8,6 +8,7 @@ using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
@@ -37,6 +38,7 @@ namespace LiveHTS.Presentation.ViewModel
         private MvxCommand _closeTestCommand;
         private IDashboardService _dashboardService;
         private ILookupService _lookupService;
+        private IndexClientDTO _indexClient;
 
         public PartnerTracingViewModel(ISettings settings, IDialogService dialogService, IPartnerTracingService tracingService, IDashboardService dashboardService, ILookupService lookupService)
         {
@@ -47,7 +49,7 @@ namespace LiveHTS.Presentation.ViewModel
             _lookupService = lookupService;
         }
 
-        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId, string indexclient)
         {
 
             // Load Client
@@ -58,6 +60,11 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 var clientJson = JsonConvert.SerializeObject(Client);
                 _settings.AddOrUpdateValue("client", clientJson);
+            }
+            if (!string.IsNullOrWhiteSpace(indexclient))
+            {
+                IndexClient = new IndexClientDTO(new Guid(indexclient));
+                _settings.AddOrUpdateValue("ptclientIndex", JsonConvert.SerializeObject(IndexClient));
             }
 
             // Load or Create Encounter
@@ -73,7 +80,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.link.mode", "new");
-                Encounter = _tracingService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId);
+                Encounter = _tracingService.StartEncounter(new Guid(formId), EncounterTypeId, Client.Id, AppProviderId, AppUserId, AppPracticeId, AppDeviceId, IndexClient.Id);
             }
             else
             {
@@ -98,9 +105,8 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("lookup.TMode", JsonConvert.SerializeObject(modes));
             var outcomes = _lookupService.GetCategoryItems("PNSOutcome", true, "[Select Outcome]").ToList();
             _settings.AddOrUpdateValue("lookup.TOutcome", JsonConvert.SerializeObject(outcomes));
-
-
-
+            var consents = _lookupService.GetCategoryItems("YesNo", true, "[Select Consent]").ToList();
+            _settings.AddOrUpdateValue("lookup.TConsent", JsonConvert.SerializeObject(consents));
 
         }
 
@@ -108,12 +114,18 @@ namespace LiveHTS.Presentation.ViewModel
         {
 
             var clientJson = _settings.GetValue("client.dto", "");
+            var indexClientJson = _settings.GetValue("ptclientIndex", "");
             var clientEncounterJson = _settings.GetValue("client.encounter", "");
             var encounterTypeId = _settings.GetValue("encounterTypeId", "");
 
             if (null == Client && !string.IsNullOrWhiteSpace(clientJson))
             {
                 Client = JsonConvert.DeserializeObject<Client>(clientJson);
+            }
+
+            if (null == IndexClient && !string.IsNullOrWhiteSpace(indexClientJson))
+            {
+                IndexClient = JsonConvert.DeserializeObject<IndexClientDTO>(indexClientJson);
             }
 
             if (EncounterTypeId.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(encounterTypeId))
@@ -154,6 +166,12 @@ namespace LiveHTS.Presentation.ViewModel
             set { _encounterTypeId = value; }
         }
 
+        public IndexClientDTO IndexClient
+        {
+            get { return _indexClient; }
+            set { _indexClient = value; RaisePropertyChanged(() => IndexClient); }
+        }
+
         public Client Client
         {
             get { return _client; }
@@ -173,6 +191,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var modesJson = _settings.GetValue("lookup.TMode", "");
             var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
+            var consentJson = _settings.GetValue("lookup.TConsent", "");
 
             List<CategoryItem> modes = new List<CategoryItem>();
             if (!string.IsNullOrWhiteSpace(modesJson))
@@ -185,16 +204,22 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(outcomeJson);
             }
+            
+            List<CategoryItem> consents = new List<CategoryItem>();
+            if (!string.IsNullOrWhiteSpace(consentJson))
+            {
+                consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
+            }
 
 
 
             if (null != Encounter)
             {
-                Traces = ConvertToTraceWrapperClass(this, Encounter, modes, outcomes);
+                Traces = ConvertToTraceWrapperClass(this, Encounter, modes, outcomes, consents);
             }
         }
 
-        private static List<PartnerTraceTemplateWrap> ConvertToTraceWrapperClass(IPartnerTracingViewModel clientDashboardViewModel, Encounter encounter, List<CategoryItem> modes, List<CategoryItem> outcomes)
+        private static List<PartnerTraceTemplateWrap> ConvertToTraceWrapperClass(IPartnerTracingViewModel clientDashboardViewModel, Encounter encounter, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents)
         {
             List<PartnerTraceTemplateWrap> list = new List<PartnerTraceTemplateWrap>();
 
@@ -202,7 +227,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             foreach (var r in testResults)
             {
-                list.Add(new PartnerTraceTemplateWrap(clientDashboardViewModel, new PartnerTraceTemplate(r, modes, outcomes)));
+                list.Add(new PartnerTraceTemplateWrap(clientDashboardViewModel, new PartnerTraceTemplate(r, modes, outcomes,consents)));
             }
 
             return list;
@@ -255,7 +280,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void SaveTrace(ObsPartnerTraceResult test)
         {
-            _tracingService.SaveTest(test);
+            _tracingService.SaveTest(test,Client.Id,IndexClient.Id);
             Encounter = _tracingService.OpenEncounter(Encounter.Id);
         }
 
@@ -267,7 +292,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (result)
                 {
 
-                    _tracingService.DeleteTest(test);
+                    _tracingService.DeleteTest(test,Client.Id,IndexClient.Id);
                     Referesh(test.EncounterId);
                 }
             }

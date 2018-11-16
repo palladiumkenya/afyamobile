@@ -135,7 +135,7 @@ namespace LiveHTS.Infrastructure.Migrations
             db.CreateTable<Client>();
             db.CreateTable<ClientIdentifier>();
             db.CreateTable<ClientRelationship>();
-
+            db.CreateTable<ClientSummary>();
             #endregion
 
             InsertOnly<Person,Guid>(db, new PersonUserJson());

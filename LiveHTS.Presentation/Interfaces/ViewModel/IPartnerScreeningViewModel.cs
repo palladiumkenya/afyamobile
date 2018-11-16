@@ -22,6 +22,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string ErrorSummary { get; set; }
 
         Guid EncounterTypeId { get; set; }
+        IndexClientDTO IndexClient { get; set; }
         Client Client { get; set; }
         Encounter Encounter { get; set; }
         Guid EncounterId { get; set; }
@@ -38,6 +39,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         DateTime ScreeningDate { get; set; }
 
         //  Pns Accepted
+        bool EnablePnsAccepted { get; set; }
         List<CategoryItem> PnsAccepted { get; set; }
         CategoryItem SelectedPnsAccepted { get; set; }
 
@@ -77,14 +79,17 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         List<CategoryItem> HIVStatus { get; set; }
         CategoryItem SelectedHIVStatus { get; set; }
 
+        bool EnablePNSApproach { get; set; }
         // PNSApproach
         List<CategoryItem> PNSApproach { get; set; }
         CategoryItem SelectedPNSApproach { get; set; }
 
+        
         //  Eligible for Testing(Y/N)
         List<CategoryItem> Eligibility { get; set; }
         CategoryItem SelectedEligibility { get; set; }
 
+        bool EnableBookingDate { get; set; }
         //  Date contact booked for testing (DD/MM/YYYY)
         DateTime BookingDate { get; set; }
         TraceDateDTO SelectedBookingDate { get; set; }

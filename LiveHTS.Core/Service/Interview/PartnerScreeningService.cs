@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
+using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Interview
 {
@@ -15,14 +18,16 @@ namespace LiveHTS.Core.Service.Interview
         private readonly IEncounterRepository _encounterRepository;
         private readonly IObsPartnerScreeningRepository _obsPartnerScreeningRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
         private List<CategoryItem> _categoryItems;
 
-        public PartnerScreeningService(IEncounterRepository encounterRepository, IObsPartnerScreeningRepository obsPartnerScreeningRepository, ICategoryRepository categoryRepository)
+        public PartnerScreeningService(IEncounterRepository encounterRepository, IObsPartnerScreeningRepository obsPartnerScreeningRepository, ICategoryRepository categoryRepository, IClientStateRepository clientStateRepository)
         {
             _encounterRepository = encounterRepository;
             _obsPartnerScreeningRepository = obsPartnerScreeningRepository;
             _categoryRepository = categoryRepository;
+            _clientStateRepository = clientStateRepository;
         }
 
         public Encounter OpenEncounter(Guid encounterId)
@@ -31,11 +36,12 @@ namespace LiveHTS.Core.Service.Interview
             return exisitngEncounter;
         }
 
-        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId)
+        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId, Guid indexClientId)
         {
             var exisitngEncounter = _encounterRepository
                 .GetAll(x => x.EncounterTypeId == encounterTypeId &&
-                             x.ClientId == clientId)
+                             x.ClientId == clientId &&
+                             x.IndexClientId == indexClientId)
                 .FirstOrDefault();
 
             if (null != exisitngEncounter)
@@ -43,7 +49,7 @@ namespace LiveHTS.Core.Service.Interview
                 return OpenEncounter(exisitngEncounter.Id);
             }
 
-            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId, deviceId);
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId, deviceId,indexClientId);
             encounter.Started = DateTime.Now;
             _encounterRepository.Save(encounter);
             return encounter;
@@ -55,14 +61,27 @@ namespace LiveHTS.Core.Service.Interview
             return _encounterRepository.LoadTestAll(encounterTypeId, clientId, true).ToList();
         }
 
-        public void SavePartnerScreening(ObsPartnerScreening testResult)
+        public void SavePartnerScreening(ObsPartnerScreening testResult, Guid clientId, Guid indexClientId)
         {
             _obsPartnerScreeningRepository.SaveOrUpdate(testResult);
+
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerScreened,indexClientId));
+
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.PartnerEligibileNo,indexClientId);
+            _clientStateRepository.DeleteState(clientId, testResult.EncounterId, LiveState.PartnerEligibileYes,indexClientId);
+            if (testResult.Eligibility == new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
+            {
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerEligibileYes,indexClientId));
+            }
+            else
+            {
+                _clientStateRepository.SaveOrUpdate(new ClientState(clientId, testResult.EncounterId, LiveState.PartnerEligibileNo,indexClientId));
+            }
         }
 
-        public void MarkEncounterCompleted(Guid encounterId, bool completed)
+        public void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed)
         {
-            _encounterRepository.UpdateStatus(encounterId, completed);
+            _encounterRepository.UpdateStatus(encounterId,userId, completed);
         }
     }
 }

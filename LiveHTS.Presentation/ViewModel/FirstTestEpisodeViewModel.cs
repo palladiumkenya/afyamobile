@@ -130,7 +130,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (result)
                 {
 
-                    _testingService.DeleteTest(testResult);
+                    _testingService.DeleteTest(testResult, Parent.Client.Id);
                     Parent.Referesh(testResult.EncounterId);
                 }
             }

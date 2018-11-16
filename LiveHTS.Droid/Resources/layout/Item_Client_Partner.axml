@@ -39,20 +39,20 @@
                     android:paddingRight="5dp" />
             </LinearLayout>
         </LinearLayout>
-      <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight=".28"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:orientation="horizontal">
-        <Button
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="Screen"
-          android:textSize="10sp"
-          android:textAlignment="center"
-          local:MvxBind="Click ScreenPartnerCommand;Text ScreenText;Visibility ShowScreen, Converter=Visibility" />
-      </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".28"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Screen/Trace"
+                android:textSize="10sp"
+                android:textAlignment="center"
+                local:MvxBind="Click ScreenPartnerCommand;Text ScreenText;Visibility ShowScreen, Converter=Visibility" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight=".1"

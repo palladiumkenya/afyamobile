@@ -47,13 +47,23 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedResultGiven { get; set; }
         List<CategoryItem> ResultGivenOptions { get; set; }
 
+        bool EnableCoupleDiscordant { get; set; }
         Guid CoupleDiscordant { get; set; }
         CategoryItem SelectedCoupleDiscordant { get; set; }
         List<CategoryItem> CoupleDiscordantOptions { get; set; }
 
+        bool EnableSelfTestOption { get; set; }
         Guid SelfTestOption { get; set; }
         CategoryItem SelectedSelfTest { get; set; }
         List<CategoryItem> SelfTestOptions { get; set; }
+
+        bool EnablePnsDeclined { get; set; }
+        Guid PnsDeclined { get; set; }
+        CategoryItem SelectedPnsDeclined { get; set; }
+        List<CategoryItem> PnsDeclineds { get; set; }
+       
+        
+
         string Remarks { get; set; }
 
         List<CategoryItem> Kits { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Subject;
@@ -8,18 +9,23 @@ using LiveHTS.Core.Model.Subject;
 
 namespace LiveHTS.Core.Service.Access
 {
-    public class AuthService:IAuthService
+    public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
         private readonly IProviderRepository _providerRepository;
         private readonly IPracticeRepository _practiceRepository;
         private readonly IDeviceRepository _deviceRepository;
-        public AuthService(IUserRepository userRepository, IProviderRepository providerRepository, IPracticeRepository practiceRepository, IDeviceRepository deviceRepository)
+        private readonly IUserSummaryRepository _userSummaryRepository;
+
+        public AuthService(IUserRepository userRepository, IProviderRepository providerRepository,
+            IPracticeRepository practiceRepository, IDeviceRepository deviceRepository,
+            IUserSummaryRepository userSummaryRepository)
         {
             _userRepository = userRepository;
             _providerRepository = providerRepository;
             _practiceRepository = practiceRepository;
             _deviceRepository = deviceRepository;
+            _userSummaryRepository = userSummaryRepository;
         }
 
         public Provider GetDefaultProvider()
@@ -52,6 +58,17 @@ namespace LiveHTS.Core.Service.Access
                 return _userRepository.Get(user.Id);
 
             throw new Exception("wrong User or Password !");
+        }
+
+        public void SaveDownloaded(Guid userId, List<UserSummary> userSummaries)
+        {
+            _userSummaryRepository.DeleteSummary(userId);
+            _userSummaryRepository.SaveSummary(userSummaries);
+        }
+
+        public List<UserSummary> Get(Guid userId)
+        {
+           return _userSummaryRepository.GetAll(x => x.UserId == userId).ToList();
         }
     }
 }

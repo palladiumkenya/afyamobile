@@ -24,6 +24,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/afyamobile" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center"
+                local:MvxBind="Text Version" />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -52,8 +57,6 @@
                     android:singleLine="true"
                     local:MvxBind="Text Password" />
             </android.support.design.widget.TextInputLayout>
-            
-   
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +64,6 @@
                 android:textColor="@android:color/holo_orange_light"
                 android:textStyle="bold"
                 local:MvxBind="Text Facility" />
-
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
@@ -73,8 +75,6 @@
                 android:background="#3F51B5"
                 android:textStyle="bold"
                 local:MvxBind="Click SignInCommand" />
-           
-           
         <!-- Login progress -->
             <ProgressBar
                 android:id="@+id/login_progress"
@@ -84,22 +84,21 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 local:MvxBind="Visibility IsBusy, Converter=Visibility" />
-          <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.refractored.fab.FloatingActionButton
-              android:id="@+id/fabSignInSetup"
-              local:MvxBind="Click SetUpCommand"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="bottom|left"
-              android:layout_margin="16dp"
-              android:src="@drawable/ic_cloud_download"
-              fab:fab_colorNormal="@color/accent2"
-              fab:fab_colorPressed="@color/accent_pressed2"
-              fab:fab_colorRipple="@color/ripple2" />
-          </FrameLayout>
-          </LinearLayout>
-   
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.refractored.fab.FloatingActionButton
+                    android:id="@+id/fabSignInSetup"
+                    local:MvxBind="Click SetUpCommand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|left"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_cloud_download"
+                    fab:fab_colorNormal="@color/accent2"
+                    fab:fab_colorPressed="@color/accent_pressed2"
+                    fab:fab_colorRipple="@color/ripple2" />
+            </FrameLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -17,6 +17,12 @@ namespace LiveHTS.SharedKernel.Model
             new CustomItem("D", "Days")
         };
 
+        private static readonly List<CustomItem> _visitTypeList = new List<CustomItem>
+        {
+            new CustomItem("1", "Initial Test"),
+            new CustomItem("2", "Repeat Test")
+        };
+
         public static List<CustomItem> GenderList
         {
             get { return _genderList; }
@@ -24,6 +30,10 @@ namespace LiveHTS.SharedKernel.Model
         public static List<CustomItem> AgeUnitList
         {
             get { return _ageUnitList; }
+        }
+        public static List<CustomItem> VisitTypeList
+        {
+            get { return _visitTypeList; }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model
 {
@@ -11,7 +12,9 @@ namespace LiveHTS.Core.Model
         public Guid Id { get; set; }
         public Guid ClientId { get; set; }
         public Guid FormId { get; set; }
+        public Guid? IndexClientId { get; set; }
         public Guid EncounterTypeId { get; set; }
+        public VisitType? VisitType { get; set; }
         public DateTime EncounterDate { get; set; }
         public Guid ProviderId { get; set; }
         public Guid DeviceId { get; set; }
@@ -39,9 +42,11 @@ namespace LiveHTS.Core.Model
         {
             Id = encounter.Id;
             ClientId = encounter.ClientId;
+            IndexClientId = encounter.IndexClientId;
             FormId = encounter.FormId;
             EncounterTypeId = encounter.EncounterTypeId;
             EncounterDate = encounter.EncounterDate;
+            VisitType = encounter.VisitType;
             ProviderId = encounter.ProviderId;
             DeviceId = encounter.DeviceId;
             PracticeId = encounter.PracticeId;

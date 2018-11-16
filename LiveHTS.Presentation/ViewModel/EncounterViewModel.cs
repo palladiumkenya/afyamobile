@@ -42,6 +42,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<FormTemplateWrap> _formsFamily;
         private List<FormTemplateWrap> _formsPartner;
         private List<ModuleTemplateWrap> _allModules;
+        private IndexClientDTO _indexClient;
 
 
         public IDashboardViewModel Parent { get; set; }
@@ -68,19 +69,38 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => Modules);
                 if (Modules.Count == 0)
                 {
-                    _dialogService.ShowToast("No Modules Found!.Please Pull data from Server.");
+                    //_dialogService.ShowToast("No Modules Found!.Please Pull data from Server.");
                 }
                 foreach (var module in _modules)
                 {
                     foreach (var form in module.Forms)
                     {
-                        form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                        if (null != IndexClient)
+                        {
+                            form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id, IndexClient.Id).ToList();
+                        }
+                        else
+                        {
+                            form.ClientEncounters = _interviewService.LoadEncounters(Client.Id, form.Id).ToList();
+                        }
+
+                        form.ClientDownloaded = Client.Downloaded;
                         form.KeyClientEncounters= _interviewService.LoadKeyEncounters(Client.Id).ToList();
+                        form.ClientStates = Client.ClientStates.ToList();
+                        form.IndexClientId = IndexClient?.Id;
+                        form.Block =  null != Client && null != Client.AlreadyTestedPos && Client.AlreadyTestedPos.Value;
                     }
                 }
                 AllModules = ConvertToModuleWrapperClass(_modules,this);
             }
         }
+
+        public IndexClientDTO IndexClient
+        {
+            get {return _indexClient;}
+            set { _indexClient = value; RaisePropertyChanged(() => IndexClient);}
+        }
+    
 
         public Client Client
         {
@@ -97,7 +117,7 @@ namespace LiveHTS.Presentation.ViewModel
                 var forms = Module.Forms.ToList();
                 if (forms.Count == 0)
                 {
-                    _dialogService.ShowToast("No Forms Found!.Please Pull data from Server.");
+                   // _dialogService.ShowToast("No Forms Found!.Please Pull data from Server.");
                 }
                 foreach (var form in forms)
                 {
@@ -112,11 +132,13 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _moduleFamily; }
             set { _moduleFamily = value; RaisePropertyChanged(() => ModuleFamily); }
         }
- public Module ModulePartner
+
+        public Module ModulePartner
         {
             get { return _modulePartner; }
             set { _modulePartner = value; RaisePropertyChanged(() => ModulePartner); }
         }
+
         public List<FormTemplateWrap> Forms
         {
             get { return _forms; }
@@ -148,14 +170,8 @@ namespace LiveHTS.Presentation.ViewModel
         public override void ViewAppeared()
         {
             //Reload
-          //  var moduleJson = _settings.GetValue("module", "");
             var modulesJson = _settings.GetValue("modules", "");
-
-//            if (!string.IsNullOrWhiteSpace(moduleJson))
-//            {
-//                Module = JsonConvert.DeserializeObject<Module>(moduleJson);
-//
-//            }
+            
             if (!string.IsNullOrWhiteSpace(modulesJson))
             {
                 Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
@@ -176,7 +192,7 @@ namespace LiveHTS.Presentation.ViewModel
                     formId = formTemplate.Id.ToString(),
                     encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                     mode = "new",
-                    clientId =Client.Id.ToString(),
+                    clientId = Client.Id.ToString(),
                     encounterId = ""
                 });
                 return;
@@ -205,10 +221,12 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                     mode = "new",
                     clientId = Client.Id.ToString(),
-                    encounterId = ""
+                    encounterId = "",
+                    indexclient = IndexClient.Id.ToString()
                 });
                 return;
             }
+
             //Member Tracing 
             if (formTemplate.Display.ToLower().Contains("Member Tracing".ToLower()))
             {
@@ -218,11 +236,12 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                     mode = "new",
                     clientId = Client.Id.ToString(),
-                    encounterId = ""
+                    encounterId = "",
+                    indexclient = IndexClient.Id.ToString()
                 });
                 return;
             }
-        
+
             //  Partner Screening
             if (formTemplate.Display.ToLower().Contains("Partner Screening".ToLower()))
             {
@@ -232,12 +251,13 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                     mode = "new",
                     clientId = Client.Id.ToString(),
-                    encounterId = ""
+                    encounterId = "",
+                    indexclient = IndexClient.Id.ToString()
                 });
                 return;
             }
 
-            //Partner Tracing
+            //  Partner Tracing
             if (formTemplate.Display.ToLower().Contains("Partner Tracing".ToLower()))
             {
                 ShowViewModel<PartnerTracingViewModel>(new
@@ -246,18 +266,20 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                     mode = "new",
                     clientId = Client.Id.ToString(),
-                    encounterId = ""
+                    encounterId = "",
+                    indexclient = IndexClient.Id.ToString()
                 });
                 return;
             }
 
-            //Pretest
+            //  Pretest
             ShowViewModel<ClientEncounterViewModel>(new
             {
                 formId = formTemplate.Id.ToString(),
                 encounterTypeId = formTemplate.EncounterTypeId.ToString(),
                 mode = "new",
-                encounterId = ""
+                encounterId = "",
+                repmode = formTemplate.RepMode
             });
         }
 
@@ -302,7 +324,8 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
                     mode = "open",
                     clientId = Client.Id.ToString(),
-                    encounterId = encounterTemplate.Id.ToString()
+                    encounterId = encounterTemplate.Id.ToString(),
+                    indexclient = null != IndexClient ? IndexClient.Id.ToString() : ""
                 });
                 return;
             }
@@ -316,7 +339,8 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
                     mode = "open",
                     clientId = Client.Id.ToString(),
-                    encounterId = encounterTemplate.Id.ToString()
+                    encounterId = encounterTemplate.Id.ToString(),
+                    indexclient = null != IndexClient ? IndexClient.Id.ToString() : ""
                 });
                 return;
             }
@@ -331,7 +355,8 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
                     mode = "open",
                     clientId = Client.Id.ToString(),
-                    encounterId = encounterTemplate.Id.ToString()
+                    encounterId = encounterTemplate.Id.ToString(),
+                    indexclient = null != IndexClient ? IndexClient.Id.ToString() : ""
                 });
                 return;
             }
@@ -345,7 +370,8 @@ namespace LiveHTS.Presentation.ViewModel
                     encounterTypeId = encounterTemplate.EncounterTypeId.ToString(),
                     mode = "open",
                     clientId = Client.Id.ToString(),
-                    encounterId = encounterTemplate.Id.ToString()
+                    encounterId = encounterTemplate.Id.ToString(),
+                    indexclient = null != IndexClient ? IndexClient.Id.ToString() : ""
                 });
                 return;
             }
@@ -397,6 +423,7 @@ namespace LiveHTS.Presentation.ViewModel
                     foreach (var program in form.Programs)
                     {
                         var formTemplate = new FormTemplate(form, program);
+                        //formTemplate.Block = isBlocked;
                         var encounters = form.ClientEncounters.Where(x => x.EncounterTypeId == program.EncounterTypeId).ToList();
                         formTemplate.Encounters = ConvertToEncounterWrapperClass(encounters, encounterViewModel, formTemplate.Display);
                         var formTemplateWrap = new FormTemplateWrap(encounterViewModel, formTemplate);

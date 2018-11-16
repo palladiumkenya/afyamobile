@@ -59,11 +59,18 @@
                 android:id="@+id/spinnerMaritalStatus"
                 local:MvxBind="ItemsSource MaritalStatus;SelectedItem SelectedMaritalStatus" />
             <TextView
-                android:text="Key Population"
+                android:text="Population Type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewProfileKeyPop"
                 local:MvxBind="Error Errors['KeyPops']" />
+			<TextView
+			    android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileKeyPopCat"
+				android:textStyle="bold"
+				android:paddingLeft="9dp"
+                local:MvxBind="Text KeyPopCategory" />
             <MvxSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,6 +88,45 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextProfileKeyOtherPop"
                 local:MvxBind="Text OtherKeyPop; Visibility IsOtherKeyPop; Error Errors['OtherKeyPop']" />
+
+
+			 <TextView
+                android:text="Eductaion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileEductaion"
+                local:MvxBind="Error Errors['Education']" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:id="@+id/spinnerEducation"
+                local:MvxBind="ItemsSource Educations;SelectedItem SelectedEducation" />
+            <TextView
+                android:text="Eductaion Completed?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileCompletion"
+                local:MvxBind="Visibility AllowCompletion, Converter=Visibility;Error Errors['Completions']" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:id="@+id/spinnerCompletion"
+                local:MvxBind="ItemsSource Completions;SelectedItem SelectedCompletion;Visibility AllowCompletion, Converter=Visibility" />
+
+			<TextView
+                android:text="Occupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileOccupation"/>
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="40dp"
+                android:id="@+id/spinnerOccupation"
+                local:MvxBind="ItemsSource Occupations;SelectedItem SelectedOccupation" />
+
             <TextView
                 android:text="Relation To Index Client"
                 android:layout_width="match_parent"

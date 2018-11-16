@@ -12,12 +12,16 @@ namespace LiveHTS.Core.Model.Interview
     {
         [Indexed]
         public Guid ClientId { get; set; }
+
+        [Indexed]
+        public Guid? IndexClientId { get; set; }
         [Indexed]
         public Guid FormId { get; set; }
         [Indexed]
         public Guid EncounterTypeId { get; set; }
         [Ignore]
         public EncounterType EncounterType { get; set; }
+        public VisitType VisitType { get; set; }
         public DateTime EncounterDate { get; set; }
         [Indexed]
         public Guid ProviderId { get; set; }
@@ -76,8 +80,9 @@ namespace LiveHTS.Core.Model.Interview
             //Status = "Created";
             Id = LiveGuid.NewGuid();
             EncounterDate = DateTime.Now;
+            VisitType =SharedKernel.Model.VisitType.None;
         }
-        private Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId,Guid practiceId,Guid deviceId):this()
+        private Encounter(Guid formId, Guid encounterTypeId, Guid clientId,  Guid providerId, Guid userId,Guid practiceId,Guid deviceId,Guid? indexClientId):this()
         {
             FormId = formId;
             EncounterTypeId = encounterTypeId;
@@ -86,10 +91,11 @@ namespace LiveHTS.Core.Model.Interview
             UserId = userId;
             PracticeId = practiceId;
             DeviceId = deviceId;
+            IndexClientId = indexClientId;
         }
-        public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId)
+        public static Encounter CreateNew(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId, Guid practiceId, Guid deviceId, Guid? indexClientId)
         {
-            var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId,practiceId,deviceId);
+            var encounter = new Encounter(formId,encounterTypeId, clientId, providerId, userId,practiceId,deviceId,indexClientId);
             return encounter;
         }
 

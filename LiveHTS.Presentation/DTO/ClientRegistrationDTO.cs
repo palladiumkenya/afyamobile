@@ -77,32 +77,34 @@ namespace LiveHTS.Presentation.DTO
             return clientRegistrationDTO;
         }
 
-        public Client Generate(Guid? practiceId = null)
+        public Client Generate(Guid userId,Guid? practiceId = null)
         {
             //Person
             var person = GeneratePerson();
 
             //Client
-            var client = GenerateClient(person,practiceId);
+            var client = GenerateClient(person,practiceId,userId);
 
             return client;
         }
-        private Client GenerateClient(Person person, Guid? practiceId)
+        private Client GenerateClient(Person person, Guid? practiceId, Guid userId)
         {
-            var client = GenerateClient(person.Id,practiceId);
+            var client = GenerateClient(person.Id,practiceId,userId);
             client.Person = person;
             return client;
         }
 
-        private Client GenerateClient(Guid personId,Guid? practiceId)
+        private Client GenerateClient(Guid personId,Guid? practiceId,Guid userId)
         {
             Guid clientPracticeId = practiceId.IsNullOrEmpty() ? ClientEnrollment.PracticeId : practiceId.Value;
             //ClientIdentifier 
 
             //string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person
-            
 
-            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop, ClientProfile.OtherKeyPop, clientPracticeId, personId);
+
+            var client = Client.CreateFromPerson(ClientProfile.MaritalStatus, ClientProfile.KeyPop,
+                ClientProfile.OtherKeyPop, clientPracticeId, personId, userId, ClientProfile.Education,
+                ClientProfile.Completion, ClientProfile.Occupation);
 
             if (null!= ClientEnrollment && !string.IsNullOrWhiteSpace(ClientEnrollment.ClientId))
             {
@@ -156,7 +158,7 @@ namespace LiveHTS.Presentation.DTO
 
             var person = Person.Create(ClientDemographic.FirstName, ClientDemographic.MiddleName,
                 ClientDemographic.LastName, ClientDemographic.Gender, ClientDemographic.BirthDate,
-                ClientDemographic.BirthDateEstimated, string.Empty);
+                ClientDemographic.BirthDateEstimated, string.Empty, ClientDemographic.NickName);
 
             if (!string.IsNullOrWhiteSpace(ClientDemographic.PersonId))
             {
@@ -209,7 +211,7 @@ namespace LiveHTS.Presentation.DTO
 
             //string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId
 
-            var personAddress = PersonAddress.Create(ClientContactAddress.Landmark, ClientContactAddress.CountyId, ClientContactAddress.Preferred, ClientContactAddress.Lat, ClientContactAddress.Lng, personId);
+            var personAddress = PersonAddress.Create(ClientContactAddress.Landmark, ClientContactAddress.CountyId, ClientContactAddress.Preferred, ClientContactAddress.Lat, ClientContactAddress.Lng, personId,ClientContactAddress.SubCountyId,ClientContactAddress.WardId);
 
             if (!string.IsNullOrWhiteSpace(ClientContactAddress.AddressId))
             {

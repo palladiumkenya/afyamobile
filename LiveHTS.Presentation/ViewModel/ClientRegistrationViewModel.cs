@@ -21,6 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             _settings = settings;
             _registryService = registryService;
+            ClearCache();
         }
 
         public void Init(string id, string indexId, string reltype,string enroll)
@@ -45,6 +46,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 return;
             }
+
             if (!string.IsNullOrWhiteSpace(id))
             {
                 Client = _registryService.Find(new Guid(id));
@@ -110,6 +112,16 @@ namespace LiveHTS.Presentation.ViewModel
         }
         public void ClearCache()
         {
+
+            _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientContactViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientProfileViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel), "");
+            _settings.AddOrUpdateValue(nameof(IndexClientDTO), "");
+            _settings.AddOrUpdateValue("PreventEnroll", "");
+            _settings.AddOrUpdateValue("PracticeId", "");
+
+
 
             if (_settings.Contains(nameof(ClientDemographicViewModel)))
                 _settings.DeleteValue(nameof(ClientDemographicViewModel));

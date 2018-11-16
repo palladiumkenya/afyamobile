@@ -33,7 +33,8 @@ namespace LiveHTS.Droid.Views
             {
                 ViewModel.SelectedDate = new TraceDateDTO(e.Id, time.Date);
             }, e.Date);
-
+           
+        
             frag.Show(FragmentManager, DatePickerFragmentV4.TAG);
         }
     }

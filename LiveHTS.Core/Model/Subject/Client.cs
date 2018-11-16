@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Model;
+using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using SQLite;
@@ -17,6 +18,9 @@ namespace LiveHTS.Core.Model.Subject
         public string MaritalStatus { get; set; }
         public string KeyPop { get; set; }
         public string OtherKeyPop { get; set; }
+        public Guid? Education { get; set; }
+        public Guid? Completion { get; set; }
+        public Guid? Occupation { get; set; }
         public bool IsFamilyMember  { get; set; }
         public bool IsPartner { get; set; }
         [Indexed]
@@ -30,53 +34,143 @@ namespace LiveHTS.Core.Model.Subject
         public bool EncountersDownloaded { get; set; }
         public bool Downloaded { get; set; }
         public bool? PreventEnroll { get; set; }
+        public bool? AlreadyTestedPos { get; set; }
+        public string SmartCardSerial { get; set; }
+
+        [Indexed]
+        public Guid UserId { get; set; }
+
 
         [Ignore]
         public IEnumerable<ClientRelationship> MyRelationships { get; set; }=new List<ClientRelationship>();
         [Ignore]
         public IEnumerable<ClientRelationship> RelatedToMe { get; set; } = new List<ClientRelationship>();
+        [Ignore]
+        public ICollection<ClientState> ClientStates { get; set; } = new List<ClientState>();
+        [Ignore]
+        public ICollection<ClientSummary> ClientSummaries { get; set; } = new List<ClientSummary>();
+
+        [Ignore]
+        public bool IsPead => null != Person && Person.IsPead;
+
         public Client()
         {
             Id = LiveGuid.NewGuid();
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId):this()
+        public Client(Guid id) : base(id)
+        {
+        }
+
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,Guid userId,Guid? education,Guid? completion, Guid? occupation) :this()
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
             OtherKeyPop = otherKeyPop;
             PracticeId = practiceId;
+            UserId = userId;
+            Education = education;
+            Completion = completion;
+            Occupation = occupation;
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId)
-            :this(maritalStatus, keyPop, otherKeyPop,practiceId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId,Guid userId, Guid? education, Guid? completion, Guid? occupation)
+            :this(maritalStatus, keyPop, otherKeyPop,practiceId, userId, education, completion, occupation)
         {
             PersonId = personId;
         }
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person)
-            : this(maritalStatus, keyPop, otherKeyPop, practiceId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId, Guid? education, Guid? completion, Guid? occupation)
+            : this(maritalStatus, keyPop, otherKeyPop, practiceId, userId, education, completion, occupation)
         {
             Person = person;
         }
 
-        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person)
+        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId, Guid? education, Guid? completion, Guid? occupation)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person);
+            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person,userId, education, completion, occupation);
         }
-        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId)
+        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId, Guid userId, Guid? education, Guid? completion, Guid? occupation)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId);
+            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId, education, completion, occupation);
         }
 
+       
+
+        public bool IsHtstEnrolled()
+        {
+            return IsInState(LiveState.HtsEnrolled);
+        }
         public bool DisableHts()
         {
             return null != PreventEnroll && PreventEnroll.Value;
         }
+
+        public bool IsInState(params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any() && states.Length > 0)
+            {
+                var found = ClientStates.Where(x => states.Contains(x.Status)).ToList();
+                return found.Count == states.Length;
+            }
+            return false;
+        }
+
+        public bool IsInAnyState(params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any() && states.Length > 0)
+            {
+                var found = ClientStates.Where(x => states.Contains(x.Status)).ToList();
+                return found.Count > 0;
+            }
+
+            return false;
+        }
+
+        public bool IsInState(Guid indexId, params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any(x => null != x.IndexClientId && x.IndexClientId == indexId) &&
+                states.Length > 0)
+            {
+                var found = ClientStates.Where(x => states.Contains(x.Status) && x.IndexClientId == indexId).ToList();
+                return found.Count == states.Length;
+            }
+
+            return false;
+        }
+        public bool IsInAnyState(Guid indexId, params LiveState[] states)
+        {
+            if (null != ClientStates && ClientStates.Any(x => null != x.IndexClientId && x.IndexClientId == indexId) &&
+                states.Length > 0)
+            {
+                var found = ClientStates.Where(x => states.Contains(x.Status) && x.IndexClientId == indexId).ToList();
+                return found.Count > 0;
+            }
+
+            return false;
+        }
+
         public override string ToString()
         {
             return $"{Person} ,{Person.Gender}";
         }
 
-     
+        public bool IsInFamilyTesting(Guid indexId)
+        {
+            return IsInState(indexId,LiveState.FamilyListed);
+        }
+
+        public bool IsInPns(Guid indexId)
+        {
+            return IsInState(indexId,LiveState.PartnerListed);
+        }
+
+        public void AddIdentifier(ClientIdentifier clientIdentifier)
+        {
+            var ids = Identifiers.ToList();
+            clientIdentifier.ClientId = Id;
+
+            ids.Add(clientIdentifier);
+            Identifiers = ids.ToList();
+        }
     }
 }

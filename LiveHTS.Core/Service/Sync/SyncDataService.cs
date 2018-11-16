@@ -20,7 +20,7 @@ namespace LiveHTS.Core.Service.Sync
         }
 
 
-        public void UpdateMeta(Meta meta)
+        public void UpdateMeta(SyncModel.Meta meta)
         {
             Update(meta.PracticeTypes);
             Update(meta.IdentifierTypes);

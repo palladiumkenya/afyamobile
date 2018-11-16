@@ -1,4 +1,5 @@
-﻿using LiveHTS.Presentation.Validations;
+﻿using System;
+using LiveHTS.Presentation.Validations;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform.UI;
 using MvvmValidation;
@@ -9,6 +10,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     {
         IClientRegistrationViewModel Parent { get; set; }
         VMStore ModelStore { get; set; }
+        Guid UserId { get; }
         int Step { get; set; }
         string Title { get; set; }
         string Description { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace LiveHTS.SharedKernel.Custom
 {
@@ -27,6 +28,24 @@ namespace LiveHTS.SharedKernel.Custom
         public static bool IsNullOrEmpty(this Guid guid)
         {
             return guid == Guid.Empty;
+        }
+
+        public static bool IsSameAs(this object s, object other)
+        {
+            if (null == s)
+                s = string.Empty;
+
+            if (null == other)
+                other=string.Empty;
+
+            return s.ToString().ToLower().Trim() == other.ToString().ToLower().Trim();
+        }
+
+        public static string FirstCharToUpper(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return string.Empty;
+            return input.First().ToString().ToUpper() + input.Substring(1);
         }
     }
 }

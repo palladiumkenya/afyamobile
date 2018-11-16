@@ -1,4 +1,5 @@
-﻿using LiveHTS.Core.Model.Config;
+﻿using System.Collections.Generic;
+using LiveHTS.Core.Model.Config;
 using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
@@ -17,8 +18,11 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         bool Loading { get; set; }
         string SetupAction { get; set; }
 
+        IEnumerable<Practice> Practices { get; set; }
+        Practice SelectedPractice { get; set; }
 
         IMvxCommand SetupDeviceCommand { get; }
+        IMvxCommand LoginCommand { get; }
         void LoadDeviceInfo(string serial, string name, string manufacturer);
     }
 }

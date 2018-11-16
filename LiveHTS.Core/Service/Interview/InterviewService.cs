@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service.Interview
 {
@@ -21,6 +22,11 @@ namespace LiveHTS.Core.Service.Interview
        public IEnumerable<Encounter> LoadEncounters(Guid clientId, Guid formId)
        {
            return _encounterRepository.LoadAll(formId, clientId);
+       }
+
+       public IEnumerable<Encounter> LoadEncounters(Guid clientId, Guid formId, Guid indexClient)
+       {
+           return _encounterRepository.LoadAll(formId, clientId, indexClient);
        }
 
        public IEnumerable<Encounter> LoadKeyEncounters(Guid clientId)

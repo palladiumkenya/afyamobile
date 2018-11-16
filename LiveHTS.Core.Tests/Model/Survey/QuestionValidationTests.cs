@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Linq;
 using LiveHTS.Core.Interfaces;
-using LiveHTS.Core.Interfaces.Repository.Survey;
-using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Infrastructure.Repository.Survey;
 using LiveHTS.SharedKernel.Custom;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using SQLite;
 using Assert = NUnit.Framework.Assert;
@@ -54,7 +51,7 @@ namespace LiveHTS.Core.Tests.Model.Survey
             _questionValidation = q1.Validations.First(x => x.ValidatorId.ToLower() == "Required".ToLower() && x.Revision == 0);
 
             obs.ValueCoded = Guid.NewGuid();
-            _responseRequired = new Response(obs.EncounterId, q1, obs);
+            _responseRequired = new Response(obs.EncounterId, _encounter.ClientId, q1, obs);
 
             var isvalid= _questionValidation.Evaluate(_responseRequired);
             Assert.IsTrue(isvalid);
@@ -76,7 +73,7 @@ namespace LiveHTS.Core.Tests.Model.Survey
             _questionValidation.MinLimit = "1";
             _questionValidation.MaxLimit = string.Empty;
             obs.ValueNumeric = 1;
-            _responseMinOnly = new Response(obs.EncounterId, q3, obs);
+            _responseMinOnly = new Response(obs.EncounterId, _encounter.ClientId,q3, obs);
             
             var isvalid = _questionValidation.Evaluate(_responseMinOnly);
             Assert.IsTrue(isvalid);
@@ -101,7 +98,7 @@ namespace LiveHTS.Core.Tests.Model.Survey
             _questionValidation.MinLimit = string.Empty;
             _questionValidation.MaxLimit = "4";
             obs.ValueNumeric = 4;
-            _responseMaxOnly = new Response(obs.EncounterId, q3, obs);
+            _responseMaxOnly = new Response(obs.EncounterId, _encounter.ClientId,q3, obs);
 
             var isvalid = _questionValidation.Evaluate(_responseMaxOnly);
             Assert.IsTrue(isvalid);
@@ -126,7 +123,7 @@ namespace LiveHTS.Core.Tests.Model.Survey
             _questionValidation.MinLimit = "1";
             _questionValidation.MaxLimit = "4";
             obs.ValueNumeric = 4;
-            _responseMaxOnly = new Response(obs.EncounterId, q3, obs);
+            _responseMaxOnly = new Response(obs.EncounterId, _encounter.ClientId, q3, obs);
 
             var isvalid = _questionValidation.Evaluate(_responseMaxOnly);
             Assert.IsTrue(isvalid);
@@ -151,7 +148,7 @@ namespace LiveHTS.Core.Tests.Model.Survey
             _questionValidation.MinLimit = "2";
             _questionValidation.MaxLimit = string.Empty;
             obs.ValueMultiCoded = $"{LiveGuid.NewGuid()},{LiveGuid.NewGuid()}";
-            _responseMinOnly = new Response(obs.EncounterId, q4, obs);
+            _responseMinOnly = new Response(obs.EncounterId, _encounter.ClientId,q4, obs);
 
             var isvalid = _questionValidation.Evaluate(_responseMinOnly);
             Assert.IsTrue(isvalid);
@@ -180,7 +177,7 @@ namespace LiveHTS.Core.Tests.Model.Survey
             _questionValidation.MinLimit = string.Empty;
             _questionValidation.MaxLimit = "4";
             obs.ValueMultiCoded = $"{LiveGuid.NewGuid()},{LiveGuid.NewGuid()}";
-            _responseMaxOnly = new Response(obs.EncounterId, q4, obs);
+            _responseMaxOnly = new Response(obs.EncounterId, _encounter.ClientId, q4, obs);
 
             var isvalid = _questionValidation.Evaluate(_responseMaxOnly);
             Assert.IsTrue(isvalid);
@@ -208,7 +205,7 @@ namespace LiveHTS.Core.Tests.Model.Survey
             _questionValidation.MinLimit = "1";
             _questionValidation.MaxLimit = "4";
             obs.ValueMultiCoded = $"{LiveGuid.NewGuid()},{LiveGuid.NewGuid()}";
-            _responseMinMax = new Response(obs.EncounterId, q4, obs);
+            _responseMinMax = new Response(obs.EncounterId, _encounter.ClientId,q4, obs);
 
             var isvalid = _questionValidation.Evaluate(_responseMinMax);
             Assert.IsTrue(isvalid);

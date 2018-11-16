@@ -6,6 +6,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
     public interface ISignInViewModel
     {
         User User { get; }
+        string Version { get; set; }
         string Facility { get; set; }
         string Username { get; set; }
         string Password { get; set; }
@@ -14,6 +15,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         IMvxCommand SignInCommand { get; }
         IMvxCommand SetUpCommand { get; }
         void LoadDeviceInfo(string serial, string model, string manufacturer);
+        void LoadVersion(string version);
         void UpdateSession();
     }
 }

@@ -8,6 +8,7 @@ using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Infrastructure.Repository.Interview
 {
@@ -131,6 +132,7 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                     var obses = _db.Table<Obs>()
                         .Where(x => x.EncounterId == e.Id)
                         .ToList();
+
                     e.Obses = obses;
 
                     var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
@@ -199,7 +201,52 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounters;
         }
 
-     
+        public IEnumerable<Encounter> LoadAll(Guid formId, Guid clientId, Guid indexClientId, bool includeObs = false)
+        {
+            var encounters = GetAll(x => x.FormId == formId &&
+                                         x.ClientId == clientId&&
+                                         x.IndexClientId==indexClientId)
+                .ToList();
+
+            if (includeObs)
+            {
+                foreach (var e in encounters)
+                {
+                    if (null != e)
+                    {
+                        var obses = _db.Table<Obs>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.Obses = obses;
+
+                        var obsTestResults = _db.Table<ObsTestResult>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsTestResults = obsTestResults;
+
+                        var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsFinalTestResults = obsFinalTestResults;
+
+                        var obsTraceResults = _db.Table<ObsTraceResult>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsTraceResults = obsTraceResults;
+
+                        var obsLinkages = _db.Table<ObsLinkage>()
+                            .Where(x => x.EncounterId == e.Id)
+                            .ToList();
+                        e.ObsLinkages = obsLinkages;
+
+
+
+                    }
+                }
+            }
+            return encounters;
+        }
+
 
         public Encounter LoadTest(Guid id, bool includeObs = false)
         {
@@ -245,6 +292,21 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                     .Where(x => x.EncounterId == encounter.Id)
                     .ToList();
                 encounter.ObsPartnerTraceResults = obsPartnerTraceResults;
+            }
+
+            return encounter;
+        }
+
+        public Encounter LoadFinalTest(Guid id, bool includeObs = false)
+        {
+            var encounter = Get(id);
+
+            if (null != encounter && includeObs)
+            {
+                var obsFinalTestResults = _db.Table<ObsFinalTestResult>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.ObsFinalTestResults = obsFinalTestResults;
             }
 
             return encounter;
@@ -313,19 +375,90 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return encounters;
         }
 
+        public DateTime GetPretestEncounterDate(Guid clientId)
+        {
+            var encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0");
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            if (null != encounter)
+                return encounter.EncounterDate;
+
+            return new DateTime(1900,1,1);        
+        }
+
+        public bool GetIndividual(Guid clientId)
+        {
+            var encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0");
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            if (null != encounter)
+            {
+                var obses = _db.Table<Obs>()
+                    .Where(x => x.EncounterId == encounter.Id)
+                    .ToList();
+                encounter.Obses = obses;
+                if (encounter.HasObs)
+                {
+                    var testedAsObs= encounter.Obses.FirstOrDefault(x => x.QuestionId == new Guid("b260401e-852f-11e7-bb31-be2e44b06b34"));
+                    if (null != testedAsObs)
+                    {
+                        return null != testedAsObs.ValueCoded && testedAsObs.ValueCoded.Value == new Guid("B25EDE36-852F-11E7-BB31-BE2E44B06B34");
+                    }
+                }
+            }
+
+            return false;
+        }
+
 
         public void ClearObs(Guid id)
         {
             _db.Execute("DELETE FROM Obs WHERE EncounterId=?", id.ToString());
         }
 
-     
         public void UpdateStatus(Guid id, bool completed)
         {
             var encounter = Get(id);
             if (null != encounter)
+            {
                 encounter.IsComplete = completed;
+            }
 
+            Update(encounter);
+        }
+
+        public void UpdateStatus(Guid id, Guid userId, bool completed)
+        {
+            var encounter = Get(id);
+            if (null != encounter)
+            {
+                encounter.UserId = userId;
+                encounter.IsComplete = completed;
+            }
+
+            Update(encounter);
+        }
+
+        public void UpdateEncounterDate(Guid id, DateTime encounterDate, VisitType visitType)
+        {
+            var encounter = Get(id);
+            if (null != encounter)
+            {
+                encounter.EncounterDate = encounterDate;
+                encounter.VisitType = visitType;
+            }
+            Update(encounter);
+        }
+
+        public void UpdateEncounterDate(Guid id, DateTime encounterDate)
+        {
+            var encounter = Get(id);
+            if (null != encounter)
+            {
+                encounter.EncounterDate = encounterDate;
+            }
             Update(encounter);
         }
 

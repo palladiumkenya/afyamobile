@@ -30,6 +30,7 @@ namespace LiveHTS.Droid
         protected override IMvxApplication CreateApp()
         {            
             var dbpath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "livehts.db"); //Create New Database
+           
             return new Presentation.App(dbpath);
         }
 
@@ -72,17 +73,6 @@ namespace LiveHTS.Droid
             MvxAppCompatSetupHelper.FillTargetFactories(registry);
             base.FillTargetFactories(registry);
         }
-
-//        protected override void FillTargetFactories(IMvxTargetBindingFactoryRegistry registry)
-//        {
-//            base
-//            base.FillTargetFactories(registry);
-//            registry.RegisterCustomBindingFactory<View>(
-//                "ScaleMe",
-//                v => new ViewScalingCustomBinding(v));
-//            MvxAppCompatSetupHelper.FillTargetFactories;
-//            base.FillTargetFactories(registry);
-//        }
 
         protected override IMvxAndroidViewPresenter CreateViewPresenter()
         {

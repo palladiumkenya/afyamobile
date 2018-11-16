@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
+using LiveHTS.Core.Interfaces.Services.Meta;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
@@ -21,6 +25,13 @@ namespace LiveHTS.Presentation.ViewModel
         private IndexClientDTO _indexClientDTO;
         private double? _lat;
         private double? _lng;
+        private List<RegionItem> _counties=new List<RegionItem>();
+        private RegionItem _selectedCounty;
+        private List<RegionItem> _subCounties=new List<RegionItem>();
+        private RegionItem _selectedSubCounty;
+        private List<RegionItem> _wards=new List<RegionItem>();
+        private RegionItem _selectedWard;
+        private IMetaService _metaService;
 
         public IndexClientDTO IndexClientDTO
         {
@@ -79,12 +90,78 @@ namespace LiveHTS.Presentation.ViewModel
             set { _lng = value; RaisePropertyChanged(() => Lng); }
         }
 
-        public ClientContactViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
+        public List<RegionItem> Counties
         {
+            get { return _counties; }
+            set
+            {
+                _counties = value;
+                RaisePropertyChanged(() => Counties);
+            }
+        }
+
+        public RegionItem SelectedCounty
+        {
+            get { return _selectedCounty; }
+            set
+            {
+                _selectedCounty = value;
+                RaisePropertyChanged(() => SelectedCounty);
+                GetSubCounties();
+            }
+        }
+
+        public List<RegionItem> SubCounties
+        {
+            get { return _subCounties; }
+            set
+            {
+                _subCounties = value;
+                RaisePropertyChanged(() => SubCounties);
+            }
+        }
+
+        public RegionItem SelectedSubCounty
+        {
+            get { return _selectedSubCounty; }
+            set
+            {
+                _selectedSubCounty = value;
+                RaisePropertyChanged(() => SelectedSubCounty);
+                GetWards();
+            }
+        }
+
+        public List<RegionItem> Wards
+        {
+            get { return _wards; }
+            set
+            {
+                _wards = value;
+                RaisePropertyChanged(() => Wards);
+            }
+        }
+
+        public RegionItem SelectedWard
+        {
+            get { return _selectedWard; }
+            set
+            {
+                _selectedWard = value;
+                RaisePropertyChanged(() => SelectedWard);
+            }
+        }
+
+        public ClientContactViewModel(IDialogService dialogService, ISettings settings, IMetaService metaService) : base(dialogService, settings)
+        {
+            _metaService = metaService;
             Step = 2;
             Title = "Contacts";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
+            Counties = RegionItem.Init("County");
+            SubCounties = RegionItem.Init("SubCounty");
+            Wards = RegionItem.Init("Ward");
         }
 
         public void Init(string clientinfo, string indexId)
@@ -100,6 +177,7 @@ namespace LiveHTS.Presentation.ViewModel
                         Title = $"Contacts [{IndexClientDTO.RelType}]";
                 }
             }
+            Counties = _metaService.GetCounties().ToList();
         }
 
         public override void ViewAppeared()
@@ -111,6 +189,12 @@ namespace LiveHTS.Presentation.ViewModel
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
                     Title = $"Contacts [{IndexClientDTO.RelType}]";
+            }
+
+            var countyJson = _settings.GetValue("meta.county", "");
+            if (!string.IsNullOrWhiteSpace(countyJson))
+            {
+                Counties = JsonConvert.DeserializeObject<List<RegionItem>>(countyJson);
             }
         }
 
@@ -138,6 +222,41 @@ namespace LiveHTS.Presentation.ViewModel
             return true;
         }
 
+        private void GetSubCounties()
+        {
+            SubCounties = RegionItem.Init("SubCounty");
+            Wards = RegionItem.Init("Ward");
+            try
+            {
+                if (null != SelectedCounty)
+                    SubCounties = _metaService.GetSubCounties(SelectedCounty.Id).ToList();
+            }
+            catch { }
+        }
+
+        private void GetWards()
+        {
+            Wards = RegionItem.Init("Ward");
+            try
+            {
+                if (null != SelectedSubCounty)
+                    Wards = _metaService.GetWards(SelectedSubCounty.Id).ToList();
+            }
+            catch { }
+        }
+
+        public override void Start()
+        {
+            base.Start();
+           try
+            {
+                SelectedCounty = Counties.FirstOrDefault(x => x.Id == 0);
+                SelectedSubCounty = SubCounties.FirstOrDefault(x => x.Id == 0);
+                SelectedWard = Wards.FirstOrDefault(x => x.Id == 0);
+            }
+            catch { }
+        }
+
         public override void LoadFromStore(VMStore modelStore)
         {
             try
@@ -148,6 +267,28 @@ namespace LiveHTS.Presentation.ViewModel
                 Landmark = ContactAddress.Landmark;
                 ContactId = ContactAddress.ContactId;
                 AddressId = ContactAddress.AddressId;
+
+                SelectedCounty = Counties.FirstOrDefault(x => x.Id ==0);
+                SelectedSubCounty = SubCounties.FirstOrDefault(x => x.Id ==0);
+                SelectedWard = Wards.FirstOrDefault(x => x.Id == 0);
+
+                if ( ContactAddress.CountyId.HasValue &&  ContactAddress.CountyId.Value >0)
+                {
+                    SelectedCounty = Counties.FirstOrDefault(x => x.Id == ContactAddress.CountyId);
+                    GetSubCounties();
+                }
+
+                if (ContactAddress.SubCountyId.HasValue && ContactAddress.SubCountyId.Value > 0)
+                {
+                    SelectedSubCounty = SubCounties.FirstOrDefault(x => x.Id == ContactAddress.SubCountyId);
+                    GetWards();
+                }
+
+                if (ContactAddress.WardId.HasValue && ContactAddress.WardId.Value > 0)
+                {
+                    SelectedWard = Wards.FirstOrDefault(x => x.Id == ContactAddress.WardId);
+                }
+
             }
             catch (Exception e)
             {

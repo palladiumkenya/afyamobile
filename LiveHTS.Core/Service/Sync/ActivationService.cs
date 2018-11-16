@@ -12,8 +12,8 @@ using LiveHTS.SharedKernel.Custom;
 
 namespace LiveHTS.Core.Service.Sync
 {
-  public  class ActivationService : IActivationService
-  {
+    public class ActivationService : IActivationService
+    {
         private readonly IRestClient _restClient;
 
         public ActivationService(IRestClient restClient)
@@ -21,42 +21,63 @@ namespace LiveHTS.Core.Service.Sync
             _restClient = restClient;
         }
 
-      public Task<Practice> SearchLocal(string url,string code)
-      {
-          url = GetActivateUrl(url, $"enroll/{code}");
-
-          return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
-        }
-
-      public Task<Practice> SearchCentral(string url, string code)
-      {
-          url = GetActivateUrl(url, $"enroll/{code}");
-
-          return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
-        }
-
-      public Task<Practice> GetCentral(string url)
+        public Task<string> AttempCheckVersion(string url)
         {
-            url = GetActivateUrl(url, "central");
+            url = GetActivateUrl(url, "version");
 
-            return  _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
+            return _restClient.AttemptMakeApiCallResult($"{url}", HttpMethod.Get);
         }
 
-        public Task<Practice> GetLocal(string url)
+        public Task<Practice> SearchLocal(string url, string code)
         {
-            url =GetActivateUrl(url, "local");
+            url = GetActivateUrl(url, $"enroll/{code}");
 
             return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
         }
 
-      public Task<Practice> Register(string device, string url)
-      {
-          throw new NotImplementedException();
-      }
+        public Task<Practice> SearchCentral(string url, string code)
+        {
+            url = GetActivateUrl(url, $"enroll/{code}");
 
-      private string GetActivateUrl(string url,string endpoint)
-      {
-          return $"{url.HasToEndWith("/")}api/activate/{endpoint}".HasToEndWith("/");
-      }
-  }
+            return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<Practice> GetCentral(string url)
+        {
+            url = GetActivateUrl(url, "central");
+
+            return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<Practice> GetLocal(string url)
+        {
+            url = GetActivateUrl(url, "local");
+
+            return _restClient.MakeApiCall<Practice>($"{url}", HttpMethod.Get);
+        }
+
+        public Task<Practice> Register(string device, string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AttemptEnrollPractice(string url, List<Practice> practices)
+        {
+            url = GetActivateUrl(url, "enroll");
+
+            return _restClient.AttemptMakeApiCall($"{url}", HttpMethod.Post, practices);
+        }
+
+        public Task<string> AttemptEnrollDevice(string url, Device device)
+        {
+            url = GetActivateUrl(url, "device");
+
+            return _restClient.AttemptMakeApiCallResult($"{url}", HttpMethod.Post, device);
+        }
+
+        private string GetActivateUrl(string url, string endpoint)
+        {
+            return $"{url.HasToEndWith("/")}api/activate/{endpoint}".HasToEndWith("/");
+        }
+    }
 }

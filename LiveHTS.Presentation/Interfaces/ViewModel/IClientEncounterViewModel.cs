@@ -7,6 +7,7 @@ using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
@@ -38,6 +39,15 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         
         IMvxCommand SaveChangesCommand { get; }
 
+        IMvxCommand ShowDateDialogCommand { get; }
+        event EventHandler<ChangedDateEvent> ChangedDate;
+        TraceDateDTO SelectedDate { get; set; }
+        void ShowDatePicker(Guid refId, DateTime refDate);
+
+        DateTime BirthDate { get; set; }
+
+        List<CustomItem> VisitTypes { get; set; }
+        CustomItem SelectedVisitType { get; set; }
         void LoadView();
         bool ValidateResponse(QuestionTemplate questionTemplate);
         void AllowNextQuestion(QuestionTemplate questionTemplate);

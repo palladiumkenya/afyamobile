@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services;
+using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
@@ -9,6 +10,7 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class AppDashboardViewModel:MvxViewModel,IAppDashboardViewModel
     {
+        private readonly IDeviceSetupService _deviceSetupService;
         private readonly ISettings _settings;
         private readonly IDialogService _dialogService;
         private readonly IAppDashboardService _dashboardService;
@@ -22,6 +24,8 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _pullCommand;
         private  IMvxCommand _pushDataCommand;
         private string _practiceName;
+        private IMvxCommand _summaryCommand;
+        private IMvxCommand _smartCardCommand;
 
         public IMvxCommand RegistryCommand
         {
@@ -86,8 +90,23 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-      
+        public IMvxCommand SummaryCommand
+        {
+            get
+            {
+                _summaryCommand = _summaryCommand ?? new MvxCommand(Summary);
+                return _summaryCommand;
+            }
+        }
 
+        public IMvxCommand SmartCardCommand
+        {
+            get
+            {
+                _smartCardCommand = _smartCardCommand ?? new MvxCommand(SmartCard);
+                return _smartCardCommand;
+            }
+        }
 
         public string Profile
         {
@@ -115,11 +134,12 @@ namespace LiveHTS.Presentation.ViewModel
         public string Greeting => string.IsNullOrWhiteSpace(_profile) ? string.Empty : $"Karibu {_profile}";
 
 
-        public AppDashboardViewModel(IAppDashboardService dashboardService, IDialogService dialogService, IUserDialogs userDialogs, ISettings settings)
+        public AppDashboardViewModel(IAppDashboardService dashboardService, IDialogService dialogService, IUserDialogs userDialogs, ISettings settings, IDeviceSetupService deviceSetupService)
         {
             _dashboardService = dashboardService;
             _dialogService = dialogService;
             _settings = settings;
+            _deviceSetupService = deviceSetupService;
         }
 
         public void Init(string username)
@@ -157,7 +177,18 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void RegisterNew()
         {
-            ShowViewModel<ClientRegistrationViewModel>();
+
+            if (_deviceSetupService.HasPulledData())
+            {
+                ClearCache(_settings);
+                ShowViewModel<ClientRegistrationViewModel>(new { mode = "new" });
+            }
+            else
+            {
+                _dialogService.Alert("Please Pull Data before proceeding !");
+            }
+
+            //ShowViewModel<ClientRegistrationViewModel>();
         }
         private void ShowDevice()
         {
@@ -176,10 +207,41 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowViewModel<PushDataViewModel>();
         }
+        private void Summary()
+        {
+            ShowViewModel<UserSummaryViewModel>();
+        }
+        private void SmartCard()
+        {
+            if (_deviceSetupService.HasPulledData())
+            {
+                ShowViewModel<SmartCardViewModel>();
+            }
+            else
+            {
+                _dialogService.Alert("Please Pull Data before proceeding !");
+            }
+        }
 
         public void Quit()
         {
           _dialogService.ConfirmExit();
+        }
+
+        private void ClearCache(ISettings settings)
+        {
+
+            if (settings.Contains(nameof(ClientDemographicViewModel)))
+                settings.DeleteValue(nameof(ClientDemographicViewModel));
+
+            if (settings.Contains(nameof(ClientContactViewModel)))
+                settings.DeleteValue(nameof(ClientContactViewModel));
+
+            if (settings.Contains(nameof(ClientProfileViewModel)))
+                settings.DeleteValue(nameof(ClientProfileViewModel));
+
+            if (settings.Contains(nameof(ClientEnrollmentViewModel)))
+                settings.DeleteValue(nameof(ClientEnrollmentViewModel));
         }
     }
 }

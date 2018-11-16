@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:textSize="40dp"
         android:id="@+id/spinnerEligibility"
-        local:MvxBind="ItemsSource Eligibility;SelectedItem SelectedEligibility" />
+        local:MvxBind="ItemsSource Eligibility;SelectedItem SelectedEligibility;Enabled EnableEligibility" />
       
       <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

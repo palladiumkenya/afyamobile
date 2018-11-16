@@ -261,7 +261,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (Validate())
             {
                 TestResult= GenerateTest();
-                _linkageService.SaveTest(TestResult);
+                _linkageService.SaveTest(TestResult, Parent.ParentViewModel.Client.Id);
                 Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
             }

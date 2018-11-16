@@ -23,12 +23,19 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string HandedTo { get; set; }
         string WorkerCarde { get; set; }
         DateTime DateEnrolled { get; set; }
+        DateTime ARTStartDate { get; set; }
         string EnrollmentId { get; set; }
         string Remarks { get; set; }
         TraceDateDTO SelectedEnrolDate { get; set; }
+        TraceDateDTO SelectedArtDate { get; set; }
         IMvxCommand SaveLinkingCommand { get; }
+
         IMvxCommand ShowDateEnrolledDialogCommand { get; }
         event EventHandler<ChangedDateEvent> ChangedEnrollDate;
+
+        IMvxCommand ShowArtDateDialogCommand { get; }
+        event EventHandler<ChangedDateEvent> ChangedArtDate;
+
         bool Validate();
     }
 }

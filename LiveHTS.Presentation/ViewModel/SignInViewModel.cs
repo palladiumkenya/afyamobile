@@ -26,10 +26,19 @@ namespace LiveHTS.Presentation.ViewModel
         private IMvxCommand _setUpCommand;
         private bool _isBusy;
         private string _facility;
-        
-
+        private string _version;
 
         public User User { get; private set; }
+
+        public string Version
+        {
+            get { return $"v {_version}"; }
+            set
+            {
+                _version = value;
+                RaisePropertyChanged(() => Version);
+            }
+        }
 
         public string Facility
         {
@@ -96,11 +105,15 @@ namespace LiveHTS.Presentation.ViewModel
             _settings = settings;
             _deviceSetupService = deviceSetupService;
             IsBusy = false;
-            AutoSignIn = false;
+
+            //TODO : Disable auto sign in
+
+            AutoSignIn = true;
+
             if (AutoSignIn)
             {
                 Username = "admin";
-                Password = "maun2806";
+                Password = "c0nste11a";
             }
         }
 
@@ -118,14 +131,23 @@ namespace LiveHTS.Presentation.ViewModel
             var practice = _authService.GetDefaultPractice();
             _settings.AddOrUpdateValue("livehts.practiceid", practice.Id.ToString());
             _settings.AddOrUpdateValue("livehts.practicename", practice.Name);
+            _settings.AddOrUpdateValue("livehts.practicecode", practice.Code);
 
             _deviceSetupService.CheckRegister(new Device(serial, serial, name,practice.Id));
             var device = _authService.GetDefaultDevice();
             _settings.AddOrUpdateValue("livehts.deviceid", device.Id.ToString());
+            _settings.AddOrUpdateValue("livehts.devicecode", device.Code ?? "");
 
             var provider = _authService.GetDefaultProvider();
             _settings.AddOrUpdateValue("livehts.providerid", provider.Id.ToString());
             _settings.AddOrUpdateValue("livehts.providername", provider.Person.FullName);
+        }
+
+        public void LoadVersion(string version)
+        {
+            //TODO : Disable QA
+
+            Version = $"{version} QA Only";
         }
 
         public void UpdateSession()

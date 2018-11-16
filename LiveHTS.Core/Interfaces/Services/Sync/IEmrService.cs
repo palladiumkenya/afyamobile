@@ -8,6 +8,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
     public interface IEmrService
     {
         Task<Practice> GetDefault(string url);
+        Task<List<Practice>> GetAllDefault(string url);
         Task<List<User>> GetUsers( string url);
     }
 }
