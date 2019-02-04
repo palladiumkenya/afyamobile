@@ -12,7 +12,7 @@ namespace LiveHTS.Presentation.DTO
         public string AddressId { get; set; }
         public string PersonId { get; set; }
 
-        public int? Phone { get; set; }
+        public long? Phone { get; set; }
         public int? CountyId { get; set; }
         public int? SubCountyId { get; set; }
         public int? WardId { get; set; }
