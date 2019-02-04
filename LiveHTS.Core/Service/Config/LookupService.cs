@@ -125,7 +125,7 @@ namespace LiveHTS.Core.Service.Config
             return _encounterTypeRepository.Get(id.Value);
         }
 
-        public IEnumerable<CategoryItem> GetCategoryItems(string code,bool addSelectOption = false, string selectOption = "[Select Option]")
+        public IEnumerable<CategoryItem> GetCategoryItems(string code, bool addSelectOption = false, string selectOption = "[Select Option]", bool voided = false)
         {
             var categoryItems = new List<CategoryItem>();
 
@@ -138,7 +138,10 @@ namespace LiveHTS.Core.Service.Config
             var categotry = _categoryRepository.GetWithCode(code);
             if (null != categotry)
             {
-                var items= categotry.Items.ToList();
+                var items = categotry.Items
+                    .Where(x=>x.Voided==voided)
+                    .ToList();
+
                 if (null != items && items.Count > 0)
                 {
                     categoryItems.AddRange(items);

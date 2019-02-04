@@ -21,6 +21,6 @@ namespace LiveHTS.Core.Interfaces.Services.Config
         IEnumerable<RelationshipType> GetRelationshipTypes();
         EncounterType GetDefaultEncounterType(Guid? id=null);
 
-        IEnumerable<CategoryItem> GetCategoryItems(string code,bool addSelectOption=false,string selectOption="[Select Option]");
+        IEnumerable<CategoryItem> GetCategoryItems(string code, bool addSelectOption = false, string selectOption = "[Select Option]", bool voided = false);
     }
 }
