@@ -286,6 +286,7 @@
     <Compile Include="Views\ClientDemographicFragment.cs" />
     <Compile Include="Views\ClientEnrollmentFragment.cs" />
     <Compile Include="Views\TraceFragment.cs" />
+    <Compile Include="UnhandledExceptionExampleApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_facility.png" />

@@ -799,13 +799,13 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveChanges()
         {
-            FormStatus = "Satus: In complete";
+            FormStatus = "Status: In complete";
 
             if (null != Manifest)
             {
                 if (string.IsNullOrWhiteSpace(FormError) && Manifest.IsComplete())
                 {
-                    FormStatus = "Satus: Completed";
+                    FormStatus = "Status: Completed";
                     return true;
                 }
                 

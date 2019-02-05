@@ -74,6 +74,14 @@ namespace LiveHTS.Core.Model.Survey
                 
             }
         }
+        [Ignore]
+        public bool CanStart
+        {
+            get { return CheckCanStart(); }
+        }
+
+       
+
         private bool CheckConsentRequired()
         {
             //HIV Test Form
@@ -124,7 +132,6 @@ B25EC112-852F-11E7-BB31-BE2E46B06B38	Partner Tracing	Partner Tracing	B260C688-85
             {
                 var obsTestEncounter = KeyClientEncounters.FirstOrDefault(x => x.FormId == new Guid("B25EC568-852F-11E7-BB31-BE2E44B06B34"));
 
-
                 if (CheckConsentRequired() && null != obsTestEncounter)
                 {
                     var finalTestResults = obsTestEncounter.ObsFinalTestResults.ToList();
@@ -136,6 +143,7 @@ B25EC112-852F-11E7-BB31-BE2E46B06B38	Partner Tracing	Partner Tracing	B260C688-85
                         return null != finalTestResult;
                     }
                 }
+
                 return false;
             }
 
@@ -191,7 +199,7 @@ B25EC112-852F-11E7-BB31-BE2E46B06B38	Partner Tracing	Partner Tracing	B260C688-85
             //HTS Linkage Form 
             if (Id == new Guid("b25ec112-852f-11e7-bb31-be2e44b06b34"))
             {
-                return ClientState.IsInAnyState(ClientStates, LiveState.HtsTestedPos,LiveState.HtsTestedInc);
+                return ClientState.IsInAnyState(ClientStates, LiveState.HtsTestedPos,LiveState.HtsTestedInc, LiveState.HtsCanBeReferred);
             }
 
             //Member Tracing
@@ -206,6 +214,16 @@ B25EC112-852F-11E7-BB31-BE2E46B06B38	Partner Tracing	Partner Tracing	B260C688-85
             null != IndexClientId && !IndexClientId.Value.IsNullOrEmpty())
             {
                 return ClientState.IsInState(ClientStates, IndexClientId.Value,LiveState.PartnerEligibileYes);
+            }
+            return false;
+        }
+
+        private bool CheckCanStart()
+        {
+            //HTS Linkage Form 
+            if (Id == new Guid("b25ec112-852f-11e7-bb31-be2e44b06b34"))
+            {
+                return ClientState.IsInAnyState(ClientStates, LiveState.HtsTestedPos, LiveState.HtsTestedInc);
             }
             return false;
         }

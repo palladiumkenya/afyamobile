@@ -23,10 +23,14 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public Guid DefaultEncounterTypeId { get; set; }
         public List<EncounterTemplateWrap> Encounters { get; set; }=new List<EncounterTemplateWrap>();
         public bool Block { get; set; }
+        public bool CanStart { get; set; }
         public string RepMode
         {
             get { return EncounterTypeDisplay.Contains("REPEAT") ? "1" : "0"; }
         }
+
+
+
         public FormTemplate(Form r)
         {
             Id = r.Id;
@@ -50,6 +54,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
             ConsentRequired = r.ConsentRequired;
             HasConsent = r.HasConsent;
             Block = r.Block;
+            CanStart = r.CanStart;
         }
 
         private string SetDisplay(Form form, Program program)
