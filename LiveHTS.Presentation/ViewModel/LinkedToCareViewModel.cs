@@ -295,7 +295,6 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-
             Validator.AddRule(
                 nameof(EnrollmentId),
                 () => RuleResult.Assert(
@@ -304,22 +303,21 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
+            //Validator.AddRule(
+            //    nameof(DateEnrolled),
+            //    () => RuleResult.Assert(
+            //        DateEnrolled >= DateTime.Today,
+            //        $"{nameof(DateEnrolled)} should be a valid date"
+            //    )
+            //);
 
-            Validator.AddRule(
-                nameof(DateEnrolled),
-                () => RuleResult.Assert(
-                    DateEnrolled >= DateTime.Today,
-                    $"{nameof(DateEnrolled)} should be a valid date"
-                )
-            );
-
-            Validator.AddRule(
-                nameof(ARTStartDate),
-                () => RuleResult.Assert(
-                    ARTStartDate >= DateTime.Today,
-                    $"{nameof(ARTStartDate)} should be a valid date"
-                )
-            );
+            //Validator.AddRule(
+            //    nameof(ARTStartDate),
+            //    () => RuleResult.Assert(
+            //        ARTStartDate >= DateTime.Today,
+            //        $"{nameof(ARTStartDate)} should be a valid date"
+            //    )
+            //);
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();

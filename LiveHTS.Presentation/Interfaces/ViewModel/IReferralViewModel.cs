@@ -46,9 +46,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         void SaveTrace(ObsTraceResult test);
         void DeleteTrace(ObsTraceResult test);
         bool Validate();
-
-
-        
         void EditTrace(ObsTraceResult testResult);
         void Referesh(Guid encounterId);
         

@@ -191,11 +191,21 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
             }
 
+            var testedPosOnly = null != client.ClientSummaries &&
+             client.ClientSummaries.Any(x => x.Area == "Testing" && (x.Report == "Positive"));
+
+            if (testedPos)
+            {
+                client.ClientStates.Add(new ClientState(client.Id, LiveState.HtsCanBeLinked));
+
+            }
+
             var states = client.ClientStates.Where(x => x.Status == LiveState.HtsEnrolled ||
                                                                          x.Status == LiveState.HtsSmartCardEnrolled ||
                                                                          x.Status == LiveState.HtsFamAcceptedYes ||
                                                                          x.Status == LiveState.HtsTested ||
-                                                                         x.Status == LiveState.HtsCanBeReferred);
+                                                                         x.Status == LiveState.HtsCanBeReferred ||
+                                                                         x.Status == LiveState.HtsCanBeLinked);
             foreach (var clientState in states)
             {
                 var rowsAffected = _db.Update(clientState);

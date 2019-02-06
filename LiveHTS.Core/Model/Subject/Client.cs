@@ -164,6 +164,18 @@ namespace LiveHTS.Core.Model.Subject
             return IsInState(indexId,LiveState.PartnerListed);
         }
 
+        public bool CanBeReferred()
+        {
+            return IsInAnyState(LiveState.HtsTestedPos, LiveState.HtsTestedInc,
+            LiveState.HtsRetestedPos, LiveState.HtsRetestedInc,
+                LiveState.HtsCanBeReferred);
+        }
+
+        public bool CanBeLinked()
+        {
+            return IsInAnyState(LiveState.HtsTestedPos, LiveState.HtsRetestedPos, LiveState.HtsCanBeLinked);
+        }
+
         public void AddIdentifier(ClientIdentifier clientIdentifier)
         {
             var ids = Identifiers.ToList();
