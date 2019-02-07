@@ -62,7 +62,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedPnsDeclined { get; set; }
         List<CategoryItem> PnsDeclineds { get; set; }
        
-        
 
         string Remarks { get; set; }
 

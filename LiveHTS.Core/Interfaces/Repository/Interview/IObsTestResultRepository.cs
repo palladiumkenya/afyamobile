@@ -8,5 +8,6 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
     {
         void SaveOrUpdate(ObsTestResult obs);
         List<ObsTestResult> Find(Guid clientId);
+       
     }
 }

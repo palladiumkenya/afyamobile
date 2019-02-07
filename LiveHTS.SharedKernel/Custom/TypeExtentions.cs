@@ -41,6 +41,17 @@ namespace LiveHTS.SharedKernel.Custom
             return s.ToString().ToLower().Trim() == other.ToString().ToLower().Trim();
         }
 
+        public static bool IsNullOrEmpty(this DateTime? guid)
+        {
+            if (null == guid)
+                return true;
+
+            if (!guid.HasValue)
+                return true;
+
+            return false;
+        }
+
         public static string FirstCharToUpper(string input)
         {
             if (string.IsNullOrWhiteSpace(input))

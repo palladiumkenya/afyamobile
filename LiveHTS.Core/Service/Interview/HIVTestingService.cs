@@ -7,6 +7,7 @@ using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
@@ -242,6 +243,11 @@ namespace LiveHTS.Core.Service.Interview
                 }
             }
         
+        }
+
+        public List<KitHistory> GetKitHistories()
+        {
+            return _obsTestResultRepository.GetKitHistories();
         }
     }
 }

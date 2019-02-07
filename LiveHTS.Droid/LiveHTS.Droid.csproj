@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -73,7 +73,6 @@
       <HintPath>..\packages\Cheesebaron.MvxPlugins.Settings.3.1.0\lib\MonoAndroid10\Cheesebaron.MvxPlugins.Settings.Droid.dll</HintPath>
     </Reference>
     <Reference Include="Java.Interop" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
