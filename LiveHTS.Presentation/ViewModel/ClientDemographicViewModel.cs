@@ -22,7 +22,9 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private List<CustomItem> _genderOptions;
         private List<CustomItem> _ageUnitOptions;
-
+        private bool _dateHasFoucus = false;
+        private bool _ageCalculated = false;
+        private bool _ageUnitCalculated = false;
         private string _firstName;
         private string _middleName;
         private string _lastName;
@@ -33,6 +35,7 @@ namespace LiveHTS.Presentation.ViewModel
         
         private string _personId;
         private MvxCommand _showDateDialogCommand;
+        private MvxCommand _showAgeDialogCommand;
         private TraceDateDTO _selectedDate;
         private ClientDemographicDTO _demographic;
         private IndexClientDTO _indexClientDTO;
@@ -124,7 +127,7 @@ namespace LiveHTS.Presentation.ViewModel
                 bool hasChanged = AgeHasChanged(_age, value);
                 _age = value;
                 RaisePropertyChanged(() => Age);
-                if (hasChanged)
+                if (!_dateHasFoucus && !_ageCalculated && hasChanged)
                     CalculateBirthDate();
             }
         }
@@ -136,7 +139,7 @@ namespace LiveHTS.Presentation.ViewModel
                 bool hasChanged = AgeUnitHasChanged(_selectedAgeUnit, value);
                 _selectedAgeUnit = value;
                 RaisePropertyChanged(() => SelectedAgeUnit);
-                if (hasChanged)
+                if (!_dateHasFoucus && !_ageUnitCalculated && hasChanged)
                     CalculateBirthDate();
             }
         }
@@ -149,12 +152,16 @@ namespace LiveHTS.Presentation.ViewModel
                 bool hasChanged = BirthDateHasChanged(_birthDate, value);
                 _birthDate = value;
                 RaisePropertyChanged(() => BirthDate);
-                if(hasChanged)
+                if (_dateHasFoucus || isDefaultAge())
                     CalculateAge();
             }
         }
 
-        
+        private bool isDefaultAge()
+        {
+            return BirthDate.Date < DateTime.Today.Date && Age == 0;
+        }
+
         public string PersonId
         {
             get { return _personId; }
@@ -184,14 +191,29 @@ namespace LiveHTS.Presentation.ViewModel
                 return _showDateDialogCommand;
             }
         }
+
+        public IMvxCommand ShowAgeDialogCommand
+        {
+            get
+            {
+                _showAgeDialogCommand = _showAgeDialogCommand ?? new MvxCommand(ShowAgeDialog);
+                return _showAgeDialogCommand;
+            }
+        }
         private void ShowDateDialog()
         {
-
+            _dateHasFoucus = true;
+            _ageCalculated = false;
             ShowDatePicker(Guid.Empty, BirthDate);
+        }
+        private void ShowAgeDialog()
+        {
+            _ageCalculated =true;
         }
         private void UpdatePromiseDate(TraceDateDTO selectedDate)
         {
             BirthDate = selectedDate.EventDate;
+            _dateHasFoucus = false;
         }
         public void ShowDatePicker(Guid refId, DateTime refDate)
         {
@@ -216,8 +238,6 @@ namespace LiveHTS.Presentation.ViewModel
             MoveNextLabel = "NEXT";
             Age = 0;
             SelectedAgeUnit = AgeUnitOptions.First();
-
-
         }
 
         public void Init(string indexId)
@@ -286,47 +306,40 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void CalculateBirthDate()
         {
-            if (Age == 0)
-                return;
-
             var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
-            var dob = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
-
-            if (BirthDate.Year!=dob.Year)
+            try
             {
-                BirthDate = dob;
+                BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
+            }
+            catch (Exception ex)
+            {
+
             }
         }
-
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
         {
-            if (BirthDate.Date == DateTime.Today.Date)
+            _ageCalculated = true;
+
+            PersonAge personAge = null;
+            try
+            {
+                personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (null == personAge)
                 return;
 
-            if (Age == 0)
-            {
-                if (null != BirthDate)
-                {
-                    var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-
-                    Age = personAge.Age;
-                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
-                    SelectedAgeUnit = ageUnit;
-                }
-            }
-            else
-            {
-                //if (BirthDate.Month == 6 && BirthDate.Day == 15)
-                    //return;
-                var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                if (Age!= personAge.Age)
-                {
-                    Age = personAge.Age;
-                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
-                    SelectedAgeUnit = ageUnit;
-                }
-            }
+            Age = personAge.Age;
+            _ageCalculated = false;
+            var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+            _ageUnitCalculated = true;
+            SelectedAgeUnit = ageUnit;
+            _ageUnitCalculated = false;
         }
 
         public override void MoveNext()
@@ -371,12 +384,12 @@ namespace LiveHTS.Presentation.ViewModel
 
         bool AgeHasChanged(decimal oldAge,decimal newAge)
         {
-            return oldAge != newAge;            
+            return  oldAge != newAge;            
         }
 
         bool AgeUnitHasChanged(CustomItem oldUnit, CustomItem newUnit)
         {
-            return !oldUnit.Equals(newUnit);
+            return null != oldUnit && !oldUnit.Equals(newUnit);
         }
 
         bool BirthDateHasChanged(DateTime oldBirth, DateTime newBirth)
