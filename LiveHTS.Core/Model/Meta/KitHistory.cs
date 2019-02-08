@@ -1,31 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Model.Meta
 {
-    public class KitHistory
+    public class KitHistory:Entity<Guid>
     {
-        public Guid KitId { get; set; }
         public string Batch { get; set; }
         public DateTime Expiry { get; set; }
+        public DateTime? Created { get; set; }
 
         public KitHistory()
         {
         }
 
-        public KitHistory(Guid kitId, string batch, DateTime expiry):this()
+        public KitHistory(Guid kitId, string batch, DateTime expiry, DateTime? created)
         {
-            KitId = kitId;
+            Id = kitId;
             Batch = batch;
             Expiry = expiry;
+            Created = created.IsNullOrEmpty()?DateTime.Now:created;
         }
 
         public static KitHistory Create(ObsTestResult testResult)
         {
             if (null != testResult)
-                return new KitHistory(testResult.Kit, testResult.LotNumber, testResult.Expiry);
+                return new KitHistory(testResult.Kit, testResult.LotNumber, testResult.Expiry,testResult.Created);
             
             return new KitHistory();
         }

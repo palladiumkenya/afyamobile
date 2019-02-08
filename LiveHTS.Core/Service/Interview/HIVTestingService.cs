@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Interfaces.Repository.Lookup;
+using LiveHTS.Core.Interfaces.Repository.Meta;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
@@ -21,18 +22,21 @@ namespace LiveHTS.Core.Service.Interview
         private readonly IObsFinalTestResultRepository _obsFinalTestResultRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IClientStateRepository _clientStateRepository;
+        private readonly IKitHistoryRepository _kitHistoryRepository;
 
         private List<CategoryItem> _categoryItems;
         
         public HIVTestingService(IEncounterRepository encounterRepository,
             IObsTestResultRepository obsTestResultRepository,
-            IObsFinalTestResultRepository obsFinalTestResultRepository, ICategoryRepository categoryRepository, IClientStateRepository clientStateRepository)
+            IObsFinalTestResultRepository obsFinalTestResultRepository, ICategoryRepository categoryRepository, IClientStateRepository clientStateRepository,
+            IKitHistoryRepository kitHistoryRepository)
         {
             _encounterRepository = encounterRepository;
             _obsTestResultRepository = obsTestResultRepository;
             _obsFinalTestResultRepository = obsFinalTestResultRepository;
             _categoryRepository = categoryRepository;
             _clientStateRepository = clientStateRepository;
+            _kitHistoryRepository = kitHistoryRepository;
             LoadItems();
         }
 
@@ -68,7 +72,8 @@ namespace LiveHTS.Core.Service.Interview
 
         public void SaveTest(ObsTestResult testResult,Guid clientId)
         {
-            _obsTestResultRepository.SaveOrUpdate(testResult);            
+            _obsTestResultRepository.SaveOrUpdate(testResult);
+            UpdateKitHistories(testResult);        
 
             var final = _obsFinalTestResultRepository.GetAll(x => x.EncounterId == testResult.EncounterId)
                 .FirstOrDefault();
@@ -247,7 +252,12 @@ namespace LiveHTS.Core.Service.Interview
 
         public List<KitHistory> GetKitHistories()
         {
-            return _obsTestResultRepository.GetKitHistories();
+            return _kitHistoryRepository.GetAll().ToList();
+        }
+
+        public void UpdateKitHistories(ObsTestResult testResult)
+        {
+            _kitHistoryRepository.InsertOrUpdate(KitHistory.Create(testResult));
         }
     }
 }

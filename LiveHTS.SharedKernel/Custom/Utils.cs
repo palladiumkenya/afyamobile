@@ -12,9 +12,11 @@ namespace LiveHTS.SharedKernel.Custom
         public static DateTime CalculateBirthDate(PersonAge personAge)
         {
             var birthDate = DateTime.Today;
+            var standardBirthDate = DateTime.Today;
+
             if (null != personAge && personAge.Age > 0)
             {
-                int intAge = (int) Math.Round(personAge.Age, MidpointRounding.ToEven);
+                int intAge = (int)Math.Round(personAge.Age, MidpointRounding.ToEven);
                 switch (personAge.AgeUnit)
                 {
                     case "Y": //Years
@@ -27,11 +29,13 @@ namespace LiveHTS.SharedKernel.Custom
                         birthDate = DateTime.Today.AddDays(-intAge);
                         break;
                 }
+                standardBirthDate =  new DateTime(birthDate.Year, 6, 15);
+                if (standardBirthDate > DateTime.Today)
+                    return birthDate;
             }
-
-            //birthDate = new DateTime(birthDate.Year, 6, 15);
-            return birthDate;
+            return standardBirthDate.Date;
         }
+
 
         public static PersonAge CalculateAge(DateTime Bday)
         {

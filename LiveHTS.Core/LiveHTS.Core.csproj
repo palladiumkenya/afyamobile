@@ -265,6 +265,7 @@
     <Compile Include="Service\Sync\SyncUser.cs" />
     <Compile Include="SyncModel\Meta.cs" />
     <Compile Include="Model\Meta\KitHistory.cs" />
+    <Compile Include="Interfaces\Repository\Meta\IKitHistoryRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

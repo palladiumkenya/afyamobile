@@ -5,6 +5,7 @@ using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
@@ -31,6 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _result;
         private List<CategoryItem> _kits=new List<CategoryItem>();
         private List<CategoryItem> _results=new List<CategoryItem>();
+        private List<KitHistory> _kitHistories = new List<KitHistory>();
         private bool _showKitOther;
         private CategoryItem _selectedKit;
         private CategoryItem _selectedResult;
@@ -174,6 +176,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null != SelectedKit)
                     Kit = SelectedKit.ItemId;
                 ShowOther();
+                ShowLastKit();
             }
         }
 
@@ -203,6 +206,11 @@ namespace LiveHTS.Presentation.ViewModel
             set { _results = value; RaisePropertyChanged(() => Results); }
         }
 
+        public List<KitHistory> KitHistories {
+            get { return _kitHistories; }
+            set { _kitHistories = value; RaisePropertyChanged(() => KitHistories); }
+        }
+
         public TestViewModel()
         {
             Validator = new ValidationHelper();
@@ -213,6 +221,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var kitsJson = _settings.GetValue("lookup.KitName", "");
             var resultsJson = _settings.GetValue("lookup.TestResult", "");
+            var kitHistoriesJson= _settings.GetValue("lookup.KitHistory", "");
 
             if (!string.IsNullOrWhiteSpace(kitsJson))
             {
@@ -222,7 +231,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Results = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
             }
-          
+
+            if (!string.IsNullOrWhiteSpace(kitHistoriesJson))
+            {
+                KitHistories = JsonConvert.DeserializeObject<List<KitHistory>>(kitHistoriesJson);
+            }
+
         }
 
         private void LoadTest()
@@ -259,6 +273,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var kitsJson = _settings.GetValue("lookup.KitName", "");
             var resultsJson = _settings.GetValue("lookup.TestResult", "");
+            var kitHistoriesJson = _settings.GetValue("lookup.KitHistory", "");
 
             if (!string.IsNullOrWhiteSpace(kitsJson))
             {
@@ -267,6 +282,10 @@ namespace LiveHTS.Presentation.ViewModel
             if (!string.IsNullOrWhiteSpace(resultsJson))
             {
                 Results = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
+            }
+            if (!string.IsNullOrWhiteSpace(kitHistoriesJson))
+            {
+                KitHistories = JsonConvert.DeserializeObject<List<KitHistory>>(kitHistoriesJson);
             }
 
             if (!EditMode)
@@ -364,6 +383,20 @@ namespace LiveHTS.Presentation.ViewModel
                 ShowKitOther = true;
             }
         }
+
+        private void ShowLastKit()
+        {
+            if (null != SelectedKit && !SelectedKit.ItemId.IsNullOrEmpty())
+            {
+                var kitHistory = KitHistories.FirstOrDefault(x => x.Id == SelectedKit.ItemId);
+                if (null != kitHistory && !EditMode)
+                {
+                    LotNumber = kitHistory.Batch;
+                    Expiry = kitHistory.Expiry;
+                }
+            }
+        }
+
         private ObsTestResult GenerateTest()
         {
             var obs= ObsTestResult.Create(TestName,Attempt,Kit,KitOther,LotNumber,Expiry,Result,EncounterId,ResultCode);

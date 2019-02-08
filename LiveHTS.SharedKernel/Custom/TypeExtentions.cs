@@ -41,12 +41,12 @@ namespace LiveHTS.SharedKernel.Custom
             return s.ToString().ToLower().Trim() == other.ToString().ToLower().Trim();
         }
 
-        public static bool IsNullOrEmpty(this DateTime? guid)
+        public static bool IsNullOrEmpty(this DateTime? dateTime)
         {
-            if (null == guid)
+            if (null == dateTime)
                 return true;
 
-            if (!guid.HasValue)
+            if (!dateTime.HasValue)
                 return true;
 
             return false;

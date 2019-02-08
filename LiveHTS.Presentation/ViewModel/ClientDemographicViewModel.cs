@@ -121,9 +121,11 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _age; }
             set
             {
+                bool hasChanged = AgeHasChanged(_age, value);
                 _age = value;
                 RaisePropertyChanged(() => Age);
-                CalculateBirthDate();
+                if (hasChanged)
+                    CalculateBirthDate();
             }
         }
         public CustomItem SelectedAgeUnit
@@ -131,9 +133,11 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _selectedAgeUnit; }
             set
             {
+                bool hasChanged = AgeUnitHasChanged(_selectedAgeUnit, value);
                 _selectedAgeUnit = value;
                 RaisePropertyChanged(() => SelectedAgeUnit);
-                CalculateBirthDate();
+                if (hasChanged)
+                    CalculateBirthDate();
             }
         }
        
@@ -142,9 +146,11 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _birthDate; }
             set
             {
+                bool hasChanged = BirthDateHasChanged(_birthDate, value);
                 _birthDate = value;
                 RaisePropertyChanged(() => BirthDate);
-                CalculateAge();
+                if(hasChanged)
+                    CalculateAge();
             }
         }
 
@@ -204,7 +210,7 @@ namespace LiveHTS.Presentation.ViewModel
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
 
-            BirthDate = DateTime.Today.AddDays(-1);
+            BirthDate = DateTime.Today;//.AddDays(-1);
             Title = "Demographics";
             MovePreviousLabel = "";
             MoveNextLabel = "NEXT";
@@ -280,6 +286,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void CalculateBirthDate()
         {
+            if (Age == 0)
+                return;
+
             var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
             var dob = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
 
@@ -292,11 +301,15 @@ namespace LiveHTS.Presentation.ViewModel
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
         {
+            if (BirthDate.Date == DateTime.Today.Date)
+                return;
+
             if (Age == 0)
             {
                 if (null != BirthDate)
                 {
                     var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
+
                     Age = personAge.Age;
                     var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
                     SelectedAgeUnit = ageUnit;
@@ -304,6 +317,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
             else
             {
+                //if (BirthDate.Month == 6 && BirthDate.Day == 15)
+                    //return;
                 var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
                 if (Age!= personAge.Age)
                 {
@@ -352,6 +367,21 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Mvx.Error(e.Message);
             }
+        }
+
+        bool AgeHasChanged(decimal oldAge,decimal newAge)
+        {
+            return oldAge != newAge;            
+        }
+
+        bool AgeUnitHasChanged(CustomItem oldUnit, CustomItem newUnit)
+        {
+            return !oldUnit.Equals(newUnit);
+        }
+
+        bool BirthDateHasChanged(DateTime oldBirth, DateTime newBirth)
+        {
+            return oldBirth.Date!=newBirth.Date;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
@@ -12,7 +13,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
     public interface ITestingViewModel
     {
-
         Guid AppUserId { get; }
         Guid AppProviderId { get;  }
         Guid AppPracticeId { get;  }
@@ -66,7 +66,8 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string Remarks { get; set; }
 
         List<CategoryItem> Kits { get; set; }
-        
+        List<KitHistory> KitHistories { get; set; }
+
         IMvxCommand SaveTestingCommand { get; }
 
         void SaveTest(ObsTestResult test);

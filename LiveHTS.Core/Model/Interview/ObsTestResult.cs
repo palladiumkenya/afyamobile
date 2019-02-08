@@ -25,11 +25,13 @@ namespace LiveHTS.Core.Model.Interview
         public bool IsValid { get; set; }
         [Indexed]
         public Guid EncounterId { get; set; }
+        public DateTime? Created { get; set; }
 
-      
+
         public ObsTestResult()
         {
             Id = LiveGuid.NewGuid();
+            Created = DateTime.Now;
         }
 
         private ObsTestResult(string testName, int attempt, Guid kit, string kitOther, string lotNumber, DateTime expiry, Guid result, Guid encounterId,string resultCode="") :this()

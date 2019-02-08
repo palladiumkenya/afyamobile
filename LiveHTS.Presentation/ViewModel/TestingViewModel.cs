@@ -9,6 +9,7 @@ using LiveHTS.Core.Interfaces.Services.Interview;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
@@ -74,7 +75,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Guid _pnsDeclined;
         private bool _enablePnsDeclined;
         private bool _enableSelfTestOption;
-
+        private List<KitHistory> _kitHistories = new List<KitHistory>();
 
         public ValidationHelper Validator { get; set; }
 
@@ -504,6 +505,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public List<KitHistory> KitHistories 
+        {
+            get { return _kitHistories; }
+            set
+            {
+                _kitHistories = value;
+                RaisePropertyChanged(() => KitHistories);
+            }
+        }
+
         public IMvxCommand SaveTestingCommand
         {
             get
@@ -586,7 +597,6 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-   
 
         public TestingViewModel(ILookupService lookupService, IDashboardService dashboardService,
             IHIVTestingService testingService, ISettings settings, IDialogService dialogService)
@@ -616,6 +626,7 @@ namespace LiveHTS.Presentation.ViewModel
             SelfTestOptions = _lookupService.GetCategoryItems("YesNo", true).ToList();
             PnsDeclineds = _lookupService.GetCategoryItems("PNSDecline", true).ToList();
             Kits = _lookupService.GetCategoryItems("KitName", true, "[Select Kit]").ToList();
+            KitHistories = _testingService.GetKitHistories();
 
             EncounterType = _lookupService.GetDefaultEncounterType(new Guid(encounterTypeId));
 
@@ -627,6 +638,7 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("lookup.PNSDecline", JsonConvert.SerializeObject(PnsDeclined));
             _settings.AddOrUpdateValue("lookup.KitName", JsonConvert.SerializeObject(Kits));
             _settings.AddOrUpdateValue("lookup.EncounterType", JsonConvert.SerializeObject(EncounterType));
+            _settings.AddOrUpdateValue("lookup.KitHistory", JsonConvert.SerializeObject(KitHistories));
 
 
             // Load Client
