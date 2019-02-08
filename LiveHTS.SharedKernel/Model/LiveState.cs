@@ -40,6 +40,8 @@
 
         HtsSmartCardEnrolled,
         HtsTested,
-        IsPead
+        IsPead,
+        HtsCanBeReferred,
+        HtsCanBeLinked
     }
 }

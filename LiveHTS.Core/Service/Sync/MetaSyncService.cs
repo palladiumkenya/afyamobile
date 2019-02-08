@@ -25,11 +25,11 @@ namespace LiveHTS.Core.Service.Sync
         }
      
 
-        Task<Meta> IMetaSyncService.GetMetaData(string url)
+        Task<SyncModel.Meta> IMetaSyncService.GetMetaData(string url)
         {
             url = GetActivateUrl(url, "data");
 
-            return _restClient.MakeApiCall<Meta>($"{url}", HttpMethod.Get);
+            return _restClient.MakeApiCall<SyncModel.Meta>($"{url}", HttpMethod.Get);
         }
 
         public Task<List<County>> GetCounties(string url)

@@ -14,6 +14,7 @@ namespace LiveHTS.Core.Model.Subject
         public virtual string FirstName { get; set; }
         public virtual string MiddleName { get; set; }
         public virtual string LastName { get; set; }
+        public virtual string NickName { get; set; }
         public virtual string Gender { get; set; }
         public virtual DateTime BirthDate { get; set; }
         public virtual bool? BirthDateEstimated { get; set; }
@@ -69,7 +70,7 @@ namespace LiveHTS.Core.Model.Subject
             Id = LiveGuid.NewGuid();
         }
 
-        private Person(string firstName, string middleName, string lastName, string gender, DateTime birthDate, bool? birthDateEstimated, string email):this()
+        private Person(string firstName, string middleName, string lastName, string gender, DateTime birthDate, bool? birthDateEstimated, string email, string nickName):this()
         {
             FirstName = firstName;
             MiddleName = middleName;
@@ -78,20 +79,21 @@ namespace LiveHTS.Core.Model.Subject
             BirthDate = birthDate;
             BirthDateEstimated = birthDateEstimated;
             Email = email;
+            NickName = nickName;
         }
 
-        public static Person Create(string firstName, string middleName, string lastName, string gender,DateTime birthDate, bool? birthDateEstimated, string email)
+        public static Person Create(string firstName, string middleName, string lastName, string gender,DateTime birthDate, bool? birthDateEstimated, string email, string nickName)
         {
-            return new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
+            return new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email,nickName);
         }
 
         public static Person Create(string firstName, string middleName, string lastName, string gender,
-            DateTime birthDate, bool? birthDateEstimated, string email, string landmark, int? phone)
+            DateTime birthDate, bool? birthDateEstimated, string email, string landmark, int? phone, string nickName, int? countyId, int? subCountyId, int? wardId)
         {
-            var person = new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
+            var person = new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email,nickName);
 
             if (!string.IsNullOrWhiteSpace(landmark))
-                person.AddAddress(landmark, null, true, null, null);
+                person.AddAddress(landmark, countyId, true, null, null,subCountyId,wardId);
             
             if (phone.HasValue)
                 person.AddContact(phone, true);
@@ -99,16 +101,17 @@ namespace LiveHTS.Core.Model.Subject
             return person;
         }
 
-        public static Person Create(string firstName, string middleName, string lastName, string gender, DateTime birthDate, bool? birthDateEstimated, string email,Guid personId)
+        public static Person Create(string firstName, string middleName, string lastName, string gender, DateTime birthDate, bool? birthDateEstimated, string email,Guid personId, string nickName)
         {
-            var person=Create(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email);
+            var person=Create(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email, nickName);
             person.Id = personId;
             return person;
         }
-        public void AddAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng)
+
+        public void AddAddress(string landmark, int? countyId, bool preferred, decimal? lat, decimal? lng, int? subCountyId, int? wardId)
         {
             var addressList = Addresses.ToList();
-            var address = PersonAddress.Create(landmark, countyId, preferred, lat, lng, Id);
+            var address = PersonAddress.Create(landmark, countyId, preferred, lat, lng, Id, subCountyId, wardId);
             addressList.Add(address);
 
             Addresses = addressList;

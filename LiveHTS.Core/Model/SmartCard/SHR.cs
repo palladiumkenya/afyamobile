@@ -81,10 +81,10 @@ namespace LiveHTS.Core.Model.SmartCard
             var smartClient = SmartClientDTO.Create(this);
             var smartPerson = Person.Create(smartClient.FirstName, smartClient.MiddleName, smartClient.LastName,
                 smartClient.Sex, smartClient.BirthDate, smartClient.BirthDateEstimated, string.Empty,
-                smartClient.Landmark, smartClient.Phone);
+                smartClient.Landmark, smartClient.Phone, string.Empty,null,null,null);
 
             var client = Client.Create(smartClient.MaritalStatus, smartClient.KeyPop, smartClient.OtherKeyPop,
-                practiceId, smartPerson, userId);
+                practiceId, smartPerson, userId,Guid.Empty, Guid.Empty, Guid.Empty);
             client.PersonId = smartPerson.Id;
 
             var clientIdentifier =

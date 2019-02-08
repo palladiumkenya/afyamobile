@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Interview;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Meta;
 
 namespace LiveHTS.Infrastructure.Repository.Interview
 {
@@ -34,6 +35,19 @@ FROM
     ObsTestResult INNER JOIN Encounter ON ObsTestResult.EncounterId =Encounter.Id
 WHERE
     Encounter.ClientId =?", clientId);
+
+        }
+
+        public List<KitHistory> GetKitHistories()
+        {
+
+            var results= _db.Query<ObsTestResult>(@"
+SELECT 
+    DISTINCT Kit,KitOther,Expiry,Created
+FROM 
+    ObsTestResult");
+
+            return KitHistory.Create(results);
 
         }
     }

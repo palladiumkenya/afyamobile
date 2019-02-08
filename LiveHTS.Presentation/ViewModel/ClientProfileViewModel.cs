@@ -5,10 +5,12 @@ using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -35,6 +37,14 @@ namespace LiveHTS.Presentation.ViewModel
         private bool _isRelation;
         private string _indexClientName;
         private readonly IRegistryService _registryService;
+        private List<CategoryItem> _educations = new List<CategoryItem>();
+        private List<CategoryItem> _completions = new List<CategoryItem>();
+        private CategoryItem _selectedEducation;
+        private CategoryItem _selectedCompletion;
+        private bool _allowCompletion;
+        private List<CategoryItem> _occupations=new List<CategoryItem>();
+        private CategoryItem _selectedOccupation;
+        private string _keyPopCategory;
 
 
         public bool IsRelation
@@ -52,7 +62,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _indexClientName; }
             set
             {
-                _indexClientName = value; 
+                _indexClientName = value;
                 RaisePropertyChanged(() => IndexClientName);
             }
         }
@@ -130,6 +140,19 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => SelectedKeyPop);
                 IsOtherKeyPop = _selectedKeyPop.Id.ToLower() == "O".ToLower() ? "visible" : "invisible";
                 RaisePropertyChanged(() => IsOtherKeyPop);
+                if (null != _selectedKeyPop)
+                    KeyPopCategory = _selectedKeyPop.Category;
+
+            }
+        }
+
+        public string KeyPopCategory
+        {
+            get { return _keyPopCategory; }
+            set
+            {
+                _keyPopCategory = value;
+                RaisePropertyChanged(() => KeyPopCategory);
             }
         }
 
@@ -153,13 +176,93 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public List<CategoryItem> Educations
+        {
+            get { return _educations; }
+            set
+            {
+                _educations = value;
+                RaisePropertyChanged(() => Educations);
+            }
+        }
+
+        public CategoryItem SelectedEducation
+        {
+            get { return _selectedEducation; }
+            set
+            {
+                _selectedEducation = value;
+                RaisePropertyChanged(() => SelectedEducation);
+                AllowCompletion = null != _selectedEducation &&
+                                  !_selectedEducation.ItemId.IsNullOrEmpty() &&
+                                  _selectedEducation.ItemId != new Guid("cdeaef01-0056-11e8-ba89-0ed5f89f718b");
+                RaisePropertyChanged(() => AllowCompletion);
+            }
+        }
+
+        public bool AllowCompletion
+        {
+            get { return _allowCompletion; }
+            set
+            {
+                _allowCompletion = value;
+                RaisePropertyChanged(() => AllowCompletion);
+            }
+
+        }
+
+        public List<CategoryItem> Completions
+        {
+            get { return _completions; }
+            set
+            {
+                _completions = value;
+                RaisePropertyChanged(() => Completions);
+            }
+        }
+
+        public CategoryItem SelectedCompletion
+        {
+            get { return _selectedCompletion; }
+            set
+            {
+                _selectedCompletion = value;
+                RaisePropertyChanged(() => SelectedCompletion);
+            }
+        }
+
+        public List<CategoryItem> Occupations
+        {
+            get { return _occupations; }
+            set
+            {
+                _occupations = value;
+                RaisePropertyChanged(() => Occupations);
+            }
+        }
+
+        public CategoryItem SelectedOccupation
+        {
+            get { return _selectedOccupation; }
+            set
+            {
+                _selectedOccupation = value;
+                RaisePropertyChanged(() => SelectedOccupation);
+            }
+        }
+
         public string ClientId
         {
             get { return _clientId; }
-            set { _clientId = value;RaisePropertyChanged(() => ClientId); }
+            set
+            {
+                _clientId = value;
+                RaisePropertyChanged(() => ClientId);
+            }
         }
 
-        public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService,ISettings settings, IRegistryService registryService) : base(dialogService, settings)
+        public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService, ISettings settings,
+            IRegistryService registryService) : base(dialogService, settings)
         {
             Step = 3;
             _lookupService = lookupService;
@@ -169,7 +272,7 @@ namespace LiveHTS.Presentation.ViewModel
             Title = "Profile";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
-            
+            AllowCompletion = false;
         }
 
         public void Init(string clientinfo, string indexId)
@@ -177,6 +280,30 @@ namespace LiveHTS.Presentation.ViewModel
             IndexClientName = string.Empty;
             IsRelation = false;
 
+            var educationsJson = _settings.GetValue("lookup.Education", "");
+            var completionsJson = _settings.GetValue("lookup.Completion", "");
+            var occupationsJson = _settings.GetValue("lookup.Occupation", "");
+
+            if (string.IsNullOrWhiteSpace(educationsJson))
+            {
+                var educations = _lookupService.GetCategoryItems("Education", true, "[Select Education]").ToList();
+                Educations = educations;
+                _settings.AddOrUpdateValue("lookup.Education", JsonConvert.SerializeObject(educations));
+            }
+
+            if (string.IsNullOrWhiteSpace(completionsJson))
+            {
+                var completions = _lookupService.GetCategoryItems("Completion", true, "[Select Completion]").ToList();
+                Completions = completions;
+                _settings.AddOrUpdateValue("lookup.Completion", JsonConvert.SerializeObject(completions));
+            }
+
+            if (string.IsNullOrWhiteSpace(occupationsJson))
+            {
+                var occupations = _lookupService.GetCategoryItems("Occupation", true, "[Select Occupation]").ToList();
+                Occupations = occupations;
+                _settings.AddOrUpdateValue("lookup.Occupation", JsonConvert.SerializeObject(occupations));
+            }
 
             ClientInfo = clientinfo;
             if (!string.IsNullOrWhiteSpace(indexId))
@@ -188,13 +315,15 @@ namespace LiveHTS.Presentation.ViewModel
                     IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                     if (null != IndexClientDTO)
                     {
-                        IndexClientName =$"Relation To Index [{IndexClientDTO}]" ;
+                        IndexClientName = $"Relation To Index [{IndexClientDTO}]";
                         Title = $"Profile [{IndexClientDTO.RelType}]";
-                        RelationshipTypes = RelationshipTypes.Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
+                        RelationshipTypes = RelationshipTypes
+                            .Where(x => x.Description.ToLower() == IndexClientDTO.RelType.ToLower()).ToList();
                     }
                 }
             }
         }
+
 
         public override void ViewAppeared()
         {
@@ -222,6 +351,25 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 MoveNextLabel = Convert.ToBoolean(preventEnroll) ? "SAVE" : "NEXT";
             }
+
+            var educationsJson = _settings.GetValue("lookup.Education", "");
+            var completionsJson = _settings.GetValue("lookup.Completion", "");
+            var occupationsJson = _settings.GetValue("lookup.Occupation", "");
+
+            if (!string.IsNullOrWhiteSpace(educationsJson) && !Educations.Any())
+            {
+                Educations = JsonConvert.DeserializeObject<List<CategoryItem>>(educationsJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(completionsJson) && !Completions.Any())
+            {
+                Completions = JsonConvert.DeserializeObject<List<CategoryItem>>(completionsJson);
+            }
+
+            if (!string.IsNullOrWhiteSpace(occupationsJson) && !Occupations.Any())
+            {
+                Occupations = JsonConvert.DeserializeObject<List<CategoryItem>>(occupationsJson);
+            }
         }
 
         public override void Start()
@@ -229,14 +377,19 @@ namespace LiveHTS.Presentation.ViewModel
             base.Start();
             MaritalStatus = _lookupService.GetMaritalStatuses(true).ToList();
             KeyPops = _lookupService.GetKeyPops(true).ToList();
+            Educations = _lookupService.GetCategoryItems("Education", true, "[Select Education]").ToList();
+            Completions = _lookupService.GetCategoryItems("Completion", true, "[Select Completion]").ToList();
+            Occupations = _lookupService.GetCategoryItems("Occupation", true, "[Select Occupation]").ToList();
+
             try
             {
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == "");
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == "");
+                SelectedEducation= Educations.FirstOrDefault(x => x.Id == Guid.Empty);
+                SelectedCompletion = Completions.FirstOrDefault(x => x.Id == Guid.Empty);
+                SelectedOccupation = Occupations.FirstOrDefault(x => x.Id == Guid.Empty);
             }
-            catch 
-            {
-            }
+            catch{}
         }
 
         public override bool Validate()
@@ -278,6 +431,28 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                 }
             }
+
+            if (AllowCompletion)
+            {
+                Validator.AddRule(
+                    nameof(Completions),
+                    () => RuleResult.Assert(
+                        null != SelectedCompletion && !SelectedCompletion.ItemId.IsNullOrEmpty(),
+                        $"Education completed is required"
+                    )
+                );
+            }
+            else
+            {
+                try
+                {
+                    Errors.Remove(nameof(Completions));
+                }
+                catch
+                {
+                }
+            }
+
             return base.Validate();
         }
 
@@ -297,7 +472,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
                 else
                 {
-                    ShowViewModel<ClientEnrollmentViewModel>(new { clientinfo = ClientInfo, indexId = indexId });
+                    ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo, indexId = indexId});
                 }
             }
         }
@@ -307,20 +482,21 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Guid? pid = null;
-                var clientRegistrationDTO = new ClientRegistrationDTO(_settings,false);
+                var clientRegistrationDTO = new ClientRegistrationDTO(_settings, false);
                 if (null == IndexClientDTO)
                 {
                     var practiceId = _settings.GetValue("PracticeId", "");
                     if (!string.IsNullOrWhiteSpace(practiceId))
                     {
-                        pid=new Guid(practiceId);
+                        pid = new Guid(practiceId);
                     }
                 }
                 else
                 {
                     pid = IndexClientDTO.PracticeId;
                 }
-                var client = clientRegistrationDTO.Generate(UserId,pid);
+
+                var client = clientRegistrationDTO.Generate(UserId, pid);
 
                 if (null != IndexClientDTO)
                 {
@@ -331,9 +507,9 @@ namespace LiveHTS.Presentation.ViewModel
                         client.IsPartner = true;
                 }
 
-             
+
                 client.PreventEnroll = true;
-                _registryService.SaveOrUpdate(client,false);
+                _registryService.SaveOrUpdate(client, false);
 
                 if (null != IndexClientDTO)
                 {
@@ -341,20 +517,17 @@ namespace LiveHTS.Presentation.ViewModel
                         IndexClientDTO.Id,
                         client.Id);
                     ClearCache();
-                    
-                    ShowViewModel<DashboardViewModel>(new { id = IndexClientDTO.Id.ToString() });
+
+                    ShowViewModel<DashboardViewModel>(new {id = IndexClientDTO.Id.ToString()});
                     Close(this);
                 }
                 else
                 {
                     ClearCache();
-                   
-                    ShowViewModel<DashboardViewModel>(new { id = client.Id.ToString() });
+
+                    ShowViewModel<DashboardViewModel>(new {id = client.Id.ToString()});
                     Close(this);
                 }
-
-                
-                
             }
             catch (Exception e)
             {
@@ -365,12 +538,14 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void MovePrevious()
         {
-            ShowViewModel<ClientContactViewModel>(new { clientinfo = ClientInfo });
+            ShowViewModel<ClientContactViewModel>(new {clientinfo = ClientInfo});
         }
+
         public override bool CanMoveNext()
         {
             return true;
         }
+
         public override bool CanMovePrevious()
         {
             return true;
@@ -385,7 +560,14 @@ namespace LiveHTS.Presentation.ViewModel
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);
                 OtherKeyPop = Profile.OtherKeyPop;
-                SelectedRelationshipType = RelationshipTypes.FirstOrDefault(x=>x.Description.ToLower()==Profile.RelTypeId.ToLower());
+                SelectedEducation = Educations.FirstOrDefault(x => x.ItemId == Profile.Education);
+                SelectedCompletion = Completions.FirstOrDefault(x => x.ItemId == Profile.Completion);
+                SelectedOccupation = Occupations.FirstOrDefault(x => x.ItemId == Profile.Occupation);
+
+                if (null != Profile.RelTypeId && !string.IsNullOrWhiteSpace(Profile.RelTypeId))
+                    SelectedRelationshipType =
+                        RelationshipTypes.FirstOrDefault(x => x.Description.ToLower() == Profile.RelTypeId.ToLower());
+
             }
             catch (Exception e)
             {
@@ -393,16 +575,12 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-
-
-
         private void ClearCache()
         {
-
-            _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel),"");
-            _settings.AddOrUpdateValue(nameof(ClientContactViewModel),"");
-            _settings.AddOrUpdateValue(nameof(ClientProfileViewModel),"");
-            _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel),"");
+            _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientContactViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientProfileViewModel), "");
+            _settings.AddOrUpdateValue(nameof(ClientEnrollmentViewModel), "");
 
             if (_settings.Contains(nameof(ClientDemographicViewModel)))
                 _settings.DeleteValue(nameof(ClientDemographicViewModel));
@@ -415,8 +593,6 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (_settings.Contains(nameof(ClientEnrollmentViewModel)))
                 _settings.DeleteValue(nameof(ClientEnrollmentViewModel));
-
         }
-
     }
 }

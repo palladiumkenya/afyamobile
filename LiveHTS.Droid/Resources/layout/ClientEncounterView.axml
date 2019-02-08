@@ -162,6 +162,24 @@
             android:editable="false"
             local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']" />
     </android.support.design.widget.TextInputLayout>
+
+	<!--VisitType-->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayoutVisitType">
+                <MvxRadioGroup
+                    android:textSize="40dp"
+                    android:orientation="horizontal"
+                    local:MvxItemTemplate="@layout/item_visittype"
+                    local:MvxBind="ItemsSource VisitTypes;SelectedItem SelectedVisitType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:id="@+id/visitType" />
+            </LinearLayout>
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">

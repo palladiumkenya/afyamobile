@@ -32,16 +32,19 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight=".2"
+        android:layout_weight=".1"
         android:orientation="vertical"
         android:paddingEnd="4dp">
 
-      <ImageButton
-          android:layout_width="32dp"
-          android:layout_height="32dp"
-          android:layout_gravity="right"
-          android:src="@drawable/ic_create_new_folder"
-          local:MvxBind="Click StartEncounterCommand;Visibility ShowStart, Converter=ShowControl" />
+       <Button
+                android:id="@+id/email_sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_encounter"
+                android:textColor="#FFFFFF"
+                android:background="#FF5733"
+                android:textStyle="bold"
+                 local:MvxBind="Click StartEncounterCommand;Visibility ShowStart, Converter=ShowControl" />
     </LinearLayout>
   </LinearLayout>
 

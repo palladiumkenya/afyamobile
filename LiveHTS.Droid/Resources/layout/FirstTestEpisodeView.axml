@@ -12,8 +12,7 @@
     <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="HIV Test 1"
-      local:MvxBind="Text TestName"/>
+      android:text="Screening Test"/>
     <Button
       android:id="@+id/addtest1"
       android:layout_width="wrap_content"

@@ -666,7 +666,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _selectedPhysicalAssult = value;RaisePropertyChanged(() => SelectedPhysicalAssult);
-                UpdateEligibility();
+               // UpdateEligibility();
             }
         }
 
@@ -685,7 +685,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _selectedThreatened = value; RaisePropertyChanged(() => SelectedThreatened);
-                UpdateEligibility();
+               //UpdateEligibility();
             }
         }
         public List<CategoryItem> SexuallyUncomfortable
@@ -700,7 +700,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _selectedSexuallyUncomfortable = value;RaisePropertyChanged(() => SelectedSexuallyUncomfortable);
-                UpdateEligibility();
+                //UpdateEligibility();
             }
         }
 

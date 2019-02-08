@@ -294,7 +294,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ErrorSummary=string.Empty;
 
-            
+            Validator.RemoveAllRules();
 
             Validator.AddRule(
                 nameof(Mode),
@@ -339,6 +339,7 @@ namespace LiveHTS.Presentation.ViewModel
                     )
                 );
             }
+          
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();

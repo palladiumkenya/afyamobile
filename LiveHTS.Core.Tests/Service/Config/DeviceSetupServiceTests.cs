@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Linq;
 using LiveHTS.Core.Interfaces;
 using LiveHTS.Core.Interfaces.Repository.Config;
-using LiveHTS.Core.Interfaces.Repository.Survey;
-using LiveHTS.Core.Interfaces.Services;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
-using LiveHTS.Core.Model.Subject;
-using LiveHTS.Core.Service;
-using LiveHTS.Core.Service.Config;
 using LiveHTS.Infrastructure.Repository.Config;
-using LiveHTS.Infrastructure.Repository.Survey;
 using NUnit.Framework;
 using SQLite;
 

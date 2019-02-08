@@ -13,6 +13,7 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform.Platform;
 using Newtonsoft.Json;
@@ -44,6 +45,8 @@ namespace LiveHTS.Presentation.ViewModel
         private DateTime _birthDate;
         private IMvxCommand _showDateDialogCommand;
         private TraceDateDTO _selectedDate;
+        private CustomItem _selectedVisitType;
+        private List<CustomItem> _visitTypes = new List<CustomItem>();
 
         public Guid AppUserId
         {
@@ -120,7 +123,6 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _clientDTO = value;
-                ;
                 RaisePropertyChanged(() => ClientDTO);
             }
         }
@@ -221,22 +223,48 @@ namespace LiveHTS.Presentation.ViewModel
             set { _birthDate = value;RaisePropertyChanged(() => BirthDate); }
         }
 
+        public List<CustomItem> VisitTypes
+        {
+            get { return _visitTypes; }
+            set
+            {
+                _visitTypes = value;
+                RaisePropertyChanged(() => VisitTypes);
+            }
+        }
+
+        public CustomItem SelectedVisitType
+        {
+            get { return _selectedVisitType; }
+            set
+            {
+                _selectedVisitType = value;
+                RaisePropertyChanged(() => SelectedVisitType);
+            }
+        }
+
         public ClientEncounterViewModel(ISettings settings, IDialogService dialogService,
             IEncounterService encounterService, IObsService obsService)
         {
+            VisitTypes = CustomLists.VisitTypeList;
+
+
+
+
+
             _settings = settings;
             _dialogService = dialogService;
             _encounterService = encounterService;
             _obsService = obsService;
             BirthDate = DateTime.Today;
+            
+            SelectedVisitType = VisitTypes.First();
         }
 
-        public void Init(string formId, string encounterTypeId, string mode, string encounterId)
+        public void Init(string formId, string encounterTypeId, string mode, string encounterId, string repmode)
         {
             //Load Form + Question Metadata
-
-
-
+            
             if (null == Form)
             {
                 Form = _encounterService.LoadForm(new Guid(formId));
@@ -286,15 +314,17 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 //  New Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "new");
+                var visitType = repmode == "1" ? VisitType.Repeat : VisitType.Initial;
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null);
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null, visitType);
+
+                
             }
             else
             {
                 //  Load Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "open");
-                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, true);
+                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, true);
             }
 
             if (null == Encounter)
@@ -366,14 +396,12 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void LoadView()
         {
-
-
             //set defaults
-            
 
             if (null != Manifest)
             {
                 BirthDate = Manifest.Encounter.EncounterDate;
+                SelectedVisitType = SetVisitType(Manifest.Encounter.VisitType);
 
                 if (Manifest.HasResponses())
                 {
@@ -771,13 +799,13 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveChanges()
         {
-            FormStatus = "Satus: In complete";
+            FormStatus = "Status: In complete";
 
             if (null != Manifest)
             {
                 if (string.IsNullOrWhiteSpace(FormError) && Manifest.IsComplete())
                 {
-                    FormStatus = "Satus: Completed";
+                    FormStatus = "Status: Completed";
                     return true;
                 }
                 
@@ -811,9 +839,10 @@ namespace LiveHTS.Presentation.ViewModel
                 //Manifest = _obsService.Manifest;
             }
             _obsService.MarkEncounterCompleted(Encounter.Id,UserId,true);
-            _obsService.UpdateEncounterDate(Encounter.Id, BirthDate);
+            _obsService.UpdateEncounterDate(Encounter.Id, BirthDate, GetVisitType());
             Manifest = _obsService.Manifest;
             Manifest.Encounter.EncounterDate = BirthDate;
+            Manifest.Encounter.VisitType = GetVisitType();
             Encounter = Manifest.Encounter;
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
@@ -837,6 +866,20 @@ namespace LiveHTS.Presentation.ViewModel
                 return Guid.Empty;
 
             return new Guid(guid);
+        }
+
+        private VisitType GetVisitType()
+        {
+            if (null != SelectedVisitType)
+                return (VisitType)SelectedVisitType.GetIntValue();
+            return VisitType.Initial;
+        }
+
+        private CustomItem SetVisitType(VisitType visitType)
+        {
+            var vtype = (int) visitType;
+            var v = VisitTypes.FirstOrDefault(x => x.Value == vtype.ToString());
+            return v ?? VisitTypes.First();
         }
     }
 }

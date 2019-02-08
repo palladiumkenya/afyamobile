@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using FizzWare.NBuilder;
-using LiveHTS.Core.Annotations;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.SharedKernel.Custom;

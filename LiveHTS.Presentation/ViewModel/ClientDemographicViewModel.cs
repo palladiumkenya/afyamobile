@@ -22,7 +22,9 @@ namespace LiveHTS.Presentation.ViewModel
     {
         private List<CustomItem> _genderOptions;
         private List<CustomItem> _ageUnitOptions;
-
+        private bool _dateHasFoucus = false;
+        private bool _ageCalculated = false;
+        private bool _ageUnitCalculated = false;
         private string _firstName;
         private string _middleName;
         private string _lastName;
@@ -33,9 +35,11 @@ namespace LiveHTS.Presentation.ViewModel
         
         private string _personId;
         private MvxCommand _showDateDialogCommand;
+        private MvxCommand _showAgeDialogCommand;
         private TraceDateDTO _selectedDate;
         private ClientDemographicDTO _demographic;
         private IndexClientDTO _indexClientDTO;
+        private string _nickName;
 
         public ClientDemographicDTO Demographic
         {
@@ -95,6 +99,17 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => LastName);
             }
         }
+
+        public string NickName
+        {
+            get { return _nickName; }
+            set
+            {
+                _nickName = value;
+                RaisePropertyChanged(() => NickName);
+            }
+        }
+
         public CustomItem SelectedGender
         {
             get { return _selectedGender; }
@@ -109,9 +124,11 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _age; }
             set
             {
+                bool hasChanged = AgeHasChanged(_age, value);
                 _age = value;
                 RaisePropertyChanged(() => Age);
-                CalculateBirthDate();
+                if (!_dateHasFoucus && !_ageCalculated && hasChanged)
+                    CalculateBirthDate();
             }
         }
         public CustomItem SelectedAgeUnit
@@ -119,9 +136,11 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _selectedAgeUnit; }
             set
             {
+                bool hasChanged = AgeUnitHasChanged(_selectedAgeUnit, value);
                 _selectedAgeUnit = value;
                 RaisePropertyChanged(() => SelectedAgeUnit);
-                CalculateBirthDate();
+                if (!_dateHasFoucus && !_ageUnitCalculated && hasChanged)
+                    CalculateBirthDate();
             }
         }
        
@@ -130,13 +149,19 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _birthDate; }
             set
             {
+                bool hasChanged = BirthDateHasChanged(_birthDate, value);
                 _birthDate = value;
                 RaisePropertyChanged(() => BirthDate);
-                CalculateAge();
+                if (_dateHasFoucus || isDefaultAge())
+                    CalculateAge();
             }
         }
 
-        
+        private bool isDefaultAge()
+        {
+            return BirthDate.Date < DateTime.Today.Date && Age == 0;
+        }
+
         public string PersonId
         {
             get { return _personId; }
@@ -166,14 +191,29 @@ namespace LiveHTS.Presentation.ViewModel
                 return _showDateDialogCommand;
             }
         }
+
+        public IMvxCommand ShowAgeDialogCommand
+        {
+            get
+            {
+                _showAgeDialogCommand = _showAgeDialogCommand ?? new MvxCommand(ShowAgeDialog);
+                return _showAgeDialogCommand;
+            }
+        }
         private void ShowDateDialog()
         {
-
+            _dateHasFoucus = true;
+            _ageCalculated = false;
             ShowDatePicker(Guid.Empty, BirthDate);
+        }
+        private void ShowAgeDialog()
+        {
+            _ageCalculated =true;
         }
         private void UpdatePromiseDate(TraceDateDTO selectedDate)
         {
             BirthDate = selectedDate.EventDate;
+            _dateHasFoucus = false;
         }
         public void ShowDatePicker(Guid refId, DateTime refDate)
         {
@@ -192,14 +232,12 @@ namespace LiveHTS.Presentation.ViewModel
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
 
-            BirthDate = DateTime.Today.AddDays(-1);
+            BirthDate = DateTime.Today;//.AddDays(-1);
             Title = "Demographics";
             MovePreviousLabel = "";
             MoveNextLabel = "NEXT";
             Age = 0;
             SelectedAgeUnit = AgeUnitOptions.First();
-
-
         }
 
         public void Init(string indexId)
@@ -269,37 +307,39 @@ namespace LiveHTS.Presentation.ViewModel
         public void CalculateBirthDate()
         {
             var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
-            var dob = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
-
-            if (BirthDate.Year!=dob.Year)
+            try
             {
-                BirthDate = dob;
+                BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
+            }
+            catch (Exception ex)
+            {
+
             }
         }
-
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
         {
-            if (Age == 0)
+            _ageCalculated = true;
+
+            PersonAge personAge = null;
+            try
             {
-                if (null != BirthDate)
-                {
-                    var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                    Age = personAge.Age;
-                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
-                    SelectedAgeUnit = ageUnit;
-                }
+                personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
             }
-            else
+            catch (Exception ex)
             {
-                var personAge = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                if (Age!= personAge.Age)
-                {
-                    Age = personAge.Age;
-                    var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
-                    SelectedAgeUnit = ageUnit;
-                }
+
             }
+
+            if (null == personAge)
+                return;
+
+            Age = personAge.Age;
+            _ageCalculated = false;
+            var ageUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == personAge.AgeUnit);
+            _ageUnitCalculated = true;
+            SelectedAgeUnit = ageUnit;
+            _ageUnitCalculated = false;
         }
 
         public override void MoveNext()
@@ -329,6 +369,7 @@ namespace LiveHTS.Presentation.ViewModel
                 FirstName = Demographic.FirstName;
                 MiddleName = Demographic.MiddleName;
                 LastName = Demographic.LastName;
+                NickName = Demographic.NickName;
                 SelectedGender = GenderOptions.FirstOrDefault(x=>x.Value==Demographic.Gender);
                 Age = Demographic.Age;
                 if (!string.IsNullOrWhiteSpace(Demographic.AgeUnit))
@@ -339,6 +380,21 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Mvx.Error(e.Message);
             }
+        }
+
+        bool AgeHasChanged(decimal oldAge,decimal newAge)
+        {
+            return  oldAge != newAge;            
+        }
+
+        bool AgeUnitHasChanged(CustomItem oldUnit, CustomItem newUnit)
+        {
+            return null != oldUnit && !oldUnit.Equals(newUnit);
+        }
+
+        bool BirthDateHasChanged(DateTime oldBirth, DateTime newBirth)
+        {
+            return oldBirth.Date!=newBirth.Date;
         }
     }
 }

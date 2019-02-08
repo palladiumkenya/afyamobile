@@ -61,12 +61,20 @@
                 android:id="@+id/spinnerMaritalStatus"
                 local:MvxBind="ItemsSource MaritalStatus;SelectedItem SelectedMaritalStatus" />
             <TextView
-                android:text="Key Population"
+                android:text="Population Type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                  android:textSize="@dimen/textM"
                 android:id="@+id/textViewProfileKeyPop"
                 local:MvxBind="Error Errors['KeyPops']" />
+			<TextView
+				android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileKeyPopCat"
+				android:textSize="@dimen/textM"
+				android:textStyle="bold"
+				android:paddingLeft="9dp"
+                local:MvxBind="Text KeyPopCategory" />
             <MvxSpinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,12 +88,61 @@
                  android:textSize="@dimen/textM"
                 android:id="@+id/textViewProfileOtherKeyPop"
                 local:MvxBind="ItemsSource KeyPops;SelectedItem SelectedKeyPop;Visibility IsOtherKeyPop" />
-            <EditText
+			<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileKeyPopCat"
+				android:textSize="@dimen/textM"
+                local:MvxBind="Text KeyPopCategory" />
+			<EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                  android:textSize="@dimen/textM"
                 android:id="@+id/editTextProfileKeyOtherPop"
                 local:MvxBind="Text OtherKeyPop; Visibility IsOtherKeyPop; Error Errors['OtherKeyPop']" />
+            <TextView
+                android:text="Education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileEductaion"
+                android:textSize="@dimen/textM"
+                local:MvxBind="Error Errors['Education']" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            
+                android:id="@+id/spinnerEducation"
+				    android:textSize="@dimen/textXL"
+                local:MvxBind="ItemsSource Educations;SelectedItem SelectedEducation" />
+            <TextView
+                android:text="Education Completed?"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewProfileCompletion"
+                android:textSize="@dimen/textM"
+                local:MvxBind="Error Errors['Completion'];Visibility AllowCompletion, Converter=Visibility" />
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+               
+                android:id="@+id/spinnerCompletion"
+				    android:textSize="@dimen/textXL"
+                local:MvxBind="ItemsSource Completions;SelectedItem SelectedCompletion;Visibility AllowCompletion, Converter=Visibility" />
+
+			<TextView
+                android:text="Occupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:textSize="@dimen/textM"
+                android:id="@+id/textViewProfileOccupation"/>
+            <MvxSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textXL"
+                android:id="@+id/spinnerOccupation"
+                local:MvxBind="ItemsSource Occupations;SelectedItem SelectedOccupation" />
+
+
             <TextView
                 android:text="Relation To Index Client"
                 android:layout_width="match_parent"

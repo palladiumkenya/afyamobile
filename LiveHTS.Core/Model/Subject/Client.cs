@@ -18,6 +18,9 @@ namespace LiveHTS.Core.Model.Subject
         public string MaritalStatus { get; set; }
         public string KeyPop { get; set; }
         public string OtherKeyPop { get; set; }
+        public Guid? Education { get; set; }
+        public Guid? Completion { get; set; }
+        public Guid? Occupation { get; set; }
         public bool IsFamilyMember  { get; set; }
         public bool IsPartner { get; set; }
         [Indexed]
@@ -59,33 +62,36 @@ namespace LiveHTS.Core.Model.Subject
         {
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,Guid userId):this()
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,Guid userId,Guid? education,Guid? completion, Guid? occupation) :this()
         {
             MaritalStatus = maritalStatus;
             KeyPop = keyPop;
             OtherKeyPop = otherKeyPop;
             PracticeId = practiceId;
             UserId = userId;
+            Education = education;
+            Completion = completion;
+            Occupation = occupation;
         }
 
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId,Guid userId)
-            :this(maritalStatus, keyPop, otherKeyPop,practiceId, userId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Guid personId,Guid userId, Guid? education, Guid? completion, Guid? occupation)
+            :this(maritalStatus, keyPop, otherKeyPop,practiceId, userId, education, completion, occupation)
         {
             PersonId = personId;
         }
-        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId)
-            : this(maritalStatus, keyPop, otherKeyPop, practiceId, userId)
+        private Client(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId, Guid? education, Guid? completion, Guid? occupation)
+            : this(maritalStatus, keyPop, otherKeyPop, practiceId, userId, education, completion, occupation)
         {
             Person = person;
         }
 
-        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId)
+        public static Client Create(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person, Guid userId, Guid? education, Guid? completion, Guid? occupation)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person,userId);
+            return new Client(maritalStatus, keyPop, otherKeyPop,practiceId,person,userId, education, completion, occupation);
         }
-        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId, Guid userId)
+        public static Client CreateFromPerson(string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId,  Guid personId, Guid userId, Guid? education, Guid? completion, Guid? occupation)
         {
-            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId);
+            return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId, education, completion, occupation);
         }
 
        
@@ -156,6 +162,18 @@ namespace LiveHTS.Core.Model.Subject
         public bool IsInPns(Guid indexId)
         {
             return IsInState(indexId,LiveState.PartnerListed);
+        }
+
+        public bool CanBeReferred()
+        {
+            return IsInAnyState(LiveState.HtsTestedPos, LiveState.HtsTestedInc,
+            LiveState.HtsRetestedPos, LiveState.HtsRetestedInc,
+                LiveState.HtsCanBeReferred);
+        }
+
+        public bool CanBeLinked()
+        {
+            return IsInAnyState(LiveState.HtsTestedPos, LiveState.HtsRetestedPos, LiveState.HtsCanBeLinked);
         }
 
         public void AddIdentifier(ClientIdentifier clientIdentifier)

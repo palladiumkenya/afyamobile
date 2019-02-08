@@ -171,6 +171,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         {
             InsertOrUpdate(client);
 
+            // Check if Has ever been tested
 
             if (!ClientState.IsInState(client.ClientStates.ToList(), LiveState.HtsTested))
             {
@@ -181,21 +182,38 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 }
             }
 
-            
+            var testedPos = null != client.ClientSummaries &&
+            client.ClientSummaries.Any(x => x.Area == "Testing" && (x.Report == "Positive" || x.Report == "Inconclusive"));
 
-            foreach (var clientState in client.ClientStates.Where(x => x.Status == LiveState.HtsEnrolled ||
-                                                                       x.Status == LiveState.HtsSmartCardEnrolled ||
-                                                                       x.Status == LiveState.HtsFamAcceptedYes ||
-                                                                       x.Status == LiveState.HtsTested))
+            if (!ClientState.IsInState(client.ClientStates.ToList(), LiveState.HtsTestedNeg, LiveState.HtsRetestedNeg) || testedPos)
             {
+                client.ClientStates.Add(new ClientState(client.Id, LiveState.HtsCanBeReferred));
 
+            }
+
+            var testedPosOnly = null != client.ClientSummaries &&
+             client.ClientSummaries.Any(x => x.Area == "Testing" && (x.Report == "Positive"));
+
+            if (testedPos)
+            {
+                client.ClientStates.Add(new ClientState(client.Id, LiveState.HtsCanBeLinked));
+
+            }
+
+            var states = client.ClientStates.Where(x => x.Status == LiveState.HtsEnrolled ||
+                                                                         x.Status == LiveState.HtsSmartCardEnrolled ||
+                                                                         x.Status == LiveState.HtsFamAcceptedYes ||
+                                                                         x.Status == LiveState.HtsTested ||
+                                                                         x.Status == LiveState.HtsCanBeReferred ||
+                                                                         x.Status == LiveState.HtsCanBeLinked);
+            foreach (var clientState in states)
+            {
                 var rowsAffected = _db.Update(clientState);
                 if (rowsAffected == 0)
                 {
                     _db.Insert(clientState);
                 }
             }
-
 
             foreach (var clientSummary in client.ClientSummaries)
             {

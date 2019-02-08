@@ -11,7 +11,6 @@ using LiveHTS.Core.Model.Survey;
 using LiveHTS.Core.Service.Clients;
 using LiveHTS.Infrastructure.Repository.Interview;
 using LiveHTS.Infrastructure.Repository.Survey;
-using LiveHTS.SharedKernel.Custom;
 using NUnit.Framework;
 using SQLite;
 

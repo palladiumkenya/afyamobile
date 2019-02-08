@@ -16,6 +16,7 @@ using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
+using MvvmValidation;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
@@ -166,6 +167,20 @@ namespace LiveHTS.Presentation.ViewModel
             if (null==Encounter&& !string.IsNullOrWhiteSpace(clientEncounterJson))
             {
                 Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
+            }
+
+            if (!Client.CanBeLinked())
+            {
+                LinkedToCareViewModel.ErrorSummary = "Client Cannot be linked to Care !";
+                LinkedToCareViewModel.
+                Validator.AddRule(
+            
+            () => RuleResult.Assert(
+               Client.CanBeLinked(),
+                $"Client Cannot be linked to Care !"
+            )
+        );
+
             }
         }
 

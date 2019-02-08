@@ -7,6 +7,7 @@ namespace LiveHTS.Core.Interfaces.Model
         string FirstName { get; set; }
         string MiddleName { get; set; }
         string LastName { get; set; }
+        string NickName { get; set; }
         string Gender { get; set; }
         DateTime BirthDate { get; set; }
         bool? BirthDateEstimated { get; set; }

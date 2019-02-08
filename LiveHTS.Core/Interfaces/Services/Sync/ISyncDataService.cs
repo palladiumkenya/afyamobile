@@ -8,7 +8,7 @@ namespace LiveHTS.Core.Interfaces.Services.Sync
 {
     public interface ISyncDataService
     {
-        void UpdateMeta(Meta meta);
+        void UpdateMeta(SyncModel.Meta meta);
 
         void UpdateModules(List<Module>modules);
 

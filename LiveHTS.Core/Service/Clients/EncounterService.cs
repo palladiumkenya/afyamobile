@@ -6,6 +6,7 @@ using LiveHTS.Core.Interfaces.Repository.Survey;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Clients
 {
@@ -41,23 +42,24 @@ namespace LiveHTS.Core.Service.Clients
         public Encounter StartEncounter(Encounter encounter)
         {
             return StartEncounter(encounter.FormId, encounter.EncounterTypeId, encounter.ClientId, encounter.ProviderId,
-                encounter.UserId,encounter.PracticeId,encounter.DeviceId,encounter.IndexClientId);
+                encounter.UserId,encounter.PracticeId,encounter.DeviceId,encounter.IndexClientId,encounter.VisitType);
         }
 
-        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,Guid practiceId, Guid deviceId,Guid? indexClientId)
+        public Encounter StartEncounter(Guid formId, Guid encounterTypeId, Guid clientId, Guid providerId, Guid userId,
+            Guid practiceId, Guid deviceId, Guid? indexClientId, VisitType visitType)
         {
-            var exisitngEncounter =_encounterRepository.GetAll(x => x.FormId == formId &&
-                                                 x.EncounterTypeId == encounterTypeId &&
-                                                 x.ClientId == clientId)
-                    .FirstOrDefault();
+            var exisitngEncounter = _encounterRepository.GetAll(x => x.FormId == formId &&
+                                                                     x.EncounterTypeId == encounterTypeId &&
+                                                                     x.ClientId == clientId).FirstOrDefault();
 
             if (null != exisitngEncounter)
             {
                 return exisitngEncounter;
             }
 
-            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId,deviceId,indexClientId);
-            encounter.Started=DateTime.Now;
+            var encounter = Encounter.CreateNew(formId, encounterTypeId, clientId, providerId, userId, practiceId, deviceId, indexClientId);
+            encounter.Started = DateTime.Now;
+            encounter.VisitType = visitType;
             _encounterRepository.Save(encounter);
             return encounter;
         }

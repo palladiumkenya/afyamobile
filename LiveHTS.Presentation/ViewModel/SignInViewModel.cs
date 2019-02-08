@@ -108,7 +108,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             //TODO : Disable auto sign in
 
-            AutoSignIn = false;
+            AutoSignIn = true;
 
             if (AutoSignIn)
             {
@@ -145,7 +145,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void LoadVersion(string version)
         {
-            Version = version;
+            //TODO : Disable QA
+
+            Version = $"{version} QA Only";
         }
 
         public void UpdateSession()

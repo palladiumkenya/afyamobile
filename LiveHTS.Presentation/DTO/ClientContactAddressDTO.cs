@@ -12,8 +12,10 @@ namespace LiveHTS.Presentation.DTO
         public string AddressId { get; set; }
         public string PersonId { get; set; }
 
-        public int? Phone { get; set; }
+        public long? Phone { get; set; }
         public int? CountyId { get; set; }
+        public int? SubCountyId { get; set; }
+        public int? WardId { get; set; }
         public string Landmark { get; set; }
         public decimal? Lat { get; set; }
         public decimal? Lng { get; set; }
@@ -32,7 +34,7 @@ namespace LiveHTS.Presentation.DTO
         {
         }
 
-        private ClientContactAddressDTO(int? phone, string landmark)
+        private ClientContactAddressDTO(long? phone, string landmark)
         {
             Phone = phone;
             Landmark = landmark;
@@ -44,6 +46,9 @@ namespace LiveHTS.Presentation.DTO
             addressDTO.PersonId = clientContactViewModel.PersonId;
             addressDTO.ContactId = clientContactViewModel.ContactId;
             addressDTO.AddressId = clientContactViewModel.AddressId;
+            addressDTO.CountyId = clientContactViewModel.SelectedCounty?.Id;
+            addressDTO.SubCountyId = clientContactViewModel.SelectedSubCounty?.Id;
+            addressDTO.WardId = clientContactViewModel.SelectedWard?.Id;
             return addressDTO;
         }
 
@@ -73,6 +78,9 @@ namespace LiveHTS.Presentation.DTO
                         var address = client.Person.Addresses.First();
                         addressDTO.Landmark = address.Landmark;
                         addressDTO.AddressId = address.Id.ToString();
+                        addressDTO.CountyId = address.CountyId;
+                        addressDTO.SubCountyId = address.SubCountyId;
+                        addressDTO.WardId = address.WardId;
                     }
 
                     addressDTO.PersonId = client.PersonId.ToString();

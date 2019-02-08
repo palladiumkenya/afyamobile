@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\Repository\Config\IPracticeRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IDeviceRepository.cs" />
     <Compile Include="Interfaces\Repository\Config\IPracticeTypeRepository.cs" />
+    <Compile Include="Interfaces\Repository\IMetaRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsPartnerTraceResultRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsPartnerScreeningRepository.cs" />
     <Compile Include="Interfaces\Repository\Interview\IObsMemberScreeningRepository.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Interfaces\Repository\Interview\IObsFinalTestResultRepository.cs" />
     <Compile Include="Interfaces\Repository\ISeedJson.cs" />
     <Compile Include="Interfaces\Repository\ISyncDataRepository.cs" />
+    <Compile Include="Interfaces\Repository\Meta\IRegionRepository.cs" />
     <Compile Include="Interfaces\Repository\SmartCard\IPSmartStoreRepository.cs" />
     <Compile Include="Interfaces\Repository\SmartCard\IClientShrRecordRepository.cs" />
     <Compile Include="Interfaces\Repository\Subject\IClientStateRepository.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Interfaces\Services\Clients\IRemoteSearchService.cs" />
     <Compile Include="Interfaces\Services\Clients\IRemoteRegistryService.cs" />
     <Compile Include="Interfaces\Services\Config\ICohortService.cs" />
+    <Compile Include="Interfaces\Services\Meta\IMetaService.cs" />
     <Compile Include="Interfaces\Services\Config\ISetupWizardService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerScreeningService.cs" />
     <Compile Include="Interfaces\Services\Interview\IPartnerTracingService.cs" />
@@ -119,6 +122,8 @@
     <Compile Include="Interfaces\Model\IPerson.cs" />
     <Compile Include="Interfaces\Model\IPersonContact.cs" />
     <Compile Include="Interfaces\Model\IPersonAddress.cs" />
+    <Compile Include="Model\Meta\Region.cs" />
+    <Compile Include="Model\Meta\RegionItem.cs" />
     <Compile Include="Model\SmartCard\CARDDETAILS.cs" />
     <Compile Include="Model\SmartCard\ClientShrRecord.cs" />
     <Compile Include="Model\SmartCard\EXTERNALPATIENTID.cs" />
@@ -233,6 +238,7 @@
     <Compile Include="Service\Clients\RegistryService.cs" />
     <Compile Include="Service\Config\CohortService.cs" />
     <Compile Include="Service\Config\DeviceSetupService.cs" />
+    <Compile Include="Service\Meta\MetaService.cs" />
     <Compile Include="Service\Config\PracticeSetupService.cs" />
     <Compile Include="Service\Config\LookupService.cs" />
     <Compile Include="Service\Config\SetupWizardService.cs" />
@@ -258,6 +264,8 @@
     <Compile Include="Service\Sync\SyncPerson.cs" />
     <Compile Include="Service\Sync\SyncUser.cs" />
     <Compile Include="SyncModel\Meta.cs" />
+    <Compile Include="Model\Meta\KitHistory.cs" />
+    <Compile Include="Interfaces\Repository\Meta\IKitHistoryRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

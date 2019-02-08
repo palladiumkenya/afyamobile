@@ -198,9 +198,9 @@ namespace LiveHTS.Core.Service.Clients
             _encounterRepository.UpdateStatus(encounterId, userId,completed);
         }
 
-        public void UpdateEncounterDate(Guid encounterId, DateTime encounterDate)
+        public void UpdateEncounterDate(Guid encounterId, DateTime encounterDate, VisitType visitType)
         {
-            _encounterRepository.UpdateEncounterDate(encounterId, encounterDate);
+            _encounterRepository.UpdateEncounterDate(encounterId, encounterDate,visitType);
         }
 
         private void UpdateManifest(Guid encounterId)

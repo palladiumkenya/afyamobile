@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Interfaces.Services.Clients
 {
@@ -29,6 +30,6 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
 
         void ClearEncounter(Guid encounterId);
         void MarkEncounterCompleted(Guid encounterId,Guid userId,bool completed);
-        void UpdateEncounterDate(Guid id, DateTime encounterDate);
+        void UpdateEncounterDate(Guid id, DateTime encounterDate,VisitType visitType);
     }
 }
