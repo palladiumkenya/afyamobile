@@ -40,7 +40,6 @@
     <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>PdbOnly</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -522,6 +521,22 @@
     <AndroidResource Include="Resources\layout\Test_History.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Client_Summary.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-sw720dp\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-sw600dp\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\layout-sw600dp\Item_Summary.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-sw720dp\Item_Summary.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-sw600dp\Item_Client_Summary.axml" />
+    <AndroidResource Include="Resources\layout-sw720dp\Item_Client_Summary.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

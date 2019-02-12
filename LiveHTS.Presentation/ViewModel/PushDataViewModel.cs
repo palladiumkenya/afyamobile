@@ -22,6 +22,7 @@ namespace LiveHTS.Presentation.ViewModel
     {
         //TODO: Update version
         private readonly int _hapiVersion = 106;
+        private bool deleteOnPush = true;
 
         private readonly IDialogService _dialogService;
         private readonly ISettings _settings;
@@ -271,15 +272,14 @@ namespace LiveHTS.Presentation.ViewModel
                         clientIdsDelete.Add(clientToDeleteDto);
                         foreach (var toDeleteDto in clientIdsDelete)
                         {
-                            //TODO: ALLOW DELETE [DONE]
-                            _clientReaderService.Purge(toDeleteDto);
+                            //TODO: ALLOW DELETE []
+                            if(deleteOnPush)
+                                _clientReaderService.Purge(toDeleteDto);
                         }
                     }
                 }
                 
                 //  send
-                
-            
                 
                 CurrentStatus = $"done! sent {clientIdsDelete.Count} of {count} ";
 

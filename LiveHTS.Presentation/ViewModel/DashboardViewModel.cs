@@ -289,6 +289,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Client)
             {
                 PartnerViewModel.Client = EncounterViewModel.Client = Client;
+                SummaryViewModel.Client = Client;
             }
 
             if (null != IndexClient)
