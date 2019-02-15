@@ -21,7 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
     public class PushDataViewModel:MvxViewModel, IPushDataViewModel
     {
         //TODO: Update version
-        private readonly int _hapiVersion = 106;
+        private readonly int _hapiVersion = 107;
         private bool deleteOnPush = true;
 
         private readonly IDialogService _dialogService;
