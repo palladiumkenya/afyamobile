@@ -200,7 +200,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null == Local)
                 {
                     Local = new ServerConfig();
-                    Local.Address = "http://192.168.43.243:4747";
+                    Local.Address = "http://data.kenyahmis.org:4747";
                 }
                 else
                 {

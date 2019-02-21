@@ -79,15 +79,7 @@
                 android:background="#3F51B5"
                 android:textStyle="bold"
                 local:MvxBind="Click SignInCommand" />
-        <!-- Login progress -->
-            <ProgressBar
-                android:id="@+id/login_progress"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                local:MvxBind="Visibility IsBusy, Converter=Visibility" />
+       
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
