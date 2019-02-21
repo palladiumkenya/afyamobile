@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 
@@ -9,6 +10,7 @@ namespace LiveHTS.Core.Interfaces.Services.Config
     {
         bool IsSetup();
         bool HasPulledData();
+        Task<bool> HasPulledDataAsync();
         Device GetDefault(Guid deviceId);
         Device GetDefault(string serial="");
         ServerConfig GetCentral();

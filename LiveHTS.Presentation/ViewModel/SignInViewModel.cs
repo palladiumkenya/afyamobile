@@ -161,7 +161,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
         }
-        private async void AttemptSignIn()
+        private void AttemptSignIn()
         {
             IsBusy = true;
           //  _dialogService.ShowWait("Please wait...");
@@ -177,6 +177,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
             catch (Exception e)
             {
+                IsBusy = false;
                 _dialogService.Alert($"{e.Message}", "Sign In Failed", "OK");
             }
            IsBusy = false;
@@ -184,7 +185,6 @@ namespace LiveHTS.Presentation.ViewModel
      
         private void SetUp()
         {
-            IsBusy = true;
             ShowViewModel<SetupWizardViewModel>();
         }
 

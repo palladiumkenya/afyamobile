@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LiveHTS.Core.Interfaces.Repository.Config;
 using LiveHTS.Core.Interfaces.Repository.Subject;
 using LiveHTS.Core.Interfaces.Repository.Survey;
@@ -42,7 +43,10 @@ namespace LiveHTS.Core.Service.Config
           
             return _moduleRepository.Count()>0;
         }
-
+        public Task<bool> HasPulledDataAsync()
+        {
+            throw new NotImplementedException();
+        }
         public Device GetDefault(Guid deviceId)
         {
             return _deviceRepository.Get(deviceId);
@@ -137,5 +141,7 @@ namespace LiveHTS.Core.Service.Config
                 _providerRepository.InsertOrUpdate(user.Provider);
             }
         }
+
+       
     }
 }

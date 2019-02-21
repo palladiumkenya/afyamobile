@@ -31,7 +31,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _registryCommand = _registryCommand ?? new MvxCommand(ShowRegistry);
+                _registryCommand = _registryCommand ?? new MvxCommand(ShowRegistry,()=>!IsBusy);
                 return _registryCommand;
             }
         }
@@ -40,7 +40,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _registerNewClientCommand = _registerNewClientCommand ?? new MvxCommand(RegisterNew);
+                _registerNewClientCommand = _registerNewClientCommand ?? new MvxCommand(RegisterNew, () => !IsBusy);
                 return _registerNewClientCommand;
             }
         }
@@ -49,7 +49,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _quitCommand = _quitCommand ?? new MvxCommand(Quit);
+                _quitCommand = _quitCommand ?? new MvxCommand(Quit, () => !IsBusy);
                 return _quitCommand;
             }
         }
@@ -58,7 +58,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _deviceCommand = _deviceCommand ?? new MvxCommand(ShowDevice);
+                _deviceCommand = _deviceCommand ?? new MvxCommand(ShowDevice, () => !IsBusy);
                 return _deviceCommand;
             }
         }
@@ -67,7 +67,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _practiceCommand = _practiceCommand ?? new MvxCommand(ShowPractice);
+                _practiceCommand = _practiceCommand ?? new MvxCommand(ShowPractice, () => !IsBusy);
                 return _practiceCommand;
             }
         }
@@ -76,7 +76,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _pullCommand = _pullCommand ?? new MvxCommand(PullData);
+                _pullCommand = _pullCommand ?? new MvxCommand(PullData, () => !IsBusy);
                 return _pullCommand;
             }
         }
@@ -85,7 +85,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _pushDataCommand = _pushDataCommand ?? new MvxCommand(PushData);
+                _pushDataCommand = _pushDataCommand ?? new MvxCommand(PushData, () => !IsBusy);
                 return _pushDataCommand;
             }
         }
@@ -94,7 +94,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _summaryCommand = _summaryCommand ?? new MvxCommand(Summary);
+                _summaryCommand = _summaryCommand ?? new MvxCommand(Summary, () => !IsBusy);
                 return _summaryCommand;
             }
         }
@@ -103,7 +103,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _smartCardCommand = _smartCardCommand ?? new MvxCommand(SmartCard);
+                _smartCardCommand = _smartCardCommand ?? new MvxCommand(SmartCard, () => !IsBusy);
                 return _smartCardCommand;
             }
         }
@@ -128,7 +128,7 @@ namespace LiveHTS.Presentation.ViewModel
         public bool IsBusy
         {
             get { return _isBusy; }
-            set { _isBusy = value; RaisePropertyChanged(() => IsBusy);}
+            set { _isBusy = value; RaisePropertyChanged(() => IsBusy); ManageStatus(); }
         }
 
         public string Greeting => string.IsNullOrWhiteSpace(_profile) ? string.Empty : $"Karibu {_profile}";
@@ -149,6 +149,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void ViewAppeared()
         {
+            IsBusy = false;
             /*
              _settings.AddOrUpdateValue("livehts.userid", _user.Id.ToString());
                 _settings.AddOrUpdateValue("livehts.username", _user.UserName);
@@ -173,18 +174,22 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void ShowRegistry()
         {
+            IsBusy = true;
             ShowViewModel<RegistryViewModel>();
         }
         private void RegisterNew()
         {
+            IsBusy = true;
 
             if (_deviceSetupService.HasPulledData())
             {
                 ClearCache(_settings);
+                IsBusy = false;
                 ShowViewModel<ClientRegistrationViewModel>(new { mode = "new" });
             }
             else
             {
+                IsBusy = false;
                 _dialogService.Alert("Please Pull Data before proceeding !");
             }
 
@@ -192,40 +197,49 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void ShowDevice()
         {
+            IsBusy = true;
             ShowViewModel<DeviceViewModel>();
         }
 
         private void ShowPractice()
         {
+            IsBusy = true;
             ShowViewModel<PracticeViewModel>();
         }
         private void PullData()
         {
+            IsBusy = true;
             ShowViewModel<PullDataViewModel>();
         }
         private void PushData()
         {
+            IsBusy = true;
             ShowViewModel<PushDataViewModel>();
         }
         private void Summary()
         {
+            IsBusy = true;
             ShowViewModel<UserSummaryViewModel>();
         }
         private void SmartCard()
         {
+            IsBusy = true;
             if (_deviceSetupService.HasPulledData())
             {
+                IsBusy = false;
                 ShowViewModel<SmartCardViewModel>();
             }
             else
             {
+                IsBusy = false;
                 _dialogService.Alert("Please Pull Data before proceeding !");
             }
         }
 
         public void Quit()
         {
-          _dialogService.ConfirmExit();
+            IsBusy = true;
+            _dialogService.ConfirmExit();
         }
 
         private void ClearCache(ISettings settings)
@@ -242,6 +256,18 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (settings.Contains(nameof(ClientEnrollmentViewModel)))
                 settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+        }
+
+        private void ManageStatus()
+        {
+            if (IsBusy)
+            {
+                Common.StatusInfo.Show(_dialogService);
+            }
+            else
+            {
+                Common.StatusInfo.Close(_dialogService);
+            }
         }
     }
 }
