@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Access;
 using LiveHTS.Core.Interfaces.Services.Config;
@@ -75,6 +76,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _isBusy = value;
                 RaisePropertyChanged(() => IsBusy);
+                ManageStatus();
             }
         }
 
@@ -108,7 +110,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             //TODO : Disable auto sign in
 
-            AutoSignIn = true;
+            AutoSignIn = false;
 
             if (AutoSignIn)
             {
@@ -162,24 +164,25 @@ namespace LiveHTS.Presentation.ViewModel
         private void AttemptSignIn()
         {
             IsBusy = true;
-            
+          //  _dialogService.ShowWait("Please wait...");
+
             try
             {
                 User = _authService.SignIn(Username, Password);
 
                 _settings.AddOrUpdateValue("livehts.userid", User.Id.ToString());
                 _settings.AddOrUpdateValue("livehts.username", User.UserName);
-
+                IsBusy = false;
                 ShowViewModel<AppDashboardViewModel>(new { username= User.UserName });
             }
             catch (Exception e)
             {
+                IsBusy = false;
                 _dialogService.Alert($"{e.Message}", "Sign In Failed", "OK");
             }
-            
            IsBusy = false;
         }
-
+     
         private void SetUp()
         {
             ShowViewModel<SetupWizardViewModel>();
@@ -192,6 +195,18 @@ namespace LiveHTS.Presentation.ViewModel
         public void Quit()
         {
             _dialogService.ConfirmExit();
+        }
+
+        private void ManageStatus()
+        {
+            if(IsBusy)
+            {
+                Common.StatusInfo.Show(_dialogService);
+            }
+            else
+            {
+               Common.StatusInfo.Close(_dialogService);
+            }
         }
     }
 }

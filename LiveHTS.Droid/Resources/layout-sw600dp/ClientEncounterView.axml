@@ -1,206 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingBottom="4dp"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp"
-    android:paddingTop="4dp">
-<!-- CLEINT -->
+              xmlns:local="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:paddingBottom="4dp"
+              android:paddingLeft="4dp"
+              android:paddingRight="4dp"
+              android:paddingTop="4dp">
+    <!-- CLEINT -->
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@android:color/holo_orange_light"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:text="First Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                     android:textSize="@dimen/textM"
-                    android:id="@+id/textViewClientFirstName"
-                    local:MvxBind="Text ClientDTO.FirstName"
-                    android:paddingRight="5dp" />
-                <TextView
-                    android:text="MName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                     android:textSize="@dimen/textM"
-                    android:id="@+id/textViewClientMiddleName"
-                    local:MvxBind="Text ClientDTO.MiddleName"
-                    android:paddingRight="5dp" />
-                <TextView
-                    android:text="LName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                     android:textSize="@dimen/textM"
-                    android:id="@+id/textViewClientLastName"
-                    local:MvxBind="Text ClientDTO.LastName"
-                    android:paddingRight="5dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:text="Sex:"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                     android:textSize="@dimen/textM"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-                <TextView
-                    android:text="M"
-                    android:layout_width="wrap_content"
-                    android:textSize="@dimen/textM"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textViewClientGender"
-                    local:MvxBind="Text ClientDTO.Gender"
-                    android:paddingRight="5dp" />
-                <TextView
-                    android:text="Age:"
-                    android:textStyle="bold"
-                     android:textSize="@dimen/textM"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingRight="5dp" />
-                <TextView
-                    android:text="20 Ys"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/textM"
-                    android:id="@+id/textViewClientAge"
-                    local:MvxBind="Text ClientDTO.Age" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/holo_blue_light"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Summary" />
-        </LinearLayout>
-    </LinearLayout>
-<!-- FORM -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight=".7">
-            <TextView
-                android:paddingTop="8dp"
-                android:text="Form"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/textViewForm"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                 android:textSize="@dimen/textM"
-                local:MvxBind="Text ClientEncounterDTO.FormDisplay"
-                android:paddingRight="5dp" />
-            <TextView
-                android:text="Form Status"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/textViewForm"
-                local:MvxBind="Text FormStatus"
-                 android:textSize="@dimen/textM"
-                android:paddingRight="5dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@android:color/holo_orange_light"
+                android:orientation="vertical">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                        android:text="First Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textM"
+                        android:id="@+id/textViewClientFirstName"
+                        local:MvxBind="Text ClientDTO.FirstName"
+                        android:paddingRight="5dp"/>
+                <TextView
+                        android:text="MName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textM"
+                        android:id="@+id/textViewClientMiddleName"
+                        local:MvxBind="Text ClientDTO.MiddleName"
+                        android:paddingRight="5dp"/>
+                <TextView
+                        android:text="LName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textM"
+                        android:id="@+id/textViewClientLastName"
+                        local:MvxBind="Text ClientDTO.LastName"
+                        android:paddingRight="5dp"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <TextView
+                        android:text="Sex:"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/textM"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"/>
+                <TextView
+                        android:text="M"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/textM"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textViewClientGender"
+                        local:MvxBind="Text ClientDTO.Gender"
+                        android:paddingRight="5dp"/>
+                <TextView
+                        android:text="Age:"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/textM"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingRight="5dp"/>
+                <TextView
+                        android:text="20 Ys"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/textM"
+                        android:id="@+id/textViewClientAge"
+                        local:MvxBind="Text ClientDTO.Age"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight=".3">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_edit" />
-            <Button
-                android:text="Save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonSaveEncounter"
-                android:drawableLeft="@drawable/ic_save"
-                local:MvxBind="Click SaveChangesCommand" />
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/holo_blue_light"
+                android:orientation="vertical">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Summary"/>
         </LinearLayout>
     </LinearLayout>
-<!-- FORM SUMMARY-->
+    <!-- FORM -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text=""
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             android:textSize="@dimen/textT"
-            android:textColor="@android:color/holo_red_dark"
-            android:id="@+id/textViewErrors"
-            local:MvxBind="Text FormError" />
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7">
+            <TextView
+                    android:paddingTop="8dp"
+                    android:text="Form"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewForm"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/textM"
+                    local:MvxBind="Text ClientEncounterDTO.FormDisplay"
+                    android:paddingRight="5dp"/>
+            <TextView
+                    android:text="Form Status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewForm"
+                    local:MvxBind="Text FormStatus"
+                    android:textSize="@dimen/textM"
+                    android:paddingRight="5dp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit"/>
+            <Button
+                    android:text="Save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonSaveEncounter"
+                    android:drawableLeft="@drawable/ic_save"
+                    local:MvxBind="Click SaveChangesCommand"/>
+        </LinearLayout>
     </LinearLayout>
-<!-- FIELDS -->
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <AutoCompleteTextView
-            android:id="@+id/txtTestDate"
+    <!-- FORM SUMMARY-->
+    <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Encounter Date"
-             android:textSize="@dimen/textM"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:clickable="true"
-            android:editable="false"
-            local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']" />
+            android:layout_height="wrap_content">
+        <TextView
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textT"
+                android:textColor="@android:color/holo_red_dark"
+                android:id="@+id/textViewErrors"
+                local:MvxBind="Text FormError"/>
+    </LinearLayout>
+    <!-- FIELDS -->
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <AutoCompleteTextView
+                android:id="@+id/txtTestDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Encounter Date"
+                android:textSize="@dimen/textM"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:clickable="true"
+                android:editable="false"
+                local:MvxBind="Text BirthDate, Converter=Dmy; Click ShowDateDialogCommand; Error Errors['BirthDate']"/>
     </android.support.design.widget.TextInputLayout>
 
-	<!--VisitType-->
-            <LinearLayout
+    <!--VisitType-->
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutVisitType">
+        <MvxRadioGroup
+                android:textSize="@dimen/textM"
                 android:orientation="horizontal"
-                android:layout_width="match_parent"
+                local:MvxItemTemplate="@layout/item_visittype"
+                local:MvxBind="ItemsSource VisitTypes;SelectedItem SelectedVisitType"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearLayoutVisitType">
-                <MvxRadioGroup
-                    android:textSize="@dimen/textM"
-                    android:orientation="horizontal"
-                    local:MvxItemTemplate="@layout/item_visittype"
-                    local:MvxBind="ItemsSource VisitTypes;SelectedItem SelectedVisitType"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:id="@+id/visitType" />
-            </LinearLayout>
+                android:gravity="center_vertical"
+                android:id="@+id/visitType"/>
+    </LinearLayout>
 
     <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <Mvx.MvxListView
-            android:id="@+id/lvobs"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            local:MvxBind="ItemsSource Questions"
-            local:MvxItemTemplate="@layout/item_question"
-            android:descendantFocusability="afterDescendants"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
+            android:layout_height="fill_parent">
+        <Mvx.MvxListView
+                android:id="@+id/lvobs"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                local:MvxBind="ItemsSource Questions"
+                local:MvxItemTemplate="@layout/item_question"
+                android:descendantFocusability="afterDescendants"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
     </FrameLayout>
 </LinearLayout>

@@ -55,6 +55,8 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 client.Relationships = relationsList;
 
                 client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id).ToList(); ;
+
+                client.ClientSummaries=_db.Table<ClientSummary>().Where(x => x.ClientId == client.Id).ToList(); 
             }
             return client;
         }
@@ -253,6 +255,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 
         public void Purge(Guid id)
         {
+            _db.Execute($"DELETE FROM {nameof(ClientSummary)} WHERE ClientId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE ClientId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ClientIdentifier)} WHERE ClientId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(Client)} WHERE Id=?", id.ToString());
@@ -282,6 +285,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             _db.Table<ClientRelationship>().Delete(x => x.ClientId == id);
             _db.Table<ClientIdentifier>().Delete(x => x.ClientId ==id);
             _db.Table<ClientState>().Delete(x => x.ClientId == id);
+            _db.Table<ClientSummary>().Delete(x => x.ClientId == id);
             //Person
 
             foreach (var personId in personIds)

@@ -171,6 +171,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _isBusy = value; 
                 RaisePropertyChanged(() => IsBusy);
+                ManageStatus();
             }
         }
 
@@ -184,6 +185,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void Start()
         {
+
             base.Start();
             LoadClients();
         }
@@ -219,6 +221,18 @@ namespace LiveHTS.Presentation.ViewModel
                 return Guid.Empty;
 
             return new Guid(guid);
+        }
+
+        private void ManageStatus()
+        {
+            if (IsBusy)
+            {
+                Common.StatusInfo.Show(_dialogService);
+            }
+            else
+            {
+                Common.StatusInfo.Close(_dialogService);
+            }
         }
     }
 }
