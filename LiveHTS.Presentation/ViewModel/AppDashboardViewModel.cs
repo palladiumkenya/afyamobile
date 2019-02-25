@@ -128,7 +128,11 @@ namespace LiveHTS.Presentation.ViewModel
         public bool IsBusy
         {
             get { return _isBusy; }
-            set { _isBusy = value; RaisePropertyChanged(() => IsBusy); ManageStatus(); }
+            set
+            {
+                _isBusy = value; RaisePropertyChanged(() => IsBusy);
+                //ManageStatus();
+            }
         }
 
         public string Greeting => string.IsNullOrWhiteSpace(_profile) ? string.Empty : $"Karibu {_profile}";

@@ -171,7 +171,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _isBusy = value; 
                 RaisePropertyChanged(() => IsBusy);
-                ManageStatus();
+                //ManageStatus();
             }
         }
 
