@@ -31,7 +31,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _registryCommand = _registryCommand ?? new MvxCommand(ShowRegistry,()=>!IsBusy);
+                _registryCommand = _registryCommand ?? new MvxCommand(ShowRegistry);
                 return _registryCommand;
             }
         }
@@ -40,7 +40,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _registerNewClientCommand = _registerNewClientCommand ?? new MvxCommand(RegisterNew, () => !IsBusy);
+                _registerNewClientCommand = _registerNewClientCommand ?? new MvxCommand(RegisterNew);
                 return _registerNewClientCommand;
             }
         }
@@ -49,7 +49,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _quitCommand = _quitCommand ?? new MvxCommand(Quit, () => !IsBusy);
+                _quitCommand = _quitCommand ?? new MvxCommand(Quit);
                 return _quitCommand;
             }
         }
@@ -58,7 +58,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _deviceCommand = _deviceCommand ?? new MvxCommand(ShowDevice, () => !IsBusy);
+                _deviceCommand = _deviceCommand ?? new MvxCommand(ShowDevice);
                 return _deviceCommand;
             }
         }
@@ -67,7 +67,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _practiceCommand = _practiceCommand ?? new MvxCommand(ShowPractice, () => !IsBusy);
+                _practiceCommand = _practiceCommand ?? new MvxCommand(ShowPractice);
                 return _practiceCommand;
             }
         }
@@ -76,7 +76,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _pullCommand = _pullCommand ?? new MvxCommand(PullData, () => !IsBusy);
+                _pullCommand = _pullCommand ?? new MvxCommand(PullData);
                 return _pullCommand;
             }
         }
@@ -85,7 +85,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _pushDataCommand = _pushDataCommand ?? new MvxCommand(PushData, () => !IsBusy);
+                _pushDataCommand = _pushDataCommand ?? new MvxCommand(PushData);
                 return _pushDataCommand;
             }
         }
@@ -94,7 +94,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _summaryCommand = _summaryCommand ?? new MvxCommand(Summary, () => !IsBusy);
+                _summaryCommand = _summaryCommand ?? new MvxCommand(Summary);
                 return _summaryCommand;
             }
         }
@@ -103,7 +103,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _smartCardCommand = _smartCardCommand ?? new MvxCommand(SmartCard, () => !IsBusy);
+                _smartCardCommand = _smartCardCommand ?? new MvxCommand(SmartCard);
                 return _smartCardCommand;
             }
         }
