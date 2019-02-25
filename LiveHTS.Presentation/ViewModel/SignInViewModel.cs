@@ -149,7 +149,8 @@ namespace LiveHTS.Presentation.ViewModel
         {
             //TODO : Disable QA
 
-            Version = $"{version} QA Only";
+            // Version = $"{version} QA Only";
+            Version = $"{version}";
         }
 
         public void UpdateSession()
