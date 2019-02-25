@@ -97,7 +97,7 @@
 
 			
 			 <TextView
-                android:text="Eductaion"
+                android:text="Education"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewProfileEductaion"
@@ -111,7 +111,7 @@
 				    android:textSize="@dimen/textXL"
                 local:MvxBind="ItemsSource Educations;SelectedItem SelectedEducation" />
             <TextView
-                android:text="Eductaion Completed?"
+                android:text="Education Completed?"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewProfileCompletion"

@@ -18,5 +18,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         bool ConsentRequired { get; set; }
         bool HasConsent { get; set; }
         bool Block { get; set; }
+        bool CanStart { get; set; }
     }
 }

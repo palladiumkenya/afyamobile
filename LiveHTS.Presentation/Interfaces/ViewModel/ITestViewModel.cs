@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Lookup;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces.ViewModel.Wrapper;
@@ -24,6 +25,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string TestName { get; set; }
         int Attempt { get; set; }
         List<CategoryItem> Kits { get; set; }
+        List<KitHistory> KitHistories { get; set; }
         CategoryItem SelectedKit { get; set; }
         Guid Kit { get; set; }
         bool ShowKitOther { get; set; }

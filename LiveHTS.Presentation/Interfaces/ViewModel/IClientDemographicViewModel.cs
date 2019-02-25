@@ -25,6 +25,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CustomItem SelectedAgeUnit { get; set; }
 
         IMvxCommand ShowDateDialogCommand { get; }
+        IMvxCommand ShowAgeDialogCommand { get; }
         event EventHandler<ChangedDateEvent> ChangedDate;
         TraceDateDTO SelectedDate { get; set; }
         void ShowDatePicker(Guid refId, DateTime refDate);

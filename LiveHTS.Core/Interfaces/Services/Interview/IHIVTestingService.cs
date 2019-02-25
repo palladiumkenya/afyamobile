@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.Meta;
 using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Interfaces.Services.Interview
@@ -21,7 +22,7 @@ namespace LiveHTS.Core.Interfaces.Services.Interview
         void UpdateEncounterDate(Guid encounterId, Guid clientId);
         bool IsIndividual(Guid clientId);
         ObsFinalTestResult GetFinalTest(Guid clientId);
-       
-
+        List<KitHistory> GetKitHistories();
+        void UpdateKitHistories(ObsTestResult testResult);
     }
 }

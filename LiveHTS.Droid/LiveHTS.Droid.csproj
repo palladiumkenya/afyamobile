@@ -16,7 +16,6 @@
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <NuGetPackageImportStamp>
@@ -37,12 +36,12 @@
     <WarningLevel>4</WarningLevel>
     <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>PdbOnly</DebugType>
     <DebugSymbols>false</DebugSymbols>
+    <DebugType></DebugType>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -51,11 +50,8 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <AndroidLinkSkip>
-    </AndroidLinkSkip>
     <AndroidSupportedAbis>
     </AndroidSupportedAbis>
-    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Acr.Support.Android, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -77,7 +73,6 @@
       <HintPath>..\packages\Cheesebaron.MvxPlugins.Settings.3.1.0\lib\MonoAndroid10\Cheesebaron.MvxPlugins.Settings.Droid.dll</HintPath>
     </Reference>
     <Reference Include="Java.Interop" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
@@ -290,6 +285,7 @@
     <Compile Include="Views\ClientDemographicFragment.cs" />
     <Compile Include="Views\ClientEnrollmentFragment.cs" />
     <Compile Include="Views\TraceFragment.cs" />
+    <Compile Include="UnhandledExceptionExampleApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-hdpi\ic_facility.png" />
@@ -526,6 +522,22 @@
     <AndroidResource Include="Resources\layout\Test_History.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\Item_Client_Summary.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-sw720dp\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-sw600dp\ic_summary.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_summary.png" />
+    <AndroidResource Include="Resources\layout-sw600dp\Item_Summary.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-sw720dp\Item_Summary.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout-sw600dp\Item_Client_Summary.axml" />
+    <AndroidResource Include="Resources\layout-sw720dp\Item_Client_Summary.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

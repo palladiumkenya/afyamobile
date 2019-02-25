@@ -22,10 +22,27 @@ namespace LiveHTS.Infrastructure.Repository
             _db.CreateTable<T>();
         }
 
+        public virtual IEnumerable<T> GetAll(bool voided = false)
+        {
+            var results = _db.Table<T>()
+                .Where(x => x.Voided == voided);
+
+            return results;
+        }
+
         public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate)
         {
             return _db.Table<T>()
                 .Where(predicate);
+        }
+
+        public virtual void InsertOrUpdate(T entity)
+        {
+            var rowsAffected = _db.Update(entity);
+            if (rowsAffected == 0)
+            {
+                _db.Insert(entity);
+            }
         }
     }
 }

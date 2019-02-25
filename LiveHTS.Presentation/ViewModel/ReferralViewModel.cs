@@ -43,6 +43,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Action _closeTestCommandAction;
         private Action _addTraceCommandAction;
         private Action _editTestCommandAction;
+        
 
 
         public ILinkageViewModel ParentViewModel
@@ -240,6 +241,10 @@ namespace LiveHTS.Presentation.ViewModel
         */
         private bool CanSaveReferral()
         {
+            if (null != ParentViewModel.Client)
+            {
+
+            }
             return true;
         }
 
@@ -342,14 +347,15 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-            Validator.AddRule(
-                nameof(DatePromised),
-                () => RuleResult.Assert(
-                    DatePromised >= DateTime.Today,
-                    $"{nameof(DatePromised)} should be a valid date"
-                )
-            );
-            
+          
+            //Validator.AddRule(
+            //    nameof(DatePromised),
+            //    () => RuleResult.Assert(
+            //        DatePromised >= DateTime.Today,
+            //        $"{nameof(DatePromised)} should be a valid date"
+            //    )
+            //);
+
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
             if (null != Errors && Errors.Count > 0)

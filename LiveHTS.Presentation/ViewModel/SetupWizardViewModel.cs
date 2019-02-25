@@ -6,6 +6,7 @@ using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Interfaces.Services.Sync;
 using LiveHTS.Core.Model.Config;
+using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
@@ -34,6 +35,7 @@ namespace LiveHTS.Presentation.ViewModel
         private string _setupAction;
         private IEnumerable<Practice> _practices;
         private Practice _selectedPractice;
+       
 
         public Device Device { get; set; }
 
@@ -53,7 +55,6 @@ namespace LiveHTS.Presentation.ViewModel
                     SetupAction = Local.IsSetupComplete()
                         ? "Setup Again"
                         : "Setup";
-
                 }
             }
         }
@@ -199,7 +200,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null == Local)
                 {
                     Local = new ServerConfig();
-                    Local.Address = "http://41.204.187.159:4747";
+                    Local.Address = "http://data.kenyahmis.org:4747";
                 }
                 else
                 {
@@ -239,7 +240,18 @@ namespace LiveHTS.Presentation.ViewModel
                 _settings.AddOrUpdateValue("device.id", JsonConvert.SerializeObject(Device));
 
             //get fac
-            var practices = await _emrService.GetAllDefault(Url);
+            var practices = new List<Practice>();
+
+            try {
+                practices = await _emrService.GetAllDefault(Url);
+            }
+            catch( Exception ex)
+            {
+                _dialogService.Alert("Server error please check with System Admin");
+                _dialogService.HideWait();
+                return;
+            }
+           
             Practices = practices;
 
             if (null != practices && practices.Any())
@@ -249,7 +261,6 @@ namespace LiveHTS.Presentation.ViewModel
                     //save fac
                     _deviceSetupService.SavePractce(practice);
                 }
-              
             }
             else
             {
@@ -259,7 +270,17 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             //get users
-            var users = await _emrService.GetUsers(Url);
+            var users = new List<User>();
+            try
+            {
+                users = await _emrService.GetUsers(Url);
+            }
+            catch (Exception ex)
+            {
+                _dialogService.Alert("Server error please check with System Admin");
+                _dialogService.HideWait();
+                return;
+            }
             _deviceSetupService.SaveUsers(users);
 
 

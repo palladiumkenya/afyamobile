@@ -80,12 +80,8 @@
           android:id="@+id/regimageView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:src="@drawable/ic_cloud_done"
-       
-          local:MvxBind="Visibility Downloaded, Converter=ShowControl"
-       
-
-                />
+          android:src="@drawable/ic_cloud_done" 
+          local:MvxBind="Visibility Downloaded, Converter=ShowControl"/>
 
     </LinearLayout>
   </LinearLayout>

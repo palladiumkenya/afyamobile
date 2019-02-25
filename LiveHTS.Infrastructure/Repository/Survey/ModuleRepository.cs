@@ -16,7 +16,7 @@ namespace LiveHTS.Infrastructure.Repository.Survey
 
         public int Count()
         {
-           return _db.Table<Module>().Count();
+            return _db.Table<Module>().Count();
         }
 
         public Module GetDefaultModule()
