@@ -108,10 +108,10 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-       
 
 
-       
+
+
 
 
         public DeviceViewModel(ISettings settings,IDialogService dialogService, IDeviceSetupService deviceSetupService, IActivationService activationService)
@@ -207,6 +207,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanVerifyCentral()
         {
+            return false;
             return !string.IsNullOrWhiteSpace(CentralAddress);
         }
 
@@ -228,11 +229,12 @@ namespace LiveHTS.Presentation.ViewModel
                 _dialogService.Alert("Address could not be verified");
             }
             CentralName = Central.Name;
-            
+
         }
 
         private bool CanVerifyLocal()
         {
+            return false;
             return !string.IsNullOrWhiteSpace(LocalAddress);
         }
 
@@ -255,10 +257,11 @@ namespace LiveHTS.Presentation.ViewModel
 
 
             LocalName = Local.Name;
-            
+
         }
         private bool CanSaveDevice()
         {
+            return false;
             return !string.IsNullOrWhiteSpace(Serial);
         }
 

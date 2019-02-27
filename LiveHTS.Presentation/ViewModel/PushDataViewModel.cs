@@ -39,7 +39,7 @@ namespace LiveHTS.Presentation.ViewModel
         private int _overallStatusProgress;
         private IMvxCommand _pushDataCommand;
         private bool _isBusy;
-        
+
 
         public Device Device { get; set; }
         public ServerConfig Local { get; set; }
@@ -197,17 +197,16 @@ namespace LiveHTS.Presentation.ViewModel
                 }
                 catch (Exception e)
                 {
-                    _dialogService.Alert($"connetion Error {e.Message}");
+                    _dialogService.Alert($"connection Error {e.Message}");
                     IsBusy = false;
                     return;
                 }
 
-               
 
                 var ids = _clientReaderService.LoadClientIds();
                 var count= ids.Count;
                 int n = 0;
-                
+
                 var clientIdsDelete=new List<ClientToDeleteDTO>();
                 var encountersDelete=new List<EnconterToDeleteDTO>();
 
@@ -217,10 +216,10 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     var clientToDeleteDto = new ClientToDeleteDTO();
                     n++;
-                    
+
                     var client = _clientReaderService.LoadClient(id);
-                    
-                    
+
+
                     if (null != client)
                     {
                         var clientInfo = new SyncClientDTO(client);
@@ -278,9 +277,9 @@ namespace LiveHTS.Presentation.ViewModel
                         }
                     }
                 }
-                
+
                 //  send
-                
+
                 CurrentStatus = $"done! sent {clientIdsDelete.Count} of {count} ";
 
                 if (completed)
@@ -302,7 +301,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             IsBusy = false;
-            
+
         }
 
         private string GetCode(Guid? clientInfoPracticeId, List<Practice> practicses)
