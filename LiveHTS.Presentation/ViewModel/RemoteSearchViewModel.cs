@@ -5,6 +5,7 @@ using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Interfaces.Services.Sync;
+using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.Interfaces;
@@ -47,7 +48,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _search; }
             set
             {
-                _search = value; 
+                _search = value;
                 RaisePropertyChanged(() => Search);
                 SearchCommand.RaiseCanExecuteChanged();
             }
@@ -96,37 +97,50 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-     
 
-      
+
+
 
         private void DeletePerson()
         {
             throw new System.NotImplementedException();
         }
 
-       
+
         private async void SelectClient(Client selectedClient)
         {
-           // _dialogService.Alert("Downloads are currently not enabled !");
+            // _dialogService.Alert("Downloads are currently not enabled !");
 
 
-            if (null==selectedClient)
+            if (null == selectedClient)
                 return;
             IsBusy = true;
             _dialogService.ShowWait($"Downloading,Please wait...");
-            var remoteData = await _clientSyncService.DownloadClient(Address,selectedClient.Id);
+            RemoteClientDTO remoteData = null;
+            try
+            {
+                remoteData = await _clientSyncService.DownloadClient(Address, selectedClient.Id);
+            }
+            catch (Exception e)
+            {
+                _dialogService.Alert($"Could not download! {e.Message}");
+            }
+
             if (null != remoteData)
             {
                 SelectedClient = remoteData.Client;
                 var encounters = remoteData.Encounters;
-                await _registryService.Download(SelectedClient,encounters);
+                await _registryService.Download(SelectedClient, encounters);
             }
-           _dialogService.HideWait();
-            IsBusy = false;
-            ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
-        }
 
+            _dialogService.HideWait();
+            IsBusy = false;
+            if (null != remoteData)
+            {
+                ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
+            }
+
+        }
 
         private void ClearSearch()
         {
@@ -159,7 +173,7 @@ namespace LiveHTS.Presentation.ViewModel
                     IsBusy = false; return;
                 }
             }
-        
+
             _dialogService.HideWait();
             IsBusy = false;
         }
@@ -173,7 +187,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _isBusy; }
             set
             {
-                _isBusy = value; 
+                _isBusy = value;
                 RaisePropertyChanged(() => IsBusy);
             }
         }
