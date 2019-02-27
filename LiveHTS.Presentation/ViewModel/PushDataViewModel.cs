@@ -8,6 +8,7 @@ using LiveHTS.Core.Interfaces.Services.Sync;
 using LiveHTS.Core.Model;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Interview;
+using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
@@ -39,7 +40,7 @@ namespace LiveHTS.Presentation.ViewModel
         private int _overallStatusProgress;
         private IMvxCommand _pushDataCommand;
         private bool _isBusy;
-        
+
 
         public Device Device { get; set; }
         public ServerConfig Local { get; set; }
@@ -197,17 +198,16 @@ namespace LiveHTS.Presentation.ViewModel
                 }
                 catch (Exception e)
                 {
-                    _dialogService.Alert($"connetion Error {e.Message}");
+                    _dialogService.Alert($"connection Error {e.Message}");
                     IsBusy = false;
                     return;
                 }
 
-               
 
                 var ids = _clientReaderService.LoadClientIds();
                 var count= ids.Count;
                 int n = 0;
-                
+
                 var clientIdsDelete=new List<ClientToDeleteDTO>();
                 var encountersDelete=new List<EnconterToDeleteDTO>();
 
@@ -217,10 +217,19 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     var clientToDeleteDto = new ClientToDeleteDTO();
                     n++;
-                    
-                    var client = _clientReaderService.LoadClient(id);
-                    
-                    
+
+                    Client client = null;
+                    try
+                    {
+                        client = _clientReaderService.LoadClient(id);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+
+
                     if (null != client)
                     {
                         var clientInfo = new SyncClientDTO(client);
@@ -229,7 +238,16 @@ namespace LiveHTS.Presentation.ViewModel
 
                         CurrentStatus = showPerc("Clients", n, count);
 
-                        var status= await _clientSyncService.AttempSendClients(Address, clientInfo);
+                        bool status = false;
+
+                        try
+                        {
+                            status = await _clientSyncService.AttempSendClients(Address, clientInfo);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+
                         if (status)
                         {
                             clientToDeleteDto = new ClientToDeleteDTO(client.Id, client.PersonId);
@@ -242,11 +260,29 @@ namespace LiveHTS.Presentation.ViewModel
 
                     if (!clientToDeleteDto.NotSent)
                     {
-                        var encounters = _clientReaderService.LoadEncounters(id);
+                        List<Encounter> encounters = new List<Encounter>();
+                        try
+                        {
+                            encounters = _clientReaderService.LoadEncounters(id);
+
+                        }
+                        catch (Exception e)
+                        {
+                        }
+
                         if (null != encounters && encounters.Count > 0)
                         {
                             var syncEncounters = SyncClientEncounterDTO.Create(encounters, client);
-                            var status=await _clientSyncService.AttempSendClientEncounters(Address, syncEncounters);
+                            bool status = false;
+                            try
+                            {
+                                status = await _clientSyncService.AttempSendClientEncounters(Address, syncEncounters);
+                            }
+                            catch (Exception e)
+                            {
+
+                            }
+
                             if (status)
                             {
                                 foreach (var encounter in encounters)
@@ -262,25 +298,48 @@ namespace LiveHTS.Presentation.ViewModel
 
                         }
 
-                        var shrs = _clientReaderService.LoadPSmartStores(id);
+                        List<PSmartStore> shrs = new List<PSmartStore>();
+                        try
+                        {
+                            shrs = _clientReaderService.LoadPSmartStores(id);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+
 
                         if (null != shrs && shrs.Count > 0)
                         {
-                            await _clientSyncService.SendClientShrs(Address, shrs);
+                            try
+                            {
+                                await _clientSyncService.SendClientShrs(Address, shrs);
+                            }
+                            catch (Exception e)
+                            {
+                            }
                         }
 
                         clientIdsDelete.Add(clientToDeleteDto);
                         foreach (var toDeleteDto in clientIdsDelete)
                         {
                             //TODO: ALLOW DELETE []
-                            if(deleteOnPush)
-                                _clientReaderService.Purge(toDeleteDto);
+                            if (deleteOnPush)
+                            {
+                                try
+                                {
+                                    _clientReaderService.Purge(toDeleteDto);
+                                }
+                                catch (Exception e)
+                                {
+                                }
+                            }
+
                         }
                     }
                 }
-                
+
                 //  send
-                
+
                 CurrentStatus = $"done! sent {clientIdsDelete.Count} of {count} ";
 
                 if (completed)
@@ -302,7 +361,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             IsBusy = false;
-            
+
         }
 
         private string GetCode(Guid? clientInfoPracticeId, List<Practice> practicses)

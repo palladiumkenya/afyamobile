@@ -31,7 +31,7 @@ namespace LiveHTS.Presentation.ViewModel
         private int _overallStatusProgress;
         private IMvxCommand _pullDataCommand;
         private bool _isBusy;
-        
+
 
         public Device Device { get; set; }
         public Device RegisteredDevice { get; set; }
@@ -188,17 +188,17 @@ namespace LiveHTS.Presentation.ViewModel
                         _deviceSetupService.UpdateCode(devicePrefix);
                         _settings.AddOrUpdateValue("livehts.devicecode", devicePrefix);
                     }
-                        
+
                 }
                 catch (Exception e)
                 {
                 }
-                
+
 
 
                 current++;
                 CurrentStatus = showPerc("Metas",current, total);
-                var meta = await _metaSyncService.GetMetaData(Address); 
+                var meta = await _metaSyncService.GetMetaData(Address);
                 _syncDataService.UpdateMeta(meta);
 
                 current++;
@@ -247,8 +247,8 @@ namespace LiveHTS.Presentation.ViewModel
                 CurrentStatus = showPerc("Users", current, total);
                 var users = await _emrService.GetUsers(Address);
                 _deviceSetupService.SaveUsers(users);
-               
-               
+
+
 
                 current++;
                 CurrentStatus = showPerc("cohort lists", current, total);
@@ -269,10 +269,10 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
             IsBusy = false;
-            
+
         }
 
-   
+
 
         private string showPerc(string message, int complete,int total)
         {
