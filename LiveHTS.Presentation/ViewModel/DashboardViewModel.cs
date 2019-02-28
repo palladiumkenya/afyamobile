@@ -72,7 +72,7 @@ namespace LiveHTS.Presentation.ViewModel
                 EncounterViewModel.IndexClient =IndexClient;
             }
         }
-        
+
         public IMvxCommand ManageRegistrationCommand
         {
             get
@@ -238,7 +238,16 @@ namespace LiveHTS.Presentation.ViewModel
                     _settings.DeleteValue("emod");
             }
 
-            Client = _dashboardService.LoadClient(new Guid(id));
+            try
+            {
+                Client = _dashboardService.LoadClient(new Guid(id));
+            }
+            catch (Exception e)
+            {
+
+            }
+
+
             Modules = _dashboardService.LoadModules();
 
             if (null != Client)
@@ -250,7 +259,7 @@ namespace LiveHTS.Presentation.ViewModel
                 var clientDtoJson = JsonConvert.SerializeObject(clientDto);
                 _settings.AddOrUpdateValue("client.dto", clientDtoJson);
             }
-           
+
             if (null != Modules)
             {
                 var modulesJson = JsonConvert.SerializeObject(Modules);
@@ -309,7 +318,7 @@ namespace LiveHTS.Presentation.ViewModel
                 ShowViewModel<DashboardViewModel>(new {id = IndexClient.Id});
                 return;
             }
-            
+
             var profile = _settings.GetValue("livehts.username", "");
             if (!string.IsNullOrWhiteSpace(profile))
             {

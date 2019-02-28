@@ -32,7 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private decimal _age;
         private CustomItem _selectedAgeUnit;
         private DateTime _birthDate;
-        
+
         private string _personId;
         private MvxCommand _showDateDialogCommand;
         private MvxCommand _showAgeDialogCommand;
@@ -143,7 +143,7 @@ namespace LiveHTS.Presentation.ViewModel
                     CalculateBirthDate();
             }
         }
-       
+
         public DateTime BirthDate
         {
             get { return _birthDate; }
@@ -283,7 +283,7 @@ namespace LiveHTS.Presentation.ViewModel
                     $"{nameof(LastName)} is required"
                 )
             );
-       
+
 
             Validator.AddRule(
                 nameof(Age),
@@ -294,7 +294,7 @@ namespace LiveHTS.Presentation.ViewModel
             );
 
             Validator.AddRequiredRule(() => BirthDate, $"{nameof(BirthDate)} is required");
-    
+
             Validator.AddRule(
                 nameof(BirthDate),
                 () => RuleResult.Assert(
@@ -306,9 +306,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void CalculateBirthDate()
         {
-            var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
             try
             {
+                var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
                 BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
             }
             catch (Exception ex)
@@ -316,6 +316,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             }
         }
+
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
         {
@@ -384,7 +385,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         bool AgeHasChanged(decimal oldAge,decimal newAge)
         {
-            return  oldAge != newAge;            
+            return  oldAge != newAge;
         }
 
         bool AgeUnitHasChanged(CustomItem oldUnit, CustomItem newUnit)

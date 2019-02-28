@@ -94,7 +94,7 @@ namespace LiveHTS.Core.Model.Subject
             return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId, education, completion, occupation);
         }
 
-       
+
 
         public bool IsHtstEnrolled()
         {
@@ -183,6 +183,11 @@ namespace LiveHTS.Core.Model.Subject
 
             ids.Add(clientIdentifier);
             Identifiers = ids.ToList();
+        }
+
+        public bool IsValid()
+        {
+            return true;
         }
     }
 }
