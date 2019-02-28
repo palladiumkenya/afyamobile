@@ -219,6 +219,7 @@ namespace LiveHTS.Presentation.ViewModel
                     n++;
 
                     Client client = null;
+
                     try
                     {
                         client = _clientReaderService.LoadClient(id);
