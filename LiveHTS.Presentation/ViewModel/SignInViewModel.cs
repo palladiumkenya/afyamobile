@@ -148,9 +148,8 @@ namespace LiveHTS.Presentation.ViewModel
         public void LoadVersion(string version)
         {
             //TODO : Disable QA
-
-            // Version = $"{version} QA Only";
-            Version = $"{version}";
+              Version = $"{version} QA Only";
+            //Version = $"{version}";
         }
 
         public void UpdateSession()
@@ -183,7 +182,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
            IsBusy = false;
         }
-     
+
         private void SetUp()
         {
             ShowViewModel<SetupWizardViewModel>();

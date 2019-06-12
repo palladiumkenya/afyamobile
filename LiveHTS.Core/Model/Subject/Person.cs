@@ -65,6 +65,25 @@ namespace LiveHTS.Core.Model.Subject
             }
         }
 
+        [Ignore]
+        [JsonIgnore]
+        public bool IsUnderAge
+        {
+            get
+            {
+                try
+                {
+                    var age = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
+                    return age.Months < 18;
+                }
+                catch
+                {
+                }
+
+                return false;
+            }
+        }
+
         public Person()
         {
             Id = LiveGuid.NewGuid();
@@ -94,7 +113,7 @@ namespace LiveHTS.Core.Model.Subject
 
             if (!string.IsNullOrWhiteSpace(landmark))
                 person.AddAddress(landmark, countyId, true, null, null,subCountyId,wardId);
-            
+
             if (phone.HasValue)
                 person.AddContact(phone, true);
 

@@ -52,5 +52,23 @@ namespace LiveHTS.SharedKernel.Tests.Custom
             Assert.That(display, Does.Contain("Days"));
             Console.WriteLine(_personAge.ToFullAgeString());
         }
+
+        [Test]
+        public void should_Check_IsPead()
+        {
+            var dob = DateTime.Now.AddYears(-14);
+            var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.True(personAge.Age<15);
+            Console.WriteLine( personAge.ToFullAgeString());
+        }
+
+        [Test]
+        public void should_Check_IsUnderAge()
+        {
+            var dob = DateTime.Now.AddMonths(-17);
+            var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.True(personAge.Months<18);
+            Console.WriteLine( personAge.ToFullAgeString());
+        }
     }
 }
