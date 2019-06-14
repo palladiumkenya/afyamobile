@@ -67,14 +67,13 @@ namespace LiveHTS.Core.Model.Subject
 
         [Ignore]
         [JsonIgnore]
-        public bool IsUnderAge
+        public bool IsOverAge
         {
             get
             {
                 try
                 {
-                    var age = SharedKernel.Custom.Utils.CalculateAge(BirthDate);
-                    return age.Months < 18;
+                  return  SharedKernel.Custom.Utils.CheckAgeLimit(BirthDate,1,5);
                 }
                 catch
                 {

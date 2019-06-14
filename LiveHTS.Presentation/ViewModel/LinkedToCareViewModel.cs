@@ -196,7 +196,7 @@ namespace LiveHTS.Presentation.ViewModel
                 else
                 {
                     obs = ObsLinkage;
-               
+
                     obs.FacilityHandedTo = FacilityHandedTo;
                     obs.HandedTo = HandedTo;
                     obs.WorkerCarde = WorkerCarde;
@@ -303,6 +303,22 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
+            Validator.AddRule(
+                nameof(EnrollmentId),
+                () => RuleResult.Assert(
+                    EnrollmentId.Trim().Length!=10,
+                    $"CCC {nameof(EnrollmentId)} is invalid"
+                )
+            );
+
+            Validator.AddRule(
+                nameof(EnrollmentId),
+                () => RuleResult.Assert(
+                     !isNonNumeric(EnrollmentId),
+                    $"CCC {nameof(EnrollmentId)} is invalid"
+                )
+            );
+
             //Validator.AddRule(
             //    nameof(DateEnrolled),
             //    () => RuleResult.Assert(
@@ -326,6 +342,11 @@ namespace LiveHTS.Presentation.ViewModel
                 ErrorSummary = Errors.First().Value;
             }
             return result.IsValid;
+        }
+
+        private bool isNonNumeric(string enrollmentId)
+        {
+          return long.TryParse(enrollmentId.Trim(), out long n);
         }
     }
 }

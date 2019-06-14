@@ -65,10 +65,15 @@ namespace LiveHTS.SharedKernel.Tests.Custom
         [Test]
         public void should_Check_IsUnderAge()
         {
-            var dob = DateTime.Now.AddMonths(-17);
+            var dob = DateTime.Now.AddMonths(-18);
             var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
-            Assert.True(personAge.Months<18);
-            Console.WriteLine( personAge.ToFullAgeString());
+            Assert.True(Utils.CheckAgeLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} over 1.5" );
+
+            dob = DateTime.Now.AddMonths(-17);
+            personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.False(Utils.CheckAgeLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} under 1.5" );
         }
     }
 }
