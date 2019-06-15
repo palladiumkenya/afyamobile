@@ -205,6 +205,7 @@ namespace LiveHTS.Presentation.ViewModel
                     return;
                 }
 
+                var preseveIds=new List<Guid>();
 
                 var ids = _clientReaderService.LoadClientIds();
                 var count= ids.Count;
@@ -244,11 +245,26 @@ namespace LiveHTS.Presentation.ViewModel
                         bool status = false;
                         bool isCompleted = client.CanBeSynced();
 
+                        if (preseveIds.Any(x => x.Equals(client.Id)))
+                            isCompleted = false;
+
                         try
                         {
 
                             if (isCompleted)
+                            {
                                 status = await _clientSyncService.AttempSendClients(Address, clientInfo);
+                            }
+                            else
+                            {
+                                if (client.MyRelationships.Any())
+                                {
+                                    foreach (var relationship in client.MyRelationships)
+                                    {
+                                        preseveIds.Add(relationship.RelatedClientId);
+                                    }
+                                }
+                            }
                         }
                         catch (Exception e)
                         {
