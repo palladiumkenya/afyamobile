@@ -15,6 +15,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         List<Guid> LoadClientIds();
         List<Encounter> LoadEncounters(Guid clientId);
         List<PSmartStore> LoadPSmartStores(Guid clientId);
+        bool CheckPretestComplete(Guid clientId);
         void Purge(ClientToDeleteDTO toDeleteDto);
         void Purge(Guid id);
     }

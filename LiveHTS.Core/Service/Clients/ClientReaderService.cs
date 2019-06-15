@@ -14,6 +14,7 @@ using LiveHTS.Core.Model.SmartCard;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.SharedKernel.Custom;
+using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Clients
 {
@@ -24,14 +25,16 @@ namespace LiveHTS.Core.Service.Clients
         private readonly IEncounterRepository _encounterRepository;
         private readonly IPersonRepository _personRepository;
         private readonly IPSmartStoreRepository _pSmartStoreRepository;
+        private readonly IClientStateRepository _clientStateRepository;
 
-        public ClientReaderService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IPersonRepository personRepository, IPSmartStoreRepository pSmartStoreRepository)
+        public ClientReaderService(IClientRepository clientRepository, IClientRelationshipRepository clientRelationshipRepository, IEncounterRepository encounterRepository, IPersonRepository personRepository, IPSmartStoreRepository pSmartStoreRepository, IClientStateRepository clientStateRepository)
         {
             _clientRepository = clientRepository;
             _clientRelationshipRepository = clientRelationshipRepository;
             _encounterRepository = encounterRepository;
             _personRepository = personRepository;
             _pSmartStoreRepository = pSmartStoreRepository;
+            _clientStateRepository = clientStateRepository;
         }
 
         public Client LoadClient(Guid clientId)
@@ -39,7 +42,10 @@ namespace LiveHTS.Core.Service.Clients
             var client= _clientRepository.Get(clientId);
 
             if (null != client)
+            {
                 client.Relationships = _clientRelationshipRepository.GetRelationships(clientId).ToList();
+                client.IsPretestComplete = _encounterRepository.CheckPretestComplete(clientId);
+            }
 
             return client;
         }
@@ -59,6 +65,11 @@ namespace LiveHTS.Core.Service.Clients
             return _pSmartStoreRepository.LoadAll(clientId).ToList();
         }
 
+        public bool CheckPretestComplete(Guid clientId)
+        {
+            return _encounterRepository.CheckPretestComplete(clientId);
+        }
+
         public void Purge(ClientToDeleteDTO toDeleteDto)
         {
             foreach (var enconterToDeleteDto in toDeleteDto.EnconterToDeleteDtos)
@@ -75,7 +86,7 @@ namespace LiveHTS.Core.Service.Clients
 
             Purge(toDeleteDto.Id);
 
-        
+
         }
 
         public void Purge(Guid id)

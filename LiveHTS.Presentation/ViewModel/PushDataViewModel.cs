@@ -23,6 +23,8 @@ namespace LiveHTS.Presentation.ViewModel
     {
         //TODO: Update version
         private readonly int _hapiVersion = 108;
+
+        //TODO: Allow deleteOnPush
         private bool deleteOnPush = true;
 
         private readonly IDialogService _dialogService;
@@ -240,10 +242,13 @@ namespace LiveHTS.Presentation.ViewModel
                         CurrentStatus = showPerc("Clients", n, count);
 
                         bool status = false;
+                        bool isCompleted = client.CanBeSynced();
 
                         try
                         {
-                            status = await _clientSyncService.AttempSendClients(Address, clientInfo);
+
+                            if (isCompleted)
+                                status = await _clientSyncService.AttempSendClients(Address, clientInfo);
                         }
                         catch (Exception e)
                         {

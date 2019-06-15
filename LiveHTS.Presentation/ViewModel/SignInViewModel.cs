@@ -110,7 +110,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             //TODO : Disable auto sign in
 
-            AutoSignIn = false;
+            AutoSignIn = true;
 
             if (AutoSignIn)
             {

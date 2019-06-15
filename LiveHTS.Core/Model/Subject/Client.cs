@@ -52,6 +52,8 @@ namespace LiveHTS.Core.Model.Subject
 
         [Ignore]
         public bool IsPead => null != Person && Person.IsPead;
+        [Ignore]
+        public bool IsPretestComplete { get; set; }
 
         public Client()
         {
@@ -145,6 +147,46 @@ namespace LiveHTS.Core.Model.Subject
                 var found = ClientStates.Where(x => states.Contains(x.Status) && x.IndexClientId == indexId).ToList();
                 return found.Count > 0;
             }
+
+            return false;
+        }
+
+        public bool CanBeSynced()
+        {
+            if (IsHtstEnrolled())
+            {
+                if (!IsPretestComplete)
+                    return false;
+
+                if (IsInState(LiveState.HtsConsented))
+                {
+
+                    // check if test
+                    if (!IsInAnyState(LiveState.HtsTestedPos, LiveState.HtsTestedNeg, LiveState.HtsTestedInc))
+                        return false;
+
+                    // tested Pos
+                    if (IsInState(LiveState.HtsTestedPos,LiveState.HtsReferred))
+                    {
+                        return true;
+                    }
+                    // tested other
+                    if (IsInState(LiveState.HtsTestedNeg,LiveState.HtsTestedInc))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                // other contact
+                return true;
+            }
+
 
             return false;
         }
