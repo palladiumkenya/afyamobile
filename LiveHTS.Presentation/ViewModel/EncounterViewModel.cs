@@ -14,6 +14,7 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -404,8 +405,21 @@ namespace LiveHTS.Presentation.ViewModel
                 var result = await _dialogService.ConfirmAction("Are you sure ?", "Delete this Encounter");
                 if (result)
                 {
-                    _dashboardService.RemoveEncounter(encounterTemplate.Id);
-                    Parent.Modules=_dashboardService.LoadModules();
+
+                    if (_dashboardService.CanRemoveEncounter(encounterTemplate.Id, Client.Id,
+                        encounterTemplate.EncounterTypeId))
+                    {
+                        // validate Encounter
+                        _dashboardService.RemoveEncounter(encounterTemplate.Id);
+                        Parent.Modules = _dashboardService.LoadModules();
+                    }
+                    else
+                    {
+                        if(Terms.PreTest==encounterTemplate.EncounterTypeId)
+                            _dialogService.Alert("Please Delete Testing Encounters first", "Encounter");
+                        if(Terms.Testing==encounterTemplate.EncounterTypeId)
+                            _dialogService.Alert("Please Delete Referral and Linkage Encounters first", "Encounter");
+                    }
                 }
             }
             catch (Exception e)

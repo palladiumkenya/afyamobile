@@ -20,6 +20,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Interview
         List<Encounter> LoadTestAll(Guid encounterTypeId, Guid clientId, bool includeObs = false);
         DateTime GetPretestEncounterDate(Guid clientId);
         bool CheckPretestComplete(Guid clientId,bool downloaded=false);
+        bool CheckEncountersExisit(Guid clientId,Guid encounterTypeId);
         bool GetIndividual(Guid clientId);
 
         void ClearObs(Guid id);

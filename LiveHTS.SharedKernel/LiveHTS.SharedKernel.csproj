@@ -36,6 +36,7 @@
     <Compile Include="Custom\LiveGuid.cs" />
     <Compile Include="Custom\TypeExtentions.cs" />
     <Compile Include="Custom\Utils.cs" />
+    <Compile Include="Model\Terms.cs" />
     <Compile Include="Model\Context.cs" />
     <Compile Include="Model\CustomItem.cs" />
     <Compile Include="Model\CustomLists.cs" />

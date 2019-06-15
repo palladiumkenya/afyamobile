@@ -406,6 +406,14 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             }
         }
 
+        public bool CheckEncountersExisit(Guid clientId, Guid encounterTypeId)
+        {
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            return null != encounter;
+        }
+
         public bool GetIndividual(Guid clientId)
         {
             var encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0");
@@ -520,6 +528,8 @@ namespace LiveHTS.Infrastructure.Repository.Interview
 
             _db.Execute($"DELETE FROM {nameof(ObsPartnerTraceResult)} WHERE EncounterId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ObsPartnerScreening)} WHERE EncounterId=?", id.ToString());
+
+            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE EncounterId=?", id.ToString());
 
 
         }
