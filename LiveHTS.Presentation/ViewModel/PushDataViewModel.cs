@@ -370,7 +370,7 @@ namespace LiveHTS.Presentation.ViewModel
                 }
                 else
                 {
-                    CurrentStatus = $"{CurrentStatus} with some Errors, Please check server logs";
+                    CurrentStatus = $"{CurrentStatus} with some Errors,Resolve any Incomplete Encounters or Please check server logs";
                     _dialogService.Alert("send completed with errors");
                 }
             }

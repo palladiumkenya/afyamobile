@@ -44,7 +44,7 @@ namespace LiveHTS.Core.Service.Clients
             if (null != client)
             {
                 client.Relationships = _clientRelationshipRepository.GetRelationships(clientId).ToList();
-                client.IsPretestComplete = _encounterRepository.CheckPretestComplete(clientId);
+                client.IsPretestComplete = _encounterRepository.CheckPretestComplete(clientId,client.Downloaded);
             }
 
             return client;

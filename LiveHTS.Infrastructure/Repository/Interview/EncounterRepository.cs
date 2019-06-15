@@ -387,14 +387,23 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             return new DateTime(1900,1,1);
         }
 
-        public bool CheckPretestComplete(Guid clientId)
+        public bool CheckPretestComplete(Guid clientId,bool downloaded=false)
         {
             var encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0");
 
             var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
                 .FirstOrDefault();
 
-            return null != encounter && encounter.IsComplete;
+            if (downloaded)
+            {
+                if (null != encounter)
+                    return encounter.IsComplete;
+                return true;
+            }
+            else
+            {
+                return null != encounter && encounter.IsComplete;
+            }
         }
 
         public bool GetIndividual(Guid clientId)

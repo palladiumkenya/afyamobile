@@ -55,6 +55,9 @@ namespace LiveHTS.Core.Model.Subject
         [Ignore]
         public bool IsPretestComplete { get; set; }
 
+        [Ignore]
+        public bool IsClient => IsHtstEnrolled();
+
         public Client()
         {
             Id = LiveGuid.NewGuid();
