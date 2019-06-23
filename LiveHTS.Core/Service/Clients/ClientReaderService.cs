@@ -47,6 +47,10 @@ namespace LiveHTS.Core.Service.Clients
                 client.IsPretestComplete = _encounterRepository.CheckPretestComplete(clientId,client.Downloaded);
             }
 
+            if (!client.CanBeSynced())
+            {
+                _clientRepository.MarkIncomplete(clientId);
+            }
             return client;
         }
 
@@ -106,6 +110,11 @@ namespace LiveHTS.Core.Service.Clients
 
                 Purge(guid);
             }
+        }
+
+        public void ResetState()
+        {
+            _clientRepository.ClearIncomplete();
         }
     }
 }

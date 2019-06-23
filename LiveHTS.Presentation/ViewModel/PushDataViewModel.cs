@@ -206,15 +206,23 @@ namespace LiveHTS.Presentation.ViewModel
                 }
 
                 var preseveIds=new List<Guid>();
-
-                var ids = _clientReaderService.LoadClientIds();
+                var liveClients=new List<LiveClient>();
+                List<Guid> ids;
+                 ids = _clientReaderService.LoadClientIds();
                 var count= ids.Count;
                 int n = 0;
 
                 var clientIdsDelete=new List<ClientToDeleteDTO>();
+                var clientIdsDeleteLater=new List<ClientToDeleteDTO>();
+                var clientIdsDeleteNow=new List<ClientToDeleteDTO>();
                 var encountersDelete=new List<EnconterToDeleteDTO>();
-
+                int deleted = 0;
                 var practicses = _practiceSetupService.GetAll();
+
+                if (ids.Any())
+                {
+                    _clientReaderService.ResetState();
+                }
 
                 foreach (var id in ids)
                 {
@@ -245,25 +253,30 @@ namespace LiveHTS.Presentation.ViewModel
                         bool status = false;
                         bool isCompleted = client.CanBeSynced();
 
-                        if (preseveIds.Any(x => x.Equals(client.Id)))
-                            isCompleted = false;
+                        if (client.Relationships.Any() && client.IsHtstEnrolled())
+                        {
+                            var liveClient = new LiveClient(client.Id, isCompleted,client.IsHtstEnrolled());
+                            foreach (var relationship in client.Relationships)
+                            {
+                                liveClient.AddRelation(relationship.RelatedClientId,LiveClient.CheckIfCleared(relationship.RelatedClientId,liveClients));
+                            }
+                            liveClients.Add(liveClient);
+                        }
+
+                        if (!client.IsHtstEnrolled())
+                        {
+                            isCompleted = !RelatedLiveClient.CheckIfPrimaryNotCleared(client.Id, liveClients);
+                        }
 
                         try
                         {
-
                             if (isCompleted)
                             {
                                 status = await _clientSyncService.AttempSendClients(Address, clientInfo);
                             }
                             else
                             {
-                                if (client.MyRelationships.Any())
-                                {
-                                    foreach (var relationship in client.MyRelationships)
-                                    {
-                                        preseveIds.Add(relationship.RelatedClientId);
-                                    }
-                                }
+
                             }
                         }
                         catch (Exception e)
@@ -273,6 +286,15 @@ namespace LiveHTS.Presentation.ViewModel
                         if (status)
                         {
                             clientToDeleteDto = new ClientToDeleteDTO(client.Id, client.PersonId);
+                            if (client.IsHtstEnrolled())
+                            {
+                                clientToDeleteDto.NotYet = liveClients.Any(x => x.ClientId == client.Id);
+                            }
+                            else
+                            {
+                                var rels = liveClients.SelectMany(x => x.RelatedClients).ToList();
+                                clientToDeleteDto.NotYet = rels.Any(x => x.ClientId == client.Id);
+                            }
                         }
                         else
                         {
@@ -342,7 +364,14 @@ namespace LiveHTS.Presentation.ViewModel
                         }
 
                         clientIdsDelete.Add(clientToDeleteDto);
-                        foreach (var toDeleteDto in clientIdsDelete)
+
+                        if(!clientToDeleteDto.NotYet)
+                            clientIdsDeleteNow.Add(clientToDeleteDto);
+
+                        if(clientToDeleteDto.NotYet)
+                            clientIdsDeleteLater.Add(clientToDeleteDto);
+
+                        foreach (var toDeleteDto in clientIdsDeleteNow)
                         {
                             //TODO: ALLOW DELETE []
                             if (deleteOnPush)
@@ -360,9 +389,41 @@ namespace LiveHTS.Presentation.ViewModel
                     }
                 }
 
+
+                //// check rels
+
+                if (clientIdsDeleteLater.Any())
+                {
+                    var notCleared = liveClients.Where(x => !x.IsCleared).ToList();
+                    if (!notCleared.Any())
+                    {
+                        //remove all
+                        foreach (var toDeleteDto in clientIdsDeleteLater)
+                        {
+                            //TODO: ALLOW DELETE []
+                            if (deleteOnPush)
+                            {
+                                try
+                                {
+                                    _clientReaderService.Purge(toDeleteDto);
+                                    deleted++;
+                                }
+                                catch (Exception e)
+                                {
+                                }
+                            }
+
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+
                 //  send
 
-                CurrentStatus = $"done! sent {clientIdsDelete.Count} of {count} ";
+                CurrentStatus = $"done! sent {(clientIdsDeleteNow.Count+deleted)} of {count} ";
 
                 if (completed)
                 {
@@ -407,4 +468,60 @@ namespace LiveHTS.Presentation.ViewModel
             return $"uploading {message}...  {percentComplete}% ";
         }
     }
+
+    public class LiveClient
+    {
+        public Guid ClientId { get; }
+        public bool IsCleared { get; }
+        public bool IsIndex { get; }
+        public List<RelatedLiveClient> RelatedClients { get; set; } = new List<RelatedLiveClient>();
+
+        public LiveClient(Guid clientId, bool isCleared,bool isIndex)
+        {
+            ClientId = clientId;
+            IsCleared = isCleared;
+            IsIndex = isIndex;
+        }
+
+        public void AddRelation(Guid relatedClientId, bool isCleared)
+        {
+            RelatedClients.Add(new RelatedLiveClient(ClientId, relatedClientId, isCleared));
+        }
+
+        public static bool CheckIfCleared(Guid id,List<LiveClient> liveClients)
+        {
+            if (liveClients.Any(x => x.ClientId == id))
+            {
+                return liveClients.First(x=>x.ClientId==id).IsCleared;
+            }
+            return false;
+        }
+    }
+
+    public class RelatedLiveClient
+    {
+        public Guid PrimaryClientId { get; }
+        public Guid ClientId { get; }
+        public bool IsCleared { get; }
+
+        public RelatedLiveClient(Guid primaryClientId, Guid clientId, bool isCleared)
+        {
+            PrimaryClientId = primaryClientId;
+            ClientId = clientId;
+            IsCleared = isCleared;
+        }
+
+        public static bool CheckIfPrimaryNotCleared(Guid id,List<LiveClient> liveClients)
+        {
+            var allFailed = liveClients.Where(x => !x.IsCleared).ToList();
+
+            if (allFailed.Any())
+            {
+                var allFailedRel = allFailed.SelectMany(x => x.RelatedClients).ToList();
+                return allFailed.Any(x => x.ClientId == id);
+            }
+            return false;
+        }
+    }
+
 }

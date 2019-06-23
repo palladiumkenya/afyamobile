@@ -63,6 +63,7 @@ namespace LiveHTS.Droid
                 var toReturn = base.ValueConverterAssemblies.ToList();
                 toReturn.Add(typeof(DmyValueConverter).Assembly);
                 toReturn.Add(typeof(ShowControlConverter).Assembly);
+                toReturn.Add(typeof(ShowControlNConverter).Assembly);
                 toReturn.Add(typeof(ShowRequiredConverter).Assembly);
                 toReturn.Add(typeof(ClientTextColorConverter).Assembly);
                 return toReturn;

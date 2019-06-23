@@ -36,6 +36,7 @@
     <Compile Include="App.cs" />
     <Compile Include="AppStart.cs" />
     <Compile Include="Converters\ClientTextColorConverter.cs" />
+    <Compile Include="Converters\ShowControlNConverter.cs" />
     <Compile Include="Converters\ShowRequiredConverter.cs" />
     <Compile Include="Converters\ShowControlConverter.cs" />
     <Compile Include="Converters\DateTimeConverter .cs" />

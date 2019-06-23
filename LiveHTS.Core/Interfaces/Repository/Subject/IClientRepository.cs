@@ -12,5 +12,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
         void SaveDownloaded(Client client);
         IEnumerable<Client> QuickSearch(string search);
         void Purge(Guid id);
+        void ClearIncomplete();
+        void MarkIncomplete(Guid id);
     }
 }

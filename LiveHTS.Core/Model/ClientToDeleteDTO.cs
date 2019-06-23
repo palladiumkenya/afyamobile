@@ -14,6 +14,9 @@ namespace LiveHTS.Core.Model
         public Guid PersonId { get; set; }
         public List<EnconterToDeleteDTO> EnconterToDeleteDtos { get; set; }=new List<EnconterToDeleteDTO>();
         public List<Guid> Relations { get; set; }=new List<Guid>();
+
+        public bool NotYet { get; set; }
+
         public ClientToDeleteDTO()
         {
         }

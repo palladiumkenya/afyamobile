@@ -37,6 +37,8 @@ namespace LiveHTS.Core.Model.Subject
         public bool? AlreadyTestedPos { get; set; }
         public string SmartCardSerial { get; set; }
 
+        public bool? Incomplete { get; set; }
+
         [Indexed]
         public Guid UserId { get; set; }
 

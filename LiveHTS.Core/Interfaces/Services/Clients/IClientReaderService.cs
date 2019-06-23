@@ -18,5 +18,6 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
         bool CheckPretestComplete(Guid clientId);
         void Purge(ClientToDeleteDTO toDeleteDto);
         void Purge(Guid id);
+        void ResetState();
     }
 }

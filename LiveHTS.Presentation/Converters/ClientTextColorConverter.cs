@@ -15,4 +15,16 @@ namespace LiveHTS.Presentation.Converters
             return MvxColors.Gray;
         }
     }
+
+    public class ClientIncompleteColorConverter : MvxColorValueConverter<bool>
+    {
+        protected override MvxColor Convert(bool value, object parameter, CultureInfo culture)
+        {
+            if (value)
+            {
+                return MvxColors.DarkBlue;
+            }
+            return MvxColors.Gray;
+        }
+    }
 }
