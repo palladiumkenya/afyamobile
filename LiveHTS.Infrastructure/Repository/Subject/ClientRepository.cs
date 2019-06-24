@@ -205,6 +205,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var states = client.ClientStates.Where(x => x.Status == LiveState.HtsEnrolled ||
                                                                          x.Status == LiveState.HtsSmartCardEnrolled ||
                                                                          x.Status == LiveState.HtsFamAcceptedYes ||
+                                                                         x.Status == LiveState.HtsPnsAcceptedYes ||
                                                                          x.Status == LiveState.HtsTested ||
                                                                          x.Status == LiveState.HtsCanBeReferred ||
                                                                          x.Status == LiveState.HtsCanBeLinked);

@@ -19,12 +19,12 @@ namespace LiveHTS.Presentation.ViewModel
 {
     public class PartnerViewModel :MvxViewModel, IPartnerViewModel
     {
-        
+
         private readonly IDialogService _dialogService;
         private readonly IDashboardService _dashboardService;
-        
+
         private List<PartnerTemplateWrap> _partners=new List<PartnerTemplateWrap>();
-        
+
         private Client _client;
         private IMvxCommand _addPartnerCommand;
         private bool _showAddPartner;
@@ -37,7 +37,7 @@ namespace LiveHTS.Presentation.ViewModel
             set
             {
                 _client = value; RaisePropertyChanged(() => Client);
-                ShowAddPartner = Client.IsInState(LiveState.HtsPnsAcceptedYes,LiveState.HtsEnrolled,LiveState.HtsTestedPos);
+                ShowAddPartner = Client.IsInState(LiveState.HtsPnsAcceptedYes,LiveState.HtsEnrolled);
                 Partners = ConvertToPartnerWrapperClass(Client, this);
             }
         }
@@ -66,7 +66,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        
+
 
         public PartnerViewModel()
         {
