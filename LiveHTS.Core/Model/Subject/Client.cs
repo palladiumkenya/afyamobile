@@ -171,7 +171,7 @@ namespace LiveHTS.Core.Model.Subject
                         return false;
 
                     // tested Pos
-                    if (IsInState(LiveState.HtsTestedPos,LiveState.HtsReferred))
+                    if (IsInState(LiveState.HtsTestedPos))
                     {
                         return true;
                     }
