@@ -67,12 +67,30 @@ namespace LiveHTS.SharedKernel.Tests.Custom
         {
             var dob = DateTime.Now.AddMonths(-18);
             var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
-            Assert.True(Utils.CheckAgeLimit(dob,1,5));
+            Assert.True(Utils.CheckDateGreaterThanLimit(dob,1,5));
             Console.WriteLine($"{personAge.ToFullAgeString()} over 1.5" );
 
             dob = DateTime.Now.AddMonths(-17);
             personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
-            Assert.False(Utils.CheckAgeLimit(dob,1,5));
+            Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} under 1.5" );
+        }
+
+        [Test]
+        public void should_Check_IsUnderAge_1980()
+        {
+            //15May1980
+            //01May1980
+
+            var dob = new DateTime(1980,5,1);
+
+            var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} over 1.5" );
+
+            dob = DateTime.Now.AddMonths(-17);
+            personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
             Console.WriteLine($"{personAge.ToFullAgeString()} under 1.5" );
         }
     }

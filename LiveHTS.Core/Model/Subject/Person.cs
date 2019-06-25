@@ -73,7 +73,7 @@ namespace LiveHTS.Core.Model.Subject
             {
                 try
                 {
-                  return  SharedKernel.Custom.Utils.CheckAgeLimit(BirthDate,1,5);
+                  return  SharedKernel.Custom.Utils.CheckDateGreaterThanLimit(BirthDate,1,5);
                 }
                 catch
                 {

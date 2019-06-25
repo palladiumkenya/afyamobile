@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Custom\PersonAgeTests.cs" />
     <Compile Include="Custom\PersonAgeUtilsTests.cs" />
+    <Compile Include="Custom\UtilsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

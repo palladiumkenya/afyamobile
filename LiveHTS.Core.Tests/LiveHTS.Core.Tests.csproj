@@ -88,6 +88,7 @@
     <Compile Include="Model\Interview\EncounterTests.cs" />
     <Compile Include="Model\Interview\ResponseTests.cs" />
     <Compile Include="Model\SmartCard\SHRTests.cs" />
+    <Compile Include="Model\Subject\PersonTests.cs" />
     <Compile Include="Model\Survey\QuestionValidationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Access\AuthServiceTests.cs" />

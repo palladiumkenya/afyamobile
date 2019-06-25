@@ -158,6 +158,9 @@ namespace LiveHTS.Core.Model.Subject
 
         public bool CanBeSynced()
         {
+            if (!Person.IsOverAge)
+                return true;
+
             if (IsHtstEnrolled())
             {
                 if (!IsPretestComplete)
@@ -170,13 +173,8 @@ namespace LiveHTS.Core.Model.Subject
                     if (!IsInAnyState(LiveState.HtsTestedPos, LiveState.HtsTestedNeg, LiveState.HtsTestedInc))
                         return false;
 
-                    // tested Pos
-                    if (IsInState(LiveState.HtsTestedPos))
-                    {
-                        return true;
-                    }
                     // tested other
-                    if (IsInState(LiveState.HtsTestedNeg,LiveState.HtsTestedInc))
+                    if (IsInAnyState(LiveState.HtsTestedPos,LiveState.HtsTestedNeg,LiveState.HtsTestedInc))
                     {
                         return true;
                     }

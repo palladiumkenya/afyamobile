@@ -42,16 +42,15 @@ namespace LiveHTS.SharedKernel.Custom
             return CalculateAge(Bday, DateTime.Today);
         }
 
-        public static bool CheckAgeLimit(DateTime Bday, int years ,int months)
+        public static bool CheckDateGreaterThanLimit(DateTime Bday, int years, int months)
         {
-            var age =CalculateAge(Bday);
+            var age = CalculateAge(Bday);
 
-            if (age.Months > 0)
-                return age.Age >= years && age.Months > months;
+            if (age.Age > years)
+                return true;
 
-            return age.Age > years;
+            return age.Months > months;
         }
-
         public static PersonAge CalculateAge(DateTime Bday, DateTime Cday)
         {
             var personAge = new PersonAge(0);
