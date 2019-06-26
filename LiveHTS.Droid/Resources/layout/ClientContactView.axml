@@ -73,12 +73,12 @@
                 android:id="@+id/spinnerCounties"
                 local:MvxBind="ItemsSource Counties;SelectedItem SelectedCounty" />
 
-			
+
 				<TextView
                 android:text="Sub County"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-		
+
                 android:id="@+id/textViewSubConties" />
             <MvxSpinner
                 android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                 android:text="Ward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-			
+
                 android:id="@+id/textViewWards" />
             <MvxSpinner
                 android:layout_width="match_parent"

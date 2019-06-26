@@ -8,6 +8,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
     {
         Client Load(Guid id);
         IEnumerable<Guid> GetAllClientIds();
+        IEnumerable<Guid> GetAllClientIds(Guid pracId);
         void SaveOrUpdate(Client client);
         void SaveDownloaded(Client client);
         IEnumerable<Client> QuickSearch(string search);

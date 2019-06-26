@@ -59,6 +59,16 @@ namespace LiveHTS.Core.Service.Clients
             return _clientRepository.GetAllClientIds().ToList();
         }
 
+        public List<Guid> LoadClientIds(Guid pracId)
+        {
+            if (pracId != Guid.Empty)
+            {
+                return _clientRepository.GetAllClientIds(pracId).ToList();
+            }
+
+            return _clientRepository.GetAllClientIds().ToList();
+        }
+
         public List<Encounter> LoadEncounters(Guid clientId)
         {
             return _encounterRepository.LoadAll(clientId).ToList();

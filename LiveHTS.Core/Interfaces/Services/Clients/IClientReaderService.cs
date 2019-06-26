@@ -13,6 +13,7 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
     {
         Client LoadClient(Guid clientId);
         List<Guid> LoadClientIds();
+        List<Guid> LoadClientIds(Guid pracId);
         List<Encounter> LoadEncounters(Guid clientId);
         List<PSmartStore> LoadPSmartStores(Guid clientId);
         bool CheckPretestComplete(Guid clientId);

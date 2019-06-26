@@ -42,11 +42,18 @@ namespace LiveHTS.Presentation.ViewModel
         private int _overallStatusProgress;
         private IMvxCommand _pushDataCommand;
         private bool _isBusy;
-
+        private string _currentStatusTotal;
+        private string _currentStatusSent;
+        private string _currentStatusFailed;
+        private string _currentStatusSummary;
 
         public Device Device { get; set; }
         public ServerConfig Local { get; set; }
 
+        public Guid AppPracticeId
+        {
+            get { return GetGuid("livehts.practiceid"); }
+        }
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -59,10 +66,32 @@ namespace LiveHTS.Presentation.ViewModel
             set { _address = value; RaisePropertyChanged(() => Address); }
         }
 
+        public string CurrentStatusTotal
+        {
+            get { return _currentStatusTotal; }
+            set { _currentStatusTotal = value; RaisePropertyChanged(() => CurrentStatusTotal); }
+        }
+
+        public string CurrentStatusSent
+        {
+            get { return _currentStatusSent; }
+            set { _currentStatusSent = value; RaisePropertyChanged(() => CurrentStatusSent); }
+        }
+        public string CurrentStatusFailed
+        {
+            get { return _currentStatusFailed; }
+            set { _currentStatusFailed = value; RaisePropertyChanged(() => CurrentStatusFailed); }
+        }
+
         public string CurrentStatus
         {
             get { return _currentStatus; }
             set { _currentStatus = value; RaisePropertyChanged(() => CurrentStatus); }
+        }
+        public string CurrentStatusSummary
+        {
+            get { return _currentStatusSummary; }
+            set { _currentStatusSummary = value; RaisePropertyChanged(() => CurrentStatusSummary); }
         }
 
         public int CurrentStatusProgress
@@ -164,8 +193,14 @@ namespace LiveHTS.Presentation.ViewModel
         private async void PushData()
         {
             IsBusy = true;
+            CurrentStatusTotal = "";
+            CurrentStatusSent =  "";
+           CurrentStatusFailed =  "";
+           CurrentStatusSummary = "";
+           CurrentStatus = "";
+           CurrentStatus = $"connecting...";
 
-            CurrentStatus = $"connecting...";
+
             var practice = await _activationService.GetLocal(Address);
 
             if (null != practice)
@@ -208,7 +243,7 @@ namespace LiveHTS.Presentation.ViewModel
                 var preseveIds=new List<Guid>();
                 var liveClients=new List<LiveClient>();
                 List<Guid> ids;
-                 ids = _clientReaderService.LoadClientIds();
+                 ids = _clientReaderService.LoadClientIds(AppPracticeId);
                 var count= ids.Count;
                 int n = 0;
 
@@ -423,22 +458,29 @@ namespace LiveHTS.Presentation.ViewModel
 
                 //  send
 
-                CurrentStatus = $"done! sent {(clientIdsDeleteNow.Count+deleted)} of {count} ";
+                CurrentStatusTotal = $"Total Clients {count}";
+                CurrentStatusSent =  $"Total Sent {(clientIdsDeleteNow.Count + deleted)}";
+                CurrentStatusFailed =$"Total Failed {count - (clientIdsDeleteNow.Count + deleted)}";
+                var messageVerdict = $"Check and resolve any Incomplete records and review server logs";
 
                 if (completed)
                 {
-                    _dialogService.ShowToast("completed successfully");
+                    if(count>(clientIdsDeleteNow.Count + deleted))
+                        CurrentStatusSummary =messageVerdict;
+
+                    _dialogService.ShowToast("process completed");
                 }
                 else
                 {
-                    CurrentStatus = $"{CurrentStatus} with some Errors,Resolve any Incomplete Encounters or Please check server logs";
-                    _dialogService.Alert("send completed with errors");
+                    CurrentStatusSummary = messageVerdict;
+                    _dialogService.ShowToast("process completed");
                 }
             }
             else
             {
                 IsBusy = false;
                 CurrentStatus = $"connection failed !!";
+                CurrentStatusSummary = "Could not connect to server";
 
                 _dialogService.Alert("Could not connect to server");
             }
@@ -466,6 +508,16 @@ namespace LiveHTS.Presentation.ViewModel
             int percentComplete = (int)Math.Round((double)(100 * complete) / total);
 
             return $"uploading {message}...  {percentComplete}% ";
+        }
+
+        public Guid GetGuid(string key)
+        {
+            var guid = _settings.GetValue(key, "");
+
+            if (string.IsNullOrWhiteSpace(guid))
+                return Guid.Empty;
+
+            return new Guid(guid);
         }
     }
 

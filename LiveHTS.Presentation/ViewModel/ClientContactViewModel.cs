@@ -55,7 +55,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _landmark; }
             set { _landmark = value; RaisePropertyChanged(() => Landmark);}
         }
-        
+
         public string PersonId
         {
             get { return _personId; }
@@ -159,6 +159,7 @@ namespace LiveHTS.Presentation.ViewModel
             Title = "Contacts";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
+            //Telephone = 0;
             Counties = RegionItem.Init("County");
             SubCounties = RegionItem.Init("SubCounty");
             Wards = RegionItem.Init("Ward");

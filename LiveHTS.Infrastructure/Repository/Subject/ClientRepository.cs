@@ -155,6 +155,16 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             return clients;
         }
 
+        public IEnumerable<Guid> GetAllClientIds(Guid pracId)
+        {
+            var clients = _db.Table<Client>()
+                .Where(x=>x.PracticeId==pracId)
+                .ToList()
+                .Select(x => x.Id).ToList();
+
+            return clients;
+        }
+
         public void SaveOrUpdate(Client obs)
         {
             var existingObs = _db.Find<Client>(obs.Id);
