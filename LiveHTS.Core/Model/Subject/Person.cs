@@ -106,14 +106,14 @@ namespace LiveHTS.Core.Model.Subject
         }
 
         public static Person Create(string firstName, string middleName, string lastName, string gender,
-            DateTime birthDate, bool? birthDateEstimated, string email, string landmark, int? phone, string nickName, int? countyId, int? subCountyId, int? wardId)
+            DateTime birthDate, bool? birthDateEstimated, string email, string landmark, string phone, string nickName, int? countyId, int? subCountyId, int? wardId)
         {
             var person = new Person(firstName, middleName, lastName, gender, birthDate, birthDateEstimated, email,nickName);
 
             if (!string.IsNullOrWhiteSpace(landmark))
                 person.AddAddress(landmark, countyId, true, null, null,subCountyId,wardId);
 
-            if (phone.HasValue)
+            if (!string.IsNullOrWhiteSpace(phone))
                 person.AddContact(phone, true);
 
             return person;
@@ -135,7 +135,7 @@ namespace LiveHTS.Core.Model.Subject
             Addresses = addressList;
         }
 
-        public void AddContact(int? phone, bool preferred)
+        public void AddContact(string phone, bool preferred)
         {
             var contactList = Contacts.ToList();
             var contact = PersonContact.Create(phone, preferred, Id);

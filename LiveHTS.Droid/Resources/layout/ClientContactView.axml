@@ -57,7 +57,7 @@
             android:maxLines="1"
             android:singleLine="true"
             android:numeric="integer"
-            android:inputType="number"
+            android:inputType="phone"
             local:MvxBind="Text Telephone; Error Errors['Telephone']" />
       </android.support.design.widget.TextInputLayout>
 

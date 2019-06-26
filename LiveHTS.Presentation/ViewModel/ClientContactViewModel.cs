@@ -17,7 +17,7 @@ namespace LiveHTS.Presentation.ViewModel
     public class ClientContactViewModel : StepViewModel, IClientContactViewModel
     {
         private string _clientInfo;
-        private long? _telephone;
+        private string _telephone;
         private string _landmark;
         private string _personId;
         private string _contactId;
@@ -45,7 +45,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _clientInfo; }
             set { _clientInfo = value; RaisePropertyChanged(() => ClientInfo);}
         }
-        public long? Telephone
+        public string Telephone
         {
             get { return _telephone; }
             set { _telephone = value; RaisePropertyChanged(() => Telephone);}
