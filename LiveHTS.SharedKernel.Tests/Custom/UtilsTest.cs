@@ -8,6 +8,16 @@ namespace LiveHTS.SharedKernel.Tests.Custom
     public class UtilsTest
     {
         [Test]
+        public void should_GenId()
+        {
+            var nos = Utils.GenId();
+            var nos2 = Utils.GenId();
+            Assert.AreNotEqual(nos,nos2);
+            Console.WriteLine(nos);
+            Console.WriteLine(nos2);
+
+        }
+        [Test]
         public void should_CheckDateGreaterThanLimit()
         {
             //15May1980

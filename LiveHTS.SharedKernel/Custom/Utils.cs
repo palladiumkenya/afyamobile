@@ -42,6 +42,10 @@ namespace LiveHTS.SharedKernel.Custom
             return CalculateAge(Bday, DateTime.Today);
         }
 
+        public static string GenId()
+        {
+            return $"{(DateTime.Now.Ticks / 10) % 1000000000:d9}";
+        }
         public static bool CheckDateGreaterThanLimit(DateTime Bday, int years, int months)
         {
             var age = CalculateAge(Bday);

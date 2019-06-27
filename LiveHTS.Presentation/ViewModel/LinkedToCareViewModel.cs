@@ -346,6 +346,7 @@ namespace LiveHTS.Presentation.ViewModel
             Validator.AddRule(
                 nameof(EnrollmentId),
                 () => RuleResult.Assert(
+                    !string.IsNullOrWhiteSpace(EnrollmentId)&&
                       EnrollmentId.Trim().Length == 10 && isNumeric(EnrollmentId),
                     $"CCC {nameof(EnrollmentId)} is invalid"
                 )

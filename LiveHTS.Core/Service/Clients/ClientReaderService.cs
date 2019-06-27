@@ -44,13 +44,34 @@ namespace LiveHTS.Core.Service.Clients
             if (null != client)
             {
                 client.Relationships = _clientRelationshipRepository.GetRelationships(clientId).ToList();
-                client.IsPretestComplete = _encounterRepository.CheckPretestComplete(clientId,client.Downloaded);
+                client.IsPretestComplete = _encounterRepository.CheckPretestComplete(clientId, client.Downloaded);
+
+                if (!client.CanBeSynced())
+                {
+                    _clientRepository.MarkIncomplete(clientId);
+                }
+            }
+            return client;
+        }
+
+        public Client LoadClientContact(Guid clientId)
+        {
+            var client = _clientRepository.Get(clientId);
+
+            if (null != client)
+            {
+                if (client.IsHtstEnrolled())
+                {
+                    client.Relationships = _clientRelationshipRepository.GetRelationships(clientId).ToList();
+                    client.IsPretestComplete = _encounterRepository.CheckPretestComplete(clientId, client.Downloaded);
+
+                    if (!client.CanBeSynced())
+                    {
+                        _clientRepository.MarkIncomplete(clientId);
+                    }
+                }
             }
 
-            if (!client.CanBeSynced())
-            {
-                _clientRepository.MarkIncomplete(clientId);
-            }
             return client;
         }
 
@@ -68,6 +89,23 @@ namespace LiveHTS.Core.Service.Clients
 
             return _clientRepository.GetAllClientIds().ToList();
         }
+
+        public List<SyncClientPriorityDTO> LoadClientIdsWithRelations(Guid pracId)
+        {
+            var list = new List<SyncClientPriorityDTO>();
+
+            // index only
+
+            var relations = _clientRelationshipRepository.GetPracticeRelationships(pracId).ToList();
+
+            if (relations.Any())
+            {
+                list = SyncClientPriorityDTO.Create(relations);
+            }
+
+            return list;
+        }
+
 
         public List<Encounter> LoadEncounters(Guid clientId)
         {

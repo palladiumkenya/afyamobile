@@ -161,7 +161,15 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 .Where(x=>x.PracticeId==pracId)
                 .ToList()
                 .Select(x => x.Id).ToList();
+            return clients;
+        }
 
+        public IEnumerable<Guid> GetAllClientIdsWithRelations(List<Guid> ids, Guid pracId)
+        {
+            var clients = _db.Table<Client>()
+                .Where(x=>x.PracticeId==pracId && ids.Contains(x.Id))
+                .ToList()
+                .Select(x => x.Id).ToList();
             return clients;
         }
 
