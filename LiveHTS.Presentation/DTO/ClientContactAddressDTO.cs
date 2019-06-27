@@ -12,7 +12,7 @@ namespace LiveHTS.Presentation.DTO
         public string AddressId { get; set; }
         public string PersonId { get; set; }
 
-        public string Phone { get; set; }
+        public long? Phone { get; set; }
         public int? CountyId { get; set; }
         public int? SubCountyId { get; set; }
         public int? WardId { get; set; }
@@ -34,7 +34,7 @@ namespace LiveHTS.Presentation.DTO
         {
         }
 
-        private ClientContactAddressDTO(string phone, string landmark)
+        private ClientContactAddressDTO(long? phone, string landmark)
         {
             Phone = phone;
             Landmark = landmark;

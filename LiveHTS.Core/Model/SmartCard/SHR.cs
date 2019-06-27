@@ -141,8 +141,8 @@ namespace LiveHTS.Core.Model.SmartCard
             if (person.Contacts.Any())
             {
                 var phone = person.Contacts.First().Phone;
-                if (string.IsNullOrWhiteSpace(phone))
-                    return phone;
+                if (phone.HasValue)
+                    return phone.Value.ToString();
             }
 
             return string.Empty;

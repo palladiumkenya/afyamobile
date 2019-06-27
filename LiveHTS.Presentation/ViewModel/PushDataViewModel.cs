@@ -275,6 +275,8 @@ namespace LiveHTS.Presentation.ViewModel
 
                     }
 
+
+
                     if (null != client)
                     {
                         var clientInfo = new SyncClientDTO(client);
