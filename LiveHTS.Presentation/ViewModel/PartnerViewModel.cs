@@ -107,7 +107,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private static List<PartnerTemplateWrap> ConvertToPartnerWrapperClass(Client client, IPartnerViewModel partnerViewModel)
         {
-            var clientRelationships = client.Relationships.Where(x => x.RelationshipTypeId.ToLower() == "Partner".ToLower()).ToList();
+            var clientRelationships = client.Relationships.ToList().Where(x => x.IsPatner()).ToList();
 
             List<PartnerTemplateWrap> list = new List<PartnerTemplateWrap>();
             foreach (var r in clientRelationships)

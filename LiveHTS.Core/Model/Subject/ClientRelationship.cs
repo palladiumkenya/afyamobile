@@ -16,9 +16,9 @@ namespace LiveHTS.Core.Model.Subject
         [Indexed]
         public Guid ClientId { get; set; }
         public bool? IsIndex { get; set; }
-        
-        
-        
+
+
+
         [Ignore]
         [JsonIgnore]
         public  Person Person { get; set; }
@@ -36,7 +36,7 @@ namespace LiveHTS.Core.Model.Subject
             ClientId = clientId;
             IsIndex = isIndex;
         }
-        
+
         public static ClientRelationship Create(string relationshipTypeId, Guid relatedClientId, bool preferred, Guid clientId, bool? isIndex=null)
         {
             return new ClientRelationship(relationshipTypeId, relatedClientId, preferred, clientId,isIndex);
@@ -48,8 +48,10 @@ namespace LiveHTS.Core.Model.Subject
         }
         public bool IsPatner()
         {
-            return (RelationshipTypeId.ToLower().Trim() == "Partner".ToLower().Trim() ||
-                    RelationshipTypeId == "Cowife".ToLower().Trim() || RelationshipTypeId == "Spouse".ToLower().Trim());
+            return
+                RelationshipTypeId.IsSameAs("Partner") ||
+                RelationshipTypeId.IsSameAs("Cowife") ||
+                RelationshipTypeId.IsSameAs("Spouse");
         }
         public bool IsFamily()
         {

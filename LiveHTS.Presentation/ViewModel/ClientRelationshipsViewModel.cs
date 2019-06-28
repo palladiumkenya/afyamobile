@@ -42,8 +42,6 @@ namespace LiveHTS.Presentation.ViewModel
             _registryService = registryService;
             _dialogService = dialogService;
             _lookupService = lookupService;
-
-
             //TODO: Remove ShowId
             ShowId = true;
         }
@@ -310,7 +308,6 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void ClearCache(ISettings settings)
         {
-
             if (settings.Contains(nameof(ClientDemographicViewModel)))
                 settings.DeleteValue(nameof(ClientDemographicViewModel));
 
