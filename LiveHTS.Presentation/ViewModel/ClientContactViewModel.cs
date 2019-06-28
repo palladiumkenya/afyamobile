@@ -17,8 +17,7 @@ namespace LiveHTS.Presentation.ViewModel
     public class ClientContactViewModel : StepViewModel, IClientContactViewModel
     {
         private string _clientInfo;
-        private long? _telephone;
-        private string _phoneView;
+        private string _telephone;
         private string _landmark;
         private string _personId;
         private string _contactId;
@@ -46,30 +45,12 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _clientInfo; }
             set { _clientInfo = value; RaisePropertyChanged(() => ClientInfo);}
         }
-        public long? Telephone
+        public string Telephone
         {
 
             get { return _telephone; }
-            set
-            {
-                string fn = value.ToString();
-               // if(fn=0)
-                _telephone = value;
-             //   RaisePropertyChanged(() => Telephone);
-             }
+            set { _telephone = value; RaisePropertyChanged(() => Telephone);}
         }
-
-        public string PhoneView
-        {
-
-            get { return _phoneView; }
-            set
-            {
-                _phoneView = value;
-                RaisePropertyChanged(() => PhoneView);
-            }
-        }
-
 
         public string Landmark
         {
@@ -180,7 +161,6 @@ namespace LiveHTS.Presentation.ViewModel
             Title = "Contacts";
             MovePreviousLabel = "PREV";
             MoveNextLabel = "NEXT";
-            //Telephone = 0;
             Counties = RegionItem.Init("County");
             SubCounties = RegionItem.Init("SubCounty");
             Wards = RegionItem.Init("Ward");
@@ -222,10 +202,8 @@ namespace LiveHTS.Presentation.ViewModel
 
         public override void MoveNext()
         {
-
             if (Validate())
             {
-                RaisePropertyChanged(() => Telephone);
                 ContactAddress = ClientContactAddressDTO.CreateFromView(this);
                 var json = JsonConvert.SerializeObject(ContactAddress);
                 _settings.AddOrUpdateValue(GetType().Name, json);
@@ -287,7 +265,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 ContactAddress = JsonConvert.DeserializeObject<ClientContactAddressDTO>(modelStore.Store);
                 PersonId = ContactAddress.PersonId;
-                Telephone = ContactAddress.Phone; RaisePropertyChanged(() => Telephone);
+                Telephone = ContactAddress.Phone;
                 Landmark = ContactAddress.Landmark;
                 ContactId = ContactAddress.ContactId;
                 AddressId = ContactAddress.AddressId;
