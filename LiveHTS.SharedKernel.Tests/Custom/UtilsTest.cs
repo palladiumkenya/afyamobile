@@ -47,6 +47,11 @@ namespace LiveHTS.SharedKernel.Tests.Custom
             personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
             Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
             Console.WriteLine($"{personAge.ToFullAgeString()} under 1.5" );
+
+            dob = DateTime.Now.AddMonths(-6);
+            personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} under 1.5" );
         }
     }
 }

@@ -53,6 +53,9 @@ namespace LiveHTS.SharedKernel.Custom
             if (age.Years > years)
                 return true;
 
+            if (age.Years < 1)
+                return false;
+
             return age.Months > months;
         }
         public static PersonAge CalculateAge(DateTime Bday, DateTime Cday)
