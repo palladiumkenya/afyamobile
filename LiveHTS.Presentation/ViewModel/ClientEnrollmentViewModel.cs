@@ -142,7 +142,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        
+
 
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService,
             IRegistryService registryService) : base(dialogService, settings)
@@ -157,7 +157,7 @@ namespace LiveHTS.Presentation.ViewModel
             RegistrationDate = DateTime.Today;
             ClientInfo=String.Empty;
             Identifier=String.Empty;
-           
+
         }
 
         public void Init(string clientinfo, string indexId)
@@ -297,6 +297,11 @@ namespace LiveHTS.Presentation.ViewModel
                 var json = JsonConvert.SerializeObject(Enrollment);
                 _settings.AddOrUpdateValue(GetType().Name, json);
                 Save();
+            }
+            else
+            {
+                if(null!=Errors&& Errors.Any())
+                    _dialogService.ShowErrorToast(Errors.First().Value);
             }
         }
 

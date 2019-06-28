@@ -50,7 +50,7 @@ namespace LiveHTS.SharedKernel.Custom
         {
             var age = CalculateAge(Bday);
 
-            if (age.Age > years)
+            if (age.Years > years)
                 return true;
 
             return age.Months > months;

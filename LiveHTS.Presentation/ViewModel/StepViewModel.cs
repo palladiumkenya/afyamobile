@@ -59,9 +59,9 @@ namespace LiveHTS.Presentation.ViewModel
 
             get
             {
-                
+
                 return _showId;
-                
+
             }
             set { _showId = value;RaisePropertyChanged(() => ShowId); }
         }
@@ -102,10 +102,6 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        protected StepViewModel():this(null, null)
-        {
-        }
-
         protected StepViewModel(IDialogService dialogService, ISettings settings)
         {
             _dialogService = dialogService;
@@ -134,11 +130,11 @@ namespace LiveHTS.Presentation.ViewModel
 
         public virtual void MoveNext()
         {
-            
+
         }
         public virtual void MovePrevious()
         {
-            
+
         }
         public virtual bool CanMoveNext()
         {
@@ -148,14 +144,14 @@ namespace LiveHTS.Presentation.ViewModel
         {
             return false;
         }
-       
+
         public virtual void Save()
         {
         }
 
         public virtual void LoadFromStore(VMStore modelStore)
         {
-            
+
         }
     }
 }
