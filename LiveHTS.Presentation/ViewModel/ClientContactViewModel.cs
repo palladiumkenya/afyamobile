@@ -10,6 +10,7 @@ using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
+using MvvmValidation;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
@@ -232,6 +233,22 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public override bool Validate()
+        {
+            if (!string.IsNullOrWhiteSpace(Telephone))
+            {
+                Validator.AddRule(
+                    nameof(Telephone),
+                    () => RuleResult.Assert(
+                        Telephone.Trim().Length >= 9 && isNumeric(Telephone),
+                        $"{nameof(Telephone)} is invalid"
+                    )
+                );
+            }
+
+            return base.Validate();
+        }
+
         public override void MoveNext()
         {
             if (Validate())
@@ -342,6 +359,10 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Mvx.Error(e.Message);
             }
+        }
+        private bool isNumeric(string phone)
+        {
+            return long.TryParse(phone.Trim(), out long n);
         }
     }
 }

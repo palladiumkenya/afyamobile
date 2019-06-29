@@ -319,6 +319,17 @@ namespace LiveHTS.Presentation.ViewModel
                     BirthDate < DateTime.Today,
                     $"{nameof(BirthDate)} should be a valid date"));
 
+            if (Age > 0)
+            {
+                Validator.AddRule(
+                    nameof(Age),
+                    () => RuleResult.Assert(
+                        !(Age > 121),
+                        $"{nameof(Age)} is invalid"
+                    )
+                );
+            }
+
             return base.Validate();
         }
 
