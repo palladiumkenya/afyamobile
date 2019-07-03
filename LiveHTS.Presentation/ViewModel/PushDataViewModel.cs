@@ -272,12 +272,11 @@ namespace LiveHTS.Presentation.ViewModel
 
             #region LoadIds
 
+            _clientReaderService.ResetState();
+
             var allClientsIds = _clientReaderService.LoadClientIds(AppPracticeId);
             clientNoRelationsIds = allClientsIds;
             var totalCount = allClientsIds.Count;
-
-            if (clientNoRelationsIds.Any())
-                _clientReaderService.ResetState();
 
             var clientIdsWithRelations = _clientReaderService.LoadClientIdsWithRelations(AppPracticeId);
             clientRelationsIds = clientIdsWithRelations.Select(x => x.IndexId).ToList();
