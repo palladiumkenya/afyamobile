@@ -324,7 +324,7 @@ namespace LiveHTS.Presentation.ViewModel
                 Validator.AddRule(
                     nameof(Age),
                     () => RuleResult.Assert(
-                        !(Age > 121),
+                        !  (Age > 121),
                         $"{nameof(Age)} is invalid"
                     )
                 );
