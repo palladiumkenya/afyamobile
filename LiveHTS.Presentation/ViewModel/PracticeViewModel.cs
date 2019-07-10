@@ -163,6 +163,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSavePractice()
         {
+            return false;
             return !string.IsNullOrWhiteSpace(Code) && !string.IsNullOrWhiteSpace(Name);
         }
 
@@ -175,6 +176,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private bool CanSearchPractice()
         {
+            return false;
             return !string.IsNullOrWhiteSpace(Code) && Code.Trim().Length > 4;
         }
 

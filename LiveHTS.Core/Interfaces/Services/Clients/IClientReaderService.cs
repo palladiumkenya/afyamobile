@@ -12,10 +12,15 @@ namespace LiveHTS.Core.Interfaces.Services.Clients
     public interface IClientReaderService
     {
         Client LoadClient(Guid clientId);
+        Client LoadClientContact(Guid clientId);
         List<Guid> LoadClientIds();
+        List<Guid> LoadClientIds(Guid pracId);
+        List<SyncClientPriorityDTO> LoadClientIdsWithRelations(Guid pracId);
         List<Encounter> LoadEncounters(Guid clientId);
         List<PSmartStore> LoadPSmartStores(Guid clientId);
+        bool CheckPretestComplete(Guid clientId);
         void Purge(ClientToDeleteDTO toDeleteDto);
         void Purge(Guid id);
+        void ResetState();
     }
 }

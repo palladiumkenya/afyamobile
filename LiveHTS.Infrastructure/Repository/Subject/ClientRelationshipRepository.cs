@@ -18,7 +18,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         {
             var relationsList = new List<ClientRelationship>();
 
-            //My Relationships  
+            //My Relationships
 
             var myRelations= _db.Table<ClientRelationship>()
                 .Where(x => x.ClientId == clientId)
@@ -51,6 +51,17 @@ namespace LiveHTS.Infrastructure.Repository.Subject
 //            }
 
             return relationsList;
+        }
+
+        public IEnumerable<ClientRelationship> GetPracticeRelationships(Guid practiceId)
+        {
+            var relations = _db
+                .Query<ClientRelationship>(@"
+                        select r.* from ClientRelationship r inner join Client c on r.ClientId=c.Id
+                        where r.IsIndex=0 and c.PracticeId=?", practiceId)
+                .ToList();
+
+            return relations;
         }
 
         public ClientRelationship Find(string relationshipTypeId, Guid clientId, Guid otherClientId)

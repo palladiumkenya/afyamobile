@@ -82,8 +82,34 @@ namespace LiveHTS.Core.Service.Clients
             }
         }
 
+        public bool CanRemoveEncounter(Guid id,Guid clientId, Guid encounterTemplateEncounterTypeId)
+        {
+            // Pretest
+            if (Terms.PreTest == encounterTemplateEncounterTypeId)
+            {
+                //check if Testing
+                return !_encounterRepository.CheckEncountersExisit(clientId, Terms.Testing);
+            }
+
+            // Testing
+            if (Terms.Testing == encounterTemplateEncounterTypeId)
+            {
+                //check if Referral
+                return !_encounterRepository.CheckEncountersExisit(clientId, Terms.LinkageReferall);
+            }
+
+            return true;
+        }
+
         public void RemoveEncounter(Guid id)
         {
+            // check Pretest has Testing
+
+            // check Testing has Referall
+
+
+
+
             _encounterRepository.Delete(id);
             _encounterRepository.Purge(id,string.Empty);
         }

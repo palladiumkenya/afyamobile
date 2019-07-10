@@ -24,7 +24,7 @@ namespace LiveHTS.Core.Model
         public string OtherKeyPop { get; set; }
         public string SmartCardSerial { get; set; }
         public string Landmark { get; set; }
-        public int? Phone { get; set; }
+        public string Phone { get; set; }
 
         public string FullName
         {
@@ -37,7 +37,7 @@ namespace LiveHTS.Core.Model
 
         private SmartClientDTO(string firstName, string middleName, string lastName, string sex, DateTime birthDate,
             bool birthDateEstimated, string htsNumber, string facility, string maritalStatus, string smartCardSerial,
-            string landmark, int? phone)
+            string landmark, string phone)
         {
             FirstName = firstName;
             MiddleName = middleName;
@@ -141,15 +141,14 @@ namespace LiveHTS.Core.Model
             return string.Empty;
         }
 
-        private static int? GetPhone(PATIENTIDENTIFICATION shrPatientIdentification)
+        private static string GetPhone(PATIENTIDENTIFICATION shrPatientIdentification)
         {
             if (!string.IsNullOrWhiteSpace(shrPatientIdentification.PHONE_NUMBER))
             {
-                if (int.TryParse(shrPatientIdentification.PHONE_NUMBER, out var phone))
-                    return phone;
+                return shrPatientIdentification.PHONE_NUMBER;
             }
 
-            return null;
+            return string.Empty;
         }
 
         private static string GetLandmark(PATIENTIDENTIFICATION shrPatientIdentification)

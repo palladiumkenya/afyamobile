@@ -21,7 +21,7 @@ namespace LiveHTS.Presentation.ViewModel
         private string _search;
         private IMvxCommand _searchCommand;
         private IMvxCommand _clearSearchCommand;
-        
+
         private Client _selectedClient;
         private IMvxCommand<Client> _clientSelectedCommand;
         private  IMvxCommand _registerClientCommand;
@@ -38,7 +38,7 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _search; }
             set
             {
-                _search = value; 
+                _search = value;
                 RaisePropertyChanged(() => Search);
                 SearchCommand.RaiseCanExecuteChanged();
             }
@@ -107,7 +107,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void OpenRemoteRegistery()
         {
-         
+
             if (_deviceSetupService.HasPulledData())
             {
                 ShowViewModel<RemoteRegistryViewModel>();
@@ -140,10 +140,11 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void SelectClient(Client selectedClient)
         {
-            if(null==selectedClient)
+            if (null == selectedClient)
                 return;
             SelectedClient = selectedClient;
-            ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
+            if (null != selectedClient)
+                ShowViewModel<DashboardViewModel>(new {id = SelectedClient.Id});
         }
 
 
@@ -169,9 +170,9 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _isBusy; }
             set
             {
-                _isBusy = value; 
+                _isBusy = value;
                 RaisePropertyChanged(() => IsBusy);
-                ManageStatus();
+                //ManageStatus();
             }
         }
 

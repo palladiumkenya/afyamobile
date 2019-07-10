@@ -37,6 +37,8 @@ namespace LiveHTS.Core.Model.Subject
         public bool? AlreadyTestedPos { get; set; }
         public string SmartCardSerial { get; set; }
 
+        public bool? Incomplete { get; set; }
+
         [Indexed]
         public Guid UserId { get; set; }
 
@@ -52,6 +54,11 @@ namespace LiveHTS.Core.Model.Subject
 
         [Ignore]
         public bool IsPead => null != Person && Person.IsPead;
+        [Ignore]
+        public bool IsPretestComplete { get; set; }
+
+        [Ignore]
+        public bool IsClient => IsHtstEnrolled();
 
         public Client()
         {
@@ -94,7 +101,7 @@ namespace LiveHTS.Core.Model.Subject
             return new Client(maritalStatus, keyPop, otherKeyPop, practiceId, personId,userId, education, completion, occupation);
         }
 
-       
+
 
         public bool IsHtstEnrolled()
         {
@@ -149,6 +156,44 @@ namespace LiveHTS.Core.Model.Subject
             return false;
         }
 
+        public bool CanBeSynced()
+        {
+            if (!Person.IsOverAge)
+                return true;
+
+            if (IsHtstEnrolled())
+            {
+                if (!IsPretestComplete)
+                    return false;
+
+                if (IsInState(LiveState.HtsConsented))
+                {
+
+                    // check if test
+                    if (!IsInAnyState(LiveState.HtsTestedPos, LiveState.HtsTestedNeg, LiveState.HtsTestedInc))
+                        return false;
+
+                    // tested other
+                    if (IsInAnyState(LiveState.HtsTestedPos,LiveState.HtsTestedNeg,LiveState.HtsTestedInc))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                // other contact
+                return true;
+            }
+
+
+            return false;
+        }
+
         public override string ToString()
         {
             return $"{Person} ,{Person.Gender}";
@@ -184,5 +229,10 @@ namespace LiveHTS.Core.Model.Subject
             ids.Add(clientIdentifier);
             Identifiers = ids.ToList();
         }
+
+        public bool IsValid()
+        {
+            return true;
+        }
     }
-}
+ }

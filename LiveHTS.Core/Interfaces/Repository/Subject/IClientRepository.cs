@@ -8,9 +8,13 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
     {
         Client Load(Guid id);
         IEnumerable<Guid> GetAllClientIds();
+        IEnumerable<Guid> GetAllClientIds(Guid pracId);
+        IEnumerable<Guid> GetAllClientIdsWithRelations(List<Guid> ids, Guid pracId);
         void SaveOrUpdate(Client client);
         void SaveDownloaded(Client client);
         IEnumerable<Client> QuickSearch(string search);
         void Purge(Guid id);
+        void ClearIncomplete();
+        void MarkIncomplete(Guid id);
     }
 }

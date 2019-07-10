@@ -15,7 +15,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
     {
         public ClientRepository(ILiveSetting liveSetting) : base(liveSetting)
         {
-            
+
         }
 
         public override Client Get(Guid id, bool voided = false)
@@ -34,7 +34,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 client.Person.Addresses = _db.Table<PersonAddress>().Where(x => x.PersonId == client.PersonId).ToList();
 
                 var relationsList=new List<ClientRelationship>();
-                
+
                 //my Relationships
                 var relations = _db.Table<ClientRelationship>().Where(x => x.ClientId == client.Id).ToList();
                 if (null != relations && relations.Count > 0)
@@ -50,13 +50,13 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                     client.RelatedToMe = relationsTo;
                     relationsList.AddRange(relationsTo);
                 }
-                    
+
 
                 client.Relationships = relationsList;
 
                 client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id).ToList(); ;
 
-                client.ClientSummaries=_db.Table<ClientSummary>().Where(x => x.ClientId == client.Id).ToList(); 
+                client.ClientSummaries=_db.Table<ClientSummary>().Where(x => x.ClientId == client.Id).ToList();
             }
             return client;
         }
@@ -99,7 +99,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             {
                 var identifiers = entity.Identifiers.ToList();
                 _db.InsertAll(identifiers);
-            }                
+            }
 
             return;
             //TODO: Create without Relationships index
@@ -107,13 +107,13 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             {
                 var relationships = entity.Relationships.ToList();
                 _db.InsertAll(relationships);
-            }                
+            }
         }
 
         public override void InsertOrUpdate(Client entity)
         {
             base.InsertOrUpdate(entity);
-       
+
 
             //Create identifiers
             if (entity.Identifiers.Any())
@@ -125,7 +125,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 }
             }
 
-            
+
             return;
             //TODO: Create without Relationships index
             if (entity.Relationships.Any())
@@ -144,7 +144,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             if (null != client)
             {
                 client.Person = _db.Table<Person>().FirstOrDefault(x => x.Id == client.PersonId);
-                client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id).ToList(); 
+                client.Identifiers = _db.Table<ClientIdentifier>().Where(x => x.ClientId == client.Id).ToList();
             }
             return client;
         }
@@ -152,6 +152,24 @@ namespace LiveHTS.Infrastructure.Repository.Subject
         public IEnumerable<Guid> GetAllClientIds()
         {
             var clients = _db.Table<Client>().ToList().Select(x => x.Id).ToList();
+            return clients;
+        }
+
+        public IEnumerable<Guid> GetAllClientIds(Guid pracId)
+        {
+            var clients = _db.Table<Client>()
+                .Where(x=>x.PracticeId==pracId)
+                .ToList()
+                .Select(x => x.Id).ToList();
+            return clients;
+        }
+
+        public IEnumerable<Guid> GetAllClientIdsWithRelations(List<Guid> ids, Guid pracId)
+        {
+            var clients = _db.Table<Client>()
+                .Where(x=>x.PracticeId==pracId && ids.Contains(x.Id))
+                .ToList()
+                .Select(x => x.Id).ToList();
             return clients;
         }
 
@@ -205,6 +223,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             var states = client.ClientStates.Where(x => x.Status == LiveState.HtsEnrolled ||
                                                                          x.Status == LiveState.HtsSmartCardEnrolled ||
                                                                          x.Status == LiveState.HtsFamAcceptedYes ||
+                                                                         x.Status == LiveState.HtsPnsAcceptedYes ||
                                                                          x.Status == LiveState.HtsTested ||
                                                                          x.Status == LiveState.HtsCanBeReferred ||
                                                                          x.Status == LiveState.HtsCanBeLinked);
@@ -261,6 +280,16 @@ namespace LiveHTS.Infrastructure.Repository.Subject
             _db.Execute($"DELETE FROM {nameof(Client)} WHERE Id=?", id.ToString());
         }
 
+        public void ClearIncomplete()
+        {
+            _db.Execute($"UPDATE {nameof(Client)} SET {nameof(Client.Incomplete)}=? WHERE {nameof(Client.Incomplete)}=?",false,true);
+        }
+
+        public void MarkIncomplete(Guid id)
+        {
+            _db.Execute($"UPDATE {nameof(Client)} SET {nameof(Client.Incomplete)}=? WHERE Id=?",true, id.ToString());
+        }
+
         private void DeleteClientData(Guid id)
         {
             var personIds = _db.Table<Client>().Where(x => x.Id == id).Select(x => x.PersonId).ToList();
@@ -277,7 +306,7 @@ namespace LiveHTS.Infrastructure.Repository.Subject
                 _db.Table<ObsMemberScreening>().Delete(x => x.EncounterId == encounterId);
                 _db.Table<ObsFamilyTraceResult>().Delete(x => x.EncounterId == encounterId);
                 _db.Table<ObsPartnerScreening>().Delete(x => x.EncounterId == encounterId);
-                _db.Table<ObsPartnerTraceResult>().Delete(x => x.EncounterId == encounterId); 
+                _db.Table<ObsPartnerTraceResult>().Delete(x => x.EncounterId == encounterId);
             }
 
             //Client

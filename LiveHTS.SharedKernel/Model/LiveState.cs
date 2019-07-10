@@ -42,6 +42,7 @@
         HtsTested,
         IsPead,
         HtsCanBeReferred,
-        HtsCanBeLinked
+        HtsCanBeLinked,
+        HasPretest
     }
 }

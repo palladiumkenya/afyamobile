@@ -257,14 +257,14 @@ namespace LiveHTS.Presentation.ViewModel
             _encounterService = encounterService;
             _obsService = obsService;
             BirthDate = DateTime.Today;
-            
+
             SelectedVisitType = VisitTypes.First();
         }
 
         public void Init(string formId, string encounterTypeId, string mode, string encounterId, string repmode)
         {
             //Load Form + Question Metadata
-            
+
             if (null == Form)
             {
                 Form = _encounterService.LoadForm(new Guid(formId));
@@ -298,7 +298,7 @@ namespace LiveHTS.Presentation.ViewModel
                         _settings.AddOrUpdateValue("client.partner.result", "");
                     }
                 }
-                
+
             }
 
             var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
@@ -308,7 +308,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
 
-            //Load or Create Encounter 
+            //Load or Create Encounter
 
             if (mode == "new")
             {
@@ -318,7 +318,7 @@ namespace LiveHTS.Presentation.ViewModel
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
                     ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null, visitType);
 
-                
+
             }
             else
             {
@@ -332,7 +332,7 @@ namespace LiveHTS.Presentation.ViewModel
                 throw new ArgumentException("Encounter has not been Initialized");
             }
 
-            //Store Encounter 
+            //Store Encounter
 
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
@@ -347,7 +347,7 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("client.manifest", manifestJson);
 
 
-          
+
 
             //Load View
 
@@ -561,10 +561,10 @@ namespace LiveHTS.Presentation.ViewModel
                                 else
                                 {
                                     //not-discordant
-                                    
+
                                     discordant.QuestionTemplate.SetResponse(new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"));
                                 }
-                            }                            
+                            }
                         }
                     }
 
@@ -718,7 +718,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Manifest)
             {
 
-                //Client 
+                //Client
 
                 if (null == ClientDTO)
                 {
@@ -773,7 +773,7 @@ namespace LiveHTS.Presentation.ViewModel
                                 var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
                                 if (null != q)
                                 {
-                                    
+
                                     //q.QuestionTemplate.Allow = true;
                                 }
                             }
@@ -808,7 +808,7 @@ namespace LiveHTS.Presentation.ViewModel
                     FormStatus = "Status: Completed";
                     return true;
                 }
-                
+
             }
             return false;
         }
@@ -833,12 +833,15 @@ namespace LiveHTS.Presentation.ViewModel
 
             _obsService.ClearEncounter(Encounter.Id);
 
+
             foreach (var q in allowedQuestions)
             {
-                _obsService.SaveResponse(Encounter.Id,ClientDTO.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
+                _obsService.SaveResponse(Encounter.Id, ClientDTO.Id, q.QuestionTemplate.Id,
+                    q.QuestionTemplate.GetResponse());
                 //Manifest = _obsService.Manifest;
             }
-            _obsService.MarkEncounterCompleted(Encounter.Id,UserId,true);
+
+            _obsService.MarkEncounterCompleted(Encounter.Id, UserId, true, ClientDTO.Id);
             _obsService.UpdateEncounterDate(Encounter.Id, BirthDate, GetVisitType());
             Manifest = _obsService.Manifest;
             Manifest.Encounter.EncounterDate = BirthDate;

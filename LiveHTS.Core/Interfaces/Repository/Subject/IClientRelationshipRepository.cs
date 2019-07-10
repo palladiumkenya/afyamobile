@@ -8,6 +8,7 @@ namespace LiveHTS.Core.Interfaces.Repository.Subject
     public interface IClientRelationshipRepository : IRepository<ClientRelationship,Guid>
     {
         IEnumerable<ClientRelationship> GetRelationships(Guid clientId);
+        IEnumerable<ClientRelationship> GetPracticeRelationships(Guid practiceId);
         ClientRelationship Find(string relationshipTypeId, Guid clientId, Guid otherClientId);
         void Purge(Guid clientId);
         void PurgeRel(Guid guid);

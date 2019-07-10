@@ -24,17 +24,19 @@ namespace LiveHTS.SharedKernel.Tests.Custom
         {
             var checkDate = DateTime.Today.AddYears(-3);
             var dob = Utils.CalculateBirthDate(_personAge);
-            Assert.AreEqual(checkDate,dob);
+            Assert.AreEqual(15,dob.Day);
+            Assert.AreEqual(6,dob.Month);
             Console.WriteLine($"{_personAge} Born: {dob:yyyy MMMM dd}");
         }
 
         [Test]
         public void should_CalculateBirthDate_From_AgeInMonths()
         {
-            var checkDate = DateTime.Today.AddMonths(-1);
-            _personAge =PersonAge.CreateFromMonths(1);
+            var checkDate = DateTime.Today.AddMonths(-13);
+            _personAge =PersonAge.CreateFromMonths(13);
             var dob = Utils.CalculateBirthDate(_personAge);
-            Assert.AreEqual(checkDate, dob);
+            Assert.AreEqual( 6,dob.Month);
+            Assert.AreEqual( 15,dob.Day);
             Console.WriteLine($"{_personAge} Born: {dob:yyyy MMMM dd}");
         }
 
@@ -47,6 +49,17 @@ namespace LiveHTS.SharedKernel.Tests.Custom
             Assert.AreEqual(checkDate, dob);
             Console.WriteLine($"{_personAge} Born: {dob:yyyy MMMM dd}");
         }
+
+        [Test]
+        public void should_CalculateBirthDate_From_AgeInMonths_LessThan12()
+        {
+            var checkDate = DateTime.Today.AddMonths(-1);
+            _personAge =PersonAge.CreateFromMonths(1);
+            var dob = Utils.CalculateBirthDate(_personAge);
+            Assert.AreEqual(checkDate, dob);
+            Console.WriteLine($"{_personAge} Born: {dob:yyyy MMMM dd}");
+        }
+
 
         [Test]
         public void should_Calculate_Age_In_Years_From_BirthDate()

@@ -11,7 +11,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
         private  FormTemplate _formTemplate;
         private  IMvxCommand _startEncounterCommand;
         private readonly IEncounterViewModel _encounterViewModel;
-        
+
 
         public FormTemplateWrap(ClientDashboardViewModel parent, FormTemplate formTemplate)
         {
@@ -62,7 +62,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
             ShowStart = !_formTemplate.HasEncounters;
             return ShowStart;
         }
-        
+
 
         private void StartEncounter()
         {
@@ -75,7 +75,7 @@ namespace LiveHTS.Presentation.ViewModel.Wrapper
             {
                 _encounterViewModel.StartEncounter(_formTemplate);
             }
-            
+
         }
     }
 }
