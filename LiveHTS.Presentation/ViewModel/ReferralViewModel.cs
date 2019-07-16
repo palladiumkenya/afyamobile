@@ -359,7 +359,7 @@ namespace LiveHTS.Presentation.ViewModel
                     Validator.AddRule(
                         nameof(DatePromised),
                         () => RuleResult.Assert(
-                            !(DatePromised.Date < ParentViewModel.Client.DateEnrolled),
+                            !(DatePromised.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
                             $"{nameof(DatePromised)} cannot be before Enrolled Date"
                         )
                     );

@@ -492,7 +492,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
             catch (Exception e)
             {
-                questionTemplate.ErrorSummary = e.Message;
+                questionTemplate.ErrorSummary = "Response required !";
                 try
                 {
                     _dialogService.ShowErrorToast(e.Message, 6000);
@@ -932,7 +932,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 if (null != ClientDTO && !ClientDTO.DateEnrolled.IsNullOrEmpty())
                 {
-                    if (BirthDate.Date < ClientDTO.DateEnrolled.Value)
+                    if (BirthDate.Date < ClientDTO.DateEnrolled.Value.Date)
                     {
                         ShowErroInfo("Encounter Date before Registration Date");
                         return false;
