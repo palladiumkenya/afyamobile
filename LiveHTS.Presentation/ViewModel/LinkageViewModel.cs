@@ -75,7 +75,7 @@ namespace LiveHTS.Presentation.ViewModel
                 LoadTraces();
             }
         }
-        
+
         public LinkageViewModel(ILookupService lookupService, IDashboardService dashboardService, ILinkageService linkageService, ISettings settings)
         {
             _lookupService = lookupService;
@@ -91,9 +91,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void Init(string formId, string encounterTypeId, string mode, string clientId, string encounterId)
         {
-         
+
             // Load Client
-            
+
                 Client = _dashboardService.LoadClient(new Guid(clientId));
 
             if (null != Client)
@@ -128,21 +128,16 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 throw new ArgumentException("Encounter has not been Initialized");
             }
-            //Store Encounter 
+            //Store Encounter
 
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
 
-
-       
-
             var modes = _lookupService.GetCategoryItems("TraceMode", true, "[Select Mode]").ToList();
             _settings.AddOrUpdateValue("lookup.Mode", JsonConvert.SerializeObject(modes));
+
             var outcomes = _lookupService.GetCategoryItems("TraceOutcome", true, "[Select Outcome]").ToList();
             _settings.AddOrUpdateValue("lookup.Outcome", JsonConvert.SerializeObject(outcomes));
-
-
-
 
         }
 
@@ -160,26 +155,23 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (EncounterTypeId.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(encounterTypeId))
             {
-                EncounterTypeId =new Guid(encounterTypeId);
+                EncounterTypeId = new Guid(encounterTypeId);
             }
 
-
-            if (null==Encounter&& !string.IsNullOrWhiteSpace(clientEncounterJson))
+            if (null == Encounter && !string.IsNullOrWhiteSpace(clientEncounterJson))
             {
                 Encounter = JsonConvert.DeserializeObject<Encounter>(clientEncounterJson);
             }
 
-            if (!Client.CanBeLinked())
+            if (null != Client && !Client.CanBeLinked())
             {
                 LinkedToCareViewModel.ErrorSummary = "Client Cannot be linked to Care !";
-                LinkedToCareViewModel.
-                Validator.AddRule(
-            
-            () => RuleResult.Assert(
-               Client.CanBeLinked(),
-                $"Client Cannot be linked to Care !"
-            )
-        );
+                LinkedToCareViewModel.Validator.AddRule(
+                    () => RuleResult.Assert(
+                        Client.CanBeLinked(),
+                        $"Client Cannot be linked to Care !"
+                    )
+                );
 
             }
         }
@@ -204,7 +196,7 @@ namespace LiveHTS.Presentation.ViewModel
                 outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(outcomeJson);
             }
 
-      
+
 
             if (null != Encounter)
             {
@@ -217,6 +209,16 @@ namespace LiveHTS.Presentation.ViewModel
                     ReferralViewModel.ObsLinkage = linkage;
                     LinkedToCareViewModel.ObsLinkage = linkage;
                 }
+                else
+                {
+                    LinkedToCareViewModel.ErrorSummary = "Missing Referral information";
+                    LinkedToCareViewModel.Validator.AddRule(
+                        () => RuleResult.Assert(
+                            false,
+                            $"Missing Referral information !"
+                        )
+                    );
+                }
             }
         }
 
@@ -226,7 +228,7 @@ namespace LiveHTS.Presentation.ViewModel
            List<TraceTemplateWrap> list = new List<TraceTemplateWrap>();
 
             var testResults = encounter.ObsTraceResults.ToList();
-          
+
             foreach (var r in testResults)
             {
                 list.Add(new TraceTemplateWrap(clientDashboardViewModel.ReferralViewModel, new TraceTemplate(r, modes, outcomes)));

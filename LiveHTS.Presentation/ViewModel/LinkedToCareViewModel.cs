@@ -260,7 +260,7 @@ namespace LiveHTS.Presentation.ViewModel
             else
             {
                 if (null != Errors && Errors.Any())
-                    _dialogService.ShowErrorToast(Errors.First().Value,6000);
+                    ShowErrorInfo(Errors.First().Value);
             }
         }
 
@@ -410,6 +410,17 @@ namespace LiveHTS.Presentation.ViewModel
         private bool isNumeric(string enrollmentId)
         {
             return long.TryParse(enrollmentId.Trim(), out long n);
+        }
+
+        private void ShowErrorInfo(string message)
+        {
+            try
+            {
+                _dialogService.ShowErrorToast(message, 6000);
+            }
+            catch (Exception exception)
+            {
+            }
         }
     }
 }
