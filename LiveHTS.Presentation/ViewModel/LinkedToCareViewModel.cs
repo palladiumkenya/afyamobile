@@ -240,7 +240,6 @@ namespace LiveHTS.Presentation.ViewModel
                 else
                 {
                     obs = ObsLinkage;
-
                     obs.FacilityHandedTo = FacilityHandedTo;
                     obs.HandedTo = HandedTo;
                     obs.WorkerCarde = WorkerCarde;
@@ -248,7 +247,6 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.ARTStartDate = ARTStartDate;
                     obs.EnrollmentId = EnrollmentId;
                     obs.Remarks = Remarks;
-
                     _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id, false);
                 }
 
@@ -257,6 +255,11 @@ namespace LiveHTS.Presentation.ViewModel
 
                 _dialogService.ShowToast("Linkage info saved successfully");
                 ParentViewModel.GoBack();
+            }
+            else
+            {
+                if (null != Errors && Errors.Any())
+                    _dialogService.ShowErrorToast(Errors.First().Value,6000);
             }
         }
 
@@ -352,21 +355,21 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-            //Validator.AddRule(
-            //    nameof(DateEnrolled),
-            //    () => RuleResult.Assert(
-            //        DateEnrolled >= DateTime.Today,
-            //        $"{nameof(DateEnrolled)} should be a valid date"
-            //    )
-            //);
+            Validator.AddRule(
+                nameof(DateEnrolled),
+                () => RuleResult.Assert(
+                    !(DateEnrolled.Date > DateTime.Today),
+                    $"{nameof(DateEnrolled)} should be a valid date"
+                )
+            );
 
-            //Validator.AddRule(
-            //    nameof(ARTStartDate),
-            //    () => RuleResult.Assert(
-            //        ARTStartDate >= DateTime.Today,
-            //        $"{nameof(ARTStartDate)} should be a valid date"
-            //    )
-            //);
+            Validator.AddRule(
+                nameof(ARTStartDate),
+                () => RuleResult.Assert(
+                    !(ARTStartDate.Date > DateTime.Today),
+                    $"{nameof(ARTStartDate)} should be a valid date"
+                )
+            );
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();

@@ -12,6 +12,6 @@ namespace LiveHTS.Presentation.Interfaces
         void ConfirmExit();
         Task<bool> ConfirmAction(string message, string title = "LiveHTS", string yesbtnText = "Yes", string nobtnText = "No");
         void ShowToast(string message);
-        void ShowErrorToast(string message,ToastPosition position=ToastPosition.Bottom);
+        void ShowErrorToast(string message,int ts=3000,ToastPosition position=ToastPosition.Bottom);
     }
 }

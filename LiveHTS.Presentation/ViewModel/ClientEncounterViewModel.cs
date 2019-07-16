@@ -5,7 +5,6 @@ using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
-using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
@@ -15,7 +14,6 @@ using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
 using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform.Platform;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
@@ -67,7 +65,6 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get { return GetGuid("livehts.deviceid"); }
         }
-
 
         public bool AtTheEnd { get; set; }
 
@@ -477,6 +474,13 @@ namespace LiveHTS.Presentation.ViewModel
             catch (Exception e)
             {
                 questionTemplate.ErrorSummary = e.Message;
+                try
+                {
+                    _dialogService.ShowErrorToast(e.Message,6000);
+                }
+                catch (Exception exception)
+                {
+                }
             }
 
             return validate;
@@ -810,15 +814,17 @@ namespace LiveHTS.Presentation.ViewModel
                 }
 
             }
-            return false;
+            return null != Manifest;
         }
 
         private void SaveChanges()
         {
-
             //nTODO : Save Enconter + Obs
 
             //readResponses
+
+            if(!IsValidEncounterDate())
+                return;
 
             var allowedQuestions = Questions.Where(x => x.QuestionTemplate.Allow).ToList();
 
@@ -883,6 +889,16 @@ namespace LiveHTS.Presentation.ViewModel
             var vtype = (int) visitType;
             var v = VisitTypes.FirstOrDefault(x => x.Value == vtype.ToString());
             return v ?? VisitTypes.First();
+        }
+
+        private bool IsValidEncounterDate()
+        {
+             if (BirthDate.Date > DateTime.Today)
+             {
+                 _dialogService.Alert("Encounter Date cannot be in the Future");
+                 return false;
+             }
+             return true;
         }
     }
 }

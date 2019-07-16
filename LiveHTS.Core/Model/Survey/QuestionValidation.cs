@@ -30,7 +30,7 @@ namespace LiveHTS.Core.Model.Survey
             var validationMessages=new List<string>();
 
             bool isValid = true;
-            
+
             //  Required | Range
 
             if (ValidatorId.ToLower() == "Required".ToLower())
@@ -38,9 +38,9 @@ namespace LiveHTS.Core.Model.Survey
                 isValid = response.Obs.HasValue(response.Question.Concept.ConceptTypeId);
 
                 if (!isValid)
-                    validationMessages.Add($"Response is required");
+                    validationMessages.Add($"{response.Question} is required");
             }
-            
+
             if (isValid&& ValidatorId.ToLower() == "Range".ToLower())
             {
                 bool isValidMin = true;
@@ -54,14 +54,14 @@ namespace LiveHTS.Core.Model.Survey
                     {
                         isValidMin= obsValue >= Convert.ToDecimal(MinLimit);
                         if (!isValidMin)
-                            validationMessages.Add($"Response cannot be Less than {MinLimit}");
+                            validationMessages.Add($"{response.Question} cannot be Less than {MinLimit}");
                     }
 
                     if (!string.IsNullOrWhiteSpace(MaxLimit))
                     {
                         isValidMax = obsValue <= Convert.ToDecimal(MaxLimit);
                         if (!isValidMax)
-                            validationMessages.Add($"Response cannot be greater than {MaxLimit}");
+                            validationMessages.Add($"{response.Question} cannot be greater than {MaxLimit}");
                     }
 
                     isValid = isValidMin&& isValidMax;
@@ -75,14 +75,14 @@ namespace LiveHTS.Core.Model.Survey
                     {
                         isValidMin = obsValue.Length>0 && obsValue.Length >= Convert.ToDecimal(MinLimit);
                         if (!isValidMin)
-                            validationMessages.Add($"Response cannot be Less than {MinLimit}");
+                            validationMessages.Add($"{response.Question} cannot be Less than {MinLimit}");
                     }
 
                     if (!string.IsNullOrWhiteSpace(MaxLimit))
                     {
                         isValidMax = obsValue.Length > 0 && obsValue.Length <= Convert.ToDecimal(MaxLimit);
                         if (!isValidMax)
-                            validationMessages.Add($"Response cannot be greater than {MaxLimit}");
+                            validationMessages.Add($"{response.Question} cannot be greater than {MaxLimit}");
                     }
 
                     isValid = isValidMin && isValidMax;
@@ -103,6 +103,6 @@ namespace LiveHTS.Core.Model.Survey
             var minInfo = string.IsNullOrWhiteSpace(MinLimit) ? string.Empty : $" >={MinLimit}";
             var maxInfo = string.IsNullOrWhiteSpace(MaxLimit) ? string.Empty : $" <={MaxLimit}";
             return $"{mainInfo} {minInfo} {maxInfo}  [{Revision}]";
-        }      
+        }
     }
 }

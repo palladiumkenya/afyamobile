@@ -75,11 +75,11 @@ namespace LiveHTS.Droid.Services
             _userDialogs.Toast(toastConfig);
         }
 
-        public void ShowErrorToast(string message,ToastPosition position=ToastPosition.Bottom)
+        public void ShowErrorToast(string message,int ts=3000, ToastPosition position=ToastPosition.Bottom)
         {
             var toastConfig = new ToastConfig(message);
             toastConfig.SetPosition(position);
-            toastConfig.SetDuration(3000);
+            toastConfig.SetDuration(ts);
             toastConfig.SetBackgroundColor(System.Drawing.Color.FromArgb(255, 0, 0));
             _userDialogs.Toast(toastConfig);
         }
