@@ -240,7 +240,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                return null != SelectedFinalTestResult && !SelectedFinalTestResult.ItemId.IsNullOrEmpty(); 
+                return null != SelectedFinalTestResult && !SelectedFinalTestResult.ItemId.IsNullOrEmpty();
             }
         }
 
@@ -317,7 +317,7 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => ResultGivenOptions);
             }
         }
-        
+
         public bool EnableCoupleDiscordant
         {
             get { return _enableCoupleDiscordant; }
@@ -337,9 +337,9 @@ namespace LiveHTS.Presentation.ViewModel
                 var id = new Guid("B25ED1C0-852F-11E7-BB31-BE2E44B06B34");
                 SelectedCoupleDiscordant = CoupleDiscordantOptions.FirstOrDefault(x => x.ItemId == id);
             }
-            catch 
+            catch
             {
-                
+
             }
             //throw new NotImplementedException();
         }
@@ -395,7 +395,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _selfTestOption = value;
                 RaisePropertyChanged(() => SelfTestOption);
-                
+
             }
         }
 
@@ -505,7 +505,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        public List<KitHistory> KitHistories 
+        public List<KitHistory> KitHistories
         {
             get { return _kitHistories; }
             set
@@ -526,6 +526,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveTesting()
         {
+            return true;
             if (null != SelectedResultGiven && null != SelectedFinalTestResult)
             {
                 var requiredGiven = null != SelectedResultGiven&& !SelectedResultGiven.ItemId.IsNullOrEmpty();
@@ -579,8 +580,11 @@ namespace LiveHTS.Presentation.ViewModel
                    // _dialogService.ShowToast("Tests saved successfully");
                     GoBack();
                 }
-
-
+            }
+            else
+            {
+                if (null != Errors && Errors.Any())
+                    ShowErrorInfo(Errors.First().Value);
             }
         }
 
@@ -645,7 +649,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var clientJson = _settings.GetValue("client", "");
 
-            
+
 
             if (null == Client)
             {
@@ -706,7 +710,7 @@ namespace LiveHTS.Presentation.ViewModel
             //RaisePropertyChanged(() => FirstHIVTestViewModel.FirstTestName);
         }
 
- 
+
         public void SaveTest(ObsTestResult test)
         {
 
@@ -735,10 +739,13 @@ namespace LiveHTS.Presentation.ViewModel
 
         public bool Validate()
         {
-            return true;
+            Validator.Reset();
+            Validator.RemoveAllRules();
+
+            // return true;
             ErrorSummary = string.Empty;
 
-            //FInal Result Given
+            //Final Result
             var final = SelectedFinalTestResult.ItemId;
 
             Validator.AddRule(
@@ -760,18 +767,24 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-            //Pns Accepted
-            var pnsaccepted = SelectedSelfTest.ItemId;
 
-            Validator.AddRule(
-                "Partner Listing",
-                () => RuleResult.Assert(
-                    !pnsaccepted.IsNullOrEmpty(),
-                    $"Partner Listing is required"
-                )
-            );
+            if (EnableSelfTestOption)
+            {
+                // Accepted to partner listing
 
-            if (EnablePnsDeclined)
+                var pnsaccepted = SelectedSelfTest.ItemId;
+
+                Validator.AddRule(
+                    "Partner Listing",
+                    () => RuleResult.Assert(
+                        !pnsaccepted.IsNullOrEmpty(),
+                        $"Partner Listing is required"
+                    )
+                );
+                
+            }
+
+                if (EnablePnsDeclined)
             {
                 //Decline
                 var declined = SelectedPnsDeclined.ItemId;
@@ -875,7 +888,7 @@ namespace LiveHTS.Presentation.ViewModel
                     }
 
                     //  Result given
-                    
+
                     var resultg = ResultGivenOptions.FirstOrDefault(x => x.ItemId == finalResult.ResultGiven);
                     if (null != resultg)
                     {
@@ -955,8 +968,19 @@ namespace LiveHTS.Presentation.ViewModel
 
             if(string.IsNullOrWhiteSpace(guid))
                 return Guid.Empty;
-            
+
             return new Guid(guid);
+        }
+
+        private void ShowErrorInfo(string message)
+        {
+            try
+            {
+                _dialogService.ShowErrorToast(message, 3000);
+            }
+            catch (Exception exception)
+            {
+            }
         }
     }
 }
