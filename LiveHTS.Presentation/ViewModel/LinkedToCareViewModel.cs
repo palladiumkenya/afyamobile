@@ -7,6 +7,7 @@ using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmValidation;
@@ -359,7 +360,7 @@ namespace LiveHTS.Presentation.ViewModel
                 nameof(DateEnrolled),
                 () => RuleResult.Assert(
                     !(DateEnrolled.Date > DateTime.Today),
-                    $"{nameof(DateEnrolled)} should be a valid date"
+                    $"{nameof(DateEnrolled)} cannot be in future"
                 )
             );
 
@@ -367,9 +368,34 @@ namespace LiveHTS.Presentation.ViewModel
                 nameof(ARTStartDate),
                 () => RuleResult.Assert(
                     !(ARTStartDate.Date > DateTime.Today),
-                    $"{nameof(ARTStartDate)} should be a valid date"
+                    $"{nameof(ARTStartDate)} cannot be in future"
                 )
             );
+
+            if (null != ParentViewModel.Client)
+            {
+                if (!ParentViewModel.Client.DateEnrolled.IsNullOrEmpty())
+                {
+
+                    Validator.AddRule(
+                        nameof(DateEnrolled),
+                        () => RuleResult.Assert(
+                            !(DateEnrolled.Date < ParentViewModel.Client.DateEnrolled),
+                            $"{nameof(DateEnrolled)} cannot be before Enrolled Date"
+                        )
+                    );
+
+                    Validator.AddRule(
+                        nameof(ARTStartDate),
+                        () => RuleResult.Assert(
+                            !(ARTStartDate.Date < ParentViewModel.Client.DateEnrolled),
+                            $"{nameof(ARTStartDate)} cannot be before Enrolled Date"
+                        )
+                    );
+                }
+            }
+
+
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();

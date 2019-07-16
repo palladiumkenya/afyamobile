@@ -60,6 +60,8 @@ namespace LiveHTS.Core.Model.Subject
         [Ignore]
         public bool IsClient => IsHtstEnrolled();
 
+        [Ignore] public DateTime? DateEnrolled => GetDateEnrolled();
+
         public Client()
         {
             Id = LiveGuid.NewGuid();
@@ -233,6 +235,13 @@ namespace LiveHTS.Core.Model.Subject
         public bool IsValid()
         {
             return true;
+        }
+
+        private DateTime? GetDateEnrolled()
+        {
+            if (Identifiers.Any())
+                return Identifiers.First().RegistrationDate;
+            return null;
         }
     }
  }
