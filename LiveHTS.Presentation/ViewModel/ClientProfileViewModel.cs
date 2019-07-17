@@ -406,7 +406,7 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
             Validator.AddRule(
-                "Key Pops",
+                "KeyPops",
                 () => RuleResult.Assert(
                     null != SelectedKeyPop && !string.IsNullOrWhiteSpace(SelectedKeyPop.Id),
                     $"Population Type is required"
