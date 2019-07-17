@@ -381,7 +381,7 @@ namespace LiveHTS.Presentation.ViewModel
                         nameof(DateEnrolled),
                         () => RuleResult.Assert(
                             !(DateEnrolled.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
-                            $"{nameof(DateEnrolled)} cannot be before Enrolled Date"
+                            $"{nameof(DateEnrolled)} cannot be before Registration Date"
                         )
                     );
 
@@ -389,7 +389,7 @@ namespace LiveHTS.Presentation.ViewModel
                         nameof(ARTStartDate),
                         () => RuleResult.Assert(
                             !(ARTStartDate.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
-                            $"{nameof(ARTStartDate)} cannot be before Enrolled Date"
+                            $"{nameof(ARTStartDate)} cannot be before Registration Date"
                         )
                     );
                 }

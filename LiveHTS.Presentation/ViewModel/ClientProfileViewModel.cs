@@ -406,10 +406,10 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
             Validator.AddRule(
-                "KeyPops",
+                "Key Pops",
                 () => RuleResult.Assert(
                     null != SelectedKeyPop && !string.IsNullOrWhiteSpace(SelectedKeyPop.Id),
-                    $"KeyPops is required"
+                    $"Population Type is required"
                 )
             );
 
@@ -419,7 +419,7 @@ namespace LiveHTS.Presentation.ViewModel
                     nameof(OtherKeyPop),
                     () => RuleResult.Assert(
                         !string.IsNullOrWhiteSpace(OtherKeyPop),
-                        $"{nameof(OtherKeyPop)} has to be specified"
+                        $"Other Population Type has to be specified"
                     )
                 );
             }
