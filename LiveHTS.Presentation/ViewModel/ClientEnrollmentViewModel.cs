@@ -252,6 +252,22 @@ namespace LiveHTS.Presentation.ViewModel
                     RegistrationDate <= DateTime.Today,
                     $"{nameof(RegistrationDate)} should not be future date"));
 
+            try
+            {
+                var clientRegistrationDTO = new ClientRegistrationDTO(_settings);
+
+                if (null != clientRegistrationDTO)
+                    Validator.AddRule(
+                        nameof(RegistrationDate),
+                        () => RuleResult.Assert(
+                            RegistrationDate > clientRegistrationDTO.ClientDemographic.BirthDate,
+                            $"{nameof(RegistrationDate)} should be after Birth Date"));
+            }
+            catch (Exception e)
+            {
+
+            }
+
             return base.Validate();
         }
 
@@ -349,7 +365,6 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void ClearCache()
         {
-
             _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel), "");
             _settings.AddOrUpdateValue(nameof(ClientContactViewModel), "");
             _settings.AddOrUpdateValue(nameof(ClientProfileViewModel), "");
