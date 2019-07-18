@@ -140,6 +140,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool Downloaded { get; set; }
+
         public CustomItem SelectedAgeUnit
         {
             get { return _selectedAgeUnit; }
@@ -401,6 +403,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Demographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(modelStore.Store);
+                Downloaded = Demographic.Downloaded;
                 PersonId = Demographic.PersonId;
                 FirstName = Demographic.FirstName;
                 MiddleName = Demographic.MiddleName;

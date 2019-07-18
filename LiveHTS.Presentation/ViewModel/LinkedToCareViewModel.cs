@@ -7,6 +7,7 @@ using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmValidation;
@@ -240,7 +241,6 @@ namespace LiveHTS.Presentation.ViewModel
                 else
                 {
                     obs = ObsLinkage;
-
                     obs.FacilityHandedTo = FacilityHandedTo;
                     obs.HandedTo = HandedTo;
                     obs.WorkerCarde = WorkerCarde;
@@ -248,7 +248,6 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.ARTStartDate = ARTStartDate;
                     obs.EnrollmentId = EnrollmentId;
                     obs.Remarks = Remarks;
-
                     _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id, false);
                 }
 
@@ -257,6 +256,11 @@ namespace LiveHTS.Presentation.ViewModel
 
                 _dialogService.ShowToast("Linkage info saved successfully");
                 ParentViewModel.GoBack();
+            }
+            else
+            {
+                if (null != Errors && Errors.Any())
+                    ShowErrorInfo(Errors.First().Value);
             }
         }
 
@@ -352,21 +356,46 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-            //Validator.AddRule(
-            //    nameof(DateEnrolled),
-            //    () => RuleResult.Assert(
-            //        DateEnrolled >= DateTime.Today,
-            //        $"{nameof(DateEnrolled)} should be a valid date"
-            //    )
-            //);
+            Validator.AddRule(
+                nameof(DateEnrolled),
+                () => RuleResult.Assert(
+                    !(DateEnrolled.Date > DateTime.Today),
+                    $"{nameof(DateEnrolled)} cannot be in future"
+                )
+            );
 
-            //Validator.AddRule(
-            //    nameof(ARTStartDate),
-            //    () => RuleResult.Assert(
-            //        ARTStartDate >= DateTime.Today,
-            //        $"{nameof(ARTStartDate)} should be a valid date"
-            //    )
-            //);
+            Validator.AddRule(
+                nameof(ARTStartDate),
+                () => RuleResult.Assert(
+                    !(ARTStartDate.Date > DateTime.Today),
+                    $"{nameof(ARTStartDate)} cannot be in future"
+                )
+            );
+
+            if (null != ParentViewModel.Client)
+            {
+                if (!ParentViewModel.Client.DateEnrolled.IsNullOrEmpty())
+                {
+
+                    Validator.AddRule(
+                        nameof(DateEnrolled),
+                        () => RuleResult.Assert(
+                            !(DateEnrolled.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
+                            $"{nameof(DateEnrolled)} cannot be before Registration Date"
+                        )
+                    );
+
+                    Validator.AddRule(
+                        nameof(ARTStartDate),
+                        () => RuleResult.Assert(
+                            !(ARTStartDate.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
+                            $"{nameof(ARTStartDate)} cannot be before Registration Date"
+                        )
+                    );
+                }
+            }
+
+
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
@@ -381,6 +410,17 @@ namespace LiveHTS.Presentation.ViewModel
         private bool isNumeric(string enrollmentId)
         {
             return long.TryParse(enrollmentId.Trim(), out long n);
+        }
+
+        private void ShowErrorInfo(string message)
+        {
+            try
+            {
+                _dialogService.ShowErrorToast(message, 6000);
+            }
+            catch (Exception exception)
+            {
+            }
         }
     }
 }

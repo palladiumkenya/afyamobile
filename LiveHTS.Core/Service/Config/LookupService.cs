@@ -99,8 +99,15 @@ namespace LiveHTS.Core.Service.Config
             var list = _keyPopRepository.GetAll().ToList();
             if (null != list && list.Count > 0)
             {
-                keyPops.AddRange(list);
+                foreach (var keyPop in list)
+                {
+                    if (keyPop.Id == "NA")
+                        keyPop.Name = "General Popuplation";
+                    keyPops.Add(keyPop);
+                }
+
             }
+
             return keyPops;
         }
 

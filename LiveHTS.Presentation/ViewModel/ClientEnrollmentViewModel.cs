@@ -142,6 +142,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool Downloaded { get; set; }
 
 
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService,
@@ -252,6 +253,22 @@ namespace LiveHTS.Presentation.ViewModel
                     RegistrationDate <= DateTime.Today,
                     $"{nameof(RegistrationDate)} should not be future date"));
 
+            try
+            {
+                var clientRegistrationDTO = new ClientRegistrationDTO(_settings);
+
+                if (null != clientRegistrationDTO)
+                    Validator.AddRule(
+                        nameof(RegistrationDate),
+                        () => RuleResult.Assert(
+                            RegistrationDate > clientRegistrationDTO.ClientDemographic.BirthDate,
+                            $"{nameof(RegistrationDate)} should be after Birth Date"));
+            }
+            catch (Exception e)
+            {
+
+            }
+
             return base.Validate();
         }
 
@@ -325,6 +342,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Enrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(modelStore.Store);
+                Downloaded = Enrollment.Downloaded;
                 ClientId = Enrollment.ClientId;
                 SelectedIdentifierType = IdentifierTypes.FirstOrDefault(x => x.Id == Enrollment.IdentifierTypeId);
                 Identifier = Enrollment.Identifier;
@@ -349,7 +367,6 @@ namespace LiveHTS.Presentation.ViewModel
 
         private void ClearCache()
         {
-
             _settings.AddOrUpdateValue(nameof(ClientDemographicViewModel), "");
             _settings.AddOrUpdateValue(nameof(ClientContactViewModel), "");
             _settings.AddOrUpdateValue(nameof(ClientProfileViewModel), "");

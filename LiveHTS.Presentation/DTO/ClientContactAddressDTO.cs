@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.DTO
         public decimal? Lat { get; set; }
         public decimal? Lng { get; set; }
         public bool Preferred { get; set; }
+        public bool Downloaded { get; set; }
 
         public bool HasAnyData
         {
@@ -49,10 +50,11 @@ namespace LiveHTS.Presentation.DTO
             addressDTO.CountyId = clientContactViewModel.SelectedCounty?.Id;
             addressDTO.SubCountyId = clientContactViewModel.SelectedSubCounty?.Id;
             addressDTO.WardId = clientContactViewModel.SelectedWard?.Id;
+            addressDTO.Downloaded = clientContactViewModel.Downloaded;
             return addressDTO;
         }
 
-        public static ClientContactAddressDTO CreateFromClient(Client client)
+        public static ClientContactAddressDTO CreateFromClient(Client client, bool clientDownloaded)
         {
             var addressDTO = new ClientContactAddressDTO();
 
@@ -84,6 +86,7 @@ namespace LiveHTS.Presentation.DTO
                     }
 
                     addressDTO.PersonId = client.PersonId.ToString();
+                    addressDTO.Downloaded = clientDownloaded;
                 }
             }
 

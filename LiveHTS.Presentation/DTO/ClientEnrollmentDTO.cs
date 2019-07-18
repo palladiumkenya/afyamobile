@@ -16,6 +16,7 @@ namespace LiveHTS.Presentation.DTO
         public string IdentifierTypeId { get; set; }
         public string Identifier { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public bool Downloaded { get; set; }
 
         public bool HasAnyData
         {
@@ -41,24 +42,25 @@ namespace LiveHTS.Presentation.DTO
 
         public static ClientEnrollmentDTO CreateFromView(ClientEnrollmentViewModel clientEnrollmentViewModel)
         {
-            
+
             var enrollmentDTO= new ClientEnrollmentDTO(clientEnrollmentViewModel.SelectedPractice.Id,
                 clientEnrollmentViewModel.SelectedIdentifierType.Id, clientEnrollmentViewModel.Identifier,
                 clientEnrollmentViewModel.RegistrationDate);
 
             enrollmentDTO.ClientId = clientEnrollmentViewModel.ClientId;
             enrollmentDTO.Id = clientEnrollmentViewModel.Id;
+            enrollmentDTO.Downloaded = clientEnrollmentViewModel.Downloaded;
             return enrollmentDTO;
         }
 
-        public static ClientEnrollmentDTO CreateFromClient(Client client)
+        public static ClientEnrollmentDTO CreateFromClient(Client client, bool clientDownloaded)
         {
             var enrollmentDTO = new ClientEnrollmentDTO();
 
             if (null != client)
             {
                 enrollmentDTO.PracticeId = client.PracticeId;
-                
+
 
                 //Client Identifiers
 
@@ -76,6 +78,8 @@ namespace LiveHTS.Presentation.DTO
                     enrollmentDTO.ClientId = client.Id.ToString();
                     enrollmentDTO.RegistrationDate =DateTime.Today;
                 }
+
+                enrollmentDTO.Downloaded = clientDownloaded;
             }
             return enrollmentDTO;
         }

@@ -261,6 +261,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool Downloaded { get; set; }
+
         public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService, ISettings settings,
             IRegistryService registryService) : base(dialogService, settings)
         {
@@ -409,7 +411,7 @@ namespace LiveHTS.Presentation.ViewModel
                 "KeyPops",
                 () => RuleResult.Assert(
                     null != SelectedKeyPop && !string.IsNullOrWhiteSpace(SelectedKeyPop.Id),
-                    $"KeyPops is required"
+                    $"Population Type is required"
                 )
             );
 
@@ -419,7 +421,7 @@ namespace LiveHTS.Presentation.ViewModel
                     nameof(OtherKeyPop),
                     () => RuleResult.Assert(
                         !string.IsNullOrWhiteSpace(OtherKeyPop),
-                        $"{nameof(OtherKeyPop)} has to be specified"
+                        $"Other Population Type has to be specified"
                     )
                 );
             }
@@ -563,6 +565,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Profile = JsonConvert.DeserializeObject<ClientProfileDTO>(modelStore.Store);
+                Downloaded = Profile.Downloaded;
                 ClientId = Profile.ClientId;
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);

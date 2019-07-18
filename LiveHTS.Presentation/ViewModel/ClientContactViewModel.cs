@@ -123,6 +123,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool Downloaded { get; set; }
+
         public List<RegionItem> Counties
         {
             get { return _counties; }
@@ -328,6 +330,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 ContactAddress = JsonConvert.DeserializeObject<ClientContactAddressDTO>(modelStore.Store);
                 PersonId = ContactAddress.PersonId;
+                Downloaded = ContactAddress.Downloaded;
                 Telephone = ContactAddress.Phone;
                 Landmark = ContactAddress.Landmark;
                 ContactId = ContactAddress.ContactId;
@@ -353,6 +356,8 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     SelectedWard = Wards.FirstOrDefault(x => x.Id == ContactAddress.WardId);
                 }
+
+
 
             }
             catch (Exception e)

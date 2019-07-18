@@ -21,6 +21,7 @@ namespace LiveHTS.Presentation.DTO
         public string Identifier { get; set; }
         public bool HasPartners { get; set; }
         public List<Guid> Partners { get; set; }
+        public DateTime? DateEnrolled { get; set; }
 
         public ClientDTO()
         {
@@ -54,6 +55,8 @@ namespace LiveHTS.Presentation.DTO
                 client.Person.AgeInfo,
                 null == ids ? "" : ids.IdentifierTypeId,
                 null == ids ? "" : ids.Identifier);
+
+            dto.DateEnrolled = client.DateEnrolled;
 
             dto.HasPartners = client.Relationships.Any();
 

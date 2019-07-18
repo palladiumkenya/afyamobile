@@ -18,6 +18,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         double? Lat { get; set; }
         double? Lng { get; set; }
 
+        bool Downloaded { get; set; }
         List<RegionItem> Counties { get; set; }
         RegionItem SelectedCounty { get; set; }
 

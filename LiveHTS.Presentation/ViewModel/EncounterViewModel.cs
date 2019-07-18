@@ -494,14 +494,14 @@ namespace LiveHTS.Presentation.ViewModel
         private bool CheckEligibility()
         {
             bool isEligibility = true;
+
             if (null != Client && !Client.Person.IsOverAge)
             {
                 isEligibility = false;
                 _dialogService.Alert("This client under 18 months !", "Encounter");
             }
-
+            
             return isEligibility;
-
         }
     }
 }
