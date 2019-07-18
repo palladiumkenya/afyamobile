@@ -17,13 +17,13 @@ using MvvmCross.Platform.Platform;
 
 namespace LiveHTS.Presentation.ViewModel
 {
-    public class PartnerViewModel :MvxViewModel, IPartnerViewModel
+    public class PartnerViewModel : MvxViewModel, IPartnerViewModel
     {
 
         private readonly IDialogService _dialogService;
         private readonly IDashboardService _dashboardService;
 
-        private List<PartnerTemplateWrap> _partners=new List<PartnerTemplateWrap>();
+        private List<PartnerTemplateWrap> _partners = new List<PartnerTemplateWrap>();
 
         private Client _client;
         private IMvxCommand _addPartnerCommand;
@@ -36,15 +36,21 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _client; }
             set
             {
-                _client = value; RaisePropertyChanged(() => Client);
-                ShowAddPartner = Client.IsInState(LiveState.HtsPnsAcceptedYes,LiveState.HtsEnrolled);
+                _client = value;
+                RaisePropertyChanged(() => Client);
+                ShowAddPartner = Client.IsInState(LiveState.HtsPnsAcceptedYes, LiveState.HtsEnrolled);
                 Partners = ConvertToPartnerWrapperClass(Client, this);
             }
         }
+
         public List<PartnerTemplateWrap> Partners
         {
             get { return _partners; }
-            set { _partners = value; RaisePropertyChanged(() => Partners); }
+            set
+            {
+                _partners = value;
+                RaisePropertyChanged(() => Partners);
+            }
         }
 
         public bool ShowAddPartner
@@ -76,10 +82,12 @@ namespace LiveHTS.Presentation.ViewModel
             _dashboardService = Mvx.Resolve<IDashboardService>();
 
         }
+
         private void AddRelationShip()
         {
-            ShowViewModel<ClientRelationshipsViewModel>(new { id = Client.Id ,reltype= "Partner" });
+            ShowViewModel<ClientRelationshipsViewModel>(new {id = Client.Id, reltype = "Partner"});
         }
+
         public async void RemoveRelationship(PartnerTemplate template)
         {
             try
@@ -102,17 +110,29 @@ namespace LiveHTS.Presentation.ViewModel
         {
 //            Close(this);
 //            Parent.ShowDashboard(template.RelatedClientId.ToString(), template.ClientId.ToString(), "pns");
-            ShowViewModel<StandByViewModel>(new { id = template.RelatedClientId.ToString(), callerId = template.ClientId.ToString(), mode = "pns" });
+            ShowViewModel<StandByViewModel>(new
+                {id = template.RelatedClientId.ToString(), callerId = template.ClientId.ToString(), mode = "pns"});
         }
 
-        private static List<PartnerTemplateWrap> ConvertToPartnerWrapperClass(Client client, IPartnerViewModel partnerViewModel)
+        private static List<PartnerTemplateWrap> ConvertToPartnerWrapperClass(Client client,
+            IPartnerViewModel partnerViewModel)
         {
-            var clientRelationships = client.Relationships.ToList().Where(x => x.IsPatner()).ToList();
+            List<ClientRelationship> clientRelationships = new List<ClientRelationship>();
+
+            if (null != client.Relationships && client.Relationships.Any())
+                clientRelationships = client.Relationships.ToList().Where(x => x.IsPatner()).ToList();
 
             List<PartnerTemplateWrap> list = new List<PartnerTemplateWrap>();
             foreach (var r in clientRelationships)
             {
-                list.Add(new PartnerTemplateWrap(new PartnerTemplate(r), partnerViewModel));
+                try
+                {
+                    var partner = new PartnerTemplateWrap(new PartnerTemplate(r), partnerViewModel);
+                    list.Add(partner);
+                }
+                catch (Exception e)
+                {
+                }
             }
 
             return list;

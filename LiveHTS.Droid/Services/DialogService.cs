@@ -15,17 +15,38 @@ namespace LiveHTS.Droid.Services
 
         public DialogService()
         {
-            _userDialogs = Mvx.Resolve<IUserDialogs>();
+            try
+            {
+                _userDialogs = Mvx.Resolve<IUserDialogs>();
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
         public void ShowWait(string message="Loading")
         {
-            _userDialogs.ShowLoading(message, MaskType.Black);
+            try
+            {
+                _userDialogs.ShowLoading(message, MaskType.Black);
+            }
+            catch (Exception e)
+            {
+            }
+
         }
 
         public void HideWait()
         {
-            _userDialogs.HideLoading();
+            try
+            {
+                _userDialogs.HideLoading();
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         public void Alert(string message, string title="Afya Mobile", string okbtnText="Ok")
