@@ -22,6 +22,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string NickName { get; set; }
         CustomItem SelectedGender { get; set; }
         decimal Age { get; set; }
+        bool Downloaded { get; set; }
         CustomItem SelectedAgeUnit { get; set; }
 
         IMvxCommand ShowDateDialogCommand { get; }
@@ -32,7 +33,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         DateTime BirthDate { get; set; }
         string PersonId { get; set; }
-        
+
         void CalculateBirthDate();
         void CalculateAge();
     }

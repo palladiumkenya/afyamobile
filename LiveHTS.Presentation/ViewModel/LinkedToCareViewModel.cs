@@ -7,13 +7,14 @@ using LiveHTS.Presentation.Events;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.Validations;
+using LiveHTS.SharedKernel.Custom;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmValidation;
 
 namespace LiveHTS.Presentation.ViewModel
 {
-    public class LinkedToCareViewModel:MvxViewModel, ILinkedToCareViewModel
+    public class LinkedToCareViewModel : MvxViewModel, ILinkedToCareViewModel
     {
         private readonly ILinkageService _linkageService;
         private Guid _linkageId;
@@ -42,11 +43,17 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _validator; }
             set { _validator = value; }
         }
+
         public ObservableDictionary<string, string> Errors
         {
             get { return _errors; }
-            set { _errors = value; RaisePropertyChanged(() => Errors); }
+            set
+            {
+                _errors = value;
+                RaisePropertyChanged(() => Errors);
+            }
         }
+
         public ILinkageViewModel ParentViewModel
         {
             get { return _parentViewModel; }
@@ -62,7 +69,11 @@ namespace LiveHTS.Presentation.ViewModel
         public string ErrorSummary
         {
             get { return _errorSummary; }
-            set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary); }
+            set
+            {
+                _errorSummary = value;
+                RaisePropertyChanged(() => ErrorSummary);
+            }
         }
 
         public ObsLinkage ObsLinkage
@@ -89,52 +100,85 @@ namespace LiveHTS.Presentation.ViewModel
                 }
             }
         }
+
         public Guid LinkageId
         {
             get { return _linkageId; }
-            set { _linkageId = value; RaisePropertyChanged(() => LinkageId); }
+            set
+            {
+                _linkageId = value;
+                RaisePropertyChanged(() => LinkageId);
+            }
         }
 
         public string FacilityHandedTo
         {
             get { return _facilityHandedTo; }
-            set { _facilityHandedTo = value; RaisePropertyChanged(() => FacilityHandedTo); }
+            set
+            {
+                _facilityHandedTo = value;
+                RaisePropertyChanged(() => FacilityHandedTo);
+            }
         }
 
         public string HandedTo
         {
             get { return _handedTo; }
-            set { _handedTo = value; RaisePropertyChanged(() => HandedTo); }
+            set
+            {
+                _handedTo = value;
+                RaisePropertyChanged(() => HandedTo);
+            }
         }
 
         public string WorkerCarde
         {
             get { return _workerCarde; }
-            set { _workerCarde = value; RaisePropertyChanged(() => WorkerCarde); }
+            set
+            {
+                _workerCarde = value;
+                RaisePropertyChanged(() => WorkerCarde);
+            }
         }
 
         public DateTime DateEnrolled
         {
             get { return _dateEnrolled; }
-            set { _dateEnrolled = value; RaisePropertyChanged(() => DateEnrolled); }
+            set
+            {
+                _dateEnrolled = value;
+                RaisePropertyChanged(() => DateEnrolled);
+            }
         }
 
         public DateTime ARTStartDate
         {
             get { return _artStartDate; }
-            set { _artStartDate = value; RaisePropertyChanged(() => ARTStartDate); }
+            set
+            {
+                _artStartDate = value;
+                RaisePropertyChanged(() => ARTStartDate);
+            }
         }
 
         public string EnrollmentId
         {
             get { return _enrollmentId; }
-            set { _enrollmentId = value; RaisePropertyChanged(() => EnrollmentId); }
+            set
+            {
+                _enrollmentId = value;
+                RaisePropertyChanged(() => EnrollmentId);
+            }
         }
 
         public string Remarks
         {
             get { return _remarks; }
-            set { _remarks = value; RaisePropertyChanged(() => Remarks); }
+            set
+            {
+                _remarks = value;
+                RaisePropertyChanged(() => Remarks);
+            }
         }
 
         public TraceDateDTO SelectedEnrolDate
@@ -180,7 +224,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanSaveLinking()
         {
-           return true;
+            return true;
         }
 
         private void SaveLinking()
@@ -191,12 +235,12 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null == ObsLinkage)
                 {
-                    obs = ObsLinkage.CreateNew(FacilityHandedTo,HandedTo,WorkerCarde,DateEnrolled,EnrollmentId,Remarks, ParentViewModel.Encounter.Id,ARTStartDate);
+                    obs = ObsLinkage.CreateNew(FacilityHandedTo, HandedTo, WorkerCarde, DateEnrolled, EnrollmentId,
+                        Remarks, ParentViewModel.Encounter.Id, ARTStartDate);
                 }
                 else
                 {
                     obs = ObsLinkage;
-               
                     obs.FacilityHandedTo = FacilityHandedTo;
                     obs.HandedTo = HandedTo;
                     obs.WorkerCarde = WorkerCarde;
@@ -204,14 +248,19 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.ARTStartDate = ARTStartDate;
                     obs.EnrollmentId = EnrollmentId;
                     obs.Remarks = Remarks;
-
-                    _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id,false);
+                    _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id, false);
                 }
-                _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id,false);
+
+                _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id, false);
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
 
                 _dialogService.ShowToast("Linkage info saved successfully");
                 ParentViewModel.GoBack();
+            }
+            else
+            {
+                if (null != Errors && Errors.Any())
+                    ShowErrorInfo(Errors.First().Value);
             }
         }
 
@@ -219,7 +268,8 @@ namespace LiveHTS.Presentation.ViewModel
         {
             get
             {
-                _showDateEnrolledDialogCommand = _showDateEnrolledDialogCommand ?? new MvxCommand(ShowDateEnrolledDialog);
+                _showDateEnrolledDialogCommand =
+                    _showDateEnrolledDialogCommand ?? new MvxCommand(ShowDateEnrolledDialog);
                 return _showDateEnrolledDialogCommand;
             }
         }
@@ -260,6 +310,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             OnChangedEnrollDate(new ChangedDateEvent(refId, refDate));
         }
+
         public void ShowArtDatePicker(Guid refId, DateTime refDate)
         {
             OnChangedArtDate(new ChangedDateEvent(refId, refDate));
@@ -295,29 +346,56 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
+
             Validator.AddRule(
                 nameof(EnrollmentId),
                 () => RuleResult.Assert(
-                    !string.IsNullOrWhiteSpace(EnrollmentId),
-                    $"CCC {nameof(EnrollmentId)} is required"
+                    !string.IsNullOrWhiteSpace(EnrollmentId)&&
+                      EnrollmentId.Trim().Length == 10 && isNumeric(EnrollmentId),
+                    $"CCC {nameof(EnrollmentId)} is invalid"
                 )
             );
 
-            //Validator.AddRule(
-            //    nameof(DateEnrolled),
-            //    () => RuleResult.Assert(
-            //        DateEnrolled >= DateTime.Today,
-            //        $"{nameof(DateEnrolled)} should be a valid date"
-            //    )
-            //);
+            Validator.AddRule(
+                nameof(DateEnrolled),
+                () => RuleResult.Assert(
+                    !(DateEnrolled.Date > DateTime.Today),
+                    $"{nameof(DateEnrolled)} cannot be in future"
+                )
+            );
 
-            //Validator.AddRule(
-            //    nameof(ARTStartDate),
-            //    () => RuleResult.Assert(
-            //        ARTStartDate >= DateTime.Today,
-            //        $"{nameof(ARTStartDate)} should be a valid date"
-            //    )
-            //);
+            Validator.AddRule(
+                nameof(ARTStartDate),
+                () => RuleResult.Assert(
+                    !(ARTStartDate.Date > DateTime.Today),
+                    $"{nameof(ARTStartDate)} cannot be in future"
+                )
+            );
+
+            if (null != ParentViewModel.Client)
+            {
+                if (!ParentViewModel.Client.DateEnrolled.IsNullOrEmpty())
+                {
+
+                    Validator.AddRule(
+                        nameof(DateEnrolled),
+                        () => RuleResult.Assert(
+                            !(DateEnrolled.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
+                            $"{nameof(DateEnrolled)} cannot be before Registration Date"
+                        )
+                    );
+
+                    Validator.AddRule(
+                        nameof(ARTStartDate),
+                        () => RuleResult.Assert(
+                            !(ARTStartDate.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
+                            $"{nameof(ARTStartDate)} cannot be before Registration Date"
+                        )
+                    );
+                }
+            }
+
+
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
@@ -325,7 +403,24 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 ErrorSummary = Errors.First().Value;
             }
+
             return result.IsValid;
+        }
+
+        private bool isNumeric(string enrollmentId)
+        {
+            return long.TryParse(enrollmentId.Trim(), out long n);
+        }
+
+        private void ShowErrorInfo(string message)
+        {
+            try
+            {
+                _dialogService.ShowErrorToast(message, 6000);
+            }
+            catch (Exception exception)
+            {
+            }
         }
     }
 }

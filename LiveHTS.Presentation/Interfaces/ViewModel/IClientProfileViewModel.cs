@@ -32,5 +32,6 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         CategoryItem SelectedOccupation { get; set; }
 
         string ClientId { get; set; }
+        bool Downloaded { get; set; }
     }
 }

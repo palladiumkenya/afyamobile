@@ -9,6 +9,7 @@ using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
 using LiveHTS.Core.Model.Subject;
 using LiveHTS.Core.Model.Survey;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 
 namespace LiveHTS.Core.Service.Clients
@@ -167,6 +168,8 @@ namespace LiveHTS.Core.Service.Clients
             // check consent
             if (questionId == new Guid("b2603dc6-852f-11e7-bb31-be2e44b06b34"))
             {
+                //
+
                 if (null != liveResponse.Obs.ValueCoded && liveResponse.Obs.ValueCoded.Value ==
                     new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"))
                 {
@@ -180,7 +183,7 @@ namespace LiveHTS.Core.Service.Clients
             //
 
             //
-            
+
         }
 
         public void SaveClientResponse(Guid cientId, Guid questionId, object response)
@@ -193,9 +196,16 @@ namespace LiveHTS.Core.Service.Clients
             _encounterRepository.ClearObs(encounterId);
         }
 
-        public void MarkEncounterCompleted(Guid encounterId,Guid userId, bool completed)
+        public void LogPretest(Guid encounterId,Guid clientId)
         {
-            _encounterRepository.UpdateStatus(encounterId, userId,completed);
+            _clientStateRepository.SaveOrUpdate(new ClientState(clientId, encounterId, LiveState.HasPretest));
+        }
+
+        public void MarkEncounterCompleted(Guid encounterId, Guid userId, bool completed, Guid? clientId)
+        {
+            _encounterRepository.UpdateStatus(encounterId, userId, completed);
+            if (!clientId.IsNullOrEmpty())
+                LogPretest(encounterId, clientId.Value);
         }
 
         public void UpdateEncounterDate(Guid encounterId, DateTime encounterDate, VisitType visitType)

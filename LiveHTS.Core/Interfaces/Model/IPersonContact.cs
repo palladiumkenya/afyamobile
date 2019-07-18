@@ -4,7 +4,7 @@ namespace LiveHTS.Core.Interfaces.Model
 {
     public interface IPersonContact
     {
-        long? Phone { get; set; }
+        string Phone { get; set; }
         bool Preferred { get; set; }
     }
 }

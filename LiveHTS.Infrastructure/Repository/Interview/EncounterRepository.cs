@@ -32,7 +32,7 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                     encounter.Obses = obses;
                 }
             }
-            
+
             return encounter;
         }
 
@@ -193,7 +193,7 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                             .ToList();
                         e.ObsLinkages = obsLinkages;
 
-                     
+
 
                     }
                 }
@@ -349,7 +349,7 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                 encounter.ObsPartnerTraceResults = obsPartnerTraceResults;
             }
 
-        
+
 
             return encounter;
         }
@@ -384,7 +384,34 @@ namespace LiveHTS.Infrastructure.Repository.Interview
             if (null != encounter)
                 return encounter.EncounterDate;
 
-            return new DateTime(1900,1,1);        
+            return new DateTime(1900,1,1);
+        }
+
+        public bool CheckPretestComplete(Guid clientId,bool downloaded=false)
+        {
+            var encounterTypeId = new Guid("7e5164a6-6b99-11e7-907b-a6006ad3dba0");
+
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            if (downloaded)
+            {
+                if (null != encounter)
+                    return encounter.IsComplete;
+                return true;
+            }
+            else
+            {
+                return null != encounter && encounter.IsComplete;
+            }
+        }
+
+        public bool CheckEncountersExisit(Guid clientId, Guid encounterTypeId)
+        {
+            var encounter = GetAll(x => x.EncounterTypeId == encounterTypeId && x.ClientId == clientId)
+                .FirstOrDefault();
+
+            return null != encounter;
         }
 
         public bool GetIndividual(Guid clientId)
@@ -501,8 +528,10 @@ namespace LiveHTS.Infrastructure.Repository.Interview
 
             _db.Execute($"DELETE FROM {nameof(ObsPartnerTraceResult)} WHERE EncounterId=?", id.ToString());
             _db.Execute($"DELETE FROM {nameof(ObsPartnerScreening)} WHERE EncounterId=?", id.ToString());
-          
-        
+
+            _db.Execute($"DELETE FROM {nameof(ClientState)} WHERE EncounterId=?", id.ToString());
+
+
         }
 
         public void PurgeAny(Guid id)
@@ -521,7 +550,7 @@ namespace LiveHTS.Infrastructure.Repository.Interview
                 _db.Execute($"DELETE FROM {nameof(ObsFinalTestResult)} WHERE EncounterId=?", guid.ToString());
                 Delete(guid);
             }
-           
+
         }
     }
 }

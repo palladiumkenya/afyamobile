@@ -52,5 +52,46 @@ namespace LiveHTS.SharedKernel.Tests.Custom
             Assert.That(display, Does.Contain("Days"));
             Console.WriteLine(_personAge.ToFullAgeString());
         }
+
+        [Test]
+        public void should_Check_IsPead()
+        {
+            var dob = DateTime.Now.AddYears(-14);
+            var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.True(personAge.Age<15);
+            Console.WriteLine( personAge.ToFullAgeString());
+        }
+
+        [Test]
+        public void should_Check_IsUnderAge()
+        {
+            var dob = DateTime.Now.AddMonths(-18);
+            var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.True(Utils.CheckDateGreaterThanLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} over 1.5" );
+
+            dob = DateTime.Now.AddMonths(-17);
+            personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} under 1.5" );
+        }
+
+        [Test]
+        public void should_Check_IsUnderAge_1980()
+        {
+            //15May1980
+            //01May1980
+
+            var dob = new DateTime(1980,5,1);
+
+            var personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} over 1.5" );
+
+            dob = DateTime.Now.AddMonths(-17);
+            personAge=SharedKernel.Custom.Utils.CalculateAge(dob);
+            Assert.False(Utils.CheckDateGreaterThanLimit(dob,1,5));
+            Console.WriteLine($"{personAge.ToFullAgeString()} under 1.5" );
+        }
     }
 }

@@ -130,7 +130,14 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 SelectedClient = remoteData.Client;
                 var encounters = remoteData.Encounters;
-                await _registryService.Download(SelectedClient, encounters);
+                try
+                {
+                    await _registryService.Download(SelectedClient, encounters);
+                }
+                catch (Exception e)
+                {
+                    _dialogService.Alert($"Could not save! {e.Message}");
+                }
             }
 
             _dialogService.HideWait();

@@ -14,6 +14,7 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 using MvvmCross.Platform.Platform;
@@ -100,7 +101,7 @@ namespace LiveHTS.Presentation.ViewModel
             get {return _indexClient;}
             set { _indexClient = value; RaisePropertyChanged(() => IndexClient);}
         }
-    
+
 
         public Client Client
         {
@@ -171,7 +172,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             //Reload
             var modulesJson = _settings.GetValue("modules", "");
-            
+
             if (!string.IsNullOrWhiteSpace(modulesJson))
             {
                 Modules = JsonConvert.DeserializeObject<List<Module>>(modulesJson);
@@ -180,6 +181,9 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void StartEncounter(FormTemplate formTemplate)
         {
+            if(!CheckEligibility())
+                return;
+
             var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, formTemplate);
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
@@ -227,7 +231,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
-            //Member Tracing 
+            //Member Tracing
             if (formTemplate.Display.ToLower().Contains("Member Tracing".ToLower()))
             {
                 ShowViewModel<MemberTracingViewModel>(new
@@ -285,9 +289,14 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void ResumeEncounter(EncounterTemplate encounterTemplate)
         {
+            if(!CheckEligibility())
+                return;
+
             var clientEncounterDTO = ClientEncounterDTO.Create(Client.Id, encounterTemplate);
             var clientEncounterDTOJson = JsonConvert.SerializeObject(clientEncounterDTO);
             _settings.AddOrUpdateValue("client.encounter.dto", clientEncounterDTOJson);
+
+
 
             if (encounterTemplate.FormDisplay.ToLower().Contains("Test Form".ToLower()))
             {
@@ -330,7 +339,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return;
             }
 
-            //Member Tracing 
+            //Member Tracing
             if (encounterTemplate.FormDisplay.ToLower().Contains("Member Tracing".ToLower()))
             {
                 ShowViewModel<MemberTracingViewModel>(new
@@ -396,8 +405,21 @@ namespace LiveHTS.Presentation.ViewModel
                 var result = await _dialogService.ConfirmAction("Are you sure ?", "Delete this Encounter");
                 if (result)
                 {
-                    _dashboardService.RemoveEncounter(encounterTemplate.Id);
-                    Parent.Modules=_dashboardService.LoadModules();
+
+                    if (_dashboardService.CanRemoveEncounter(encounterTemplate.Id, Client.Id,
+                        encounterTemplate.EncounterTypeId))
+                    {
+                        // validate Encounter
+                        _dashboardService.RemoveEncounter(encounterTemplate.Id);
+                        Parent.Modules = _dashboardService.LoadModules();
+                    }
+                    else
+                    {
+                        if(Terms.PreTest==encounterTemplate.EncounterTypeId)
+                            _dialogService.Alert("Please Delete Testing Encounters first", "Encounter");
+                        if(Terms.Testing==encounterTemplate.EncounterTypeId)
+                            _dialogService.Alert("Please Delete Referral and Linkage Encounters first", "Encounter");
+                    }
                 }
             }
             catch (Exception e)
@@ -433,17 +455,17 @@ namespace LiveHTS.Presentation.ViewModel
                 moduleTemplate.AllForms = formTemplateWraps.Count > 0 ? formTemplateWraps.OrderBy(x=>x.FormTemplate.Rank).ToList() : formTemplateWraps;
                 var moduleTemplateWrap = new ModuleTemplateWrap(encounterViewModel,moduleTemplate);
                 moduleTemplateWraps.Add(moduleTemplateWrap);
-               
+
             }
             moduleTemplateWraps = moduleTemplateWraps.OrderBy(x => x.ModuleTemplate.Rank).ToList();
             return moduleTemplateWraps;
         }
-        
+
 
         private static List<FormTemplateWrap> ConvertToFormWrapperClass(List<Form> forms, IEncounterViewModel encounterViewModel)
         {
             List<FormTemplateWrap> list = new List<FormTemplateWrap>();
-           
+
             foreach (var r in forms)
             {
                 foreach (var program in r.Programs)
@@ -467,6 +489,19 @@ namespace LiveHTS.Presentation.ViewModel
                 list.Add(new EncounterTemplateWrap(encounterViewModel, new EncounterTemplate(r, fDisplay)));
             }
             return list;
+        }
+
+        private bool CheckEligibility()
+        {
+            bool isEligibility = true;
+
+            if (null != Client && !Client.Person.IsOverAge)
+            {
+                isEligibility = false;
+                _dialogService.Alert("This client under 18 months !", "Encounter");
+            }
+            
+            return isEligibility;
         }
     }
 }

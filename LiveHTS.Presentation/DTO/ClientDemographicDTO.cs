@@ -19,6 +19,7 @@ namespace LiveHTS.Presentation.DTO
         public string AgeUnit { get; set; }
         public DateTime BirthDate { get; set; }
         public bool? BirthDateEstimated { get; set; }
+        public bool Downloaded { get; set; }
 
         public bool HasAnyData
         {
@@ -45,7 +46,7 @@ namespace LiveHTS.Presentation.DTO
             LastName = lastName;
             NickName = nickName;
             Gender = gender;
-         
+
             BirthDate = birthDate;
         }
 
@@ -68,15 +69,15 @@ namespace LiveHTS.Presentation.DTO
                 model.SelectedAgeUnit.Value,
                 model.NickName
             );
-
+            demographicDTO.Downloaded = model.Downloaded;
             demographicDTO.PersonId = model.PersonId;
             return demographicDTO;
         }
 
-        public static ClientDemographicDTO CreateFromClient(Client client)
+        public static ClientDemographicDTO CreateFromClient(Client client,bool downloaded)
         {
             var demographicDTO=new ClientDemographicDTO();
-            
+
             //Person
 
             if (null != client)
@@ -93,9 +94,10 @@ namespace LiveHTS.Presentation.DTO
                         model.NickName);
 
                     demographicDTO.PersonId = model.Id.ToString();
-                    
+                    demographicDTO.Downloaded = downloaded;
                 }
             }
+
 
             return demographicDTO;
         }

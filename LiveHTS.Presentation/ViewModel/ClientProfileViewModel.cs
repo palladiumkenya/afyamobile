@@ -42,7 +42,7 @@ namespace LiveHTS.Presentation.ViewModel
         private CategoryItem _selectedEducation;
         private CategoryItem _selectedCompletion;
         private bool _allowCompletion;
-        private List<CategoryItem> _occupations=new List<CategoryItem>();
+        private List<CategoryItem> _occupations = new List<CategoryItem>();
         private CategoryItem _selectedOccupation;
         private string _keyPopCategory;
 
@@ -261,6 +261,8 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool Downloaded { get; set; }
+
         public ClientProfileViewModel(IDialogService dialogService, ILookupService lookupService, ISettings settings,
             IRegistryService registryService) : base(dialogService, settings)
         {
@@ -385,11 +387,13 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == "");
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == "");
-                SelectedEducation= Educations.FirstOrDefault(x => x.Id == Guid.Empty);
+                SelectedEducation = Educations.FirstOrDefault(x => x.Id == Guid.Empty);
                 SelectedCompletion = Completions.FirstOrDefault(x => x.Id == Guid.Empty);
                 SelectedOccupation = Occupations.FirstOrDefault(x => x.Id == Guid.Empty);
             }
-            catch{}
+            catch
+            {
+            }
         }
 
         public override bool Validate()
@@ -407,7 +411,7 @@ namespace LiveHTS.Presentation.ViewModel
                 "KeyPops",
                 () => RuleResult.Assert(
                     null != SelectedKeyPop && !string.IsNullOrWhiteSpace(SelectedKeyPop.Id),
-                    $"KeyPops is required"
+                    $"Population Type is required"
                 )
             );
 
@@ -417,7 +421,7 @@ namespace LiveHTS.Presentation.ViewModel
                     nameof(OtherKeyPop),
                     () => RuleResult.Assert(
                         !string.IsNullOrWhiteSpace(OtherKeyPop),
-                        $"{nameof(OtherKeyPop)} has to be specified"
+                        $"Other Population Type has to be specified"
                     )
                 );
             }
@@ -474,6 +478,11 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     ShowViewModel<ClientEnrollmentViewModel>(new {clientinfo = ClientInfo, indexId = indexId});
                 }
+            }
+            else
+            {
+                if (null != Errors && Errors.Any())
+                    _dialogService.ShowErrorToast(Errors.First().Value);
             }
         }
 
@@ -556,6 +565,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Profile = JsonConvert.DeserializeObject<ClientProfileDTO>(modelStore.Store);
+                Downloaded = Profile.Downloaded;
                 ClientId = Profile.ClientId;
                 SelectedMaritalStatus = MaritalStatus.FirstOrDefault(x => x.Id == Profile.MaritalStatus);
                 SelectedKeyPop = KeyPops.FirstOrDefault(x => x.Id == Profile.KeyPop);

@@ -66,7 +66,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-      
+
         public FamilyMemberViewModel()
         {
             Title = "FAMILY";
@@ -104,10 +104,9 @@ namespace LiveHTS.Presentation.ViewModel
             ShowViewModel<StandByViewModel>(new {id = template.RelatedClientId.ToString(), callerId = template.ClientId.ToString(), mode = "fam" });
         }
 
-
         private static List<FamilyMemberTemplateWrap> ConvertToFamilyMemberWrapperClass(Client client, IFamilyMemberViewModel familyMemberViewModel)
         {
-            var clientRelationships = client.Relationships.Where(x => x.IsFamily()).ToList();
+            var clientRelationships = client.Relationships.ToList().Where(x => x.IsFamily()).ToList();
 
             List<FamilyMemberTemplateWrap> list = new List<FamilyMemberTemplateWrap>();
             foreach (var r in clientRelationships)

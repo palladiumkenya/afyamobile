@@ -12,7 +12,7 @@ namespace LiveHTS.Presentation.DTO
         public string AddressId { get; set; }
         public string PersonId { get; set; }
 
-        public long? Phone { get; set; }
+        public string Phone { get; set; }
         public int? CountyId { get; set; }
         public int? SubCountyId { get; set; }
         public int? WardId { get; set; }
@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.DTO
         public decimal? Lat { get; set; }
         public decimal? Lng { get; set; }
         public bool Preferred { get; set; }
+        public bool Downloaded { get; set; }
 
         public bool HasAnyData
         {
@@ -34,7 +35,7 @@ namespace LiveHTS.Presentation.DTO
         {
         }
 
-        private ClientContactAddressDTO(long? phone, string landmark)
+        private ClientContactAddressDTO(string phone, string landmark)
         {
             Phone = phone;
             Landmark = landmark;
@@ -49,14 +50,15 @@ namespace LiveHTS.Presentation.DTO
             addressDTO.CountyId = clientContactViewModel.SelectedCounty?.Id;
             addressDTO.SubCountyId = clientContactViewModel.SelectedSubCounty?.Id;
             addressDTO.WardId = clientContactViewModel.SelectedWard?.Id;
+            addressDTO.Downloaded = clientContactViewModel.Downloaded;
             return addressDTO;
         }
 
-        public static ClientContactAddressDTO CreateFromClient(Client client)
+        public static ClientContactAddressDTO CreateFromClient(Client client, bool clientDownloaded)
         {
             var addressDTO = new ClientContactAddressDTO();
 
-            
+
             if (null != client)
             {
                 if (null != client.Person)
@@ -84,6 +86,7 @@ namespace LiveHTS.Presentation.DTO
                     }
 
                     addressDTO.PersonId = client.PersonId.ToString();
+                    addressDTO.Downloaded = clientDownloaded;
                 }
             }
 

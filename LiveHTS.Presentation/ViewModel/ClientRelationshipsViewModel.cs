@@ -42,8 +42,6 @@ namespace LiveHTS.Presentation.ViewModel
             _registryService = registryService;
             _dialogService = dialogService;
             _lookupService = lookupService;
-
-            
             //TODO: Remove ShowId
             ShowId = true;
         }
@@ -199,7 +197,7 @@ namespace LiveHTS.Presentation.ViewModel
                 return _addPersonCommand;
             }
         }
-        
+
         private void SearchClient()
         {
             Clients = _registryService.GetAllSiteClients(AppPracticeId, Search);
@@ -210,7 +208,7 @@ namespace LiveHTS.Presentation.ViewModel
             RelType = reltype;
             IndexClientId = id;
             AddPersonLabel = $"Register New {RelType}";
-            RelationshipTypes = _lookupService.GetRelationshipTypes().ToList().Where(x => x.Description.ToLower() == RelType.ToLower()).ToList(); 
+            RelationshipTypes = _lookupService.GetRelationshipTypes().ToList().Where(x => x.Description.ToLower() == RelType.ToLower()).ToList();
 
             if (!string.IsNullOrEmpty(RelType))
             {
@@ -285,7 +283,17 @@ namespace LiveHTS.Presentation.ViewModel
 
         private bool CanAddRelationship()
         {
-            return null != SelectedClient && !string.IsNullOrEmpty(IndexClientId);
+            // new Guid(IndexClientId), SelectedClient.Id
+            return null != SelectedClient && !string.IsNullOrEmpty(IndexClientId) &&
+                   IsNotSelf(IndexClientId, SelectedClient.Id);
+        }
+
+        private bool IsNotSelf(string indexClientId, Guid selectedClientId)
+        {
+            if (Guid.TryParse(indexClientId, out Guid cid))
+                return cid != selectedClientId;
+
+            return true;
         }
 
         private void AddPerson()
@@ -300,7 +308,6 @@ namespace LiveHTS.Presentation.ViewModel
         }
         private void ClearCache(ISettings settings)
         {
-
             if (settings.Contains(nameof(ClientDemographicViewModel)))
                 settings.DeleteValue(nameof(ClientDemographicViewModel));
 

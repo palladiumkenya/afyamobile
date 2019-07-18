@@ -43,7 +43,7 @@ namespace LiveHTS.Presentation.ViewModel
         private Action _closeTestCommandAction;
         private Action _addTraceCommandAction;
         private Action _editTestCommandAction;
-        
+
 
 
         public ILinkageViewModel ParentViewModel
@@ -157,7 +157,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                 ShowDatePicker(LinkageId, DatePromised);
             }
-        
+
 
         public ReferralViewModel()
         {
@@ -207,12 +207,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 throw new ArgumentException("Encounter has not been Initialized");
             }
-            //Store Encounter 
+            //Store Encounter
 
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
 
-            
+
         }
 
         public override void ViewAppeared()
@@ -270,8 +270,13 @@ namespace LiveHTS.Presentation.ViewModel
                 _linkageService.MarkEncounterCompleted(ParentViewModel.Encounter.Id,ParentViewModel.AppUserId,true);
                 ParentViewModel.Encounter = _linkageService.OpenEncounter(ParentViewModel.Encounter.Id);
 
-                _dialogService.ShowToast("Referrall info saved successfully");
+                _dialogService.ShowToast("Referral info saved successfully");
                 ParentViewModel.GoBack();
+            }
+            else
+            {
+                if (null != Errors && Errors.Any())
+                    ShowErrorInfo(Errors.First().Value);
             }
         }
 
@@ -338,7 +343,7 @@ namespace LiveHTS.Presentation.ViewModel
         public bool Validate()
         {
             ErrorSummary = string.Empty;
-            
+
             Validator.AddRule(
                 nameof(ReferredTo),
                 () => RuleResult.Assert(
@@ -347,7 +352,20 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-          
+            if (null != ParentViewModel.Client)
+            {
+                if (!ParentViewModel.Client.DateEnrolled.IsNullOrEmpty())
+                {
+                    Validator.AddRule(
+                        nameof(DatePromised),
+                        () => RuleResult.Assert(
+                            !(DatePromised.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
+                            $"{nameof(DatePromised)} cannot be before Registration Date"
+                        )
+                    );
+                }
+            }
+
             //Validator.AddRule(
             //    nameof(DatePromised),
             //    () => RuleResult.Assert(
@@ -412,10 +430,6 @@ namespace LiveHTS.Presentation.ViewModel
         {
             DatePromised = selectedDate.EventDate;
         }
-
-
-
-
         public void ShowDatePicker(Guid refId, DateTime refDate)
         {
             OnChangedDate(new ChangedDateEvent(refId, refDate));
@@ -423,6 +437,17 @@ namespace LiveHTS.Presentation.ViewModel
         protected virtual void OnChangedDate(ChangedDateEvent e)
         {
             ChangedDate?.Invoke(this, e);
+        }
+
+        private void ShowErrorInfo(string message)
+        {
+            try
+            {
+                _dialogService.ShowErrorToast(message, 6000);
+            }
+            catch (Exception exception)
+            {
+            }
         }
     }
 }

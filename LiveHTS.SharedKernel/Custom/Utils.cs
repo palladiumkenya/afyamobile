@@ -9,13 +9,22 @@ namespace LiveHTS.SharedKernel.Custom
             return value.EndsWith(end) ? value : $"{value}{end}";
         }
 
-        public static DateTime CalculateBirthDate(PersonAge personAge)
+        public static DateTime CalculateBirthDate(PersonAge personAge,bool exact=false)
         {
             var birthDate = DateTime.Today;
             var standardBirthDate = DateTime.Today;
 
             if (null != personAge && personAge.Age > 0)
             {
+                if (personAge.AgeUnit == "D")
+                {
+                    exact = true;
+                }
+                else
+                {
+                    exact = personAge.AgeUnit == "M" && personAge.Age < 12;
+                }
+
                 int intAge = (int)Math.Round(personAge.Age, MidpointRounding.ToEven);
                 switch (personAge.AgeUnit)
                 {
@@ -29,9 +38,14 @@ namespace LiveHTS.SharedKernel.Custom
                         birthDate = DateTime.Today.AddDays(-intAge);
                         break;
                 }
+
+                if (exact)
+                    return birthDate;
+
                 standardBirthDate =  new DateTime(birthDate.Year, 6, 15);
                 if (standardBirthDate > DateTime.Today)
                     return birthDate;
+
             }
             return standardBirthDate.Date;
         }
@@ -42,6 +56,22 @@ namespace LiveHTS.SharedKernel.Custom
             return CalculateAge(Bday, DateTime.Today);
         }
 
+        public static string GenId()
+        {
+            return $"{(DateTime.Now.Ticks / 10) % 1000000000:d9}";
+        }
+        public static bool CheckDateGreaterThanLimit(DateTime Bday, int years, int months)
+        {
+            var age = CalculateAge(Bday);
+
+            if (age.Years > years)
+                return true;
+
+            if (age.Years < 1)
+                return false;
+
+            return age.Months > months;
+        }
         public static PersonAge CalculateAge(DateTime Bday, DateTime Cday)
         {
             var personAge = new PersonAge(0);

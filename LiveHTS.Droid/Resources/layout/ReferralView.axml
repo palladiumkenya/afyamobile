@@ -55,7 +55,18 @@
 
     </LinearLayout>
 
-
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".19">
+      <Button
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:height="20dp"
+              android:text="Save Referral"
+              android:drawableLeft="@drawable/ic_save"
+              local:MvxBind="Click SaveReferralCommand"/>
+    </LinearLayout>
 
 
     <Button
@@ -63,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_add"
-        android:text="Add Trace"
+        android:text="Add Tracing Information"
         local:MvxBind="Click AddTraceCommand" />
 
     <LinearLayout
@@ -76,18 +87,6 @@
           local:MvxBind="ItemsSource Traces"
           local:MvxItemTemplate="@layout/item_trace" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".19">
-      <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:height="20dp"
-          android:text="Save"
-          android:drawableLeft="@drawable/ic_save"
-          local:MvxBind="Click SaveReferralCommand"/>
     </LinearLayout>
   </LinearLayout>
 </LinearLayout>

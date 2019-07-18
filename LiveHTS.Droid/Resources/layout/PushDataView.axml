@@ -24,20 +24,44 @@
     android:layout_height="wrap_content"
     android:text="PUSH"
     local:MvxBind="Click PushDataCommand" />
-
   <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="20dp"
-    android:text="current status"
-    local:MvxBind="Text CurrentStatus"/>
-
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingLeft="20dp"
+          android:text="current status"
+          local:MvxBind="Text CurrentStatus"/>
   <ProgressBar
     style="@android:style/Widget.Material.ProgressBar.Large"
     android:id="@+id/progressBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     local:MvxBind="Visibility IsBusy, Converter=Visibility"/>
+
+  <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingLeft="20dp"
+          android:text=""
+          local:MvxBind="Text CurrentStatusTotal"/>
+  <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingLeft="20dp"
+          android:text=""
+          local:MvxBind="Text CurrentStatusSent"/>
+  <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingLeft="20dp"
+          android:text=""
+          local:MvxBind="Text CurrentStatusFailed"/>
+  <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingLeft="20dp"
+          android:text=""
+          android:textColor="@android:color/holo_red_dark"
+          local:MvxBind="Text CurrentStatusSummary"/>
 
 
 </LinearLayout>

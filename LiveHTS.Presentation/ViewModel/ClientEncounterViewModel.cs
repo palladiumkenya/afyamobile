@@ -5,7 +5,6 @@ using System.Linq;
 using Cheesebaron.MvxPlugins.Settings.Interfaces;
 using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Model.Interview;
-using LiveHTS.Core.Model.Lookup;
 using LiveHTS.Core.Model.Survey;
 using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Events;
@@ -13,9 +12,9 @@ using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using LiveHTS.Presentation.ViewModel.Template;
 using LiveHTS.Presentation.ViewModel.Wrapper;
+using LiveHTS.SharedKernel.Custom;
 using LiveHTS.SharedKernel.Model;
 using MvvmCross.Core.ViewModels;
-using MvvmCross.Platform.Platform;
 using Newtonsoft.Json;
 
 namespace LiveHTS.Presentation.ViewModel
@@ -68,7 +67,6 @@ namespace LiveHTS.Presentation.ViewModel
             get { return GetGuid("livehts.deviceid"); }
         }
 
-
         public bool AtTheEnd { get; set; }
 
         public bool IsLoading
@@ -114,7 +112,11 @@ namespace LiveHTS.Presentation.ViewModel
         public string FormStatus
         {
             get { return _formStatus; }
-            set { _formStatus = value; RaisePropertyChanged(() => FormStatus); }
+            set
+            {
+                _formStatus = value;
+                RaisePropertyChanged(() => FormStatus);
+            }
         }
 
         public ClientDTO ClientDTO
@@ -190,6 +192,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
         public event EventHandler<ChangedDateEvent> ChangedDate;
+
         public TraceDateDTO SelectedDate
         {
             get { return _selectedDate; }
@@ -200,27 +203,36 @@ namespace LiveHTS.Presentation.ViewModel
                 UpdatePromiseDate(SelectedDate);
             }
         }
+
         private void ShowDateDialog()
         {
 
             ShowDatePicker(Guid.Empty, BirthDate);
         }
+
         private void UpdatePromiseDate(TraceDateDTO selectedDate)
         {
             BirthDate = selectedDate.EventDate;
         }
+
         public void ShowDatePicker(Guid refId, DateTime refDate)
         {
             OnChangedDate(new ChangedDateEvent(refId, refDate));
         }
+
         protected virtual void OnChangedDate(ChangedDateEvent e)
         {
             ChangedDate?.Invoke(this, e);
         }
+
         public DateTime BirthDate
         {
             get { return _birthDate; }
-            set { _birthDate = value;RaisePropertyChanged(() => BirthDate); }
+            set
+            {
+                _birthDate = value;
+                RaisePropertyChanged(() => BirthDate);
+            }
         }
 
         public List<CustomItem> VisitTypes
@@ -257,14 +269,14 @@ namespace LiveHTS.Presentation.ViewModel
             _encounterService = encounterService;
             _obsService = obsService;
             BirthDate = DateTime.Today;
-            
+
             SelectedVisitType = VisitTypes.First();
         }
 
         public void Init(string formId, string encounterTypeId, string mode, string encounterId, string repmode)
         {
             //Load Form + Question Metadata
-            
+
             if (null == Form)
             {
                 Form = _encounterService.LoadForm(new Guid(formId));
@@ -291,14 +303,15 @@ namespace LiveHTS.Presentation.ViewModel
                     var pObst = _obsService.GetObs(p, new Guid("b2605964-852f-11e7-bb31-be2e44b06b34"));
                     if (null != pObst && pObst.Count > 0)
                     {
-                        _settings.AddOrUpdateValue("client.partner.result", pObst.FirstOrDefault().ValueCoded.ToString());
+                        _settings.AddOrUpdateValue("client.partner.result",
+                            pObst.FirstOrDefault().ValueCoded.ToString());
                     }
                     else
                     {
                         _settings.AddOrUpdateValue("client.partner.result", "");
                     }
                 }
-                
+
             }
 
             var clientEncounterJson = _settings.GetValue("client.encounter.dto", "");
@@ -308,7 +321,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
 
-            //Load or Create Encounter 
+            //Load or Create Encounter
 
             if (mode == "new")
             {
@@ -316,15 +329,17 @@ namespace LiveHTS.Presentation.ViewModel
                 _settings.AddOrUpdateValue("client.form.mode", "new");
                 var visitType = repmode == "1" ? VisitType.Repeat : VisitType.Initial;
                 Encounter = _encounterService.StartEncounter(ClientEncounterDTO.FormId,
-                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId,AppUserId,AppPracticeId,AppDeviceId,null, visitType);
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, AppProviderId, AppUserId,
+                    AppPracticeId, AppDeviceId, null, visitType);
 
-                
+
             }
             else
             {
                 //  Load Encounter
                 _settings.AddOrUpdateValue("client.form.mode", "open");
-                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, true);
+                Encounter = _encounterService.LoadEncounter(ClientEncounterDTO.FormId,
+                    ClientEncounterDTO.EncounterTypeId, ClientEncounterDTO.ClientId, true);
             }
 
             if (null == Encounter)
@@ -332,7 +347,7 @@ namespace LiveHTS.Presentation.ViewModel
                 throw new ArgumentException("Encounter has not been Initialized");
             }
 
-            //Store Encounter 
+            //Store Encounter
 
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
@@ -347,7 +362,7 @@ namespace LiveHTS.Presentation.ViewModel
             _settings.AddOrUpdateValue("client.manifest", manifestJson);
 
 
-          
+
 
             //Load View
 
@@ -466,7 +481,8 @@ namespace LiveHTS.Presentation.ViewModel
 
             try
             {
-                _obsService.ValidateResponse(Encounter.Id, Encounter.ClientId,questionTemplate.Id, questionTemplate.GetResponse());
+                _obsService.ValidateResponse(Encounter.Id, Encounter.ClientId, questionTemplate.Id,
+                    questionTemplate.GetResponse());
                 validate = true;
                 questionTemplate.ErrorSummary = string.Empty;
             }
@@ -476,7 +492,14 @@ namespace LiveHTS.Presentation.ViewModel
             }
             catch (Exception e)
             {
-                questionTemplate.ErrorSummary = e.Message;
+                questionTemplate.ErrorSummary = "Response required !";
+                try
+                {
+                    _dialogService.ShowErrorToast(e.Message, 6000);
+                }
+                catch (Exception exception)
+                {
+                }
             }
 
             return validate;
@@ -504,9 +527,10 @@ namespace LiveHTS.Presentation.ViewModel
                 // create Response
 
                 var question = Manifest.GetQuestion(questionTemplate.Id);
-                var liveResponse = new Response(Encounter.Id,Encounter.ClientId);
+                var liveResponse = new Response(Encounter.Id, Encounter.ClientId);
                 liveResponse.SetQuestion(question);
-                liveResponse.SetObs(Encounter.Id,Encounter.ClientId, questionTemplate.Id, question.Concept.ConceptTypeId,
+                liveResponse.SetObs(Encounter.Id, Encounter.ClientId, questionTemplate.Id,
+                    question.Concept.ConceptTypeId,
                     questionTemplate.GetResponse());
 
                 //update encounter with Response
@@ -538,7 +562,7 @@ namespace LiveHTS.Presentation.ViewModel
 
                     if (!string.IsNullOrWhiteSpace(partnerResult))
                     {
-                        var presult= new Guid(partnerResult);
+                        var presult = new Guid(partnerResult);
                         var inc = new Guid("b25f017c-852f-11e7-bb31-be2e44b06b34");
                         var discordant =
                             Questions.FirstOrDefault(
@@ -548,7 +572,7 @@ namespace LiveHTS.Presentation.ViewModel
                         if (questionTemplate.Id == new Guid("b2605964-852f-11e7-bb31-be2e44b06b34"))
                         {
                             var obsValue = questionTemplate.GetResponse();
-                            var value = null == obsValue ? Guid.Empty :new Guid(obsValue.ToString());
+                            var value = null == obsValue ? Guid.Empty : new Guid(obsValue.ToString());
 
                             if (value != inc && presult != inc)
                             {
@@ -556,15 +580,17 @@ namespace LiveHTS.Presentation.ViewModel
                                 {
                                     //discordant
 
-                                    discordant.QuestionTemplate.SetResponse(new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"));
+                                    discordant.QuestionTemplate.SetResponse(
+                                        new Guid("b25ed04e-852f-11e7-bb31-be2e44b06b34"));
                                 }
                                 else
                                 {
                                     //not-discordant
-                                    
-                                    discordant.QuestionTemplate.SetResponse(new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"));
+
+                                    discordant.QuestionTemplate.SetResponse(
+                                        new Guid("b25eccd4-852f-11e7-bb31-be2e44b06b34"));
                                 }
-                            }                            
+                            }
                         }
                     }
 
@@ -592,6 +618,7 @@ namespace LiveHTS.Presentation.ViewModel
                                 q.QuestionTemplate.SetResponse(a.Response);
                             }
                         }
+
                         if (a.Action.ToLower() == "Block".ToLower())
                         {
                             var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
@@ -600,6 +627,7 @@ namespace LiveHTS.Presentation.ViewModel
                                 q.QuestionTemplate.Allow = false;
                             }
                         }
+
                         if (a.Action.ToLower() == "Allow".ToLower())
                         {
                             var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
@@ -625,6 +653,7 @@ namespace LiveHTS.Presentation.ViewModel
                                 q.QuestionTemplate.SetResponse(a.Response);
                             }
                         }
+
                         if (a.Action.ToLower() == "Block".ToLower())
                         {
                             var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
@@ -633,6 +662,7 @@ namespace LiveHTS.Presentation.ViewModel
                                 q.QuestionTemplate.Allow = false;
                             }
                         }
+
                         if (a.Action.ToLower() == "Allow".ToLower())
                         {
                             var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == a.QuestionId);
@@ -718,7 +748,7 @@ namespace LiveHTS.Presentation.ViewModel
             if (null != Manifest)
             {
 
-                //Client 
+                //Client
 
                 if (null == ClientDTO)
                 {
@@ -760,6 +790,7 @@ namespace LiveHTS.Presentation.ViewModel
                                     q.QuestionTemplate.SetResponse(pre.Response);
                                 }
                             }
+
                             if (pre.Action.ToLower() == "Block".ToLower())
                             {
                                 var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
@@ -768,12 +799,13 @@ namespace LiveHTS.Presentation.ViewModel
                                     q.QuestionTemplate.Allow = false;
                                 }
                             }
+
                             if (pre.Action.ToLower() == "Allow".ToLower())
                             {
                                 var q = Questions.FirstOrDefault(x => x.QuestionTemplate.Id == pre.QuestionId);
                                 if (null != q)
                                 {
-                                    
+
                                     //q.QuestionTemplate.Allow = true;
                                 }
                             }
@@ -794,6 +826,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 list.Add(new QuestionTemplateWrap(clientDashboardViewModel, new QuestionTemplate(r)));
             }
+
             return list;
         }
 
@@ -808,17 +841,20 @@ namespace LiveHTS.Presentation.ViewModel
                     FormStatus = "Status: Completed";
                     return true;
                 }
-                
+
             }
-            return false;
+
+            return null != Manifest;
         }
 
         private void SaveChanges()
         {
-
             //nTODO : Save Enconter + Obs
 
             //readResponses
+
+            if (!IsValidEncounterDate())
+                return;
 
             var allowedQuestions = Questions.Where(x => x.QuestionTemplate.Allow).ToList();
 
@@ -833,12 +869,15 @@ namespace LiveHTS.Presentation.ViewModel
 
             _obsService.ClearEncounter(Encounter.Id);
 
+
             foreach (var q in allowedQuestions)
             {
-                _obsService.SaveResponse(Encounter.Id,ClientDTO.Id, q.QuestionTemplate.Id, q.QuestionTemplate.GetResponse());
+                _obsService.SaveResponse(Encounter.Id, ClientDTO.Id, q.QuestionTemplate.Id,
+                    q.QuestionTemplate.GetResponse());
                 //Manifest = _obsService.Manifest;
             }
-            _obsService.MarkEncounterCompleted(Encounter.Id,UserId,true);
+
+            _obsService.MarkEncounterCompleted(Encounter.Id, UserId, true, ClientDTO.Id);
             _obsService.UpdateEncounterDate(Encounter.Id, BirthDate, GetVisitType());
             Manifest = _obsService.Manifest;
             Manifest.Encounter.EncounterDate = BirthDate;
@@ -855,7 +894,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public void GoBack()
         {
-            ShowViewModel<DashboardViewModel>(new { id = ClientDTO.Id });
+            ShowViewModel<DashboardViewModel>(new {id = ClientDTO.Id});
         }
 
         public Guid GetGuid(string key)
@@ -871,7 +910,7 @@ namespace LiveHTS.Presentation.ViewModel
         private VisitType GetVisitType()
         {
             if (null != SelectedVisitType)
-                return (VisitType)SelectedVisitType.GetIntValue();
+                return (VisitType) SelectedVisitType.GetIntValue();
             return VisitType.Initial;
         }
 
@@ -880,6 +919,39 @@ namespace LiveHTS.Presentation.ViewModel
             var vtype = (int) visitType;
             var v = VisitTypes.FirstOrDefault(x => x.Value == vtype.ToString());
             return v ?? VisitTypes.First();
+        }
+
+        private bool IsValidEncounterDate()
+        {
+            if (BirthDate.Date > DateTime.Today)
+            {
+                ShowErroInfo("Encounter Date cannot be in the Future");
+                return false;
+            }
+            else
+            {
+                if (null != ClientDTO && !ClientDTO.DateEnrolled.IsNullOrEmpty())
+                {
+                    if (BirthDate.Date < ClientDTO.DateEnrolled.Value.Date)
+                    {
+                        ShowErroInfo("Encounter Date before Registration Date");
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private void ShowErroInfo(string message)
+        {
+            try
+            {
+                _dialogService.ShowErrorToast(message, 6000);
+            }
+            catch (Exception exception)
+            {
+            }
         }
     }
 }

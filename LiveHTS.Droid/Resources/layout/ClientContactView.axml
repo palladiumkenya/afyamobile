@@ -56,8 +56,7 @@
             android:hint="Telephone"
             android:maxLines="1"
             android:singleLine="true"
-            android:numeric="integer"
-            android:inputType="number"
+            android:inputType="phone"
             local:MvxBind="Text Telephone; Error Errors['Telephone']" />
       </android.support.design.widget.TextInputLayout>
 
@@ -73,12 +72,12 @@
                 android:id="@+id/spinnerCounties"
                 local:MvxBind="ItemsSource Counties;SelectedItem SelectedCounty" />
 
-			
+
 				<TextView
                 android:text="Sub County"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-		
+
                 android:id="@+id/textViewSubConties" />
             <MvxSpinner
                 android:layout_width="match_parent"
@@ -91,7 +90,7 @@
                 android:text="Ward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-			
+
                 android:id="@+id/textViewWards" />
             <MvxSpinner
                 android:layout_width="match_parent"

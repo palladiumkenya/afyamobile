@@ -15,17 +15,38 @@ namespace LiveHTS.Droid.Services
 
         public DialogService()
         {
-            _userDialogs = Mvx.Resolve<IUserDialogs>();
+            try
+            {
+                _userDialogs = Mvx.Resolve<IUserDialogs>();
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
         public void ShowWait(string message="Loading")
         {
-            _userDialogs.ShowLoading(message, MaskType.Black);
+            try
+            {
+                _userDialogs.ShowLoading(message, MaskType.Black);
+            }
+            catch (Exception e)
+            {
+            }
+
         }
 
         public void HideWait()
         {
-            _userDialogs.HideLoading();
+            try
+            {
+                _userDialogs.HideLoading();
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         public void Alert(string message, string title="Afya Mobile", string okbtnText="Ok")
@@ -72,6 +93,15 @@ namespace LiveHTS.Droid.Services
             var toastConfig = new ToastConfig(message);
             toastConfig.SetDuration(3000);
             toastConfig.SetBackgroundColor(System.Drawing.Color.FromArgb(12, 131, 193));
+            _userDialogs.Toast(toastConfig);
+        }
+
+        public void ShowErrorToast(string message,int ts=3000, ToastPosition position=ToastPosition.Bottom)
+        {
+            var toastConfig = new ToastConfig(message);
+            toastConfig.SetPosition(position);
+            toastConfig.SetDuration(ts);
+            toastConfig.SetBackgroundColor(System.Drawing.Color.FromArgb(255, 0, 0));
             _userDialogs.Toast(toastConfig);
         }
     }

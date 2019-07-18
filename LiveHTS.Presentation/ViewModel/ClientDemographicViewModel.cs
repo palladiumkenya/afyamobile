@@ -32,7 +32,7 @@ namespace LiveHTS.Presentation.ViewModel
         private decimal _age;
         private CustomItem _selectedAgeUnit;
         private DateTime _birthDate;
-        
+
         private string _personId;
         private MvxCommand _showDateDialogCommand;
         private MvxCommand _showAgeDialogCommand;
@@ -44,7 +44,11 @@ namespace LiveHTS.Presentation.ViewModel
         public ClientDemographicDTO Demographic
         {
             get { return _demographic; }
-            set { _demographic = value; RaisePropertyChanged(() => Demographic); }
+            set
+            {
+                _demographic = value;
+                RaisePropertyChanged(() => Demographic);
+            }
         }
 
         public List<CustomItem> GenderOptions
@@ -56,6 +60,7 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => GenderOptions);
             }
         }
+
         public List<CustomItem> AgeUnitOptions
         {
             get { return _ageUnitOptions; }
@@ -81,6 +86,7 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => FirstName);
             }
         }
+
         public string MiddleName
         {
             get { return _middleName; }
@@ -90,6 +96,7 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => MiddleName);
             }
         }
+
         public string LastName
         {
             get { return _lastName; }
@@ -119,6 +126,7 @@ namespace LiveHTS.Presentation.ViewModel
                 RaisePropertyChanged(() => SelectedGender);
             }
         }
+
         public decimal Age
         {
             get { return _age; }
@@ -131,6 +139,9 @@ namespace LiveHTS.Presentation.ViewModel
                     CalculateBirthDate();
             }
         }
+
+        public bool Downloaded { get; set; }
+
         public CustomItem SelectedAgeUnit
         {
             get { return _selectedAgeUnit; }
@@ -143,7 +154,7 @@ namespace LiveHTS.Presentation.ViewModel
                     CalculateBirthDate();
             }
         }
-       
+
         public DateTime BirthDate
         {
             get { return _birthDate; }
@@ -173,6 +184,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
         public event EventHandler<ChangedDateEvent> ChangedDate;
+
         public TraceDateDTO SelectedDate
         {
             get { return _selectedDate; }
@@ -183,6 +195,7 @@ namespace LiveHTS.Presentation.ViewModel
                 UpdatePromiseDate(SelectedDate);
             }
         }
+
         public IMvxCommand ShowDateDialogCommand
         {
             get
@@ -200,30 +213,37 @@ namespace LiveHTS.Presentation.ViewModel
                 return _showAgeDialogCommand;
             }
         }
+
         private void ShowDateDialog()
         {
             _dateHasFoucus = true;
             _ageCalculated = false;
             ShowDatePicker(Guid.Empty, BirthDate);
         }
+
         private void ShowAgeDialog()
         {
-            _ageCalculated =true;
+            _ageCalculated = true;
         }
+
         private void UpdatePromiseDate(TraceDateDTO selectedDate)
         {
             BirthDate = selectedDate.EventDate;
             _dateHasFoucus = false;
         }
+
         public void ShowDatePicker(Guid refId, DateTime refDate)
         {
             OnChangedDate(new ChangedDateEvent(refId, refDate));
         }
+
         protected virtual void OnChangedDate(ChangedDateEvent e)
         {
             ChangedDate?.Invoke(this, e);
         }
-        public ClientDemographicViewModel(IDialogService dialogService, ISettings settings) : base(dialogService, settings)
+
+        public ClientDemographicViewModel(IDialogService dialogService, ISettings settings) : base(dialogService,
+            settings)
         {
             Step = 1;
             GenderOptions = CustomLists.GenderList;
@@ -232,7 +252,7 @@ namespace LiveHTS.Presentation.ViewModel
             SelectedGender = GenderOptions.First();
             SelectedAgeUnit = AgeUnitOptions.First();
 
-            BirthDate = DateTime.Today;//.AddDays(-1);
+            BirthDate = DateTime.Today; //.AddDays(-1);
             Title = "Demographics";
             MovePreviousLabel = "";
             MoveNextLabel = "NEXT";
@@ -258,7 +278,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             base.ViewAppeared();
             var indexJson = _settings.GetValue(nameof(IndexClientDTO), "");
-            if (IndexClientDTO==null &&!string.IsNullOrWhiteSpace(indexJson))
+            if (IndexClientDTO == null && !string.IsNullOrWhiteSpace(indexJson))
             {
                 IndexClientDTO = JsonConvert.DeserializeObject<IndexClientDTO>(indexJson);
                 if (null != IndexClientDTO)
@@ -283,7 +303,7 @@ namespace LiveHTS.Presentation.ViewModel
                     $"{nameof(LastName)} is required"
                 )
             );
-       
+
 
             Validator.AddRule(
                 nameof(Age),
@@ -294,21 +314,32 @@ namespace LiveHTS.Presentation.ViewModel
             );
 
             Validator.AddRequiredRule(() => BirthDate, $"{nameof(BirthDate)} is required");
-    
+
             Validator.AddRule(
                 nameof(BirthDate),
                 () => RuleResult.Assert(
                     BirthDate < DateTime.Today,
                     $"{nameof(BirthDate)} should be a valid date"));
 
+            if (Age > 0)
+            {
+                Validator.AddRule(
+                    nameof(Age),
+                    () => RuleResult.Assert(
+                        !  (Age > 121),
+                        $"{nameof(Age)} is invalid"
+                    )
+                );
+            }
+
             return base.Validate();
         }
 
         public void CalculateBirthDate()
         {
-            var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
             try
             {
+                var personAge = PersonAge.Create(Age, SelectedAgeUnit.Value);
                 BirthDate = SharedKernel.Custom.Utils.CalculateBirthDate(personAge);
             }
             catch (Exception ex)
@@ -316,6 +347,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             }
         }
+
         //TODO: CalculateAge from BirthDate
         public void CalculateAge()
         {
@@ -346,15 +378,21 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (Validate())
             {
-                Demographic =ClientDemographicDTO.CreateFromView(this);
+                Demographic = ClientDemographicDTO.CreateFromView(this);
                 var json = JsonConvert.SerializeObject(Demographic);
                 _settings.AddOrUpdateValue(GetType().Name, json);
 
                 var clientinfo = Demographic.ToString();
                 var indexId = null != IndexClientDTO ? IndexClientDTO.Id.ToString() : string.Empty;
-                ShowViewModel<ClientContactViewModel>(new { clientinfo = clientinfo, indexId = indexId });
+                ShowViewModel<ClientContactViewModel>(new {clientinfo = clientinfo, indexId = indexId});
+            }
+            else
+            {
+                if (null != Errors && Errors.Any())
+                    _dialogService.ShowErrorToast(Errors.First().Value);
             }
         }
+
         public override bool CanMoveNext()
         {
             return true;
@@ -365,12 +403,13 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Demographic = JsonConvert.DeserializeObject<ClientDemographicDTO>(modelStore.Store);
+                Downloaded = Demographic.Downloaded;
                 PersonId = Demographic.PersonId;
                 FirstName = Demographic.FirstName;
                 MiddleName = Demographic.MiddleName;
                 LastName = Demographic.LastName;
                 NickName = Demographic.NickName;
-                SelectedGender = GenderOptions.FirstOrDefault(x=>x.Value==Demographic.Gender);
+                SelectedGender = GenderOptions.FirstOrDefault(x => x.Value == Demographic.Gender);
                 Age = Demographic.Age;
                 if (!string.IsNullOrWhiteSpace(Demographic.AgeUnit))
                     SelectedAgeUnit = AgeUnitOptions.FirstOrDefault(x => x.Value == Demographic.AgeUnit);
@@ -382,9 +421,9 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
-        bool AgeHasChanged(decimal oldAge,decimal newAge)
+        bool AgeHasChanged(decimal oldAge, decimal newAge)
         {
-            return  oldAge != newAge;            
+            return oldAge != newAge;
         }
 
         bool AgeUnitHasChanged(CustomItem oldUnit, CustomItem newUnit)
@@ -394,7 +433,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         bool BirthDateHasChanged(DateTime oldBirth, DateTime newBirth)
         {
-            return oldBirth.Date!=newBirth.Date;
+            return oldBirth.Date != newBirth.Date;
         }
     }
 }
