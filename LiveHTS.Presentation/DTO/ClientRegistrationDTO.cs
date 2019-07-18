@@ -19,6 +19,7 @@ namespace LiveHTS.Presentation.DTO
         public ClientContactAddressDTO ClientContactAddress { get; set; }
         public ClientProfileDTO ClientProfile { get; set; }
         public ClientEnrollmentDTO ClientEnrollment { get; set; }
+        public bool Downloaded { get; set; }
 
         public ClientRegistrationDTO()
         {
@@ -29,7 +30,7 @@ namespace LiveHTS.Presentation.DTO
             string contactAddress = null;
             string profile = null;
             string enrollment = null;
-            
+
             if (settings.Contains(nameof(ClientDemographicViewModel)))
                 demographic = settings.GetValue(nameof(ClientDemographicViewModel), "");
             if (settings.Contains(nameof(ClientContactViewModel)))
@@ -62,19 +63,21 @@ namespace LiveHTS.Presentation.DTO
             ClientProfile = clientProfile;
             ClientEnrollment = clientEnrollment;
         }
-        
+
         public static ClientRegistrationDTO Create(Client client)
         {
-            var clientRegistrationDTO =
+            var clientRegistrationDto =
                 new ClientRegistrationDTO
                 {
-                    ClientDemographic = ClientDemographicDTO.CreateFromClient(client),
-                    ClientContactAddress = ClientContactAddressDTO.CreateFromClient(client),
-                    ClientProfile = ClientProfileDTO.CreateFromClient(client),
-                    ClientEnrollment = ClientEnrollmentDTO.CreateFromClient(client)
+                    ClientDemographic = ClientDemographicDTO.CreateFromClient(client,client.Downloaded),
+                    ClientContactAddress = ClientContactAddressDTO.CreateFromClient(client,client.Downloaded),
+                    ClientProfile = ClientProfileDTO.CreateFromClient(client,client.Downloaded),
+                    ClientEnrollment = ClientEnrollmentDTO.CreateFromClient(client,client.Downloaded)
                 };
 
-            return clientRegistrationDTO;
+            clientRegistrationDto.Downloaded = client.Downloaded;
+
+            return clientRegistrationDto;
         }
 
         public Client Generate(Guid userId,Guid? practiceId = null)
@@ -84,6 +87,9 @@ namespace LiveHTS.Presentation.DTO
 
             //Client
             var client = GenerateClient(person,practiceId,userId);
+
+            if (null != ClientDemographic)
+                client.Downloaded = ClientDemographic.Downloaded;
 
             return client;
         }
@@ -97,7 +103,7 @@ namespace LiveHTS.Presentation.DTO
         private Client GenerateClient(Guid personId,Guid? practiceId,Guid userId)
         {
             Guid clientPracticeId = practiceId.IsNullOrEmpty() ? ClientEnrollment.PracticeId : practiceId.Value;
-            //ClientIdentifier 
+            //ClientIdentifier
 
             //string maritalStatus, string keyPop, string otherKeyPop, Guid practiceId, Person person
 
@@ -126,14 +132,14 @@ namespace LiveHTS.Presentation.DTO
                 clientIdentifiers.Add(clientIdentifier);
                 client.Identifiers = clientIdentifiers;
             }
-            
+
             return client;
         }
         private ClientIdentifier GenerateClientIdentifier(Guid clientId)
         {
             if (null == ClientEnrollment)
                 return null;
-            //ClientIdentifier 
+            //ClientIdentifier
 
             //string identifierTypeId, string identifier, DateTime registrationDate,bool preferred, Guid clientId
 
@@ -151,8 +157,8 @@ namespace LiveHTS.Presentation.DTO
         {
             if (null == ClientDemographic)
                 throw new ArgumentNullException("No Demographic data !");
-            
-            //Person 
+
+            //Person
 
             //string firstName, string middleName, string lastName, string gender,DateTime? birthDate, bool? birthDateEstimated, string email
 
@@ -164,7 +170,7 @@ namespace LiveHTS.Presentation.DTO
             {
                 person.Id=new Guid(ClientDemographic.PersonId);
             }
-            
+
             var contact = GeneratePersonContact(person.Id);
             if (null != contact)
             {
@@ -207,7 +213,7 @@ namespace LiveHTS.Presentation.DTO
             if (null == ClientContactAddress)
                 throw new ArgumentNullException("No Address data !");
 
-            //Person Address 
+            //Person Address
 
             //string landmark, Guid? countyId, bool preferred, decimal? lat, decimal? lng, Guid personId
 

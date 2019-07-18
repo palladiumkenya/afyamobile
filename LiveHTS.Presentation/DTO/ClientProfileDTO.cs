@@ -7,7 +7,7 @@ using LiveHTS.Presentation.ViewModel;
 namespace LiveHTS.Presentation.DTO
 {
     public class ClientProfileDTO:IProfile
-    {     
+    {
         public string ClientId { get; set; }
 
         public string MaritalStatus { get; set; }
@@ -18,7 +18,8 @@ namespace LiveHTS.Presentation.DTO
         public Guid? Occupation { get; set; }
         public string RelTypeId { get; set; }
         public bool? PreventEnroll { get; set; }
-        
+        public bool Downloaded { get; set; }
+
         public bool HasAnyData
         {
             get
@@ -28,7 +29,7 @@ namespace LiveHTS.Presentation.DTO
             }
         }
 
-     
+
         public ClientProfileDTO()
         {
         }
@@ -49,13 +50,14 @@ namespace LiveHTS.Presentation.DTO
                 ? clientProfileViewModel.SelectedRelationshipType.Id
                 : "";
 
-            var profileDTO= new ClientProfileDTO(clientProfileViewModel.SelectedMaritalStatus.Id, clientProfileViewModel.SelectedKeyPop.Id, clientProfileViewModel.OtherKeyPop, relTypeId, 
+            var profileDTO= new ClientProfileDTO(clientProfileViewModel.SelectedMaritalStatus.Id, clientProfileViewModel.SelectedKeyPop.Id, clientProfileViewModel.OtherKeyPop, relTypeId,
                 clientProfileViewModel.SelectedEducation?.ItemId, clientProfileViewModel.SelectedCompletion?.ItemId,clientProfileViewModel.SelectedOccupation?.ItemId);
             profileDTO.ClientId = clientProfileViewModel.ClientId;
+            profileDTO.Downloaded = clientProfileViewModel.Downloaded;
             return profileDTO;
         }
 
-        public static ClientProfileDTO CreateFromClient(Client client)
+        public static ClientProfileDTO CreateFromClient(Client client, bool clientDownloaded)
         {
             var profileDTO = new ClientProfileDTO();
 
@@ -69,6 +71,7 @@ namespace LiveHTS.Presentation.DTO
                 profileDTO.Education = client.Education;
                 profileDTO.Completion = client.Completion;
                 profileDTO.Occupation = client.Occupation;
+                profileDTO.Downloaded = clientDownloaded;
             }
 
             return profileDTO;

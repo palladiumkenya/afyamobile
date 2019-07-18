@@ -142,6 +142,7 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool Downloaded { get; set; }
 
 
         public ClientEnrollmentViewModel(IDialogService dialogService, ISettings settings, ILookupService lookupService,
@@ -341,6 +342,7 @@ namespace LiveHTS.Presentation.ViewModel
             try
             {
                 Enrollment = JsonConvert.DeserializeObject<ClientEnrollmentDTO>(modelStore.Store);
+                Downloaded = Enrollment.Downloaded;
                 ClientId = Enrollment.ClientId;
                 SelectedIdentifierType = IdentifierTypes.FirstOrDefault(x => x.Id == Enrollment.IdentifierTypeId);
                 Identifier = Enrollment.Identifier;
