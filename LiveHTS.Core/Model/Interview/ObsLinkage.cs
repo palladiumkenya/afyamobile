@@ -13,6 +13,7 @@ namespace LiveHTS.Core.Model.Interview
         public string HandedTo { get; set; }
         public string WorkerCarde { get; set; }
         public DateTime? DateEnrolled { get; set; }
+        public bool? HasArtStartDate { get; set; }
         public DateTime? ARTStartDate { get; set; }
         public string EnrollmentId { get; set; }
         public string Remarks { get; set; }
@@ -23,7 +24,9 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsLinkage(string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate):this()
+        public ObsLinkage(string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo,
+            string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId,
+            DateTime? artStartDate, bool hasArtStartDate) : this()
         {
             FacilityHandedTo = facilityHandedTo;
             ReferredTo = referredTo;
@@ -34,21 +37,29 @@ namespace LiveHTS.Core.Model.Interview
             EnrollmentId = enrollmentId;
             Remarks = remarks;
             EncounterId = encounterId;
-            ARTStartDate = artStartDate;
+            if (hasArtStartDate)
+                ARTStartDate = artStartDate;
         }
 
-        public static ObsLinkage Create(string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate)
+        public static ObsLinkage Create(string referredTo, DateTime? datePromised, string facilityHandedTo,
+            string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks,
+            Guid encounterId, DateTime? artStartDate, bool hasArtStartDate)
         {
             var obs = new ObsLinkage(referredTo, datePromised, handedTo, facilityHandedTo, workerCarde, dateEnrolled,
-                enrollmentId, remarks, encounterId, artStartDate);
+                enrollmentId, remarks, encounterId, artStartDate, hasArtStartDate);
             return obs;
         }
-        public static ObsLinkage Create(Guid id, string referredTo, DateTime? datePromised, string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate)
+
+        public static ObsLinkage Create(Guid id, string referredTo, DateTime? datePromised, string facilityHandedTo,
+            string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks,
+            Guid encounterId, DateTime? artStartDate, bool hasArtStartDate)
         {
-            var obs = new ObsLinkage(referredTo, datePromised, handedTo, facilityHandedTo, workerCarde, dateEnrolled, enrollmentId, remarks, encounterId, artStartDate);
+            var obs = new ObsLinkage(referredTo, datePromised, handedTo, facilityHandedTo, workerCarde, dateEnrolled,
+                enrollmentId, remarks, encounterId, artStartDate, hasArtStartDate);
             obs.Id = id;
             return obs;
         }
+
         public static ObsLinkage CreateNew(string referredTo, DateTime? datePromised, Guid encounterId)
         {
             var obs = new ObsLinkage();
@@ -58,14 +69,17 @@ namespace LiveHTS.Core.Model.Interview
             return obs;
         }
 
-        public static ObsLinkage CreateNew(string facilityHandedTo, string handedTo, string workerCarde, DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate)
+        public static ObsLinkage CreateNew(string facilityHandedTo, string handedTo, string workerCarde,
+            DateTime? dateEnrolled, string enrollmentId, string remarks, Guid encounterId, DateTime? artStartDate,
+            bool hasArtStartDate)
         {
             var obs = new ObsLinkage();
             obs.FacilityHandedTo = facilityHandedTo;
             obs.HandedTo = handedTo;
             obs.WorkerCarde = workerCarde;
             obs.DateEnrolled = dateEnrolled;
-            obs.ARTStartDate = artStartDate;
+            if (hasArtStartDate)
+                obs.ARTStartDate = artStartDate;
             obs.EnrollmentId = enrollmentId;
             obs.Remarks = remarks;
             return obs;

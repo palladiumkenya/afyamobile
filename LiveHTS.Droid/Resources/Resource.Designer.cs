@@ -5915,8 +5915,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00cc
 			public const int buttonSaveEncounter = 2131493068;
 			
-			// aapt resource value: 0x7f0c016f
-			public const int buttonok = 2131493231;
+			// aapt resource value: 0x7f0c0170
+			public const int buttonok = 2131493232;
 			
 			// aapt resource value: 0x7f0c0164
 			public const int buttonread = 2131493220;
@@ -6203,8 +6203,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c00d1
 			public const int lvobs = 2131493073;
 			
-			// aapt resource value: 0x7f0c0171
-			public const int masked = 2131493233;
+			// aapt resource value: 0x7f0c0172
+			public const int masked = 2131493234;
 			
 			// aapt resource value: 0x7f0c0132
 			public const int media_actions = 2131493170;
@@ -6533,6 +6533,9 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c001a
 			public const int text2 = 2131492890;
 			
+			// aapt resource value: 0x7f0c016f
+			public const int textReason = 2131493231;
+			
 			// aapt resource value: 0x7f0c0076
 			public const int textSpacerNoButtons = 2131492982;
 			
@@ -6818,8 +6821,8 @@ namespace LiveHTS.Droid
 			// aapt resource value: 0x7f0c0120
 			public const int viewpagerlink = 2131493152;
 			
-			// aapt resource value: 0x7f0c0170
-			public const int visible = 2131493232;
+			// aapt resource value: 0x7f0c0171
+			public const int visible = 2131493233;
 			
 			// aapt resource value: 0x7f0c00d0
 			public const int visitType = 2131493072;
