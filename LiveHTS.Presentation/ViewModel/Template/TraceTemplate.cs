@@ -23,6 +23,8 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public Guid Outcome { get; set; }
         public string OutcomeDisplay { get; set; }
         public Guid ReasonNotContacted { get; set; }
+
+        public string ReasonNotContactedDisplay { get; set; }
         public string ReasonNotContactedOther { get; set; }
         public Guid EncounterId { get; set; }
 
@@ -55,7 +57,7 @@ namespace LiveHTS.Presentation.ViewModel.Template
                     !testResult.ReasonNotContacted.IsNullOrEmpty() && x.ItemId == testResult.ReasonNotContacted);
                 if (null != result)
                 {
-                    OutcomeDisplay = result.Display;
+                    ReasonNotContactedDisplay = result.Display;
 
                 }
             }

@@ -14,13 +14,17 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
     {
         ObsPartnerTraceResult TraceResult { get; set; }
         Guid Id { get; set; }
-        DateTime Date { get; set; }        
+        DateTime Date { get; set; }
         Guid Mode { get; set; }
         string ModeDisplay { get; set; }
         Guid Outcome { get; set; }
         string OutcomeDisplay { get; set; }
         Guid? Consent { get; set; }
         string ConsentDisplay { get; set; }
+         Guid ReasonNotContacted { get; set; }
+
+         string ReasonNotContactedDisplay { get; set; }
+         string ReasonNotContactedOther { get; set; }
         Guid EncounterId { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel.Template
         Guid Outcome { get; set; }
         string OutcomeDisplay { get; set; }
         Guid ReasonNotContacted { get; set; }
+        string ReasonNotContactedDisplay { get; set; }
         string ReasonNotContactedOther { get; set; }
         Guid EncounterId { get; set; }
     }

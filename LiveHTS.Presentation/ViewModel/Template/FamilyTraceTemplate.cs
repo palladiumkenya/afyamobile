@@ -26,9 +26,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string ConsentDisplay { get; set; }
         public DateTime? Reminder { get; set; }
         public DateTime? BookingDate { get; set; }
+        public Guid ReasonNotContacted { get; set; }
+
+        public string ReasonNotContactedDisplay { get; set; }
+        public string ReasonNotContactedOther { get; set; }
         public Guid EncounterId { get; set; }
 
-        public FamilyTraceTemplate(ObsFamilyTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents)
+        public FamilyTraceTemplate(ObsFamilyTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents,List<CategoryItem> reasons)
         {
             TraceResult = testResult;
 
@@ -60,7 +64,16 @@ namespace LiveHTS.Presentation.ViewModel.Template
 
                 }
             }
+            if (null != reasons && reasons.Count > 0)
+            {
+                var result = reasons.FirstOrDefault(x =>
+                    !testResult.ReasonNotContacted.IsNullOrEmpty() && x.ItemId == testResult.ReasonNotContacted);
+                if (null != result)
+                {
+                    ReasonNotContactedDisplay = result.Display;
 
+                }
+            }
             Id = testResult.Id;
             Date = testResult.Date;
             Mode = testResult.Mode;
@@ -69,9 +82,12 @@ namespace LiveHTS.Presentation.ViewModel.Template
             Consent = testResult.Consent;
             Reminder = testResult.Reminder;
             BookingDate = testResult.BookingDate;
+            if(!testResult.ReasonNotContacted.IsNullOrEmpty())
+                ReasonNotContacted = testResult.ReasonNotContacted.Value;
+            ReasonNotContactedOther = testResult.ReasonNotContactedOther;
 
         }
 
-       
+
     }
 }

@@ -23,6 +23,10 @@ namespace LiveHTS.Core.Model.Interview
         public DateTime? Reminder { get; set; }
         public DateTime? BookingDate { get; set; }
         public Guid IndexClientId { get; set; }
+        public Guid? ReasonNotContacted { get; set; }
+        [Ignore]
+        public string ReasonNotContactedDisplay { get; set; }
+        public string ReasonNotContactedOther { get; set; }
         public Guid EncounterId { get; set; }
 
         public ObsFamilyTraceResult()
@@ -30,7 +34,7 @@ namespace LiveHTS.Core.Model.Interview
             Id = LiveGuid.NewGuid();
         }
 
-        public ObsFamilyTraceResult(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder , DateTime? bookingDate ,Guid encounterId,Guid indexClientId) : this()
+        public ObsFamilyTraceResult(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder , DateTime? bookingDate ,Guid encounterId,Guid indexClientId,Guid? reasonNotContacted,string reasonNotContactedOther) : this()
         {
             Date = date;
             Mode = mode;
@@ -40,21 +44,23 @@ namespace LiveHTS.Core.Model.Interview
             Reminder = reminder;
             BookingDate = bookingDate;
             IndexClientId = indexClientId;
+            ReasonNotContacted = reasonNotContacted;
+            ReasonNotContactedOther = reasonNotContactedOther;
         }
 
-        public static ObsFamilyTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
+        public static ObsFamilyTraceResult Create(Guid id, DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId, Guid indexClientId,Guid? reasonNotContacted,string reasonNotContactedOther)
         {
-            var obs = new ObsFamilyTraceResult(date, mode, outcome,consent,reminder,bookingDate, encounterId,indexClientId);
+            var obs = new ObsFamilyTraceResult(date, mode, outcome,consent,reminder,bookingDate, encounterId,indexClientId,reasonNotContacted,reasonNotContactedOther);
             obs.Id = id;
             return obs;
         }
-        public static ObsFamilyTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
+        public static ObsFamilyTraceResult Create(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId, Guid indexClientId,Guid? reasonNotContacted,string reasonNotContactedOther)
         {
-            return new ObsFamilyTraceResult(date, mode, outcome, consent,reminder,bookingDate,encounterId,indexClientId);
+            return new ObsFamilyTraceResult(date, mode, outcome, consent,reminder,bookingDate,encounterId,indexClientId,reasonNotContacted,reasonNotContactedOther);
         }
-        public static ObsFamilyTraceResult CreateNew(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId, Guid indexClientId)
+        public static ObsFamilyTraceResult CreateNew(DateTime date, Guid mode, Guid outcome, Guid? consent, DateTime? reminder, DateTime? bookingDate, Guid encounterId, Guid indexClientId,Guid? reasonNotContacted,string reasonNotContactedOther)
         {
-            return new ObsFamilyTraceResult(date, mode, outcome,consent,reminder,bookingDate, encounterId,indexClientId);
+            return new ObsFamilyTraceResult(date, mode, outcome,consent,reminder,bookingDate, encounterId,indexClientId,reasonNotContacted,reasonNotContactedOther);
         }
         public static ObsFamilyTraceResult CreateNew(Guid encounterId, Guid indexClientId)
         {

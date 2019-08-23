@@ -34,6 +34,7 @@ namespace LiveHTS.Presentation.ViewModel
         private List<CategoryItem> _outcomes;
         private CategoryItem _selectedOutcome;
         private List<CategoryItem> _reasons;
+        private List<CategoryItem> _allReasons = new List<CategoryItem>();
         private CategoryItem _selectedReasoun;
         private DateTime _date;
         private ILinkageService _linkageService;
@@ -47,53 +48,86 @@ namespace LiveHTS.Presentation.ViewModel
         public bool EditMode
         {
             get { return _editMode; }
-            set { _editMode = value; RaisePropertyChanged(() => EditMode);}
+            set
+            {
+                _editMode = value;
+                RaisePropertyChanged(() => EditMode);
+            }
         }
+
         public IReferralViewModel Parent
         {
             get { return _parent; }
             set
             {
-                _parent = value; RaisePropertyChanged(() => Parent);
+                _parent = value;
+                RaisePropertyChanged(() => Parent);
                 //TestName = Parent.TestName;
                 //EncounterId = Parent.Parent.Encounter.Id;
             }
         }
+
         public string ErrorSummary
         {
             get { return _errorSummary; }
-            set { _errorSummary = value; RaisePropertyChanged(() => ErrorSummary); }
+            set
+            {
+                _errorSummary = value;
+                RaisePropertyChanged(() => ErrorSummary);
+            }
         }
+
         public ValidationHelper Validator { get; }
         public ObservableDictionary<string, string> Errors { get; set; }
+
         public ObsTraceResult TestResult
         {
             get { return _traceResult; }
-            set { _traceResult = value; RaisePropertyChanged(() => TestResult);}
+            set
+            {
+                _traceResult = value;
+                RaisePropertyChanged(() => TestResult);
+            }
         }
 
         public Guid Id
         {
             get { return _id; }
-            set { _id = value; RaisePropertyChanged(() => Id);}
+            set
+            {
+                _id = value;
+                RaisePropertyChanged(() => Id);
+            }
         }
 
         public DateTime Date
         {
             get { return _date; }
-            set { _date = value; RaisePropertyChanged(() => Date);}
+            set
+            {
+                _date = value;
+                RaisePropertyChanged(() => Date);
+            }
         }
 
         public Guid Mode
         {
             get { return _mode; }
-            set { _mode = value; RaisePropertyChanged(() => Mode); }
+            set
+            {
+                _mode = value;
+                RaisePropertyChanged(() => Mode);
+            }
         }
 
         public List<CategoryItem> Modes
         {
             get { return _modes; }
-            set { _modes = value; RaisePropertyChanged(() => Modes);}
+            set
+            {
+                _modes = value;
+                RaisePropertyChanged(() => Modes);
+            }
         }
 
         public CategoryItem SelectedMode
@@ -101,22 +135,32 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _selectedMode; }
             set
             {
-                _selectedMode = value; RaisePropertyChanged(() => SelectedMode);
+                _selectedMode = value;
+                RaisePropertyChanged(() => SelectedMode);
                 if (null != SelectedMode)
                     Mode = SelectedMode.ItemId;
+                UpdateReasonsByMode();
             }
         }
 
         public Guid Outcome
         {
             get { return _outcome; }
-            set { _outcome = value; RaisePropertyChanged(() => Outcome);}
+            set
+            {
+                _outcome = value;
+                RaisePropertyChanged(() => Outcome);
+            }
         }
 
         public List<CategoryItem> Outcomes
         {
             get { return _outcomes; }
-            set { _outcomes = value; RaisePropertyChanged(() => Outcomes); }
+            set
+            {
+                _outcomes = value;
+                RaisePropertyChanged(() => Outcomes);
+            }
         }
 
         public CategoryItem SelectedOutcome
@@ -124,29 +168,52 @@ namespace LiveHTS.Presentation.ViewModel
             get { return _selectedOutcome; }
             set
             {
-                _selectedOutcome = value; RaisePropertyChanged(() => SelectedOutcome);
+                _selectedOutcome = value;
+                RaisePropertyChanged(() => SelectedOutcome);
                 if (null != SelectedOutcome)
                     Outcome = SelectedOutcome.ItemId;
                 ShowReasonOption();
             }
         }
 
-        public bool ShowReason {  get { return _showReason; }
-            set { _showReason = value; RaisePropertyChanged(() => ShowReason); } }
+        public bool ShowReason
+        {
+            get { return _showReason; }
+            set
+            {
+                _showReason = value;
+                RaisePropertyChanged(() => ShowReason);
+            }
+        }
 
-        public bool ShowKitOther {  get { return _showReasonOther; }
-            set { _showReasonOther = value; RaisePropertyChanged(() => ShowKitOther); } }
+        public bool ShowKitOther
+        {
+            get { return _showReasonOther; }
+            set
+            {
+                _showReasonOther = value;
+                RaisePropertyChanged(() => ShowKitOther);
+            }
+        }
 
         public Guid ReasonNotContacted
         {
             get { return _reason; }
-            set { _reason = value; RaisePropertyChanged(() => ReasonNotContacted);}
+            set
+            {
+                _reason = value;
+                RaisePropertyChanged(() => ReasonNotContacted);
+            }
         }
 
         public List<CategoryItem> ReasonsNotContacted
         {
             get { return _reasons; }
-            set { _reasons = value; RaisePropertyChanged(() => ReasonsNotContacted); }
+            set
+            {
+                _reasons = value;
+                RaisePropertyChanged(() => ReasonsNotContacted);
+            }
         }
 
         public CategoryItem SelectedReasonNotContacted
@@ -166,17 +233,19 @@ namespace LiveHTS.Presentation.ViewModel
         {
             ShowReason = false;
             if (null != SelectedOutcome &&
-                !SelectedOutcome.ItemId.IsNullOrEmpty()&&
+                !SelectedOutcome.ItemId.IsNullOrEmpty() &&
                 SelectedOutcome.Item.Display.ToLower().Contains("Not".ToLower()))
             {
                 ShowReason = true;
+                UpdateReasonsByMode();
             }
         }
+
         private void ShowOther()
         {
             ShowKitOther = false;
             if (null != SelectedReasonNotContacted &&
-                !SelectedReasonNotContacted.ItemId.IsNullOrEmpty()&&
+                !SelectedReasonNotContacted.ItemId.IsNullOrEmpty() &&
                 SelectedReasonNotContacted.Item.Display.ToLower().Contains("other".ToLower()))
             {
                 ShowKitOther = true;
@@ -196,7 +265,11 @@ namespace LiveHTS.Presentation.ViewModel
         public Guid EncounterId
         {
             get { return _encounterId; }
-            set { _encounterId = value; RaisePropertyChanged(() => EncounterId); }
+            set
+            {
+                _encounterId = value;
+                RaisePropertyChanged(() => EncounterId);
+            }
         }
 
 
@@ -212,9 +285,9 @@ namespace LiveHTS.Presentation.ViewModel
         public TraceViewModel()
         {
             Validator = new ValidationHelper();
-            Date=DateTime.Today;
+            Date = DateTime.Today;
 
-            _linkageService =  Mvx.Resolve<ILinkageService>();
+            _linkageService = Mvx.Resolve<ILinkageService>();
             _settings = Mvx.Resolve<ISettings>();
 
             var modesJson = _settings.GetValue("lookup.Mode", "");
@@ -225,13 +298,15 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Modes = JsonConvert.DeserializeObject<List<CategoryItem>>(modesJson);
             }
+
             if (!string.IsNullOrWhiteSpace(outcomeJson))
             {
                 Outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(outcomeJson);
             }
+
             if (!string.IsNullOrWhiteSpace(reasonJson))
             {
-                ReasonsNotContacted = JsonConvert.DeserializeObject<List<CategoryItem>>(reasonJson);
+                _allReasons = ReasonsNotContacted = JsonConvert.DeserializeObject<List<CategoryItem>>(reasonJson);
             }
         }
 
@@ -255,7 +330,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             SelectedMode = Modes.OrderBy(x => x.Rank).FirstOrDefault();
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
-            SelectedReasonNotContacted=ReasonsNotContacted.OrderBy(x => x.Rank).FirstOrDefault();
+            SelectedReasonNotContacted = ReasonsNotContacted.OrderBy(x => x.Rank).FirstOrDefault();
             ReasonNotContactedOther = string.Empty;
         }
 
@@ -277,10 +352,12 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Modes = JsonConvert.DeserializeObject<List<CategoryItem>>(kitsJson);
             }
+
             if (!string.IsNullOrWhiteSpace(resultsJson))
             {
                 Outcomes = JsonConvert.DeserializeObject<List<CategoryItem>>(resultsJson);
             }
+
             if (!string.IsNullOrWhiteSpace(reasonJson))
             {
                 ReasonsNotContacted = JsonConvert.DeserializeObject<List<CategoryItem>>(reasonJson);
@@ -302,7 +379,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public bool Validate()
         {
-            ErrorSummary=string.Empty;
+            ErrorSummary = string.Empty;
 
 
 
@@ -338,6 +415,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 ErrorSummary = Errors.First().Value;
             }
+
             return result.IsValid;
         }
 
@@ -345,7 +423,7 @@ namespace LiveHTS.Presentation.ViewModel
         {
             if (Validate())
             {
-                TestResult= GenerateTest();
+                TestResult = GenerateTest();
                 _linkageService.SaveTest(TestResult, Parent.ParentViewModel.Client.Id);
                 Parent.Referesh(TestResult.EncounterId);
                 Parent.CloseTestCommand.Execute();
@@ -360,10 +438,37 @@ namespace LiveHTS.Presentation.ViewModel
 
         private ObsTraceResult GenerateTest()
         {
-            var obs= ObsTraceResult.Create(Date,Mode,Outcome,EncounterId,ReasonNotContacted,ReasonNotContactedOther);
+            var obs = ObsTraceResult.Create(Date, Mode, Outcome, EncounterId, ReasonNotContacted,
+                ReasonNotContactedOther);
             if (EditMode)
                 obs.Id = Id;
             return obs;
+        }
+
+        private void UpdateReasonsByMode()
+        {
+            string mode = string.Empty;
+
+            if (null != SelectedMode && _allReasons.Any())
+            {
+                try
+                {
+                    mode = SelectedMode.Item.Display;
+                }
+                catch{}
+
+                if (!string.IsNullOrWhiteSpace(mode))
+                {
+                    if (mode.Contains("Physical"))
+                    {
+                        ReasonsNotContacted = _allReasons.Where(x => x.Display.EndsWith(".")).ToList();
+                    }
+                    else
+                    {
+                        ReasonsNotContacted = _allReasons.Where(x => !x.Display.EndsWith(".")).ToList();
+                    }
+                }
+            }
         }
     }
 }
