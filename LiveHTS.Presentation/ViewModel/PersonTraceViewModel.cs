@@ -119,6 +119,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedMode = value; RaisePropertyChanged(() => SelectedMode);
                 if (null != SelectedMode)
                     Mode = SelectedMode.ItemId;
+                UpdateReasonsByMode();
             }
         }
 
@@ -143,6 +144,7 @@ namespace LiveHTS.Presentation.ViewModel
                 if (null != SelectedOutcome)
                     Outcome = SelectedOutcome.ItemId;
                 SetOutcome();
+                ShowReasonOption();
             }
         }
 
