@@ -241,6 +241,7 @@ namespace LiveHTS.Presentation.DTO
 
             if (settings.Contains(nameof(ClientEnrollmentViewModel)))
                 settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+
         }
     }
 }

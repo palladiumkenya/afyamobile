@@ -7,6 +7,7 @@ using LiveHTS.Core.Interfaces.Services.Clients;
 using LiveHTS.Core.Interfaces.Services.Config;
 using LiveHTS.Core.Model.Config;
 using LiveHTS.Core.Model.Subject;
+using LiveHTS.Presentation.DTO;
 using LiveHTS.Presentation.Interfaces;
 using LiveHTS.Presentation.Interfaces.ViewModel;
 using MvvmCross.Core.ViewModels;
@@ -319,6 +320,14 @@ namespace LiveHTS.Presentation.ViewModel
 
             if (settings.Contains(nameof(ClientEnrollmentViewModel)))
                 settings.DeleteValue(nameof(ClientEnrollmentViewModel));
+
+            if (_settings.Contains(nameof(IndexClientDTO)))
+                _settings.DeleteValue(nameof(IndexClientDTO));
+
+            if (_settings.Contains("PreventEnroll"))
+                _settings.DeleteValue("PreventEnroll");
+            if (_settings.Contains("PracticeId"))
+                _settings.DeleteValue("PracticeId");
         }
         public Guid GetGuid(string key)
         {

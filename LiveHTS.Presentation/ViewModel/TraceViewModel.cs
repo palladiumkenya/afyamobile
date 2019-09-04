@@ -461,7 +461,7 @@ namespace LiveHTS.Presentation.ViewModel
                 {
                     if (mode.Contains("Physical"))
                     {
-                        ReasonsNotContacted = _allReasons.Where(x => x.Display.EndsWith(".")).ToList();
+                        ReasonsNotContacted = _allReasons.Where(x => !x.Display.Contains("Mteja")).ToList();
                     }
                     else
                     {
