@@ -256,13 +256,13 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null == ObsLinkage)
                 {
-                    obs = ObsLinkage.CreateNew(ReferredTo, DatePromised, ParentViewModel.Encounter.Id);
+                    obs = ObsLinkage.CreateNew(ReferredTo, DatePromised.Date, ParentViewModel.Encounter.Id);
                 }
                 else
                 {
                     obs = ObsLinkage;
                     obs.ReferredTo = ReferredTo;
-                    obs.DatePromised = DatePromised;
+                    obs.DatePromised = DatePromised.Date;
                     _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id);
                 }
                 _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id);

@@ -22,7 +22,7 @@ namespace LiveHTS.Presentation.ViewModel
     public class MemberTracingViewModel: MvxViewModel,IMemberTracingViewModel
     {
         private ObsFamilyTraceResult _trace;
-        
+
         private  IMvxCommand _addTraceCommand;
         private Action _addTraceCommandAction;
         private readonly ISettings _settings;
@@ -92,7 +92,7 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 throw new ArgumentException("Encounter has not been Initialized");
             }
-            //Store Encounter 
+            //Store Encounter
 
             var encounterJson = JsonConvert.SerializeObject(Encounter);
             _settings.AddOrUpdateValue("client.encounter", encounterJson);
@@ -107,6 +107,8 @@ namespace LiveHTS.Presentation.ViewModel
             var consents = _lookupService.GetCategoryItems("YesNo", true, "[Select Consent]").ToList();
             _settings.AddOrUpdateValue("lookup.TConsent", JsonConvert.SerializeObject(consents));
 
+            var reasons = _lookupService.GetCategoryItems("ReasonNotContacted", true, "[Select Reason]").ToList();
+            _settings.AddOrUpdateValue("lookup.ReasonNotContacted", JsonConvert.SerializeObject(reasons));
 
 
 
@@ -194,6 +196,8 @@ namespace LiveHTS.Presentation.ViewModel
             var modesJson = _settings.GetValue("lookup.TMode", "");
             var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
             var consentJson = _settings.GetValue("lookup.TConsent", "");
+            var reasonJson = _settings.GetValue("lookup.ReasonNotContacted", "");
+
 
             List<CategoryItem> modes = new List<CategoryItem>();
             if (!string.IsNullOrWhiteSpace(modesJson))
@@ -213,14 +217,21 @@ namespace LiveHTS.Presentation.ViewModel
                 consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
             }
 
+            List<CategoryItem> reasons=new List<CategoryItem>();
+            if ( !string.IsNullOrWhiteSpace(reasonJson))
+            {
+                reasons = JsonConvert.DeserializeObject<List<CategoryItem>>(reasonJson);
+            }
+
+
 
             if (null != Encounter)
             {
-                Traces = ConvertToTraceWrapperClass(this, Encounter, modes, outcomes,consents);
+                Traces = ConvertToTraceWrapperClass(this, Encounter, modes, outcomes,consents,reasons);
             }
         }
 
-        private static List<FamilyTraceTemplateWrap> ConvertToTraceWrapperClass(IMemberTracingViewModel clientDashboardViewModel, Encounter encounter, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents)
+        private static List<FamilyTraceTemplateWrap> ConvertToTraceWrapperClass(IMemberTracingViewModel clientDashboardViewModel, Encounter encounter, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents,List<CategoryItem> reasons)
         {
             List<FamilyTraceTemplateWrap> list = new List<FamilyTraceTemplateWrap>();
 
@@ -228,7 +239,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             foreach (var r in testResults)
             {
-                list.Add(new FamilyTraceTemplateWrap(clientDashboardViewModel, new FamilyTraceTemplate(r, modes, outcomes, consents)));
+                list.Add(new FamilyTraceTemplateWrap(clientDashboardViewModel, new FamilyTraceTemplate(r, modes, outcomes, consents,reasons)));
             }
 
             return list;

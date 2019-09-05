@@ -8,7 +8,7 @@ using MvvmValidation;
 
 namespace LiveHTS.Presentation.Interfaces.ViewModel
 {
-   
+
     public interface IPartnerTraceViewModel
     {
         bool EditMode { get; set; }
@@ -36,7 +36,12 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
 
         bool EnableBooking { get; set; }
         DateTime? BookingDate { get; set; }
-
+        bool ShowReason { get; set; }
+        bool ShowKitOther { get; set; }
+        Guid ReasonNotContacted { get; set; }
+        List<CategoryItem> ReasonsNotContacted { get; set; }
+        CategoryItem SelectedReasonNotContacted { get; set; }
+        string ReasonNotContactedOther { get; set; }
         Guid EncounterId { get; set; }
         IMvxCommand SaveTraceCommand { get; }
     }

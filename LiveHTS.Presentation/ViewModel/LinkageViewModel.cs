@@ -139,6 +139,9 @@ namespace LiveHTS.Presentation.ViewModel
             var outcomes = _lookupService.GetCategoryItems("TraceOutcome", true, "[Select Outcome]").ToList();
             _settings.AddOrUpdateValue("lookup.Outcome", JsonConvert.SerializeObject(outcomes));
 
+            var reasons = _lookupService.GetCategoryItems("ReasonNotContacted", true, "[Select Reason]").ToList();
+            _settings.AddOrUpdateValue("lookup.ReasonNotContacted", JsonConvert.SerializeObject(reasons));
+
         }
 
         public override void ViewAppeared()
@@ -183,6 +186,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             var modesJson = _settings.GetValue("lookup.Mode", "");
             var outcomeJson = _settings.GetValue("lookup.Outcome", "");
+            var reasonJson = _settings.GetValue("lookup.ReasonNotContacted", "");
 
             List<CategoryItem> modes=new List<CategoryItem>();
             if (!string.IsNullOrWhiteSpace(modesJson))
@@ -197,10 +201,16 @@ namespace LiveHTS.Presentation.ViewModel
             }
 
 
+            List<CategoryItem> reasons=new List<CategoryItem>();
+            if ( !string.IsNullOrWhiteSpace(reasonJson))
+            {
+                reasons = JsonConvert.DeserializeObject<List<CategoryItem>>(reasonJson);
+            }
+
 
             if (null != Encounter)
             {
-                 ReferralViewModel.Traces = ConvertToHIVTestWrapperClass(this, Encounter,modes,outcomes);
+                 ReferralViewModel.Traces = ConvertToHIVTestWrapperClass(this, Encounter,modes,outcomes,reasons);
 
                 var linkage = Encounter.ObsLinkages.ToList().FirstOrDefault();
 
@@ -223,7 +233,7 @@ namespace LiveHTS.Presentation.ViewModel
         }
 
 
-        private static List<TraceTemplateWrap> ConvertToHIVTestWrapperClass(ILinkageViewModel clientDashboardViewModel, Encounter encounter,List<CategoryItem> modes, List<CategoryItem> outcomes)
+        private static List<TraceTemplateWrap> ConvertToHIVTestWrapperClass(ILinkageViewModel clientDashboardViewModel, Encounter encounter,List<CategoryItem> modes, List<CategoryItem> outcomes,List<CategoryItem> reasons)
         {
            List<TraceTemplateWrap> list = new List<TraceTemplateWrap>();
 
@@ -231,7 +241,7 @@ namespace LiveHTS.Presentation.ViewModel
 
             foreach (var r in testResults)
             {
-                list.Add(new TraceTemplateWrap(clientDashboardViewModel.ReferralViewModel, new TraceTemplate(r, modes, outcomes)));
+                list.Add(new TraceTemplateWrap(clientDashboardViewModel.ReferralViewModel, new TraceTemplate(r, modes, outcomes,reasons)));
             }
 
             return list;

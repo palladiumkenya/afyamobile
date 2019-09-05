@@ -86,6 +86,29 @@
         android:textSize="@dimen/textXL"
         local:MvxBind="ItemsSource Outcomes;SelectedItem SelectedOutcome" />
     <TextView
+            android:id="@+id/textReason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reason Not Contacted"
+            local:MvxBind="Visibility ShowReason, Converter=Visibility" />
+
+    <MvxSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textXL"
+            local:MvxBind="ItemsSource ReasonsNotContacted;SelectedItem SelectedReasonNotContacted;Visibility ShowReason, Converter=Visibility" />
+    <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            local:MvxBind="Visibility ShowKitOther, Converter=Visibility">
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Specify Reason"
+                local:MvxBind="Text ReasonNotContactedOther;Visibility ShowKitOther, Converter=Visibility" />
+    </android.support.design.widget.TextInputLayout>
+    <TextView
         android:id="@+id/textViewConsent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

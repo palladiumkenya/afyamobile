@@ -43,6 +43,15 @@ namespace LiveHTS.Presentation.ViewModel
         private DateTime? _bookingDate;
         private bool _enableConsent;
         private bool _enableBooking;
+        private CategoryItem _selectedReasoun;
+        private List<CategoryItem> _reasons;
+        private List<CategoryItem> _allReasons = new List<CategoryItem>();
+        private Guid _reason;
+        private string _reasonOther;
+        private bool _showReason;
+        private bool _showReasonOther;
+
+
 
         public bool EditMode
         {
@@ -104,6 +113,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedMode = value; RaisePropertyChanged(() => SelectedMode);
                 if (null != SelectedMode)
                     Mode = SelectedMode.ItemId;
+                UpdateReasonsByMode();
             }
         }
 
@@ -127,6 +137,7 @@ namespace LiveHTS.Presentation.ViewModel
                 _selectedOutcome = value; RaisePropertyChanged(() => SelectedOutcome);
                 if (null != SelectedOutcome)
                     Outcome = SelectedOutcome.ItemId;
+                ShowReasonOption();
                 SetOutcome();
             }
         }
@@ -200,17 +211,128 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+         public bool ShowReason
+        {
+            get { return _showReason; }
+            set
+            {
+                _showReason = value;
+                RaisePropertyChanged(() => ShowReason);
+            }
+        }
+
+        public bool ShowKitOther
+        {
+            get { return _showReasonOther; }
+            set
+            {
+                _showReasonOther = value;
+                RaisePropertyChanged(() => ShowKitOther);
+            }
+        }
+
+        public Guid ReasonNotContacted
+        {
+            get { return _reason; }
+            set
+            {
+                _reason = value;
+                RaisePropertyChanged(() => ReasonNotContacted);
+            }
+        }
+
+        public List<CategoryItem> ReasonsNotContacted
+        {
+            get { return _reasons; }
+            set
+            {
+                _reasons = value;
+                RaisePropertyChanged(() => ReasonsNotContacted);
+            }
+        }
+
+        public CategoryItem SelectedReasonNotContacted
+        {
+            get { return _selectedReasoun; }
+            set
+            {
+                _selectedReasoun = value;
+                RaisePropertyChanged(() => SelectedReasonNotContacted);
+                if (null != SelectedReasonNotContacted)
+                    ReasonNotContacted = SelectedReasonNotContacted.ItemId;
+                ShowOther();
+            }
+        }
+
+        private void ShowReasonOption()
+        {
+            ShowReason = false;
+            if (null != SelectedOutcome &&
+                !SelectedOutcome.ItemId.IsNullOrEmpty() &&
+                SelectedOutcome.Item.Display.ToLower().Contains("Not".ToLower()))
+            {
+                ShowReason = true;
+                UpdateReasonsByMode();
+            }
+        }
+        private void UpdateReasonsByMode()
+        {
+            string mode = string.Empty;
+
+            if (null != SelectedMode && _allReasons.Any())
+            {
+                try
+                {
+                    mode = SelectedMode.Item.Display;
+                }
+                catch{}
+
+                if (!string.IsNullOrWhiteSpace(mode))
+                {
+                    if (mode.Contains("Physical"))
+                    {
+                        ReasonsNotContacted = _allReasons.Where(x => !x.Display.Contains("Mteja")).ToList();
+                    }
+                    else
+                    {
+                        ReasonsNotContacted = _allReasons.Where(x => !x.Display.EndsWith(".")).ToList();
+                    }
+                }
+            }
+        }
+        private void ShowOther()
+        {
+            ShowKitOther = false;
+            if (null != SelectedReasonNotContacted &&
+                !SelectedReasonNotContacted.ItemId.IsNullOrEmpty() &&
+                SelectedReasonNotContacted.Item.Display.ToLower().Contains("other".ToLower()))
+            {
+                ShowKitOther = true;
+            }
+        }
+
+        public string ReasonNotContactedOther
+        {
+            get { return _reasonOther; }
+            set
+            {
+                _reasonOther = value;
+                RaisePropertyChanged(() => ReasonNotContactedOther);
+            }
+        }
+
         public PartnerTraceViewModel()
         {
             Validator = new ValidationHelper();
             BookingDate = Date = DateTime.Today;
-            
+
             _tracingService =  Mvx.Resolve<IPartnerTracingService>();
             _settings = Mvx.Resolve<ISettings>();
 
             var modesJson = _settings.GetValue("lookup.TMode", "");
             var outcomeJson = _settings.GetValue("lookup.TOutcome", "");
             var consentJson = _settings.GetValue("lookup.TConsent", "");
+            var reasonJson = _settings.GetValue("lookup.ReasonNotContacted", "");
 
             if (!string.IsNullOrWhiteSpace(modesJson))
             {
@@ -224,6 +346,10 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
             }
+            if (!string.IsNullOrWhiteSpace(reasonJson))
+            {
+                _allReasons = ReasonsNotContacted = JsonConvert.DeserializeObject<List<CategoryItem>>(reasonJson);
+            }
         }
 
         private void LoadTest()
@@ -236,6 +362,9 @@ namespace LiveHTS.Presentation.ViewModel
                 SelectedOutcome =Outcomes.FirstOrDefault(x => x.ItemId == TestResult.Outcome);
                 SelectedConsent = Consents.FirstOrDefault(x => x.ItemId == TestResult.Consent);
                 BookingDate = TestResult.BookingDate;
+                SelectedReasonNotContacted =
+                    ReasonsNotContacted.FirstOrDefault(x => x.ItemId == TestResult.ReasonNotContacted);
+                ReasonNotContactedOther = TestResult.ReasonNotContactedOther;
             }
         }
 
@@ -247,6 +376,8 @@ namespace LiveHTS.Presentation.ViewModel
             SelectedOutcome = Outcomes.OrderBy(x => x.Rank).FirstOrDefault();
             if (null != Consents)
                 SelectedConsent = Consents.OrderBy(x => x.Rank).FirstOrDefault();
+            SelectedReasonNotContacted = ReasonsNotContacted.OrderBy(x => x.Rank).FirstOrDefault();
+            ReasonNotContactedOther = string.Empty;
         }
 
         public void Init(string id)
@@ -262,6 +393,7 @@ namespace LiveHTS.Presentation.ViewModel
             var kitsJson = _settings.GetValue("lookup.TMode", "");
             var resultsJson = _settings.GetValue("lookup.TOutcome", "");
             var consentJson = _settings.GetValue("lookup.TConsent", "");
+            var reasonJson = _settings.GetValue("lookup.ReasonNotContacted", "");
 
             if (!string.IsNullOrWhiteSpace(kitsJson))
             {
@@ -275,7 +407,10 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 Consents = JsonConvert.DeserializeObject<List<CategoryItem>>(consentJson);
             }
-
+            if (!string.IsNullOrWhiteSpace(reasonJson))
+            {
+                ReasonsNotContacted = JsonConvert.DeserializeObject<List<CategoryItem>>(reasonJson);
+            }
             EncounterId = Parent.Encounter.Id;
 
             if (!EditMode)
@@ -339,7 +474,7 @@ namespace LiveHTS.Presentation.ViewModel
                     )
                 );
             }
-          
+
 
             var result = Validator.ValidateAll();
             Errors = result.AsObservableDictionary();
@@ -361,7 +496,7 @@ namespace LiveHTS.Presentation.ViewModel
                 Parent.CloseTestCommand.Execute();
             }
         }
-     
+
 
         public bool CanSaveTest()
         {
@@ -370,7 +505,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         private ObsPartnerTraceResult GenerateTest()
         {
-            var obs= ObsPartnerTraceResult.Create(Date,Mode,Outcome,Consent,BookingDate, EncounterId,Parent.IndexClient.Id);
+            var obs= ObsPartnerTraceResult.Create(Date,Mode,Outcome,Consent,BookingDate, EncounterId,Parent.IndexClient.Id,ReasonNotContacted,ReasonNotContactedOther);
             if (EditMode)
                 obs.Id = Id;
             return obs;

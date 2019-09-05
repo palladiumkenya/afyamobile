@@ -23,7 +23,9 @@ namespace LiveHTS.Presentation.Interfaces.ViewModel
         string HandedTo { get; set; }
         string WorkerCarde { get; set; }
         DateTime DateEnrolled { get; set; }
+        bool HasArtStartDate { get; set; }
         DateTime ARTStartDate { get; set; }
+        bool AllowARTStartDate { get; set; }
         string EnrollmentId { get; set; }
         string Remarks { get; set; }
         TraceDateDTO SelectedEnrolDate { get; set; }

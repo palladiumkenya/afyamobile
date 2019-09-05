@@ -22,9 +22,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string ModeDisplay { get; set; }
         public Guid Outcome { get; set; }
         public string OutcomeDisplay { get; set; }
+        public Guid ReasonNotContacted { get; set; }
+
+        public string ReasonNotContactedDisplay { get; set; }
+        public string ReasonNotContactedOther { get; set; }
         public Guid EncounterId { get; set; }
 
-        public TraceTemplate(ObsTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes)
+        public TraceTemplate(ObsTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes,List<CategoryItem> reasons)
         {
             TraceResult = testResult;
 
@@ -47,13 +51,27 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 }
             }
 
+            if (null != reasons && reasons.Count > 0)
+            {
+                var result = reasons.FirstOrDefault(x =>
+                    !testResult.ReasonNotContacted.IsNullOrEmpty() && x.ItemId == testResult.ReasonNotContacted);
+                if (null != result)
+                {
+                    ReasonNotContactedDisplay = result.Display;
+
+                }
+            }
+
             Id = testResult.Id;
             Date = testResult.Date;
             Mode = testResult.Mode;
             Outcome = testResult.Outcome;
-            EncounterId = testResult.EncounterId;            
+            if(!testResult.ReasonNotContacted.IsNullOrEmpty())
+                ReasonNotContacted = testResult.ReasonNotContacted.Value;
+            ReasonNotContactedOther = testResult.ReasonNotContactedOther;
+            EncounterId = testResult.EncounterId;
         }
 
-       
+
     }
 }

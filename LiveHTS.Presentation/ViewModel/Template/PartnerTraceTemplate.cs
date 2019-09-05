@@ -24,9 +24,13 @@ namespace LiveHTS.Presentation.ViewModel.Template
         public string OutcomeDisplay { get; set; }
         public Guid? Consent { get; set; }
         public string ConsentDisplay { get; set; }
+        public Guid ReasonNotContacted { get; set; }
+
+        public string ReasonNotContactedDisplay { get; set; }
+        public string ReasonNotContactedOther { get; set; }
         public Guid EncounterId { get; set; }
 
-        public PartnerTraceTemplate(ObsPartnerTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents)
+        public PartnerTraceTemplate(ObsPartnerTraceResult testResult, List<CategoryItem> modes, List<CategoryItem> outcomes, List<CategoryItem> consents,List<CategoryItem> reasons)
         {
             TraceResult = testResult;
 
@@ -58,14 +62,25 @@ namespace LiveHTS.Presentation.ViewModel.Template
                 }
             }
 
+            if (null != reasons && reasons.Count > 0)
+            {
+                var result = reasons.FirstOrDefault(x =>
+                    !testResult.ReasonNotContacted.IsNullOrEmpty() && x.ItemId == testResult.ReasonNotContacted);
+                if (null != result)
+                {
+                    ReasonNotContactedDisplay = result.Display;
+
+                }
+            }
+
             Id = testResult.Id;
             Date = testResult.Date;
             Mode = testResult.Mode;
             Outcome = testResult.Outcome;
             Consent = testResult.Consent;
-            EncounterId = testResult.EncounterId;            
+            EncounterId = testResult.EncounterId;
         }
 
-       
+
     }
 }

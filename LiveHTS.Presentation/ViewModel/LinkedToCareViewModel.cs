@@ -37,6 +37,8 @@ namespace LiveHTS.Presentation.ViewModel
         private DateTime _artStartDate;
         private TraceDateDTO _selectedArtDate;
         private IMvxCommand _showArtDateDialogCommand;
+        private bool _hasArtStartDate;
+        private bool _allowArtStartDate;
 
         public ValidationHelper Validator
         {
@@ -89,10 +91,19 @@ namespace LiveHTS.Presentation.ViewModel
                     FacilityHandedTo = ObsLinkage.FacilityHandedTo;
                     HandedTo = ObsLinkage.HandedTo;
                     WorkerCarde = ObsLinkage.WorkerCarde;
+                    if (ObsLinkage.HasArtStartDate.HasValue)
+                    {
+                        HasArtStartDate = ObsLinkage.HasArtStartDate.Value;
+                    }
 
                     if (ObsLinkage.DateEnrolled.HasValue)
                         DateEnrolled = ObsLinkage.DateEnrolled.Value;
                     if (ObsLinkage.ARTStartDate.HasValue)
+                    {
+                        HasArtStartDate = true;
+                    }
+
+                    if (HasArtStartDate && ObsLinkage.ARTStartDate.HasValue)
                         ARTStartDate = ObsLinkage.ARTStartDate.Value;
 
                     EnrollmentId = ObsLinkage.EnrollmentId;
@@ -151,6 +162,17 @@ namespace LiveHTS.Presentation.ViewModel
             }
         }
 
+        public bool HasArtStartDate
+        {
+            get { return _hasArtStartDate; }
+            set
+            {
+                _hasArtStartDate = value;
+                RaisePropertyChanged(() => HasArtStartDate);
+                AllowARTStartDate = HasArtStartDate;
+            }
+        }
+
         public DateTime ARTStartDate
         {
             get { return _artStartDate; }
@@ -158,6 +180,16 @@ namespace LiveHTS.Presentation.ViewModel
             {
                 _artStartDate = value;
                 RaisePropertyChanged(() => ARTStartDate);
+            }
+        }
+
+        public bool AllowARTStartDate
+        {
+            get { return _allowArtStartDate; }
+            set
+            {
+                _allowArtStartDate = value;
+                RaisePropertyChanged(() => AllowARTStartDate);
             }
         }
 
@@ -235,8 +267,8 @@ namespace LiveHTS.Presentation.ViewModel
 
                 if (null == ObsLinkage)
                 {
-                    obs = ObsLinkage.CreateNew(FacilityHandedTo, HandedTo, WorkerCarde, DateEnrolled, EnrollmentId,
-                        Remarks, ParentViewModel.Encounter.Id, ARTStartDate);
+                    obs = ObsLinkage.CreateNew(FacilityHandedTo, HandedTo, WorkerCarde, DateEnrolled.Date, EnrollmentId,
+                        Remarks, ParentViewModel.Encounter.Id, ARTStartDate.Date,HasArtStartDate);
                 }
                 else
                 {
@@ -244,8 +276,9 @@ namespace LiveHTS.Presentation.ViewModel
                     obs.FacilityHandedTo = FacilityHandedTo;
                     obs.HandedTo = HandedTo;
                     obs.WorkerCarde = WorkerCarde;
-                    obs.DateEnrolled = DateEnrolled;
-                    obs.ARTStartDate = ARTStartDate;
+                    obs.DateEnrolled = DateEnrolled.Date;
+                    if (HasArtStartDate)
+                        obs.ARTStartDate = ARTStartDate.Date;
                     obs.EnrollmentId = EnrollmentId;
                     obs.Remarks = Remarks;
                     _linkageService.SaveLinkage(obs, ParentViewModel.Client.Id, false);
@@ -364,13 +397,17 @@ namespace LiveHTS.Presentation.ViewModel
                 )
             );
 
-            Validator.AddRule(
-                nameof(ARTStartDate),
-                () => RuleResult.Assert(
-                    !(ARTStartDate.Date > DateTime.Today),
-                    $"{nameof(ARTStartDate)} cannot be in future"
-                )
-            );
+            if (HasArtStartDate)
+            {
+
+                Validator.AddRule(
+                    nameof(ARTStartDate),
+                    () => RuleResult.Assert(
+                        !(ARTStartDate.Date > DateTime.Today),
+                        $"{nameof(ARTStartDate)} cannot be in future"
+                    )
+                );
+            }
 
             if (null != ParentViewModel.Client)
             {
@@ -385,13 +422,16 @@ namespace LiveHTS.Presentation.ViewModel
                         )
                     );
 
-                    Validator.AddRule(
-                        nameof(ARTStartDate),
-                        () => RuleResult.Assert(
-                            !(ARTStartDate.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
-                            $"{nameof(ARTStartDate)} cannot be before Registration Date"
-                        )
-                    );
+                    if (HasArtStartDate)
+                    {
+                        Validator.AddRule(
+                            nameof(ARTStartDate),
+                            () => RuleResult.Assert(
+                                !(ARTStartDate.Date < ParentViewModel.Client.DateEnrolled.Value.Date),
+                                $"{nameof(ARTStartDate)} cannot be before Registration Date"
+                            )
+                        );
+                    }
                 }
             }
 
