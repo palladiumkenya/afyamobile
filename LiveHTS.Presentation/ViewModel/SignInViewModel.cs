@@ -33,7 +33,7 @@ namespace LiveHTS.Presentation.ViewModel
 
         public string Version
         {
-            get { return $"v {_version} QA ONLY"; }
+            get { return $"v {_version}"; }
             set
             {
                 _version = value;
