@@ -385,7 +385,7 @@ namespace LiveHTS.Presentation.ViewModel
                 () => RuleResult.Assert(
                     !string.IsNullOrWhiteSpace(EnrollmentId)&&
                       EnrollmentId.Trim().Length == 10 && isNumeric(EnrollmentId),
-                    $"CCC {nameof(EnrollmentId)} is invalid"
+                    $"Provide a valid 10 digit ccc number"
                 )
             );
 
